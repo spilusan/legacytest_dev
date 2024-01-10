@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+	<?= $this->partial('application-signature.phtml', array());?>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<?php if ($_SERVER['HTTP_HOST'] !== 'www.shipserv.com') { ?>
+		<meta name="robots" content="noindex">
+	<?php } ?>
+	<?php if ($_SERVER['APPLICATION_ENV'] !== 'development') { ?>
+		<script type="text/javascript">
+			window.onerror = function catchAndLogError(msg, url, lineno, colno, error) {
+				console.log('catchAndLogError SS func>>> Error message: '+msg+'\nURL: '+url+'\nLine: '+lineno+' Col: '+colno+'\nError: '+error);
+				return true;
+			}
+		</script>
+	<?php } ?>
+	<!--[if lt IE 9]>
+  	<script src="/js/<?php echo Myshipserv_Config::getCachebusterTagAddition() ?>lib/html5shiv.min.js"></script>
+  	<![endif]-->
+	<?php
+	echo $this->headTitle()."\n";
+	$req = Zend_Controller_Front::getInstance()->getRequest();
+	$isCampfireLayout = (
+			$this->isCorporate
+			|| ($req->getModuleName() === 'search' && $req->getControllerName() === 'index' && $req->getActionName() === 'index')
+			|| ($req->getModuleName() === 'default' && $req->getControllerName() === 'user' && in_array($req->getActionName(), array('forgot-password', 'login')))
+			|| ($req->getModuleName() === 'spr')
+			|| ($req->getControllerName() === 'shipmate' && in_array($req->getActionName(), array('buyer-connect-admin')))
+			);
+	if ($isCampfireLayout) {
+		echo $this->CDNLink()->prependStylesheet('/css/default-new.css', 'all')->prependStylesheet('/css/reset.css', 'all');
+		?>
+		<script type="text/javascript" src="/js/<?php echo Myshipserv_Config::getCachebusterTagAddition() ?>lib/flexibility.js"></script>
+		<?php
+	} else {
+		echo $this->CDNLink()->prependStylesheet('/css/default.css', 'all')->prependStylesheet('/css/reset.css', 'all');
+	}
+
+	if (
+		!(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest") &&
+	 	!(isset($_SERVER['REQUEST_URI']) && $_SERVER['REQUEST_URI'] == "/favicon.ico" )
+	 ) {
+		if ($this->canonical != '') {
+	    	$pageURL = $this->canonical;
+		} else {
+	        switch ($_SERVER['HTTP_HOST']) {
+	        	case 'www.shipserv.net':
+	            case 'www.shipserv.com.tr':
+	            	$server = 'www.shipserv.com';
+	                break;
+	            default:
+	            	$server = $_SERVER['HTTP_HOST'];
+	   	 	}
+
+	        $pageURL = 'http://' . $server . str_replace('?' . $_SERVER['QUERY_STRING'], '', $_SERVER['REQUEST_URI']);
+	        $pageURL = preg_replace('/\/$/i', '', $pageURL);
+	        $pageURL = preg_replace('/\/zone$/i', '', $pageURL);
+		}
+		if ($this->canonical !== false) {
+			$this->headLink()->headLink(array('rel'  => 'canonical', 'href' => $pageURL), 'PREPEND');
+		}
+	}
+
+	echo $this->headLink()."\n";
+	echo $this->headMeta()."\n";
+
+	if (!$this->isCorporate) {		
+		$this->getHelper('Requirejs')->addDefinition('alert/element', '"#preHeader"');
+		if ($this->user !== false && $this->user !== null) {
+			$this->getHelper('Requirejs')->addDefinition('alert/isBuyer', ($this->activeCompany->type=='b')?"true":"false");
+			$this->getHelper('Requirejs')->addDefinition('alert/tnid', ($this->activeCompany->id!="")?$this->activeCompany->id:"''");
+			$this->getHelper('Requirejs')->addDefinition('alert/isShipmate', ($this->user->isShipservUser()==true)?"true":"false");
+			$this->getHelper('Requirejs')->addDefinition('alert/inShipServ', ($this->userInsideShipServIP==true)?"true":"false");
+			$this->getHelper('Requirejs')->addDefinition('alert/switcherUser', ($this->user->canPerform("PSG_COMPANY_SWITCHER")==true)?"true":"false");
+			
+			$this->requirejs()->addModule('alert/announcement');
+			$this->requirejs()->addModule('backbone/user/switch/views/switchView');
+		}
+		
+		$this->requirejs()->render();
+	} else {
+		?>
+		<script type="text/javascript" src="/js/<?php echo Myshipserv_Config::getCachebusterTagAddition() ?>modules/backbone/lib/jquery.min.1.8.3.js"></script>
+		<?php
+	}
+
+	echo $this->headScript()."\n";
+	echo $this->compressedScript()."\n";
+
+	?>
+	<script type="text/javascript" src="/js/<?php echo Myshipserv_Config::getCachebusterTagAddition() ?>lib/cookieAlert.js"></script>
+	<script type="text/javascript" src="/js/<?php echo Myshipserv_Config::getCachebusterTagAddition() ?>navigation.js"></script>
+	<?php
+	if ($isCampfireLayout) {
+	?>
+		<script type="text/javascript" src="/js/<?php echo Myshipserv_Config::getCachebusterTagAddition() ?>ie-flex-fix.js"></script>
+	<?php
+	} 
+	
+	if ((Myshipserv_Config::isInProduction() || Myshipserv_Config::isInUat()) && isset($this->params['enableConsoleLog']) == false) { ?>
+		<script type="text/javascript">
+			var console = {};
+			console.log = function(){};
+		</script>
+	<?php } ?>
+	</head>
+	<body class="<?= ($this->isCorporate? 'wp' : 'app'); ?>">
+		<?= $this->partial('layout/upgrade-browser-warning.phtml'); ?>
+		<?= $this->partial('layout/tag-manager.phtml', array('config' => $this->config));?>
+		<header>
+			<i class="fa fa-bars toggleMenu<?php if ($this->user): ?> loggedIn<?php endif; ?>" aria-hidden="true"></i>
+			<a href="/search"><img src="/img/logo.svg" alt="ShipServ logo" width="150"></a>
+			<?php if (!isset($this->noHeader)): ?>
+				<div class="navigations<?php if ($this->user): ?> loggedIn<?php endif; ?>">	
+					<?= $this->partial('layout/app-menu.phtml', array('user' => $this->user, 'tnid' => $this->tnid, 'activeCompany' => $this->activeCompany)); ?>
+					
+					<?= $this->partial('layout/mycompanies.phtml', array('companies' => $this->myCompanies, 'user' => $this->user, 'activeCompany' => $this->activeCompany, 'params' => $this->params)); ?>
+	
+		        	<?= $this->partial('layout/corporate-tabs-lev1.phtml', array('companies' => $this->myCompanies,  'user' => $this->user, 'userTradenet' => $this->userTradenet)); ?>
+				</div>
+			<?php endif ?>
+		</header>
+		<div class="headerSpace"></div>
+		<?= $this->partial('layout/corporate-tabs-lev2.phtml'); ?>
+		<div class="scrollWrapper">
+			<main>
+				<?= $this->layout()->content ?>
+			</main>
+			<?= $this->partial('layout/footer.phtml'); ?>
+		</div>
+		<div id="preHeader"></div>
+	</body>
+</html>

@@ -1,0 +1,27 @@
+<h1 class="styled">New Segment</h1>
+<div class="innerContent">
+	<form class="new">
+		<label for="segmentName">Name:</label>
+		<input type="text" name="segmetname" />
+		<label for="catSel">Category:</label>
+		<input type="hidden" name="catId" />
+		<input type="text" name="catSel" />
+		<div class="selectlist"></div>
+		<div class="plus"></div>
+		<label for="countrySel">Country:</label>
+		<select name="countrySel" id="countSel">
+			<option value="0">Global</option>
+			{{#each models}}
+				<option value="{{this.attributes.id}}">{{this.attributes.name}}</option>
+			{{/each}}
+		</select>
+		<div class="plus"></div>
+		<label for="startDate">Start date:</label>
+		<input type="text" name="startDate" />
+		<div class="plus"></div>
+		<label for="notes">Notes:</label>
+		<input type="text" name="notes" />
+		<input type="button" name="add" value="OK" class="button medium green" />
+		<div class="clear"></div>
+	</form>
+</div>

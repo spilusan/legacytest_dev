@@ -1,0 +1,99 @@
+input[name="run"] {
+	position: relative;
+	top: 15px;
+	margin-left: 20px;
+}
+
+input[name="export"] {
+	margin-top: 20px;
+}
+
+label[for="xcludeShipmate"] {
+	top: 15px;
+}
+
+#warning {
+	display: none;
+	margin: 24px 0px 0px 6px;
+	color: #005AAD ;
+}
+
+table#usageData, #shipservStickyHeader  {
+	.taHelp {
+		color: #005AAD;
+		cursor: pointer;
+	}
+
+	thead {
+		tr {
+			th {
+				height: 90px;
+			}
+		}
+	}
+
+	tbody {
+		tr {
+
+			&.fake {
+				opacity: 0;
+			}
+
+			td {
+				overflow: hidden;
+				min-width: 95px;
+				.lvl {
+					width: 15px;
+					height: 15px;
+					margin: 0 auto;
+					@include border-radius(50%);
+
+					&.bad {
+						background: #E81E24;
+					}
+
+					&.medium {
+						background: #FEC008;
+					}
+
+					&.good {
+						background: #008B00;
+					}
+				}
+			}
+		}
+	}
+}
+
+#englevelTooltip {
+	display: none;
+}
+
+.sh-tooltip {
+	ul {
+		li {
+			border: 1px solid #f0f0f0;
+			background: #f0f0f0;
+			@include border-radius(3px);
+			padding: 6px;
+			margin-bottom: 6px;
+		}
+	}
+
+	.lvl {
+		width: 15px;
+		height: 15px;
+		display: inline-block;
+		margin-right: 6px;
+		@include border-radius(50%);
+		&.bad {
+			background: #E81E24;
+		}
+		&.medium {
+			background: #FEC008;
+		}
+		&.good {
+			background: #008B00;
+		}
+	}
+}

@@ -1,0 +1,26 @@
+<div class="itemselector prod inner new form clearfix multi">
+	<form class="new">
+		<ul>
+			<li>
+				<label for="basic"><input type="checkbox" name="basic" id="basic-product" {{#if basic}}checked="checked" {{/if}}/> Basic Listing</label>
+				<p>Suppliers who have a basic listing only.</p>
+			</li>
+			<li>
+				<label for="basic"><input type="checkbox" name="premium" id="premium-product" {{#if premium}}checked="checked" {{/if}}/> Premium Profile</label>
+				<p>Suppliers who have upgraded to a Premium Profile.</p>
+			</li>
+			<li>
+				<label for="basic"><input type="checkbox" name="smart" id="smart-product" {{#if smart}}checked="checked" {{/if}}/> Smart Supplier</label>
+				<p>Smart Supplier subscribed suppliers.</p>
+			</li>
+			<li>
+				<label for="basic"><input type="checkbox" name="expert" id="expert-product" {{#if expert}}checked="checked" {{/if}}/> Expert Supplier</label>
+				<p>Expert Supplier subscribed suppliers.</p>
+			</li>
+		</ul>
+		<div class="clear"></div>
+	</form>
+	<div class="buttonContainer">
+        <input type="button" class="apply button green medium" value="Apply changes" />
+    </div>
+</div>

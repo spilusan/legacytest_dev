@@ -1,0 +1,25 @@
+<style type="text/css">
+	div.errors {
+		width: 730px;
+		padding: 40px 0;
+		margin: 70px auto;
+		border: 1px solid #FF0000;
+		-webkit-border-radius: 10px;
+		-moz-border-radius: 10px;
+		border-radius: 10px;
+		background-color: #fff;
+	}
+
+	div.errors>div {
+		background: url(/images/icons/32/warning.png) 0 0 no-repeat;
+		height: 32px;
+		line-height: 32px;
+		vertical-align: middle;
+		padding-left: 36px;
+		margin: 5px 30px;
+	}
+</style>
+
+<div class="errors">
+	<div>We're very sorry, but the transaction was unsuccessful. <a href="/payment/invoice/sfiid/<?php echo $this->params["sfiid"];?>">Please try again</a></div>
+</div>

@@ -1,0 +1,8 @@
+<li class="<?= ($this->isSelected? ' selected' : ''); ?>">
+	<?php if($this->isSelected) :?>
+		<i class="fa fa-angle-right"></i>
+	<?php endif;?>
+	<a href="<?= $this->href; ?>">
+		<?= $this->title; ?>
+	</a>
+</li>

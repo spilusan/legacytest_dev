@@ -1,0 +1,39 @@
+<div class="google_zone_ad">
+	<h4>ADVERTISEMENTS</h4>
+	<?php 
+	if( $this->adUnits === null )
+	{
+		echo $this->googledfp()->fillSlot('TargetedOrGeneralAdSlot1'); ?><br /><?php 
+		echo $this->googledfp()->fillSlot('TargetedOrGeneralAdSlot2'); ?><br /><?php
+		echo $this->googledfp()->fillSlot('TargetedOrGeneralAdSlot3'); ?><br /><?php
+		echo $this->googledfp()->fillSlot('TargetedOrGeneralAdSlot4'); ?><br />
+		<div id="fifthSlot">
+			<?php
+			echo $this->googledfp()->fillSlot('TargetedOrGeneralAdSlot5'); ?>
+			<br />
+		</div>
+		<?php
+				
+	}
+	else if( lg_count($this->adUnits) > 0 )
+	{
+		foreach( $this->adUnits as $unit )
+		{
+			$unitId = ($unit['PAS_ADUNIT_ID'] !== null && $unit['PAS_ADUNIT_ID'] != "" ) ? $unit['PAS_ADUNIT_ID']:$unit['PAP_ADUNIT_ID'];
+			echo $this->googledfp()->fillSlot($unitId); ?><br /><?php
+		}
+	}
+	?>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(
+		function(){
+			if( $("#fifthSlot").length>0 && $('#15').length > 0 ){
+			$("#fifthSlot")
+				.css("position", 'absolute')
+				.css("top",  ($("#15").position().top - 23 ) + 'px');
+			}
+		}	
+	);
+</script>

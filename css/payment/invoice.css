@@ -1,0 +1,123 @@
+#summary {
+	width: 730px;
+	margin: 30px auto;
+}
+
+div.summary {
+	background-image: url(/images/forms/value_summary_bg.png);
+	width: 280px;
+	height: 60px;
+	position: relative;
+	font-size: 14px;
+	color: #666;
+	line-height: 60px;
+	vertical-align: middle;
+	padding-left: 80px;
+	float: left;
+}
+
+div.summary .value {
+	color: #000;
+	font-weight: bold;
+}
+
+div.summary .currencies {
+	width:60px;
+}
+
+div.summary .icon {
+	position: absolute;
+	left: 24px;
+	background-repeat: no-repeat;
+}
+
+div.summary.number .icon {
+	background-image: url(/images/icons/data.png);
+	width: 21px;
+	height: 28px;
+	top: 16px;
+}
+
+div.summary.currency .icon {
+	background-image: url(/images/icons/dollar.png);
+	width: 18px;
+	height: 29px;
+	top: 15px;
+}
+
+div#total {
+	margin-left: 10px;
+}
+
+ul.validation.errors {
+	margin-bottom: 30px;
+}
+
+#BillingState {
+	width: 200px;
+}
+
+span.note {
+	font: 12px Arial,sans-serif;
+}
+
+form.modify {
+	width: 730px;
+	height: 30px;
+	margin: auto;
+}
+
+form.main label {
+	width: 11.5em;
+}
+
+form.main hr {
+	border: dashed #c1c1c1;
+	border-width: 1px 0 0;
+	height: 0;
+	width: 670px;
+	margin: 13px 30px 20px;
+	float:left;
+}
+
+input.button.edit {
+	background: url(/images/buttons/edit_button.png) 0 0 no-repeat;
+	width: 97px;
+	height: 42px;
+	border: 0;
+	margin: 0 1.3em 0 4em;
+	padding: 0;
+	float:left; 
+	clear: none;
+	cursor: pointer;
+}
+
+form.main input.button.submit {
+	background: url(/images/buttons/confirm_pay.png) 0 0 no-repeat;
+}
+
+form.main input.button.edit:hover, form.main input.button.submit:hover {
+	background-position: 0 -42px;
+}
+
+fieldset.submit {
+	margin: 15px 0 20px;
+}
+
+#InvoiceId {
+	letter-spacing: 1px;
+}
+
+.invoiceIdValidation {
+    display: none;
+    position: absolute;
+	background-color: #ffe4c4;
+	border: 1px solid #d6d6d6;
+    z-index: 999;
+    line-height: 1;
+    font-weight: normal;
+    font-size: 10px;
+    padding: 9px;
+    top: 47px;
+    border-radius: 5px;
+}

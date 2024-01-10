@@ -1,0 +1,250 @@
+<?php
+$debug = false;
+
+// $this->showZoneSponsorshipBanner = false;
+
+if( $debug === true )
+{
+	echo "currentZoneIdent: ";
+	var_dump($this->currentZoneIdent);
+
+	echo "showZoneSponsorshipBanner: ";
+	var_dump($this->showZoneSponsorshipBanner);
+
+	echo "refinedQuery: ";
+	var_dump($this->refinedQuery);
+
+	echo "Total zones: " . lg_count($this->zones);
+
+}
+
+?>
+
+<?php
+// if we are not within a zone - display zone invites
+
+if ( !$this->currentZoneIdent ) {
+
+		$zoneCount = lg_count($this->zones);
+
+		foreach ((array)$this->zones as $zoneInvite)
+		{
+			$zoneInvite['type'] = 'activeZone';
+			$randomisedActiveZone[] = $zoneInvite;
+
+			// check if zone is prioritise
+			if( isset( $zoneInvite['content']['prioritiseZone'] ) && $zoneInvite['content']['prioritiseZone'] == 1 )
+			{
+				if( (!isset($banners[0]) ) || (isset($banners[0]) && $banners[0]['name'] != $zoneInvite['name'] ) )
+				{
+					$banners[] = $zoneInvite;
+				}
+			}
+		}
+
+		if( $this->showZoneSponsorshipBanner === true )
+        {
+        	if( lg_count($this->zoneSponsorshipBanner) > 0 )
+        	{
+        		foreach( $this->zoneSponsorshipBanner as $banner )
+        		{
+        			$banner['type'] = 'soldBannerSponsorship';
+        			$banners[] = $banner;
+        		}
+
+        		if ($this->addActiveZoneBanner)
+        		{
+        			foreach ((array)$this->zones as $zoneInvite)
+        			{
+        				$zoneInvite['type'] = 'activeZone';
+        				$banners[] = $zoneInvite;
+        			}
+        		}
+        	}
+        	else
+        	{
+        		if( $randomisedActiveZone )
+        		{
+        			$key = rand(0,lg_count($randomisedActiveZone)-1);
+        			$banners = array_merge(array_slice($randomisedActiveZone, $key, 1));
+        		}
+        		else
+        		{
+        			$banners[] = $randomisedActiveZone[0];
+        		}
+        	}
+
+        }
+        else
+        {
+        	foreach ((array)$this->zones as $zoneInvite)
+        	{
+        		$zoneInvite['type'] = 'activeZone';
+
+        		if( (!isset($banners[0]) ) || (isset($banners[0]) && $banners[0]['name'] != $zoneInvite['name'] ) ){
+        			$banners[] = $zoneInvite;
+        		}
+        	}
+
+        }
+
+        if( $this->showZoneSponsorshipBanner === true )
+        {
+	        $banners[]['type'] = 'banner';
+	        $banners[]['type'] = 'banner';
+        }
+
+        if( lg_count($banners) > 0 )
+        {
+
+	        $className = 'zone_invite_block' . ((lg_count($this->zones) == 1)?'_single':'') . ' ' . 'zone_invite_block_' . lg_count($this->zones);
+       		?>
+        	<div class="zone_invite_block_single <?= (lg_count($banners) == 1)?'zone_invite_stretched':'' ?> zone_invite_block_1" style="height: 55px !important;">
+        	<!--<div class="<?=$className ?>" style="height: 55px !important;">-->
+	            <?php
+		            $banners = array_slice($banners, 0, 2);
+		            $totalBanners = lg_count($banners);
+		            foreach( $banners as $banner )
+		            {
+		            	if( $banner['type'] == 'activeZone' )
+		            	{
+		            		$zoneInvite = $banner;
+
+		            		// Is there a Human readable URL provided?
+		            		if(!$zoneInvite['zoneUrl'] === false){
+		            			$urlToZone = $zoneInvite['zoneUrl']
+		            			;//. $this->searchUrl()->withholdURLStem( true )->sourceKey('ZONE_INVITE_FROM_SEARCH') . '&searchWhat=' . urlencode($this->searchValues['searchWhat']) . '&searchWhere=' . urlencode($this->searchValues['searchWhere']) . '&searchText=' . urlencode($this->searchValues['searchText']);
+		            		}else{
+		            			$urlToZone = $this->searchUrl()
+			            			->zone($zoneInvite['content']['@attributes']['ident'])
+			            			->searchWhat(html_entity_decode($this->searchValues['searchWhat']))
+			            			->searchWhere($this->searchValues['searchWhere'])
+			            			->searchText($this->searchText)
+			            			->sourceKey('ZONE_INVITE_FROM_SEARCH');
+		            		}
+
+
+		            		createActiveZoneInviteHtml($zoneInvite, $newInviteHeight, $urlToZone, $totalBanners);
+		            	}
+		            	else if( $banner['type'] == 'soldBannerSponsorship' )
+		            	{
+		            		createZoneBanner($banner, 46, $this->searchId);
+		            	}
+		            	else
+		            	{
+		            		createZoneBanner(null, 46, $this->searchId);
+		            	}
+		            	$i++;
+		            }
+	       		?>
+	       	</div>
+        	<?php
+        }
+    }
+
+    function createZoneBanner( $banner = null, $newInviteHeight = 46, $searchId = null )
+    {
+    	static $no=0;
+
+	   	// if there's no banner
+    	if( $banner === null ){
+	    	?>
+	    	<div class="zone_invite yourCompany color<?= $no++?>">
+	    		<a href="/info/pages-for-suppliers/additional-member-solutions/banner-advertising/">See your company here</a>
+	    	</div>
+	    	<?php
+    	}
+    	else
+    	{
+    		$hb = Shipserv_Zone_HighlightBanner::getInstanceById($banner['PZS_ID']);
+    		$searchId = _htmlspecialchars($_GET['searchWhat'] . $_GET['searchText'] . $_GET['searchWhere']);
+    		$impressionId = $hb->logImpression( $searchId );
+    		$supplier = Shipserv_Supplier::getInstanceById($banner['PZS_TNID'], '', true);
+
+    		$url = $hb->getUrl( $impressionId );
+    		// if banner image is specified
+    		if( $banner['PZS_BANNER_IMG'] != "" )
+    		{
+	    		?>
+		    	<div class="zone_radius" title="<?= $banner['PZS_TITLE']?>" style="float:left; width:345px; <?php if($newInviteHeight > 0): ?>height: <?php echo $newInviteHeight - 22;?>px !important; margin-left: 15px !important;<?php endif;?><?php if (isset($zoneInvite['content']['invite']['style'])) echo $zoneInvite['content']['invite']['style'] ?>">
+		    		<a href="<?= $url ?>">
+		    			<img src="<?= $banner['PZS_BANNER_IMG']?>" style="max-width: 345px; max-height:56px;" />
+		    		</a>
+		    	</div>
+	    		<?
+    		}
+    		else
+    		{
+    			?>
+    				<div class="invite_left marine" title="<?= $banner['PZS_TITLE']?>">
+    					<div class="pre"></div>
+			    		<table cellpadding="0" cellspacing="0" width="100%" border="0">
+			    			<tr>
+			    				<td <?php if (isset($zoneInvite['content']['invite']['style'])) echo 'style="'.$zoneInvite['content']['invite']['style'].'"' ?> class="left">
+			    					<a class="zone_invite_link" href="<?= $url ?>" class="clickThis" title="<?= $banner['PZS_TITLE']?>">
+			    						<?= $supplier->name?>
+			    					</a>
+			    				</td>
+			    				<td class="right">
+			    					<a href="<?= $url ?>">
+			    						<img src="/img/zone/arrow.png" />
+			    					</a>
+			    				</td>
+			    			</tr>
+			    		</table>
+			    	</div>
+    			<?
+    		}
+    	}
+    }
+
+    function createActiveZoneInviteHtml($zoneInvite, $newInviteHeight, $urlToZone, $totalBanners )
+    {
+    	if (isset($zoneInvite['content']['invite']['style']))
+    	{
+    		$inlineCSS = 'style="'.$zoneInvite['content']['invite']['style'].'"';
+    	}
+    	else if( isset($zoneInvite['content']['invite']['styles']) )
+    	{
+    		if( $totalBanners > 1 )
+    		{
+    			$inlineCSS = $zoneInvite['content']['invite']['styles']['narrow'];
+    		}
+    		else
+    		{
+    			$inlineCSS = $zoneInvite['content']['invite']['styles']['wide'];
+    		}
+
+    		$inlineCSS = 'style="' . $inlineCSS . '"';
+    		$hideClickableImage = true;
+    	}
+
+    	?>
+    	<div class="invite_left" <?php echo $inlineCSS; ?>>
+    		<table cellpadding="0" cellspacing="0" width="100%" border="0">
+    			<tr>
+    				<td class="left">
+    					<a class="zone_invite_link" href="<?= $urlToZone ?>">
+    						<?php echo $zoneInvite['content']['invite']['header'] ?>
+    					</a>
+    				</td>
+    				<? if( $hideClickableImage !== true ){ ?>
+    				<td class="right">
+    					 <a href="<?= $urlToZone ?>">
+    					 	<img src="/img/zone/shipserv_expert_zone.jpg" class="expert" /> <img src="/images/layout_v2/zones/zone_invite_arrow.png" />
+    					 </a>
+    				</td>
+    				<? }?>
+    			</tr>
+    		</table>
+    	</div>
+		<?php
+    }
+?>
+<script type="text/javascript">
+	$(function() {
+		$('.invite_left').bind('click', function(e){
+			window.location.href = $(e.target).find('a.zone_invite_link').attr("href");
+		});
+	});
+</script>

@@ -1,0 +1,237 @@
+<div class="box">
+<p><strong>This tab shows the value of orders you received in the time period selected (regardless of when the RFQ was received).</strong> So how does this vary from the Sales Funnel tab? The sales funnel tab uses a different definition as it is designed to show sales conversion: it only shows orders connected to RFQs received in the period selected. (Example: period set as month of February. #1 RFQ and its order received February for $50; #2 RFQ received January and its order in February for $40. Sales funnel tab will show $50, Billable tab will show $90). </p>
+ 
+<p>The information in this tab is used for billing you and corresponds to you invoice. The Sales Funnel data does not match the Billable tab and is not used for billing.</p>
+</div>
+<form class="new">
+	<div class="txLeft filterBlock">
+
+<!-- date filter header -->
+
+	<div class="filterLabel">
+		Select time period:
+	</div>
+	<div class="filterContent">
+
+		<div class="dropDown">
+			<div id="periodSel" class="billPeriodSel">
+				{{dateFromPretty}} - {{dateToPretty}}
+			</div>
+			<div class="details">
+				<select name="quickPeriod" id="quick" class="quickSelTw">
+					<option value="0">Quick selection</option>
+					{{#monthSelectorOptions}}{{/monthSelectorOptions}}
+				</select>
+				<br />
+				<div class="dateField from">
+					<label for="dateFrom">From: (dd/mm/yyyy)</label>
+					<input type="text" name="dateFrom" class="date from" value="{{dateFrom}}" />
+					<br />
+					
+				</div>
+				<div class="dateField to">
+					<label for="dateToFirst">To: (dd/mm/yyyy)</label>
+					<input type="text" name="dateTo" class="date to" value="{{dateTo}}" />
+					<br />
+				</div>
+				<div class="clear"></div>
+				<input type="button" class="button green medium transactionsApply" value="Apply">
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	
+<!-- End date filter header -->
+	
+		<table cellpadding="0" cellspacing="0" class="topLeftTable">
+			<tbody>
+				<tr>
+					<td class="deepBlue">Total order value</td>
+					<td class="deepBlue">{{formatNumber tradingStatsCollection.po-total-value.count }} USD</td>
+					{{#if comparePeriod}}
+						<td>&nbsp;</td>
+						<td><span class="{{ gmvChange.arrowClass }}"></td>
+						<td class="{{ customersChange.fontColor }}">{{ gmvChange.value }}</td>
+					{{/if}}
+				</tr>
+				<tr>
+					<td class="deepBlue">Customers</td>
+					<td class="deepBlue">{{formatNumber tradingStatsCollection.customer-count }}</td>
+					{{#if comparePeriod}}
+						<td>&nbsp;</td>
+						<td><span class="{{ customersChange.arrowClass }}"></td>
+						<td class="{{ customersChange.fontColor }}">{{ customersChange.value }}</td>
+					{{/if}}
+				</tr>
+
+				<tr>
+					<td class="deepBlue">POs</td>
+					<td class="deepBlue">{{formatNumber tradingStatsCollection.PO.count }}</td>
+					{{#if comparePeriod}}
+						<td>&nbsp;</td>
+						<td><span class="{{ poChange.arrowClass }}"></td>
+						<td class="{{ poChange.fontColor }}">{{ poChange.value }}</td>
+					{{/if}}
+				</tr>
+
+				<tr>
+					<td class="deepBlue">Quotes</td>
+					<td class="deepBlue">{{formatNumber tradingStatsCollection.QOT.count}}</td>
+					{{#if comparePeriod}}
+						<td>&nbsp;</td>
+						<td><span class="{{ quoteChange.arrowClass }}"></td>
+						<td class="{{ quoteChange.fontColor }}">{{ quoteChange.value }}</td>
+					{{/if}}
+				</tr>
+
+				<tr>
+					<td class="deepBlue">RFQs</td>
+					<td class="deepBlue">{{formatNumber tradingStatsCollection.RFQ.count}}</td>
+					{{#if comparePeriod}}
+						<td>&nbsp;</td>
+						<td><span class="{{ rfqChange.arrowClass }}"></td>
+						<td class="{{ rfqChange.fontColor }}">
+							{{ rfqChange.value }}</td>
+					{{/if}}
+				</tr>
+
+			</tbody>
+		</table>
+
+		<p>Other value events</p>
+
+			<table cellpadding="0" cellspacing="0" class="topLeftTable">
+			<tbody>
+				<tr>
+					<td class="deepLtBlue">Targeted impressions</td>
+					<td class="deepLtBlue">{{formatNumber pagesStatsCollection.targeted-impressions.count}}</td>
+					{{#if comparePeriod}}
+						<td>&nbsp;</td>
+						<td><span class="{{ targetImpression.arrowClass }}"></td>
+						<td class="{{ targetImpression.fontColor }}">{{ targetImpression.value }}</td>
+					{{/if}}
+				</tr>
+
+
+				<tr>
+					<td class="deepLtBlue">No of unactioned RFQs</td>
+					<td class="deepLtBlue">{{formatNumber pagesStatsCollection.unactioned-rfq.count}}</td>
+					{{#if comparePeriod}}
+						<td>&nbsp;</td>
+						<td><span class="{{ unactionedChange.arrowClass}}"></td>
+						<td class="{{ unactionedChange.fontColor}}">{{ unactionedChange.value}}</td>
+					{{/if}}
+				</tr>
+
+				<tr>
+					<td class="deepLtBlue">Unique contact views</td>
+					<td class="deepLtBlue">{{formatNumber pagesStatsCollection.unique-contact-view.count}}</td>
+					{{#if comparePeriod}}
+						<td>&nbsp;</td>
+						<td><span class="{{ contactViewChange.arrowClass }}"></td>
+						<td class="{{ contactViewChange.fontColor }}">{{ contactViewChange.value }}</td>
+					{{/if}}
+				</tr>
+
+			</tbody>
+		</table>
+
+	</div>
+	<div class="txRight filterBlock">
+
+	<!-- date filter header -->
+
+	<div class="filterLabel">
+		<div class="checker transactionComp{{#if comparePeriod}} checked{{/if}}">
+			<!-- <input type="hidden" value="1" name="marketComp" /> -->
+		</div>
+		<div>Compare to:</div>
+	</div>
+	
+	<div class="filterContent">
+
+	<div class="dropDown">
+		<div id="periodSelCompare" class="billPeriodSel compare {{#unless comparePeriod}} inactive{{/unless}}">
+			{{dateFromCompPretty}} - {{dateToCompPretty}}
+		</div>
+		<input type="hidden" value="" name="comparePeriod">
+		<div class="details">
+			<select name="quickPeriodComp" id="quickCompare" class="quickSelTw">
+				<option value="0">Quick selection</option>
+				{{#monthSelectorOptions}}{{/monthSelectorOptions}}
+			</select>
+			<br />
+			<div class="dateField from">
+				<label for="dateFromCompare">From: (dd/mm/yyyy)</label>
+				<input type="text" name="dateFromCompare" class="date from" value="{{dateFromComp}}" />
+				<br />
+			</div>
+			<div class="dateField to">
+				<label for="dateToCompare">To: (dd/mm/yyyy)</label>
+				<input type="text" name="dateToCompare" class="date to" value="{{dateFromComp}}" />
+				<br />
+			</div>
+			<div class="clear"></div>
+			<input type="button" class="button green medium transactionsApply" value="Apply">
+			<div class="clear"></div>
+		</div>
+	</div>
+
+	<div class="clear"></div>
+
+	</div>
+
+<!-- End filters -->
+
+		{{#if comparePeriod}}
+
+		<table cellpadding="0" cellspacing="0" class="topRightTable darkBrown">
+			<tbody>
+				<tr>
+					<td>Total order value</td>
+					<td>{{formatNumber compareTradingStatsCollection.po-total-value.count }} USD</td>
+				</tr>
+				<tr>
+					<td>Customers</td>
+					<td>{{formatNumber compareTradingStatsCollection.customer-count }}</td>
+				</tr>
+				<tr>
+					<td>POs</td>
+					<td>{{formatNumber compareTradingStatsCollection.PO.count }}</td>
+				</tr>
+				<tr>
+					<td>Quotes</td>
+					<td>{{formatNumber compareTradingStatsCollection.QOT.count}}</td>
+				</tr>
+
+				<tr>
+					<td>RFQs</td>
+					<td>{{formatNumber compareTradingStatsCollection.RFQ.count}}</td>
+				</tr>
+
+			</tbody>
+		</table>
+
+		<p>Other value events</p>
+
+		<table cellpadding="0" cellspacing="0" class="topRightTable lightBrown">
+			<tbody>
+				<tr>
+					<td>Targeted impressions</td>
+					<td>{{formatNumber comparePagesStatsCollection.targeted-impressions.count}}</td>
+				</tr>
+
+				<tr>
+					<td>No. of unactioned RFQs</td>
+					<td>{{formatNumber comparePagesStatsCollection.unactioned-rfq.count}}</td>
+				</tr>
+
+				<tr>
+					<td>Unique conteact views</td>
+					<td>{{formatNumber comparePagesStatsCollection.unique-contact-view.count}}</td>
+				</tr>								
+			</tbody>
+		</table>
+		{{/if}}
+	</div>
+</form>

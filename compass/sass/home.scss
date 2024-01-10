@@ -1,0 +1,623 @@
+/*
+Document   : home.scss
+Created on : Dec 17, 2013, 3:00:43 PM
+Author     : gly
+Description: combining partials for homepage styles
+*/
+
+@import "partials/def/autocomplete-new";
+@import "2016_campfire/main/colours";
+@import "partials/mixins/mixins";
+
+
+.formContainer {
+	padding: 0;
+	background-color: $white;
+
+	.inline {
+		width: 100%;
+		margin: 0 auto;
+		padding: 20px 0;
+		max-width: 1260px;
+		@include display-flex-ie;
+		box-sizing: border-box;
+
+		fieldset {
+
+			label {
+				width: 100%;
+				font-size: 18px;
+				margin-right: 0px;
+				vertical-align: middle;
+
+				a {
+					white-space: nowrap;
+				}
+			}
+
+			input {
+				padding: 12px;
+				font-size: 18px;
+				box-sizing: border-box;
+				color: $text-grey;
+
+				&:focus {
+					color: $text-grey;
+				}
+
+				&.blur {
+					color: $dark-grey;
+				}
+			}
+
+			&:first-child {
+				width: 34%;
+
+				input {
+					width: 98%;
+				}
+			}
+
+			&:nth-child(2) {
+				width: 35%;
+
+				input {
+					width: calc(100% - 240px);
+				}
+			}
+
+			&:last-child{
+				width: 31%;
+				border-left: 2px solid $mid-grey;
+				img {
+					&.impa-small-logo {
+						//float: left;
+						vertical-align: bottom;
+						}
+				}
+
+				div {
+					width: 350px;
+					margin-left: 50px;
+
+					&.impa-label {
+						text-indent: 56px;
+					}
+				}
+			}
+			
+			button {
+				padding: 10px 20px;
+				margin-left: 10px;
+			}
+
+		}
+	}
+
+}
+
+.autocomplete-suggestions {
+	border-radius: 4px;
+	top: 241px !important;
+	border: 1px solid $dark-grey;
+
+	.autocomplete-suggestion {
+		border: 0;
+		padding: 10px;
+		font-size: 16px;
+		font-family: 'Lato', sans-serif;
+	}
+}
+
+.topSearch {	
+	@include display-flex-ie;
+
+	h2 {
+		text-align: center;
+		text-transform: uppercase;
+	}	
+	
+	.categories, .brands, .Locations {
+
+		h4 {
+			padding-bottom: 20px;
+			text-transform: uppercase;
+		}
+
+		ul {
+			list-style-type: none;
+			padding-left: 0;
+
+			li {
+				font-size: 18px;
+				line-height: 1;
+				margin-right: 26px;
+			}
+		}
+
+		p {
+			text-align: left;
+
+			a {
+				font-weight: bold;
+				display: inline-block;
+				padding: 12px 0px;
+			}
+		}
+	}
+
+	.categories, .brands {
+		width: 50%;
+
+		ul {
+			column-count: 2;
+		}
+	}
+
+	.categories {
+
+		ul {
+			padding-right: 10%;
+		}
+	}
+
+	.brands {
+
+		p {
+			display: inline-block;
+			float: left;
+			clear: both;
+		}
+	}
+
+	.Locations {
+		width: 20%;
+	}
+
+}
+
+.wrapper {
+	p {
+		&.countries {
+			width: 100%;
+			line-height: 50px;
+			border-top: 1px solid $outline-grey;
+			border-bottom: 1px solid $outline-grey;
+			margin-top: 24px;
+			text-align: left;
+			a {
+				margin-left: 24px;
+			}
+		}
+	}
+}
+			
+#tradingActivityMap {
+	width: 100%;
+	margin: 0px;
+	margin-top: 0px;
+	overflow: hidden;
+	padding: 0;
+	background-color: $dark-blue-grey;
+
+	&:after {
+		left: 50%;
+	    top: 135px;
+	    width: 0;
+	    height: 0;
+	    content: '';
+	    display: block;
+	    position: absolute;
+	    transform: translateX(-50%);
+	    border-top: 25px solid $dark-blue-grey;
+	    border-bottom: 25px solid transparent;
+	    border-left: 25px solid transparent;
+	    border-right: 25px solid transparent;
+	}
+
+	h4 {
+		color: $white;
+		font-size: 30px;
+		text-align: center;
+		padding: 50px 0;
+		font-weight: 500;
+		margin-bottom: 0;
+
+		span {
+			padding: 10px;
+			border-radius: 4px;
+			background: $cyan-blue;
+		}
+	}
+	
+	#map, #full-screen-map {
+		position: relative;
+		height: 320px;
+
+		#message {
+			display: none;
+			width: 178px !important;
+			height: auto;
+			min-height: 52px;
+			padding: 0;
+			color: #2fa1d8;
+			background-color: #58c4eb;
+			@include border-radius(6px);
+			@include single-box-shadow(3px, 3px, 5px, #616161);
+			@include x-multiple-colored-gradient(#097fc5 0%, #58c4eb 100%);
+			-pie-background: linear-gradient(top, #097fc5 0%, #58c4eb 100%);
+			behavior: url(/css/PIE.htc);
+
+			.icon {
+				padding: 7px 7px 7px 54px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				border-radius: 0%;
+				height: auto;
+
+				h3 {
+					font-weight: bold;
+					font-size: 12px;
+					color: white;
+					margin-bottom: 5px;
+					line-height: 14px;
+				}
+				h4 {
+					color: #00376c !important;
+					font-size: 11px;
+					font-weight: bold;
+					padding: 0px; 
+				}
+			}
+		}
+	}
+}
+
+.alertHp {
+	width: 100%;
+	padding: 5px 0;
+	border-bottom: 1px solid $dark-grey;
+	background-color: #EAF2FC;
+
+	.alert-wrapper {
+		width: 100%;
+		height: auto;
+		margin: 0 auto;
+		//@include display-flex-ie;
+		padding: 20px 0;
+		max-width: 800px;
+		text-align: center;
+		display: table;
+	
+		p, .btn-container {
+			display: table-cell;
+			vertical-align: middle;
+		}
+
+		.btn-container {
+			width: 180px;
+		}
+
+		p {
+			padding: 0px 16px 0px 6px; 
+			width: calc(100% - 180px);
+			font-size: 16px;
+			margin: 0px;			
+		}
+	}
+}
+
+section {
+
+	&.logos-container {
+		border-bottom: 1px solid $dark-grey;
+		.wrapper {
+			height: 90px;
+			.homepage-logos {
+				opacity: 0;
+				display: none; 
+				figure {
+					float: left;
+					padding: 10px;
+					width: calc(100% / 6);
+					box-sizing: border-box;
+
+					img {
+						width: 100%;
+						margin-bottom: 0;
+					}
+				}
+			}
+		}
+	}
+
+}
+
+div.statItem div.circle {
+	border: 5px solid;
+}
+
+@media only screen and (max-width: 1145px) {
+	.formContainer {
+
+		.inline {
+			padding: 20px;
+
+			fieldset {
+
+				&:first-child {
+					input {
+						//width: calc(90% -150px);
+					}
+				}
+
+				&:nth-child(2) {
+					input {
+						width: calc(90% - 125px);
+					}
+				}
+
+				&:last-child {
+					div {
+						margin-left: 20px;
+					}
+				}
+			}
+		}
+
+	}
+}
+
+@media only screen and (max-width: 1000px) {
+	.formContainer {
+
+		.inline {
+
+			fieldset {
+
+				&:first-child {
+					width: 30%;
+					input {
+						width: 98%;
+					}
+				}
+
+				&:nth-child(2) {
+					width: 50%;
+					input {
+						width: calc(90% - 95px);
+					}
+				}
+
+				&:last-child {
+					width: 23%;
+					div, a {
+						margin-left: 5px;
+					}
+				}
+
+				button {
+					padding: 10px;
+					margin-left: 5px;
+				}
+			}
+		}
+
+	}
+}
+
+@media only screen and (max-width: 768px) {
+	.formContainer {
+
+		.inline {
+			@include flex-direction(column);
+
+			fieldset {
+
+				&:first-child {
+					width: 100%;
+					margin-bottom: 20px;
+
+					input {
+						width: 100%;
+						max-width: none;
+					}
+				}
+
+				&:nth-child(2) {
+					width: 100%;
+					margin-bottom: 20px;
+
+					input {
+						width: calc(100% - 145px);
+					}
+				}
+
+				&:last-child {
+					text-align: center;
+					width: 100%;
+					border-left: none;
+
+					div, a {
+						margin-left: 0;
+					}
+
+					div {
+						text-align: left;
+						padding: 0;
+					}
+
+					a {
+						margin: 16px 0px;
+					}
+
+					img {
+						&.impa-small-logo {
+							margin: 16px 0px;
+						}
+					}
+
+				}
+
+				button {
+					padding: 10px 20px;
+					margin-left: 10px;
+				}
+			}
+		}
+
+	}
+
+	.autocomplete-suggestions {
+		&.right-side {
+			top: 290px !important;
+		}
+	}
+
+	section {
+		&.logos-container {
+			display: none;
+		}
+	}
+
+	.topSearch {
+
+		@include flex-wrap(wrap);
+
+		.categories, .brands {
+			width: 100%;
+		}
+		.categories {
+
+			ul {
+				padding-right: 0;
+			}
+		}
+	}
+
+	.alertHp {
+		width: 100%;
+		padding: 15px 0;
+		border-bottom: 1px solid $dark-grey;
+
+		.alert-wrapper {
+			width: 100%;
+			max-width: 100%;
+		}
+
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	.formContainer {
+
+		h1 {
+			padding: 10px;
+			font-size: 16px;
+			line-height: 1.3;
+		}
+
+		.inline {
+
+			fieldset {
+
+				label {
+					font-size: 16px;
+					display: block;
+					margin-bottom: 10px;
+				}
+
+				&:first-child {
+
+					input {
+						width: 100%;
+					}
+				}
+
+				&:nth-child(2) {
+					input {
+						width: 100%;
+						max-width: none;
+					}
+				}
+
+				&:last-child {
+					text-align: center;
+
+					div {
+						text-align: left;
+					}
+
+					a {
+						display: inline-block;
+					}
+				}
+
+				button {
+					width: 100%;
+					margin: 10px 0;
+				}
+
+			}
+		}
+
+	}
+
+	.autocomplete-suggestions {
+
+		&.left-side {
+			top: 267px !important;
+		}
+
+		&.right-side {
+			top: 361px !important;
+		}
+	}
+
+	#tradingActivityMap {
+		h4 {
+			font-size: 16px;
+			padding: 40px 0;
+		}
+
+		&:after {
+			top: 99px;
+		}
+	}
+
+	.alertHp {
+		width: 100%;
+		padding: 15px 0;
+		border-bottom: 1px solid $dark-grey;
+
+		.alert-wrapper {
+			width: 100%;
+			max-width: 100%;
+			height: auto;
+			
+			p {
+				text-align: left;
+				max-width: calc(100% - 140px);
+				font-size: 14px;
+			}
+		}
+
+	}
+
+	.topSearch {
+
+		@include flex-direction(column);
+
+		.categories, .brands {
+			ul {
+				column-count: 1;
+			}
+		}
+
+		.categories, .brands, .Locations {
+			h6 {
+				padding-bottom: 20px;
+			}
+		}
+	}
+}

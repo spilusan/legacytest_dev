@@ -1,0 +1,83 @@
+#body {
+	.detailContainer {
+		.quoteDetails {
+			.sections {
+				.section {
+					&.sendTo {
+						.details {
+							table {
+								border-collapse: collapse;
+								table-layout: fixed;
+								border-top: 1px solid #d6dce4;
+								border-left: 1px solid #d6dce4;
+								margin:10px;
+								width: 888px;
+
+								tr {
+									th, td {
+										font-size: 11px;
+										border-bottom: 1px solid #d6dce4;
+										border-right: 1px solid #d6dce4;
+										padding: 5px;
+										vertical-align: middle;
+									}
+								}
+
+								thead {
+									tr {
+										th {
+											background: #f5f7fa;
+
+											&.sup {
+												width: 265px;
+											}
+
+											&.mr {
+												width: 57px;
+											}
+
+											&.typ {
+												width: 71px;
+											}
+
+											&.stat {
+												width: 59px;
+											}
+
+											&.qd {
+												width: 56px;
+											}
+
+											&.tpo, &.tpu {
+												width: 116px;
+											}
+										}
+									}
+								}
+
+								tbody {
+									tr {
+										td {
+											&.center {
+												text-align: center;
+											}
+
+											&.right {
+												text-align: right;
+											}
+
+											span {
+												padding: 3px 5px;
+												border: 2px solid #caedf9;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

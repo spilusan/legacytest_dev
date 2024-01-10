@@ -1,0 +1,190 @@
+@media only screen and (min-width: 1044px) {
+    #pagesNav {
+        .menu {
+            position: relative;
+            list-style: none;
+        }
+        .focus.show-submenu>.menu {
+            visibility: visible;
+            opacity: 1.0;
+        }
+        .menu-item {
+            cursor: pointer;
+            margin: 0;
+            line-height: 10px;
+            .menu-label {
+                color: $black;
+                font-family: 'Open Sans', sans-serif;
+                font-weight: 400;
+                text-decoration: none;
+                overflow: hidden;
+                padding: 0;
+            }
+        }
+        .menu-0 {
+            >.menu-item {
+                margin: 0;
+                padding: 0;
+                display: block;
+                position: relative;
+                font-size: 12px;
+                float: left;
+                line-height: 60px;
+                height: 60px;
+                &.focus {
+                    background-color: $link-blue;
+                    >.menu-label {
+                        color: $white;
+                    }
+                }
+                >.menu-label {
+                    margin: 0 20px;
+                    display: inline-block;
+                    color: #13B5EA;
+                    font-weight: 400;
+                    text-decoration: none;
+                    text-transform: uppercase;
+                    overflow: hidden;
+                    padding: 0;
+                    &:hover {
+                        color: #90DCF7;
+                    }
+                    &.selected {
+                        color: white;
+                    }
+                }
+            }
+            >.selected {
+                background-color: $link-blue;
+            }
+            >.menu-item {
+                &.shipTab {
+                    >.menu-label {
+                        width: 25px;
+                        text-indent: -100px;
+                        background: url(/img/shipmate/Shipmate.png) center center transparent no-repeat;
+                        background-size: 25px;
+                        &.selected {
+                            background: url(/img/shipmate/Shipmate_selected.png) center center transparent no-repeat;
+                        }
+                    }
+                }
+            }
+        }
+        &.submenu-open > .menu-0 > .selected:not(.focus) {
+            background-color: transparent; 
+        }
+        .menu-1,
+        .menu-2 {
+            min-width: 200px;
+            opacity: 0.0;
+            white-space: nowrap;
+            visibility: collapse;
+            .menu-label {
+                line-height: 40px;
+                display: inline-block;
+                color: #000000;
+                font-size: 12px;
+                display: block;
+                width: 220px;
+                padding: 5px 15px;
+                box-sizing: border-box;
+                position: relative;
+			    white-space: nowrap;
+			    overflow: hidden;
+				text-overflow: ellipsis;
+            }
+        }
+        .menu-1 {
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);           
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: $white;
+            .menu-item.focus {
+                background-color: $reg-grey;
+            }
+            >.menu-item {
+                &.has-children {
+                    position: initial;
+                    background: $white;
+                    >.menu-label:after {
+                        font-family: "FontAwesome";
+                        content: "\f105";
+                        margin-left: 5px;
+                        vertical-align: middle;
+                        line-height: inherit;
+                        margin: 0px 5px;
+                        float: right;
+                        line-height: 40px;
+                        position: absolute;
+                        right: 10px;
+                    }
+                }
+                &:hover {
+                    background-color: #e9ecf1;
+                }
+                &.focus {
+                    background-color: #dbe2ea!important;
+                }
+            }
+        }
+        .menu-2 {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            left: 220px;
+            width: 220px;
+            background: #dbe2ea;
+            z-index: 1;
+            >.menu-item {
+                >.menu-label {
+                    color: $black;
+                    min-width: 150px;
+                }
+                &:hover {
+                    background-color: #cdd5de;
+                }
+            }
+        }
+        // &.submenu-open {
+        //     .menu-item.selected {
+        //         background-color: transparent;
+        //     }
+        // }
+    }
+    #corporateNav {
+        float: right;
+        z-index: 400;
+        font-size: 12px;
+        top: 38px;
+        right: 15px;
+        position: absolute;
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            li {
+                line-height: 12px;
+                display: block;
+                float: left;
+                padding: 0;
+                margin: 0 0 0 10px;
+                font-size: 12px;
+                a {
+                    font-family: 'Open Sans', sans-serif;
+                    font-size: 12px;
+                    margin: 6px 9px 1px;
+                    padding: 0;
+                    color: $white;
+                }
+                a:hover {
+                    color: $active-cyan-blue;
+                }
+            }
+            li:last-child a {
+                color: $cyan-blue;
+            }
+        }
+    }
+}

@@ -1,0 +1,243 @@
+/*
+Document   : _misc
+Created on : Jun 13, 2012, 4:28:23 PM
+Author     : gly
+Description: Misc. styles
+*/
+
+/*Reusable elements*/
+hr.dotted{
+	border:dotted #c1c1c1; 
+	border-width:1px 0 0; 
+	margin:15px 0 24px; 
+	height:0; 
+	width:100%; 
+	float:left; 
+}
+
+h3.zz { 
+	display: block; 
+	margin: 10px -15px; 
+	margin-bottom: 15px; 
+	padding: 0 18px;
+	height: 36px; 
+	line-height: 36px; 
+	vertical-align: middle; 
+	background: #ffffff; 
+	border: 1px solid #d6dce4; 
+	border-bottom: 2px solid #13b5ea; 
+	@include border-radius(6px); 
+    @include x-multiple-colored-gradient(#ffffff, #f6f8fa);
+	-pie-background: linear-gradient(top, #ffffff 0%,#f6f8fa 100%); 
+	behavior: url(/css/PIE.htc); 
+    
+    &.grey {
+        @include x-multiple-colored-gradient(#e9edf1, #d6dce4);
+        -pie-background: linear-gradient(top, #e9edf1 0%,#d6dce4 100%);
+        border-top: 1px solid #d6dce4;
+        border-right: 1px solid #d6dce4;
+        border-left: 1px solid #d6dce4;
+        
+        &.no-marg {
+            margin: 10px 0;
+        }
+   }
+}
+
+h4.zz { 
+	font-weight: bold; 
+	font-size: 20px; 
+	color: #13b5ea; 
+}
+
+/*Tweaks*/
+div.zz{
+    &.header {
+        div.zz {
+            &.medium {
+                &.button { 
+                    margin-top: 0px; 
+                    margin-right: 5px; 
+                    float: right;
+                }
+            }
+        }
+    }
+}
+
+
+/*End reusable elements*/
+
+/*Needs refactoring*/
+#brand_invitation_form_popup { 
+	@include border-radius(6px); 
+}
+
+/*End KB New*/
+
+/* Headings */
+h1.corp, h2.corp { 
+	font-family: ITCFranklinGothic LT Med,Franklin Gothic Medium,Arial,sans-serif; 
+}
+
+.content_right h2 { 
+	font-size: 18px; 
+	color: #4f4f4f; 
+	margin-bottom: 30px; 
+	font-weight: bold; 
+}
+
+/*Simple definition lists, such as:
+ email: foo@bar*
+ tel:   012345546
+*/
+dl.simple { 
+	margin: 1em 0 1em 0; 
+    
+    dt, dd {
+        float: left; 
+        display: block; 
+        line-height: 1.9em;
+    }
+    
+    dt { 
+        width: 60px; 
+        clear: both; 
+    }
+    
+    dd { 
+        margin-left: 8px; 
+        clear: right; 
+    }
+}
+
+/* Fixes & Hacks*/
+
+.clearfix { 
+	display: inline-block;
+    
+    &:after { 
+        content: "."; 
+        display: block; 
+        clear: both; 
+        visibility: hidden; 
+        line-height: 0; 
+        height: 0; 
+    }
+}
+
+html[xmlns] .clearfix { 
+	display: block; 
+    
+    &.hidden { 
+        display: none; 
+    }
+}
+
+* html .clearfix { 
+	height: 1%; 
+}
+
+/*Added !important hacks due to impenetrable javascript adding style attributes and breaking IE*/
+#mask { 
+	position:absolute; 
+	left:0; 
+	top:0;
+	z-index: 9999 !important; 
+	background-color:#000000; 
+	display:none; 
+	opacity:0.8; filter:alpha(opacity=80) !important; 
+}
+
+.window { 
+	position:absolute; 
+	font-weight:400; 
+	font-size:12px; 
+	line-height:20px; 
+	background:#01478C; 
+	color:#fff; 
+	@include border-radius(6px); 
+	width:300px; 
+	height:200px; 
+	z-index:10000; 
+	padding:16px; 
+}
+
+hr.dashed {	
+	border: dashed #c1c1c1; 
+	border-width: 1px 0 0; 
+	margin: 22px; 
+}
+
+.hide { 
+	display: none; 
+}
+
+.error { 
+	width: auto; 
+}
+
+span.nowrap { 
+	white-space: nowrap; 
+}
+
+/*Sub headers*/
+.info-message { 
+	background: url("/images/layout_v2/profile/orange-info.png") no-repeat scroll 0 0 transparent !important; 
+	color: #FC630F; 
+	font-size: 12.5px; 
+	font-weight: 700; 
+	height: 22px; 
+	margin-bottom: 10px; 
+	padding: 0 0 0 27px; 
+	line-height: 15px; 
+}
+/*End Sub headers*/
+
+/*Reusable elements*/
+hr.dotted {
+	border: dotted #c1c1c1;
+	border-width: 1px 0 0;
+	margin: 15px 0 24px;
+	height: 0;
+	width: 100%;
+	float:left;
+}
+
+hr.dashed {
+	border: dashed #c1c1c1;
+	border-width: 1px 0 0;
+	margin: 22px;
+}
+
+ul.pagenav {
+	color: #005aad;
+	font-size: 12px;
+	list-style: none;
+	line-height: 24px;
+	margin-bottom: 25px;
+}
+
+div.fsmask { 
+	width: 100%; 
+	height: 100%; 
+	position: fixed; 
+	top: 0; 
+	left: 0; 
+	background: url(/img/mask_bg.png) left top repeat transparent;
+	z-index: 9999; 
+	behavior: url(/css/PIE.htc); 
+}
+
+.hide { 
+	display: none; 
+}
+.ie7 {
+    div.help{
+        &.panel {
+            button { 
+                width: 95px; 
+            }
+        }
+    }
+}

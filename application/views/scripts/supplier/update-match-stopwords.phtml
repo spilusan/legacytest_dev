@@ -1,0 +1,17 @@
+<?php if($this->message):?>
+	<span class="notice"><?php echo $this->message; ?><span>
+<?php endif;?>
+<form method="POST">		
+	<label for="stopword">Insert STOPWORD</label><input type="input" name="stopword" id="stopword" value="" />
+	<input type="submit" value="Submit" />
+</form>
+			<table width="700">
+			<?php 
+	foreach($this->results as $result):
+	?>
+	<tr>
+		<td><label style="width: 300px; margin: 5px 10px;" ><?php echo $result['MSW_WORD']; ?></label></td>
+	</tr>
+	<?php
+	endforeach;
+	?></table>

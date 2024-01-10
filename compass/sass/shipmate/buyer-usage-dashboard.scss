@@ -1,0 +1,22 @@
+/*
+Document   : buyer-usage-dashboard.scss
+Created on : Jun 10, 2016, 3:15:43 PM
+Author     : Attila O
+Description: Buyer usage dashboard
+*/
+
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/min";
+@import "partials/def/left_nav";
+
+@import "font-awesome";
+
+@import "2016_campfire/main/colours";
+@import "2016_campfire/main/tables";
+@import "2016_campfire/main/forms";
+@import "2016_campfire/main/buttons";
+@import "2016_campfire/main/titles";
+@import "partials/tooltip/tooltip";
+
+@import "partials/shipmate/buyer-user-dashboard/table";

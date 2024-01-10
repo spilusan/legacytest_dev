@@ -1,0 +1,42 @@
+/*
+Document   : _sub
+Created on : Jun 14, 2012, 10:18:47 AM
+Author     : gly
+Description: Profile sub blcoks styles
+*/
+
+.sub-block-top {
+	background:url(/images/layout_v2/profile/sub-block-top.png) no-repeat; 
+	width:398px; 
+	font-size:1px; 
+	height:8px; 
+}
+
+.sub-block-bottom {
+	background:url(/images/layout_v2/profile/sub-block-bottom.png) no-repeat; 
+	width:398px; 
+	height:8px; 
+	margin-bottom:10px; 
+}
+
+.sub-block {
+	background:url(/images/layout_v2/profile/sub-block-bg.png) repeat-y; 
+	width:362px; 
+	padding:3px 18px;
+    
+    dd {
+        width:100%; 
+        margin:0; 
+        padding:0 0 20px; 
+    }
+    
+    input {
+        background:url(/images/layout_v2/profile/sub-block-input.png) no-repeat; 
+        width:342px; 
+        height:27px; 
+        border:none; 
+        font-weight:700; 
+        font-size:13px; 
+        padding:4px 8px; 
+    }
+}

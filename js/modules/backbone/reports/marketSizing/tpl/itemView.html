@@ -1,0 +1,34 @@
+<td class="first">
+	<img src="/img/icons/small/redx.png" alt="remove" class="remove" />
+	{{#if first}}
+		<div style="width: 16px; height: 13px; display: inline-block;"></div>
+	{{else}}
+		<img src="/img/icons/small/blueTriangleUp.png" alt="Up" class="moveUp" />
+	{{/if}}
+	{{#if last}}
+	{{else}}
+		<img src="/img/icons/small/blueTriangleDown.png" alt="Down" class="moveDown" />
+	{{/if}}
+</td>
+<td>{{keywords}}</td>
+<td class="number format">{{formatNumRound pagesSearchCount}}</td>
+<td class="number format">{{formatNumRound rfq.eventCount}}</td>
+<td class="number format">{{formatNumRound rfq.count}}</td>
+<!-- <td class="number format">{{!-- }}{{formatNumRound rfq.buyerOrgCount}} --}}</td> -->
+<td class="number format">{{formatNumRound rfq.buyerBranchCount}}</td>
+<!-- <td class="number format">{{!-- {{formatNumRound rfq.vesselCount}} --}}</td> -->
+<td class="number format">{{formatNumRound rfq.lineItemCount}}</td>
+
+<td class="number format">{{formatNumRound orders.count}}</td>
+<td class="number format">{{for matNumRound orders.supplierBranchCount}}</td>
+<!-- <td class="number format">{{!-- {{formatNumRound orders.buyerOrgCount}} --}}</td> -->
+<td class="number format">{{formatNumRound orders.buyerBranchCount}}</td>
+<!-- <td class="number format">{{!-- {{formatNumRound orders.vesselCount}} --}}</td> -->
+<td class="number format">{{formatNumRound orders.lineItemCount}}</td>
+<td class="number format">{{formatNumRound orders.totalLineItemQuantity}}</td>
+
+<td class="number format">{{formatNumRound orders.avgUnitCost}}</td>
+<td class="number format">{{orders.mostCommonUnt}} {{formatNumRound orders.mostCommonUnitShare}}%</td>
+
+<td class="number format">{{formatNumRound orders.totalLineItemCost}}</td>
+<td class="number format">{{formatNumRound orders.totalCost}}</td>

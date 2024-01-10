@@ -1,0 +1,10 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/default-new.css');
+	$this->headLink()->appendStylesheet('/css/spr.css');
+	$this->requirejs()	->addModule('backbone/shipmate/design-guidelines/views/mainView');
+	$user = Shipserv_User::isLoggedIn();
+?>
+
+
+
+

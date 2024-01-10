@@ -1,0 +1,153 @@
+#wide-sub-navigation {
+	margin: 0 auto;
+	width: 969px;
+}
+
+#wide-sub-navigation .sub-nav-content {
+	background: url('/images/wide-layout/sub-banner-bg.png') top left repeat-y;
+	width: 947px;
+	height: 38px;
+	padding: 7px 10px 7px 12px;
+}
+
+#wide-sub-navigation .sub-nav-footer {
+	background: url('/images/wide-layout/sub-banner-bottom.png') top left no-repeat;
+	height: 11px;
+	width: 969px;
+}
+
+#wide-sub-navigation .sub-nav-content ul li {
+	float: left;
+}
+
+#wide-sub-navigation .sub-nav-content ul li a {
+	display: block;
+	text-indent: -9000px;
+}
+
+#wide-sub-navigation .sub-nav-content ul li.new-rfq a {
+	background: url('/images/buttons/new-rfq.png') top left no-repeat;
+	height: 42px;
+	width: 116px;
+}
+
+#wide-breadcrumbs {
+	margin: auto;
+	margin-bottom: 5px;
+	width: 969px;
+	height: 30px;
+	position: relative;
+}
+
+#wide-breadcrumbs ul {
+	padding: 8px 0 0 10px;
+}
+
+#wide-breadcrumbs ul li {
+	float: left;
+	padding-right: 5px;
+	padding-left: 10px;
+	background: url('/images/wide-layout/breadcrumbs-arrow.png') 2px 3px no-repeat;
+	font-size: 11px;
+}
+
+#wide-breadcrumbs ul li:first-child {
+	background: none;
+	padding-left: 0px;
+}
+
+#wide-content {
+	margin: 0 auto;
+	width: 969px;
+}
+
+#wide-content .header {
+	width: 972px;
+	height: 71px;
+	background: url('/images/wide-layout/title-banner.png') top left no-repeat;
+	position: relative;
+}
+
+#wide-content .header h2 {
+	color: white;
+	margin-left: 30px;
+	padding-top: 22px;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+#wide-content .header .search {
+	position: absolute;
+	top: 17px;
+	right: 35px;
+}
+
+#wide-content .header .search input[type=text] {
+	background: url('/images/wide-layout/title-search-box.png') top left no-repeat;
+	width: 168px;
+	padding: 0 10px 0 10px;
+	height: 30px;
+	font-style: italic;
+	color: #879eb4;
+	font-size: 11px;
+	border: none;
+}
+
+#wide-content .header .search input[type=submit] {
+	background: url('/images/wide-layout/title-search-button.png') top left no-repeat;
+	height: 30px;
+	width: 28px;
+	border: none;
+	text-indent: -9000px;
+	cursor: pointer;
+}
+
+#wide-content .footer {
+	width: 972px;
+	height: 11px;
+	background: url('/images/wide-layout/main-block-footer.png') top left no-repeat;
+}
+
+#wide-content .content {
+	padding: 20px 0px 20px 20px;
+	margin: 0;
+	width: 952px;
+	background: url('/images/wide-layout/main-block-bg.png') top left repeat-y;
+}
+
+#wide-content .content .left {
+	float: left;
+	width: 171px;
+	margin-right: 30px;
+}
+
+#wide-content .content .left h3 {
+	font-size: 12.5px;
+	font-weight: bold;
+}
+
+#wide-content .content .left h4 {
+	font-size: 12.5px;
+	font-weight: bold;
+	padding: 0 0 5px 0;
+	margin: 0 0 5px 0;
+	border-bottom: 1px solid #3375b2;
+}
+
+#wide-content .content .left ul {
+	margin: 0;
+	padding: 0;
+}
+
+#wide-content .content .left ul li {
+	padding: 0 0 5px 10px;
+	margin: 0 0 5px 0;
+	border-bottom: 1px solid #3375b2;
+	font-size: 11px;
+	background: url('/images/icons/accordion-arrow.png') 0px 4px no-repeat;
+}
+
+#wide-content .content .right {
+	width: 751px;
+	float: right;
+}

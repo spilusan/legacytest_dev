@@ -1,0 +1,24 @@
+			<div class="graph profile">
+				<a href="profile" class="cHelp light"></a>
+				<div class="clear"></div>
+				<p>Profile <br /> Views</p>
+				{{#if hasSpinner}}
+				<div class="value">
+					<div class="spinnerIcon"></div>
+				</div>
+				{{else}}
+				<div class="value">{{formatNumRound leadGen.profile-view}}</div>
+				{{/if}}
+			</div>
+			<div class="graph contact">
+				<a href="contact" class="cHelp light"></a>
+				<div class="clear"></div>
+				<p>Contact <br /> Views</p>
+				{{#if hasSpinner}}
+				<div class="value">
+					<div class="spinnerIcon"></div>
+				</div>
+				{{else}}
+				<div class="value">{{formatNumRound leadGen.contact-view}}</div>
+				{{/if}}
+			</div>

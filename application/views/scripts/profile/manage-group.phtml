@@ -1,0 +1,257 @@
+<?php
+$this->compressedScript()->appendFile('/js/pending-actions.js')
+						 ->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/company-people.js');
+						 
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Users',
+						   'url'  => '/profile/company-people'));
+
+$this->headLink()->appendStylesheet('/css/profile/manage-group.css');
+
+if( $_SERVER['APPLICATION_ENV'] == "production" || $_SERVER['APPLICATION_ENV'] == "testing")
+{
+	$allowedShipservUserToAddNewUsers = array( "eloretizo@shipserv.com","jramos@shipserv.com","etan@shipserv.com","jmanayon@shipserv.com","royek-daya@shipserv.com","walcolea@shipserv.com","ksalonga@shipserv.com","dhombrebueno@shipserv.com","lnuqui@shipserv.com","wlinatoc@shipserv.com","fguevara@shipserv.com","emascardo@shipserv.com","hguillermo@shipserv.com","kcua@shipserv.com","edavis@shipserv.com", "hromero@shipserv.com","smadamba@shipserv.com");
+}
+else
+{
+	$allowedShipservUserToAddNewUsers = array('jgo@shipserv.com');	
+}
+
+$canAddUsers = false;
+$isMemberOfCompany = false;
+$isAdminOfSupplier = $this->user->isAdminOfSupplier($this->companyDetail['id']);
+$isAdminOfBuyer = $this->user->isAdminOfBuyer($this->companyDetail['id']);
+$isShipservUser = $this->user->isShipservUser();
+$canAddUsers = $this->user->canPerform('PSG_ADD_USER');
+
+if( $this->user->canPerform('PSG_ADD_USER') || $isAdminOfSupplier == true || $isAdminOfBuyer == true )
+{
+	$canAddUsers = true;
+}
+?>
+
+<? if($this->companyDetail['id'] == $this->ssCompanyId ){ ?>
+<script type="text/javascript">
+	var refreshAfterAdding = true;
+	$(document).ready(function(){
+		window.location.href='#<?= _htmlspecialchars($_GET['email']) ?>';
+	});
+</script>
+<? }?>
+
+<style>
+</style>
+
+<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		
+<div id="body" class="manageGroup">
+	<div id="content">
+		<h1 class="styled">Managing groups</h1>
+		    <table style="margin: auto;  width:100%;">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		                <table id="resultsTab" style="display:block; ">
+							<thead>
+								<tr>
+									<th width="30"></th>
+									<th class="left">Name/Description</th>
+									<th>Members</th>
+									<th>
+										IP Restricted?
+										<span style="font-size:8px; line-height:10px;">(within ShipServ premises)</span>
+									</th>
+									<th>Access SIR</th>
+									<th>Forward SIR to customer</th>
+									<th>Add new user</th>
+									<th>Turn TN Integration</th>
+									<th>View user activity</th>
+									<th>Switch company</th>
+									<th>Access Billing Report</th>
+									<th>Access Invalid Txn Tools</th>
+									<th>Access Match Report</th>
+									<th>Access Match Inbox</th>
+									<th>Access Salesforce Tools</th>
+									<th>Access Dashboard</th>
+									<th>Manage Group</th>
+									<th>Ad Network publisher</th>
+									<th>Supplier GMV</th>
+									<th>Supplier Conversion</th>
+									<th>Buyer GMV</th>
+									<th>Market Sizing</th>
+									<!-- New colunms -->
+									<th>Admin GW</th>
+									<th>Pages Admin (basic)</th>
+									<th>Pages Admin (advanced)</th>
+									<th>ScoreCard</th>
+									<th>ScoreCard Advanced Reports</th>
+									<th>Transaction Monitor</th>
+									<th>WebReporter</th>
+									<th>Access PO Pack</th>	
+									<th>Access KPI/SP reports</th>	
+									<th>Manage User and Company</th>	
+									<th>Login As</th>
+                                    <th>Buyer Connect</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach($this->groups as $group){?>
+								<? if($group['PSG_ID'] == $this->params['id']){?>
+								<form action="/profile/manage-group">
+								<? }?>
+															
+								<tr>
+									<td><?= ++$no; ?></td>
+									<td class="left">
+										<? if($group['PSG_ID'] != $this->params['id']){?>
+											<?= $group['PSG_NAME'] ?>
+										<? }else{ ?>
+											<input type="hidden" name="psgId" value="<?= $group['PSG_ID']?>" />
+											Name<br /><input type="text" name="psgName" value="<?= $group['PSG_NAME']?>" /><br /><br />
+											Description<br />
+											<textarea name="psgDescription" style="border:1px solid #bec4cb; width:95%; height:80px;"><?= $group['PSG_DESCRIPTION']?></textarea>										
+										<? }?>
+										
+									</td>
+									<td>
+										<a class="showMemberList pointer" groupId="<?= $group['PSG_ID']?>"><?= $group['TOTAL_MEMBERS']?></a>
+									</td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_IP_RESTRICTED" <?= (($group['PSG_IP_RESTRICTED'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_SIR" <?= (($group['PSG_ACCESS_SIR'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_FORWARD_SIR" <?= (($group['PSG_FORWARD_SIR'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ADD_USER" <?= (($group['PSG_ADD_USER'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_TURN_TN_INTEGRATION" <?= (($group['PSG_TURN_TN_INTEGRATION'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_VIEW_USER_ACTIVITY" <?= (($group['PSG_VIEW_USER_ACTIVITY'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_COMPANY_SWITCHER" <?= (($group['PSG_COMPANY_SWITCHER'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_VIEW_BILLING_REPORT" <?= (($group['PSG_VIEW_BILLING_REPORT'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_INV_TXN_TOOLS" <?= (($group['PSG_ACCESS_INV_TXN_TOOLS'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_MATCH" <?= (($group['PSG_ACCESS_MATCH'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_MATCH_INBOX" <?= (($group['PSG_ACCESS_MATCH_INBOX'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_SALESFORCE" <?= (($group['PSG_ACCESS_SALESFORCE'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_DASHBOARD" <?= (($group['PSG_ACCESS_DASHBOARD'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_MANAGE_GROUP" <?= (($group['PSG_ACCESS_MANAGE_GROUP'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_MANAGE_PUBLISHER" <?= (($group['PSG_ACCESS_MANAGE_PUBLISHER'] == 'Y')?"checked='checked'":"")?>></td>
+									
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_GMV_SUPPLIER" <?= (($group['PSG_GMV_SUPPLIER'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_CONVERSION_SUPPLIER" <?= (($group['PSG_CONVERSION_SUPPLIER'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_GMV_BUYER" <?= (($group['PSG_GMV_BUYER'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_MARKET_SIZING" <?= (($group['PSG_MARKET_SIZING'] == 'Y')?"checked='checked'":"")?>></td>
+
+									<!-- New columns -->
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ADMIN_GATEWAY" <?= (($group['PSG_ADMIN_GATEWAY'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_PAGES_ADMIN" <?= (($group['PSG_PAGES_ADMIN'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_PAGES_ADMIN_ADV" <?= (($group['PSG_PAGES_ADMIN_ADV'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_SCORECARD" <?= (($group['PSG_ACCESS_SCORECARD'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_SCORECARD_ADV" <?= (($group['PSG_ACCESS_SCORECARD_ADV'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_TXNMON" <?= (($group['PSG_ACCESS_TXNMON'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_WEBREPORTER" <?= (($group['PSG_ACCESS_WEBREPORTER'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_PO_PACK" <?= (($group['PSG_ACCESS_PO_PACK'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_SPR_KPI" <?= (($group['PSG_ACCESS_SPR_KPI'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_MANAGE_USER_AND_COMPANY" <?= (($group['PSG_MANAGE_USER_AND_COMPANY'] == 'Y')?"checked='checked'":"")?>></td>
+									<td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_LOGIN_AS" <?= (($group['PSG_LOGIN_AS'] == 'Y')?"checked='checked'":"")?>></td>
+                                    <td><input <? if($group['PSG_ID'] != $this->params['id']){?>disabled="disabled"<? }?> type="checkbox" value="1" name="PSG_ACCESS_BC_ADMIN" <?= (($group['PSG_ACCESS_BC_ADMIN'] == 'Y') ? "checked='checked'" : "")?>></td>
+
+                                    <td width="80">
+										<? if($group['PSG_ID'] != $this->params['id']){?>
+											[
+											<a href="/profile/manage-group?id=<?= $group['PSG_ID']?>">Edit</a>
+											|
+											<a href="/profile/manage-group?did=<?= $group['PSG_ID']?>" <?= ($group['TOTAL_MEMBERS']>0)?"onclick='alert(\"Sorry, you cannot delete this group. There are " . $group['TOTAL_MEMBERS'] . " member(s) in this group. To remove this group, you will need to move all members to a new group\"); return false;'":""?>>Delete</a>
+											]
+										<? }else{ ?>
+											<input type="submit" name="s" value="Save" />
+										<? }?>
+									</td>
+								</tr>		
+								<tr id="member-<?= $group['PSG_ID']?>" class="hidden" style="display: none;">
+									<td colspan="20" class="left">
+									<?
+										echo "Description: " . $group['PSG_DESCRIPTION'] . "<br />";
+										
+									 	$members = explode("|||", $group['MEMBERS']);
+									 	if( lg_count($members) > 0 )
+									 	{
+									 		echo "Members:  <br />";
+										 	foreach($members as $member)
+										 	{
+										 		$member = trim($member);
+										 		if( $member != "" )
+												echo "- " . $member . "<br />"; 
+										 	}
+									 	}
+									?>
+									</td>
+								</tr>		
+								<? if($group['PSG_ID'] == $this->params['id']){?>
+								</form>
+								<? }?>												
+								<?php }?>
+								<form action="/profile/manage-group">
+								<tr>
+									<td><?= ++$no; ?></td>
+									<td class="left">
+										Name<br /><input type="text" name="newPsgName" /><br /><br />
+										Description<br />
+										<textarea name="psgDescription" style="border:1px solid #bec4cb; width:95%; height:80px;"></textarea>
+									</td>
+									<td></td>
+									<td><input type="checkbox" value="1" name="PSG_IP_RESTRICTED" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_SIR" /></td>
+									<td><input type="checkbox" value="1" name="PSG_FORWARD_SIR" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ADD_USER" /></td>
+									<td><input type="checkbox" value="1" name="PSG_TURN_TN_INTEGRATION" /></td>
+									<td><input type="checkbox" value="1" name="PSG_VIEW_USER_ACTIVITY" /></td>
+									<td><input type="checkbox" value="1" name="PSG_COMPANY_SWITCHER" /></td>
+									<td><input type="checkbox" value="1" name="PSG_VIEW_BILLING_REPORT" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_INV_TXN_TOOLS" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_MATCH" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_MATCH_INBOX" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_SALESFORCE" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_DASHBOARD" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_MANAGE_GROUP" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_MANAGE_PUBLISHER" /></td>
+									<td><input type="checkbox" value="1" name="PSG_GMV_SUPPLIER" /></td>
+									<td><input type="checkbox" value="1" name="PSG_CONVERSION_SUPPLIER" /></td>
+									<td><input type="checkbox" value="1" name="PSG_GMV_BUYER" /></td>
+									<td><input type="checkbox" value="1" name="PSG_MARKET_SIZING" /></td>
+
+									<!-- new columns -->
+									<td><input type="checkbox" value="1" name="PSG_ADMIN_GATEWAY" /></td>	
+									<td><input type="checkbox" value="1" name="PSG_PAGES_ADMIN" /></td>
+									<td><input type="checkbox" value="1" name="PSG_PAGES_ADMIN_ADV" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_SCORECARD" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_SCORECARD_ADV" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_TXNMON" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_WEBREPORTER" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_PO_PACK" /></td>
+									<td><input type="checkbox" value="1" name="PSG_ACCESS_SPR_KPI" /></td>
+									<td><input type="checkbox" value="1" name="PSG_MANAGE_USER_AND_COMPANY" /></td>
+									<td><input type="checkbox" value="1" name="PSG_LOGIN_AS" /></td>
+                                    <td><input type="checkbox" value="1" name="PSG_ACCESS_BC_ADMIN" /></td>
+
+									<td><input type="submit" name="s" value="Create" /></td>
+								</tr>									
+								</form>
+							</tbody>
+						</table>			
+					</td>
+				</tr>
+			</table>
+	</div>
+</div>
+<a rel="aaa1"></a>
+
+<script type="text/javascript">
+	$("document").ready(function(){
+		$(".showMemberList").click(function(){
+			$('#member-' + $(this).attr("groupId")).toggle();
+		});
+	});
+</script>
+<div class="clear"></div>

@@ -1,0 +1,112 @@
+<?php
+$this->headLink()->appendStylesheet('/css/shipmate.css')
+->appendStylesheet('/css/supplier/decline.css');
+
+?>
+
+<div id="body" style="width:1150px;">
+	<div id="content" style="width: 1150px;">
+        <h1 class="styled">Cancel <?= $this->docLabel; ?></h1>
+		<div class="innerContent">
+			<div class="">
+                <div class="sub-heading-3">
+                    <?= $this->docLabel; ?> Reference Number: <?= _htmlspecialchars($this->docRefNo); ?>
+
+					<a class="button medium green" style="margin-top:-5px; float: right;" href="<?= $this->docUrl; ?>" target="_blank">Click here to view <?= $this->docLabel; ?></a>
+                </div>
+
+				<div class="document-detail">
+	                <table>
+	                    <tr>
+	                        <td>Subject</td>
+                            <td class="content"><?= _htmlspecialchars($this->docSubject); ?></td>
+
+	                        <td>Delivery Date</td>
+                            <td class="content"><?= _htmlspecialchars($this->docDeliveryDate); ?></td>
+	                    </tr>
+	                    <tr>
+	                        <td>RFQ Submitted Date</td>
+	                        <td class="content"><?= _htmlspecialchars($this->docDate); ?></td>
+
+	                        <td>Delivery Port</td>
+	                        <td class="content">
+                                <?php if (strlen($this->docPortLabel)) {
+                                    ?><?= _htmlspecialchars($this->docPortLabel); ?> (<?= _htmlspecialchars($this->docPort); ?>)<?php
+                                } else {
+                                    ?><?= _htmlspecialchars($this->docPort); ?><?php
+                                }
+                                ?>
+                            </td>
+	                    </tr>
+	                    <tr>
+	                        <td>Buyer Company Name</td>
+	                        <td class="content"><?= _htmlspecialchars($this->buyer->bybName); ?></td>
+	                    </tr>
+	                    <tr>
+	                        <td>Vessel Name</td>
+	                        <td class="content"><?= _htmlspecialchars($this->docVessel); ?></td>
+	                    </tr>
+	                    <tr>
+	                        <td>Supplier Company Name</td>
+	                        <td class="content"><ul>
+								<?php foreach ($this->suppliers as $supplier) { ?>
+									<li><?= _htmlspecialchars($supplier->name); ?></li>
+								<?php } ?>
+							</ul></td>
+	                    </tr>
+	                </table>
+				</div>
+
+				<?php
+                if (!is_null($this->success)) {
+                    if ($this->success === true) { ?>
+						<div class="confirmation">
+							You have successfully cancelled this <?= $this->docLabel; ?>.
+						</div>
+					<?php } else { ?>
+						<div class="confirmation error">
+							There is an issue cancelling this <?= $this->docLabel; ?>. Our engineer has been notified and will be looking into this.
+						</div>
+					<?php } ?>
+					<div class="clear"></div>
+					<a class="button medium lblue" style="margin-top:10px; float: right;" href="/" target="_blank">Go to Homepage</a>
+
+				<?php } else { ?>
+
+                    <form action="/buyer/cancel-rfq" method="POST">
+                        <input type="hidden" name="id"  value="<?= _htmlspecialchars($this->params['id']); ?>" />
+                        <input type="hidden" name="doc" value="<?= _htmlspecialchars($this->params['doc']); ?>" />
+                        <input type="hidden" name="s"   value="<?= _htmlspecialchars($this->params['s']); ?>" />
+                        <input type="hidden" name="h"   value="<?= _htmlspecialchars($this->params['h']); ?>" />
+                        <input type="hidden" name="a"   value="<?= md5($this->params['h']); ?>" />
+
+                        <div class="action-pane">
+                            <?php if ($this->docType === 'rfq') { ?>
+                                If you cancel this RFQ, an email to this effect will be sent to all suppliers that you asked to quote.
+                            <?php } ?>
+
+                            <div class="right">
+								<input type="submit" class="button medium red" name="act" value="Cancel <?= $this->docLabel; ?>" />
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <?php
+                        if (!$this->isProduction) {
+                            ?>
+                            <div class="clear"></div>
+                            <div class="footnote">
+                                If you need somebody to cancel this <?= ($this->docLabel); ?>,
+                                please click or copy and send this URL:
+                                <a href="<?= $this->docCancelUrl; ?>"><?= $this->docCancelUrl;?></a>
+                            </div>
+                            <?
+                        }
+                        ?>
+                    </form>
+				<?php } ?>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

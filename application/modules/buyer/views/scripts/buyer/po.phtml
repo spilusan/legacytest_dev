@@ -1,0 +1,53 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/buyer/po-outbox.css')
+					 ->appendStylesheet('/css/uniform.rfq.css');
+
+	$this->getHelper('Requirejs')->addModule('backbone/buyer/po-outbox/views/mainView');
+
+	$user = Shipserv_User::isLoggedIn();
+
+	$shipservUser = $user->isShipservUser();
+	$hash = $this->hash;
+	if($this->params['page']){
+		$page = $this->params['page'];
+	}
+	else {
+		$page = 1;
+	}
+?>
+
+<div id="body">
+	<div id="content">
+		<h1 class="styled"><strong><span class="sum">34</span> Orders</strong> found</h1>
+		<table class="poList" cellpadding="0" cellspacing="0" border>
+			<thead>
+				<tr>
+					<th class="setorder priority" title="priority"><img src="/img/buyer/rfq-outbox/priority-dblue.png" border="0" alt="Priority" /></th>
+					<th class="setorder supplier" title="supplier"><div>Supplier</div></th>
+					<th class="setorder ref" title="reference"><div>Reference</div></th>
+					<th class="setorder vessel" title="vessel"><div>Vessel</div></th>
+					<th class="setorder date ordered desc" title="date"><div>Date</div></th>
+					<th class="setorder qstat" title="status"><div>Status</div></th>
+					<th class="last">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+		<div class="pagination"></div>
+	</div>
+	<div id="sidebar">
+		<div class="filterSection"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="clear"></div>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody"></div>
+</div>
+<div id="waiting">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>

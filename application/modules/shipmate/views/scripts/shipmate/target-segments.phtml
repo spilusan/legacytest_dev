@@ -1,0 +1,497 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/shipmate/prime-suppliers.css')
+					 ->appendStylesheet('/css/uniform.default.new.css');
+
+	$hostname = $this->config['shipserv']['application']['hostname'];
+
+	$this->getHelper('Requirejs')->addModule('backbone/shipmate/prime-suppliers/views/mainView')
+								 ->addDefinition('shipmate/targetSegments/hostname', "'" . $hostname . "'");
+
+	$user = Shipserv_User::isLoggedIn();
+	$shipservUser = $user->isShipservUser();
+
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Target Segments', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<div id="waiting" style="display: block;">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>
+<div id="body">
+	<div id="content">
+		<div id="segments">
+			<h1 class="styled">Target Segments <a href="#" class="button white medium newSegment">New segment</a></h1>
+
+			<div class="innerContent">
+				<form class="new ts">
+					<label for="category">Filter by Name:</label>
+					<input type="text" id="categoryInput" name="category" />
+					<label for="period">Period:</label>
+					<select id="periodSelector" name="period">
+						<option value="">Since start date</option>
+						<option value="30">Last month</option>
+						<option value="90">Last 3 months</option>
+						<option value="180">Last 6 months</option>
+						<option value="365">Last 12 months</option>
+					</select>
+				</form>
+				<table>
+					<thead>
+						
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div id="segmentEditor" style="display: none;">
+			<h1 class="styled">New segment</h1>
+			<div class="innerContent">
+				<form class="new ts newSegmentForm">
+					<label for="segmentName">Name:</label>
+					<input type="text" name="segmentName" /><br /><br />
+					<label for="startDate">Start date:</label>
+					<input type="text" name="startDate" /><br /><br />
+					<label for="comments">Comments:</label>
+					<textarea name="comments"></textarea>
+					<div>
+						<div class="categorySelector selectors">
+							<div class="selectTitle"><a href="#" class="clearCats clear button white medium">Clear all</a><span>Category</span><div class="clear"></div></div>
+							<input type="text" name="catComplete" /><br /><br />
+							<div class="selectlist"></div>
+							<ul class="selectedItems categs">
+
+							</ul>
+						</div>
+						<div class="brandSelector selectors">
+							<div class="selectTitle"><a href="#" class="clearBrands clear button white medium">Clear all</a><span>Brands</span> <div class="clear"></div></div>
+							<input type="text" name="brandComplete" /><br /><br />
+							<div class="selectlistB"></div>
+							<ul class="selectedItems brands"></ul>
+						</div>
+						<div class="countrySelector selectors">
+							<div class="selectTitle"><a href="#" class="clearCountries clear button white medium">Clear all</a><span>Countries / Regions</span><div class="clear"></div></div>
+							<input type="text" name="countryComplete" /><br /><br />
+							<div class="selectlistC"></div>
+							<ul class="selectedItems countries"></ul>
+						</div>
+						<div class="clear"></div>
+						<div class="buttons">
+							<input type="button" value="Cancel" class="button medium white" name="cancel" />
+							<input type="button" value="Ok" class="button medium green" name="ok" />
+							<div class="clear"></div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div id="suppliers" style="display: none;">
+			<h1 class="styled"><a href="#" class="back button medium white">Back</a>Target Segment for <span class="segmentName"></span></h1>
+			<div class="innerContent">
+				<h2 class="title">
+					<form class="addSupplier">
+						<label for="tnidtoadd">Add new supplier (TNID)</label>
+						<input type="text" name="tnidtoadd" />
+						<input type="button" class="button medium" value="Add" name="addTnid" />
+					</form>
+					<div>Current Target Suppliers</div>
+				</h2>
+				<div class="segmentMatchPerf">
+					<form class="new ts currentSuppliers">
+						<label for="period">Period:</label>
+						<select id="periodSelectorCurrent" name="period">
+							<option value="">Since start date</option>
+							<option value="30">Last month</option>
+							<option value="90">Last 3 months</option>
+							<option value="180">Last 6 months</option>
+							<option value="365">Last 12 months</option>
+						</select>
+						<label for="segmentKeywords">Keywords:</label>
+						<select id="segmentKeywordSel" name="segmentKeywords">
+
+						</select>
+					</form>
+					<ul class="tabs">
+						<li class="selected segmentMatch"><input type="radio" name="tabs" checked="checked" id="tabMatch" /> Segment Match Performance</li>
+						<li class="overall"><input type="radio" name="tabs" id="tabOverall" /> Overall Trading Performance</li>
+					</ul>
+					<table class="current">
+						<thead>
+							<tr>
+								<th class="tnid"><span title="Supplier branch ID">
+									TNID
+								</span></th>
+								<th class="supName"><span title="Supplier branch name">
+									Supplier name
+								</span></th>
+								<th class="country"><span title="Supplier country">
+									Country
+								</span></th>
+								<th class="monet"><span title="Currently active target rate">
+									Target rate %
+								</span></th>
+								<th class="monet"><span title="Currently active standard rate">
+									Standard rate %
+								</span></th>
+								<th class="targeted"><span title="Date when supplier has been added to the current segment (most recent of them, if it has been added and removed before)">
+									Targeted since
+								</span></th>
+								<th class="small"><span title="Whether the supplier participates in Automatch – must be enabled for automatch PLUS have at least one enabled keyword set assigned">
+									AM
+								</span></th>
+								<th class="activeKey"><span title="Number of enabled keyword sets owned by the supplier">
+									Active Keyword Sets
+								</span></th>
+								<th class="segMatch"><span title="Number of RFQ events categorised in the current segment which were forwarded by Match to the current supplier, if that happened when that supplier was the member of the segment and also in the time interval selected in Period dropdown. If a keyword set is selected, only automatch RFQs matched the given keyword set will be included.">
+									Segment Match Events
+								</span></th>
+								<th class="segQuot"><span title="Percentage of events from the group above in which supplier has provided at least one match quote back.">
+									Segment Quote rate %
+								</span></th>
+								<th class="segMatchAvQuot"><span title="Number of match orders secured by the current supplier as a result of quotes they issued in response to RFQ events from the first group, divided by the number of those quotes.">
+									Segment Match RFQ Av. Quote Resp. time
+								</span></th>
+								<th class="segRfqEvent"><span title="RFQ events from the first group above with no match-based order (order in the event with a match quote) from the current supplier.">
+									Segment RFQ events with no PO
+								</span></th>
+								<th class="quotWinRate"><span title="Number of match orders secured by the current supplier as a result of quotes they issued in response to RFQ events from the first group, divided by the number of those quotes.">
+									Quote win rate %
+								</span></th>
+								<th class="potSave"><span title="Potential savings from supplier’s match quotes">
+									Potential savings (USD)
+								</span></th>
+								<th class="matchedGmv"><span title="Total value of match orders placed by the current supplier in response to RFQs from the first group.">
+									Matched GMV (USD)
+								</span></th>
+								<th class="compMatchRfqEv"><span title="Number of RFQ events from the first group, but where there was at least one supplier apart from the current one quoting.">
+									Comp. Match RFQ events
+								</span></th>
+								<th class="cheapest"><span title="The number of match quotes provided by the current supplier in response to RFQs from the first group where there was a competition (see the definition of competition in Comp. Match RFQ events definition) and that quote was the cheapest">
+									% Cheapest
+								</span></th>
+
+								<th class="supplierActions">
+									Actions
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
+				<div class="overallPerf" style="display: none;">
+					<form class="new ts currentSuppliersSecond">
+						<label for="period">Period:</label>
+						<select id="periodSelectorCurrentSecond" name="period">
+							<option value="">Since start date</option>
+							<option value="30">Last month</option>
+							<option value="90">Last 3 months</option>
+							<option value="180">Last 6 months</option>
+							<option value="365">Last 12 months</option>
+						</select>
+						<label for="segmentKeywords">Keywords:</label>
+						<select id="segmentKeywordSelSecond" name="segmentKeywords">
+							
+						</select>
+					</form>
+					<ul class="tabs">
+						<li class="selected segmentMatch"><input type="radio" name="tabsOv" id="tabMatchOv" /> Segment Match Performance</li>
+						<li class="overall"><input type="radio" name="tabsOv" checked="checked" id="tabOverallOv" /> Overall Trading Performance</li>
+					</ul>
+					<table class="current">
+						<thead>
+							<tr>
+								<th class="tnid"><span title="Supplier branch ID">
+									TNID
+								</span></th>
+								<th class="supName"><span title="Supplier branch name">
+									Supplier name
+								</span></th>
+								<th class="country"><span title="Supplier country">
+									Country
+								</span></th>
+								<th class="monet"><span title="Currently active target rate">
+									Target rate %
+								</span></th>
+								<th class="monet"><span title="Currently active standard rate">
+									Standard rate %
+								</span></th>
+								<th class="targeted"><span title="Date when supplier has been added to the current segment (most recent of them, if it has been added and removed before)">
+									Targeted since
+								</span></th>
+								<th class="small"><span title="Whether the supplier participates in Automatch – must be enabled for automatch PLUS have at least one enabled keyword set assigned">
+									AM
+								</span></th>
+								<th class="activeKey"><span title="Number of enabled keyword sets owned by the supplier">
+									Active Keyword Sets
+								</span></th>
+								
+								<th class=""><span title="Number of buyers that can be potentially targeted (is the same for all segments)">
+									Targetable Buyers
+								</span></th>
+								<th class=""><span title="Share of buyers targeted but not yet locked by segment members">
+									Unlocked targets %
+								</span></th>
+								<th class=""><span title="Share of buyers targeted and locked by segment members">
+									Locked Targets %
+								</span></th>
+								
+								
+								<th class="gmvTrend"><span title="GMV trend is always calculated for the last 3 months against 3 months before that regardless of selected time interval">
+									GMV Trend (T3M) %
+								</span></th>
+								<th class="respness"><span title="Supplier’s number of quotes divided by the number of RFQs supplier has received">
+									Responsive-<br />ness %
+								</span></th>
+								<th class="compRfqEv"><span title="Number of RFQ events where the supplier in question has quoted along with at least one more supplier">
+									Competitive RFQ events
+								</span></th>
+								<th class="wonCand"><span title="Share of competitive events where the supplier has got an order">
+									% Won
+								</span></th>
+								<th class="cheapestCand"><span title="Number of competitive events where the supplier has provided the cheapest quotes (regardless of its completeness)">
+									% Cheapest
+								</span></th>
+
+								<th class="supplierActions">
+									Actions
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
+				<h2 class="title">
+					<div>Candidate Target Suppliers</div>
+				</h2>
+				<form class="new ts">
+					<label for="category">Filter by Name:</label>
+					<input type="text" id="nameInputCandidate" name="nameFilter" style="margin-right: 10px;"/>
+					<input type="button" name="filterByName" value="Filter" class="button medium green" style="margin-right: 20px;" />
+					<label for="periodCandidate">Period:</label>
+					<select id="periodSelectorCandidate" name="periodCandidate">
+						<option value="">Since start date</option>
+						<option value="30">Last month</option>
+						<option value="90">Last 3 months</option>
+						<option value="180">Last 6 months</option>
+						<option value="365">Last 12 months</option>
+					</select>
+				</form>
+				<table class="candidate">
+					<thead>
+						<tr>
+							<th style="width: 70px;">
+								<a href="relevance" class="sort sorted desc">
+									<div>Relevance</div>
+									<div class="arrow"></div>
+								</a>
+							</th>
+							<th class="tnid">TNID</th>
+							<th>
+								<a href="supplierName" class="sort">
+									<div>Supplier Name</div>
+									<div class="arrow"></div>
+								</a>
+							</th>
+							<th class="country">
+								<a href="countryCode" class="sort">
+									<div>Country</div>
+									<div class="arrow"></div>
+								</a>
+							</th>
+							<th class="monet">
+								<a href="monetisation" class="sort">
+									<div>Moneti-<br />sation %</div>
+									<div class="arrow"></div>
+								</a>
+							</th>
+							<th class="prevTarg">
+								<a href="previouslyTargeted" class="sort">
+									<div>Previously<br /> Targeted <br /></div>
+									<div class="arrow"></div>
+								</a>
+							</th>
+							<th class="small">
+								<a href="isAutomatch" class="sort">
+									<div>AM</div>
+									<div class="arrow"></div>
+								</a>
+							</th>
+							<th class="gmvTraded">
+								<a href="gmv" class="sort">
+									<div>GMV Traded (USD)</div>
+									<div class="arrow"></div>
+								</a>
+							</th>
+							<th class="gmvTrend">
+								<a href="gmvTrend" class="sort">
+									<div>GMV Trend (T3M) %</div>
+									<div class="arrow"></div>
+								</a>
+							</th>
+							<th class="respness">
+								<a href="responseRate" class="sort">
+									<div>Responsive- <br />ness (%)</div>
+									<div class="arrow"></div>
+								</a>
+							</th>
+							<th class="compRfqEv">
+								<a href="competitionCount" class="sort">
+									<div>Competitive RFQ events</div>
+									<div class="arrow"></div>
+								</a>
+							</th>
+							<th class="won">
+								<a href="winRate" class="sort">
+									<div>% Won</div>
+									<div class="arrow"></div>
+								</a>
+							</th>
+							<th class="cheapest">
+								<a href="cheapestRate" class="sort">
+									<div>% Cheapest</div>
+									<div class="arrow"></div>
+								</a>
+							</th>
+							<th class="supplierActions">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+
+					</tbody>
+				</table>
+				<div class="pagination"></div>
+				<div class="legend">
+					<div class="icons">
+						<p class="icon"><span class="actionButton"><img src="/img/prime-supplier/roundarrowup.png" alt="Promote" border="0" /></span> <span class="iconName"> Promote</span></p>
+						<p class="icon"><span class="actionButton"><img src="/img/prime-supplier/roundarrowdown.png" alt="Demote" border="0" /></span><span class="iconName"> Demote</span></p>
+						<p class="icon"><span class="actionButton money"><img src="/img/prime-supplier/dollar.png" alt="GMV Report" border="0" /></span><span class="iconName"> GMV Report</span></p>
+						<p class="icon"><span class="actionButton"><img src="/img/prime-supplier/tick.png" alt="Conversions" border="0" /></span><span class="iconName"> Conversions</span></p>
+						<p class="icon"><span class="actionButton"><img src="/img/prime-supplier/eye.png" alt="View" border="0" /></span><span class="iconName"> View</span></p>
+						<p class="icon"><span class="actionButton"><img src="/img/prime-supplier/edit.png" alt="Edit profile" border="0" /></span><span class="iconName"> Edit profile</span></p>
+						<p class="icon"><span class="actionButton graph"><img src="/img/prime-supplier/graph.png" alt="Supplier stats" border="0" /></span><span class="iconName"> Supplier stats</span></p>
+						<p class="icon"><span class="actionButton"><img src="/img/prime-supplier/a.png" alt="Automatch settings" border="0" /></span><span class="iconName"> Automatch settings</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="automatchSetup" id="amSetup" style="display: none;">
+			<h1 class="styled">AutoMatch setup for Supplier <span class="autoSupplier">Fuji Trading</span> <a href="#" class="button white medium back closeAutoMatch">Back</a></h1>
+
+			<div class="innerContent">
+				<form class="new ts">
+					<label for="keywords">Filter by keyword name:</label>
+					<input type="text" id="keywordInput" name="keywords" />
+				</form>
+				<div class="leftTable">
+					<table>
+						<thead>
+							<tr>
+								<th colspan="3" style="height: 30px;">&nbsp;</th>
+							</tr>
+							<tr>
+								<th colspan="3" class="keywSets">Available keyword sets</th>
+							</tr>
+							<tr>
+								<th colspan="3" style="height: 20px;">&nbsp;</th>
+							</tr>
+							<tr class="last">
+								<th class="enabled">
+									Enabled
+								</th>
+								<th>&nbsp;</th>
+								<th>&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
+				<div class="rightTable">
+					<table>
+						<thead>
+							<tr>
+								<th colspan="3" style="height: 30px;">&nbsp;</th>
+							</tr>
+							<tr>
+								<th colspan="3" class="keywSets">Selected keyword sets <span>(Keyword sets assigned to this Supplier)</span></th>
+							</tr>
+							<tr>
+								<th colspan="3" style="height: 20px;">&nbsp;</th>
+							</tr>
+							<tr class="last">
+								<th class="enabled">
+									Enabled
+								</th>
+								<th>&nbsp;</th>
+								<th>&nbsp;</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+						</tbody>
+					</table>
+				</div>
+				<div class="clear"></div>
+				<div class="buttons">
+					<a href="#" class="button medium blue addNewSet">Add new keyword set</a>
+				</div>
+				<div class="clear"></div>
+				<div class="legend am">
+					<div class="icons">
+						<p class="icon"><span class="actionButton"><img src="/img/prime-supplier/linked.png" alt="Linked to" border="0" /></span> <span class="iconName"> Linked to</span></p>
+						<p class="icon"><span class="actionButton"><img src="/img/prime-supplier/upload.png" alt="Upload" border="0" /></span><span class="iconName"> Upload</span></p>
+						<p class="icon"><span class="actionButton"><img src="/img/prime-supplier/download.png" alt="Download" border="0" /></span><span class="iconName"> Download</span></p>
+						<p class="icon"><span class="actionButton"><img src="/img/prime-supplier/add.png" alt="Select" border="0" /></span><span class="iconName"> Select</span></p>
+						<p class="icon"><span class="actionButton"><img src="/img/prime-supplier/remove.png" alt="Deselect" border="0" /></span><span class="iconName"> Deselect</span></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="modal" style="display: none;">
+	<div class="modalBody">
+		<h1 class="styled">Add new keyword set:</h1><div class="close" data-dismiss="modal" aria-hidden="true">Close</div>
+		<div class="modalContent">
+			<form name="newSet" class="new">
+				<label for="name">Name of set:</label>
+				<input type="text" name="name" /><br />
+				<label>Select file:</label>
+				<input type="button" name="csv" class="button medium green uploadFile" value="Browse" />
+				<div class="clear"></div>
+				<label for="type">Type:</label>
+				<select name="type">
+					<option value="spares">Spares</option>
+					<option value="stores">Stores</option>]
+					<option value="musthave">Must have</option>
+				</select>
+				<label for="tnids">Additional suppliers to add (coma separated list of TNIDs):</label>
+				<input type="text" name="tnids" />
+				<div class="clear"></div>
+				<input type="button" name="upload" value="Upload" class="button medium blue create" />
+			</form>
+		</div>
+	</div>
+</div>
+<div id="modalX" style="display: none;">
+	<div class="modalBody">
+		<h1 class="styled">Suppliers linked to this keyword set:</h1><div class="close" data-dismiss="modalX" aria-hidden="true">Close</div>
+		<div class="modalContent">
+			<p>TNID</p>
+			<table>
+				<tbody>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>

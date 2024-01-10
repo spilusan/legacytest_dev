@@ -1,0 +1,557 @@
+/*
+Document   : partials/rfq/_forms_rfqdetails.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: styles for rfq forms rfq details
+*/
+#modal.choose {
+	z-index: 999 !important;
+	display: block;
+	position: absolute;
+	left: 50%;
+	margin-left: -200px;
+	top: 50px;
+}
+
+#maskx {
+	z-index: 10 !important;
+	width: 100%;
+	height: 100%;
+	background: #000000;
+	opacity: 0.75;
+	filter: alpha(opacity=70);
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+#body {
+	&.dialog {
+		min-height: 200px !important;
+		height: 200px !important;
+
+		#content {
+			height: 200px !important;
+		}
+	}
+	#content {
+		form.chooseSupplier {
+			label {
+				font-size: 12px;
+				position: relative;
+				top: 0;
+			}
+		}
+
+		form.rfq {
+			.rfqDet {
+				padding-bottom: 5px;
+				padding-top: 6px;
+
+				.documents {
+					position: relative;
+					z-index:1;
+					margin-top: 20px;
+
+					strong {
+						font-size: 12px;
+					}
+
+					table {
+						tr {
+							td {
+								padding: 2px 5px;
+
+								span {
+									&.error {
+										margin-left: 0;
+									}
+								}
+
+								button {
+									cursor: pointer;
+								}
+							}
+						}
+					}
+
+					span, a {
+						font-size: 11px;
+					}
+
+					.fileupload-buttonbar {
+						margin-top: 10px;
+						margin-bottom: 5px;
+						div.uploadFile{
+							float: left;
+							padding: 4px 10px;
+							z-index: 1;
+							cursor: pointer;
+							overflow: hidden;
+							width: 110px;
+							height: 10px;
+							position: relative;
+							text-align: center;
+
+							&.disabled {
+								color: #d8dee5;
+								cursor: default;
+							}
+
+							input[type="file"]{
+								z-index:20;
+								position: absolute;
+								top: 0;
+								left: -467px;
+								z-index: 20;
+								cursor: pointer;
+								border: 1px solid red;
+								height: 35px;
+								line-height: 35px;
+								font-size: 35px;
+								filter: alpha(opacity=0);
+								opacity: 0;
+							}
+						}
+					}
+
+					.btn.btn-primary.start, .btn.btn-warning.cancel, 
+					.fileupload-buttonbar .btn.delete, 
+					.fileupload-buttonbar .checker, 
+					.fileupload-buttonbar input[type="checkbox"], table input[type="checkbox"] {
+					  display: none;
+					}
+
+					.fileupload-progress {
+					    display: none;
+					    position: absolute;
+					    left: 125px;
+					    top: 56px;
+
+						&.fade{
+
+							&.in {
+					  			display: block;
+					  		}
+					  	}
+					}
+
+					.progress {
+						width: 40px;
+						height: 5px;
+						position: relative;
+						margin-left: 15px;
+						overflow: hidden;
+						&.active {
+							border: 1px solid grey;
+						}
+
+						.bar {
+							position: absolute;
+							left: 0;
+							top: 0;
+							background: green;
+							height: 10px;
+						}
+					}
+				}
+
+				.suppliers {
+					strong {
+						font-size: 12px;
+					}
+				}
+
+				.detailBox {
+					position: relative;
+					background: #e9edf1;
+					padding: 10px;
+					@include border-radius(6px);
+					behavior: url(/css/PIE.htc);
+
+					ul.detailTabs {
+						list-style: none;
+						display: block;
+						float: left;
+
+						li {
+							position: relative;
+							display: block;
+							padding: 14px 0;
+							border: 1px solid #b4bac3;
+							@include inline-block;
+							@include border-radius(6px 6px 0 0);
+							@include background-image(linear-gradient(#fefefe 0%, #b4bac3 100%));
+	  						-pie-background: linear-gradient(top, #fefefe 0%, #b4bac3 100%);
+							color: #2e3235;
+							font-size: 13px;
+							font-weight: bold;
+							text-align: center;
+							width: 95px;
+							behavior: url(/css/PIE.htc);
+							z-index: 100;
+							cursor: pointer;
+
+							&.selected {
+								background:#e9edf1;
+								border-bottom: 1px solid #e9edf1;
+							}
+						}
+					}
+
+					.detailBorder {
+						position: relative;
+						border: 1px solid #b4bac3;
+						padding: 10px;
+						top: -2px;
+						z-index: 90;
+					}
+
+					strong {
+						font-size: 12px;
+						color: #2e3235;
+
+						&.line {
+							margin-bottom: 5px;
+							margin-top: 15px;
+							display: block;
+							float: left;
+						}
+					}
+
+					p.commentLabel {
+						margin-top: 20px;
+						margin-bottom: 0;
+						padding: 0;
+						display: none;
+					}
+
+					.infoArrow {
+						position: relative;
+						margin-top: 10px;
+						margin-left: 209px;
+						padding: 0px 0px 0px 9px;
+						background: url(/img/rfq/arrowtip_green.png) left top no-repeat transparent;
+						width: 306px;
+
+						div {
+							font-size: 10px;
+							color: #008b00;
+							padding: 4px 8px 4px 7px;
+							border: 1px solid #83cc4e;
+							border-left: 0;
+							background: #e5f8d8;
+							font-weight: bold;
+						}
+					}
+
+					.info {
+						display: none;
+						margin-bottom: 15px;
+						margin-top: 3px;
+						span {
+							position: relative;
+							float: none;
+							padding-left: 15px;
+						}
+					}
+
+					h2 {
+						font-size: 13px;
+					}
+
+					input[type="text"] {
+						font-size: 11px;
+						padding: 5px 10px 5px;
+						width: 300px;
+					}
+
+					input.addSection {
+						margin-bottom: 0px;
+						margin-top: 6px;
+						margin-right: 8px;
+						float: right;
+					}
+
+					.sectionList {
+						clear: both;
+						margin-bottom: 8px;
+						display: none;
+						.itemBox {
+							position: relative;
+							display: block;
+							padding-top: 6px;
+
+							.boxContent {
+								h4 {
+									position: relative;
+									display: block;
+									border: 1px solid #d6dce4;
+									font-size: 13px;
+									color: #2e3235;
+									font-weight: normal;
+									padding: 3px 10px;
+									padding-right: 2px;
+									background:#f5f7fa;
+
+									span {
+										display: block;
+										padding: 4px 0 2px;
+									}
+
+									input.removeSecDet {
+										display: none;
+									}
+
+									input[type="image"].button {
+										margin-top: 3px;
+										padding-left: 8px;
+										padding-right: 8px;
+										float: right;
+									}
+								}
+
+								fieldset {
+									background: #f5f7fa;
+									border: 1px solid #dadada;
+									padding: 10px;
+									margin-top: -2px;
+									display: none;
+
+									.left, .right {
+										width: 420px;
+									}
+
+									.left {
+										float: left;
+									}
+
+									.right {
+										float: right;
+									}
+								}
+
+								.lineItemHead {
+									margin-top: -2px;
+
+									.cHelp {
+										top: -2px;
+									}
+									.cell {
+										background: #f5f7fa;
+										padding: 8px 10px;
+										border-top: 1px solid #d6dce4;
+									}
+								}
+
+								.lineItemHead, .items {
+									position: relative;
+
+									.cell {
+										position: relative;
+										float: left;
+										font-size: 12px;
+										color: #2e3235;
+										border-bottom: 1px solid #d6dce4;
+										border-left: 1px solid #d6dce4;
+										
+										&.ln {
+											width: 20px;
+											padding: 8px 0;
+											padding-right: 4px;
+											text-align: right;
+										}
+
+										&.qt {
+											width: 28px;
+										}
+
+										&.un {
+											width: 68px;
+										}
+
+										&.pt {
+											width: 108px;
+										}
+
+										&.pn {
+											width: 88px;
+										}
+
+										&.ds {
+											width: 260px;
+										}
+
+										&.cm {
+											width: 148px;
+										}
+
+										&.del {
+											width: 15px;
+											border-right: 1px solid #d6dce4;
+										}
+									}
+								}
+
+								.items {
+									margin-top: -1px;
+									.cell {
+										padding: 2px 2px;
+										background: #f5f7fa;
+
+										input[type="text"] {
+											margin-bottom: 0;
+										}
+
+										&.ln {
+											width: 20px;
+											padding: 10px 0 9px;
+											padding-right: 4px;
+											text-align: right;
+										}
+
+										&.qt {
+											width: 44px;
+
+											input.qty {
+												width: 22px;
+											}
+										}
+
+										&.un {
+											width: 85px;
+											padding: 1px 2px 1px 1px;
+											.selector {
+												width: 74px !important;
+												margin: 0;
+												margin-top: -1px;
+
+												span {
+													width: 49px !important;
+												}
+
+												select { 
+													width: 84px;
+												}
+											}
+										}
+
+										&.pt {
+											width: 125px;
+											padding: 1px 2px 1px 1px;
+											.selector {
+												width: 114px !important;
+												margin: 0;
+												margin-top: -1px;
+
+												span {
+													width: 89px !important;
+												}
+
+												select { 
+													width: 94px;
+												}
+											}
+										}
+
+										&.pn {
+											width: 104px;
+
+											input.pno{
+												width: 82px;
+											}
+										}
+
+										&.ds {
+											width: 276px;
+
+											input.idesc{
+												width: 254px;
+											}
+										}
+
+										&.cm {
+											width: 164px;
+
+											input.icomments{
+												width: 142px;
+											}
+										}
+
+										&.del {
+											width: 31px;
+											height: 24px;
+											text-align: center;
+											padding-top: 5px;
+											padding-bottom: 2px;
+
+											.button {
+												padding: 3px 8px;
+											}
+										}
+									}
+								}
+
+								.lineItemFoot {
+									background: #f5f7fa;
+									padding: 5px;
+									border-bottom: 1px solid #d6dce4;
+									border-right: 1px solid #d6dce4;
+									border-left: 1px solid #d6dce4;
+								}
+							}
+						}
+					}
+
+					textarea {
+						width: 856px;
+						height: 130px;
+						margin-bottom: 0px;
+						margin-top: 6px;
+
+						&.slim {
+							height: 55px;
+						}
+					}
+				}
+			}
+
+			.formSubmit {
+				fieldset {
+					padding-bottom: 20px;
+					border-bottom: 1px dotted black;
+					margin-bottom: 15px;
+					label {
+						font-size: 15px;
+						margin-bottom: 15px;
+						display: block;
+					}
+
+					input#captchaInput {
+						position: relative;
+						width: 150px;
+						float: none;
+						top: -20px;
+						margin-left: 15px;
+					}
+
+					.captcha {
+						.description {
+							span {
+								font-size: 12px;
+								margin-bottom: 15px;
+								display: block;
+							}
+							a.new-captcha {
+								cursor: pointer;
+							}
+						}
+					}
+				}
+
+				.error {
+					margin-left: 0;
+				}
+			}
+		}
+	}
+}

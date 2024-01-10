@@ -1,0 +1,270 @@
+/*
+Document   : partials/def/_buttons.scss
+Created on : Aug 24, 2012, 4:00:43 PM
+Author     : gly
+Description: default styles for buttons
+*/
+input[type="button"], input[type="submit"] {
+    &:hover {
+        cursor: pointer;
+    }
+}
+.button {
+	position: relative;
+	font-weight: bold;
+	color: #ffffff;
+	@include single-text-shadow(-1px, -1px, 1px, rgba(0, 0, 0, 0.28));
+	@include border-radius(6px);
+	border: 1px solid transparent;
+    -pie-poll: true;
+	behavior: url(/css/PIE.htc);
+
+    &.extrasmall {
+        font-size: 11px;
+        padding: 1px 10px;
+        text-shadow: none;
+    }
+
+	&.small {
+		font-size: 11px;
+		padding: 3px 10px;
+	}
+
+	&.medium {
+		font-size: 14px;
+		padding: 6px 20px;
+	}
+
+	&.large {
+		font-size: 18px;
+		padding: 6px 28px;
+	}
+
+	&.white {
+		background: #ffffff;
+		border-color: #d6dce4;
+		@include x-multiple-colored-gradient(#ffffff 0%, #f5f7fa 100%);
+  		-pie-background: linear-gradient(top, #ffffff 0%, #f5f7fa 100%);
+  		color: #005aad;
+  		@include single-text-shadow(none);
+	}
+
+	&.grey {
+		background: #d3d3d3;
+		@include x-multiple-colored-gradient(#d3d3d3 0%, #c7c7c7 2%, #878787 100%);
+  		-pie-background: linear-gradient(top, #d3d3d3 0%, #c7c7c7 2%, #878787 100%);
+ 		behavior: url(/css/PIE.htc);
+	}
+
+	&.dblue {
+		border-color:#1364af;
+		border-top-color: #2b76bb;
+		border-bottom-color: #004c94;
+		@include x-multiple-colored-gradient(#92b8db 0%, #0058a9 2%, #00386e 100%);
+		-pie-background: linear-gradient(top, #92b8db 0%, #0058a9 2%, #00386e 100%);
+	}
+
+	&.lblue {
+		background: #3bc1ee;
+		border-color: #0277cd;
+		@include x-multiple-colored-gradient(#3bc1ee 0%, #9adff6 3%, #12b2e9 6%, #047dd5 100%);
+  		-pie-background: linear-gradient(top, #3bc1ee 0%, #9adff6 3%, #12b2e9 6%, #047dd5 100%);
+	}
+
+	&.green {
+		background: #98d56c;
+		border-color: #85b95f;
+		@include x-multiple-colored-gradient(#98d56c 0%, #c9e9b3 3%, #7fca4b 6%, #048803 100%);
+		-pie-background: linear-gradient(top, #98d56c 0%, #c9e9b3 3%, #7fca4b 6%, #048803 100%);
+	}
+
+	&.pgreen {
+		background: #98c522;
+		border-color: #78a000;
+		@include x-multiple-colored-gradient(#cee794 0%, #99c622 3%, #5e7f0b 100%);
+		-pie-background: linear-gradient(#8fba1f 0%, #99c622 3%, #5e7f0b 100%);
+	}
+
+	&.red {
+		background: #dce7f4;
+		border-color: #e92125;
+		@include x-multiple-colored-gradient(#ff765b 0%, #ffab9b 3%, #fe5c3f 6%, #e92125 98%, #cb1b1f 100%);
+  		-pie-background: linear-gradient(top, #ff765b 0%, #ffab9b 3%, #fe5c3f 6%, #e92125 98%, #cb1b1f 100%);
+	}
+
+    &.yellow {
+        background: #ff9507;
+        border-color: #ffbb36;
+        @include x-multiple-colored-gradient(#ffa90c 0%, #ffdc98 3%, #ffa90c 6%, #ff8804 70%, #df6c01 100%);
+        -pie-background: linear-gradient(top, #ffa90c 0%, #ffdc98 3%, #ffa90c 6%, #ff8804 70%, #df6c01 100%);
+    }
+
+    &.purple {
+        background: #705075;
+        border-color: #a37390;
+        @include x-multiple-colored-gradient(#cfb7c6 0%, #ffab9b 3%, #8e577a 6%, #504870 98%, #484369 100%);
+        -pie-background: linear-gradient(top, #cfb7c6 0%, #ffab9b 3%, #8e577a 6%, #504870 98%, #484369 100%);
+    }
+	&.disabled {
+		cursor: default;
+  		background: #ffffff;
+  		border-color: #e9edf1;
+  		color: #e9edf1;
+  		@include single-text-shadow(none);
+  		@include x-multiple-colored-gradient(#ffffff 0%, #f5f7fa 100%);
+  		-pie-background: linear-gradient(top, #ffffff 0%, #f5f7fa 100%);
+	}
+}
+
+/* temporary fix for buttons on new layout pages*/
+div.zz {
+    &.button { 
+        text-align: center; 
+        position: relative; 
+        float: left; 
+        font-weight: bold;
+        @include border-radius(6px);
+        border: 1px solid transparent;
+        border-color: #d3d3d3;
+        color: #fff; 
+        text-shadow:-1px -1px 1px rgba(0,0,0,0.28); 
+        -moz-text-shadow: -1px -1px 1px rgba(0,0,0,0.28); 
+        -webkit-text-shadow:-1px -1px 1px rgba(0,0,0,0.28);
+        -pie-poll: true;
+        behavior: url(/css/PIE.htc);
+        padding:0;
+        
+        button, a, input {
+            color: #fff; 
+            text-shadow:-1px -1px 1px rgba(0,0,0,0.28); 
+            -moz-text-shadow: -1px -1px 1px rgba(0,0,0,0.28); 
+            -webkit-text-shadow:-1px -1px 1px rgba(0,0,0,0.28);
+        }
+        
+        button, input {
+            background:none repeat scroll 0 0 transparent; 
+            border:0 none; 
+            font-family:inherit; 
+            font-size:inherit; 
+            font-weight:inherit; 
+            margin:0; 
+            overflow:visible; 
+            padding:0; 
+            position:relative; 
+            color: inherit; 
+            cursor: pointer;
+        }
+        
+        &.large {
+           height: 33px; 
+            line-height: 33px; 
+            padding-left: 30px; 
+            padding-right: 30px;
+            
+            button, input {
+                height: 33px; 
+                line-height: 33px;
+            }
+        }
+        
+        &.medium { 
+            height: 28px; 
+            line-height: 28px; 
+            padding-left: 20px; 
+            padding-right: 20px; 
+            font-size: 14px; 
+            
+            button, input {
+                height: 28px; 
+                line-height: 28px;
+            }
+        }
+        
+        &.small { 
+            height: 18px; 
+            line-height: 18px; 
+            padding-left: 10px; 
+            padding-right: 10px; 
+            font-size: 11px;
+            
+            button, input {
+                height: 18px; 
+                line-height: 18px;
+            }
+        }
+        
+        &.disabled {
+            cursor: default;
+            
+            background: #ffffff; 
+            @include x-multiple-colored-gradient(#ffffff 0%,#f5f7fa 100%); 
+            -pie-background: linear-gradient(top, #ffffff 0%,#f5f7fa 100%);
+            border-color: #e9edf1;
+            color: #e9edf1; 
+            text-shadow: none; 
+            -moz-text-shadow: none; 
+            -webkit-text-shadow: none; 
+            
+            input, a, button {
+                cursor: default;
+                color: #e9edf1; 
+                text-shadow: none; 
+                -moz-text-shadow: none; 
+                -webkit-text-shadow: none; 
+            }
+        }
+        
+        &.red { 
+            background: #ff765b;
+            @include x-multiple-colored-gradient(#ff765b 0%,#ffab9b 3%,#fe5c3f 6%,#e92125 98%,#cb1b1f 100%); 
+            -pie-background: linear-gradient(top, #ff765b 0%,#ffab9b 3%,#fe5c3f 6%,#e92125 98%,#cb1b1f 100%);
+            border-color: #E92125; 
+        }
+        
+        &.green { 
+            background: #98d56c;
+            @include x-multiple-colored-gradient(#98d56c 0%,#c9e9b3 3%,#7fca4b 6%,#048803 100%); 
+            -pie-background: linear-gradient(top, #98d56c 0%,#c9e9b3 3%,#7fca4b 6%,#048803 100%);
+            border-color: #85b95f;
+        }
+        
+        &.lblue { 
+            background: #3bc1ee;
+            @include x-multiple-colored-gradient(#3bc1ee 0%,#9adff6 3%,#12b2e9 6%,#047dd5 100%); 
+            -pie-background: linear-gradient(top, #3bc1ee 0%,#9adff6 3%,#12b2e9 6%,#047dd5 100%);
+            border-color: #0277cd;
+        }
+        
+        &.dblue { 
+            background: #92b8dc;
+            @include x-multiple-colored-gradient(#92b8dc 0%,#0059ab 2%,#00376c 100%); 
+            -pie-background: linear-gradient(top, #92b8dc 0%,#0059ab 2%,#00376c 100%);
+            border-color: #2b76bb;
+        }
+        
+        &.white { 
+            background: #ffffff;
+            @include x-multiple-colored-gradient(#ffffff 0%,#f5f7fa 100%); 
+            -pie-background: linear-gradient(top, #ffffff 0%,#f5f7fa 100%); 
+            border-color: #d6dce4;
+            color: #13b5ea; 
+            text-shadow: none; 
+            -moz-text-shadow: none; 
+            -webkit-text-shadow: none;
+            
+            a, input, button {
+                color: #13b5ea; 
+                text-shadow: none; 
+                -moz-text-shadow: none; 
+                -webkit-text-shadow: none;
+            }
+        }
+
+        &.grey {
+        	background: #d3d3d3;
+			@include x-multiple-colored-gradient(#d3d3d3 0%, #c7c7c7 2%, #878787 100%);
+	  		-pie-background: linear-gradient(top, #d3d3d3 0%, #c7c7c7 2%, #878787 100%);
+	 		behavior: url(/css/PIE.htc);	
+        }
+    }
+}

@@ -1,0 +1,37 @@
+<table id="supplier-table">
+	<thead>
+		<tr>
+			<th class="tnid">TNID</th>
+			<th class="supplier">Supplier</th>
+			<th class="location">Location</th>
+			<th class="fixedWidth">Have you ordered from this supplier before?</th>
+			<th class="fixedWidth">Comparison Quotes Received</th>
+			<th class="fixedWidth">Date of First Comparison Quote</th>
+			<th class="fixedWidth">% of Quotes Cheaper</th>
+			<th class="fixedWidth saving">Potential Savings (USD)<a href="#potentialSaving" class="info pHelp"></span></th>
+			<th class="fixedActionWidth">Actions</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each data}}
+			{{#ifNotCond spbBranchCode 'deleted'}}
+			<tr data-id="{{spbBranchCode}}" data-saving="{{savingTotal}}">
+				<td class="viewQote root">{{spbBranchCode}}</td>
+				<td class="viewQote root">{{spbName}}</td>
+				<td class="viewQote root">{{spbCountryCode}}</td>
+				<td class="centreAligned viewQote root">{{hasOrder}}</td>
+				<td class="centreAligned viewQote root">{{totalQuotes}}</td>
+				<td class="centreAligned viewQote root">{{firstQuoteDate}}</td>
+				<td class="centreAligned viewQote root">{{quoteCheaper}}%</td>
+				<td class="centreAligned highlighted viewQote root">{{formatCurrency savingTotal}}</td>
+				<td class="centreAligned">
+					<a href="#" class="button green viewQote">View quotes</a>
+					<div class="blacklistSupplier">	
+						<i class="fa fa-trash-o blacklist" data-id="{{spbBranchCode}}"></i>
+					</div>
+				</td>
+			</tr>
+			{{/ifNotCond}}
+		{{/each}}
+	</tbody>
+</table>

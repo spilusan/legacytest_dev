@@ -1,0 +1,132 @@
+@import "compass/css3";
+@import 'partials/def/buttons';
+@import 'partials/def/context_help';
+
+.cHelp {
+	overflow: visible;
+
+	.tooltip {
+		background: #657789;
+		width: 165px;
+		padding: 13px;
+		padding-bottom: 0;
+		position: absolute;
+		color: #ffffff;
+		bottom: 29px;
+  		left: -10px;
+  		font-weight: normal;
+  		line-height: 1.4;
+  		display: none;
+  		z-index: 5000;
+	}
+
+	.tooltip::after {
+		width: 20px;
+		height: 15px;
+		content: " ";
+		display: block;
+		background: url(/img/profile/grTriangle.png) left top no-repeat transparent;
+		position: relative;
+		top: 15px;
+	}
+}
+
+div.loginBox {
+	display: block;
+	margin: 0;
+	padding: 0;
+
+	input[type="email"], input[type="password"] {
+		width: 165px;
+	}
+
+	label[for="emil"] {
+		margin-right: 23px;
+	}
+
+	a {
+		text-decoration: none;
+		font-size: 11px;
+	}
+
+	p {
+		font-size: 11px;
+	}
+
+	.left {
+		padding: 0px 5px 0px 0px;
+	}
+
+	.right {
+		padding: 0px 0px 0px 5px;
+		position: relative;
+
+		p {
+			margin-bottom: 0;
+		}
+
+		.regContainer {
+			padding: 15px;
+			height: 205px;
+		}
+
+		input[type="button"] {
+			position: absolute;
+			bottom: 15px;
+		}
+	}
+}
+
+#modal {
+	width: 600px;
+}
+
+#main_content_area {
+	width: 960px;
+	margin: 0 0 0 20px;
+}
+
+.content_wide_body_left p.desc {
+	word-wrap: break-word;
+}
+
+.side_section_verification {
+	display: block;
+	background-color: #f9f7c4;
+	padding: 15px 0px;
+	margin: 15px 0px 0px 0px;
+	border: 1px solid #c8c8c8;
+	text-align: center;
+    @include border-radius(6px);
+
+	img {
+		height: 100px;		
+	}
+
+	img:nth-child(2) {
+		margin-left: 20px;
+	}
+
+	p {
+		border-top: 1px solid #c8c8c8;
+		text-align: left;
+		margin: 6px 0px;
+		padding: 6px 20px;
+		line-height: 125%;
+	}
+
+	.button {
+		display: inline-block;
+	}
+}
+
+#topProfileIcons {
+	.tradenet {
+		.trade-rank {
+			display: inline-block;
+			float: left;
+			margin-right: 10px;
+		}
+	}
+
+}

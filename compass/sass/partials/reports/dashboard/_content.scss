@@ -1,0 +1,131 @@
+/*
+Document   : reports/dashboard/_content.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: styles for match dashboard content
+*/
+
+#body {
+	h1, h2 {
+		.selector {
+			float: right;
+			margin-top: -7px;
+			width: 125px;
+			margin-bottom: 5px;
+			
+			span {
+				font-weight: normal;
+				width: 100px;
+			}
+		}
+
+		padding-bottom: 0;
+	}
+
+	h2 {
+		&.title {
+			display: block;
+			margin: 0;
+			.selector {
+				margin-top: 2px;
+			}
+		}
+	}
+
+	#content {
+		padding: 20px 15px 15px 15px;
+
+		p {
+			font-size: 12px;
+		}
+
+		.box {
+			display: block;
+			position: relative;
+			border: 1px solid #d6dce4;
+			padding: 6px 20px;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+			line-height: 50px;
+			margin-bottom: 2px;
+
+			&.white {
+				line-height: 41px;
+
+				.value {
+					margin-top: 9px;
+				}
+			}
+
+			&.grad {
+				@include background-image(linear-gradient(#ffffff 0%, #e9edf1 100%));
+				-pie-background: linear-gradient(top, #ffffff 0%, #e9edf1 100%);
+			}
+
+			.value {
+				position: relative;
+				display: block;
+				float: left;
+				width: 115px;
+				border-width: 1px;
+				border-style: solid;
+				font-size: 30px;
+				line-height: 1.2;
+				font-weight: bold;
+				text-align: center;
+				padding: 8px 0 6px 0;
+				vertical-align: middle;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+				margin-right: 20px;
+
+				&.blue {
+					border-color: #13b5ea;
+					background: #caedf9;
+					color: #087ec5;
+				}
+
+				&.white {
+					background: #ffffff;
+					border-color: #d6dce4;
+					font-size: 22px;
+					color: #e81e24;
+				}
+
+				&.green {
+					background: #e5f8d8;
+					border-color: #83cc4e;
+					color: #008b00;
+				}
+
+				&.yellow {
+					background: #fff0c5;
+					border-color: #fdd45c;
+					color: #ff7f04;
+				}
+			}
+
+			p {
+				display: inline;
+				vertical-align: middle;
+				line-height: 1.2;
+				font-size: 15px;
+				color: #2e3235;
+
+				.small {
+					font-size: 12px;
+					font-weight: bold;
+
+					span {
+						color: #e81e24;
+					}
+				}
+			}
+
+			.text {
+				line-height: 1.2;
+				vertical-align: middle;
+			}
+		}
+	}
+}

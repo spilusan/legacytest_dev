@@ -1,0 +1,64 @@
+#header {
+	.nav {
+		ul {
+			&.primary {
+				li {
+					a.trade {
+						width: 60px;
+					}
+				}
+			}
+		}
+	}
+}
+
+#body {
+	#content {
+		h2 {
+			input {
+				position: relative;
+				top: 1px;
+			}
+		}
+
+		input[type="button"]{
+			-pie-poll: false;
+		}
+
+		.buttons {
+			input{
+				behavior: none;
+
+				&.decline {
+					background: red;
+				}
+
+				&.reply {
+					background: #008b00;
+				}
+
+				&.back {
+					background: #005aad;
+				}
+			}
+		}
+
+		.rfqDisplay {
+			.dataBox.details {
+				width: 764px;
+			}
+		}
+
+		.pagination {
+			ul {
+				li {
+					behavior: none;
+
+					&.prev, &.next {
+						height: 60px;
+					}
+				}
+			}
+		}
+	}
+}

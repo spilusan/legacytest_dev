@@ -1,0 +1,18 @@
+<fieldset>
+	<label class="strong">Your current status:</label>
+	<span class="circle {{#if isFullMember}}tHelp{{/if}}" data-template="basic-membership">
+		{{#unless isFullMember}}
+			<span class="{{#if isFullMember}}tHelp{{/if}}" data-template="basic-membership"></span>
+		{{/unless}}
+	</span>
+	<label>Basic</label>
+	<span class="circle {{#unless isFullMember}}tHelp{{/unless}}" data-template="membership">
+		{{#if isFullMember}}
+			<span class="{{#unless isFullMember}}tHelp{{/unless}}" data-template="membership"></span>
+		{{/if}}
+	</span>
+	<label class="strong" style="margin-right: 3px;">Full Supplier Membership</label>
+	{{#unless isFullMember}}
+	<a href="basicMembership" class="cHelp" style="top: 3px;"></a>
+	{{/unless}}
+</fieldset>

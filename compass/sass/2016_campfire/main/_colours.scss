@@ -1,0 +1,166 @@
+/*
+Document   : partials/guidelines/_colours.scss
+Created on : Jun 21, 2016, 10:05:43 AM
+Author     : gly
+Description: Default colour settings
+*/
+
+
+$white : #FFFFFF;
+$lt-grey: #E9EDF1;
+$blue-grey: #D3E5FB;
+$dark-blue-grey: #44596E;
+
+$mid-grey: #D5DCE4;
+$highlight-grey: #BAC6D8;
+$reg-grey: #F3F6F9;
+$dark-grey: #9BA7BA;
+$text-grey: #333333;
+$text-green: #009b01;
+$menu-grey: #525C64;
+$blue-grey: #526380;
+$outline-blue-grey: #ACBAC7;
+$outline-grey: #8597AC;
+$icon-grey: $outline-grey;
+$darker-grey: #58738D;
+$hero-grey: $darker-grey;
+$black: #000000;
+$light-black: #2E3235;
+
+$light-cyan-blue: #DBF3FD;
+$mid-cyan-blue: #BBEAFA;
+$cyan-blue: #13B5EA;
+$light-cyan-blue: #17B5E9;
+$active-cyan-blue: #90DCF7;
+$mid-blue: #087EC5;
+$link-blue: #005AAD;
+$dk-link-blue: #00478A;
+$dk-navy: #012B54;
+$pale-blue: #417392;
+$dark-blue: #3D82C1;
+
+$pink: #FFEFEF;
+$orange: #FF7F04;
+$red: #E81E24;
+$grey: #EBEEF2;
+$dark-red: #D0011B;
+
+$green: #008B00;
+$midgreen: #cbeacb;
+
+$tableHeader: #C8D1DC;
+$tableRow: #F3F6F9;
+
+$comparisonDark: #6C8199;
+
+$disable-grey: #f2f2f2;
+
+/* Text */
+.text-white {
+	color: $white;
+}
+
+.text-lt-grey {
+	color: $lt-grey;
+}
+
+.text-mid-grey {
+	color: $mid-grey;
+}
+
+.text-highlight-grey {
+	color: $highlight-grey;
+}
+
+.text-dark-grey {
+	color: $dark-grey;
+}
+
+.text-text-grey {
+	color: $text-grey;
+}
+
+.text-black {
+	color: $black;
+}
+
+.text-light-cyan-blue {
+	color: $light-cyan-blue;
+}
+
+.text-mid-cyan-blue {
+	color: $mid-cyan-blue;
+}
+
+.text-cyan-blue {
+	color: $cyan-blue;
+}
+
+.text-mid-blue {
+	color: $mid-blue;
+}
+
+.text-link-blue {
+	color: $link-blue;
+}
+
+.text-dk-navy {
+	color: $dk-navy;
+}
+
+.text-pink {
+	color: $pink;
+}
+
+.text-orange {
+	color: $orange;
+}
+
+.text-red {
+	color: $red;
+}
+
+.text-green {
+	color: $green;
+}
+
+/* Backgrounds */
+.bg-white {
+	background-color: $white;
+}
+
+.bg-grey {
+	background-color: $lt-grey;
+}
+
+.bg-blue-grey {
+	background-color: $blue-grey;
+}
+
+.bg-icon-grey {
+	background-color: $icon-grey;
+}
+
+.bg-hero-grey {
+	background-color: $hero-grey;
+}
+
+.bg-dark-blue-grey {
+	background-color: $dark-blue-grey;
+}
+
+.bg-text-grey {
+	background-color: $text-grey;
+}
+
+.bg-darkGrey {
+	background-color: $darker-grey;
+}	
+
+.bg-mediumGrey {
+	background-color: $outline-grey;
+}
+
+.bg-mediumGreen {
+	background-color: $midgreen;
+}

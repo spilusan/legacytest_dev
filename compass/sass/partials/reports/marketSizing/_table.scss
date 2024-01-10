@@ -1,0 +1,153 @@
+div#body {
+	#content {
+		#innerContent {
+			.data {
+				display: none; 
+				width: 1215px; 
+				overflow: hidden; 
+				overflow-x: auto; 
+				padding-bottom: 30px;
+			}
+			
+			table {
+				border-collapse: collapse;
+				min-width: 1010px;
+				width: 100%;
+
+				thead, tfoot {
+					tr {
+						th, td {
+							border-right: 1px solid #bdc3ca;
+							border-bottom: 1px solid #bdc3ca;
+							border-top: 1px solid #bdc3ca;
+							width: 56px;
+							padding: 9px 5px;
+
+							span {
+								&.red {
+									color: #fa1415;
+								}
+							}
+
+							&.first {
+								border-left: 1px solid #bdc3ca;
+								width: 110px !important;
+							}
+
+							&.pages, &.tradenet, &.pagesRfq, &.pagesSearch, &.tnRfq, &.tnPo {
+								text-align: center;
+							}
+
+							&.pages {
+								background: #bee7a3;
+							}
+
+							&.tradenet {
+								background: #8fdbf7;
+							}
+
+							&.pagesRfq, &.pagesSearch, &.pagesEvents {
+								background: #e5f7d7;
+							}
+
+							&.tnRfq, &.rfqNo, &.liRfqNo {
+								background: #dff3fb;
+								font-weight: normal;
+							}
+
+							&.tnPo, &.poNo, &.liPoNo, &.totalLi, &.totalLiCost, &.totalPoCost {
+								background: #c9edf9;
+								font-weight: normal;
+							}
+
+							&.totalLiCost, &.totalPoCost {
+								width: 86px;
+							}
+
+							&.grey {
+								background: #e9edf1;
+							}
+
+							&.rank {
+								width: 45px;
+								text-align: left;
+							}
+
+							&.keyword {
+								width: 130px;
+								text-align: left;
+							}
+
+							&.space {
+								border: 0;
+
+								&.small {
+									height: 2px;
+									font-size: 1px;
+									padding: 0;
+								}
+							}
+						}
+					}
+				}
+
+				tfoot {
+					tr {
+						td {
+							&.space {
+								border: 1px solid #bdc3ca;
+
+								&.small{
+									border-right: 0;
+									border-left: 0;
+								}
+							}
+
+							padding: 9px;
+						}
+					}
+				}
+
+				tr {
+					th, td {
+						color: #2e3235;
+					}
+
+					th {
+						font-size: 12px;
+						font-weight: bold;
+					}
+
+					td {
+						font-size: 11px;
+						font-weight: normal;
+						padding: 9px;
+						text-align: left;
+						border-right: 1px solid #bdc3ca;
+						border-bottom: 1px solid #bdc3ca;
+
+						&.first {
+							border-left: 1px solid #bdc3ca;
+							width: 51px !important;
+							min-width: 51px !important;
+
+							img {
+								cursor: pointer;
+							}
+						}
+
+						&.number {
+							text-align: right;
+						}
+					}
+
+					&.first {
+						td {
+							border-top: 1px solid #bdc3ca;
+						}
+					}
+				}
+			}
+		}
+	}
+}

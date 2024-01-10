@@ -1,0 +1,31 @@
+<div class="wide_zone_block" style="width: 100%">
+    <?php
+    if (isset($this->block['title'])) echo '<h3>' . $this->block['title'] . '</h3>'; ?>
+    <div class="toggle-text zone_block_content<?= isset($this->block['@attributes']['class']) ? ' ' . $this->block['@attributes']['class'] : '' ?>">
+        <?php
+        switch ($this->block['@attributes']['type']) {
+            case "rss":
+                foreach ($this->rssContentBlock()->getBlockContent($this->block['feed']['@attributes']['uri'], $this->block['feed']['@attributes']['items']) as $feed) {
+                    if (isset($feed['title'])) {
+                        echo '<p class="zone_block_content_title">';
+                        if (isset($feed['link'])) {
+                            echo '<a href="' . ((isset($this->block['feed']['url-prepend'])) ? $this->block['feed']['url-prepend'] : '') . $feed['link'] . '" target="_blank">' . $feed['title'] . '</a>';
+                        } else {
+                            echo $feed['title'];
+                        }
+                        echo '</p>';
+                    }
+                    if (isset($feed['description'])) {
+                        echo '<div class="zone_block_content_description">' . $feed['description'] . '</div>';
+                    }
+                }
+                break;
+            default:
+                echo $this->block['text'];
+                break;
+        }
+        ?>
+    </div>
+    <span id="zone-content-read-more">more &gt;</span>
+    <div class="clear"></div>
+</div>

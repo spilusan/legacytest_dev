@@ -1,0 +1,94 @@
+<?php
+    $this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+	$this->headLink()->appendStylesheet('/css/billing/gmv.css');
+
+    $this->requirejs()->addModule('backbone/reports/gmv/views/mainView');
+
+    $canMarkTxnAsInvalid = ($this->user->canPerform('PSG_ACCESS_INV_TXN_TOOLS'))?1:0;
+
+    $this->getHelper('Requirejs')->addDefinition('reports/gmv/canMarkAsInvalid', $canMarkTxnAsInvalid);
+?>
+
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'GMV Report', 'url'  => '/reports/gmv');
+	$breadcrumbs[] = array('name' => 'Supplier', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<div id="body">
+    <div id="content">
+        <h1 class="styled">GMV Report for Supplier</h1>
+
+        <div style="margin-bottom:5px;">
+	        <?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+
+	        <div style="font-size:12px; margin-top:10px; margin-bottom:10px; padding:5px;">
+		        <strong>Rate type values:</strong> "S" stands for standard rate, "T" for target rate.<br/>
+	        </div>
+        </div>
+        <div class="clear"></div>
+        <form action="/reports/gmv" method="get" class="new report options">
+        	<div class="dateInput">
+        		<label>
+        			TNID:
+        			<input type="text" name="tnidForGmv" value="<?= $this->params['tnid'] ?>">
+                    <div class="tnidAutocomplete"></div>
+        		</label>
+        	</div>
+            <div class="dateInput">
+                <label>
+                    Start: <input type="text" name="datefrom" class="datepicker" value="<?= ($this->params['datefrom'] != "")?$this->params['datefrom']:'yyyy-mm-dd' ?>">
+                </label>
+            </div>
+            <div class="dateInput to">
+                <label>
+                    End: <input type="text" name="dateto" class="datepicker" value="<?= ($this->params['dateto'] != "")?$this->params['dateto']:'yyyy-mm-dd' ?>">
+                </label>
+            </div>
+            <input type="button" id="runReport" value="Generate Report" class="button medium lblue generate" name="generate">
+            <div class="clear"></div>
+    	</form>
+        <div class="actions">
+            <div style="float:right; margin-left:20px; margin-right:20px; font-size:20px; font-weight:bold;" class="gmvSupplierDetail">
+                <div class="supplierDetail"></div>
+                <div style="font-size:12px; font-weight:bold; margin-top: 5px;">
+                	<div class="detail"></div>
+                    <table width="100%">
+                        <tr><td>Public/Override TNID:</td><td style="text-align: left;"><span class="publicTnid"></span></td></tr>
+						<tr><td>Country:</td><td style="text-align: left;"><span class="countryName"></span></td></tr>
+						<tr><td>Published:</td><td style="text-align: left;"><span class="isPublished"></span></td></tr>
+						<tr><td>Account manager:</td><td style="text-align: left;"><span class="accountManager"></span></td></tr>
+						<tr><td>Total Adjusted GMV:</td><td style="text-align: left;">USD <span title="Total cost" class="totalTrans"></span></td></tr>
+                    </table>
+                </div>
+            </div>
+    	    <a href="#" class="view csv">[ View full report as CSV ]</a>
+    	    <a href="#" class="expandAll">[ Expand all ]</a>
+    	    <a href="#" class="collapseAll">[ Collapse all ]</a>
+    	    <a href="#" class="expandSel">[ Expand selected ]</a>
+    	    <a href="#" class="collapseSel">[ Collapse selected ]</a>
+            <div class="clear"></div>
+    	</div>
+        <textarea id="csvData" class="csv" style="display:none;"><?=$this->csv?></textarea>
+        <div class="noItems">No items found.</div>
+        <div class="gmvData"></div>
+    </div>
+</div>
+
+<div class="clear"></div>
+
+<div id="waiting">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>
+
+<? if( $this->params['tnid'] != "" && $this->params['datefrom'] != "" && $this->params['dateto'] != "" ){ ?>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#runReport").trigger("click");
+    });
+</script>
+<? } ?>

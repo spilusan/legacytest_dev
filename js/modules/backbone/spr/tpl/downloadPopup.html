@@ -1,0 +1,25 @@
+<div class="downloadPopup">
+    <div class="title">
+        <p>
+            {{#if isLoading}}
+                Exporting Data
+            {{else}}
+                Export Successful
+            {{/if}}
+        </p>
+        <span class="downloadClose"></span>
+    </div>
+    <div class="dowloadPopupContent">
+        <p>
+            {{#if isLoading}}
+                Please wait a moment while we export the data.<br>
+                <img src="/images/layout_v2/file_icons/spinner.gif">
+            {{else}}
+                Export of data has been successful, you may now view the file.
+                <div class="buttons">
+                        <a href="#" class="downloadClose btn small-wide mid-grey-outline">OK</a>
+                 </div>
+            {{/if}}
+        </p>
+    </div>
+</div>

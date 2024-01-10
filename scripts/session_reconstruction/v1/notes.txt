@@ -1,0 +1,21 @@
+349,260 events (total of rows in all 3 source tables) - 1 week's worth of data
+226,635 were tagged with a session id (untagged mainly e.g. browser = crawler rows)
+Took circa 10mins to run
+
+If a user acts on the site, then logs in, acts, logs out, then acts again, we would have user recorded across a session's events like this:
+
+null, ..., user_id, ... , null ...
+
+This implementation would split such a session into 3 sessions.
+
+We recently (Feb?) added code to the app which updates events retrospectively at log-in time. The same situation would therefore be recorded as:
+
+user_id, ..., user_id, null ...
+
+This remedies the issue for recent events, but means that such sessions are incorrectly restored prior to changing the app.
+
+One further point - it would be nice if the app remembers a user after log-out so as to produce:
+
+user_id, ..., user_id, user_id, ...
+
+I doubt that it does this.

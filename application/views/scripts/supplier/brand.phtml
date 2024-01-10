@@ -1,0 +1,180 @@
+<?php
+
+$this->headMeta()->appendName('robots', 'noindex, follow');
+
+$this->googledfp()->addTargeting('keywords','ALL');
+$this->googledfp()->addTargeting('country','ALL');
+$this->googledfp()->addTargeting('port','ALL');
+$this->googledfp()->addTargeting('supplier','ALL');
+
+$this->headScript()->appendFile('/js/jquery.auto-complete.js')
+				   ->appendFile('/js/jquery.metadata.js')
+				   ->appendFile('/js/jquery.footer.js');
+
+$this->googledfp()->add('TargetedOrGeneralAdSlot1');
+$this->googledfp()->add('TargetedOrGeneralAdSlot2');
+$this->googledfp()->add('TargetedOrGeneralAdSlot3');
+
+$this->googledfp()->render();
+
+$uri = $this->uri();
+
+echo $this->partial('searchbar.phtml', array('searchWhat'    => $this->searchValues['searchWhat'],
+											 'searchText'    => $this->searchText,
+											 'searchWhere'   => $this->searchValues['searchWhere'],
+											 'supplierCount' => $this->supplierCount));
+
+$this->CDNLink()->appendStylesheet('/css/search.css');
+
+?>
+
+<div id="main_content_area" style="margin-top:20px;"> 
+
+	<div class="content_wide" style="position:relative;">
+	
+		<div class="content_wide_header">
+			<h1 style="margin-left:-10px;"><?php echo $this->string()->shortenToLastWord($this->mainTitle, 80); ?></h1>
+			
+			<div class="clear"></div>
+		</div>
+
+		<div class="content_wide_body">
+		
+			<div class="browse_pagination">
+				<p class="indicator">
+					<?php
+					if ($this->display == 'brands')
+					{
+						echo ($this->letter) ? strtoupper($this->letter) : 'Popular Brands';
+					}
+					elseif ($this->display == 'countries')
+					{
+						echo '&nbsp;';
+					}
+					?>
+				</p>
+				
+				<ul>
+					<li style="color: #666; font-size: 11px;">More Brands:</li>
+					<li><a href="/supplier/brand/l/marine-suppliers-of-brands-beginning-with-&#35;" title="Browse marine suppliers of brands beginning with non-alpha characters" id="non-alpha">&#35;</a></li>
+					<?php
+					foreach (range('a', 'z') as $l)
+					{
+						?>
+						<li><a title="Browse marine suppliers of brands beginning with <?php echo $l; ?>" href="/supplier/brand/l/marine-suppliers-of-brands-beginning-with-<?php echo $l; ?>" id="<?php echo $l; ?>"><?php echo strtoupper($l);?></a></li>
+						<?php
+					}
+					?>
+				</ul>
+				<div class="clear"></div>
+			</div>
+		
+			<?php
+			// this a wee bit hacky, but we can do something better when we have time:
+			switch ($this->display)
+			{
+				case 'brands':
+					foreach ($this->brands as $brand)
+					{
+						?>
+						<?php // echo $this->searchUrl()->searchWhat($brand['NAME'])->brandId($brand['ID'])->sourceKey('BROWSE_BRAND') ?>
+						<div class="browse_list">
+							<a href="/brand/<?php echo $this->string()->sanitiseForURI(($brand['BROWSE_PAGE_NAME']) ? $brand['BROWSE_PAGE_NAME'] : $brand['NAME']); ?>/<?php echo $brand['ID']; ?>"
+							   title="Marine suppliers of <?php echo ($brand['BROWSE_PAGE_NAME']) ? $brand['BROWSE_PAGE_NAME'] : $brand['NAME']; ?>"><span>Marine suppliers of </span><?php echo ($brand['BROWSE_PAGE_NAME']) ? $brand['BROWSE_PAGE_NAME'] : $brand['NAME']; ?></a>
+							
+							<div class="end_link">
+								<?php
+								if ($brand['HAS_PRODUCTS'] == 'Y')
+								{
+									?>
+									<a title="Browse products made by <?php echo ($brand['BROWSE_PAGE_NAME']) ? $brand['BROWSE_PAGE_NAME'] : $brand['NAME']; ?>" href="/supplier/brand/browse-by-product/<?php echo ($brand['BROWSE_PAGE_NAME']) ? $uri->sanitise($brand['BROWSE_PAGE_NAME']) : $uri->sanitise($brand['NAME']); ?>/id/<?php echo $brand['ID']; ?>">Browse by product</a>
+									|
+									<?php
+								}
+								?>
+								<a title="Browse marine suppliers of <?php echo ($brand['BROWSE_PAGE_NAME']) ? $brand['BROWSE_PAGE_NAME'] : $brand['NAME']; ?> by country" href="/supplier/brand/browse-by-country/<?php echo ($brand['BROWSE_PAGE_NAME']) ? $uri->sanitise($brand['BROWSE_PAGE_NAME']) : $uri->sanitise($brand['NAME']); ?>/id/<?php echo $brand['ID']; ?>">Browse by country</a>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<?php
+					}
+					break;
+				
+				case 'countries':
+					foreach ($this->continents as $continent)
+					{
+						?>
+						<h3 class="continent"><?php echo $continent['name']; ?></h3>
+						<?php
+						
+						foreach ($continent['countries'] as $cntCode => $country)
+						{
+							?>
+							<?php // echo $this->searchUrl()->searchWhat($this->brand['NAME'])->searchText($country['name'])->searchWhere($cntCode)->brandId($this->brand['ID'])->sourceKey('BROWSE_BRAND'); ?>
+							<div class="browse_list">
+								<a href="/brand/<?php echo $this->string()->sanitiseForURI(($this->brand['BROWSE_PAGE_NAME']) ? $this->brand['BROWSE_PAGE_NAME'] : $this->brand['NAME']); ?>/<?php echo $this->string()->sanitiseForURI($country['name']); ?>/<?php echo $cntCode; ?>/<?php echo $this->brand['ID']; ?>"
+								   title="Marine suppliers of <?php echo ($this->brand['BROWSE_PAGE_NAME']) ? $this->brand['BROWSE_PAGE_NAME'] : $this->brand['NAME']; ?> in <?php echo $country['name']; ?>"><span>Marine suppliers of <?php echo ($this->brand['BROWSE_PAGE_NAME']) ? $this->brand['BROWSE_PAGE_NAME'] : $this->brand['NAME']; ?> in </span><?php echo $country['name']; ?></a>
+								<div class="clear"></div>
+							</div>
+							<?php
+						}
+					}
+					break;
+				
+				case 'products':
+					foreach ($this->products as $product)
+					{
+						?>
+						<div class="browse_list">
+							<a href="/product/<?php echo $this->string()->sanitiseForURI($product['NAME']) ?>/<?php echo $product['ID'] ?>"
+							   title="Marine suppliers of <?php echo $product['NAME'] ?> made by <?php echo ($this->brand['BROWSE_PAGE_NAME']) ? $this->brand['BROWSE_PAGE_NAME'] : $this->brand['NAME']; ?>">
+								<?php echo $product['NAME'] ?>
+							</a>
+							<?php
+							if ($product['HAS_MODELS'] == 'Y')
+							{
+							?>
+								<div class="end_link">
+									<a href="/supplier/brand/browse-by-model/<?php echo $this->string()->sanitiseForURI(($this->brand['BROWSE_PAGE_NAME']) ? $this->brand['BROWSE_PAGE_NAME'] : $this->brand['NAME']); ?>/id/<?php echo $this->brand['ID']; ?>/pid/<?php echo $product['ID'] ?>"
+										title="Browse models of <?php echo $product['NAME'] ?> made by <?php echo ($this->brand['BROWSE_PAGE_NAME']) ? $this->brand['BROWSE_PAGE_NAME'] : $this->brand['NAME']; ?>">Browse by models</a>
+								</div>
+							<?php
+							}
+							?>
+							<div class="clear"></div>
+						</div>
+						<?php
+					}
+					break;
+				
+				case 'models':
+					foreach ($this->models as $model)
+					{
+						?>
+						<div class="browse_list">
+							<a href="/model/<?php echo $this->string()->sanitiseForURI($model['NAME']) ?>/<?php echo $model['ID'] ?>"
+							   title="Marine suppliers of <?php echo $model['NAME'] ?> made by <?php echo ($this->brand['BROWSE_PAGE_NAME']) ? $this->brand['BROWSE_PAGE_NAME'] : $this->brand['NAME']; ?>">
+								<?php echo $model['NAME']; ?>
+							</a>
+							<div class="clear"></div>
+						</div>
+						<?php
+					}
+					break;
+			}
+			
+			?>
+			
+		</div>
+		<div class="content_wide_footer_shadow"></div>
+	</div>
+
+	<div class="zone">
+		<?php echo $this->partial('general-google-ads.phtml'); ?>
+	</div>
+	
+	<div class="clear"></div>   
+
+</div>
+
+<script type="text/javascript" src="<?php echo $this->CDNLink()->javascript('/js/jquery.searchvariables.js'); ?>" charset="utf-8"></script>

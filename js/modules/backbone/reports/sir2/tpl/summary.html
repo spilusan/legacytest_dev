@@ -1,0 +1,405 @@
+<div class="lead">
+	<div class="leadTitles">
+		<p class="ba">Brand Awareness</p>
+		<p class="lg">Lead Generation</p>
+		<p class="te">Trade Efficiency</p>
+	</div>
+	<div class="leadBoard">
+		<div class="bars ba">
+			<div class="vesselExp bar">
+				<a href="onboard" class="cHelp light"></a>
+				<p>Onboard influencer exposure</p>
+				<div class="value">
+					<div class="valueBox">
+						<span>{{#ifCond supplier.listed-in-sso-2014 0}}0{{else}}50,000{{/ifCond}}</span>
+					</div>
+					<div class="tooltipHolder">
+						<div class="tooltip">
+							<p>Period: {{dateFromPretty}} - {{dateToPretty}}</p>
+						</div>
+						<span></span>
+					</div>
+				</div>
+			</div>
+			<div class="bannerImp bar">
+				<a href="banner" class="cHelp light"></a>
+				<p>Banner impressions</p>
+				<div class="value">
+					<div class="valueBox {{#if comparePeriod}}compare{{/if}}">
+						<span>{{formatNumber supplier.banner-summary.impression.count}}</span>
+					</div>
+					<div class="tooltipHolder">
+						<div class="tooltip">
+							<p>Period: {{dateFromPretty}} - {{dateToPretty}}</p>
+						</div>
+						<span></span>
+					</div>
+				</div>
+				{{#if comparePeriod}}
+					<div class="value">
+						<div class="valueBox comp">
+
+							<span>{{formatNumber compare.banner-summary.impression.count}}</span>
+						</div>
+						<div class="tooltipHolder">
+							<div class="tooltip">
+								<p>Period: {{dateFromCompPretty}} - {{dateToCompPretty}}</p>
+							</div>
+							<span></span>
+						</div>
+					</div>
+				{{/if}}
+			</div>
+			<div class="searchImp bar">
+				<a href="search" class="cHelp light"></a>
+				<p>Search impressions</p>
+				<div class="value">
+					<div class="valueBox {{#if comparePeriod}}compare{{/if}}">
+						<span>{{formatNumber supplier.search-summary.brand-and-category-searches.count}}</span>
+					</div>
+					<div class="tooltipHolder">
+						<div class="tooltip">
+							<p>Period: {{dateFromPretty}} - {{dateToPretty}}</p>
+							<p>The number shown in the main display is the number of <strong>total</strong> search impressions (impressions from all pages in search results).</p>
+							<p>Page 1 Search impressions:<sup>*</sup> {{formatNumber supplier.search-summary.top-search-impression.count}}</p>
+							<p><sup>*</sup>This is the number of times where you appeared on page 1 of the Pages search results during the selected time period.</p>
+						</div>
+						<span></span>
+					</div>
+				</div>
+				{{#if comparePeriod}}
+					<div class="value">
+						<div class="valueBox comp">
+							<span>{{formatNumber compare.search-summary.brand-and-category-searches.count}}</span>
+						</div>
+						<div class="tooltipHolder">
+							<div class="tooltip">
+								<p>Period: {{dateFromCompPretty}} - {{dateToCompPretty}}</p>
+								<p>The number shown in the main display is the number of <strong>total</strong> search impressions (impressions from all pages in search results).</p>
+								<p>Page 1 Search impressions<sup>*</sup>: {{formatNumber compare.search-summary.top-search-impression.count}}</p>
+								<p><sup>*</sup>This is the number of times where you appeared on page 1 of the Pages search results during the selected time period.</p>
+							</div>
+							<span></span>
+						</div>
+					</div>
+				{{/if}}
+			</div>
+		</div>
+		<div class="bars lg">
+			<div class="pv bar">
+				<a href="profile" class="cHelp light"></a>
+				<p>
+					Profile<br /> 
+					Views
+				</p>
+				<div class="value">
+					<div class="valueBox {{#if comparePeriod}}compare{{/if}}">
+						<span>{{formatNumber supplier.impression-summary.impression.count}}</span>
+					</div>
+					<div class="tooltipHolder">
+						<div class="tooltip">
+							<p class="noMarg">Period: {{dateFromPretty}} - {{dateToPretty}}</p>
+						</div>
+						<span></span>
+					</div>
+				</div>
+				{{#if comparePeriod}}
+					<div class="value">
+						<div class="valueBox comp">
+							<span>{{formatNumber compare.impression-summary.impression.count}}</span>
+						</div>
+						<div class="tooltipHolder">
+							<div class="tooltip">
+								<p class="noMarg">Period: {{dateFromCompPretty}} - {{dateToCompPretty}}</p>
+							</div>
+							<span></span>
+						</div>
+					</div>
+				{{/if}}
+				{{#if compareMarket}}
+					<div class="value">
+						<div class="valueBox marketComp">
+							<span>{{roundOneUp market.impression.count}}</span>
+							<p>Market avg.</p>
+						</div>
+						<div class="tooltipHolder">
+							<div class="tooltip">
+								<p class="noMarg">Period: {{dateFromPretty}} - {{dateToPretty}}</p>
+							</div>
+							<span></span>
+						</div>
+					</div>
+					{{#if comparePeriod}}
+						<div class="value">
+							<div class="valueBox marketComp">
+								<span>{{roundOneUp marketComp.impression.count}}</span>
+								<p>Market avg.</p>
+							</div>
+							<div class="tooltipHolder">
+								<div class="tooltip">
+									<p class="noMarg">Period: {{dateFromCompPretty}} - {{dateToCompPretty}}</p>
+								</div>
+								<span></span>
+							</div>
+						</div>
+					{{/if}}
+				{{/if}}
+			</div>
+			<div class="cv bar">
+				<a href="contact" class="cHelp light"></a>
+				<p>
+					Contact<br />
+					Views
+				</p>
+				<div class="value">
+					<div class="valueBox {{#if comparePeriod}}compare{{/if}}">
+						<span>{{formatNumber supplier.impression-summary.contact-view.count}}</span>
+					</div>
+					<div class="tooltipHolder">
+						<div class="tooltip">
+							<p>Period: {{dateFromPretty}} - {{dateToPretty}}</p>
+							<p>The number shown in the main display is the number of <strong>total</strong> contact views.</p>
+							<p>Unique contact views<sup>*</sup>: {{formatNumber supplier.impression-summary.contact-view-by-unique-user.count}}</p>
+							<p><sup>*</sup>This is the number of times a unique user of Pages viewed the Contact screen on your profile and so saw your contact information.</p>
+							<p>Regardless of the number of times during each membership period that each user of Pages visits your Contact screen, ShipServ will only count 1 unique visit. The date of the unique visit will be the date of the first visit made to the Contact screen in the membership year.</p>
+						</div>
+						<span></span>
+					</div>
+				</div>
+				{{#if comparePeriod}}
+					<div class="value">
+						<div class="valueBox comp">
+							<span>{{formatNumber compare.impression-summary.contact-view.count}}</span>
+						</div>
+						<div class="tooltipHolder">
+							<div class="tooltip">
+								<p>Period: {{dateFromCompPretty}} - {{dateToCompPretty}}</p>
+								<p>The number shown in the main display is the number of <strong>total</strong> contact views.</p>
+								<p>Unique contact views<sup>*</sup>: {{formatNumber compare.impression-summary.contact-view-by-unique-user.count}}</p>
+								<p><sup>*</sup>This is the number of times a unique user of Pages viewed the Contact screen on your profile and so saw your contact information.</p>
+								<p>Regardless of the number of times during each membership period that each user of Pages visits your Contact screen, ShipServ will only count 1 unique visit. The date of the unique visit will be the date of the first visit made to the Contact screen in the membership year.</p>
+							</div>
+							<span></span>
+						</div>
+					</div>
+				{{/if}}
+				{{#if compareMarket}}
+					<div class="value">
+						<div class="valueBox marketComp">
+							<span>{{roundOneUp market.contact-view.count}}</span>
+							<p>Market avg.</p>
+						</div>
+						<div class="tooltipHolder">
+							<div class="tooltip">
+								<p class="noMarg">Period: {{dateFromPretty}} - {{dateToPretty}}</p>
+							</div>
+							<span></span>
+						</div>
+					</div>
+					{{#if comparePeriod}}
+						<div class="value">
+							<div class="valueBox marketComp">
+								<span>{{roundOneUp marketComp.contact-view.count}}</span>
+								<p>Market avg.</p>
+							</div>
+							<div class="tooltipHolder">
+								<div class="tooltip">
+									<p class="noMarg">Period: {{dateFromCompPretty}} - {{dateToCompPretty}}</p>
+								</div>
+								<span></span>
+							</div>
+						</div>
+					{{/if}}
+				{{/if}}
+			</div>
+			<div class="rfq bar">
+				<a href="rfq" class="cHelp light"></a>
+				<p>RFQs</p>
+				<div class="value">
+					<div class="valueBox {{#if comparePeriod}}compare{{/if}}">
+						<span>{{formatNumber supplier.allRfqs}}</span>
+					</div>
+					<div class="tooltipHolder">
+						<div class="tooltip">
+							<p>RFQs from Pages: {{formatNumber supplier.enquiry-summary.enquiry-sent.count}}</p>
+							<p>RFQs from TradeNet: {{formatNumber supplier.tradenet-summary.RFQ.count}}</p>
+							<p class="noMarg">Period: {{dateFromPretty}} - {{dateToPretty}}</p>
+						</div>
+						<span></span>
+					</div>
+				</div>
+				{{#if comparePeriod}}
+					<div class="value">
+						<div class="valueBox comp">
+							<span>{{formatNumber compare.allRfqs}}</span>
+						</div>
+						<div class="tooltipHolder">
+							<div class="tooltip">
+								<p>RFQs from Pages: {{formatNumber compare.enquiry-summary.enquiry-sent.count}}</p>
+								<p>RFQs from TradeNet: {{formatNumber compare.tradenet-summary.RFQ.count}}</p>
+								<p class="noMarg">Period: {{dateFromCompPretty}} - {{dateToCompPretty}}</p>
+							</div>
+							<span></span>
+						</div>
+					</div>
+				{{/if}}
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="bars te">
+			<div class="qot bar">
+				<a href="quotes" class="cHelp light"></a>
+				<p>Quotes</p>
+				<div class="value">
+					<div class="valueBox {{#if comparePeriod}}compare{{/if}}">
+						<span>{{formatNumber supplier.tradenet-summary.QOT.count}}</span>
+					</div>
+					<div class="tooltipHolder">
+						<div class="tooltip">
+							<p class="noMarg">Period: {{dateFromPretty}} - {{dateToPretty}}</p>
+						</div>
+						<span></span>
+					</div>
+				</div>
+				{{#if comparePeriod}}
+					<div class="value">
+						<div class="valueBox comp">
+							<span>{{formatNumber compare.tradenet-summary.QOT.count}}</span>
+						</div>
+						<div class="tooltipHolder">
+							<div class="tooltip">
+								<p class="noMarg">Period: {{dateFromCompPretty}} - {{dateToCompPretty}}</p>
+							</div>
+							<span></span>
+						</div>
+					</div>
+				{{/if}}
+			</div>
+			<div class="po bar">
+				<a href="po" class="cHelp light"></a>
+				<p>POs</p>
+				<div class="value">
+					<div class="valueBox {{#if comparePeriod}}compare{{/if}}">
+						<span>{{formatNumber supplier.tradenet-summary.PO.count}}</span>
+					</div>
+					<div class="tooltipHolder">
+						<div class="tooltip">
+							<p class="noMarg">Period: {{dateFromPretty}} - {{dateToPretty}}</p>
+						</div>
+						<span></span>
+					</div>
+				</div>
+				{{#if comparePeriod}}
+					<div class="value">
+						<div class="valueBox comp">
+							<span>{{formatNumber compare.tradenet-summary.PO.count}}</span>
+						</div>
+						<div class="tooltipHolder">
+							<div class="tooltip">
+								<p class="noMarg">Period: {{dateFromCompPretty}} - {{dateToCompPretty}}</p>
+							</div>
+							<span></span>
+						</div>
+					</div>
+				{{/if}}
+			</div>
+			<div class="summaryBlock">
+				<div class="total bar">
+					<a href="tpo" class="cHelp light"></a>
+					<p>Total PO Value</p>
+					<div class="value">
+						<div class="valueBox {{#if comparePeriod}}compare{{/if}}">
+							<span>{{formatNumRound supplier.tradenet-summary.po-total-value.count}} USD</span>
+						</div>
+						<div class="tooltipHolder">
+							<div class="tooltip">
+								<p class="noMarg">Period: {{dateFromPretty}} - {{dateToPretty}}</p>
+							</div>
+							<span></span>
+						</div>
+					</div>
+					{{#if comparePeriod}}
+						<div class="value">
+							<div class="valueBox comp">
+								<span>{{formatNumRound compare.tradenet-summary.po-total-value.count}} USD</span>
+							</div>
+							<div class="tooltipHolder">
+								<div class="tooltip">
+									<p class="noMarg">Period: {{dateFromCompPretty}} - {{dateToCompPretty}}</p>
+								</div>
+								<span></span>
+							</div>
+						</div>
+					{{/if}}
+				</div>
+				<div class="cust bar">
+					<a href="customer" class="cHelp light"></a>
+					<p>Number of Customers</p>
+					<div class="value">
+						<div class="valueBox {{#if comparePeriod}}compare{{/if}}">
+							<span>{{supplier.tradenet-summary.customer-count}}</span>
+						</div>
+						<div class="tooltipHolder">
+							<div class="tooltip">
+								<p class="noMarg">Period: {{dateFromPretty}} - {{dateToPretty}}</p>
+							</div>
+							<span></span>
+						</div>
+					</div>
+					{{#if comparePeriod}}
+						<div class="value">
+							<div class="valueBox comp">
+								<span>{{formatNumber compare.tradenet-summary.customer-count}}</span>
+							</div>
+							<div class="tooltipHolder">
+								<div class="tooltip">
+									<p class="noMarg">Period: {{dateFromCompPretty}} - {{dateToCompPretty}}</p>
+								</div>
+								<span></span>
+							</div>
+						</div>
+					{{/if}}
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="lines{{#ifCond supplierInfo.premiumListing '1'}} noRight{{/ifCond}}{{#ifCond supplier.listed-in-sso-2014 1}}{{#ifGreaterThan supplier.banner-summary.impression.count 0}} noLeft{{/ifGreaterThan}}{{/ifCond}}{{#ifCond supplierInfo.premiumListing '1'}}{{#ifCond supplier.listed-in-sso-2014 1}}{{#ifGreaterThan supplier.banner-summary.impression.count 0}} noLeftRight{{/ifGreaterThan}}{{/ifCond}}{{/ifCond}}"></div>
+	{{#ifCond supplier.listed-in-sso-2014 0}}
+	<div class="bottomBox red first">
+		You are not benefiting from ShipServ Onboard.
+		<a href="/info/im-a-supplier/get-on-board-with-mariners-annual/" class="button red medium read" target="_blank">Read more</a>
+	</div>
+	{{/ifCond}}
+	{{#ifCond supplier.listed-in-sso-2014 1}}
+		{{#ifCond supplier.banner-summary.impression.count 0}}
+			<div class="bottomBox red first">
+				You’re not benefiting from a targeted banner in ShipServ Pages.
+				<a href="/info/im-a-supplier/banner-advertising-on-pages/" class="button red medium read" target="_blank">Read more</a>
+			</div>
+		{{/ifCond}}
+	{{/ifCond}}
+	<div class="bottomBox red second{{#ifCond supplier.listed-in-sso-2014 1}}{{#ifGreaterThan supplier.banner-summary.impression.count 0}} leftMargin{{/ifGreaterThan}}{{/ifCond}}">
+		{{#ifCond supplierInfo.premiumListing "1"}}
+			{{#ifLowerThan supplierInfo.profileCompletionScore 70}}
+				Your <strong>profile complete score</strong> can be improved. Update your profile to get more RFQs.
+				<a href="/profile/overview" class="button red medium wide" target="_blank">Update profile</a>
+			{{/ifLowerThan}}
+			{{#ifGreaterThan supplierInfo.profileCompletionScore 70}}
+				Update your profile using the button below.
+				<a href="/profile/overview" class="button red medium wide" target="_blank">Update profile</a>
+			{{/ifGreaterThan}}
+		{{/ifCond}}
+		{{#ifCond supplierInfo.premiumListing "0"}}
+			With basic profile your maximum <strong>profile complete score</strong> is 50%. Upgrade to Membership to get a more complete profile.
+			<a href="/profile/overview" class="button red medium wide" target="_blank">Update profile</a>
+		{{/ifCond}}
+	</div>
+	{{#ifCond supplierInfo.premiumListing "0"}}
+	<div class="bottomBox red third">
+		Win more business by upgrading to <strong>ShipServ supplier Membership</strong>. 
+		<a href="/info/pages-for-suppliers/win-new-business-with-a-premium-profile/" class="button red medium wide">Buy Membership</a>
+	</div>
+	{{/ifCond}}
+</div>

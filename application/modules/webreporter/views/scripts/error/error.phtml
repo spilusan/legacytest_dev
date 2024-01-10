@@ -1,0 +1,59 @@
+<?php
+$this->headLink()
+->appendStylesheet('/css/reset.css')
+->appendStylesheet('/css/default.css')
+->appendStylesheet('/css/uniform.webreporter.css')
+->appendStylesheet('/css/webreporter/reports/webreporter/webreporter.css');
+
+$user = Shipserv_User::isLOggedIn();
+
+if ($user) {
+    $isPagesUser = 1;
+    $isShipMate = $user->isShipservUser();
+} else {
+    $isPagesUser = 0;
+    $isShipMate = false;
+}
+?>
+        <!--Breadcrumbs-->
+        <div id="breadcrumbs">
+            <span class="title">You are here: </span>
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <span></span>
+                    <a href="/reports/match-new">Reports</a>
+                </li>
+                <li>
+                    <span></span>
+                    <a href="/webreporter/index">WebReporter</a>
+                </li>
+                <li class="current">
+                    <span></span>
+                    Error
+                </li>
+            </ul>
+        </div>
+        <!--End Breadcrumbs-->
+        <!--Start Content--> 
+        <div id="body">
+            <div id="content" style="width: 860px;">
+                <h1 class="styled">Error</h1>
+                <div id="infoBox" class="infoBox info" style="width: 730px; min-height: 60px;">
+                    <?php
+                    $message = $this->exception->getMessage();
+                    if (empty($message) === false) : ?>
+                    <h2><?php echo $this->exception->getMessage(); ?></h2>
+                    <?php else : ?>
+                    <?php header('Location: ' . $this->baseUrl() . '/index/logout'); ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+        <!--End Content-->
+        <div class="spacer"></div>
+
+    </body>
+</html>

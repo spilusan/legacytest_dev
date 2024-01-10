@@ -1,0 +1,65 @@
+<?
+	$this->requirejs()->addModule('jquery');
+
+	$this->CDNLink()->appendStylesheet('/css/style.css');
+	
+	$this->headScript()->appendScript("
+		require(['jquery'], function($) {
+			$(function() {
+				$('form.main input, form.main select').change(function(){
+					$('#examplebutton').attr('class', 'zz button ' + $('[name=size]').val() + ' ' + $('[name=colour]').val());
+					$('#examplebutton button').text($('[name=text]').val());
+					$('p.code').html('&lt;div class=&quot;zz '+ $('[name=size]').val() + ' ' + $('[name=colour]').val() + ' button&quot; id=&quot;examplebutton&quot;&gt;&lt;button&gt;' + $('[name=text]').val()+'&lt;/button&gt;&lt;/div&gt;');
+				});
+			});
+		});
+	");
+
+?>
+
+<div class="content_wide new clearfix zz">
+
+	<?=$this->partial('/style/subnav.phtml', $this)?>
+
+	<div class="content_right">
+        
+    <div class="zz header"><h2>Style Guidelines - Buttons</h2></div>
+
+		<h3>Button Maker</h3>
+		<form class="main clearfix">
+		 <?=$this->partial('/forms/regular/select.phtml',
+		 	array(
+				'name' 		=> 'size',
+				'label'		=> 'Button size',
+				'required'	=> true,
+				'options'	=> array('large' => 'Large', 'medium' => 'Medium', 'small' => 'Small')
+		 ))?>
+
+		 <?=$this->partial('/forms/regular/select.phtml',
+		 	array(
+				'name' 		=> 'colour',
+				'label'		=> 'Colour',
+				'required'	=> true,
+				'options'	=> array('red' => 'Red', 'green' => 'Green', 'lblue' => 'Light blue', 'dblue' => 'Dark blue', 'white' => 'White', 'disabled' => 'Disabled')
+		 ))?>
+
+		<?=$this->partial('/forms/regular/textfield.phtml',
+			array(
+				'name'      => "text",
+			  	'label'     => 'Text',
+				'maxlength'	=> 100,
+				'value'     => 'Example'
+		 ))?>
+		 <div class="field">
+			 <label>&nbsp;</label>
+			 <div class="zz large red button" id="examplebutton" ><button>Button</button></div>
+		</div>
+		</form>
+		
+		<h3>Code:</h3>
+		<p class="code">
+			&lt;div class=&quot;zz large red button&quot; id=&quot;examplebutton&quot;&gt;&lt;button&gt;Example&lt;/button&gt;&lt;/div&gt;
+		</p>
+		
+	</div>
+</div>

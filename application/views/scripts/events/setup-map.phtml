@@ -1,0 +1,25 @@
+<?php
+if ((int)Myshipserv_Config::getIni()->google->services->maps->display === 1) {
+    $this->compressedScript()->appendFile('/js/jquery.urlparse.js')
+        ->appendFile('/js/json2.js')
+        ->appendFile('/js/jquery.jsoncookie.js')
+        ->appendFile('/js/jquery.cookie.js')
+        ->appendFile('/js/modules/backbone/lib/jquery.eventmap.js')
+        ->appendFile('/js/lib/jquery.easing.js')
+        ->appendFile('/js/lib/jshashtable.js')
+        ->appendFile('/js/lib/jquery.flipCounter.1.2.js')
+        ->appendFile('/js/lib/jquery.numberformatter-1.2.2.min.js');
+
+    $this->headScript()->appendFile('https://maps.google.com/maps?file=api&v=2&key=' . $this->googleMapsApiKey);
+
+    $this->CDNLink()->appendStylesheet('/css/mapSetup.css') . "\n";
+
+?>
+    <form action="/events/large-screen-map" method="POST" style="text-align: center; margin-top: 200px;">
+        <label for="startValue">Set counter start value</label><input type="text" name="startValue"/> <input
+                type="submit" value="start"/>
+    </form>
+<?php
+}
+?>
+

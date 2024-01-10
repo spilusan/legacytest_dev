@@ -1,0 +1,22 @@
+<h1 class="text-center">Supplier Performance Report</h1>
+
+<div class="container" id="buyer-supplier-list">
+    <div class="row">
+        <div class="gr-6">
+            <h2>Buyer(s)</h2>
+            <ul>
+                {{#each selectedBuyers}}
+                <li>{{name}}</li>
+                {{/each}}
+            </ul>
+        </div>
+        <div class="gr-6">
+            <h2>Supplier(s)</h2>
+            <ul>
+                {{#each selectedSuppliers}}
+                <li>{{tnid}} - {{value}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</div>

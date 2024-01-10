@@ -1,0 +1,111 @@
+<?php
+if ((int)Myshipserv_Config::getIni()->google->services->maps->display === 1) {
+    $this->compressedScript()->appendFile('/js/jquery.urlparse.js')
+        ->appendFile('/js/json2.js')
+        ->appendFile('/js/jquery.jsoncookie.js')
+        ->appendFile('/js/jquery.cookie.js')
+        ->appendFile('/js/lib/jquery.easing.js')
+        ->appendFile('/js/lib/jshashtable.js')
+        ->appendFile('/js/lib/jquery.flipCounter.1.2.js')
+        ->appendFile('/js/lib/jquery.numberformatter-1.2.2.min.js');
+
+    $this->CDNLink()->appendStylesheet('/css/map.css')
+        ->appendStylesheet('/css/home.css')
+        ->appendStylesheet('/css/map-large.css') . "\n";
+?>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $this->googleMapsApiKey; ?>&sensor=false"
+            type="text/javascript"></script>
+    <script src="/js/lib/gMapInfobox.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/js/modules/backbone/lib/jquery.eventmap.js"></script>
+    <div class="topBar"></div>
+    <div class="logo"></div>
+    <div id="full-screen-map"></div>
+    <div class="ticker">
+        <p class="title">Trading <strong><?= date('Y') ?></strong> to date on ShipServ:</p>
+
+        <div class="counter"><p class="usd">USD</p>
+            <div id="counter"><input type="hidden" name="counter-value" value="0"/></div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        <!--
+        $(document).ready(function () {
+            $('#full-screen-map').eventMap({showTrails: true});
+            var startValue = $.cookie('tradevalue');
+            <?php
+            if($this->params['startValue']) {?>
+            startValue = <?=$this->params['startValue']?>;
+            <?}?>
+
+            if (!startValue)
+                startValue = 0;
+            var minAvg = 4724;
+            var minValue = 100;
+            var maxValue = 100;
+            var traded = 0;
+            var runtime = 0;
+            var minTime = 5000;
+            var endNumber = 0;
+
+            function randomFromInterval(from, to) {
+                return Math.floor(Math.random() * (to - from + 1) + from);
+            }
+
+            function run() {
+                //var timer = randomFromInterval(minTime, maxTime);
+                var randomTimes = Math.floor((Math.random() * 8) + 2);
+                var trade = randomTimes * 88;
+                var timer = randomTimes * 1000;
+                //var timer = 2000;
+                runtime += timer;
+
+                var minutes = runtime / 1000 / 60;
+                if (traded / minutes > minAvg) {
+                    maxValue = (minAvg / 3) * (timer / 1000 / 60);
+                    if (maxValue <= minValue) {
+                        maxValue = 101;
+                    }
+                }
+                else {
+                    maxValue = 100000;
+                }
+
+                //var trade = randomFromInterval(minValue, maxValue);
+                //var trade = 100;
+
+                traded += trade;
+                endNumber = traded + parseInt(startValue);
+                $.cookie('tradevalue', endNumber);
+                setTimeout(function () {
+                    $("#counter").flipCounter(
+                        "startAnimation", // scroll counter from the current number to the specified number
+                        {
+                            end_number: endNumber, // the number we want the counter to scroll to
+                            easing: jQuery.easing.easeOutCubic, // this easing function to apply to the scroll.
+                            duration: 1000, // number of ms animation should take to complete
+                            formatNumberOptions: {format: "000,000", locale: "en"}
+                        }
+                    );
+                    run();
+                }, timer);
+
+            }
+
+            $("#counter").flipCounter(
+                "startAnimation", // scroll counter from the current number to the specified number
+                {
+                    end_number: startValue, // the number we want the counter to scroll to
+                    easing: jQuery.easing.easeOutCubic, // this easing function to apply to the scroll.
+                    duration: 1000, // number of ms animation should take to complete
+                    formatNumberOptions: {format: "000,000", locale: "en"}
+                }
+            );
+
+            run();
+        });
+        //-->
+    </script>
+<?php
+}
+?>

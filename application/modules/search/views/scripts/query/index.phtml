@@ -1,0 +1,62 @@
+<?php
+$this->headLink()->appendStylesheet('/css/myshipserv-home.css');
+
+$this->headScript()->appendFile('/js/jquery.auto-complete.js')
+				   ->appendFile('/js/jquery.metadata.js');
+?>
+
+<div id="main_content_area">
+	<h2>Search Page Banner</h2>
+</div>
+<?php //$query = '', $type = '', $country = '', $port = '', $inCountry = true, $start = 0, $rows = 10 ?>
+<div id="search-page-content">
+	<form id="fullSearch" enctype="application/x-www-form-urlencoded" action="/search/results" method="post">
+		<fieldset>
+			<label for="search-what">Search for</label>
+			
+			<input type="text" name="search-what" id="search-what" value="" />
+			
+			<label for="search-where">Type</label>
+			
+			<input type="text" name="search-type" id="search-type" value="" />
+			
+			<label for="search-country">Country</label>
+			
+			<input type="text" name="search-country" id="search-country" value="" />
+			
+			<label for="search-port">Port</label>
+			
+			<input type="text" name="search-port" id="search-port" value="" />
+			
+			<label for="search-incountry">inCountry</label>
+			
+			<select id="search-incountry" name="search-incountry">
+				<option value=""></option>
+				<option value="1">True</option>
+				<option value="0">False</option>
+			</select>
+			
+			<label for="search-start">Start</label>
+			
+			<input type="text" name="search-start" id="search-start" value="0" />
+			
+			<label for="search-rows">Rows</label>
+			
+			<input type="text" name="search-rows" id="search-rows" value="10" />
+			
+			<div>
+				<a href="#" title="" id="search-button"><img src="/images/buttons/search-button.png" alt="Search" /></a>
+			</div>
+		</fieldset>
+	</form>
+</div>
+
+<script type="text/javascript">
+	<!--
+	$(document).ready(function(){
+		$('#search-button').click(function() {
+			$('#fullSearch').submit();
+		});
+	});
+	//-->
+</script>

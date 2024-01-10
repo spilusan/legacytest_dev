@@ -1,0 +1,38 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/trade/po.css');
+?>
+<div id="breadcrumbs">
+	<span class="title">You are here: </span>
+	<ul>
+		<li>
+			<a href="/">Home</a>
+		</li>
+		<li>
+			<span></span>
+			<a href="/trade/rfq">Trade</a>
+		</li>
+		<li class="current">
+			<span></span>
+			Purchase Order
+		</li>
+	</ul>
+</div>
+
+	<?php //S19037 Temporarliy suspend this function ?>
+	<?php if ($this->suspended === true): ?>
+	<div id="body">
+		<div class="head">
+			<h1 class="styled">Purchase Order Confirmation</h1>
+		</div>
+		<div id="content">
+			This feature is temporarily suspended.
+		</div>
+	</div>
+	<?php else: ?>
+		<div class="message">
+			<h3>Congratulations!</h3>
+			<p>
+				Your PO has been successfully submitted 	</p>
+			<a href="/search" class="button medium white">Go to homepage</a>
+		</div>
+	<?php endif ?>

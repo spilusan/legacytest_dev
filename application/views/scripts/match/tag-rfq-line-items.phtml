@@ -1,0 +1,109 @@
+<?php
+/**
+ * A partial view for tag.phtml displaying the RFQ line items
+ *
+ * @author  Yuriy Akopov
+ * @date    2013-09-27
+ */
+?>
+<table border="0" cellpadding="0" cellspacing="0" class="itemHd">
+    <tr>
+        <td class="itemHd" width="399"><b>Line Items</b></td>
+        <td class="itemHdRtInp" width="293" align="right">
+            <b>Currency: <span><?php echo $this->rfq->rfq_header->rfqCurrency; ?></span></b>
+        </td>
+    </tr>
+</table>
+
+<table border="0" cellpadding="0" cellspacing="0" class="itemHd">
+    <tr>
+        <td class="itemHd2" width="26">Item</td>
+        <td class="itemHd2" width="110">Part Number</td>
+        <td class="itemHd2" width="345">Description</td>
+        <td class="itemHd2" width="58">Qty/Unit</td>
+        <td class="itemHd2" width="65" align="right">Unit price</td>
+        <td class="itemHd2Rt" width="65" align="right">Total</td>
+    </tr>
+</table>
+
+<div id="line_items_container">
+    <?php
+    $cnt = 0;
+    $oldDesc = '';
+
+    foreach ($this->rfq->rfq_line_items as $lineItem) {
+        $partDesc = '';
+        if (strlen($lineItem->rflConfgName)) {
+            $partDesc = "For: " . $lineItem->rflConfgName . ";";
+        }
+
+        if (strlen($lineItem->rflConfgDesc)) {
+            $partDesc .= "Desc: " . $lineItem->rflConfgDesc . ";";
+        }
+
+        if (strlen($lineItem->rflConfgManufacturer)) {
+            $partDesc .= "Mfg: " . $lineItem->rflConfgManufacturer . ";";
+        }
+
+        if (strlen($lineItem->rflConfgModelNo)) {
+            $partDesc .= "Model: " . $lineItem->rflConfgModelNo . ";";
+        }
+
+        $outputExtraDesc = ($partDesc !== $oldDesc);
+        if ($outputExtraDesc) {
+            $oldDesc = $partDesc;
+            ?>
+            <table class="item">
+                <tr>
+                    <td class="itemHd" colspan="6"><?php echo $partDesc; ?></td>
+                </tr>
+            </table>
+            <?php
+        }
+        ?>
+
+        <table border="0" cellpadding="0" cellspacing="0" class="item">
+            <tr>
+                <td class="itemLft" width="26" valign="top">
+                    <span><?php echo ++$cnt; ?></span>
+                </td>
+                <td class="item" width="110" valign="top" align="left"">
+                    <br />
+                    <span id="prodId_1"><?php echo $lineItem->rflIdCode; ?> <?php if ($lineItem->rflIdType != '') echo $lineItem->rflIdType; ?></span>
+                </td>
+                <td class="item" style="word-wrap: break-word;" valign="top" width="345">
+                    <table width="100%" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td class="item" valign="top">
+                                <span id="proddesc_1"><?php echo $lineItem->rflProductDesc; ?></span>
+                            </td> <td class="item" align="right" width="30">
+                                <div id="rendertarget_1"></div>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="item" width="58" valign="top" align="left" >
+                    <span><?php echo $lineItem->rflQuantity; ?></span>
+                    <span><?php echo $lineItem->rflUnit; ?></span>
+                </td>
+                <td class="itemInp" valign="top" width="80" align="right">&nbsp;</td>
+                <td class="itemRdRt" valign="top" width="52" align="right">&nbsp;</td>
+            </tr>
+            <tr>
+                <td class="item" valign="top" colspan="6" style="border-right:1px solid black; border-left:1px solid black;">
+                    <!-- leave this cell empty if no comments/equipment and it shrinks to zero height -->
+                    <table border="0" cellpadding="0" cellspacing="0" class="itemCmnt" style="margin-left: 144px; width: 347px;">
+                        <tr>
+                            <td valign="top" width="140">Buyer Comment:</td>
+                            <td>
+                                <span id="comments_1" style="display:block;"><?php echo $lineItem->rflComments; ?></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    <?php
+    }
+    ?>
+</div>

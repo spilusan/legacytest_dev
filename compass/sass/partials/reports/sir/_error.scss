@@ -1,0 +1,19 @@
+#body {
+	 #content { 
+		.ajaxError {
+			padding: 20px 15px 20px 65px;
+			color: #FF0000;
+			font-weight: bold;
+			position: relative;
+			margin: 6px 0px;
+  			border: 1px solid #FF0000; 
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+			/*
+			background: #F8E0E0 url(/img/icons/large/attention.png) no-repeat left 6px top 6px;
+			*/
+			 background: transparent url(/img/icons/large/attention.png) no-repeat left 6px top 6px; 
+			overflow: auto;
+		}
+ 	} 
+}

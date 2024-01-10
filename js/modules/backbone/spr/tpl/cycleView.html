@@ -1,0 +1,700 @@
+<h2 class="print-only">Cycle Time</h2>
+
+<div class="container cycle">
+    <div class="row">
+        <div class="gr-12">
+            <h3>Average cycle time
+                <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="av-cycle-time-tip"></i>
+            </h3>
+
+            <div class="hide" id="av-cycle-time-tip">
+                Calculates the time from requisition to RFQ and purchase order to order confirmation for the selected supplier.
+            </div>
+
+            <div class="show hide@mobile hide@tablet">
+                <table class="grid">
+                    <tr class="top">
+                        <td></td>
+                        <td>
+                            <label>Requisition</label>
+                        </td>
+                        <td>
+                            <label>RFQ</label>
+                        </td>
+                        <td>
+                            <label>Quote</label>
+                        </td>
+                        <td>
+                            <label>Order</label>
+                        </td>
+                        <td>
+                            <label>Order confirmation</label>
+                        </td>
+                    </tr>
+
+                    {{#if showRequisionToQuote}}
+                    <tr>
+                        <td>You and this supplier</td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{req-quote.txn}} Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if req-quote.days}} {{req-quote.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>You and all suppliers</td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{req-quote-asu.txn}} Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if req-quote-asu.days}} {{req-quote-asu.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>ShipServ average</td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if req-quote-all.days}} {{req-quote-all.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="gap-row">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {{/if}} {{#if showRequisionToOrder}}
+                    <tr>
+                        <td>You and this supplier</td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{req-ord.txn}} Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if req-ord.days}} {{req-ord.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>You and all suppliers</td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{req-ord-asu.txn}} Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if req-ord-asu.days}} {{req-ord-asu.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>ShipServ average</td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if req-ord-all.days}} {{req-ord-all.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="gap-row">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {{/if}} {{#if showRequisionToConfirmation}}
+                    <tr>
+                        <td>You and this supplier</td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{req-poc.txn}} Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if req-poc.days}} {{req-poc.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>You and all suppliers</td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{req-poc-asu.txn}} Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if req-poc-asu.days}} {{req-poc-asu.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>ShipServ average</td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{req-poc-all.days}} days</span>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr class="gap-row">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    {{/if}}
+
+                    <tr>
+                        <td>You and this supplier</td>
+                        <td>
+                            <div class="bar">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{rfq-ord.txn}} Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if rfq-ord.days}} {{rfq-ord.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>You and all suppliers</td>
+                        <td>
+                            <div class="bar ">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{rfq-ord-asu.txn}} Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if rfq-ord-asu.days}} {{rfq-ord-asu.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>ShipServ average</td>
+                        <td>
+                            <div class="bar ">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if rfq-ord-all.days}} {{rfq-ord-all.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="gap-row">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>You and this supplier</td>
+                        <td>
+                            <div class="bar">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{rfq-poc.txn}} Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if rfq-poc.days}} {{rfq-poc.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>You and all suppliers</td>
+                        <td>
+                            <div class="bar">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{rfq-poc-asu.txn}} Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if rfq-poc-asu.days}} {{rfq-poc-asu.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>ShipServ average</td>
+                        <td>
+                            <div class="bar ">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">{{#if rfq-poc-all.days}} {{rfq-poc-all.days}} days {{/if}}</span>
+                            </div>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                    <tr class="gap-row">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="hide show@mobile show@tablet">
+                <h4>
+                    Requisition to quote
+                </h4>
+                <table class="grid-mobile">
+                    <tr>
+                        <td>You and this supplier</td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">400 Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">1.7 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>You and all suppliers</td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">500 Tx</span>
+                            </div>
+                            </span>
+                        </td>
+                        <td>
+                            <div class="bar bar-2 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">1.8 days</span>
+                            </div>
+                            </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ShipServ average</td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">2.1 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <h4>
+                    Requisition to order
+                </h4>
+                <table class="grid-mobile">
+                    <tr>
+                        <td>You and this supplier</td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">
+                                </span>400 Tx </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">
+                                </span>1.7 days
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>You and all suppliers</td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">500 Tx </span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">1.8 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ShipServ average</td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">2.1 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <h4>
+                    Requisition to order confirmation
+                </h4>
+                <table class="grid-mobile">
+                    <tr>
+                        <td>You and this supplier</td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">400 Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">1.7 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>You and all suppliers</td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">500 Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">1.8 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ShipServ average</td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">2.1 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <h4>
+                    RFQ to order
+                </h4>
+                <table class="grid-mobile">
+                    <tr>
+                        <td>You and this supplier</td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">400 Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">1.7 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>You and all suppliers</td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">500 Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">1.8 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ShipServ average</td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">2.1 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+                <h4>
+                    RFQ to order confirmation
+                </h4>
+                <table class="grid-mobile">
+                    <tr>
+                        <td>You and this supplier</td>
+                        <td>
+                            <div class="bar bar-1">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">400 Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-1 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">1.7 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>You and all suppliers</td>
+                        <td>
+                            <div class="bar bar-2">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">500 Tx</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-2 point">1
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">.8 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ShipServ average</td>
+                        <td>
+                            <div class="bar bar-3">
+                                <div class="bar-fill"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="bar bar-3 point">
+                                <div class="bar-fill"></div>
+                                <span class="bar-label">2.1 days</span>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="gr-12">
+            <h3>Cycle time
+                <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="cycle-time-tip"></i>
+            </h3>
+
+            <div class="hide" id="cycle-time-tip">
+                The average cycle time in days shown over the selected date range.
+            </div>
+
+            <div class="gr-12 chart-min-height">
+                <div id="chart-cycle-time">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

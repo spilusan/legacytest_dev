@@ -1,0 +1,1074 @@
+<?php
+function getDebugInfo( $data, $tnid )
+{
+	foreach( (array) $data as $row )
+	{
+		if( $row['tnid'] == $tnid )
+		{
+			foreach( $row as $section => $line)
+			{
+				$content .= nl2br( str_replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;", $line) );
+				$content .= "<hr />";
+			}
+			return $content;
+		}
+	}
+}
+
+function getDebugInfo2( $data )
+{
+	foreach( (array) $data as $section => $line)
+	{
+		if( $section == "searchType" || $section == "searchQuery" || $section == "sorting")
+		{
+			$content .= "<b>".$section . "</b><br />" . nl2br( str_replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;", $line) );
+			$content .= "<br /><br />";
+		}
+	}
+	return $content;
+}
+
+if (isset($this->searchValues['searchStart']) && $this->searchValues['searchStart'] > 0)
+{
+	$this->headMeta()->appendName('robots', 'noindex, follow');
+}
+
+if ($this->metaDescription)
+{
+	$this->headMeta()->appendName('description', $this->metaDescription);
+}
+
+if ($this->metaKeywords)
+{
+	$this->headMeta()->appendName('keywords', $this->metaKeywords);
+}
+
+
+if ($this->gam['country'] != 'ALL')
+{
+	$this->googledfp()->addTargeting('country', $this->gam['country']);
+	$this->googledfp()->addTargeting('country','ALL');
+}
+else
+{
+	$this->googledfp()->addTargeting('country','ALL');
+}
+
+if ($this->gam['port'] != 'ALL')
+{
+	$this->googledfp()->addTargeting('port',$this->gam['port']);
+	$this->googledfp()->addTargeting('port','ALL');
+}
+else
+{
+	$this->googledfp()->addTargeting('port','ALL');
+}
+
+$stringHelper  = $this->string();
+$resultsHelper = $this->results();
+$googleHelper  = $this->googledfp();
+$uriHelper     = $this->uri();
+
+//shortcut to current zone
+$zone = null;
+
+$this->CDNLink()->appendStylesheet('/css/search.css');
+$this->CDNLink()->appendStylesheet('/css/landing.css');
+
+if ($this->currentZoneIdent)
+{
+	$this->CDNLink()->appendStylesheet('/css/zones.css');
+
+    $zone = $this->zones[$this->currentZoneIdent];
+	if (isset($zone['content']['style']))
+	{
+		$this->headStyle()->appendStyle($zone['content']['style']);
+	}
+}
+
+$gamPhrases = $stringHelper->createKeywordPhrases($this->searchValues['searchWhat']);
+
+foreach ($gamPhrases as $phrase)
+{
+	$this->googledfp()->addTargeting('keywords', $phrase);
+}
+$this->googledfp()->addTargeting('keywords', 'ALL');
+
+$this->headScript()->appendFile('/js/json2.js')
+				   ->appendFile('/js/jquery.jsoncookie.js')
+				   ->appendFile('/js/jquery.cookie.min.js')
+				   ->appendFile('/js/jquery.auto-complete.js')
+				   ->appendFile('/js/jquery.metadata.js')
+				   ->appendFile('/js/jquery.modalwindows.js')
+				   ->appendFile('/js/jquery.urlparse.js')
+					//->appendFile('/js/jquery.microprofile.min.js') // disabled for now
+					->appendFile('/js/jquery.more-options.min.js')
+					->appendFile('/js/jcarousellite_1.0.1.min.js');
+
+if ((int)Myshipserv_Config::getIni()->google->services->maps->display === 1) {
+    $this->inlineScript()->appendFile('https://maps.google.com/maps?file=api&v=2&key=' . $this->googleMapsApiKey);
+}
+
+// including javascript file using requireJS
+$this->getHelper('Requirejs')->addModule('search/searchFeedback');
+
+
+$currentPage = (($this->searchValues['searchStart'] + $this->resultsPerPage) / $this->resultsPerPage) ? (($this->searchValues['searchStart'] + $this->resultsPerPage) / $this->resultsPerPage) : 1;
+
+$spotlightAds = array();
+foreach ($this->result['documents'] as $document)
+{
+	if ($document['spotlight'])
+	{
+		$spotlightAds[] = $document['tnid'];
+	}
+}
+?>
+
+<script type="text/javascript" charset="utf-8">
+<!--
+var current_page = <?php echo $currentPage ?>;
+
+$(document).ready(function() {
+
+<?php
+if (is_array($this->microprofiles[$currentPage]))
+{
+	foreach ($this->microprofiles[$currentPage] as $key => $value)
+	{
+		?>
+		$("#<?php echo $key;?>_detail").show();
+		$("a").each(function(){
+			if($(this).attr('id')=='<?php echo $key;?>'){$(this).removeClass('expand').addClass('expand_on');}
+		});
+		$(".searchResult .footer").each(function(){
+			if($(this).attr('rel')=='<?echo $key;?>'){$(this).removeClass('footer').addClass('footer_expanded');}
+		});
+		$("#<?php echo $key;?>_detail").html('<img style="position:absolute;top:-82px;right:22px;" src="<?php echo $this->CDNLink()->image('/images/bluecircle.gif'); ?>">');
+		$.get('/supplier/microprofile/format/html/s/<?php echo $key;?>/p/' + current_page,
+					function(data){
+					  $("#<?php echo $key;?>_detail").html(data);
+					});
+		<?php
+	}
+}
+?>
+	var path = "/search/results<?php if (isset($this->currentZoneIdent)) echo "/index/zone/".$this->currentZoneIdent ?>";
+	var what = "<?php echo ($this->searchValues['searchWhat']) ? urlencode(htmlspecialchars_decode($this->searchValues['searchWhat'])) : ''; ?>";
+	var text = "<?php echo ($this->searchValues['searchText']) ? urlencode(htmlspecialchars_decode($this->searchValues['searchText'])) : ''; ?>";
+	var where = "<?php echo ($this->searchValues['searchWhere']) ? urlencode(htmlspecialchars_decode($this->searchValues['searchWhere'])) : ''; ?>";
+	var searchtype = "<?php echo ($this->searchValues['searchType']) ? urlencode(htmlspecialchars_decode($this->searchValues['searchType'])) : ''; ?>";
+	var start_page = "<? echo ($this->searchValues['searchStart']) ? $this->searchValues['searchStart'] : ''; ?>";
+	var filter ="<?if($this->appliedFilters['categoryId']){foreach($this->appliedFilters['categoryId'] as $key => $value){?>&filters[categoryId][]=<?php echo $key; ?><?}}?><?if($this->appliedFilters['membershipId']){foreach($this->appliedFilters['membershipId'] as $key => $value){?>&filters[membershipId][]=<?php echo $key; ?><?}}?>";
+
+        if (start_page == "")
+        {
+           var start_page = "0";
+       } else {
+           var start_page = (start_page / <?php echo $this->resultsPerPage; ?>);
+       }
+
+	function page_load(new_page_index, pagination_container) {
+		$('#search_pagination').html('<img style="margin:16px 6px;" src="<?php echo $this->CDNLink()->image('/images/blueloader.gif'); ?>">');
+		window.location;
+	}
+
+	function countProperties( obj )
+	{
+		var keys = [];
+        for (k in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, k)) {
+                keys.push(k);
+            }
+        }
+        return keys.length;
+	}
+
+	$(".searchResult input:checkbox").live('click', function() {
+		var o = $.JSONCookie('<?php echo $this->basketCookie['name']; ?>');
+		var maxSelectedSupplier = <?php echo $this->maxSelectedSuppliers; ?>;
+
+		if (this.checked) {
+			if (!o.suppliers) {
+				o.suppliers = [];
+			}
+
+			var tnid = this.id;
+			var count = countProperties(o.suppliers);
+
+			if( count > maxSelectedSupplier-1 ){
+				/*alert("Sorry, you can only select up to " + maxSelectedSupplier + " Suppliers.\n\nIf you send the same RFQ to more than \n" + maxSelectedSupplier + " suppliers, in 1 or more batches, the \nsystem will permanently disable your email address.");*/
+
+				maxSuppliersPopUp(maxSelectedSupplier);
+
+				return false;
+			}
+
+			o.suppliers.push(tnid);
+		} else {
+			var tnid = this.id;
+			for(var i=0;i<o.suppliers.length;i++){
+				if( tnid == o.suppliers[i] ){
+					o.suppliers.splice(i,1);
+				}
+			}
+		}
+
+		$.JSONCookie('<?php echo $this->basketCookie['name']; ?>', o, { domain: '<?php echo $this->basketCookie['domain']; ?>',
+																		path: '<?php echo $this->basketCookie['path']; ?>' });
+	});
+
+	// new addition: Check all selected suppliers
+	var b = $.JSONCookie('<?php echo $this->basketCookie['name']; ?>');
+	if( typeof b.suppliers != 'undefined' )
+	{
+		for(var i=0;i<b.suppliers.length;i++){
+			$(".searchResult input:checkbox[id='"+b.suppliers[i]+"']").attr('checked','checked');
+		}
+	}
+	$(".contact_now_detail_button").live('click', function() {
+		var tnid = this.id.substring(14);
+		var o = $.JSONCookie('<?php echo $this->basketCookie['name']; ?>');
+
+		if (o != null && o.suppliers)
+		{
+			var suppliers = o.suppliers, i = 0;
+			for (s in suppliers) {
+				i++;
+			}
+
+			if (i == 1 && suppliers[tnid] != '') {
+				return true;
+			}
+
+			return confirm('You currently have other suppliers selected. Click OK to clear this list and send an individual RFQ to this supplier, or Cancel to continue browsing');
+		}
+
+		return true;
+	});
+});
+
+$(window).load(function () {
+    $('.avatar img').each(function () {
+        $(this).load();
+        var w = $(this).width();
+        var h = $(this).height();
+
+        if (w >= h) {
+			$(this).addClass('landscape');
+		}
+		else
+		{
+			$(this).addClass('portrait');
+		}
+	});
+	$('body').delegate('input[name="showMoreCat"]', 'click', function(){
+		if($('input[name="showMoreCat"]').hasClass('collapsed')){
+			$('.catList.subs').css({
+				'height' : 'auto'
+			});
+			$('input[name="showMoreCat"]').removeClass('collapsed');
+			$('input[name="showMoreCat"]').val('Show less categories');
+		}
+		else {
+			$('.catList.subs').css({
+				'height' : '158px'
+			});
+			$('input[name="showMoreCat"]').addClass('collapsed');
+			$('input[name="showMoreCat"]').val('Show more categories');
+		}
+	});
+});
+//-->
+</script>
+
+<?php
+//render search bar
+echo $this->partial('searchbar.phtml', array('searchWhat'    => $this->searchValues['searchWhat'],
+											 'searchText'    => $this->searchText,
+											 'searchWhere'   => $this->searchValues['searchWhere'],
+											 'supplierCount' => $this->supplierCount,
+											 'currentZoneIdent'	 => $this->currentZoneIdent,
+											 'zone'		 => $zone));
+
+
+?>
+
+<div id="main_content_area">
+	<?if ($this->relatedSearches || $this->showCompanyMatches || $this->searchValues['searchType'] == 'company'):?>
+		<p class="related_searches">
+			Related searches:
+			<?
+			$relatedSearchOutput = array();
+
+			foreach ($this->relatedSearches as $name => $url)
+			{
+				$relatedSearchOutput[] = '<a href="' .$url .'">' . $name .'</a>';
+			}
+
+			if ($this->showCompanyMatches)
+			{
+				$url = $this->searchUrl()
+					->zone($this->currentZoneIdent)
+					->searchWhat(html_entity_decode($this->searchValues['searchWhat']))
+					->searchWhere($this->searchValues['searchWhere'])
+					->searchText($this->searchText)
+					->searchType('company')
+					->sourceKey("RELATED_FROM_SEARCH");
+
+				$url = $this->searchUrl()->encodeForwardSlash($url);
+
+				$relatedSearchOutput[] = '<a href="' .$url .'">Suppliers called ' . $this->searchValues['searchWhat'] .'</a>';
+			}
+			else if ($this->searchValues['searchType'] == 'company')
+			{
+				$url = $this->searchUrl()
+					->zone($this->currentZoneIdent)
+					->searchWhat(html_entity_decode($this->searchValues['searchWhat']))
+					->searchWhere($this->searchValues['searchWhere'])
+					->searchText($this->searchText)
+					->sourceKey("RELATED_FROM_SEARCH");
+
+				$url = $this->searchUrl()->encodeForwardSlash($url);
+				$relatedSearchOutput[] = '<a href="' .$url .'">Suppliers of ' . $this->searchValues['searchWhat'] .'</a>';
+			}
+
+			echo implode(",&nbsp;&nbsp;&nbsp;&nbsp;", $relatedSearchOutput);
+
+			?>
+		</p>
+	<?else:?>
+		<p class="related_searches"></p>
+	<?endif?>
+
+	<?php
+	if( lg_count($this->breadcrumbs) == 1 )
+	{
+		$this->breadcrumbs[] = array('name' => 'Search result', 'url' => '');
+	}
+	echo $this->partial('search/breadcrumbs.phtml', array('breadcrumbs' => $this->breadcrumbs));
+	?>
+
+
+	<?php
+		if (isset( $_GET['debug'] ) && $_GET['debug'] == 1) {
+			?>
+			<div class="searchResultDebug-outerBox ">
+				<div style="font-size:14px; margin-bottom:20px;">Debug info</div>
+				<?= getDebugInfo2($this->result['debugDetails']);?>
+			</div>
+			<?php
+		}
+	?>
+	<div class="landingImgBox">
+		<img src="/img/landing/mooring.png" alt="Mooring and Ropes" border="0" />
+		<div class="titleText">
+			<h1>
+				Marine Suppliers of<br />
+				Mooring, Ropes, Wires &amp; Cables
+			</h1>
+		</div>
+		<div class="titleBox"></div>
+	</div>
+	<div class="zone">
+		<?php
+
+
+
+		if( in_array($this->config['shipserv']['supplier']['dt']['tnid'], (array) $spotlightAds) !== false )
+		{
+			$overridenAdSlot = Shipserv_Supplier::getGoogleTargetedSearchBySpotlightedSupplierTnid( $this->config['shipserv']['supplier']['dt']['tnid'] );
+		}
+		else
+		{
+			$overridenAdSlot = Shipserv_Supplier::getGoogleTargetedSearchBySpotlightedSupplierTnid( $spotlightAds[0] );
+		}
+
+		/*
+		echo "<!--";
+		echo "<br />Debug<br />";
+		echo "DT tnid: " . $this->config['shipserv']['supplier']['dt']['tnid'] . "<br />";
+		echo "Spotlighted ads: " . print_r($spotlightAds, true) . "<br />";
+		echo "Overriden slots: " . print_r($overridenAdSlot, true);
+		echo "-->";
+		*/
+
+		if (!($this->currentZoneIdent and (isset($zone['content']['ads']['disable']) and $zone['content']['ads']['disable']=="true"))) // supress ads in the ISSA zone
+		{
+			// show general adunits (default)
+			if (!($this->currentZoneIdent and isset($zone['content']['ads']['slot'])) && $overridenAdSlot == null)
+			{
+				echo $this->partial('general-google-ads.phtml');
+			}
+			// if we have something in the database to override this by the spotlight then show this instead
+			else if( $overridenAdSlot !== null && lg_count($overridenAdSlot) > 0 )
+			{
+				echo $this->partial('general-google-ads.phtml', array('adUnits' => $overridenAdSlot));
+			}
+			// conditional for zone
+			else
+			{
+				?>
+				<div class="google_zone_ad">
+					<h4>ADVERTISEMENTS</h4>
+					<?php
+						$adSlots = (lg_count($overridenAdSlot) > 0 )?$overridenAdSlot:(array)$this->googledfp()->fillSlotWithCondition($zone, $this->viewSearchValues);
+						foreach($adSlots as $s)
+						{
+							echo $this->googledfp()->fillSlot($s);
+						}
+					?>
+					<br />
+				</div>
+				<?php
+			}
+		}
+		if ($this->currentZoneIdent)
+		{
+
+			$content = $zone['content'];
+			?>
+			<div class="zone_body">
+				<?php
+				foreach ((array)isset($content['infoBlocks']['block']['@attributes'])?array ($content['infoBlocks']['block']):$content['infoBlocks']['block'] as $block)
+				{
+
+					if (!isset($block['@attributes']['placement']))
+					{
+						echo $this->partial('zone/block.phtml', array( 'block' => $block));
+					}
+				}
+				?>
+			</div>
+			<?php
+		}
+
+		// When not in a zone
+		else
+		{
+			if (array_key_exists('rhs', $this->seoBlock))
+			{
+				?>
+				<div class="seo_rhs">
+					<div class="sidebar_header">
+						<h3><?php echo $this->seoBlock['rhs']['title']; ?></h3>
+					</div>
+
+					<div class="sidebar_body">
+						<p class="seo-text"><?php echo nl2br($this->seoBlock['rhs']['text']); ?></p>
+					</div>
+				</div>
+				<?php
+			}
+		}
+		?>
+
+	</div>
+
+	<div id="resultStatsModal" class="window3" style="display: none;">
+		<?php
+			// No stats in this release
+			//echo $this->stats()->resultPage($this->statsResults);
+		?>
+	</div>
+
+	<div class="content_wide">
+		<div class="infoTextBox">
+			<h1>
+				Shipserv Pages is your premier source for mooring ropes, wires and cables and this page is designed to make it easy for you to choose the right supplier in the right location with tips on what to include in your RFQ and what to look for when ordering ropes.
+			</h1>
+			<p>
+				In the listings below you will find suppliers from all over of world with the ability to deliver mooring ropes, wires and cables in any size, composition, manufacturer, make, preparation and application.
+			</p>
+			<p>When ordering and receiving delivery of ropes from any of the vendors below, try to specify some or all of the following:</p>
+			<ul>
+				<li>Exact rope composition, manufacturer, usage requirements, and time frame for delivery, vessel location, and vessel's name.</li>
+				<li>Research obtain and retain certifications of approval by class society, test certificates, as well as handling, storage and maintenance requirements that accompany each spool when delivered.</li>
+				<li>Ask for a Material safety data sheet (MSDS) that will accompany the rope when placing aboard the vessel and notify ship's crew that they should refuse delivery of damaged, discolored or aged ropes.</li>
+			</ul>
+			<p>Don’t forget that ShipServ TradeRank applies to all suppliers and is useful guide to selecting the right mooring rope, wire and cable supplier. To find out more about TradeRank <a href="#" id="resultsTR-abcdefg12345" class="tradenetlink">click here</a>.</p>
+			<div class="zz button dblue medium">
+				<a href="/search/results/index/searchWhat/Mooring%2C+Ropes%2C+Wires+%26+Cables/searchType/product?searchStart=0&searchRows=15&logSearchId=" class="showSup">Show Suppliers</a>
+			</div>
+		</div>
+		<div class="infoTextBox padSmall">
+			<h3 class="zz grey no-marg">
+				Top Categories for Mooring, Ropes, Wires & Cables
+			</h3>
+			<div class="greyBox">
+				<a href="/category/mooring-ropes/5384">
+					<img src="/img/landing/mooringSmall.png" alt="Mooring ropes" border="0" />
+					<span class="cat"><img src="/img/landing/catArrow.png" alt="Show"/> <span>Mooring Ropes</span></span>
+				</a>
+			</div>
+			<div class="greyBox">
+				<a href="/category/nylon-ropes/5388">
+					<img src="/img/landing/nylonSmall.png" alt="Nylon ropes" border="0" />
+					<span class="cat"><img src="/img/landing/catArrow.png" alt="Show"/> <span>Nylon Ropes</span></span>
+				</a>
+			</div>
+			<div class="greyBox last">
+				<a href="/category/manila-ropes/5399">
+					<img src="/img/landing/manilaSmall.png" alt="Manila ropes" border="0" />
+					<span class="cat"><img src="/img/landing/catArrow.png" alt="Show"/> <span>Manila Ropes</span></span>
+				</a>
+			</div>
+			<div class="clear"></div>
+			<div class="greyBox">
+				<a href="/category/polyester-ropes/5389">
+					<img src="/img/landing/polySmall.png" alt="Polyester ropes" border="0" />
+					<span class="cat"><img src="/img/landing/catArrow.png" alt="Show"/> <span>Polyester Ropes</span></span>
+				</a>
+			</div>
+			<div class="greyBox">
+				<a href="/category/wire-ropes/5441">
+					<img src="/img/landing/wireSmall.png" alt="Wire ropes" border="0" />
+					<span class="cat"><img src="/img/landing/catArrow.png" alt="Show"/> <span>Wire Ropes</span></span>
+				</a>
+			</div>
+			<div class="greyBox last">
+				<a href="/category/polypropylene-valves/4033">
+					<img src="/img/landing/polypropSmall.png" alt="Polypropylene ropes" border="0" />
+					<span class="cat"><img src="/img/landing/catArrow.png" alt="Show"/> <span>Polypropylene Ropes</span></span>
+				</a>
+			</div>
+			<div class="clear"></div>
+			<ul class="catList subs">
+				<?php foreach( (array) $this->subCategories as $category){ ?>
+				<li><a href="<?= $category->getUrl()?>">Marine Suppliers of <strong><?= $category->name?></strong></a></li>
+				<?php }?>
+			</ul>
+			<div class="clear"></div>
+			<div class="zz button lblue small showMoreCats">
+				<input type="button" name="showMoreCat" value="Show more categories" class="collapsed" />
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="infoTextBox padSmall">
+			<h3 class="zz grey no-marg">
+				Top Brands for Mooring, Ropes, Wires & Cables
+			</h3>
+			<div class="whiteBox">
+				<a href="/brand/dyneema/2146">
+					<span class="logoBox">
+						<img src="/img/landing/dyneema-logo.png" alt="logo" border="0" />
+					</span>
+					<span>
+						<img src="/img/landing/arrowGreen.png" alt="arrow" border="0" class="arrow" /> Dyneema
+					</span>
+				</a>
+			</div>
+			<div class="whiteBox">
+				<a href="/brand/lankhorst-touwfabrieken/457">
+					<span class="logoBox">
+						<img src="/img/landing/lankhorst-logo.png" alt="logo" border="0" />
+					</span>
+					<span>
+						<img src="/img/landing/arrowGreen.png" alt="arrow" border="0" class="arrow" /> Lankhorst Touwfabrieken
+					</span>
+				</a>
+			</div>
+			<div class="whiteBox">
+				<a href="/brand/katradis/407">
+					<span class="logoBox big">
+						<img src="/img/landing/katardis-logo.png" alt="logo" border="0" />
+					</span>
+					<span>
+						<img src="/img/landing/arrowGreen.png" alt="arrow" border="0" class="arrow" /> Katradis
+					</span>
+				</a>
+			</div>
+			<div class="clear"></div>
+			<div class="whiteBox">
+				<a href="/brand/samson/2541">
+					<span class="logoBox big">
+						<img src="/img/landing/samson-logo.png" alt="logo" border="0" />
+					</span>
+					<span>
+						<img src="/img/landing/arrowGreen.png" alt="arrow" border="0" class="arrow" /> Samson
+					</span>
+				</a>
+			</div>
+			<div class="whiteBox">
+				<a href="/brand/bridon/10824">
+					<span class="logoBox">
+						<img src="/img/landing/bridon-logo.png" alt="logo" border="0" />
+					</span>
+					<span>
+						<img src="/img/landing/arrowGreen.png" alt="arrow" border="0" class="arrow" /> Bridon
+					</span>
+				</a>
+			</div>
+			<div class="whiteBox">
+				<a href="/brand/ropesling/8501">
+					<span class="logoBox">
+
+					</span>
+					<span>
+						<img src="/img/landing/arrowGreen.png" alt="arrow" border="0" class="arrow" /> Ropesling
+					</span>
+				</a>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<?php
+        //Moved from further down page
+        $results = $this->result['documents'];
+
+		$content  = $zone['content'];
+		$rootName = Zend_Controller_Front::getInstance()->getRouter()->getCurrentRouteName();
+		?>
+		<div class="content_wide_body">
+			<h3 class="zz grey no-marg topSup">
+				<?php
+				if ($this->hasResults)
+				{?>
+						<a onclick="d = new Date(); window.open('/enquiry?ts=' + d.getTime(),'_blank');" class="enquiry_send" title="Send a RFQ to the suppliers you've selected"></a>
+				<?}?>
+				<span>Top Suppliers for Mooring, Ropes, Wires & Cables</span>
+			</h3>
+			<div id="searchResults">
+				<?php
+					if (lg_count( $spotlightAds ) == 0) {
+					    $categoryId = null;
+					    if (isset($_GET['filters']) && isset($_GET['filters']['categoryId'])) {
+					        $categoryId = $_GET['filters']['categoryId'];
+					    }
+                        // DEV-3296 requests to remove
+						// echo $this->partial('adcenter/adunits.phtml', array('ads' => $this->adUnits, 'categoryId' => $categoryId, 'searchRecId' => $this->searchRecId, 'refinedQuery' => $this->refinedQuery));
+					}
+				?>
+
+				<?php
+				if ($this->result['widenedSearch'] == "1" && $this->hasResults)
+				{
+					?>
+					<div class="serps_warning">
+						<?php
+						if (is_array($this->appliedFilters) && lg_count($this->appliedFilters) > 0)
+						{
+							?>
+							<h3>Sorry, we could not find any result for <?php echo $this->searchValues['searchWhat'];?> in <?php echo $this->searchValues['searchText'];?> with your selected refine search options, so we have widened the search to the whole country.</h3>
+							<?php
+						}
+						else
+						{
+							?>
+							<h3>Sorry, we could not find any result for <?php echo $this->searchValues['searchWhat'];?> in <?php echo $this->searchValues['searchText'];?> so we have widened the search to the whole country.</h3>
+							<?php
+						}
+						?>
+					</div>
+					<?php
+				}
+
+				if ($this->result['unknownLocation'] && $this->hasResults)
+				{
+					?>
+					<div class="serps_warning">
+						<h3>Sorry, we did not recognize the location '<?php echo $this->unknownLocation; ?>'. Here are the results for a worldwide search:</h3>
+					</div>
+					<?php
+				}
+
+				if (!$this->hasResults)
+				{
+					?>
+					<div class="serps_warning">
+						<?php
+						if (is_array($this->appliedFilters) && lg_count($this->appliedFilters) > 0)
+						{
+							?>
+							<h2>Sorry, we could not find any result for <?php echo $this->searchValues['searchWhat'];?><?if($this->searchValues['searchText']){?> in <?php echo $this->searchValues['searchText'];?><?}?> with your selected refine search options.</h2>
+							<?php
+						}
+						else
+						{
+							?>
+							<h2>Sorry, we could not find any result for <?php echo $this->searchValues['searchWhat'];?><?if($this->searchValues['searchText']){?> in <?php echo $this->searchValues['searchText'];?><?}?>.</h2>
+							<?php
+						}
+						?>
+						<p>Here are some tips on how to refine your search:</p>
+						<ul>
+							<li>Make sure all the words are spelled correctly</li>
+							<li>Try using fewer keywords</li>
+							<li>Try using more general keywords</li>
+							<li>Avoid use of punctuation</li>
+							<li>Try searching in nearby countries</li>
+							<?php
+							if (is_array($this->appliedFilters) && lg_count($this->appliedFilters) > 0)
+							{
+								?>
+								<li>Try removing one or more of the selected refine search options</li>
+								<?php
+							}
+							?>
+						</ul>
+					</div>
+					<?php
+				}
+
+				$endorseeIds = array ();
+				if (array_key_exists('documents', $this->result) && is_array($this->result['documents'])) {
+					foreach ($this->result['documents'] as $document) {
+						$endorseeIds[] = $document['tnid'];
+					}
+				}
+				$reviewsCounts = Shipserv_Review::getReviewsCounts($endorseeIds);
+
+				$spotlightAds = array();
+
+                foreach ((array)$results as $document)
+				{
+					$number = ++$i;
+
+					if ($document['spotlight'])
+					{
+						$spotlightAds[] = $document['tnid'];
+					}
+
+                    $supplier = Shipserv_Supplier::fetch($document['tnid']);
+
+					?>
+					<div id="<?php echo $number;?>" class="searchResult <?php if ($document['premiumListing']) echo 'premium'; ?>" <?php if ($document['spotlight']) echo 'style="background:url(/img/landing/spotlight_bg_landing.png) repeat-y;<!--[if IE 6]>padding-bottom:10px;<![endif]-->padding-bottom:40px; margin-bottom: 15px;"'; ?>>
+
+						<?php
+						if ($document['premiumListing'] || $document['spotlight'])
+						{
+							$imgUrl = ($document['logoUrl']) ? $document['logoUrl'] : $this->CDNLink()->image('/images/layout_v2/default_image.gif');
+							$alt    = ($document['logoUrl']) ? $document['name'] : '';
+							$imgUrl = str_replace('http://www.shipserv.com', 'https://cdn1.shipserv.com', $imgUrl);
+							$imgUrl = str_replace('https://www.shipserv.com', 'https://cdn1.shipserv.com', $imgUrl);
+						?>
+							<div class="avatar"><img src="<?php echo $imgUrl; ?>"  <?php if ($document['spotlight']) echo 'style="border:1px solid #ddd;"'; ?> alt="<?php // echo $alt; ?>" /></div>
+							<?php
+						}
+						?>
+						<?
+							$addressToDisplay = $stringHelper->formatAddress($document['city'],$document['state'],$document['countryName']);
+							$urlToSupplierProfilePage = $this->supplierProfileUrl($document, 'SEARCH', array('q'       => $this->searchValues['searchWhat'],
+																									 'type'    => $this->refinedQuery['type'],
+																									 'id'      => $this->refinedQuery['id'],
+																									 'port'    => $this->refinedQuery['portCode'],
+																									 'country' => $this->refinedQuery['countryCode']));
+
+
+						?>
+						<h3 <?php if ($document['spotlight']) echo 'style="background:url(/img/landing/spotlight_header_landing.png) left top no-repeat;"'; ?>>
+							<a href="<?php echo $urlToSupplierProfilePage ?>"><?php echo $stringHelper->shortenToLastWord($document['name'], 35 + (( strlen($addressToDisplay)>30 )?0: floor((30-strlen($addressToDisplay))/3))); ?></a>
+							<?php echo $stringHelper->shortenToLastWord($addressToDisplay, 30 + (( strlen($document['name'])>34 )?0: (35-strlen($document['name'])))  ); ?>
+						</h3>
+
+						<input type="checkbox" class="sendEnquiryCheckbox" name="<?php echo $document['tnid'];?>" <?php echo (array_key_exists($document['tnid'], $this->supplierBasket)) ? 'checked' : ''; ?> id="<?php echo $document['tnid'];?>" />
+						<input type="hidden" name="tnid-name-<?php echo $document['tnid']; ?>" id="tnid-name-<?php echo $document['tnid']; ?>" value="<?php echo trim($document['name']); ?>" />
+
+						<?php
+						$marginBottom = ($document['premiumListing'] || $document['spotlight']) ? '-10px' : '0px';
+						$summary = $stringHelper->shortenToLastWord(trim($document['description']), 166);
+						if (strlen($summary) > 0)
+						{
+							?>
+							<p class="desc"><?php echo $summary; ?></p>
+							<?php
+						}
+
+						$matches = $resultsHelper->matchReasons($document, $this->searchValues['searchWhat']);
+
+						if (lg_count($matches) > 0)
+						{
+							?>
+							<p class="desc"><?php echo $matches[0]; ?></p>
+							<?php
+						}
+						else
+						{
+							?>
+							<!--[if lte IE 7]>
+							<p class="desc" style="margin-top:-20px;">&nbsp;</p>
+							<![endif]-->
+							<?php
+						}
+
+						?>
+
+						<div class="clear"></div>
+						<div class="clear"></div>
+
+						<div class="basebar links <?php if ($document['spotlight']) echo 'spotlight'; if ($document['premiumListing'] || $document['spotlight']) echo ' prem'?>" <?php if ($document['spotlight']) echo 'style="margin-top: 20px;"'; ?>>
+							<div class="trade-rank" id="resultsTR-<?php echo $document['tnid'];?>">
+								<i class="fa fa-users" aria-hidden="true"></i>
+								TradeRank
+								<div class="rank rank-<?=$document['tradeRank'] ?>"></div>
+							</div>
+                            <?php
+                            if ($document['smartSupplier'])
+                            {
+                                echo '<span class="shipserv_icon">SmartSupplier</span>';
+                            }
+
+                            if ($document['expertSupplier'])
+                            {
+                                echo '<span class="shipserv_icon">ExpertSupplier</span>';
+                            }
+
+                            if ($document['onlineCatalogue'])
+                            {
+                                echo '<a href="/supplier/profile/s/'.$uriHelper->sanitise($document['name']).'-'.$document['tnid'].'#catalogue" class="catalogue_icon">Catalog</a>';
+                            }
+                            if (isset($reviewsCounts[$document['tnid']]))
+                            {
+                            //	reviews/supplier/s/m-m-shipping-mumbai-marine-suppliers-78526
+                            	echo '<a href="/reviews/supplier/s/'.$uriHelper->sanitise($document['name']).'-'.$document['tnid'].'" class="results_reviews_icon">Reviews ('.$reviewsCounts[$document['tnid']].')</a>';
+                                //echo '<a href="/supplier/profile/s/'.$uriHelper->sanitise($document['name']).'-'.$document['tnid'].'#reviews" class="results_reviews_icon">Reviews ('.$reviewsCounts[$document['tnid']].')</a>';
+                            }
+
+                            if($supplier->hasEInvoicing()){
+                                echo '<span class="einvoice_icon">e-invoicing</span>';
+                            }
+                            ?>
+                        </div>
+                        <?php
+							if ($document['premiumListing'] || $document['spotlight'])
+							{
+								/*
+								?>
+								<a class="expand" id="<?php echo $document['tnid'];?>" href="#"></a>
+								<?php
+								*/
+								if( isset( $_GET['debug'] ) && $_GET['debug'] == 1 )
+								{
+									?>
+									<div class="searchResultDebug control zz small white button" style="float:right;display:block;"><button onclick="$('#<?php echo $document['tnid']; ?>_debug').toggle(); return false;">Debug</button></div>
+									<?php
+								}
+								else
+								{
+									?>
+									<a class="expand" id="<?php echo $document['tnid'];?>" href="<?php echo $urlToSupplierProfilePage ?>"></a>
+									<?php
+								}
+							}
+							else
+							{
+								if( isset( $_GET['debug'] ) && $_GET['debug'] == 1 )
+								{
+									?>
+									<div class="searchResultDebug control zz small white button" style="float:right;display:block;"><button onclick="$('#<?php echo $document['tnid']; ?>_debug').toggle(); return false;">Debug</button></div>
+
+									<?php
+								}
+							}
+
+						if ($document['spotlight'])
+						{
+							?>
+							<div class="footer" id="<?php echo $document['tnid']; ?>_footer" rel="<?php echo $document['tnid']; ?>"></div>
+							<?php
+						}
+						?>
+
+						<div class="clear"></div>
+
+					</div>
+
+					<div class="clear"></div>
+					<div id="<?php echo $document['tnid']; ?>_detail" class="searchResultdetail" style="display:none;"></div>
+
+					<?php
+					if( isset( $_GET['debug'] ) && $_GET['debug'] == 1 )
+					{
+						?>
+						<div id="<?php echo $document['tnid']; ?>_debug" class="searchResultDebug hidden">
+							<div class="content"><?= getDebugInfo( $this->result['debug'], $document['tnid'])?></div>
+						</div>
+						<?php
+					}
+				}
+
+
+				echo $this->partial('zone/general-zone-exit.phtml', array('result'=> $this->result, 'isZone' => !empty($zone)));
+
+				$spotlightGam = '';
+				if (lg_count($spotlightAds) > 0)
+				{
+					foreach ($spotlightAds as $tnid)
+					{
+						$this->googledfp()->addTargeting('supplier', $tnid);
+					}
+					$this->googledfp()->addTargeting('supplier', 'ALL');
+				}
+				else
+				{
+					$this->googledfp()->addTargeting('supplier', 'ALL');
+				}
+
+				if( lg_count($overridenAdSlot) === 0 )
+				{
+					$this->googledfp()->add('TargetedOrGeneralAdSlot1');
+					$this->googledfp()->add('TargetedOrGeneralAdSlot2');
+					$this->googledfp()->add('TargetedOrGeneralAdSlot3');
+				}
+				else
+				{
+					foreach( (array) $overridenAdSlot as $slot)
+					{
+						$this->googledfp()->add($slot['PAS_ADUNIT_ID']);
+					}
+				}
+
+				if (($this->currentZoneIdent and isset($zone['content']['ads']['slot'])))
+				{
+					foreach((array)$this->googledfp()->fillSlotWithCondition($zone, $this->viewSearchValues) as $s)
+					{
+						//echo $this->googledfp()->fillSlot($s);
+						$this->googledfp()->add($s);
+					}
+
+				}
+
+				$this->googledfp()->render();
+				?>
+				<div class="buttonHolder">
+					<?php
+					if ($this->hasResults)
+					{?>
+						<a onclick="d = new Date(); window.open('/enquiry?ts=' + d.getTime(),'_blank');" class="enquiry_send bottom" title="Send a RFQ to the suppliers you've selected"></a>
+					<?}?>
+					<div class="zz button dblue small">
+						<a href="/search/results/index/searchWhat/Mooring%2C+Ropes%2C+Wires+%26+Cables/searchType/product?searchStart=15&searchRows=15&logSearchId=" class="showSup">Show more suppliers</a>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="infoTextBox padSmall">
+			<?php echo $this->partial('search/related-country-footer-landing.phtml', array('params' => $this->params, 'db' => $this->db, 'refinedQuery' => $this->refinedQuery)); ?>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+
+	<?php
+	if ($this->hasResults)
+	{
+		?>
+		<div id="moreOptions" class="more_options_block" style="display:none;">
+			<div id="moreOptionsTitle">Browse more categories</div>
+			<a id="moreOptionsClose" href="javascript:void(0);">close</a>
+			<p id="moreOptionsSearchLabel">Type for a category:</p>
+			<form id="options_search" enctype="application/x-www-form-urlencoded" onSubmit="return false;" method="get">
+				<input type="hidden" name="optionType" id="moreOptionsFilterType" value="" />
+				<fieldset>
+					<div class="more-options-input-wrapper">
+					<input type="text" name="moreOptionsWhat" id="moreOptionsWhat" size="30" value="" class="more-options-what" />
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<?php
+	}
+	?>
+
+	<script type="text/javascript" src="<?php echo $this->CDNLink()->javascript('/js/jquery.searchvariables.js'); ?>" charset="utf-8"></script>
+	<script type="text/javascript">
+		optionsCacheId = <?php echo $this->optionsCacheId; ?>;
+	</script>
+	</div>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('input[name=searchWhat]').autoComplete({
+				backwardsCompatible: true,
+				ajax: '/search/autocomplete/what/format/json/',
+				useCache: false,
+				minChars: 3,
+				preventEnterSubmit: true,
+				tabToNext: 'input[name=searchText]',
+				leftAdjustment: -8,
+				width: 325,
+				onSelect: function(data, $li){
+					$('#searchWhat').val(data.code);
+					$('#searchType').val(data.type);
+				}
+			});
+
+			$('input[name=searchText]').autoComplete({
+				backwardsCompatible: true,
+				ajax: '/search/autocomplete/portsAndCountries/format/json/',
+				useCache: false,
+				minChars: 3,
+				preventEnterSubmit: false,
+				width: 325,
+				leftAdjustment: -8,
+				onSelect: function(data, $li){
+					$('#searchWhere').val(data.code);
+				}
+			});
+
+			$('#searchWhat').keypress(function(e) {
+				if (e.which == '13') {
+					$('#anonSearch').submit();
+				}
+			});
+
+			$('#searchText').keypress(function(e) {
+				if (e.which == '13') {
+					$('#anonSearch').submit();
+				}
+			});
+
+			$('#anonSearch').live('submit', function(e) {
+				e.preventDefault();
+				var self = this;
+				if (!$('#search_box') || !$('#search_box').hasClass('zone_search_box')) {
+					$('a.search-button').html('<img src="/images/buttons/search-button-animated-whitebg.gif" alt="" />');
+				}
+				if ($('#search_box') && $('#search_box').hasClass('zone_search_box')) {
+					$('a.search-button').html('<div id="animitedSearchButtonIcon"></div>');
+				}
+
+				window.setTimeout(function() {
+					self.submit();
+				}, 100);
+			});
+
+			$('#searchButton').live('click', function(e) {
+				e.preventDefault();
+				if( typeof window.searchIsOngoing == 'undefined' )
+				{
+					$(this).attr('disabled', 'disabled');
+					window.searchIsOngoing = true;
+					$('#anonSearch').submit();
+				}
+		    });
+		});
+	</script>
+	<script type="text/javascript">
+		<!--
+		$(".docMatch").live('click', function() {
+			$.get('/supplier/trigger-page-impression/format/html/s/'+$(this).attr('id'));
+		});
+		//-->
+	</script>
+
+	<?php
+
+	echo $this->headStyle();
+
+	/*
+	// commented this out as requested by Nick
+	if($this->categoryId == 49 || $this->categoryId == 9){?>
+		<script type="text/javascript">
+		    setTimeout(function(){
+		        var a=document.createElement("script");
+		        var b=document.getElementsByTagName("script")[0];
+		        a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0017/6893.js?"+Math.floor(new Date().getTime()/3600000);
+		        a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}
+		    , 1);
+		</script>
+	<?}?>
+	*/
+	?>
+</div>

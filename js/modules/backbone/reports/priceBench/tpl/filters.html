@@ -1,0 +1,51 @@
+<div class="buttonBox">
+
+</div>
+
+<fieldset>
+	<label for="bought" class="radioLabel">Search scope:</label>
+	<!-- <input name="bought" if="bought" type="checkbox"><br> -->
+	<input type="radio" name="bought" id="bAll" value="all"><label class="radioLabel" for="bAll">All products&nbsp;&nbsp;</label>
+	<input type="radio" name="bought" id="bOrdered" value="ordered" checked><label class="radioLabel" for="bOrdered">Ordered by us</label>
+	<!-- <a href="date.html" class="help"></a> -->
+</fieldset>
+
+<fieldset>
+	<label for="keywords">Add product:</label>
+	<input type="text" name="keywordselect" placeholder="IMPA code or product description..." value=""/>
+	<!-- <a href="keywords.html" class="help"></a> -->
+	<div class="keywordsAutocomplete"></div>
+</fieldset>
+
+<fieldset>
+	<label for="dateFrom">Date range:</label>
+	<input type="text" name="dateFrom" class="date" value="dd/mm/yy"/>
+	<label for="dateTo">to:</label>
+	<input type="text" name="dateTo"  class="date" value="dd/mm/yy"/>
+	<!-- <a href="date.html" class="help"></a> -->
+	<label for="vessel">Vessel:</label>
+	<select name="vessel">
+		<option value="">All my vessels</option>
+		{{#each vessel.models}}
+			<option value="{{this.attributes.name}}">{{this.attributes.name}}</option>
+		{{/each}}
+	</select>
+	<!-- <a href="date.html" class="help"></a> -->
+</fieldset>
+
+<fieldset>
+	<div class="locs">
+		<label for="location">Suppliers located in:</label>
+		<span class="locationDisp">Globally</span>
+		<input type="button" value="Edit locations" name="addLoc" class="button small white" />
+		<!-- <a href="date.html" class="help"></a> -->
+	</div>
+</fieldset>
+
+<fieldset class="topBordered">
+	<div class="align">
+		<input type="submit" value="Show" class="button medium dblue show" />
+	</div>
+	
+	<ul class="impaItemDisplay cloud"></ul>
+</fieldset>

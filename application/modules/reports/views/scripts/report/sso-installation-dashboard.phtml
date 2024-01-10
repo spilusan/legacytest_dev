@@ -1,0 +1,96 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()
+	->addModule('match/report')
+	->addDefinition('/match/reportType', '"sso-dashboard"')
+	;
+
+
+function getMonth($number)
+{
+	$dateObj   = new DateTime;
+	$dateObj->setDate('2014', $number, '1');
+	$monthName = $dateObj->format('M'); // March
+	return strtoupper($monthName);
+}
+
+?>
+
+<?php
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Usage report', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'SSO Dashboard', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.colVis.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+
+<div id="body" class="usage">
+	<div id="content">
+		<h1 class="styled">ShipServ Onboard Installation Dashboard</h1>
+		<form method="get" class="new" id="report-form" action="/reports/sso-installation-dashboard">
+			<input type="hidden" id="selectedTnid" />
+		    <table style=";">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+						<div style="font-size:12px; float: left;">
+							SSO Version:
+							<select name="version" onchange="location.href='/reports/sso-installation-dashboard?version=' + this.value;">
+								<?php for ($optYear = date('Y'); $optYear >= 2014 ; $optYear--) {
+									?><option value="<?= $optYear; ?>" <?= (($this->params['version'] == $optYear) ? 'selected="selected"': "" )?>><?= $optYear; ?></option><?php
+								}?>
+							</select>
+						</div>
+
+						<div style="font-size:12px; float: right; margin-left: 20px;">
+            				<a href="/reports/sso-dashboard">Switch to detailed dashboard</a>
+            			</div>
+
+						<div class="clear"></div>
+						<hr />
+			            <?php
+			            if (empty($this->data)) {
+				            ?><p>No data to display</p><?php
+ 			            } else {
+				            $row = array_pop($this->data);
+				            $columns = array_keys($row);
+				            ?>
+				            <table id="resultsTab" style="border-collapse: collapse; width:800px;">
+					            <thead>
+					            <tr>
+						            <?php foreach ($columns as $column) { ?>
+							            <th class="left"><? echo ucwords(str_replace('sis', '', str_replace("_", ' ', strtolower($column)))); ?></th>
+						            <?php } ?>
+					            </tr>
+					            </thead>
+					            <tbody>
+					            <?php foreach ((array)$this->data as $result) : $key = 1;
+						            $totalNotNull = $totalPerBuyer = 0; ?>
+						            <tr class="<?php if ($key % 2 == 0): ?>altColor<?php endif; ?> handCursor">
+							            <?php foreach ($columns as $column) { ?>
+								            <td style="<?= (in_array($column, array('SIS_NO_APP_STARTED'))) ? '' : 'text-align:left;' ?>"><?= $result[$column] ?></td>
+							            <?php } ?>
+						            </tr>
+					            <?php endforeach; ?>
+					            </tbody>
+				            </table>
+				            <?php
+			            }
+			            ?>
+		                </div>
+		        	</td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>

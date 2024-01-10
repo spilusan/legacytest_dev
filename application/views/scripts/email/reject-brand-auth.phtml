@@ -1,0 +1,25 @@
+<?
+	$companyInfo = $this->requests[0]->getCompanyInfo();
+	$brandInfo = $this->requests[0]->getBrandInfo ();
+
+	$names = array ();
+	foreach ($this->requests as $brandAuthRequest)
+	{
+		$names[] = $brandAuthRequest->getAuthLevelDisplayName();
+	}
+?>
+Dear Supplier,<br />
+<br />
+We are sorry to inform you that <?php echo $brandInfo["NAME"]?> declined your request as <?= implode(", ", $names)?> on ShipServ Pages.<br />
+<br />
+As a result, <?php echo $brandInfo["NAME"]?> brand is now listed under 'Other brands supplied' in your Profile. Visitors are still able to see that you provide <?php echo $brandInfo["NAME"]?> but not as authorised supplier.<br />
+<br /> 
+<!-- 
+For more information on brand verification on ShipServ, click here (FAQ brand verification on Pages, Help section)<br />
+<br />
+ -->
+If you need any assistance, please contact support@shipserv.com<br />
+<br />
+<br />
+Best regards,<br />
+ShipServ Team<br />

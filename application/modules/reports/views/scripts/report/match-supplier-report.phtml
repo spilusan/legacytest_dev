@@ -1,0 +1,45 @@
+<?php
+    $this->headLink()->appendStylesheet('/css/reports/match-supplier-report.css')
+//    ->appendStylesheet('/css/uniform.rfq.css');
+    ->appendStylesheet('/css/uniform.default.new.css');
+    $this->getHelper('Requirejs')->addModule('backbone/reports/matchSupplierReport/views/mainView');
+    $user = Shipserv_User::isLoggedIn();
+    $shipservUser = $user->isShipservUser();
+
+    $this->headScript()->appendScript('var activeCompany ='.$this->activeCompanyForLink.';');
+
+?>
+<div id="breadcrumbs">
+    <span class="title">You are here: </span>
+    <ul>
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <span></span>
+            <a href="/reports/match-new">Analyse</a>
+        </li>
+        <li class="current">
+            <span></span>
+            Supplier Recommendations
+        </li>
+    </ul>
+</div>
+<div id="body" class="liquid">
+	<div id="content">
+		<h1 class="styled" id="titleText"></h1>
+		<div id="innerContent">
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div id="waiting">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>
+
+<div id="modalInfo">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+    </div>
+</div>

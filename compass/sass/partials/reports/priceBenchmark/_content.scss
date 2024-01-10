@@ -1,0 +1,47 @@
+
+div#waiting {
+	div.waitingMessage {
+		line-height: 1.5;
+		height: 150px;
+		width: 260px;
+
+		div {
+			text-align: center;
+		    position: relative;
+		    top: 42px;
+		}
+	}
+}
+
+div#body, div#breadcrumbs {
+	#content {
+		h1 {
+			sup {
+				font-size: 11px;
+				position: relative;
+				top: -5px;
+			}
+		}
+		
+		#innerContent {
+			min-width: 960px;
+			ul.tabs {
+				margin-top: 26px;
+				padding-left: 6px !important;
+			}
+		}
+
+		.head {
+			padding:0;
+			padding-bottom: 10px;
+			padding-left: 10px;
+		}
+
+		#innerContent {
+			padding: 15px;
+		}
+		.dataBox {
+			width: 98% !important;
+		}
+	}
+}

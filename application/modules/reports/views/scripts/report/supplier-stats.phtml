@@ -1,0 +1,342 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->headLink()->appendStylesheet('/css/uniform.rfq.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+$this->headLink()->appendStylesheet('/css/supplier/gmv.css');
+
+$this->requirejs()
+	->addModule('match/report')
+	->addDefinition('/match/reportType', '"supplier-statistic-report"')
+;
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+	table tr.child td {
+		background-color:#d6dce4;
+	}
+
+	table tr.bold td {
+		font-weight:bold;;
+	}
+	#body #content {
+		left: 0 !important;
+	}
+
+	.left{
+		text-align:left;
+	}
+
+
+</style>
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.CSV.css" media="screen" rel="stylesheet" type="text/css">
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'GMV Report', 'url'  => '/reports/gmv');
+	$breadcrumbs[] = array('name' => 'Supplier Statistic', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+	$startDate = ((isset($_GET['fromDate']) && $_GET['fromDate'])? _htmlspecialchars($_GET['fromDate']) : $this->report->startDate->format('d/m/Y'));
+	$endDate =  ((isset($_GET['toDate']) && $_GET['toDate'])? _htmlspecialchars($_GET['toDate']) : $this->report->endDate->format('d/m/Y'));
+?>
+
+<style>
+th{
+	margin-bottom:100px;
+}
+</style>
+
+
+<div id="body" class="supplierStats">
+	<div id="content">
+		<h1 class="styled">Supplier statistics</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+
+		<form action="/reports/supplier-stats" class="new" id="supplierStatsForm">
+		    <table>
+		        <tr style="position: relative;">
+		            <td colspan="5">
+
+			        		<table>
+								<tr>
+									<td width="130">
+										<label class="date">Match level:</label>
+						                <select class="uniform filter" id="matchLevelSelector" name="matchLevel">
+											<option <? if(''==$this->params['matchLevel']) echo 'selected="selected"';?> value="">All</option>
+											<!--<option <? if('prime-supplier'==$this->params['matchLevel']) echo 'selected="selected"';?> value="prime-supplier">PrimeSupplier</option>-->
+											<option <? if('matched'==$this->params['matchLevel']) echo 'selected="selected"';?> value="matched">Matched</option>
+						                </select>
+						            </td>
+									<td width="130">
+										<label class="date">Account manager:</label>
+						                <select class="uniform filter" id="accountManagerSelector" name="accountManager">
+						                	<option value="">All</option>
+							                <?foreach($this->accountManager as $data){?>
+							                <option value="<?= $data['NAME']?>" <? if($data['NAME']==$this->params['accountManager']) echo 'selected="selected"';?>><?= $data['NAME']?></option>
+							                <?}?>
+						                </select>
+						            </td>
+						            <td width="130">
+										<label class="date">Supplier name</label>
+										<input type="text" name="spbName" value="<?= $this->params['spbName']?>" id="spbName" />
+						            </td>
+						            <td width="130">
+										<label class="date">Supplier TNID</label>
+										<input type="text" name="tnid" value="<?= $this->params['tnid']?>" id="tnid" />
+										<div class="tnidAutocomplete"></div>
+						            </td>
+						            <td width="130">
+						                <label class="date">Region:</label>
+						                <select class="uniform filter" id="regionSelector" name="region">
+						                	<option value="">All</option>
+							                <?foreach($this->region as $data){?>
+							                <option value="<?= $data['REGION']?>" <? if(isset($this->params['region']) && $data['REGION']==$this->params['region']) echo 'selected="selected"';?>><?= ($data['REGION']==""?"Not specified":$data['REGION'])?></option>
+							                <?}?>
+						                </select>
+						            </td>
+
+						            <td width="130">
+						                <label class="date">Country:</label>
+						                <select class="uniform filter" id="countrySelector" name="country">
+						                	<option value="">All</option>
+							                <?foreach($this->country as $data){?>
+							                <option value="<?= $data['COUNTRY_CODE']?>" <? if($data['COUNTRY_CODE']==$this->params['country']) echo 'selected="selected"';?>><?= $data['COUNTRY']?></option>
+							                <?}?>
+						                </select>
+						            </td>
+
+						            </tr>
+						            <tr>
+						            <td width="130">
+						                <label class="date">Type:</label>
+						                <select class="uniform filter" id="typeSelector" name="type">
+						                	<option value="">All</option>
+							                <?foreach($this->type as $data){?>
+							                <option value="<?= $data['INTEGRATION_TYPE']?>" <? if($data['INTEGRATION_TYPE']==$this->params['type']) echo 'selected="selected"';?>><?= $data['INTEGRATION_TYPE']?></option>
+							                <?}?>
+						                </select>
+						            </td>
+
+									<td width="130">
+						                <label class="date">From:</label>
+						                <input type="text" name="fromDate" id="fromDate" value="<?php echo $startDate ?>" class="datepicker" />
+						            </td>
+						            <td width="130">
+						                <label class="date">To:</label>
+						                <input type="text" name="toDate" id="toDate" class="datepicker" value="<?php echo $endDate ?>"/>
+						            </td>
+<!--
+									<td width="130">
+						                <label>Transaction types:</label>
+						                <div class="clear"></div>
+						                <div style="float:left; "><label><input type="checkbox" name="txnType[]" <?= (isset($this->params['txnType']) == false || (lg_count($this->params['txnType']) > 0 && in_array('TradeNet', $this->params['txnType']))?'checked="checked"':'') ?> value="TradeNet">TradeNet</label></div>
+										<div style="float:left; "><label><input type="checkbox" name="txnType[]" <?= (isset($this->params['txnType']) == false || (lg_count($this->params['txnType']) > 0 && in_array('Pages', $this->params['txnType']))?'checked="checked"':'') ?> value="Pages">Pages</label></div>
+										<div style="float:left; "><label><input type="checkbox" name="txnType[]" <?= (isset($this->params['txnType']) == false || (lg_count($this->params['txnType']) > 0 && in_array('Match', $this->params['txnType']))?'checked="checked"':'') ?> value="Match">Match</label></div>
+						                <div class="clear"></div>
+						            </td>
+-->
+						            <td class="buttonCell">
+						            	<input type="button" value="Go" id="submitBtn"  class="button dblue medium" style="float:left; margin-right:10px;"/>
+
+		                        		<? if( $this->params['parent'] == 1 ){?>
+		                        			<input type="submit" value="Back"  class="button dblue medium" style="float:left; margin-right:10px;"/>
+		                        		<? }?>
+						            </td>
+						            <td width="" style="">&nbsp;</td>
+								</tr>
+			        		</table>
+		            	<?php if( lg_count($this->results) > 0 ){?>
+						<br /><br /><br /><br />
+		                <table id="resultsTab" class="stripe">
+		                    <thead>
+								<tr>
+									<th colspan="9" class="sectionEnd">General Info</th>
+									<th colspan="5" class="sectionEnd">Trading and Revenue</th>
+									<th colspan="11" class="sectionEnd">Performance</th>
+									<? if( $this->params['matchLevel'] != "" ) { ?>
+									<th colspan="3" class="sectionEnd">Match / AutoMatch</th>
+									<? } ?>
+									<th colspan="3" class="sectionEnd">Leakage</th>
+									<th colspan="3" class="sectionEnd">Pricing</th>
+									<th colspan="4" class="sectionEnd">Tools</th>
+								</tr>
+		                    	<tr>
+		                    		<!-- General Info -->
+		                        	<th class="left">No</th>
+		                        	<th class="left">TNID</th>
+		                        	<th class="left">Name</th>
+		                        	<th class="left">Country</th>
+									<th class="left">Level</th>
+									<th class="left">Listing</th>
+									<th class="left">Directory Entry Status</th>
+		                        	<th class="left">PCS (%)</th>
+		                        	<!--
+		                        	<th class="left ">Account manager</th>
+		                        	-->
+									<th class="sectionEnd">PO Fee %</th>
+
+									<!-- Trading and Revenue -->
+									<th class="">POs</th>
+									<th class="">GMV (USD)</th>
+		                        	<th class="">Buyers <br />interacted <br />with (RFQ or PO)</th>
+		                        	<th class="">Buyers <br />traded <br />with (PO)</th>
+		                        	<th class="sectionEnd">Estimated revenue (Credits Consumed)</th>
+
+		                        	<!-- Performance -->
+									<th class="">RFQs</th>
+									<!-- <th>Competitive RFQ Events</th> -->
+									<th>Number RFQs Unactioned</th>
+
+									<th>Response Rate</th>
+									<th>Quote Rate</th>
+									<th>Average Time to Quote (d)</th>
+									<th>Responsiveness</th>
+									<th>Number RFQ events suitable for price competitiveness analysis</th>
+									<th>% Suitable RFQ events where supplier was cheapest</th>
+									<th>Average % cheaper when supplier was cheapest</th>
+									<th>Number competitive RFQ events where there is a clear winner</th>
+									<th class="sectionEnd">Win rate</th>
+
+									<!-- Match / AutoMatch -->
+									<? if( $this->params['matchLevel'] != "" ) { ?>
+									<th class="">Potential saving (USD)</th>
+									<th class="">Realised saving (USD)</th>
+									<th class="sectionEnd"> %RFQ Events <br />where this<br /> supplier <br />was matched, <br />quoted and <br />was cheaper <br />than cheapest <br />buyer <br />selected supplier</th>
+									<? } ?>
+
+									<!-- Leakage -->
+									<!--
+									<th class="">RFQ Events with no PO</th>
+									<th class="">RFQ Events <br />with no PO <br />where supplier <br />is the <br />cheapest <br />but did not win</th>
+									<th class="sectionEnd">Average Time to Quote (d)</th>
+									-->
+									<th class="">%RFQ events where there is no PO and this supplier was the cheapest</th>
+									<th class="">Estimated GMV Leakage (USD)</th>
+									<th class="sectionEnd">Estimated Revenue Leakage (USD)</th>
+									
+									<!-- Pricing -->
+
+									<th class="">Supplier pricing model</th>
+									<th class="">Target rate</th>
+									<th class="sectionEnd">Exclude rate</th>
+
+									<!-- Tools -->
+									<th class="">GMV Trend Graph</th>
+									<th class="">Billable GMV Report</th>
+									<th class="">Conver-<br/>sion Analysis</th>
+									<th class="sectionEnd">GMV Trend - Trailing 3 months vs Prior 3 months</th>
+
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php
+		                        $supplierDetail = array();
+		                        $startDate = "";
+		                        $totalRow = lg_count($this->results);
+
+		                        foreach ( (array) $this->results as $result)
+		                        {
+		                        	++$no;
+
+									$supplier = Shipserv_Supplier::getInstanceById($result['SPB_BRANCH_CODE'], '', false);
+
+		                        	?>
+			                    	<tr>
+			                    		<!-- General Info -->
+			                    		<td><?= $no?></td>
+			                        	<td class="left"><?= $result['SPB_BRANCH_CODE']?></td>
+			                        	<td class="left"><?= $result['SPB_NAME']?></td>
+			                        	<td class="left"><?= $result['COUNTRY_NAME']?></td>
+										<td class="left"><?= $result['SPB_INTERFACE']?></td>
+										<td class="left">
+											<? if( $result['SPB_LISTING_STATUS'] == 'PUBLISHED'){ ?>
+											<a href="<?= $supplier->getUrl();?>" target="_blank">
+											<? }?>
+											<?= $result['SPB_LISTING_LEVEL']?>
+											<? if( $result['SPB_LISTING_STATUS'] == 'PUBLISHED'){ ?>
+											</a>
+											<? }?>
+										</td>
+										<td class="left"><?= $result['SPB_LISTING_STATUS']?></td>
+										<td class="left"><?= $result['SPB_PCS_SCORE']?></td>
+										<!--
+										<td class="left "><?= $result['SPB_ACCT_MNGR_NAME']?></td>
+										-->
+										<td class="percentage sectionEnd"><?= $result['PO_FEE']?></td>
+
+										<!-- Trading and Revenue -->
+										<td class=""><?= $result['TOTAL_ORD']?></td>
+										<td class="currency"><?= $result['TOTAL_GMV']?></td>
+										<td class=""><?= $result['TOTAL_PARENT_BUYER']?></td>
+										<td class=""><?= $result['TOTAL_PARENT_BUYER_ORDERED']?></td>
+										<td class="currency sectionEnd"><?= $result['ESTIMATED_REVENUE']?></td>
+
+										<!-- Performance -->
+										<td class=""><?= $result['TOTAL_RFQ']?></td>
+										<!-- <td class="sectionEnd"><?= $result['TOTAL_RFQ_EVENT']?></td> -->
+										<td class="sectionEnd"><?= $result['IS_UNACTIONED']?></td>
+
+										<td class=""><?= $result['RESPONSE_RATE']?>%</td>
+										<td class=""><?= $result['QUOTE_RATE']?>%</td>
+										<td class=""><?= $result['AVG_TIME_TO_QUOTE']?></td>
+										<td class=""><?= $result['RESPONSIVENESS']?>%</td>
+										<td class=""><?= $result['PRICE_COMPETITIVE_COUNT']?></td>
+										<td class=""><?= $result['CHEAPEST_COMPETITIVE']?>%</td>
+										<td class=""><?= $result['CHEAPER']?>%</td>
+										<td class=""><?= $result['HAS_WINNER']?></td>
+										<td class=""><?= $result['WIN_RATE']?>%</td>
+										
+										<!-- Match / AutoMatch -->
+										<? if( $this->params['matchLevel'] != "" ) { ?>
+										<td class="currency"><?= $result['MATCH_POTENTIAL_SAVING']?></td>
+										<td class="currency"><?= $result['MATCH_REALISED_SAVING']?></td>
+										<td class="percentage sectionEnd"><?= $result['PERCENTAGE_OF_CHEAPEST_QOT']?></td>
+										<? } ?>
+										
+										<!-- Leakage -->
+										<!--
+										<td class=""><?= $result['RFQ_EVENT_NO_PO']?></td>
+										<td class=""><?= $result['RFQ_EVENT_NO_PO_CHEAPEST']?></td>
+										<td class="percentage 1dc sectionEnd"><?= $result['AVG_TIME_TO_QUOTE']?></td>
+										-->
+										<td class=""><?= $result['RFQ_EVENT_NO_PO_CHEAPEST']?></td>
+										<td class="currency"><?= $result['ESTIMATED_LEAKAGE']?></td>
+										<td class="sectionEnd currency"><?= $result['ESTIMATED_REV_LEAKAGE']?></td>
+
+										<!-- Pricing -->
+
+										<td style="text-align: center; vertical-align: middle; "><?= $result['SBR_SF_SOURCE_TYPE'] ?></td>
+										<td style="text-align: center; vertical-align: middle; "><?= ($result['SBR_RATE_TARGET'] == '') ? '' : number_format($result['SBR_RATE_TARGET'],2, '.', ' ').'%' ?></td>
+										<td style="text-align: center; vertical-align: middle; "><?= ($result['SBR_RATE_STANDARD'] == '') ? '' : number_format($result['SBR_RATE_STANDARD'],2, '.', ' ').'%' ?></td>
+
+										<!-- Tools -->
+										<td style="text-align: center; vertical-align: middle; "><a target="_blank" href="/supplier/gmv-trend?tnid=<?= $result['SPB_BRANCH_CODE']?>"><img src="/img/reports/gmv/Graph.png" style="float:none; " /></a></td>
+										<td style="text-align: center; vertical-align: middle;  "><a target="_blank" href="/reports/gmv?tnid=<?= $result['SPB_BRANCH_CODE']?>&period=monthly&datefrom=<?= $this->params['fromDate']?>&dateto=<?= $this->params['toDate']?>"><img src="/img/reports/gmv/link.png" style="float:none; " /></a></td>
+										<td style="text-align: center; vertical-align: middle; "><a target="_blank" href="/reports/supplier-conversion?drilldown=all&period=monthly&id=<?= $result['SPB_BRANCH_CODE']?>&fromDate=<?= $this->params['fromDate']?>&toDate=<?= $this->params['toDate']?>"><img src="/img/reports/gmv/link.png" style="float:none; " /></a></td>
+										<td style="text-align: center; vertical-align: middle; " class=""><img src="/img/reports/gmv/<?= ($result['GMV_TREND']=='up')?'Trend_Up.png':'Trend_Down.png'?>" style="float:none; " /></td>
+
+			                        </tr>
+		                        	<?
+		                        }
+		                        ?>
+		                    </tbody>
+		                </table>
+		                <?php }else{?>
+		                No data found
+		                <?php }?>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>

@@ -1,0 +1,137 @@
+<div class="actions">
+    <input name="runReport" type="submit" value="Run Report" class="button large green" />
+    <select id="rows" name="rows">
+        <option value="25" selected="selected">Show 25 Records/Page</option>
+        <option value="50">Show 50 Records/Page</option>
+        <option value="75">Show 75 Records/Page</option>
+        <option value="100">Show 100 Records/Page</option>
+        <option value="1000">Show 1000 Records/Page</option>
+    </select>
+    <select id="numberFormat" name="numberFormat">
+        <option value="EN" selected="selected" title="English numbering format of 9,999.99">Use EN Number Format</option>
+        <option value="EU" title="European numbering format of 9.999,99">Use EU Number Format</option>
+    </select>
+    <button name="csvExport" class="button small dblue">Export to CSV</button>
+</div>
+<div class="filters">
+    <fieldset class="reportInfo">
+        <div id="rptMainFilters">
+            <label for="companyName" class="forSelect">Buyer Company: </label>
+            <select id="companyName" name="companyName" {{#if buyers}}{{#ifLength buyers 'eq' 1}}disabled="disabled"{{/ifLength}}{{/if}}>
+                {{#if buyers}}
+                    {{#foreach buyers}}
+                         <option value="{{this.bybtnid}}"{{#ifCond ../defaultBuyerBranch this.bybtnid}} selected{{/ifCond}}>{{this.bybname}}</option>
+                    {{/foreach}}
+                {{/if}}
+            </select>
+            <label for="reportType" class="forSelect">Report Type: </label>
+            <select id="reportType" name="reportType">
+                {{#if reports}}
+                    {{#foreach reports}}
+                        <option value="{{this.rptcode}}:{{toUpperCase this.rptsort}}" {{#if $first}}selected="selected"{{/if}}>{{this.rptname}}</option>
+                    {{/foreach}}
+                {{/if}}
+
+            </select>
+            <label for="currency" class="forSelect">Currency: </label>
+            <select id="currency" name="currency">
+               {{#if top_rates}}
+      			   {{#foreach top_rates}}
+                        <option value="{{this.currcode}}" {{#ifCond this.currcode "USD"}}selected="selected"{{/ifCond}}>{{this.currcode}} - {{this.currname}}</option>
+                   {{/foreach}}
+               {{/if}}
+               <option disabled>───────────────────────────</option>
+               {{#if rest_rates}}
+                   {{#foreach rest_rates}}
+                        <option value="{{this.currcode}}">{{this.currcode}} - {{fixCurrency this.currcode this.currname}}</option>
+                   {{/foreach}}
+               {{/if}}
+
+            </select>
+        </div>
+        <div id="rptSearchFilter" class="hidden">
+            <label for="rptSrch">Search: </label>
+            <input type="text" name="rptSrch" id="rptSrch" style="width: 296px; margin-bottom: 20px;" />
+        </div>
+        <div id="rptSubFilters" class="hidden">
+            <div id="rsfContacts">
+                <label for="contact" class="forSelect">Buyer Contact: </label>
+                <select id="contact" name="contact">
+                    <option value="NA" selected="selected">All Contacts</option>
+                </select>
+            </div>
+            <div id="rsfSuppliers">
+                <label for="supplier" class="forSelect">Supplier: </label>
+                <select id="supplier" name="supplier">
+                    <option value="0" selected="selected">All suppliers</option>
+                    <optgroup></optgroup>
+                </select>
+            </div>
+            <div id="rsfVessels">
+                <label for="vessel" class="forSelect">Vessel: </label>
+                <select id="vessel" name="vessel">
+                    <option value="0" selected="selected">All Vessels</option>
+                </select>
+            </div>
+        </div>
+        <div id="spbAnalysis1" class="spbAnalysis1 hidden">
+            <hr style="margin-right:16px;">
+            <label for="rptAsOfDate" class="forField">Report As Of Date: </label>
+            <input name="rptAsOfDate" class="date" type="text" value="{{today}}" />
+            <a class="help" href="asofTemplate">
+                <img src="/img/webreporter/help.png" alt="help" border="0" title="Click for help" />
+            </a>
+            <div class="clear"></div>
+            <label for="showAdv" class="forField">Show advanced options</label>
+            <input id="showAdv" name="showAdv" type="checkbox" value="show" />
+            <div class="clear"></div>
+            <div class="advancedOpts hidden">
+                <label for="rfqCutoff" class="forField">Pending RFQ Cutoff Days: </label>
+                <input name="rfqCutoff" type="text" value="30" disabled="disabled" />
+                <a class="help" href="rfqcutTemplate">
+                    <img src="/img/webreporter/help.png" alt="help" border="0" title="Click for help" />
+                </a>
+                <div class="clear"></div>
+                <label for="ordCutoff" class="forField">Pending PO Cutoff Days: </label>
+                <input name="ordCutoff" type="text" value="30" disabled="disabled" />
+                <a class="help" href="pocutTemplate">
+                    <img src="/img/webreporter/help.png" alt="help" border="0" title="Click for help" />
+                </a>
+            </div>
+        </div>
+    </fieldset>
+    <fieldset class="reportDates">
+        <label for="dateRange" class="forSelect">Date Range: </label>
+        <select id="dateRange" name="dateRange">
+            <option value="CSTMDTS">Custom Dates</option>
+            <option value="1" selected="selected">Previous Month</option>
+            <option value="3">Previous 3 Months</option>
+            <option value="6">Previous 6 Months</option>
+            <option value="12">Previous 12 Months</option>
+            <option value="1Y">Previous Year</option>
+        </select>
+        <label for="fromDate" class="forField">From date: </label>
+        <input name="fromDate" type="text" value="{{startDate}}" class="date" />
+        <label for="toDate" class="forField">To date: </label>
+        <input name="toDate" type="text" value="{{endDate}}" class="date">
+        <div id="spbAnalysis2" class="spbAnalysis2 hidden">
+            <hr style="margin-right:4px;margin-top: 3px;">
+            <div class="advancedOpts hidden">
+                <label for="qotCutoff" class="forField">PO Decision Cutoff Days: </label>
+                <input name="qotCutoff" type="text" value="30" disabled="disabled" />
+                <a class="help" href="podecTemplate">
+                    <img src="/img/webreporter/help.png" alt="help" border="0" title="Click for help">
+                </a>
+                <div class="clear"></div>
+            </div>
+            <div class="pdfDown">
+                <img src="/img/webreporter/pdf-icon.png" border="0" alt="Supplier Analysis Guide PDF">
+            	<a href="/img/webreporter/pdf/Supplier_Analysis_Guide.pdf" target="_blank">Supplier Analysis User Guide</a>
+            </div>
+        </div>
+    </fieldset>
+    <div class="clear"></div>
+    <div class="delayInfo">The reports will show transactions with 5 - 10 minutes delay.</div>
+</div>
+<div class="clear"></div>
+<div class="changedMsg" style="display: none;">The report parameters have changed.  Click the "Run Report" button to generate a new report.  Or click to <a href="#" class="button white small reverForm">Undo Parameter Changes</a></div>

@@ -1,0 +1,143 @@
+/*
+Document   : _co_icons
+Created on : Jun 14, 2012, 10:16:08 AM
+Author     : gly
+Description: Company icons profile styles
+*/
+
+.company-icons {
+    img {
+        float:left; 
+        margin-right:2px;
+    }
+    
+    .icon {
+        position:absolute; 
+        top:2px; 
+        font-size:10px;
+        
+        label {
+            font-size:10px; 
+            color:#39F; 
+        }
+        
+        input {
+            width:auto; 
+            height:auto; 
+            float:left; 
+            background:none; 
+        }
+    }
+    
+    .administrator-icon {
+        top:0; 
+    }
+    
+    a {
+        color:#39f; 
+    }
+    
+    ul li span {
+        display:block; 
+        padding-top:6px; 
+        width:120px; 
+        cursor:pointer; 
+    }
+    
+    span {
+        float:left; 
+        font-size:10px; 
+        margin-left:0px; 
+        margin-right:5px; 
+        padding:0; 
+    }
+    
+    span {
+        &.company-actions-overlay {
+            display:inline !important; 
+            float:left; 
+            background:url(/images/icons/orange-overlay.png) no-repeat; 
+            height:20px; 
+            width:21px !important; 
+            color:#FFF; 
+            font-weight:700; 
+            padding:5px 0 !important; 
+            text-align:center; 
+        }
+    }
+    
+    .remove-icon, .reject-icon {
+        span {
+            width:60px !important;
+        }
+    }
+    
+    .cancel-icon {
+        span {
+            width:100px !important;
+        }
+    }
+    
+    .administrator-icon {
+        span {
+            padding-top:5px;
+        }
+    }
+    
+    ul li, .icon {
+        img {
+            display:block; 
+            margin-top:4px; 
+            margin-right:3px;
+        }
+    }
+}
+
+.sml-action-set {
+	margin-top:0px; 
+}
+
+.ie7 {
+    .company-icons { 
+        span { 
+            margin-right: 3px;
+        }
+        
+        ul li, .icon {
+            img {
+                margin-right:1px; 
+                padding:0;
+            }
+        }
+    }
+}
+
+.remove-icon {
+	left:374px; 
+	width:80px; 
+}
+
+.cancel-icon {
+	left:315px; 
+	width:120px; 
+}
+
+.reject-icon {
+	left:358px; 
+	width:80px; 
+}
+
+.accept-icon {
+	left:225px; 
+}
+
+.remove-icon, .cancel-icon {
+    span {
+        padding-top:4px !important; 
+        color:#999;
+    }
+    
+    img {
+        margin-top:2px !important; 
+    }
+}

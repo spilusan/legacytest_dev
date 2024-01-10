@@ -1,0 +1,205 @@
+<?php
+
+$this->requirejs()->addDefaultModule('backbone/profile/matchSettings/views/mainView')
+                  ->addDefinition('categories/allExcept', '{}')
+                  ->addDefinition('categories/onlySpecific', '{}')
+                  ->addDefinition('suppliers/matchBlacklist', '{}')
+                  ->addDefinition('suppliers/forwardBlacklist', '{}');
+
+$this->headLink()->appendStylesheet('/css/transition.css');
+$this->headLink()->appendStylesheet('/css/uniform.default.new.css')
+//$this->headLink()->appendStylesheet('/css/uniform.default.css')
+//$this->headLink()->appendStylesheet('/css/uniform.rfq.css')
+    			->appendStylesheet('/css/profile.css')
+				->appendStylesheet('/css/profile/matchControlPanelNew.css');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Settings',
+						   'url'  => '/profile/company-settings-pages'),
+      				 array('name' => 'Spend Management',
+      						   'url'  => '/profile/company-settings-match'));
+?>
+
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		
+		<?=$this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		
+		<div class="content_new-wide_body">
+			<?=$this->partial('profile/title-menu.phtml', array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'],$this->companyDetail['id'], 'company-settings-match', $this->pendingUsers)
+				));
+			?>
+
+			<div class="profile-body-right">
+                <form id="match-settings-form" class="profile-form new" method="" action="">
+				<h1 class="styled">Spend Management Settings</h1>
+                <p class="savedMsg">Your settings have been saved.</p>
+                <h2 class="styled">AutoSource</h2>
+                <div class="contentBox">
+                    <div class="cColumn cDesc">
+                        Use AutoSource to benchmark the performance of your suppliers against the top suppliers on ShipServ.
+                        <!-- 
+                        <a href="/reports/match-supplier-report" target="_blank">View report</a>
+                        -->
+                    </div>
+
+                    <div class="cColumn cHint">
+                        <h3 class="extraSpace">Activate AutoSource</h3>
+                        Click this flag to activate AutoSource for this trading account.
+                    </div>
+
+                    <div class="cColumn cHint">
+                        <h3>Only forward quote notifications when cheaper</h3>
+                        Activate this option to only forward comparison quote notifications when they are cheaper than quotes from buyer selected suppliers.
+                    </div>
+                    <div id="accountList"></div>
+                    <div class="clear"></div>
+                </div>
+                <h2 class="styled">Supplier Scope</h2>
+                <div class="contentBox">
+                    <div class="umatch level">
+                        <div class="row top">
+                            <div class="switch position"><input type="radio" name="scope" class="radio" value="all"></div>
+                            <div class="label">All suppliers <span class="grayed">- RFQs can be sent to any supplier except those on the exclusion lists below.</span></div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="row middle">
+                            <div class="switch position"><input type="radio" name="scope" class="radio" value="ordered"></div>
+                            <div class="label">Suppliers we have ordered from before <span class="grayed">- explanatory text goes here to describe what's happening with this functionality. <a href="#">View</a></span></div>
+                            <div class="clear"></div>
+                        </div>
+                    
+
+                        <div class="row bottom">
+                            <div class="switch position"><input type="radio" name="scope" class="radio" value="specific"></div>
+                            <div class="label">Approved suppliers only <span class="grayed"> – RFQs will only be sent to suppliers on your <? if ($this->canAccessApprovedSupplier): ?><a id="linktoAppr" href="<?= $this->url(array('controller' => 'profile', 'action' => 'company-approved-suppliers')) ?>" class="spec"><? endif ?>Approved Supplier List<? if ($this->canAccessApprovedSupplier): ?></a><? endif ?> and which have not be excluded below.</span>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+                        <div class="clear"></div>
+                        <div class="slider"></div>
+                    </div>
+
+                    <hr>
+
+                    <h3>Supplier Exclusion Lists</h3>
+                    <div class="exclusionBlock">
+                        <div class="exclusionList">
+                            <div class="cbHolder">
+                               <input type="checkbox" name="useSbMatchBlacklist" id="useSbMatchBlacklist" class="checkbox" value="1">
+                            </div>
+                            <label>Never AutoSource these suppliers <strong>but consider them for SpotSource</strong></label>
+                            <div class="exSupplierList">
+                                <div class="matchSbSupplierDisplay"></div>
+                            </div>
+
+                            
+                        </div>
+
+                        <div class="exclusionList">
+                            <div class="cbHolder">
+                                <input type="checkbox" name="useMatchBlacklist" id="useMatchBlacklist" class="checkbox" value="1">
+                            </div>
+                            <label>Never forward RFQs to any of the following suppliers by <b>either SpotSource or AutoSource</b></label>
+                            <div class="exSupplierList">
+                                <div class="matchSupplierDisplay"></div>
+                            </div>
+                        </div>
+                         <div class="clear"></div>
+                    </div>
+
+
+                    <div class="exclusionButtonHolder">
+                        <label for="scopeBlackSbFile" class="uploadScopeBlackSbFile link button lblue medium" title="Text or CSV file with TNIDs separated by commas">Import</label><input type="file" name="supplierIdFile" id="scopeBlackSbFile" style="height: 0; width: 0; overflow: hidden;" />
+                        <a href="#" class="button lblue medium sbEditScope blacklist sbBlist">Edit</a>
+                    </div>
+
+                    <div class="exclusionButtonHolder">
+                        <label for="scopeBlackFile" class="uploadBlackScope link button lblue medium" title="Text or CSV file with TNIDs separated by commas">Import</label><input type="file" name="supplierIdFile" id="scopeBlackFile" style="height: 0; width: 0; overflow: hidden;" />
+                        <a href="#" class="button lblue medium editScope blacklist">Edit</a>
+                    </div>
+
+
+                    <div class="clear"></div>
+                </div>    
+                <h2 class="styled">General Settings</h2>
+                <div class="contentBox">
+                    <div class="gsRow gsFirst">
+                        <div class="cbHolder">
+                            <input type="checkbox" name="useMaxSuppliers" id="useMaxSuppliers">
+                        </div>
+                        <label for="hideContact">Set a maximum number of suppliers contacted by SpotSource and AutoSource</label>
+                        <select name="numSuppliers" id="numSuppliers">
+                            <option value="0" disabled selected>-</option>
+                            <? for($i=1;$i<=10;$i++): ?>
+                                <option value="<?= $i ?>"><?= $i ?></option>
+                            <? endfor ?>
+                        </select>
+                    </div>
+
+                    <div class="gsRow gsLast">
+                        <div class="cbHolder">
+                        <input type="checkbox" name="hideContact" id="hideContact">
+                        </div>
+                        <label for="hideContact">Hide contact details on RFQs to recommended suppliers</label>
+                    </div>
+                    
+                    <div class="clear"></div>
+                </div>
+                <input type="submit" value="Save Changes" name="submit" class="apply button green medium">
+            </form>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+        <h1 class="styled">
+            Suppliers
+        </h1>
+        <div class="selectorHolder">
+            <div class="tabcontent item">          
+                <div class="location selectlist itemselector inner new form">
+                    <div class="available list left" style="position: relative;">
+                        <h3>Search for supplier:</h3>
+                        <div class="textfilter">
+                            <img src="/img/icons/medium/spyglass.png">
+                            <input type="text" class="available supplierList text filter" value="Search for Supplier to add (by name or TNID)"/>
+                        </div>
+                        <div class="spinnerFwd"></div>
+                        <div class="available selectlist">
+
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="selected list right">
+                        <h3>Your selected suppliers:</h3>
+                        <div class="textfilter">
+                            <img src="/img/icons/medium/spyglass.png">
+                            <input type="text" class="selected selectedList text filter" data-selectlist="location-selected-selectlist" />
+                        </div>
+                        <ul class="selected selectlist">
+
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="buttonContainer">
+                        <input type="button" class="apply button green medium" value="Apply changes">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="waiting">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>

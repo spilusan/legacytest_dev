@@ -1,0 +1,17 @@
+<table cellpadding="0" cellspacing="0" class="content-table">
+	{{#ifCond premium 0}}
+	<tr>
+		<td>Orders won by quickest quote - <a href="">all Market</a></td>
+		<td>{{#if hasSpinner}}<div class="spinnerIcon"></div>{{else}}{{roundOneUp attributes.quickest-qot-pct}}%{{/if}}</td>
+	</tr>
+	{{/ifCond}}
+	<tr>
+		<td><strong>% of your quotes won by the supplier who quotes first</strong></td>
+		<td id="quickestQuote{{#if isCompare}}Compare{{/if}}">{{#if premium}}<div class="spinnerIcon"></div>{{else}}<a href="upgrade" class="button yellow small read btnFix tHelp" target="_blank">Upgrade</a>{{/if}}</td>
+	</tr>
+
+	<tr>
+		<td>How often are you the first to quote?</td>
+		<td id="quickestQuoteFreq{{#if isCompare}}Compare{{/if}}">{{#if premium}}<div class="spinnerIcon"></div>{{else}}<a href="upgrade" class="button yellow small read btnFix tHelp" target="_blank">Upgrade</a>{{/if}}</td>
+	</tr>
+</table>

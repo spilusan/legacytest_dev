@@ -1,0 +1,31 @@
+<div class="content_wide_footer_cat">
+    <div class="search_next_previous" style="border-right:none;">
+        {{#if prev}}
+            <a href="#" rel="{{prev}}" data-id="{{prev}}" class="prev product-paginate-page">PREV</a>
+        {{else}}
+            <p class="next">PREV</p>
+        {{/if}}
+    </div>
+    <div id="search_pagination">
+        {{#each pages}}
+            {{#ifCond page '...'}}
+                <span class="current">{{page}}</span>
+            {{else}}
+                {{#if selected}}
+                    <span class="current" rel="{{page}}">{{page}}</span>
+                {{else}}
+                    <a href="#" class="page product-paginate-page" data-id="{{page}}" rel="{{page}}">{{page}}</a>
+                {{/if}}
+            {{/ifCond}}
+        {{/each}}
+    </div>
+    <div class="search_next_previous">
+        {{#if next}}
+            <a href="#" rel="{{next}}" data-id="{{next}}" class="next product-paginate-page">NEXT</a>
+        {{else}}
+            <p class="next">NEXT</p>
+        {{/if}}
+    </div>
+    </div>
+    <div class="clear"></div>
+</div>

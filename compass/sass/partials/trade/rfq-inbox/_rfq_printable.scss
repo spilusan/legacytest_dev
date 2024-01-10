@@ -1,0 +1,152 @@
+
+#body {
+	#content {
+		.nonSessionNotification {
+			margin-left:15px; 
+			padding: 10px;
+			font-size:14px;
+			width: 740px;
+			margin-bottom:30px;
+			clear:right;
+			background-color:#13b5ea;
+			color: #fff;
+			font-weight:bold;
+			text-align:center;
+			
+			a{
+				color:#fff;
+				text-decoration:underline;
+			}
+		}
+		
+		.rfqContent {
+			padding: 37px 57px;
+			background-color: #ffffff;
+
+			img {
+				float: right;
+			}
+
+			h1 {
+				font-size: 24px;
+				font-weight: bold;
+				color: #008b00;
+				padding-top: 10px;
+				padding-bottom: 10px;
+			}
+
+			p {
+				font-size: 16px;
+				margin: 0;
+				padding: 5px 0 15px 0;
+			}
+
+			span {
+				&.high {
+					color: #e81e24;
+				}
+			}
+
+
+
+			.dataBox {
+				padding-bottom: 10px;
+
+				&.col {
+					width: 376px;
+				}
+
+				&.right {
+					float: right;
+				}
+
+				h2 {
+					font-size: 15px;
+					font-weight: normal;
+					background: #d6dce4;
+					padding: 13px 15px 11px;
+					border-bottom: 2px solid #13b5ea;
+
+					.currency {
+						float: right;
+						font-size: 12px;
+					}
+				}
+
+				.dataFrame {
+					border: 1px solid #bec4cb;
+					margin-top: 1px;
+					padding: 15px;
+
+					h3 {
+						font-size: 16px;
+						font-weight: bold;
+						color: #087ec5;
+					}
+
+					p, a {
+						font-size: 12px;
+						line-height: 1.2;
+						padding: 2px 0;
+
+						&.address {
+							padding-top: 5px;
+							padding-bottom: 10px;
+						}
+					}
+
+					span {
+						color: #008b00;
+						font-weight: bold;
+					}
+
+					.dataTable {
+						border: 0;
+						border-collapse: collapse;
+						margin-top:0;
+						table-layout: fixed;
+
+						tr {
+							padding:0;
+
+							td {
+								border: 0;
+								font-size: 12px;
+								font-weight: normal;
+								padding: 0;
+								vertical-align: top;
+								line-height: 1.2;
+								padding-bottom: 5px;
+								word-break: break-word;
+
+								&.left {
+									width: 135px;
+								}
+
+								&.wide {
+									width: 200px;
+								}
+							}
+						}
+					}
+
+					.col {
+						width: 358px;
+						padding: 0px;
+					}
+
+					.right {
+						float: right;
+						width: 343px;
+						padding-left: 15px;
+					}
+				}
+			}
+		}
+	}
+
+	.buttons {
+		padding-top: 10px;
+		display: none;
+	}
+}

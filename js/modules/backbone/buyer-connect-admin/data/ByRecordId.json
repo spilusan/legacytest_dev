@@ -1,0 +1,19 @@
+{
+	"id": 1,
+	"transactionDate": 1503960928000,
+	"docType": "RFQ",
+	"fileFormat": "XLS",
+	"status": "Beta",
+	"workFlowStatus": "Open",
+	"filename": "MorningCamilla.xls",
+	"configId": 10002,
+	"remarks": "Beta Transaction Identified for Filename : MorningCamilla.xls",
+	"supplier": {
+		"supplierId": 52572,
+		"name": "Neko Ship Supply B.V."
+	},
+	"buyer": {
+		"buyerId": 10427,
+		"name": "Morning Camilla"
+	}
+}

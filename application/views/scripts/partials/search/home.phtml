@@ -1,0 +1,27 @@
+<div id="home-search">
+	<h3 class="search-for">Search <span><?php echo $this->supplierCount; ?> marine &amp; offshore suppliers for...</span></h3>
+	<h3 class="located-in">Located in...</h3>
+	
+	<form id="anonSearch" enctype="application/x-www-form-urlencoded" action="/search/results" method="get">
+		
+		<fieldset>
+			<input type="hidden" name="newSearch" id="newSearch" value="1" />
+			<input type="hidden" name="searchType" id="searchType" value="product" />
+			<input type="hidden" name="ssrc" id="ssrc" value="<?php echo urlencode(Zend_Controller_Action_HelperBroker::getStaticHelper('SearchSource')->getObscuredKey("KEYWORD")); ?>" />
+			<div class="input-wrapper search-what-wrapper">
+				<input type="text" name="searchWhat" id="searchWhat" size="30" value="" class="search-what" />
+			</div>
+			<h4 class="search-help what-help">Company, category, brand, product, part no, IMPA/ISSA, etc.</h4>
+			
+			<div class="input-wrapper search-country-wrapper">
+				<input type="text" name="searchText" id="searchText" value="" class="search-country"/>
+			</div>
+			<h4 class="search-help where-help">Country or port name</h4>
+			
+			<input type="hidden" name="searchWhere" id="searchWhere" value="" />
+			
+			<a href="#" title="" id="searchButton" class="search-button"></a>
+		</fieldset>
+		
+	</form>
+</div>

@@ -1,0 +1,13 @@
+/*
+Document   : Shipmate Erroneous Transaction report template
+Created on : Oct 20, 2015
+Author     : Attila O
+Description: Combination of partials for Erroneous Transaction report
+*/
+
+@import "compass/css3";
+@import "font-awesome";
+
+@import "partials/erroneous-transactions/content";
+@import "partials/erroneous-transactions/table";
+@import "partials/def/pagination";

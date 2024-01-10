@@ -1,0 +1,15 @@
+<tr data-href="{{priceBenchmarkUrl}}">
+	<td><a href="{{priceBenchmarkUrl}}">{{impaCode}}</a></td>
+	<td><a href="{{priceBenchmarkUrl}}">{{desc}}</a></td>
+	<td class="text-center"><a href="{{priceBenchmarkUrl}}">{{unit}}</a></td>
+	<td class="text-right"><a href="{{priceBenchmarkUrl}}">{{order.lineItemCount}}</a></td>
+	<td class="text-right"><a href="{{priceBenchmarkUrl}}">{{order.totalQuantity}}</a></td>
+	<td class="text-right"><a href="{{priceBenchmarkUrl}}">{{formatCurrency order.averageUnitCost}}</a></td>
+	<td class="text-right"><a href="{{priceBenchmarkUrl}}">{{formatCurrency order.totalSpend}}</a></td>
+	<td class="text-right"><a href="{{priceBenchmarkUrl}}">{{#ifCond quote.averageUnitCost 0}}N/A{{/ifCond}}{{#ifGreaterThan quote.averageUnitCost 0}}{{formatCurrency quote.averageUnitCost}}{{/ifGreaterThan}}</a></td>
+	<td class="text-right colorDefault{{#ifGreaterThan 0 savings.totalBySpent}}red{{/ifGreaterThan}}{{#ifCond 0 savings.totalBySpent}}black{{/ifCond}}">
+        {{#ifCond 0 savings.totalBySpent}}0.00{{/ifCond}}
+        {{formatCurrencyAbs savings.totalBySpent}}
+    </td>
+</tr>
+

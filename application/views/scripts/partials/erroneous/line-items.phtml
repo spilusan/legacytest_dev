@@ -1,0 +1,63 @@
+<?php foreach ($this->data as $data): ?>
+	<hr>
+<p>
+	Our system have detected this document to be erroneous because of the following reason:
+</p>
+<p>
+	<?php if( $data['CURRENCY_CHECK'] == 1 ){?>
+		<b>Currency is different</b><br />
+	
+		<table border="1" cellspacing="1" cellpadding="3" style="border: 1px solid #444;">
+			<tr>
+				<td style="font-weight: bold;">Quote</td>
+				<td style="font-weight: bold;">Purchase Order</td>
+			</tr>
+			<tr>
+				<td><?php echo $data['QOT_CURRENCY']?> <?php echo $data['QOT_TOTAL_COST'] ?></td>
+				<td><?php echo $data['ORD_CURRENCY']?> <?php echo $data['ORD_TOTAL_COST'] ?></td>
+			</tr>
+		</table>
+	
+	<?php } else if(  $data['UNIT_PRICE_CHECK'] == 1 ){?>
+		<b>
+			Line item's unit price on quote and purchase order is different
+		</b>
+		<br />
+		<table border="1" cellspacing="1" cellpadding="3" style="border: 1px solid #444;">
+			<tr>
+				<td colspan="2" style="font-weight: bold;">Quote (<?php echo $data['QOT_CURRENCY']?>)</td>
+				<td colspan="2" style="font-weight: bold;">Purchase Order (<?php echo $data['ORD_CURRENCY']?>)</td>
+				<td colspan="2" style="font-weight: bold;" rowspan="2">Status</td>
+			</tr>
+			<tr>
+				<td style="font-weight: bold;">Line item</td>
+				<td style="font-weight: bold; margin-left:10px;">Price/Unit</td>
+				<td style="font-weight: bold;">Line item</td>
+				<td style="font-weight: bold; margin-left:10px;">Price/Unit</td>
+			</tr>
+			<?php foreach( $data['lineItems'] as $li){?>
+			<?php 
+				$qot = explode('<ss>', $li['QUOTE_LI_DESC']);
+				$ord = explode('<ss>', $li['ORDER_LI_DESC']);
+			?>
+				
+			<tr>
+				<td><?php echo $qot[0]?></td>
+				<td><?php echo number_format($li['QLI_UNIT_COST'],2) . '/' . $li['QLI_UNIT']?></td>
+				
+				<td><?php echo $ord[0]?></td>
+				<td><?php echo number_format($li['OLI_UNIT_COST'],2) . '/' . $li['OLI_UNIT']?></td>
+							
+				<td>
+					<?php echo ($li['QLI_UNIT_COST'] > $li['OLI_UNIT_COST']) ? ($li['OLI_UNIT_COST'] != 0) ? round($li['QLI_UNIT_COST'] / $li['OLI_UNIT_COST'] ) : '' : ($li['QLI_UNIT_COST'] != 0) ? round($li['OLI_UNIT_COST'] / $li['QLI_UNIT_COST'] ) : ''; ?>x  
+					<?php echo ($li['QLI_UNIT_COST'] > $li['OLI_UNIT_COST'])?'higher': 'lower'?> 				
+				</td>
+			</tr>
+			<?php }?>
+		</table>
+	<?php } else if(  $data['BIG_ORDER_CHECK'] == 1 ){?>
+	<b>Purchase order is higher than USD 500,000</b><br />
+	<?php }?>
+</p>
+<?php endforeach ?>
+<hr>

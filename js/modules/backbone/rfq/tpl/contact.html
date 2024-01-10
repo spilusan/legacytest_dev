@@ -1,0 +1,28 @@
+<h1 class="styled">Alternative contact information</h1>
+<div class="modalContent contactModal">
+	<h2>{{name}}</h2>
+	<p class="location">{{contactDetail.companyCity}}, {{contactDetail.companyCountry}}</p>
+
+	<div class="box">
+		{{#if contactDetail.url}}<p>URL: <a href="{{contactDetail.url}}" target="_blank">{{contactDetail.url}}</a></p>{{/if}}
+		{{#if contactDetail.phone}}<p>Phone: {{contactDetail.phone}}</p>{{/if}}
+		{{#if contactDetail.afterHoursNo}}<p>After hours: {{contactDetail.afterHoursNo}}</p>{{/if}}
+		{{#if contactDetail.fax}}<p>Fax: {{contactDetail.fax}}</p>{{/if}}
+	</div>
+	<div class="box contacts">
+		{{#eachVisible contactDetail.contactPerson}}
+			<h2>{{this.nameTitle}} {{this.firstName}} {{this.middleName}} {{this.lastName}}</h2>
+			<p class="margin">{{this.jobTitle}}</p>
+			<p>Phone: {{this.phoneNo}}</p>
+			<p class="margin">Mobile: {{this.mobileNo}}</p>
+		{{/eachVisible}}
+	</div>
+	<div class="box noMargin">
+		<p>{{name}}</p>
+		<p>{{contactDetail.companyAddress}}</p>
+		<p>{{contactDetail.companyCity}}</p>
+		<p>{{contactDetail.zipCode}}</p>
+		{{#if contactDetail.state}}<p>{{contactDetail.state}}</p>{{/if}}
+		<p>{{contactDetail.companyCountry}}</p>
+	</div>
+</div>

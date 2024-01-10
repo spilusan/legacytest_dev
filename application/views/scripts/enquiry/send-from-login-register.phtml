@@ -1,0 +1,123 @@
+<?php
+$this->headLink()->appendStylesheet('/css/uniform.rfq.css')
+				 ->appendStylesheet('/css/rfq.css');
+
+// get all companies that this user is belong to
+$myCompanies = $this->myCompanies;
+
+if (lg_count($myCompanies) > 1)
+{
+?>
+<div id="body" class="dialog">
+	<div id="content">
+	</div>
+</div>
+<div id="maskx"></div>
+<div id="modal" class="choose">
+	<div class="modalBody">
+		<h1 class="styled">Choose Company</h1>
+		<div class="modalContent">
+			<?php 
+			if( lg_count($this->errors ) > 0 )
+			{
+				echo "<br /><b>Error has occured when trying to send this RFQ.</b><br/><br/>We have notified our engineer to look into this issue.<br />we have log this error accordingly.<br /><Br />Error detail:<br />";
+				echo "<ul>";
+				foreach($this->errors as $error)
+				{
+					echo "<li>" . $error . "</li>";
+				}
+				echo "</ul>";
+			}
+			else
+			{
+				?>		
+				<form class="new chooseSupplier" action="/enquiry/send-from-login-register" id="userCompanySwitchForRfq" method="post">
+					<input type="hidden" id="mcid" value="<?= $this->x?>" />
+					<? if (lg_count($myCompanies) > 1){?>
+	
+						<!-- Company select form -->
+						<form action="/enquiry/send-from-login-register" id="userCompanySwitchForRfq">
+							<br /><br />
+							To send your RFQ to the supplier, please choose a company that you want the supplier to see.
+							<br /><br />
+						<select name="tnid" tabindex="-1">
+							<?
+							foreach( $myCompanies as $company )
+							{
+								if( !empty($company['name']) )
+								{
+									?><option title="<?= ($company['type']=="v")?"Supplier":"Buyer"?>" value="<?=$company['value'] ?>" <?= ( ( $this->activeCompany->id == $company['id'] ) ? "selected='selected'":'' ) ?>><?=$company['name'] . " (" . $company['id'] . " - " . ( ($company['type']=="v")?"Supplier":"Buyer") . ")"?></option><?
+								}
+							}
+							?>
+						</select>
+						<br /><br />
+					<?php }?>
+	
+					<?php if( isset( $this->captcha ) ){?>
+					<fieldset>
+						<input type="hidden" name="captcha[id]" value="<?= $this->captchaId ?>">
+						<div>
+							<label for="sender-country">
+								Please type the word below							
+							</label>
+							<div class="captcha">
+								<img src="<?= $this->captcha->getImgUrl() . $this->captcha->getId() . $this->captcha->getSuffix() ?>" height="<?= $this->captcha->getHeight()?>?>" width="<?= $this->captcha->getWidth()?>">
+								<?php if( $this->params['m'] == "c"){?><span class="error">Invalid captcha</span><?php }?>
+								<div class="description">
+									<span>This helps us to prevent spams. If you're <br />having difficulties reading this text, please <br /><a class="new-captcha">click here</a> or contact support <br />at <a href="mailto:support@shipserv.com">support@shipserv.com</a></span>
+								</div>
+							</div>
+							<div class="clear"></div>
+							<input type="text" style="margin-top:10px;" name="captcha[input]" >
+						</div>						
+					</fieldset>
+					<?php }?>
+					
+					<input type="submit" value="Continue" class="button medium green" />
+					<input type="button" value="Cancel" class="button medium red" id="cancelButton" />
+	
+				</form>
+				<?php 
+				}
+			}?>
+		</div>
+	</div>
+</div>
+<script type='text/javascript'>
+	$(document).ready(function(){
+		$('#maskx').show();
+		var height = $('body').height();
+		$('#maskx').css('width', '100%');
+		$('#maskx').css('height', 1000);
+		$("#cancelButton").unbind("click").bind("click", function(){
+			if( confirm("You are about to delete an RFQ with the following subject:\n<?= addslashes($this->enquiry->subject)?>") )
+			{
+				$.get("/enquiry/data/",
+						{ 
+							"type": "mcid",
+							"mcid": $('#mcid').val()
+						},			   
+					    function(response){
+							location.href="/search";
+					    }
+					);		
+			}
+		});
+
+		$(".new-captcha").bind("click", function(e){
+			$.ajax({
+				url: '/enquiry/generate-captcha',
+				type: 'GET',
+				cache: false,
+			    error: function(request, textStatus, errorThrown) {
+			    	response = eval('(' + request.responseText + ')');
+			    	alert("ERROR " + request.status + ": " + response.error);
+			    },
+				success: function( response ){
+					$(".captcha img").attr("src", response.data)
+				}
+			});
+		});
+	});
+</script>

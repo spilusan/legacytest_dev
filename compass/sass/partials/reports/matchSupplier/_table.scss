@@ -1,0 +1,118 @@
+#body {
+	#content {
+		#innerContent {
+			#supplier-table {
+				width: 100%;
+				border-collapse: collapse;
+   				border-spacing: 0px;
+   				font-size: 14px;
+   				color: #0e0f11;
+   				tr {
+   					th {
+   						position: relative;
+   						height: 48px;
+   						text-align: left;
+   						background-color: #d5dce4;
+   						border: 1px solid white;
+   						padding: 6px;
+   						vertical-align: middle;
+   						font-weight: bold;
+
+   						&.fixedWidth {
+   							text-align: center;
+   							width: 180px;
+                        	min-width: 80px;
+   							overflow: hidden;
+   						}
+                     &.fixedActionWidth {
+                        text-align: center;
+                        min-width: 175px;
+                        overflow: hidden;
+                     }
+   						&.tnid {
+   							width: 70px;
+   							overflow: hidden;
+   						}
+   						&.location {
+   							width: 150px;
+   							overflow: hidden;
+   						}
+   						&.saving {
+   							overflow: hidden;
+   							padding: 6px 25px;
+   							width: 150px;
+   							background-color: #b4bdcc;
+   						}
+   						.info {
+   							position: absolute;
+   							width: 18px;
+   							height: 18px;
+   							top: 50%;
+   							right: 6px;
+   							background: transparent url('/images/matchSupplierReport/info-icon.png') no-repeat top;
+   							margin-top: -10px;
+   							cursor: pointer;
+   						}
+                     &.supplier {
+                        min-width: 180px;
+                     }
+   					}
+   					td {
+   						border: 1px solid #c4d0dc;
+   						padding: 6px;
+   						height: 30px;
+   						vertical-align: middle;
+
+   						a {
+   							&.button {
+   								padding: 10px 24px;
+   							}
+   						}
+   						&.centreAligned {
+   							text-align: center;
+
+   						}
+   						&.highlighted {
+   							font-weight: bold;
+   							background-color: #dbf3fd;
+   						}
+   					}
+   				}
+               tbody {
+                  tr {
+                     td {
+                        font-size: 12px;
+                        &.viewQote {
+                           cursor: pointer;
+                        }
+                        a {
+                           overflow: hidden;
+                           text-overflow: ellipsis;
+                           white-space: nowrap;
+                        }
+                        .blacklistSupplier {
+                           display: inline-block;
+                           width: 40px;
+                           height: 30px;
+                           border: 1px solid #d5dce4;
+                           background-color:  #f6f7fb;
+                           @include border-radius(3px);
+                           behavior: url(/css/PIE.htc);
+                           vertical-align: middle;
+                           i {
+                              font-size: 21px;
+                              margin-top: 4px;
+                              cursor: pointer;
+                           }
+                        }
+                     }
+                  }
+                  tr:hover > td {
+                     background-color: #EDF8FC;
+                  }
+               }
+
+			}
+		}
+	}
+}

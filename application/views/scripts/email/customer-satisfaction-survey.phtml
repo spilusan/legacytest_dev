@@ -1,0 +1,94 @@
+<?php
+/**
+ * Email template for customer satisfaction survey
+ */
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Please help us improve our service</title>
+		<style type="text/css">
+		
+		#outlook a { padding:0; } /* Force Outlook to provide a "view in browser" button. */
+		body { width:100% !important; color: #2b2b2b; } /* Force Hotmail to display emails at full width */
+		body { -webkit-text-size-adjust:none; } /* Prevent Webkit platforms from changing default text sizes. */		
+		
+		/* Reset Styles */
+		body { margin:0; padding:0; }
+		img { border:none; font-size:14px; font-weight:bold; height:auto; line-height:100%; outline:none; text-decoration:none; text-transform:capitalize; }
+		#container { margin:0; padding:0; width:636px !important; }
+		/*-*/		
+		</style>
+	</head>
+
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="#f2f2f2" style="text-align: center;">
+		<center>
+			<table id="head" border="0" cellpadding="0" cellspacing="0" width="640" bgcolor="#f2f2f2" style="width: 640px; margin:auto; text-align: right;">
+				<tr>
+					<td width="497">&nbsp;</td>
+					<td width="143"><img src="<?=Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/email/logo.png" alt="ShipServ - Find. Connect. Trade." width="143" height="73" border="0" style="float: right; " /></td>
+				</tr>				
+			</table>
+			
+			<table id="container" border="0" cellpadding="0" cellspacing="0" width="640" bgcolor="#f2f2f2" style="width: 640px; margin:auto; border: 1px solid #cccccc; ">
+				<tr height="30" style="height: 30px;">
+					<td width="35" style="height: 30px;">&nbsp;</td>
+					<td width="568">&nbsp;</td>
+					<td width="35">&nbsp;</td>
+				</tr>
+				<tr>
+						<td width="35">&nbsp;</td>
+						<td width="568">
+							<h1 style="color: #000; font-size: 18px;">Dear Customer</h1>
+							<p style="color: #2b2b2b; font-size: 16px;">
+								The views of our customers are very important to ShipServ. <br />Please help us improve our services in 2012. <br /><br />
+								Clicking on this link will take you to a very short survey <br />which should take less than 30 seconds to complete.
+							</p>
+							
+							<table border="0" cellpadding="0" cellspacing="0" width="640" bgcolor="#f2f2f2" style="width: 180px; height: 38px; text-align: center;">
+								<tr>
+									<td width="175" style="width: 180px; height: 38px; background-color: #459c31; color: #f2f2f2; font-size: 18px; text-align: center;">
+										<a href="<?php echo $this->url; ?>" style="color: #ffffff; font-weight: bold;">Please click here</a>
+									</td>
+								</tr>
+							</table>
+
+							<p style="color: #2b2b2b; font-size: 16px;">Thank you for your help.</p>
+
+							<p style="color: #2b2b2b; font-size: 14px;">
+								<b>Paul Ostergaard</b><br/>ShipServ CEO
+							</p>
+
+						</td>
+						<td width="35">&nbsp;</td>
+				</tr>
+				<tr height="30" style="height: 30px;">
+					<td colspan="3" style="height: 30px;">&nbsp;</td>
+				</tr>
+			</table>
+			
+			<table id="footer" cellpadding="0" cellspacing="0" width="640" bgcolor="#f2f2f2" style="width: 640px; margin:auto; font-size: 12px; color: #2b2b2b;">
+				<tr height="22">
+					<td width="38" height="22" style="height:22px;">&nbsp;</td>
+					<td width="564">&nbsp;</td>
+					<td width="38" height="22" style="height:22px;">&nbsp;</td>
+				</tr>
+				<tr>
+					<td>&nbsp;</td>
+					<td style="word-wrap: break-word;">If the link above doesn't work, please copy and paste this to your browser address bar:<br/><a href="<?php echo $this->url; ?>"><?php echo $this->url; ?></a></td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr height="15">
+					<td colspan="3" style="height: 15px; line-height: 15px;">&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan="3" style="text-align:center; color: #333333; font-size: 12px;">ShipServ &copy; 2012 | <a href="https://www.shipserv.com/info/terms-of-use">Pages - Terms of Use</a> | <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/privacy-policy/">Privacy Policy</a></td>
+				</tr>
+				<tr height="22">
+					<td colspan="3" style="height: 22px;">&nbsp;</td>
+				</tr>
+			</table>
+		</center>
+	</body>
+</html>

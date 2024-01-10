@@ -1,0 +1,26 @@
+/*
+Document   : reports/dashboard.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: combining partials for match dashboard styles
+*/
+
+@import "compass/css3";
+
+@import "partials/def/content_sidebar";
+@import "partials/def/forms";
+@import "partials/def/pagination";
+
+
+@import "partials/reports/dashboard/content";
+@import "partials/reports/dashboard/rfq";
+@import "partials/reports/dashboard/sidebar";
+
+#sidebar.right {
+	width: 234px;
+	margin-left: 16px;
+}
+
+#body.left {
+	width: 698px;
+}

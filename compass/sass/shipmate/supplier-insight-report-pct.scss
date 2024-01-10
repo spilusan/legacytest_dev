@@ -1,0 +1,25 @@
+/*
+Document   : supplier-insight-report-new.scss
+Created on : Mar 03, 2019
+Author     : Attila O
+Description: Supplier Insight Report
+*/
+
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+@import "font-awesome";
+@import "partials/mixins/mixins";
+@import "2016_campfire/main/colours";
+@import "2016_campfire/main/buttons";
+@import "2016_campfire/main/tables";
+@import "2016_campfire/main/forms";
+// @import "compass/sass/2016_campfire/consortia/daterangepicker";
+@import "2016_campfire/components/dateRangePicker/index";
+@import "partials/tooltip/tooltip";
+
+@import "partials/shipmate/supplier-insight-report-pct/filter";
+@import "partials/shipmate/supplier-insight-report-pct/general";
+@import "partials/shipmate/supplier-insight-report-pct/error";
+@import "partials/shipmate/supplier-insight-report-pct/report";
+@import "partials/shipmate/supplier-insight-report-pct/print";

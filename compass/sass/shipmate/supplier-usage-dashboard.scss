@@ -1,0 +1,22 @@
+/*
+Document   : supplier-usage-dashboard.scss
+Created on : Sept 04, 2016
+Author     : Attila O
+Description: Supplier Usage dashboard
+*/
+
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/min";
+@import "partials/def/left_nav";
+
+@import "font-awesome";
+
+@import "2016_campfire/main/colours";
+@import "2016_campfire/main/tables";
+@import "2016_campfire/main/forms";
+@import "2016_campfire/main/buttons";
+@import "2016_campfire/main/titles";
+@import "partials/tooltip/tooltip";
+
+@import "partials/shipmate/supplier-usage-dashboard/table";

@@ -1,0 +1,22 @@
+/*
+Document   : reports/dashboard.scss
+Created on : Dec 9, 2013, 1:00:43 PM
+Author     : gly
+Description: combining partials for price benchmark styles
+*/
+
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/min";
+
+@import "partials/def/context_help";
+@import "partials/def/modal_new";
+@import "partials/def/datepicker";
+@import "partials/def/left_nav";
+
+//Item selector component
+@import "partials/itemselector/selectorNew";
+
+@import "partials/reports/marketSizing/content";
+@import "partials/reports/marketSizing/form";
+@import "partials/reports/marketSizing/table";

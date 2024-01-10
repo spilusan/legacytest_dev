@@ -1,0 +1,136 @@
+	#filters {
+		.filterRow {
+			position: relative;
+
+			min-height: 30px;
+			border: 1px solid #d6dce4;
+			padding: 5px 10px;
+			background: #f5f7fa;
+			margin: 20px 0;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+			.row {
+				width: 100%;
+				min-height: 38px;
+			}
+
+			.functionArea {
+				padding: 6px;
+
+				display: block;
+				float: right;
+				width: 650px;
+				border: 1px solid #d6dce4;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+				background-color: white;
+
+				p {
+					font-size: 12px;
+					display: block;
+					float: left;
+					width: 620px;
+					padding: 3px 12px;
+					margin: 0px;
+					line-height: 140%;
+					&.toptext {
+						font-size: 14px;
+						color: #005aad;
+						font-weight: bold;
+					}
+				}
+
+				label {
+					height: 17px;
+					line-height: 17px;
+					font-size: 12px;
+				}
+
+				.emailList {
+					display: block;
+					width: 100%;
+					float: left;
+					.emailItemRow {
+						font-size: 12px;
+						width: 360px;
+						margin-left: 12px;
+						display: block;
+						float: left;
+
+						div {
+							overflow: hidden;
+							display: block;
+							float: left;
+							/* width: 280px; */
+							height: 25px;
+							line-height: 25px;
+							margin-right: 6px;
+						}
+						a {
+							display: block;
+							float: left;
+							height: 25px;
+							line-height: 25px;
+							margin: 0px;
+							cursor: pointer;
+						}
+					}
+				}
+
+			}
+			label {
+				float: left;
+				margin-right: 12px;
+				height: 33px;
+				line-height: 33px;
+				font-size: 11px;
+				color: #2e3235;
+				font-weight: normal;
+				&.main {
+					width: 45px;
+				}
+			}
+			input[type="text"]{
+				float: left;
+				width: 490px;
+				height: 25px;
+				line-height: 25px;
+				border: 1px solid #d6dce4;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+				margin-right: 12px;
+				padding-left: 12px;
+			}
+			.checkboxHolder {
+				display: inline-block;
+				margin: 6px 0px 0px 9px;
+				float: left;
+			}
+			#showBtn {
+				float: right;
+			}
+
+			.inpButton {
+				display: block;
+				clear: both;
+				float: left;
+				width: 78px;
+				height: 17px;
+				text-align: center;
+				font: 11px Arial;
+				padding-top: 3px;
+				cursor: pointer;
+				margin: 5px 0px 0px 10px;
+				background: url("/images/layout_v2/endorsement/bulkreviews/selected_top_filter.gif") no-repeat 0 0 transparent;
+				color: white;
+				}
+		}
+
+	} 
+#emialmodal {
+	display: none;
+}
+
+.savedMsg {
+	display: none;
+}

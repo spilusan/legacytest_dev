@@ -1,0 +1,74 @@
+
+#body {
+	#content {
+		.innerContent {
+			#erroneous-transactions {
+				table {
+					border-collapse: collapse;
+					border: 1px solid #ddd;
+					font-size: 0.8em;
+					thead {
+						tr {
+							th {
+								font-weight: bold;
+								background-color: #d6dce4;
+							    color: #2E3235;
+							    padding: 5px;
+							    border-right: 1px solid #ffffff;
+							    &.fixedWidth {
+							    	min-width: 90px;
+							    }
+							}
+						}
+					} 
+					tbody {
+						tr {
+							td {
+								padding: 5px;
+								.sendBuyerAlert, .sendSuppAlert {
+									font-size: 1.2em;
+									color: #000066;
+									cursor: pointer;
+								}
+								.alertSpinner {
+									font-size: 1.6em;
+									color: #000066;
+									display: none;
+								}
+								.alertEmail {
+									font-size: 1.6em;
+									color: #000066;
+									display: none;
+								}
+								.resentNow {
+									font-size: 0.8em;
+									color: #000066;
+									display: none;
+									padding: 0;
+								}
+
+
+							}
+						}
+						tr:nth-child(even) {
+							background: #f9f9f9;
+						}
+						tr:nth-child(odd) {
+							background: #FFFFFF;
+						}
+					}
+					th, td {
+						border: 1px solid #ddd;
+						text-align: center;
+						vertical-align: middle;
+						padding: 3px;
+						height: 30px;
+					}
+				}
+			}
+
+		}
+	}
+
+}
+	

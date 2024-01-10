@@ -1,0 +1,54 @@
+{{#if isComparePeriod}}
+	<h2 class="styled grey blue period{{#if isComp}} comp{{/if}}">
+		<span>{{period}}</span>
+		<a href="{{#if isComp}}#period{{else}}#compare{{/if}}" class="button dblue small jump" name="{{#if isComp}}compare{{else}}period{{/if}}">
+			{{#if isComp}}Go to initial period{{else}}Go to compare period{{/if}}
+		</a>
+	</h2>
+{{/if}}
+<div class="conversion">
+	<div class="maintitles">
+		<div class="brandAw title">Brand Awareness</div>
+		<div class="line"></div>
+		<div class="lead title">Lead Generation</div>
+		<div class="line"></div>
+		<div class="conv title">Lead Conversion & Win rates</div>
+		<div class="clear"></div>
+	</div>
+	<div class="funnel">
+		<!-- Brand avareness -->
+		<div id="funnel-awareness{{#if isComp}}Compare{{/if}}" class="graphs awareness"></div>
+		<div class="line"></div>
+		<!-- Lead generation -->
+		<div id="funnel-leadGen{{#if isComp}}Compare{{/if}}" class="graphs leadGen"></div>
+		<div class="line"></div>
+
+		<!-- Lead conversion -->
+		<div id="funnel-leadConv{{#if isComp}}Compare{{/if}}" class="graphs leadConv"></div>
+		<div class="clear"></div>
+	</div>
+
+	<!-- End of funnel -->
+	<div class="redDownArrows">
+		<div class="brandSpace"></div>
+		<div class="line short"></div>
+		<div class="leadSpace"></div>
+		<div class="line short"></div>
+		<div class="redArrowDown"></div>
+		<div class="redArrowDown win"></div>
+		<div class="clear"></div>
+	</div>
+	<!-- Red boxes -->
+	<div id="funnel-redboxes{{#if isComp}}Compare{{/if}}"></div>
+</div>
+<div class="brandSpace"></div>
+<div class="line long"></div>
+<div class="leadSpace"></div>
+<div class="line long"></div>
+<div id="sir-analysis{{#if isComp}}Compare{{/if}}"></div>
+<div class="clear"></div>
+{{#unless isComp}}
+	<div id="sir-calculator" style="display: none;"></div>	
+{{/unless}}
+<div class="clear"></div>
+<a href="/info/the-community/#buyerlist"  class="button purple medium wide" target="_blank">See ShipServ's buyers here</a>

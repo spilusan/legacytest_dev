@@ -1,0 +1,188 @@
+		<form id="add-new-form">
+			<table>
+				<thead>
+					<tr>
+						<td width="150">User</td>
+						<td align="center" width="150">Email</td>
+						<td align="center" width="70">Level</td>
+						<td align="center" width="70">Status</td>
+						{{#ifCond companyType 'BYB'}}
+						<th align="center" width="70">Spend Management</th>
+						<th align="center" width="70">Spend Management <br />Default <br />TNID</th>
+						<th align="center" width="70">Transaction <br />Monitor</th>
+						<th align="center" width="70">Transaction <br />Monitor <br />Admin</th>
+						<th align="center" width="70">Web <br />Reporter</th>
+						<th align="center" width="70">Buy Tab</th>
+						<th align="center" width="70">Automatic Reminder</th>
+						{{/ifCond}}
+						<td align="center"></td>
+					</tr>
+				</thead>
+				<tbody>
+				{{#each list}}
+					<tr class="existing-relationship" companyId="{{this.PUC_COMPANY_ID}}" userId="{{this.PSU_ID}}">
+						<td>{{this.PSU_FIRSTNAME}} {{this.PSU_LASTNAME}}</td>
+						<td><a class="linkToUser" dataId="{{this.PSU_ID}}">{{this.PSU_EMAIL}}</a></td>
+						<td>
+							<select name="PUC_LEVEL">
+								<option value="ADM" {{#ifCond this.PUC_LEVEL 'ADM'}}selected="selected"{{/ifCond}}>Admin</option>
+								<option value="USR" {{#ifCond this.PUC_LEVEL 'USR'}}selected="selected"{{/ifCond}}>User</option>
+							</select>
+						</td>
+						<td>
+							<!-- {{this.PUC_STATUS}} -->
+							<select name="PUC_STATUS">
+								<option value="ACT" {{#ifCond this.PUC_STATUS 'ACT'}}selected="selected"{{/ifCond}}>Active</option>
+								<option value="DEL" {{#ifCond this.PUC_STATUS 'DEL'}}selected="selected"{{/ifCond}}>Deleted</option>
+								<option value="INA" {{#ifCond this.PUC_STATUS 'INA'}}selected="selected"{{/ifCond}}>Inactive</option>
+							</select>
+						</td>
+						{{#ifCond ../companyType 'BYB'}}
+						<td>
+							<!-- {{this.PUC_MATCH}} -->
+							<select name="PUC_MATCH">
+								<option value="1" {{#ifCond this.PUC_MATCH '1'}}selected="selected"{{/ifCond}}>Yes</option>
+								<option value="0" {{#ifCond this.PUC_MATCH '0'}}selected="selected"{{/ifCond}}>No</option>
+							</select>
+						</td>
+						<td>
+							<!-- {{this.PUC_IS_DEFAULT}} -->
+							<select name="PUC_IS_DEFAULT">
+								<option value="1" {{#ifCond this.PUC_IS_DEFAULT '1'}}selected="selected"{{/ifCond}}>Yes</option>
+								<option value="0" {{#ifCond this.PUC_IS_DEFAULT '0'}}selected="selected"{{/ifCond}}>No</option>
+							</select>
+						</td>
+						<td>
+							<!-- {{this.PUC_TXNMON}} -->
+							<select name="PUC_TXNMON">
+								<option value="1" {{#ifCond this.PUC_TXNMON '1'}}selected="selected"{{/ifCond}}>Yes</option>
+								<option value="0" {{#ifCond this.PUC_TXNMON '0'}}selected="selected"{{/ifCond}}>No</option>
+							</select>
+						</td>
+						<td>
+							<!-- {{this.PUC_TXNMON_ADM}} -->
+							<select name="PUC_TXNMON_ADM">
+								<option value="1" {{#ifCond this.PUC_TXNMON_ADM '1'}}selected="selected"{{/ifCond}}>Yes</option>
+								<option value="0" {{#ifCond this.PUC_TXNMON_ADM '0'}}selected="selected"{{/ifCond}}>No</option>
+							</select>
+						</td>
+						<td>
+							<!-- {{this.PUC_WEBREPORTER}} -->
+							<select name="PUC_WEBREPORTER">
+								<option value="1" {{#ifCond this.PUC_WEBREPORTER '1'}}selected="selected"{{/ifCond}}>Yes</option>
+								<option value="0" {{#ifCond this.PUC_WEBREPORTER '0'}}selected="selected"{{/ifCond}}>No</option>
+							</select>
+						</td>
+						<td>
+							<!-- {{this.PUC_BUY}} -->
+							<select name="PUC_BUY">
+								<option value="1" {{#ifCond this.PUC_BUY '1'}}selected="selected"{{/ifCond}}>Yes</option>
+								<option value="0" {{#ifCond this.PUC_BUY '0'}}selected="selected"{{/ifCond}}>No</option>
+							</select>
+						</td>
+						<td>
+							<!-- {{this.PUC_AUTOREMINDER}} -->
+							<select name="PUC_AUTOREMINDER">
+								<option value="1" {{#ifCond this.PUC_AUTOREMINDER '1'}}selected="selected"{{/ifCond}}>Yes</option>
+								<option value="0" {{#ifCond this.PUC_AUTOREMINDER '0'}}selected="selected"{{/ifCond}}>No</option>
+							</select>
+						</td>
+						{{/ifCond}}
+						<td></td>
+					</tr>
+				{{/each}}
+				
+				{{#ifCond accountIsDeleted 'N'}}
+					<tr class="table-control-panel">
+						<td colspan="10">
+							<!-- <input class="saveBtn" value="Save" type="button" > -->
+							<input class="addNewBtn" value="Add new" type="button" />
+						</td>
+					</tr>
+				{{/ifCond}}
+
+				<tr class="table-new-row-panel">
+					<td>
+						<input type="hidden" value="" name="PSU_ID" class="new-entry" />
+						<input type="hidden" value="{{companyId}}" name="NEW_PUC_COMPANY_ID" class="new-entry" />
+						<input type="hidden" value="{{companyType}}" name="NEW_PUC_COMPANY_TYPE" class="new-entry" />
+						<input type="text" value="" name="newUserFirstLastName" class="new-entry active-input" />
+						<div class="tnidAutocomplete"></div>
+					</td>
+					<td>
+						<input type="text" value="" name="newUserName" class="new-entry" readonly="readonly" />
+					</td>
+					<td>
+						<!-- {{this.PUC_LEVEL}} -->
+						<select name="NEW_PUC_LEVEL" class="new-entry">
+							<option value="ADM">Admin</option>
+							<option value="USR">User</option>
+						</select>
+					</td>
+					<td>
+					<!-- {{this.PUC_STATUS}} -->
+						<select name="NEW_PUC_STATUS" class="new-entry">
+							<option value="ACT">Active</option>
+							<option value="DEL">Deleted</option>
+							<option value="INA">Inactive</option>
+						</select>
+					</td>
+					{{#ifCond companyType 'BYB'}}
+					<td>
+						<!-- {{this.PUC_MATCH}} -->
+						<select name="NEW_PUC_MATCH" class="new-entry BYB_ONLY_FEATURE">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+						</select>
+					</td>
+					<td>
+						<!-- {{this.PUC_IS_DEFAULT}} -->
+						<select name="NEW_PUC_IS_DEFAULT" class="new-entry BYB_ONLY_FEATURE">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+						</select>
+					</td>
+					<td>
+						<!-- {{this.PUC_TXNMON}} -->
+						<select name="NEW_PUC_TXNMON" class="new-entry BYB_ONLY_FEATURE">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+						</select>
+					</td>
+					<td>
+						<!-- {{this.PUC_TXNMON_ADM}} -->
+						<select name="NEW_PUC_TXNMON_ADM" class="new-entry BYB_ONLY_FEATURE">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+						</select>
+					</td>
+					<td>
+						<!-- {{this.PUC_WEBREPORTER}} -->
+						<select name="NEW_PUC_WEBREPORTER" class="new-entry BYB_ONLY_FEATURE">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+						</select>
+					</td>
+					<td>
+						<!-- {{this.PUC_BUY}} -->
+						<select name="NEW_PUC_BUY" class="new-entry BYB_ONLY_FEATURE">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+						</select>
+					</td>
+					<td>
+						<!-- {{this.PUC_PUC_AUTOREMINDER}} -->
+						<select name="NEW_PUC_AUTOREMINDER" class="new-entry BYB_ONLY_FEATURE">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+						</select>
+					</td>
+					{{/ifCond}}
+					<td>
+						<input type="button" value="Save" class="saveNewBtn">
+						<input type="button" value="Cancel" class="cancelSaveNewBtn">
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>

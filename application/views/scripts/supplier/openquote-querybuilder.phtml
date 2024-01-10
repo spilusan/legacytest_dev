@@ -1,0 +1,37 @@
+<form id="frmOpenquote" />
+
+<div id="row1">
+	<div id="filter1">
+		<select name="rule1_filter1_column">
+			<?php foreach($this->cols as $key => $col): ?>
+			<option value="<?php echo $key; ?>"><?php echo $col['friendlyName']; ?></option>
+			<?php endforeach; ?>	
+		</select>
+
+		<select name="rule1_filter1_operator">
+			<?php foreach($this->operators as $key => $col): ?>
+			<option value="<?php echo $key; ?>"><?php echo $col['display']; ?></option>
+			<?php endforeach; ?>	
+		</select>
+
+		<input type="text" name="rule1_filter1_value" value="" />
+	</div>
+	<div class="filter_separator"><span>AND</span></div>
+	<div id="filter2">
+		<select name="rule1_filter2_column">
+			<?php foreach($this->cols as $key => $col): ?>
+			<option value="<?php echo $key; ?>"><?php echo $col['friendlyName']; ?></option>
+			<?php endforeach; ?>	
+		</select>
+
+		<select name="rule1_filter2_operator">
+			<?php foreach($this->operators as $key => $col): ?>
+			<option value="<?php echo $key; ?>"><?php echo $col['display']; ?></option>
+			<?php endforeach; ?>	
+		</select>
+
+		<input type="text" name="rule1_filter2_value" value="" />
+	</div>
+</div>
+
+</form>

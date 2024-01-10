@@ -1,0 +1,222 @@
+#header, .divider {
+	&.wide {
+		width: 1920px;
+	}
+}
+
+#body {
+	width: 1885px;
+	
+	&.wide {
+		width: 1891px;
+
+		#content {
+			width: 1660px;
+		}
+	}
+
+	#sidebar {
+		ul#nav {
+			li.selected {
+				padding: 0;
+			}
+		}
+	}
+
+	.pagination ul li {
+		padding: 0 7px;
+		cursor: pointer;
+	}
+
+	#content {
+		width: 1650px;
+
+		h1 {
+			font-size: 20px;
+			font-weight: bold;
+
+			.button {
+				background: #ffffff;
+				background-image: none;
+				color: #0058B0;
+				border: 0;
+				float: right;
+
+				&.back {
+					background: url(/img/prime-supplier/back.png) no-repeat 10px center #ffffff;
+					padding-left: 50px;
+				}
+			}
+		}
+		
+		#suppliers {
+			.innerContent {
+				h2 {
+					margin-bottom: 10px;
+					
+					&.title {
+						height: 31px;
+						display: block;
+						background: #D6DCE4;
+						padding: 10px;
+						font-size: 16px;
+						font-weight: bold;
+						color: #070606;
+						margin-top: 20px;
+					}
+
+					form {
+						float: right;
+
+						label {
+							font-size: 14px;
+							font-weight: normal;
+						}
+
+						input[type="text"] {
+							padding: 8px;
+							border: 0;
+							margin-left: 10px;
+							margin-right: 10px;
+						}
+
+						.button {
+							background: #005AAD;
+							border: 0;
+							@include border-radius(2px);
+						}
+					}
+
+					div {
+						margin-top: 8px;
+					}
+				}
+
+				ul.tabs {
+					display: inline-block;
+					position: relative;
+					top: -17px;
+
+					li {
+						position: relative;
+						font-size: 14px;
+						color: #000000;
+						height: 45px;
+						display: inline-block;
+						text-align: center;
+						vertical-align: middle;
+						line-height: 45px;
+						width: 230px;
+						cursor: pointer;
+						top: 1px;
+
+						div.radio {
+							top: 0px;
+						}
+					}
+				}
+
+				label[for="period"] {
+						margin-left: 0px;
+				}
+
+				form.currentSuppliers, form.currentSuppliersSecond {
+					display: inline-block;
+					position: relative;
+					top: -15px;
+					margin-bottom: 0;
+					padding: 0;
+					padding-left: 15px;
+				}
+			}
+		}
+	}
+}
+
+#modal, #modalX {
+	width: 500px;
+	height: 375px;
+
+	.modalBody {
+		border-radius: 0;
+
+		.close {
+			width: 30px;
+			height: 30px;
+			display: inline-block;
+			background: url(/img/icons/medium/close-modal.png) left top no-repeat transparent;
+			text-indent: -50px;
+			overflow: hidden;
+			position: relative;
+			top: -28px;
+			cursor: pointer;
+		}
+		
+		h1 {
+			display: inline-block;
+			width: 415px;
+			margin-right: 10px;
+			margin-bottom: 25px;
+		}
+
+		.modalContent {
+			padding: 0;
+
+			form {
+				border: 0;
+				padding: 0 15px;
+				margin: 0;
+
+				label {
+					display: block;
+					margin-bottom: 10px;
+				}
+
+				input[type="text"]{
+					margin-bottom: 10px;
+					width: 406px;
+				}
+
+				.plus {
+					background: url(/img/icons/small/plusGrey.png) no-repeat left top transparent;
+					height: 18px;
+					margin: 0 0 10px 0;
+				}
+
+				#uniform-countSel {
+					width: 415px;
+					margin-bottom: 10px;
+
+					span {
+						width: 390px;
+					}
+
+					select {
+						width: 425px;
+					}
+				}
+
+				input.button.medium.green {
+					background-image: none;
+					background: #008B00;
+					border: 0;
+					color: #ffffff;
+					font-size: 16px;
+					font-weight: normal;
+					margin-top: 20px;
+					float: right;
+					width: 120px;
+					padding-top: 10px;
+					padding-bottom: 10px;
+					margin-right: 35px;
+					margin-bottom: 20px;
+				}
+
+				.selectlist {
+					position: relative;
+					top: -11px;
+				}
+			}
+		}
+	}
+}

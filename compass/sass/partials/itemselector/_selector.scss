@@ -1,0 +1,251 @@
+#modal {
+    width: 898px;
+    .modalBody {
+        h1.styled {
+            margin-bottom: 5px;
+
+            &.multi {
+                height: 40px;
+
+                a {
+                    position: relative;
+                    display: block;
+                    float: left;
+                    width: 115px;
+                    padding: 10px 15px;
+                    @include border-radius(6px 6px 0 0);
+                    @include background-image(linear-gradient(#0c5ba9 0%, #04335f 100%));
+                    -pie-background: linear-gradient(top, #0c5ba9 0%, #04335f 100%);
+                    behavior: url(/css/PIE.htc);
+                    font-size: 13px;
+                    color: #ffffff;
+                    margin-right: 3px;
+                    bottom: 2px;
+                    line-height: 1.3;
+
+                    &.selected {
+                        @include background-image(linear-gradient(#ffffff 0%, #ffffff 100%));
+                        -pie-background: linear-gradient(top, #ffffff 0%, #ffffff 100%);
+                        color: #2e3235;
+                    }
+
+                    span {
+                        color: #13b3e9;
+                    }
+                }
+            }
+        }
+    }
+}
+
+div.itemselector.inner {
+    width: 867px;
+    color: #525c64;
+    margin: 10px;
+
+    &.multi.new.form {
+        .selector {
+            float: right;
+            margin-bottom: 3px;
+        }
+
+        h3 {
+            margin-bottom: 17px;
+        }
+    }
+    
+    >.left, >.right {
+        position: relative;
+        width: 393px;
+        padding: 10px;
+        border: 1px solid #d6dce4;
+        @include border-radius(6px);
+        
+        input.filterField {
+            width: 349px;
+        }
+
+        img.spinner {
+            display: none;
+            position: absolute;
+            left: 190px;
+            top: 230px;
+        }
+        
+        >ul {
+            height: 327px;
+            margin-bottom: 4px;
+            padding: 10px;
+            border: 1px solid #d6dce4;
+            @include border-radius(6px);
+            overflow-y: auto;
+            
+            li {
+                list-style: none;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 100%;
+                font-size: 12px;
+                padding-left: 23px;
+                cursor: pointer;
+                line-height: 20px;
+                /*
+                !!! changed due to marks request !!!!
+               
+                */
+            }
+
+            /*added due to Marks rquest */
+            &.left {
+                li {
+                    @for $i from 0 through 9 {
+                        &.indent#{$i} {
+                            margin-left: 23px * $i;
+                        }
+                    }
+                }
+
+                &.filtered {
+                    li {
+                        margin-left:0;
+
+                        &.hasVisibleChild {
+                            display: none;
+                        }
+                    }
+                }
+
+                &.cFiltered {
+                    li {
+                        &.hasVisibleChild {
+                            display: none;
+                        }
+                    }
+                }
+            }
+
+            &.right {
+                &.ports {
+                    li {
+                        @for $i from 0 through 9 {
+                            &.indent#{$i} {
+                                margin-left: 23px * $i;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        h3 {
+            margin-bottom: 6px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+    }
+    
+    >.left {
+        float: left;
+        
+        ul {
+            height: 352px;
+            li {
+                display: block;
+                background: url(/img/icons/small/greenplus.png) left center no-repeat transparent;
+                                
+                &.selected {
+                    display: none;
+                }
+                
+                &.hasVisibleChild {
+                    background: url(/img/icons/small/grayplus.png) left center no-repeat transparent;
+                }
+
+                &.cFilteredOut {
+                    display: none;
+                }
+            }   
+        }
+    }
+    
+    >.right {
+        float: right;
+        
+        ul {
+            li {
+                display: none;
+                background: url(/img/icons/small/smallredx.png) left center no-repeat transparent;
+                &.selected {
+                    display: block;
+                }
+                
+                &.hasVisibleChild {
+                    background: url(/img/icons/small/smallgrayx.png) left center no-repeat transparent;
+                }
+            }
+        }
+    }
+    
+    >.left, >.right {
+        ul {
+            li {
+                &.hasVisibleChild {
+                    display: block;
+                    opacity: 0.5;
+                    cursor: default;
+                    
+                }
+                
+                &.filteredOut {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    // added due to Marks request
+    >.right {
+        ul {
+            li {
+                &.hasVisibleChild {
+                    display: none;
+                }
+            }
+
+            &.ports {
+                li {
+                    &.hasVisibleChild {
+                        display: block;
+                    }
+                }
+            }
+        }
+    }
+    
+    >.divider {
+        float: left;
+        width: 34px;
+        height: 429px;
+        background: url(/img/itemselector/arrow.png) no-repeat center center transparent;
+    }
+    
+    .buttonContainer {
+        clear: both;
+        border-top: 1px solid #d8dee5;
+        width: 878px;
+        margin-left: -15px;
+        margin-top: 43px;
+        text-align: center;
+        position: relative;
+        padding: 10px;
+        background: #f5f7fa;
+        top: 20px;
+        @include border-radius(0 0 6px 6px);
+        behavior: url(/css/PIE.htc);
+    }
+    
+    input.filter {
+        width: 349px;
+    }
+}

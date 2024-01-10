@@ -1,0 +1,96 @@
+// TODO: move to _colors.scss
+$color_bunker_approx: #141414;
+$white: white;
+$color_celeste_approx: #ccc;
+$color_mountain_mist_approx: #999;
+.sh-tooltip {
+    display: none;
+    padding: 5px 10px;
+    color: $color_bunker_approx;
+    background-color: $white;
+    position: absolute; //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 5px;
+    font-size: 12px;
+    line-height: 130%; //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+    box-shadow: 0 0 7px $color_celeste_approx;
+    border: 1px solid $color_mountain_mist_approx;
+    max-width: 240px;
+    min-width: 80px;
+    min-height: 35px;
+    z-index: 99999;
+    >.arrow {
+        width: 70px;
+        height: 16px;
+        overflow: hidden;
+        position: absolute;
+        left: 50%;
+        margin-left: -35px;
+        bottom: -16px;
+        &.top {
+            top: -16px;
+            bottom: auto;
+            &:after {
+                bottom: -20px;
+                top: auto;
+            }
+        }
+        &.left {
+            left: 20%;
+        }
+        &:after {
+            background: $white;
+            border: 1px solid $color_mountain_mist_approx;
+            content: "";
+            position: absolute;
+            left: 20px;
+            top: -20px;
+            width: 25px;
+            height: 25px; //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+            box-shadow: 6px 5px 9px -9px $color_celeste_approx; //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+            transform: rotate(45deg);
+        }
+    }
+    .h-arrow {
+        width: 15px;
+        height: 30px;
+        overflow: hidden;
+        position: absolute;
+        left: 50%;
+        margin-left: -35px;
+        bottom: -16px;
+        &.top {
+            top: -16px;
+            bottom: auto;
+            &:after {
+                bottom: -20px;
+                top: auto;
+            }
+        }
+        &.left {
+            left: 20px;
+            top: 50%;
+            margin-top: -15px;
+        }
+        &.right {
+            left: auto;
+            right: -15px;
+            top: 50%;
+            margin-top: -15px;
+            &:after {
+				margin-left: -25px;
+            }
+        }
+        &:after {
+            background: $white;
+            border: 1px solid $color_mountain_mist_approx;
+            content: "";
+            position: absolute;
+            left: 6px;
+            top: 0;
+            width: 25px;
+            height: 25px; //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+            box-shadow: 6px 5px 9px -9px $color_celeste_approx; //Instead of the line below you could use @include transform($scale, $rotate, $transx, $transy, $skewx, $skewy, $originx, $originy)
+            transform: rotate(45deg);
+        }
+    }
+}

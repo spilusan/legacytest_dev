@@ -1,0 +1,48 @@
+#emialmodal {
+	  width: 400px;
+	  .modalControls {
+	  	  height: 55px;
+	  	  .close {
+	  	  	  position: relative;
+			  float: right;
+			  font-size: 14px;
+			  font-weight: bold;
+			  color: #13b5ea;
+			  background: #fcfdfe;
+			  padding: 10px 20px;
+			  cursor: pointer;
+				@include border-radius(6px);
+			  behavior: url(/css/PIE.htc);
+	  	  }
+	  }
+	  .modalBody {
+	  	height: 140px;
+		position: relative;
+		@include border-radius(6px);
+		padding: 5px;
+		background: #ffffff;
+		behavior: url(/css/PIE.htc);
+		input[type="text"] {
+			width: 350px;
+			clear: both;
+			margin: 0px 16px 16px 16px;
+			height: 25px;
+			line-height: 25px;
+			border: 1px solid #d6dce4;
+			@include border-radius(6px);
+
+		}
+
+		p {
+			font-size: 12px;
+			margin: 0px;
+			padding: 16px 0px 3px 16px;
+		}
+		button {
+			float: right;
+			margin-right: 12px;
+		}
+
+
+	  }
+}

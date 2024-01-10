@@ -1,0 +1,19 @@
+<?php if($this->corporateNav()->getNavCurrentSecondLevel()){?>
+<nav class="secondLevel">
+    <ul>			
+        <?php
+        foreach ($this->corporateNav()->getNavCurrentSecondLevel() as $subnav) {
+        	echo $this->partial('layout/corporate-tab-lev2.phtml', $subnav);
+        }
+        ?>
+    </ul>
+    <div class="clear"></div>
+</nav>
+<?php } else { ?>
+<style type="text/css">
+/*if no second lev navigation, we need to add this class for somw wp pages (contact us, legal pages)*/
+section.hero, section.intro.darkGrey {
+    top: 0;
+}
+</style>
+<?php } ?>

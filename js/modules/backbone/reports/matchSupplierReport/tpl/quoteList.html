@@ -1,0 +1,78 @@
+<table id="quote-table">
+	<thead>
+		<tr>
+			<th colspan="3" class="col-gray">RFQ Details</th>
+			<th colspan="4" class="col-cyan">Your Best Performing Supplier</th>
+			<th colspan="3" class="col-green">{{supplierName}}</th>
+			<th colspan="2" class="col-blue medium text-white">Potential savings (USD)</th>
+			<th rowspan="2" class="col-gray fullDetails">Actions</th>
+		</tr>
+		<tr>
+			<th class="col-gray small">RFQ Ref.</th>
+			<th class="col-gray">RFQ Subject</th>
+			<th class="col-gray wide">Vessel Name</th>
+
+			<th class="col-cyan">Company</th>
+			<th class="col-cyan small">Quality</th>
+			<th class="col-cyan small">Quote Completeness</th>
+			<th class="col-cyan small">Quoted Price USD</th>
+
+			<th class="col-green small">Quality</th>
+			<th class="col-green small">Quote Completeness</th>
+			<th class="col-green small">Quoted Price USD</th>
+
+			<th class="col-blue small text-white">USD</th>
+			<th class="col-blue small text-white">%</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each data}}
+				<tr data-buyerd="" data-rfqid="{{rfqInternalRefNo}}">
+					<td class="col-lgray">{{rfqRefNo}}</td>
+					<td class="col-lgray">{{rfqSubject}}</td>
+					<td class="col-lgray">{{rfqVesselName}}</td>
+					<td class="col-lcyan">{{bestBybSpbName}}</td>
+					<td class="col-lcyan center">{{qualityCompatitiveQot}}</td>
+					<td class="col-lcyan center">{{#if bestQuoteCompleteness}}{{formatNumRound bestQuoteCompleteness}}%{{/if}}{{#unless bestQuoteCompleteness}}&mdash;{{/unless}}</td>
+					<td class="col-lcyan center">{{formatCurrency bestQuotedPrice}}</td>
+					<td class="col-lgreen center">{{qualityQot}}</td>
+					<td class="col-lgreen center">{{#if quoteCompleteness}}{{formatNumRound quoteCompleteness}}%{{/if}}{{#unless quoteCompleteness}}&mdash;{{/unless}}</td>
+					<td class="col-lgreen center">{{formatCurrency quotedPrice}}</td>
+					{{#ifCond correctedSaving '0'}}
+						{{#ifCond saving '0'}}
+							{{#ifCond bestQuoteCompleteness '100'}}
+								{{#ifCond quoteCompleteness '100'}}
+									<td colspan="2" class="col-lblue center bold">None</td>
+								{{else}}
+									<td colspan="2" class="col-lblue center bold"><span class="sHelp" data-help="uncomparable" data-helpid="default"></span>Uncomparable</td>
+								{{/ifCond}}
+							{{else}}
+								<td colspan="2" class="col-lblue center bold"><span class="sHelp" data-help="uncomparable" data-helpid="default"></span>Uncomparable</td>							
+							{{/ifCond}}
+						{{else}}
+							<td colspan="2" class="col-lblue center bold"><span class="sHelp" data-help="uncomparable" data-helpid="{{excludeReason}}"></span>Uncomparable</td>	
+						{{/ifCond}}
+					{{else}}
+						<td class="col-lblue center bold">{{formatCurrency correctedSaving}}</td>	
+						<td class="col-lblue center bold">{{potentialSavingPercent}}%</td>
+					{{/ifCond}}
+					<td class="col-lgray">
+						<span class="button green fullBtn">Full details</span>
+						{{#ifCond bestQuoteCompleteness '100'}}
+								{{#ifCond quoteCompleteness '100'}}
+									{{#ifNotCond saving '0'}}
+										<img class="comparableIcon" src="/images/matchSupplierReport/comparable.png" data-id="{{qotInternalRefNo}}" data-drilldown="0" alt="Comparable">
+									{{/ifNotCond}}
+								{{else}}
+									<img class="fixComparableIcon" src="/images/matchSupplierReport/comparable.png" alt="Comparable">
+								{{/ifCond}}
+						{{else}}
+							<img class="fixComparableIcon" src="/images/matchSupplierReport/comparable.png" alt="Comparable">
+						{{/ifCond}}
+					</td>
+				</tr>
+		{{/each}}
+	</tbody>
+</table>
+<div id="pagination"></div>
+

@@ -1,0 +1,50 @@
+<?php
+$this->headLink()->appendStylesheet('/css/shipmate.css')->appendStylesheet('/css/uniform.rfq.css')->appendStylesheet('/css/shipmate/rate-synch.css');
+
+$this->requirejs()->addModule('backbone/shipmate/salesforce-synch/views/mainView');
+
+
+// -------- BREADCRUMBS ---------------
+$breadcrumbs = array();
+$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+$breadcrumbs[] = array('name' => 'Salesforce', 'url'  => '/shipmate/value-event');
+$breadcrumbs[] = array('name' => 'SalesForce rate synch', 'url'  => '');
+echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<div id="body" style="width:883px;">
+	<div id="content" style="width: 628px;">
+		<h1 class="styled">SalesForce rate synchronization</h1>
+		<div class="innerContent">
+			<form>
+				<section>
+					<label for="rateSych">Supplier TNID:</label>
+					<input type="text" name="rateSych" id="rateSych" placeholder="Type supplier name, or TNID here">
+					<div class="tnidAutocomplete"></div>
+					<div class="clear"></div>
+					<div class="rateBox left">
+						Selected Supplier TNID: <b><span id="updateTnid"></span></b><br>
+						<div id="selectedTnidRates"></div>
+					</div>
+					<div class="rateBox right">
+						Updated data from salesforce
+						<div id="updatedTnidRates"></div>
+					</div>
+					<div class="clear"></div>
+					<div id="warning"></div>
+					<div class="clear"></div>
+				</section>
+				<section>
+					<input id="sychBtn" class="button medium lblue" type="button" name="sychBtn" value="Synchronize rate with SalesForce">
+					
+				</section>
+			</form>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="waiting">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>

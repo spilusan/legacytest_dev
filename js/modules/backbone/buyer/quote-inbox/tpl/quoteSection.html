@@ -1,0 +1,383 @@
+
+<h3>Quotation</h3>
+<!--<p>Priority: <span class="high">High</span></p>-->
+<div class="box right">
+	<h2 class="styled grey blue boxhead">Supplier</h2>
+	<div class="data supplier">
+		<p class="name">{{supplierBranch.name}}</p>
+		<p>
+			{{#if supplierBranch.address.line1}}{{supplierBranch.address.line1}}{{/if}}
+			{{#if supplierBranch.address.line2}}, {{supplierBranch.address.line2}}{{/if}}
+			{{#if supplierBranch.address.city}}, {{supplierBranch.address.city}}{{/if}}
+			{{#if supplierBranch.address.state}}, {{supplierBranch.address.state}}{{/if}}
+			{{#if supplierBranch.address.zip}}, {{supplierBranch.address.zip}}{{/if}}
+			{{#if supplierBranch.address.country}}, {{supplierBranch.address.country}}{{/if}}
+		</p>
+		<table class="dataTable" cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td class="label">Contact:</td>
+				<td>{{#if supplierBranch.contact.name}}{{supplierBranch.contact.name}}{{/if}}</td>
+			</tr>
+			<tr>
+				<td class="label">Tel:</td>
+				<td>{{#if supplierBranch.contact.name}}{{supplierBranch.contact.phone}}{{/if}}</td>
+			</tr>
+			<tr>
+				<td class="label">Email:</td>
+				<td>{{#if supplierBranch.contact.name}}{{supplierBranch.contact.email}}{{/if}}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="box left">
+	<h2 class="styled grey blue boxhead">Buyer</h3>
+	<div class="data buyer">
+		<p class="name">{{rfq.rfqBuyer.name}}</p>
+		<p>
+			{{#if rfq.rfqBuyer.byoContactAddress1}}{{rfq.rfqBuyer.byoContactAddress1}}{{/if}}
+			{{#if rfq.rfqBuyer.byoContactAddress2}}, {{rfq.rfqBuyer.byoContactAddress2}}{{/if}}
+			{{#if rfq.rfqBuyer.byoContactCity}}, {{rfq.rfqBuyer.byoContactCity}}{{/if}}
+			{{#if rfq.rfqBuyer.byoContactState}}, {{rfq.rfqBuyer.byoContactState}}{{/if}}
+			{{#if rfq.rfqBuyer.byoContactZip}}, {{rfq.rfqBuyer.byoContactZip}}{{/if}}
+			{{#if rfq.rfqBuyer.byoContactCountry}}, {{rfq.rfqBuyer.byoContactCountry}}{{/if}}
+		</p>
+		<table class="dataTable" cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td class="label">Contact:</td>
+				<td>{{rfq.rfqBuyer.byoContactName}}</td>
+			</tr>
+			<tr>
+				<td class="label">Tel:</td>
+				<td>{{rfq.rfqBuyer.byoContactPhone}}</td>
+			</tr>
+			<tr>
+				<td class="label">Email:</td>
+				<td>{{rfq.rfqBuyer.byoContactEmail}}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="box right">
+	<h2 class="styled grey blue boxhead">Quote Details:</h2>
+	<div class="data buyerCont">
+		<table class="dataTable" cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td class="label">Quote Ref.:</td>
+				<td class="green">{{reference}}</td>
+			</tr>
+			<tr>
+				<td class="label">Quote Date:</td>
+				<td>{{created}}</td>
+			</tr>
+			<tr>
+				<td class="label">Prices Good Until:</td>
+				<td>{{expires}}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="box left">
+	<h2 class="styled grey blue boxhead">Re Your RFQ:</h2>
+	<div class="data supplierCont">
+		<table class="dataTable" cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				<td class="label">RFQ Ref:</td>
+				<td class="green">{{rfq.rfqRefNo}}</td>
+			</tr>
+			<tr>
+				<td class="label">RFQ Date:</td>
+				<td>{{rfq.rfqCreatedDate}}</td>
+			</tr>
+			<tr>
+				<td class="label">Subject:</td>
+				<td>{{rfq.rfqSubject}}</td>
+			</tr>
+			<tr>
+				<td class="label">Vessel:</td>
+				<td class="green">{{rfq.rfqVesselName}}</td>
+			</tr>
+			<tr>
+				<td class="label">Vessel No.:</td>
+				<td>{{rfq.rfqImoNo}}</td>
+			</tr>
+			<tr>
+				<td class="label">Class:</td>
+				<td>{{rfq.rfqVesselClassification}}</td>
+			</tr>
+			<tr>
+				<td class="label">Port:</td>
+				<td>{{rfq.rfqDeliveryPortName}}</td>
+			</tr>
+			<tr>
+				<td class="label">Vessel ETA:</td>
+				<td>{{rfq.rfqEstimatedArrivalTime}}</td>
+			</tr>
+			<tr>
+				<td class="label">Vessel ETD:</td>
+				<td>{{rfq.rfqEstimatedDepartureTime}}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div class="box noBord">
+	<h2 class="styled grey blue boxhead">Delivery:</h2>
+	<div class="data sub">
+		<div class="subHead rightFloat">Supplier:</div>
+		<div class="subHead">Buyer:</div>
+		<div class="clear"></div>
+		<div class="right">
+			<table class="dataTable" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td class="label">Freight Forwarder:</td>
+					<td>{{delivery.freightForwarder}}</td>
+				</tr>
+				<tr>
+					<td class="label">Packaging Instructions:</td>
+					<td>{{delivery.packingInstructions}}</td>
+				</tr>
+				<tr>
+					<td class="label">Quoted Delivery:</td>
+					<td>{{delivery.quoted}}</td>
+				</tr>
+				<tr>
+					<td class="label">Delivery Terms:</td>
+					<td>{{delivery.terms}}</td>
+				</tr>
+				<tr>
+					<td class="label">Transport Mode:</td>
+					<td>{{delivery.transportMode}}</td>
+				</tr>
+				<tr>
+					<td class="label">Order By:</td>
+					<td>{{delivery.orderBy}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="left">
+			<table class="dataTable" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td class="label">Delivery/Release To:</td>
+					<td>
+						{{#if delivery.releaseTo.line1}}{{delivery.releaseTo.line1}}{{/if}}
+						{{#if delivery.releaseTo.line2}}, {{delivery.releaseTo.line2}}{{/if}}
+						{{#if delivery.releaseTo.city}}, {{delivery.releaseTo.city}}{{/if}}
+						{{#if delivery.releaseTo.state}}, {{delivery.releaseTo.state}}{{/if}}
+						{{#if delivery.releaseTo.zip}}, {{delivery.releaseTo.zip}}{{/if}}
+						{{#if delivery.releaseTo.country}}, {{delivery.releaseTo.country}}{{/if}}
+					</td>
+				</tr>
+				<tr>
+					<td class="label">Freight Forwarder:</td>
+					<td>{{rfq.rfqSuggestedShipper}}</td>
+				</tr>
+				<tr>
+					<td class="label">Packaging Instructions:</td>
+					<td>{{rfq.rfqPackagingInstructions}}</td>
+				</tr>
+				<tr>
+					<td class="label">Requested Delivery:</td>
+					<td>{{delivery.requested}}</td>
+				</tr>
+				<tr>
+					<td class="label">Delivery Terms:</td>
+					<td>{{rfq.rfqTermsOfDelivery}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="box noBord">
+	<h2 class="styled grey blue boxhead">Billing Details:</h2>
+	<div class="data sub">
+		<div class="subHead rightFloat">Supplier:</div>
+		<div class="subHead">Buyer:</div>
+		<div class="clear"></div>
+		<div class="right">
+			<table class="dataTable" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td class="label">Payment Terms:</td>
+					<td>{{paymentTerms}}</td>
+				</tr>
+				<tr>
+					<td class="label">Currency Instructions:</td>
+					<td>{{currencyInstructions}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="left">
+			
+			<table class="dataTable" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td class="label">Invoice To:</td>
+					<td>
+						{{#if rfq.rfqBillingAddress1}}{{rfq.rfqBillingAddress1}}{{/if}}
+						{{#if rfq.rfqBuyer.rfqBillingAddress2}}, {{rfq.rfqBuyer.rfqBillingAddress2}}{{/if}}
+						{{#if rfq.rfqBuyer.rfqBillingCity}}, {{rfq.rfqBuyer.rfqBillingCity}}{{/if}}
+						{{#if rfq.rfqBuyer.rfqBillingStateProvince}}, {{rfq.rfqBuyer.rfqBillingStateProvince}}{{/if}}
+						{{#if rfq.rfqBuyer.rfqBillingZipCode}}, {{rfq.rfqBuyer.rfqBillingZipCode}}{{/if}}
+						{{#if rfq.rfqBuyer.rfqBillingCountry}}, {{rfq.rfqBuyer.rfqBillingCountry}}{{/if}}
+					</td>
+				</tr>
+				<tr>
+					<td class="label">Tax Status:</td>
+					<td>{{rfq.rfqTaxSts}}</td>
+				</tr>
+				<tr>
+					<td class="label">Payment Terms:</td>
+					<td>{{rfq.rfqTermsOfPayment}}</td>
+				</tr>
+				<tr>
+					<td class="label">Currency Instructions:</td>
+					<td>{{rfq.rfqCurrencyInstructions}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="box noBord">
+	<h2 class="styled grey blue boxhead">General Terms and Conditions:</h2>
+	<div class="data sub">
+		<div class="subHead rightFloat">Supplier:</div>
+		<div class="subHead">Buyer:</div>
+		<div class="clear"></div>
+		<div class="right">
+			<table class="dataTable" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td>{{termsAndConditions}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="left">
+			<table class="dataTable" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td>{{rfq.rfqGeneralTermsConditions}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="box noBord">
+	<h2 class="styled grey blue boxhead">Comments:</h2>
+	<div class="data sub">
+		<div class="subHead rightFloat">Supplier:</div>
+		<div class="subHead">Buyer:</div>
+		<div class="clear"></div>
+		<div class="right">
+			<table class="dataTable" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td>{{comments}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="left">
+			<table class="dataTable" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td>{{rfq.rfqComments}}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="box">
+	<h2 class="styled grey blue boxhead">Document tracking:</h2>
+	<div class="data terms">
+		<p>Tracking Number: 34850938470958</p>
+	</div>
+</div>
+{{#if rfq.attchment}}
+<div class="box">
+	<h2 class="styled grey blue boxhead">Attachments</h2>
+	<div class="data">
+		<p>
+			{{#each rfq.attachment}}
+				<a href="{{this.url}}">{{this.filename}}</a>
+			{{/each}}
+		</p>
+	</div>
+</div>
+{{/if}}
+{{#if lineItemSections}}
+<div class="box lineItems">
+	<h2 class="styled grey blue boxhead">Line Items:</h2>
+	{{#each lineItemSections}}
+	<table border="0" cellpadding="0" cellspacing="0" class="equipSec">
+		<tr>
+			<td class="equ">Equipment Section:</td>
+			<td>{{this.sectionDescription}}</td>
+			<td class="currency">Currency: {{this.currency}}</td>
+		</tr>
+	</table>
+	<table class="itemList" cellpadding="0" cellspacing="0" border="0">
+		<thead>
+			<tr>
+				<th class="first">No.</th>
+				<th class="ptype">Part Type</th>
+				<th class="pno">Part No.</th>
+				<th class="qty">Qty</th>
+				<th class="unt">Unit</th>
+				<th class="desc">Desciption</th>
+				<th class="untP">Unit Price</th>
+				<th class="dsc">Disc %</th>
+				<th class="ttlP">Total Price</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each this.lineItems}}
+			<tr class="{{this.statStyle}}">
+				<td class="first">{{this.number}}</td>
+				<td {{#if this.confChg}}class="chg"{{/if}}>{{this.partType}}</td>
+				<td {{#if this.confChg}}class="chg"{{/if}}>{{this.partNumber}}</td>
+				<td class="qty {{#if this.quChg}}chg{{/if}}">{{this.quantity}}</td>
+				<td {{#if this.untChg}}class="chg"{{/if}}>{{this.unit}}</td>
+				<td {{#if this.descChg}}class="chg"{{/if}}>
+					{{this.description}}<br />
+					<strong>Comments:</strong> {{this.comments}}
+				</td>
+				<td class="num">{{formatCurrency this.priceUnit}}</td>
+				<td class="num">{{this.discountPercentage}}</td>
+				<td class="num">{{formatCurrency this.priceTotal}}</td>
+				<td class="{{this.statTxtStyle}}">{{this.status}}</td>
+			</tr>
+			{{/each}}
+		</tbody>
+	</table>
+	{{/each}}
+</div>
+<div class="sum">
+	<table class="summary" cellpadding="0" cellspacing="0" border="0">
+		<tbody>
+			<tr>
+				<td class="desc">
+					<p>Line Items Sub Total:</p>
+					<p>Discount ({{cost.discountPercentage}}%):</p>
+					<p>Discounted Total:</p>
+					<p>Freight:</p>
+					{{#each cost.additional}}
+						<p>{{this.description}}:</p>
+					{{/each}}
+				</td>
+				<td class="amount">
+					<p>{{formatCurrency cost.subTotalCost}}</p>
+					<p>-{{formatCurrency cost.discount}}</p>
+					<p>{{formatCurrency cost.discountTotalCost}}</p>
+					<p>{{formatCurrency cost.freight}}</p>
+					{{#each cost.additional}}
+						<p>{{formatCurrency this.amount}}</p>
+					{{/each}}
+				</td>
+			</tr>
+			<tr>
+				<td class="desc total">
+					<p>TOTAL PRICE ({{currency}}):</p>
+				</td>
+				<td class="amount total"><p>{{formatCurrency cost.totalCost}}</p></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+{{/if}}

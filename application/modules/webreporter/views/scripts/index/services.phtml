@@ -1,0 +1,86 @@
+<?php
+$baseUrl = $this->baseUrl();
+$state = ($this->data['state'] === 'report' ? true : false);
+if ($state === true) {
+    $urlIndex = $this->baseUrl() . '/report' . '/index';
+}
+?>
+<div id="preHeader"></div>
+
+<div id="breadcrumbs">
+    <span class="title">You are here: </span>
+    <ul>
+        <li class="current">
+            My Services
+        </li>
+    </ul>
+</div>
+<div id="pagewidth">
+    <div id="sidebar">
+        <a href="#" id="addBookmark" class="button large green">Bookmark this page</a>
+    </div>
+    <div id="body">
+        <h1>My Services</h1>
+        <div id="content">
+            <table cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                    <td valign="middle">Shiplink & ShipCat</td>
+                    <td valign="middle">
+                        <img src="<?php echo $baseUrl . '/img/check.png?version=' . rand(); ?>" border="0" alt="">
+                        <a href="#" class="button small white">Learn more</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="middle">QuoteSelect</td>
+                    <td valign="middle">
+                        <img src="<?php echo $baseUrl . '/img/check.png?version=' . rand(); ?>" border="0" alt="">
+                        <a href="#" class="button small white">Learn more</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="middle">eSSM</td>
+                    <td valign="middle">
+                        <img src="<?php echo $baseUrl . '/img/check.png?version=' . rand(); ?>" border="0" alt="">
+                        <a href="#" class="button small white">Learn more</a>
+                        <a href="#" class="button small dblue">Go to application</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="middle">WebReporter</td>
+                    <td valign="middle">
+                        <img src="<?php echo $baseUrl . '/img/check.png?version=' . rand(); ?>" border="0" alt="">
+                        <a href="#" class="button small white">Learn more</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td valign="middle">Transaction Monitor</td>
+                    <td valign="middle">
+                        <img src="<?php echo $baseUrl . '/img/cross.png?version=' . rand(); ?>" border="0" alt="">
+                        <a href="#" class="button small white">Learn more</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="clear">
+</div>
+<div id="footer">Copyright &copy; 2000-<span id="copyrightYear"></span> ShipServ Ltd. All rights reserved</div>
+
+<div id="modal">
+    <div class="modalHead"><div class="close">Close</div></div>
+    <div class="modalBody">
+        <iframe src="<?php echo $this->data['casPwdUrl']; ?>"></iframe>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var base  = <?php echo json_encode(array('url' => $this->baseUrl())); ?>;
+    var user  = <?php echo json_encode($this->data['user']); ?>;
+    var buyer = <?php echo json_encode($this->data['buyer']); ?>;
+</script>
+
+<!-- Scripts -->
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/lib/jquery.tools.min.js?version=' . rand(); ?>"></script>
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/lib/jquery.tools.overlay.modified.js?version=' . rand(); ?>"></script>
+
+

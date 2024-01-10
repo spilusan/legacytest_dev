@@ -1,0 +1,168 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/profile-privacy.js');
+
+
+
+$this->headLink()->appendStylesheet('/css/transition.css');
+/* $this->headLink()->appendStylesheet('/css/uniform.default.shipserv.css') */
+$this->headLink()->appendStylesheet('/css/uniform.rfq.css')
+    			->appendStylesheet('/css/profile.css')
+    			->appendStylesheet('/css/profile/company-automatic-reminder.css');
+
+$this->getHelper('Requirejs')->addModule('backbone/profile/companyAutoReminder/views/mainView');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Settings',
+						   'url'  => '/profile/company-settings'));
+
+
+
+// redirect user if company changes by the input box on the top
+
+if( $this->user->isAdminOf($this->params['id']) == false && $this->user->canPerform('PSG_TURN_TN_INTEGRATION') == false && $this->tradenetAccess == false)
+{
+	?><script>location.href='/profile/company-profile/type/<?php echo $this->activeCompany->type?>/id/<?php echo $this->activeCompany->id?>';</script><?php
+}
+?>
+
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'],$this->companyDetail['id'], 'company-automatic-reminder', $this->pendingUsers)
+				)
+			);
+				
+			?>
+			<div class="profile-body-right">
+				<div class="zz header">
+					<h2>Configure Automatic Reminders</h2>
+				</div>
+				<div class="companyContent">
+					<!-- <form id="c-settings-form" method="post" action="/profile/company-automatic-reminder" > -->
+					<form id="c-settings-form" method="post" action="" >
+						<p>Automatic reminders are sent to suppliers that have not responded to your RFQs or POs.</p>
+						<label class="captionLabel" for="trading_account">Select trading account:</label>
+							<select name="bbs_byb_tnid" id="bbs_byb_tnid">
+								<?php foreach($this->companies as $company) { ?>
+									<option value="/profile/company-automatic-reminder/type/b/id/<?= $this->orgId ?>/trac/<?= $company['id'] ?>"<?= ($this->userTnId == $company['id'])? ' selected' : '' ?>><?= $company['name'] ?></option>
+								<?php } ?>
+							</select>
+						<div class="clear">&nbsp;</div>	
+						<div class="inputHeader">
+							<input type="checkbox" name="bbs_rmdr_rfq_is_enabled" id="rfq_all_reminder_enabled"<?= ($this->reminderData->bbsRmdrRfqIsEnabled) ? ' checked' : '' ?> <?= ($this->userTnId == 0) ? ' disabled' : '' ?>/>
+							<span>Send RFQ Reminders</span>
+						</div>
+			
+						<div class="inputHeader boxRight">
+							<input type="checkbox" name="bbs_rmdr_ord_is_enabled" id="ord_all_reminder_enabled"<?= ($this->reminderData->bbsRmdrOrdIsEnabled) ? ' checked' : '' ?><?= ($this->userTnId == 0) ? ' disabled' : '' ?>/>
+							<span>Send PO Reminders</span>
+						</div>
+
+						<div class="inputBox">
+							<div class="inputBoxContent">
+								<label class="largeLabel textRight" for="bbs_rmdr_rfq_send_after">Send first reminder after</label>
+								<div class="spinner">
+									<span class="spin-up"><div></div></span>
+									<span class="spin-down"><div></div></span>
+									<input type="text" data-maxvalue="14" data-defaultvalue="5" class="leftElement<?= ($this->reminderData->isFieldInvalid('bbsRmdrRfqSendAfter') == false) ? '' :  ' validationError' ?>" name="bbs_rmdr_rfq_send_after" value="<?= $this->reminderData->bbsRmdrRfqSendAfter ?>" readonly>
+								</div>
+									<label class="smallLabel">days</label>
+									<div class="labelIndent">
+										<input type="checkbox" class="leftElement" name="bbs_rmdr_rfq_rep_is_enabled" id="rfq_reminder_enabled" <?= ($this->reminderData->bbsRmdrRfqRepIsEnabled) ? ' checked' : '' ?>/>	
+									</div>
+								<label class="mediumLabel" for="bbs_rmdr_rfq_repeat_after">Repeat reminder after</label>
+								<div class="spinner">
+									<span class="spin-up"><div></div></span>
+									<span class="spin-down"><div></div></span>
+									<input type="text" data-maxvalue="14" data-defaultvalue="5" name="bbs_rmdr_rfq_repeat_after" class="enableLeft leftElement<?= ($this->reminderData->isFieldInvalid('bbsRmdrRfqRepeatAfter') == false) ? '' :  ' validationError' ?>" value="<?= $this->reminderData->bbsRmdrRfqRepeatAfter ?>" readonly>
+								</div>
+									<label class="smallLabel">days</label>
+								<div class="labelIndent">&nbsp;</div>	
+								<label class="mediumLabel" for="bbs_rmdr_rfq_repeat">Repeat reminder</label>
+								<div class="spinner">
+									<span class="spin-up"><div></div></span>
+									<span class="spin-down"><div></div></span>
+									<input type="text" data-maxvalue="5" data-defaultvalue="3" name="bbs_rmdr_rfq_repeat" class="enableLeft leftElement<?= ($this->reminderData->isFieldInvalid('bbsRmdrRfqRepeat') == false) ? '' :  ' validationError' ?>" value="<?= $this->reminderData->bbsRmdrRfqRepeat ?>" readonly>
+								</div>
+									<label class="smallLabel">times</label>
+								</div>
+									<h6>
+										Reminders are not sent to suppliers that have quoted or declined your RFQ.<br><br>
+ 										RFQ reminders will not be sent to any suppliers once you issue a PO for that RFQ.
+									</h6>
+						</div>
+
+						<div class="inputBox boxRight">
+							<div class="inputBoxContent">
+							<label class="largeLabel textRight" for="bbs_rmdr_ord_send_after">Send first reminder after</label>
+								<div class="spinner">
+									<span class="spin-up"><div></div></span>
+									<span class="spin-down"><div></div></span>
+									<input type="text" data-maxvalue="14" data-defaultvalue="5" class="rightElement<?= ($this->reminderData->isFieldInvalid('bbsRmdrOrdSendAfter') == false) ? '' :  ' validationError' ?>" name="bbs_rmdr_ord_send_after" value="<?= $this->reminderData->bbsRmdrOrdSendAfter ?>" readonly>
+								</div>
+								<label class="smallLabel">days</label>
+								<div class="labelIndent">
+									<input type="checkbox" class="rightElement" name="bbs_rmdr_ord_rep_is_enabled" id="ord_reminder_enabled" <?= ($this->reminderData->bbsRmdrOrdRepIsEnabled) ? ' checked' : '' ?> />
+								</div>
+							<label class="mediumLabel" for="bbs_rmdr_ord_repeat_after">Repeat reminder after</label>
+							<div class="spinner">
+								<span class="spin-up"><div></div></span>
+								<span class="spin-down"><div></div></span>
+
+								<input type="text" data-maxvalue="14" data-defaultvalue="5" name="bbs_rmdr_ord_repeat_after" class="enableRight rightElement<?= ($this->reminderData->isFieldInvalid('bbsRmdrOrdRepeatAfter') == false) ? '' :  ' validationError' ?>" value="<?= $this->reminderData->bbsRmdrOrdRepeatAfter ?>" readonly>
+							</div>	
+								<label class="smallLabel">days</label>
+							<div class="labelIndent">&nbsp;</div>	
+							<label class="mediumLabel" for="bbs_rmdr_ord_repeat">Repeat reminder</label>
+
+							<div class="spinner">
+								<span class="spin-up"><div></div></span>
+								<span class="spin-down"><div></div></span>
+								<input type="text" data-maxvalue="5" data-defaultvalue="3" name="bbs_rmdr_ord_repeat" class="enableRight rightElement<?= ($this->reminderData->isFieldInvalid('bbsRmdrOrdRepeat') == false) ? '' :  ' validationError' ?>" value="<?= $this->reminderData->bbsRmdrOrdRepeat ?>" readonly>
+							</div>
+								<label class="smallLabel">times</label>
+							</div>
+								<h6>
+								If the supplier has sent a PO confirmation, acceptance or decline then a PO reminder will not be sent.
+								</h6>
+						</div>
+
+						<div class="clear">&nbsp;</div>
+
+						<div class="checkboxHolder spaceBefore">
+							<div class="labelIndent">
+								<input type="checkbox" id="bbs_rmdr_get_copy" name="bbs_rmdr_get_copy"<?= ($this->reminderData->bbsRmdrGetCopy) ? ' checked' : '' ?> />
+							</div>
+							<label for="bbs_rmdr_get_copy">&nbsp;Send copy of reminder email to purchaser</label>
+						</div>	
+						<div class="checkboxHolder">
+							<div class="labelIndent">
+								<input type="checkbox" id="bbs_rmdr_include_match" name="bbs_rmdr_include_match"<?= ($this->reminderData->bbsRmdrIncludeMatch) ? ' checked' : '' ?> />
+							</div>
+							<label for="bbs_rmdr_include_match">&nbsp;Also send RFQ reminders to suppliers contacted by Match</label>
+						</div>
+						<div class="checkboxHolder spaceBefore">
+							<div class="zz medium <?= ($this->userTnId == 0) ? '' : 'green' ?> button save-button" id><input type="submit" value="Save changes" id="submit" name="submit" <?= ($this->userTnId == 0) ? ' disabled' : '' ?>></div>
+                            <div class="clear" style="height: 1px;"></div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

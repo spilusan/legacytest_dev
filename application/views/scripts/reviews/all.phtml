@@ -1,0 +1,418 @@
+<?php
+if ($this->metaDescription)
+{
+	$this->headMeta()->appendName('description', $this->metaDescription);
+}
+
+if ($this->metaKeywords)
+{
+	$this->headMeta()->appendName('keywords', $this->metaKeywords);
+}
+
+$this->googledfp()->addTargeting('keywords','ALL');
+$this->googledfp()->addTargeting('country','ALL');
+$this->googledfp()->addTargeting('port','ALL');
+$this->googledfp()->addTargeting('supplier','ALL');
+
+$this->headLink()->appendStylesheet('/css/endorsements.css');
+$this->headLink()->appendStylesheet('/css/search.css');
+
+$this->compressedScript()->appendFile('/js/jquery.easing.js')
+						->appendFile('/js/jquery.auto-complete.js')
+						->appendFile('/js/jquery.filetree.js')
+						->appendFile('/js/jquery.urlparse.js')
+						->appendFile('/js/json2.js')
+						->appendFile('/js/jquery.modalwindows.js')
+						->appendFile('/js/jquery.jsoncookie.js')
+						->appendFile('/js/jquery.cookie.js')
+						->appendFile('/js/jquery.metadata.js')
+						->appendFile('/js/jquery.urlencode.js');
+
+$this->googledfp()->add('TargetedOrGeneralAdSlot1');
+$this->googledfp()->add('TargetedOrGeneralAdSlot2');
+$this->googledfp()->add('TargetedOrGeneralAdSlot3');
+
+$this->googledfp()->render();
+
+// added by Yuriy Akopov on 2013-07-26 (DE4094)
+// @todo: the same check is performed at supplier controller view (profile.phtml) so it can probably be isolated into a helper (or the whole menu even)
+$integration = $this->user ? $this->user->canSeeContactViewDetailEasily() : false;
+?>
+
+<input type="hidden" name="tnid-name-<?php echo $this->supplier->tnid; ?>" id="tnid-name-<?php echo $this->supplier->tnid; ?>" value="<?php echo trim($this->supplier->name); ?>" />
+
+<div id="supplier_detail_box">
+	<?php
+	echo $this->partial('back-to-search.phtml', array('backToSearch' => (bool) $this->searchWhat));
+	?>
+</div>
+
+<div style="padding-top: 20px;"></div>
+
+<div id="main_content_area">
+
+	<div class="clear"></div>
+
+	<div class="content_wide">
+
+		<div class="content_wide_header">
+
+			<h1 class="profile"><?php echo $this->supplier->name; ?></h1>
+
+			<h2>
+				<?php
+				echo $this->supplier->city;
+				if ($this->supplier->state && $this->string()->alphaStringLength($this->supplier->state) > 1)
+				{
+					echo ', '.$this->supplier->state;
+				}
+
+				echo ', '.$this->supplier->countryName;
+				?>
+			</h2>
+
+			<a href="/enquiry/index/clearBasket/1/tnid/<?php echo $this->supplier->tnid; ?>" class="send_enquiry_button"></a>
+
+		</div>
+		<div class="content_wide_nav">
+			<ul>
+				<li class="off" id="profile_toggle"><a class="profile_toggle" href="<?php echo $this->supplierProfileUrl($this->supplier);?>#profile_box">Profile</a></li>
+                <?php
+                    if ($integration) { // see the comment to variable declaration
+                        ?>
+	        			<li class="off" id="contact_toggle"><a href="<?php echo $this->supplierProfileUrl($this->supplier);?>#contact_box" class="contact_toggle">Contact</a></li>
+                        <?php
+                    }
+                ?>
+				<li class="off" id="map_toggle"><a href="<?php echo $this->supplierProfileUrl($this->supplier);?>#map" class="map_toggle">Map</a></li>
+				<li class="on" id="reputation_toggle"><a href="<?php echo $this->supplierProfileUrl($this->supplier);?>#reviews" class="reputation_toggle">Reviews</a></li>
+				<?php
+				if ($this->supplier->onlineCatalogue)
+				{
+					?>
+					<li class="off" id="catalogue_toggle"><a class="catalogue_toggle" href="<?php echo $this->supplierProfileUrl($this->supplier);?>#catalogue">Catalogue</a></li>
+					<?php
+				}
+				?>
+			</ul>
+		</div>
+
+		<div class="content_wide_body">
+
+		<div id="customerReviewsBox">
+			<div id="customerReviewsHeader">
+				<div id="endorserInfo">
+					<?php
+					$endorserInfo = $this->reviews[0]->getEndorserInfo();
+					if ($this->reviews[0]->showEndorser ())
+					{
+					?>
+					<div id="endorserName"><b><?php echo $endorserInfo["BYO_NAME"] ?></b> <span class="grey-text">rated this company</span></div>
+					<div id="otherInfo"><span id="location"><?php echo Shipserv_Review::fetchCountryNameByCode($endorserInfo["BYO_COUNTRY"]) ?></span> <span class="grey-text">Last transaction:</span> <b><?php echo $this->string()->ago($this->endorsements[0]["PE_LAST_ORDER_DATE"]);?></b></div>
+					<?php
+					}
+					else
+					{
+						if ($endorserInfo["PCO_ANONYMISED_NAME"])
+						{
+					?>
+
+						<div id="endorserName"><b><?php echo $endorserInfo["PCO_ANONYMISED_NAME"] ?></b> <span class="grey-text">rated this company</span></div>
+						<div id="otherInfo"><span id="location">
+						<?php
+						if (isset($endorserInfo["PCO_ANONYMISED_LOCATION"]))
+						{
+							if ($anonCountryName = Shipserv_Review::fetchCountryNameByCode($endorserInfo["PCO_ANONYMISED_LOCATION"]))
+							{
+								echo $anonCountryName;
+							}
+							else
+							{
+								echo $endorserInfo["PCO_ANONYMISED_LOCATION"];
+
+							}
+						}
+
+						?></span>
+						<span class="grey-text">Last transaction:</span> <b><?php echo $this->string()->ago($this->endorsements[0]["PE_LAST_ORDER_DATE"]);?></b></div>
+						
+					<?php
+						}
+						else
+						{
+						?>
+							<div id="endorserName"><b>A buyer</b> <?php
+							if ($endorserInfo["BYO_COUNTRY"] != "Country" and !empty($endorserInfo["BYO_COUNTRY"]))
+							{
+								 echo " in ".  Shipserv_Review::fetchCountryNameByCode($endorserInfo["BYO_COUNTRY"]);
+
+							}
+							?><span class="grey-text"> rated this company</span></div>
+							
+							<div id="otherInfo"><span class="grey-text">Last transaction:</span> <b><?php echo $this->string()->ago($this->endorsements[0]["PE_LAST_ORDER_DATE"]);?></b></div>
+
+						<?php
+						}
+					}
+					?>
+
+				</div>
+				<div id="back"><a href="<?php echo $this->supplierProfileUrl($this->supplier);?>#reviews"><img src="/images/layout_v2/endorsement/button_back_normal.gif" width="72" height="30" alt="Back" id="backButtonImage"/></a>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div id="customerReviews">
+
+				<?php
+					echo $this->partial (
+						"table-header.phtml",
+						array( "columns" => array(
+								array(
+									"text"=>"Reviews",
+									"width"=>"350px"
+								),
+								array(
+									"text"=>"Opinion",
+									"width"=>"82px"
+								),
+								array(
+									"text"=>"Delivered items as described",
+									"width"=>"72px"
+								),
+								array(
+									"text"=>"On-time delivery",
+									"width"=>"72px"
+								),
+								array(
+									"text"=>"Customer Service",
+									"width"=>"72px"
+								)
+							)
+						)
+					);
+				?>
+
+				<script type="text/javascript">
+					<!--
+
+
+					$(document).ready(function(){
+
+						$('a[class="add-response"]').click(function(){
+							$(this).parent().siblings('div[class="reply-block"]').slideDown(200);
+							$(this).parent().hide();
+
+							return false;
+						});
+
+						$('a[class="save-reply"]').click(function(){
+							var pueId = $(this).parent().attr('id').replace('reply-', '');
+
+							$.post('/reviews/add-reply/format/json/',
+								   { reviewId: pueId,
+									 replyText: $(this).siblings('textarea').val() },
+								function(data) {
+									$('#review-text-' + pueId).children('div[class="reply"]').hide();
+									$('#review-text-' + pueId).append('<p class="reply"><span>Response:</span> ' + data);
+								}, 'json');
+
+							return false;
+						});
+
+						$(document).ready(function(){
+
+							$('#backButtonImage').mouseover(function(){
+								$(this).attr("src", "/images/layout_v2/endorsement/button_back_hover.gif");
+							})
+							.mouseout(function(){
+								$(this).attr("src", "/images/layout_v2/endorsement/button_back_normal.gif");
+							});
+						});
+
+
+					});
+					//-->
+				</script>
+
+
+				<div id="customerReviewsList">
+					<?php
+					foreach ($this->reviews as $review)
+					{
+						?>
+						<table class="nbox">
+						<tr>
+							<td class="nbox-top-left"></td>
+							<td class="nbox-top"></td>
+							<td class="nbox-top-right"></td>
+						</tr>
+						<tr>
+							<td class="nbox-left"></td>
+							<td class="nbox-content">
+								<div class="customerReview">
+									<div class="review-text" id="review-text-<?php echo $review->id; ?>">
+										<a name="#reply-<?php echo $review->id; ?>"></a>
+										<h3><?php 
+											
+											if ($this->reviews[0]->showEndorser ())
+											{
+												echo ($review->getAuthor()->alias)?$review->getAuthor()->alias:$review->getAuthor()->firstName." ".$review->getAuthor()->lastName;
+											}
+											else
+											{
+												if ($review->getAuthor()->alias)
+												{
+													echo $review->getAuthor()->alias;
+												}
+												else
+												{
+													echo "Name withheld";
+												}
+											}
+										?> <span class="ago-text"><?php echo $this->string()->ago($review->createdDate);?></span></h3>
+										<?php
+										if (!$review->getAuthor()->alias)
+										{
+											?>
+											<div class="ago-text"><?php echo ($review->getAuthor()->getJobFunctionName());?></div>
+											<?
+										}
+										
+										$reviewCategories = $review->getCategories();
+										$reviewCategoriesNames = array();
+										if (lg_count($reviewCategories)>0)
+										{
+										?>
+										<p style="font-weight: bold;"><span style="color:#00498e; font-weight: normal;">Purchased:</span>
+										<?php
+											foreach ($reviewCategories as $reviewCategory) $reviewCategoriesNames[] = $reviewCategory["PEC_CATEGORY_TEXT"];
+											echo implode(", ", $reviewCategoriesNames);
+										?>
+										</p>
+										<?php
+										}
+										?>
+										<p><?php
+											if (strlen($review->comment)<4)
+												echo 'No specific comment';
+											else
+												echo nl2br($review->comment);
+										?></p>
+										<?php
+										if ($this->userHasAdminRights && !$review->reply)
+										{
+											// show an option to reply if the user has administrative rights, and there is not a reply
+											?>
+											<div class="reply">
+												<p class="reply-option"><a href="#reply-<?php echo $review->id; ?>" class="add-response" title="Add a response to this review"><img src="/images/layout_v2/references/add-response.png" alt="Add a response to this review" /></a></p>
+
+												<div class="reply-block" id="reply-<?php echo $review->id; ?>" style="display: none">
+													<textarea></textarea>
+													<a href="#reply-<?php echo $review->id; ?>" class="save-reply"><img src="<?php echo $this->CDNLink()->image('/images/layout_v2/references/publish-response.png'); ?>" alt="Save Reply" /></a>
+												</div>
+											</div>
+											<?php
+										}
+
+										if ($review->reply)
+										{
+											?>
+											<p class="reply"><span>Response:</span> <?php echo nl2br($review->reply); ?></p>
+											<?php
+										}
+										?>
+									</div>
+									<div class="review-overall-impression">
+										<?php
+										switch ($review->overallImpression)
+										{
+											case -1:
+												?>
+												<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/negative_tick.png'); ?>" alt="Negative"  width="31" height="26" /><br/>
+												<h4 class="negative">Negative</h4>
+												<?php
+											break;
+
+											case 0:
+												?>
+												<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/neutral_tick.png'); ?>" alt="Neutral"  width="31" height="26" /><br/>
+												<h4 class="neutral">Neutral</h4>
+												<?php
+											break;
+
+											case 1:
+												?>
+												<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/positive_tick.png'); ?>" alt="Positive"  width="31" height="26" /><br/>
+												<h4 class="positive">Positive</h4>
+												<?php
+											break;
+
+											case 'null':
+											default:
+
+											break;
+										}
+										?>
+
+									</div>
+									<div class="review-iad">
+										<?php
+										if ($review->ratingItemsAsDescribed > 0)
+										{
+											echo $this->partial('endorsement/star-rating.phtml', array('stars' => round($review->ratingItemsAsDescribed, 0)));
+										}
+
+										?>
+									</div>
+									<div class="review-dot">
+										<?php
+										if ($review->ratingDeliveredOnTime > 0)
+										{
+											echo $this->partial('endorsement/star-rating.phtml', array('stars' => round($review->ratingDeliveredOnTime, 0)));
+										}
+
+										?>
+									</div>
+									<div class="review-cs">
+										<?php
+										if ($review->ratingCustomerService > 0)
+										{
+											echo $this->partial('endorsement/star-rating.phtml', array('stars' => round($review->ratingCustomerService, 0)));
+										}
+
+										?>
+									</div>
+									<div class="clear"></div>
+								</div>
+							</td>
+							<td class="nbox-right"></td>
+						</tr>
+						<tr>
+							<td class="nbox-bottom-left"></td>
+							<td class="nbox-bottom"></td>
+							<td class="nbox-bottom-right"></td>
+						</tr>
+					</table>
+						<?php
+					}
+					?>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+	<div class="content_wide_footer_shadow">
+	</div>
+	<div class="clear"></div>
+
+</div>
+
+	<div class="zone">
+		<div style="padding-top: 20px;"></div>
+		<?php echo $this->partial('general-google-ads.phtml'); ?>
+	</div>
+
+</div>
+
+<div class="clear"></div>

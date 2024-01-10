@@ -1,0 +1,238 @@
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/min";
+
+@import "partials/def/modal_new";
+@import "font-awesome";
+
+a.showBuyerBranches {
+	cursor: pointer;
+}
+
+.passResendSpinner, .hiddenSpinner {
+	display: none; 
+	color: #39f;
+	vertical-align: text-top;
+}
+
+.passResendSpinner {
+	font-size: 10px;
+}
+
+.hiddenSpinner {
+	float: right;
+	font-size: 26px;
+	margin-right: 60px;
+	margin-top: -19px;
+}
+
+#modal {
+	width: 1000px;
+	.modalControls {
+		.close {
+			display: none;
+		}
+	}
+}
+
+#generalModal {
+	width: 400px;
+}
+
+#modal, #generalModal {
+	
+	
+	table {
+	width: 100%;
+	margin-bottom: 10px;
+	border-collapse: collapse;
+	border: 1px solid #e9edf1;
+
+		th, td {
+		padding: 0px 5px;
+		padding-bottom: 3px;
+		vertical-align: middle;
+		border-right: 1px solid #e9edf1;
+		
+			&.center {
+				text-align:center;
+				width: 80px;
+			}
+
+			&.first {
+				width: 30px;
+			}
+		}
+
+		th {
+			font-weight: bold;
+		    padding: 0px 22px 3px 5px;
+
+		}
+
+		tr {
+			&:nth-child(odd) {
+				td {
+					background: #e9edf1;
+				}
+			}
+		}			
+	}
+
+
+
+	.modalContent {
+		.save,  .cancel {
+			float: right;
+			margin-left: 10px;
+			top: 5px;
+		}
+	}
+}
+.filter {
+    border: 1px solid #d9d9d9;
+    width: 467px;
+    @include border-radius(6px);
+	behavior: url(/css/PIE.htc);
+	padding: 6px;
+	height: 60px;
+	margin: 12px 0;
+	label {
+		float: left;
+		margin-right: 12px;
+		height: 28px;
+		line-height: 28px;
+	}
+	input {
+		height: 22px;
+		line-height: 22px;
+		width: 400px;
+		text-indent: 12px;
+		border: 1px solid #d9d9d9;
+		@include border-radius(3px);
+		behavior: url(/css/PIE.htc);
+	}
+	a {
+		float: right;
+	}
+	.button {
+		margin-left: 12px;
+		margin-top: 6px;
+		cursor: pointer;
+		&.reset {
+			margin-right: 12px;
+		}
+	}
+}
+.vResend {
+    float: right;
+    right: 6px;
+    top: -16px;
+}
+.editUserEmailBtn {
+	position: absolute;
+	top: 3px;
+	right: 5px;
+	cursor: pointer;
+	color: #39f;
+	font-size: 150%
+
+}
+
+
+.editFullName {
+	width: 380px;
+	display: none;
+	position: relative;
+
+	label {
+		display: inline-block;
+		width: 70px;
+		font-weight: bold;
+		height: 18px;
+	}
+
+	input {
+		width: 190px;
+	}
+
+	i {
+		display: block;
+		position: absolute;
+		bottom: 6px;
+		right: 0;
+		cursor: pointer;
+		color: #006400;
+		font-size: 150%;
+		&.fa-times {
+			right: 24px;
+		}
+
+		&.fa-spinner {
+			display: none;
+			color: black;
+		}
+
+		&.cancelUserEmailBtn {
+			color: #ff0000;
+		}
+
+	}
+}
+.toggleOnOff {
+
+	display: inline-block;
+	width: 19px;
+	height: 19px; 
+	cursor: pointer;
+	background: transparent url(/img/forms/sprite.png) left 0px top -100px no-repeat; 
+	margin-left: -6px;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+	&.selected {
+		background: transparent url(/img/forms/sprite.png) left -60px top -100px no-repeat; 
+	}
+	&.disabled {
+		background: transparent url(/img/forms/sprite.png) left -40px top -100px no-repeat; 
+		
+	}
+
+
+}
+.tradingAccForm {
+	table {
+		thead {
+			th {
+				position: relative;
+				.fa-info-circle {
+					cursor: pointer;
+					position: absolute;
+					top: 50%;
+					right: 5px;
+					margin-top: -10px;
+					font-size: 18px;
+				}
+				span {
+					height: 52px;
+					display: table-cell;
+					vertical-align: middle;
+				}
+			}
+		}
+	}
+}
+
+.fa-info-circle {
+	&.administratorInfo {
+		color: #39f;
+		position: relative;
+		top: 3px;
+		font-size: 18px;
+		cursor: pointer;
+	}
+}
+

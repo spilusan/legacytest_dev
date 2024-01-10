@@ -1,0 +1,41 @@
+<div class="clear small"></div>
+<div class="cell ln">
+	{{row}}
+</div>
+<div class="cell qt">
+	<input type="text" name="section[{{ id }}][lineItems][{{ lid }}][lQuantity]" class="qty"/>
+</div>
+<div class="cell un">
+	<select name="section[{{ id }}][lineItems][{{ lid }}][lUoM]" id="unt{{ id }}" class="unt">
+		<option value="">Select</option>
+		{{#each uom}}
+			<option value="{{this.id}}">{{this.name}}</option>
+		{{/each}}
+	</select>
+</div>
+<div class="cell pt">
+	<select name="section[{{ id }}][lineItems][{{ lid }}][lPartType]" id="ptype{{ id }}" class="ptype">
+		<option value="">Select</option>
+		<option value="BP">Buyer's Part No</option>
+		<option value="EN">EAN No</option>
+		<option value="MF">Manufacturer's Part No</option>
+		<option value="UP">Universal Product Code</option>
+		<option value="VP">Supplier's Part No</option>
+		<option value="ZIM">IMPA No</option>
+		<option value="ZIS">ISSA No</option>
+		<option value="ZIM">Mariner's Annual No</option>
+	</select>
+</div>
+<div class="cell pn">
+	<input type="text" name="section[{{ id }}][lineItems][{{ lid }}][lPartNo]" class="pno"/>
+</div>
+<div class="cell ds">
+	<input type="text" name="section[{{ id }}][lineItems][{{ lid }}][lDescription]" class="idesc" />
+</div>
+<div class="cell cm">
+	<input type="text" name="section[{{ id }}][lineItems][{{ lid }}][lComments]" class="icomments" />
+</div>
+<div class="cell del action">
+	<input type="image" src="/img/icons/buttons/x.png" class="button white small remove" tabindex="-1"/>
+</div>
+<div class="clear"></div>

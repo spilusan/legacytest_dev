@@ -1,0 +1,43 @@
+/*
+Document   : company-blocked-list
+Created on : Jun 14, 2012, 11:10:25 AM
+Author     : gly
+Description: Profile company blocked list styles
+*/
+
+@import "compass/css3";
+
+@CHARSET "UTF-8";
+
+.grid {
+    table {
+        width:100%;
+        
+        thead {
+            height:35px;
+            background: #e5e5e5; /* Old browsers */
+            @include x-multiple-colored-gradient(#e5e5e5, #bcbcbc);
+            -pie-background: linear-gradient(top,#e5e5e5 0%,#bcbcbc 100%); 
+            behavior: url(/css/PIE.htc);
+            
+            th {
+                padding-bottom:5px;	
+                padding-top:5px;	
+                font-weight:bold;
+                font-size:14px;
+            }
+        }
+        
+        td {
+            line-height:20px;
+            font-size:12px;
+            border-bottom:dotted 1px grey;
+            padding-bottom: 5px;
+            padding-top: 5px;
+        }
+    }
+}
+
+.even {
+	background-color: #f0f9ff;
+}

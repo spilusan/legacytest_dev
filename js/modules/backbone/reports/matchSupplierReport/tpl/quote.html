@@ -1,0 +1,46 @@
+<div class="top-summary">
+	<div class="summary-block b1">
+		<div class="summary-top">
+			{{#if supplier.logoUrl}}
+				<img src="{{supplier.logoUrl}}" alt="Logo">
+			{{/if}}
+			<div>
+				<h2>{{supplier.name}}</h2>
+				<h3>{{supplier.location}}</h3>
+			</div>
+		</div>
+		<div class="tnid">
+			<b>TradeNet ID: </b>{{supplier.tnid}}
+		</div>
+	</div>
+	<div class="summary-block b2">
+		<ul>
+			<li><b>Trading on ShipServ since:</b> {{supplier.joinedDate}}</li>
+			<li><b>Certifications:</b> {{#if supplier.certifications}}{{supplier.certifications}}{{else}}None Specified{{/if}}</li>
+			<li><b>ShipServ Trading activity (overall):</b><br>
+				{{formatNumber transactions.allMarket.transactionCount}} orders with {{formatNumber transactions.allMarket.buyerCount}} buyers in the last {{date}} months</li>
+			<li><b>ShipServ Trading activity (with you):</b><br>
+				{{formatNumber transactions.you.transactionCount}} orders in the last {{date}} months</li>
+		</ul>
+	</div>
+	<div class="summary-block b3">
+		<div class="traderank" id="traderank" data-rank="{{supplier.tradeRank}}">
+			<div id="td-bar"></div>	
+			<img src="/images/matchSupplierReport/traderank.png" alt="">
+			<div id="tr-no-data">no data</div>
+		</div>
+		<p class="supplyCat"><b>Supply Categories:</b> {{supplier.categories}}}</p>
+		{{#if supplier.url}}
+			<a href="{{supplier.url}}" class="button green" target="_blank">View profile</a>
+		{{/if}}
+	</div>
+	<div class="summary-block b4">
+		<p><b>Potential Savings (USD)<br></b>in the last {{date}} months</p>
+		<p class="currency" id="p-saving">${{#unless saving}}0{{/unless}}{{formatCurrency saving}}</p>
+		<div>
+			<a href="#potentialSaving" class="info pHelp"></a>&nbsp;<a href="#howCalculateHelp" class="pHelp">How do we calculate this?</a>	
+		</div>
+	</div>
+</div>
+
+<div id="qote-data"></div>

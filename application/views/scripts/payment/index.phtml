@@ -1,0 +1,226 @@
+<?
+	$this->headLink()->appendStylesheet('/css/forms.css')
+					 ->appendStylesheet('/css/payment/invoice.css');
+	$this->headScript()
+	// ->appendFile('/js/lib/jquery.inputFilter.js')
+	->appendFile('/js/modules/payment/invoice.js');
+?>
+
+<form class="main new" style="background: transparent; border: 0;">
+	<div id="summary" class="clearfix" style="margin-bottom: 0;">
+		<div class="summary number">
+			<div class="icon">&nbsp;</div>
+			Invoice SIN: 
+			<span class="value">
+				<?php if (lg_count($errors = $this->paymentGateway->validateParams())!=0 || (isset($this->paymentGateway->params['modify']) && $this->paymentGateway->params['modify'] === 'true')){?>
+				<input name="InvoiceId" id="InvoiceId" maxlength="10" type="text" class="textfield required curvyignore" style="width:150px;" value="<?= $this->paymentGateway->params["Invoice"] ?>" placeholder="__________" /> 
+				<div class="invoiceIdValidation">Invoice field accepts between 6 and 10 digits.</div>
+				<?php }else{?>
+					<? echo htmlentities($this->paymentGateway->params["Invoice"]) ?>
+				<?php }?>
+			</span>
+		</div>
+	
+		<div class="summary currency" id="total">
+			<div class="icon">&nbsp;</div>
+			Total: 
+			<span class="value">
+				<?php if (lg_count($errors = $this->paymentGateway->validateParams())!=0 || (isset($this->paymentGateway->params['modify']) && $this->paymentGateway->params['modify'] === 'true')){?>
+				
+				<select class="currencies select curvyignore" id="currencies" style="width: 57px; background: #ffffff; display: inline-block; vertical-align: middle; position: relative; top: -1px;">
+					<option value="USD" <?php if($this->paymentGateway->params["Currency"] == "USD") echo 'selected="selected"';?>>USD - US Dollar</option>
+					<option value="GBP" <?php if($this->paymentGateway->params["Currency"] == "GBP") echo 'selected="selected"';?>>GBP - British Poundsterling</option>
+					<option value="EUR" <?php if($this->paymentGateway->params["Currency"] == "EUR") echo 'selected="selected"';?>>EUR - Euro</option>
+				</select>
+				<input name="TotalCost" id="TotalCost" maxlength="9" type="text" value="<?= $this->paymentGateway->params["TotalTransaction"]?>" class="textfield required curvyignore" value="" style="width:140px;"></input>			
+				
+				<?php }else{?>
+
+					<? echo $this->paymentGateway->params["Currency"] . " " . number_format($this->paymentGateway->params["TotalTransaction"], 2, '.', ',') ?>
+				<?php }?>
+			</span>
+		</div>
+		<div class="clear"></div>
+	</div>
+</form>
+<div class="clear" style="height: 15px;"></div>
+<?php
+if (lg_count($errors = $this->paymentGateway->validateParams())!=0 || (isset($this->paymentGateway->params['modify']) && $this->paymentGateway->params['modify'] === 'true')):?>
+
+	<?if ($this->paymentGateway->params["secondPass"]=="true" && lg_count($errors)):?>
+		<ul class="validation errors">
+			<?foreach ($errors as $error):?>
+				<li><?=$error?></li>
+			<?endforeach?>
+		</ul>
+	<?endif?>
+
+<form name="customerform" method="POST" class="main new" style="padding:5px;">
+	
+	<fieldset class="hidden">
+		<input type="hidden" name="secondPass" value="true" />
+	</fieldset>
+	
+	<input type="hidden" name="Invoice" value="<? echo htmlentities($this->paymentGateway->params["Invoice"]) ?>" id="invoice" />
+	<input type="hidden" name="TotalTransaction" id="totalTransaction" value="<?= $this->paymentGateway->params["TotalTransaction"]?>" />
+	<input type="hidden" name="BillingCurrency" id="BillingCurrency" value="<?= $this->paymentGateway->params["Currency"] ?>" />
+		
+	<fieldset>
+		<h1 class="styled" style="margin-bottom: 20px;">Please enter your Billing details below</h1>
+		<div class="field">
+			<label class="required" for="firstname">First Name(s):</label>
+			<input name="BillingFirstnames" id="BillingFirstnames" type="text" class="textfield required curvyignore" maxlength="20" value="<?=htmlentities($this->paymentGateway->params["BillingFirstnames"]) ?>"></input>
+		</div>
+
+		<div class="field">
+			<label class="required" for="BillingSurname">Surname:</label>
+			<input name="BillingSurname" id="BillingSurname" type="text" class="textfield required curvyignore" maxlength="20" value="<? echo htmlentities($this->paymentGateway->params["BillingSurname"]) ?>"></input>
+		</div>
+
+		<div class="field">
+			<label class="required" for="CustomerName">Company Name:</label>
+			<input name="CustomerName" id="CustomerName" type="text" class="textfield required curvyignore" maxlength="100" value="<? echo htmlentities($this->paymentGateway->params["CustomerName"]) ?>"></input>
+		</div>
+		
+		<div class="field">
+			<label class="required" for="BillingAddress1">Address Line 1:</label>
+			<input name="BillingAddress1" id="BillingAddress1" type="text" class="textfield required curvyignore" maxlength="100" value="<? echo htmlentities($this->paymentGateway->params["BillingAddress1"]) ?>"></input>
+		</div>
+	
+		<div class="field">
+			<label for="BillingAddress2">Address Line 2:</label>
+			<input name="BillingAddress2" id="BillingAddress2" type="text" class="textfield curvyignore" maxlength="100" value="<? echo htmlentities($this->paymentGateway->params["BillingAddress2"]) ?>" ></input>
+		</div>
+	
+		<div class="field">
+			<label class="required" for="BillingCity">City:</label>
+			<input name="BillingCity" id="BillingCity" type="text" class="textfield required curvyignore" maxlength="40" value="<? echo htmlentities($this->paymentGateway->params["BillingCity"]) ?>"></input>
+		</div>
+		
+		<div class="field">
+			<label class="required" for="BillingPostCode">Post/Zip Code:</label>
+			<input name="BillingPostCode" id="BillingPostCode" type="text" class="textfield required curvyignore" maxlength="10" value="<? echo htmlentities($this->paymentGateway->params["BillingPostCode"]) ?>"></input>
+		</div>
+		
+		<div class="field">
+			<label class="required" for="BillingCountry">Country:</label>
+			<select name="BillingCountry" id="BillingCountry" class="select required curvyignore">
+				<option value="">Please choose your country</option>
+				<? foreach($this->countries as $country): ?>
+				
+					<? if (strlen($this->paymentGateway->params["BillingCountry"])>0) {
+						$selected = strtolower($country["CNT_COUNTRY_CODE"]) == strtolower($this->paymentGateway->params["BillingCountry"]);
+					}elseif(strlen($this->paymentGateway->params["BillingCountryName"])>0){
+						$selected = strtolower($country["CNT_NAME"]) ==  strtolower($this->paymentGateway->params["BillingCountryName"]);
+					}else{
+						$selected = false;
+					}?>
+					
+					<option value="<?=$country['CNT_COUNTRY_CODE']?>" <?=$selected ? 'selected="selected"' : ''?>><?=$country["CNT_NAME"]?></option>
+						
+				<? endforeach ?>
+			</select>
+		</div>
+
+        <?php $disabledState = (!(strlen($this->paymentGateway->params['BillingCountry']) > 0 && $this->paymentGateway->params['BillingCountry'] === 'US')); ?>
+        <div class="field">
+            <label for="BillingState">State Code (U.S. only):</label>
+            <select name="BillingState" id="BillingState" class="select curvyignore"<?php echo ($disabledState) ? ' disabled' : ''?>>
+                <option value="">Please choose your state</option>
+                <?php foreach ($this->usStates as $usState): ?>
+                    <?php $selected = (strlen($this->paymentGateway->params['BillingState']) > 0 && strtolower($usState['CODE']) === strtolower($this->paymentGateway->params['BillingState'])); ?>
+                    <option value="<?php echo $usState['CODE']; ?>"<?php echo $selected ? 'selected="selected"' : ''; ?>><?php echo $usState['CODE'] . ' (' . ucwords(strtolower($usState['NAME'])) . ')'; ?></option>
+                <?php endforeach ?>
+            </select>
+            <span class="note">(for U.S. customers only)</span>
+        </div>
+
+		<div class="field">
+			<label class="required" for="CustomerEMail">E-mail Address:</label>
+			<input name="CustomerEMail" id="CustomerEMail" type="text" class="textfield required curvyignore" maxlength="255" value="<? echo htmlentities($this->paymentGateway->params["CustomerEMail"]) ?>"></input>
+		</div>
+		
+	</fieldset>
+	
+	
+	<fieldset class="submit">
+		<label>&nbsp;</label>
+		<input type="submit" value="CONFIRM &amp; PAY" class="submit"/>
+	</fieldset>
+</form>
+
+<?else:?>
+<form action="" method="POST" class="modify" id="modifyForm" style="height: auto;">
+	<input type="hidden" name="secondPass" value="true"/>
+	<input name="BillingFirstnames" type="hidden" value="<? echo htmlentities($this->paymentGateway->params["BillingFirstnames"]) ?>"/>
+	<input name="BillingSurname" type="hidden" value="<? echo htmlentities($this->paymentGateway->params["BillingSurname"]) ?>"/>
+	<input name="CustomerName" type="hidden" value="<? echo htmlentities($this->paymentGateway->params["CustomerName"]) ?>" />
+	<input name="BillingAddress1" type="hidden" value="<? echo htmlentities($this->paymentGateway->params["BillingAddress1"]) ?>" />
+	<input name="BillingAddress2" type="hidden" value="<? echo htmlentities($this->paymentGateway->params["BillingAddress2"]) ?>" />
+	<input name="BillingCity" type="hidden" value="<? echo htmlentities($this->paymentGateway->params["BillingCity"]) ?>" />
+	<input name="BillingPostCode" type="hidden" value="<? echo htmlentities($this->paymentGateway->params["BillingPostCode"]) ?>" />
+	<input name="BillingCountry" type="hidden" value="<? echo htmlentities($this->paymentGateway->params["BillingCountry"]) ?>" />
+	<input name="BillingState" type="hidden" value="<? echo htmlentities($this->paymentGateway->params["BillingState"]) ?>" />
+	<input name="CustomerEMail" type="hidden" value="<? echo htmlentities($this->paymentGateway->params["CustomerEMail"]) ?>" />
+
+	<input type="hidden" name="Invoice" value="<? echo htmlentities($this->paymentGateway->params["Invoice"]) ?>" id="invoice" />
+	<input type="hidden" name="TotalTransaction" id="totalTransaction" value="<?= $this->paymentGateway->params["TotalTransaction"]?>" />
+	<input type="hidden" name="BillingCurrency" id="BillingCurrency" value="<?= $this->paymentGateway->params["Currency"] ?>" />
+				
+	<div id="changeDetails">
+		<input type="hidden" name="modify" value="true" />
+	</div>
+	
+</form>
+
+<form action="<?php echo $this->paymentGateway->getPurchaseURL() ?>" method="POST" id="SagePayForm" name="SagePayForm" class="main clearfix" style="padding: 5px;">
+	<fieldset>
+		<h1 class="styled" style="margin-bottom: 15px;">Summary</h1>
+	</fieldset>
+	
+	<label style="font-size: 12px; font-weight: bold; height: 24px; line-height: 1.2;">First Name(s):</label>
+	<div class="formValue" style="float: none; line-height: 1.2; height: auto; padding-bottom: 10px;"><? echo htmlentities($this->paymentGateway->params["BillingFirstnames"]) ?></div>
+	<div class="clear"></div>
+	<label style="font-size: 12px; font-weight: bold; height: 24px; line-height: 1.2;">Surname:</label>
+	<div class="formValue" style="float: none;line-height: 1.2; height: auto; padding-bottom: 10px;"><? echo htmlentities($this->paymentGateway->params["BillingSurname"]) ?></div>
+	<div class="clear"></div>
+	<label style="font-size: 12px; font-weight: bold; height: 24px; line-height: 1.2;">Company Name:</label>
+	<div class="formValue" style="float: none;line-height: 1.2; height: auto; padding-bottom: 10px;"> <? echo htmlentities($this->paymentGateway->params["CustomerName"]) ?></div>
+	<div class="clear"></div>
+	<label style="font-size: 12px; font-weight: bold; height: 24px; line-height: 1.2;">Address Line 1:</label> 
+	<div class="formValue" style="float: none;line-height: 1.2; height: auto; padding-bottom: 10px;"><? echo htmlentities($this->paymentGateway->params["BillingAddress1"]) ?></div>
+	<div class="clear"></div>
+	<label style="font-size: 12px; font-weight: bold; height: 24px; line-height: 1.2;">Address Line 2:</label>
+	<div class="formValue" style="float: none;line-height: 1.2; height: auto; padding-bottom: 10px;"><? echo htmlentities($this->paymentGateway->params["BillingAddress2"]) ?></div>
+	<div class="clear"></div>
+	<label style="font-size: 12px; font-weight: bold; height: 24px; line-height: 1.2;">City:</label>
+	<div class="formValue" style="float: none;line-height: 1.2; height: auto; padding-bottom: 10px;"><? echo htmlentities($this->paymentGateway->params["BillingCity"]) ?></div>
+	<div class="clear"></div>
+	<label style="font-size: 12px; font-weight: bold; height: 24px; line-height: 1.2;">Post/Zip Code:</label>
+	<div class="formValue" style="float: none;line-height: 1.2; height: auto; padding-bottom: 10px;"><? echo htmlentities($this->paymentGateway->params["BillingPostCode"]) ?></div>
+	<div class="clear"></div>
+	<label style="font-size: 12px; font-weight: bold; height: 24px; line-height: 1.2;">Country:</label>
+	<div class="formValue" style="float: none;line-height: 1.2; height: auto; padding-bottom: 10px;"><? echo $this->paymentGateway->params["BillingCountry"]?></div>
+	<div class="clear"></div>
+	<label style="font-size: 12px; font-weight: bold; height: 24px; line-height: 1.2;">State:</label>
+	<div class="formValue" style="float: none;line-height: 1.2; height: auto; padding-bottom: 10px;"><? echo htmlentities($this->paymentGateway->params["BillingState"]) ?></div>
+	<div class="clear"></div>
+	<label style="font-size: 12px; font-weight: bold; height: 24px; line-height: 1.2;">Email:</label>
+	<div class="formValue" style="float: none;line-height: 1.2; height: auto; padding-bottom: 10px;"><? echo htmlentities($this->paymentGateway->params["CustomerEMail"]) ?></div>
+	<div class="clear"></div>
+	
+	<input type="hidden" name="navigate" value="" />
+	<input type="hidden" name="VPSProtocol" value="<? echo $this->paymentGateway->strProtocol ?>">
+	<input type="hidden" name="TxType" value="<? echo $this->paymentGateway->strTransactionType ?>">
+	<input type="hidden" name="Vendor" value="<? echo $this->paymentGateway->strVendorName ?>">
+	<input type="hidden" name="Crypt" value="<? echo $this->paymentGateway->getCrypt(); ?>">
+	
+	<hr />
+	<div class="clear"></div>
+	<fieldset class="submit">
+		<input type="button" value="" class="button edit" onClick="document.getElementById('modifyForm').submit();" />
+		<input type="submit" value="" class="submit button clearfix" />
+	</fieldset>
+	<div class="clear"></div>	
+</form>
+<?endif?>

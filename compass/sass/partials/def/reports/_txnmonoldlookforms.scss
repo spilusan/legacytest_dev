@@ -1,0 +1,369 @@
+/*
+Document   : partials/def/reports/_forms.scss
+Created on : Oct 28, 2014, 11:54:43 PM
+Author     : Attila O.
+Description: combining partials for rfq-outbox styles, managing old look of transaction monitor
+*/
+
+
+
+form {
+	width: 100%;
+	margin: 0 0 20px 0;
+	font-size: 12px;
+	font-weight: normal;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+	select {
+		width: 192px !important;
+  		max-width: 192px !important;
+		&#buyerbranch, &#daterange, &#suppliertype, &#documenttype, &#sortfield, &#status {
+			width: 192px;
+			max-width: 192px;
+		}
+	}
+	table{
+		&.data {
+			display: table !important;
+		}
+	}
+
+	.searchFilters {
+		width: 98.5%;
+		position: relative;
+	}
+	.error {
+		padding-bottom: 10px;
+	}
+
+	&.new {
+		.singleRow {
+			position: relative;
+			width: 100%;
+			min-width: 320px;
+			min-height: 32px;
+			clear: both;
+		}
+		.date {
+			background: url('/css/essm/calendar.png') no-repeat 170px 6px;
+		}
+
+		input[type="text"] {
+			width: 100%; 
+			max-width: 170px;
+			margin-bottom: 6px;
+			padding: 6px 10px 4px;
+			background-color: #ffffff;
+			border: 1px solid #abb0b6;
+			font-size: 12px;
+			color: #2e3235;
+			height: 15px;
+			line-height: 14px;
+			@include border-radius(6px);
+			-webkit-box-shadow: #f5f7fa 3px 3px 0 0 inset, #f5f7fa -3px -3px 0 0 inset;
+			-moz-box-shadow: #f5f7fa 3px 3px 0 0 inset, #f5f7fa -3px -3px 0 0 inset;
+			box-shadow: #f5f7fa 3px 3px 0 0 inset, #f5f7fa -3px -3px 0 0 inset;
+			 /* behavior: url(/css/PIE.htc); */
+		}
+
+		.selector {
+			margin-bottom: 6px;
+			margin-top: -4px;
+		}
+		input[type="radio"] {
+			margin: -3px 6px 0px 0px;
+		}
+
+		.help {
+			position: relative;
+			top: 2px;
+		}
+
+		.hidden {
+			display: none;
+		}
+		
+		background-color: #f5f5f5;
+
+		.filters {
+
+			width: 100%;
+			border: 1px solid #e3e3e3;
+			height: 380px;
+			background-color: #f5f5f5;
+			margin-right: 3px;
+			padding: 17px 10px 13px 10px;
+			@include border-radius(6px 0 0 6px);
+			/* behavior: url(/css/PIE.htc); */
+			
+			p {
+				color: #D00;
+				font-size: 0.9em;
+				
+			}
+
+			&.sub {
+				height: 185px;
+			}
+
+			&.analysis {
+				height: 210px;
+
+				&.sub {
+					height: 267px;
+				}
+			}
+
+			&.adv {
+				height: 270px;
+
+				&.sub {
+					height: 331px;
+				}
+			}
+
+			label {
+				display: block;
+				float: left;
+				font-size: 0.9em;
+				color: #000;
+				line-height: 24px;
+				min-height: 24px;
+
+			}
+
+			.delayInfo {
+				font-size:11px;
+				margin-top: 10px;
+				clear: both;
+				padding: 0px;
+				font-size: 12px;
+				a {
+					text-decoration: none;
+					color: #08c;
+					
+				}
+			}
+
+			fieldset {
+				&.reportInfo {
+					float: left;
+					width: 37%;
+					border: none;
+					label {
+						width: 100px;
+					}
+
+
+
+					#spbAnalysis1 {
+						input[name="rptAsOfDate"] {
+							height:15px;
+							width:136px;
+						}
+
+						label {
+							width: 150px;
+						}
+
+						.advancedOpts {
+							input[type="text"] {
+								width:136px;
+							}
+						}
+					}
+				}
+
+				&.reportDates {
+					padding-left: 15px;
+					border: none;
+
+					label {
+						width: 100px;
+					}
+
+					select, input[type="text"], textarea {
+						width: 170px;
+  						max-width: 170px;
+					}
+
+					input[name="fromDate"], input[name="toDate"] {
+						height:15px;
+						width:136px;
+					}
+
+					textarea {
+						height: 60px;
+					}
+
+
+
+					#spbAnalysis2{
+						label {
+							width: 140px;
+						}
+
+						.advancedOpts {
+							input[type="text"] {
+								width:50px;
+								margin-top:1px;
+							}
+						}
+
+						.pdfDown {
+							a {
+								font-size: 11px;
+								vertical-align: 40%;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.actions {
+
+			position: absolute;
+			z-index: 999;
+			right: 0px;
+			top: 0px;
+			display: block;
+			float: right;
+			width: 310px;
+			margin-right: 10px;
+			height: 250px;
+			padding: 50px 10px 20px 10px;
+			@include border-radius(0 6px 6px 0);
+			/* behavior: url(/css/PIE.htc); */
+
+
+			&.sub {
+				height: 185px;
+			}
+
+			&.analysis {
+				height: 210px;
+
+				&.sub {
+					height: 267px;
+				}
+			}
+
+			&.adv {
+				height: 270px;
+
+				&.sub {
+					height: 331px;
+				}
+			}
+
+			hr {
+				border:0;
+				border-top: 1px dotted #686c6f;
+			}
+
+			input.button.large {
+				width: 190px;
+				float: right;
+				margin-right: 6px;
+			}
+
+			input[name="runReport"] {
+				margin-bottom: 10px;
+				background-color: #048803;
+				color: white;
+				border: 1px solid #048803;
+				@include border-radius(6px);
+  				/* behavior: url(/css/PIE.htc); */
+			}
+
+			input[name="runReport"]:hover {
+				text-decoration: none;
+				color: #e9e9e9;
+
+			}
+			button[name="csvExport"] {
+				padding-left: 49px;
+				padding-right: 49px;
+				margin-bottom: 10px;
+			}
+
+			select {
+				width: 75%;
+				width: 100%; 
+				max-width: 180px;
+				margin-top: 2px;
+
+			}
+
+
+			label {
+				display: block;
+				width: 120px;
+				float: left;
+				font-size: 0.9em;
+				color: #000;
+				min-height: 24px;
+				line-height: 24px;
+
+			}
+			
+			.button {
+				display: block;
+				padding: 6px;
+				text-decoration: none;
+				text-align: center;
+				font-size: 14px;
+				font-weight: bold;
+				color: black;
+				width: 92%;
+				clear: both;
+				cursor: pointer;
+				@include border-radius(6px);
+			
+			}
+
+			.green {
+				@include x-multiple-colored-gradient(#98d56c 0%, #048803 100%);
+  				-pie-background: linear-gradient(top, #98d56c 0%, #048803 100%);
+  				border: 1px solid #048803;
+  				color: #fff;
+			}
+
+		}
+
+		.radiobox {
+			display: inline-block;
+			float: left;
+			padding-bottom: 12px;
+			margin-left: 6px;
+			label {
+				width: auto !important;
+				padding-right: 12px;
+			}
+			
+		}
+
+		.buyerreference {
+			float: left;
+
+		}
+
+		.textBlock {
+			display: block;
+			position: absolute;
+			width: 18%;
+			float: right;
+			height: 24px;
+			text-align: center;
+			font-weight: bold;
+			margin-right: 11%;
+			margin-top: 3px;
+			right: 0px;
+			top: 0px;
+			}
+
+
+	}
+	
+}
+

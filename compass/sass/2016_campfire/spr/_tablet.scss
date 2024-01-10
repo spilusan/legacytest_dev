@@ -1,0 +1,53 @@
+@media only screen and (max-width: 1300px) {
+	.profile-main {
+
+		.first-level-data {
+			.profile {
+				width: 20%;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 1024px) {
+	.profile-main {
+
+		.first-level-data {
+
+			.company-wrapper {
+				width: 30%;
+			}
+
+			.office-map {
+				width: 33%;
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 960px) {
+	.profile-main {
+		width: 100%;
+
+		.first-level-data {
+
+			.company-wrapper {
+				margin-bottom: 20px;
+			}
+		}
+
+		.scope {
+			.scope-column {
+				width: 30%;
+			    margin-right: 3%;
+			}
+		}
+
+		.contacts {
+			.contact-block {
+				width: 40%;
+			}
+		}
+	}
+
+}

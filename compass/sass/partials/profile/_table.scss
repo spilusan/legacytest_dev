@@ -1,0 +1,58 @@
+/*
+Document   : _table
+Created on : Jun 14, 2012, 10:20:42 AM
+Author     : gly
+Description: Profile table styles
+*/
+
+.table-head {
+	width:100%;
+	background:url(https://cdn1.shipserv.com/images/layout_v2/table_header_middle.gif) repeat-x top left;
+	height:50px;
+    
+    .table-head-left {
+        float:left;
+        width:8px;
+        height:50px;
+        background:url(https://cdn1.shipserv.com/images/layout_v2/table_header_left.png) no-repeat top left;
+    }
+    
+    .table-head-columns {
+        float:left;
+        height:50px;
+        
+        .table-head-stripe {
+            float:left;
+            width:9px;
+            height:50px;
+            background:url(https://cdn1.shipserv.com/images/layout_v2/table_header_dots.gif) repeat-y top left;
+        }
+        
+        .table-head-column {
+            float:left;
+            height:40px;
+            font:normal 11px Arial,helvetica;
+            color:#fff;
+            position:relative;
+            width:60px;
+            padding:5px 0;
+            
+            .column-text {
+                bottom:5px;
+                left:0;
+                position:absolute;
+                
+                p {
+                    padding:0 5px 0 0;
+                }
+            }
+        }
+    }
+    
+    .table-head-right {
+        float:right;
+        width:8px;
+        height:50px;
+        background:url(https://cdn1.shipserv.com/images/layout_v2/table_header_right.png) no-repeat top left;
+    }
+}

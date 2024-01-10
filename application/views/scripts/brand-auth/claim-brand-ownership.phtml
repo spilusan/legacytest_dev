@@ -1,0 +1,24 @@
+<div id="reputationSummaryBox">
+	<table class="nbox">
+		<tr>
+			<td class="nbox-top-left"></td>
+			<td class="nbox-top"></td>
+			<td class="nbox-top-right"></td>
+		</tr>
+		<tr>
+			<td class="nbox-left"></td>
+			<td class="nbox-content" align="center" style="font:bold 18px Arial;vertical-align: middle; text-align: center;height:100px;">
+				<?php 
+					if( $this->error === false  ) echo 'Thank you, please <a href="' . $this->linkToBrandManagementPage . '">click here</a> to go to brand manager page.';
+					else echo 'Something went terribly wrong! <br />' . $this->error;
+				?>
+			</td>
+			<td class="nbox-right"></td>
+		</tr>
+		<tr>
+			<td class="nbox-bottom-left"></td>
+			<td class="nbox-bottom"></td>
+			<td class="nbox-bottom-right"></td>
+		</tr>
+	</table>
+</div>

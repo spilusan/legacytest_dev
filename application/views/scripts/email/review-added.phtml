@@ -1,0 +1,7 @@
+<?php
+$endorserInfo = $this->review->getEndorserInfo();
+?>
+<h2><?php echo $endorserInfo["BYO_NAME"] ?> have posted new feedback on your company.</h2>
+<p>	Read their comments and reply here:<br/>
+	<a href="<?php echo $this->data["link"]?>"><?php echo $this->data["link"]?></a>
+</p>

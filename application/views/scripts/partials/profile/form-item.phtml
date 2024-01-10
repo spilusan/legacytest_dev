@@ -1,0 +1,14 @@
+<label <?php echo ($this->hide) ? 'style="display: none"' : '';?> class="<?php echo ($this->required) ? 'required' : 'optional'; ?>" for="<?php echo $this->name; ?>">
+	<?php echo $this->title; ?> <?php echo ($this->required) ? '<sup>*</sup>' : ''; ?>
+</label>
+<input <?php echo ($this->hide) ? 'style="display: none"' : '';?> class="<?php echo $this->errorMessages ? 'invalid' : '' ?> <?php echo ($this->disabled) ? 'disabled' : ''; ?>" type="<?php echo ($this->type) ? $this->type : 'text'; ?>" <?php echo ($this->disabled) ? 'disabled="1"' : ''; ?> value="<?php echo $this->escape($this->value) ?>" id="<?php echo $this->name; ?>" name="<?php echo $this->name; ?>" />
+<div class="clear"></div>
+<?php
+if ($this->errorMessages)
+{
+	foreach ($this->errorMessages as $msg)
+	{
+		echo '<div class="error">' . $msg . '</div>';
+	}
+}
+?>

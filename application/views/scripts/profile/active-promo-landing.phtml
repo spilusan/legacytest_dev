@@ -1,0 +1,89 @@
+<?php
+    $this->headLink()->appendStylesheet('/css/uniform.default.new.css');
+    $this->headLink()->appendStylesheet('/css/profile/promoLanding.css');
+
+    $breadcrumbs = array(array('name' => 'Home',
+                               'url'  => '/search'),
+                         array('name' => 'Profile',
+                               'url'  => '/profile'),
+                         array('name' => 'Set Active Promotion Status',
+                               'url'  => '/profile/active-promo-landing'));
+     $this->getHelper('Requirejs')->addModule('backbone/profile/targetCustomers/views/landing')
+                                  ->addDefinition('profile/targetCustomers/supplierId', $this->data['spbBranchCode'])
+                                  ->addDefinition('profile/targetCustomers/buyerId', $this->data['bybBranchCode']);
+?>
+<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+<div id="body">
+    <h1 class="styled">Set Active Promotion Status</h1>
+    <div id="content">
+        <div class="greyBox">
+            You have received a transaction via ShipServ from a potential new customer. <br /><br />
+
+            If you want ShipServ to <strong>actively promote your company to this customer</strong> you must <span class="red" style="font-weight: bold;">add them to your Active Promotion List.</span><br /><br />
+
+            If they are an <strong>existing customer</strong> or <strong>you do not want to promote your company to them</strong> you should <span class="red" style="font-weight: bold;">add them to your Exclusion List.</span>
+        </div>
+        <div class="greyBox">
+            <strong>Customer details:</strong>
+        </div>
+        <div>
+            <div class="logoContainer float">
+                <? if ($this->data['logoUrlIsValid']): ?>
+                    <img src="<?= $this->data['logoUrl'] ?>" border="0" style="max-width: 155px;" />
+                <? else: ?>
+                    &nbsp;
+                <? endif ?>
+            </div>
+            <div class="companyDets float">
+                <strong>Company:</strong> <?= $this->data['buyerInfo']['BYB_NAME'] ?><br />
+                <strong>Location(s):</strong> <?= $this->data['buyerInfo']['BYB_CITY'] . ' ' . $this->data['buyerInfo']['CNT_NAME'] ?><br />
+                <strong>Number of vessels:</strong> <?= $this->data['shipInfo']['vesselCount']  ?><br />
+                <strong>Types of Vessels:</strong> <?= $this->data['vesselTypeList'] ?>
+            </div>
+            <div class="tradeStatus float">
+                <? if ((int)$this->data['buyerInfo']['GMV'] === 0): ?>
+                <strong>Your company is yet to trade on ShipServ</strong><br />
+                with this customer
+                <? else: ?>
+                <strong>You are already trading with this customer</strong><br />
+                <span>
+                    <!-- <strong>Date of first order:</strong> <?= $this->data['firstOrderDate'] ?><br /> -->
+                    <strong>Number of orders in the last 12 months:</strong> <?= $this->data['buyerInfo']['ORD_COUNT'] ?><br />
+                    <strong>Value of orders in the last 12 months:</strong> USD $<?= number_format($this->data['buyerInfo']['GMV'], 0, '.', ',') ?><br />
+                </span>
+                <? endif ?>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div>
+            <div class="promoteBox float box">
+                <div class="boxHead green">
+                    <img src="/img/profile/targetCustomers/promoTick.png" border="0" alt="promote" /> <span>ACTIVELY PROMOTE</span>
+                </div>
+                <div class="boxBody green">
+                    <strong>ShipServ will actively promote you to this customer</strong><br /><br />
+                    • You will pay <?= $this->data['currentRate']['supplierTargetRate'] ?>% for orders from this customer<br />
+                    • This status will be locked <?= $this->data['lockPeriod'] ?> once order received<br />
+                    • You can exclude them later if they have not been locked<br /><br />
+                    <a href="promote" class="button medium green promote">Add to Active Promotion List</a>
+                </div>
+            </div>
+            <div class="excludeBox float box">
+                <div class="boxHead grey">
+                    <img src="/img/profile/targetCustomers/excludeX.png" border="0" alt="exclude" /> <span>EXCLUDE</span>
+                </div>
+                <div class="boxBody grey">
+                    <strong>ShipServ will NOT promote you to this customer</strong><br /><br />
+                    • You will pay <?= $this->data['currentRate']['supplierStandardRate'] ?>% for orders from this customer<br />
+                    • You can elect to target this customer at a later date<br /><br />
+                    <a href="exclude" class="button medium green exclude">Add to Exclusion List</a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>
+<div id="waiting">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>

@@ -1,0 +1,33 @@
+/*
+Document   : partials/guidelines/_header.scss
+Created on : May 12, 2016, 14:24:15 AM
+Author     : .:Gly:.
+Description: default styles for header
+*/
+.headerSpace {
+	position: relative;
+	top: 0;
+	height: 60px;
+	width: 100%;
+}
+
+header {
+	height: 60px;
+	background-color: $dk-navy;
+	//padding: 0 20px;
+	position: fixed;
+	top: 0;
+	width: 100%;
+	//width: calc(100% - 40px);
+	z-index: 2000;
+
+	img {
+		position: relative;
+		display: block;
+		float: left;
+		top: 15px;
+		margin-right: 10px;
+		margin-left: 15px;
+		width: 150px;
+	}
+}

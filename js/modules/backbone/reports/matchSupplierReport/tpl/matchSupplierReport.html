@@ -1,0 +1,86 @@
+<div id="filter">
+	<div class="filter-center">
+
+		<fieldset class="col1">
+			<label for="branch">Branch:</label>
+			<div class="spinner" id="branchSpinner"></div>
+			<select id="branch" mame="branch"></select>
+		</fieldset>
+
+		<fieldset class="col2">
+			<label for="vessel">Vessel:</label>
+			<div class="spinner" id="vesselSpinner"></div>
+			<select id="vessel" name="vessel"></select>
+		</fieldset>
+
+		<fieldset class="col3">
+			<label for="date">Date:</label>
+			<select id="date" name="date">
+				<option value="0"{{#ifCond selectedDate 'all'}} selected{{/ifCond}}>From date of first comparison quote</option>
+				<option value="3"{{#ifCond selectedDate '3'}} selected{{/ifCond}}>Last 3 months</option>
+				<option value="6"{{#ifCond selectedDate '6'}} selected{{/ifCond}}>Last 6 months</option>
+				<option value="12"{{#ifCond selectedDate '12'}} selected{{/ifCond}}>Last 12 months</option>
+			<!--	<option value="0"{{#ifCond selectedDate '0'}} selected{{/ifCond}}>All</option> -->
+			</select>
+		</fieldset>
+		
+		<fieldset class="show">
+			<input type="button" class="button dblue go disabled" value="Show">
+		</fieldset>
+		
+		<div class="clear"></div>
+		
+		<fieldset class="col1">
+			<label for="category">Category:</label>
+			<div class="spinner" id="categorySpinner"></div>
+			<select id="category" name="category"></select>
+		</fieldset>
+		
+		<fieldset class="col2">
+			<label for="brand">Brand/Sub-Category:</label>
+			<div class="spinner" id="brandSpinner"></div>
+			<select id="brand" name="brand"></select>
+		</fieldset>
+		
+		<fieldset class="col3">
+			<label for="brand">Product Quality:</label>
+			<!-- <div class="spinner" id="qualitySpinner"></div>  -->
+			<select id="quality" name="quality">
+				<option value="">Any</option>
+				<option value="32">Genuine</option>
+				<option value="32,33">OEM or Genuine</option>
+				<option value="32,33,34">Compatible, OEM or Genuine</option>
+				<option value="35">Brand as Requested</option>
+				<option value="36">Substitute Brand</option>
+				<option value="39">N/A</option>
+				<option value="38">Unknown</option>
+				<!-- <option value="37">Mixed</option> -->
+			</select>
+		</fieldset>
+		
+		<!-- Temporaryly remove this feature, it will be requested to undo, just remove the div containing dislpay:none -->
+		<div style="display: none">
+			<div class="clear"></div>
+			
+			<fieldset class="col1">
+				&nbsp;
+			</fieldset>
+			
+			<fieldset class="col2">
+				&nbsp;
+			</fieldset>
+			
+			<fieldset class="col3">
+				&nbsp;
+				<label class="space">&nbsp;</label>
+				<input id="sameq" name="sameq" type="checkbox" value="on"{{#if selectedSameq}} checked{{/if}}>
+				<label for="sameq" title="Selecting this will only display savings where the quoted quality specified by the recommended supplier matches that of your best performing supplier.">Compare Same Quality Only</label>
+			</fieldset>
+		</div>
+		
+		<div class="clear"></div>
+	</div>
+<div class="clear"></div>
+</div>
+<div id="result"></div>
+<div id="pagination"></div>

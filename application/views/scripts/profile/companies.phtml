@@ -1,0 +1,231 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.inflated.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/my-companies.js');
+
+$pendingCount   = lg_count($this->pendingCompanies);
+$companiesCount = lg_count($this->companies);
+$rejectedCount  = lg_count($this->rejectedCompanies);
+$blockedUserCount = lg_count($this->blockedUsers);
+$companyActions = Zend_Controller_Action_HelperBroker::getStaticHelper('PendingAction')->countPendingActionsByCompany();
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'My Companies',
+						   'url'  => '/profile/companies'));
+
+$this->headLink()->appendStylesheet('/css/transition.css');						   
+$this->headLink()->appendStylesheet('/css/profile.css');
+$this->getHelper('Requirejs')->addModule('supplier/profile-completeness');
+
+?>
+<div id="main_content_area">	
+	<div class="clear"></div>
+	<div class="content_wide">
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], 'companies', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], '', $this->pendingUsers, $isAdmin)				
+				)
+			);
+			?>
+			<div class="profile-body-right">
+				<?php
+				if ($this->confirmEmail['showEmailConf'])
+				{
+					echo $this->partial('user/email-confirmation-required.phtml', $this->confirmEmail);
+				}
+				else
+				{
+					?>
+				<div class="zz header">
+					<div class="zz medium dblue button add_btn">
+						<a href="#" id="add-company" class="button" title="Add a new company to your profile">Add Company</a>
+					</div>
+					<h2>My Companies</h2>
+				</div>
+				<div class="profileContent">
+					<div id="add-company-block" style="display: none;">
+						<div class="profile-body-header"></div>	
+							<div class="profile-body-group">
+								<h3 class="info-message-large" style="padding-bottom: 10px;">Use this facility to join up with your colleagues in your company. As a member of a company you will be able to submit reviews, post responses and access company specific data.</h3>
+								<div style="line-height: 3">
+								<label for="company_search" class="required bold">Search for company by name or TradeNet ID:</label>
+								<div class="company-name-search excUsrComps excNonJoinReqComps">
+									<ul class="cns-tabs">
+										<li class="on" name="cns-opt-s"><a href="#">Search for suppliers</a></li>
+										<li class="off" name="cns-opt-b"><a href="#">Search for buyers</a></li>
+										<div class="clear"></div>
+									</ul>
+									<div class="input-wrapper-sm">
+										<input type="text" name="company_search" id="company_search" value="" />
+										<div class="spinner"></div>
+									</div>
+									<button class="cancel-company-search"></button>
+									<div class="clear"></div>
+								</div>
+							</div>
+						</div>
+					<div class="profile-body-footer"></div>
+					
+					</div>
+					<h3 id="no-companies-msg" class="info-message-large" <?php if ($pendingCount > 0 || $companiesCount > 0 || $rejectedCount > 0) echo 'style="display: none;"'; ?>>Click 'Add Company' to join up with your colleagues in your company. As a member of a company you will be able to submit reviews, post responses and access company specific information and features.</h3>
+					
+					<div id="pending-companies" <?php if ($pendingCount == 0) echo 'style="display: none;"'; ?>>
+						<h3 class="pending-count info-message">Your request<?php echo ($pendingCount > 1) ? 's':''?> to join <?php echo ($pendingCount == 1) ? 'this' : 'these'; ?> <span class="jqPendingCount" id="jqPendingCountRoot"><?php echo $pendingCount; ?></span> <span class="jqCompanyPlural">compan<?php echo ($pendingCount == 1) ? 'y is' : 'ies are'; ?></span> awaiting approval</h3>
+						<?php
+						if ($pendingCount > 0)
+						{
+							foreach ($this->pendingCompanies as $company) :
+								// logo:
+								if ($company['logoUrl'] != '/images/layout_v2/default_image.gif')
+								{
+									$logoUrl = $company['logoUrl'];
+								}
+								else
+								{
+									$logoUrl = '/images/layout_v2/profile/pending-company.png';
+								}
+								?>
+								<div class="pending-block" id="joinreq-<?php echo $company['joinRequest']['PUCR_ID']; ?>">
+									<div class="logo-holder">
+										<img src="<?php echo $logoUrl; ?>" <?php if ($showPendingOverlay) { echo 'class="logo"'; } ?> alt="<?php echo $company['name'] ?>" />
+									</div>
+									
+									<h3><?php echo $company['name'] ?></h3>
+									<h4><?php echo ($company['type'] == 'v' ? 'Supplier' : 'Buyer') . ", {$company['location']}" ?></h4>
+									<hr class="dotted" style="width:460px; margin-bottom:8px;" />
+									<div class="clear"></div>
+									<div class="icons-holder">
+										<div class="company-icons sml-action-set">
+											<a href="#" title="Cancel Request" class="cancel-request">
+												<img src="/images/icons/bin.png" alt="Cancel Request" />
+												<span>Withdraw Request</span>
+											</a>
+										</div>
+									</div>
+								</div>
+								<?php
+							endforeach;
+						}
+						?>
+					</div>
+					
+					<h3 id="current-memberships-msg" <?php if ($pendingCount == 0 || $companiesCount == 0) echo 'style="display: none;"'; ?> class="block-separator">Current Memberships</h3>
+					
+					<?php
+					$user = Shipserv_User::isLoggedIn();
+					
+					foreach ($this->companies as $company)
+					{
+						// logo:
+						$logoClass    = ($company['logoUrl'] == '/images/layout_v2/default_image.gif') ? false : true;
+						$cType        = ($company['type'] == 'v') ? 'SPB' : 'BYO';
+						$pendingCount = $companyActions[$cType][$company['id']];
+						$supplier = Shipserv_Supplier::fetch($company['id']);
+						$isAdmin = $company['type'] == 'v' ? $user->isAdminOfSupplier($company['id']):$user->isAdminOfBuyer($company['id']);
+						
+						if ($company['amAdmin'] || $company['type'] == 'b')
+						{
+							$url = "/profile/company-people/type/{$company['type']}/id/{$company['id']}";
+						}
+						else
+						{
+							$url = "/profile/company-profile/type/{$company['type']}/id/{$company['id']}";
+						}
+						
+						?>
+						<div id="approved-companies">
+							<div class="approved-block <?php echo $company['type']?>" id="<?php echo $company['type'].'-'.$company['id']; ?>">
+								<div class="logo-holder">
+									<img src="<?php echo $company['logoUrl']; ?>" <?php if ($logoClass) { echo 'class="logo"'; } ?> alt="<?php echo $company['name'] ?>" />
+								</div>
+								
+								<h3><?php if($supplier->tnid != ""): ?><a href="<?php echo "/user/switch-company?tnid={$company['type']}{$company['id']}&redirect=$url" ?>"><?php endif ?><?php echo $company['name'] ?><?php if($supplier->tnid != ""): ?></a><?php endif ?></h3>
+								<h4><?php echo ( ($isAdmin) ? "Admin of " : "User of ") . ($company['type'] == 'v' ? 'Supplier' : 'Buyer') . ", {$company['location']}" ?></h4>
+								
+								<div class="clear" style="height:10px"></div>
+								<div class="icons-holder">
+									<div class="company-icons">
+										<?php
+
+											// only show 'improve listing' if they're a supplier
+											if ($company['type'] == 'v' && $supplier->tnid != "")
+											{
+												try { 
+													?><hr class="dotted" style="width:460px; margin-top:0px; margin-bottom:8px;" /><?php		 
+													echo $this->partial('supplier/profile-completion.phtml', array('tnid' => $company['id'], 'supplier'=> $supplier, 'mode' => 'profile', 'user' => $this->user));
+													?><div class="clear"></div><?php
+													?><div class="zz small <?php echo ($supplier->getProfileCompletionScore() < 49)?'lblue':'lblue'?> button" id="editListingBtn" onclick="location.href='<?php echo $supplier->getEditUrl(); ?>';"><button>Edit profile</button></div><?php
+													?><div class="zz small white button" id="viewListingBtn" onclick="location.href='<?php echo $supplier->getUrl(); ?>';" style="margin-left:5px;"><button>View profile</button></div><?php
+													?><div class="zz small white button completionTipsBtn" style="margin-left:5px;"><button>Completion tips</button></div>
+													<?php 
+												} catch (Exception $e) {
+													//do not catch the error, just ignore it
+												}
+											}
+											?><div class="zz small white button" style="margin-left:5px;"><button class="remove-company">Remove company</button></div>
+											<div class="clear"></div>							
+									</div>
+								</div>
+							</div>							
+						</div>
+						<?php
+					}
+					
+					if ($rejectedCount > 0)
+					{
+						?>
+						<h3 class="block-separator">Rejected Companies</h3>
+						<?php
+					}
+					
+					foreach ($this->rejectedCompanies as $company) :
+						// logo:
+						if ($company['logoUrl'] != '/images/layout_v2/default_image.gif')
+						{
+							$showRejectedOverlay = false;
+							$logoUrl             = $company['logoUrl'];
+						}
+						else
+						{
+							$showRejectedOverlay = false;
+							$logoUrl             = $this->CDNLink()->image('/images/layout_v2/profile/rejected-company.png');
+						}
+						?>
+						<div id="rejected-companies">
+							<div class="rejected-block" style="height:60px;" id="<?php echo $company['type'].'-'.$company['id']; ?>">
+								<div class="logo-holder">
+									<img src="<?php echo $logoUrl; ?>" <?php if ($showRejectedOverlay) { echo 'class="logo"'; } ?> alt="<?php echo $company['name'] ?>" />
+								</div>
+								
+								<?php
+								if ($showRejectedOverlay)
+								{
+									?>
+									<img class="overlay" src="<?php echo $this->CDNLink()->image('/images/layout_v2/profile/rejected-overlay.png'); ?>" alt="Rejected" />
+									<?php
+								}
+								?>
+								<h3><?php echo $company['name'] ?></h3>
+								<h4><?php echo ($company['type'] == 'v' ? 'Supplier' : 'Buyer') . ", {$company['location']}" ?></h4>
+								<div class="clear"></div>
+							</div>
+						</div>
+						<?php
+					endforeach;
+					?>
+				</div>
+				<?}?>
+				
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

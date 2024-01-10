@@ -1,0 +1,28 @@
+<?php
+    $this->headLink()->appendStylesheet('/css/reports/kpi-trend.css')
+                     ->appendStylesheet('/css/uniform.rfq.css');;
+    $this->requirejs()->addModule('backbone/reports/kpi-trend/views/mainView');
+	// -------- BREADCRUMBS ---------------
+//	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+//	$breadcrumbs[] = array('name' => 'Reports', 'url'  => '/reports');
+//	$breadcrumbs[] = array('name' => 'KPI Trend Report', 'url'  => '');
+//	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<div id="body">
+    <div id="content">
+        <h1 class="styled">Supplier KPI trend report (BETA - for internal use only)</h1>
+        <div id="filters"></div>
+        <div id="volumeResult"></div>
+        <div id="responseRateResult"></div>
+        <div id="winRateResult"></div>
+        <div id="gmvResult"></div>
+        <div id="conversionResult"></div>
+        <div class="clear"></div>
+    </div>
+</div>
+<div class="clear"></div>
+<div id="waiting">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>

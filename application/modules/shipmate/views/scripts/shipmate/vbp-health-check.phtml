@@ -1,0 +1,110 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/shipmate.css')
+					 ->appendStylesheet('/css/uniform.rfq.css');	
+?>
+<style>
+	.ok{
+		color: green;
+		font-size:16px;
+		font-weight:bold;
+	}
+	.not-ok{
+		color: red;
+	}
+</style>
+
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Salesforce', 'url'  => '/shipmate/value-event');
+	$breadcrumbs[] = array('name' => 'VBP health check', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<div id="body" style="width:2237px;">
+	<div id="content" style="width: 2000px;">
+		<h1 class="styled">VBP Check</h1>
+		<div class="innerContent">
+			<div class="box">	
+				<style>
+					table th{
+						font-size:12px; 
+						font-weight:bold;
+					}
+					
+					table td{
+						font-size:10px; 
+						font-weight:bold;
+					}
+					table th, table td{
+						width:60px;
+					}
+				</style>			
+				
+				<span style="font-size:10px;">Data is updated daily</span>
+				<table width="100%">
+					<thead>
+						<tr>
+							<th><br />TNID</th>
+							<th style="width:200px;"><br />Transition date</th>
+							<?php 
+								$previousYear = null;
+								$allMonths = $this->application->getMonthsForVbp();
+								foreach($allMonths as $mo)
+								{
+									?>
+										<th>
+											<?
+												$tmp = explode("-", $mo);
+												if( $previousYear != $tmp[0] )
+												{
+													$previousYear = $tmp[0];
+													echo $tmp[0];
+												}
+												
+												echo '<br />' . $tmp[1];
+											?>
+										</th>
+									<?
+								}
+							?>
+						</tr>
+					</thead>
+					
+					<tbody>
+						<? 
+							foreach($this->vbpData as $tnid => $d)
+							{
+								?><tr><td><?= $tnid?></td><?
+								?><td><?= $d['transitionDate']?></td><?
+																
+								foreach($allMonths as $mo)
+								{
+									?>
+										<td>
+											<?
+												if($d['valueEvents'][$mo] != null)
+												{
+													echo "<span class='ok'>&#10004</span>";	
+												}
+												else
+												{
+													echo "<span class='not-ok'>-</span>";	
+												}
+											?>
+										</td>
+									<?
+								}
+								
+								?></tr><?
+							}
+						?>
+					</tbody>
+				</table>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

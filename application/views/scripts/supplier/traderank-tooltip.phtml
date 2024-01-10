@@ -1,0 +1,181 @@
+<div class="tooltip-panel" style="width:75px;padding-top:220px;"><div id="scrollLeftArrow"></div></div>
+<div class="tooltip-panel" style="width:516px">
+	<div id="topToolBar" style="height:40px;">
+		<div id="closeTooltipButton"></div>
+		<div class="clear"></div>
+	</div>
+	<div id="topTabBar" style="height:36px;">
+		<div id="tradeRankTab" class="tooltip-tab"></div>
+		<div id="tradePerfTab" class="tooltip-tab"></div>
+		<div id="revTab" class="tooltip-tab"></div>
+		<div id="verSysTab" class="tooltip-tab"></div>
+		<div class="clear"></div>
+	</div>
+	<div id="tradeRankBody" class="tooltip-panel-body">
+		<div>
+			<div style="float:left;width:164px">
+				<img src="/images/layout_v2/tr_popup/01_traderank/icon_traderank_identity.gif" width="164" height="170"/>
+				<div id="tradeRankTooltip">
+					<div id="bottomImage" style="width:<?php echo ($this->supplier->tradeRank != 0)?$this->supplier()->traderankHugeStars($this->supplier):'0'; ?>px;">></div>
+					<div id="topImage" <?php if ($this->supplier->tradeRank == 0) { ?>style="background:url(<?php echo '/images/layout_v2/profile/stars_notrading.gif'; ?>) no-repeat;"<?php } ?>></div>
+				</div>
+				<img src="/images/layout_v2/tr_popup/01_traderank/lines_traderank_bottom.gif" width="163" height="36"/>
+			</div>
+			<div style="float:left;width:33px"><img src="/images/layout_v2/tr_popup/01_traderank/lines.gif" width="33" height="236"/></div>
+			<div style="float:left;width:277px">
+				<div style="height:87px">
+					<div id="trPerfTitle" href="javascript:void(0);">Trading Performance</div>
+					Trading Performance is based on many factors involved in a supplier's activity on ShipServ TradeNet, the world’s most widely used maritime e-commerce trading platform
+				</div>
+				<div style="height:84px">
+					<div id="reviewsTitle" href="javascript:void(0);">Reviews</div>
+					Every supplier trading on TradeNet can share customer ratings & reviews on Pages. Positive reviews give a boost to TradeRank. <a href="<?php echo $this->supplierProfileUrl($this->supplier);?>#reviews">Read supplier's reviews</a>
+				</div>
+				<div style="height:65px">
+					<div id="verSysTitle" href="javascript:void(0);">Verification System</div>
+					Trading Performance is based on many factors involved in a supplier's activity on ShipServ TradeNet, the world’s most widely used maritime e-commerce trading platform
+					<a href="<?php echo $this->supplierProfileUrl($this->supplier);?>">View supplier's verified brands</a>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div style="padding-left:8px">
+			<b>What is TradeRank?</b>
+			<br/><br/>
+			TradeRank is devised by ShipServ to indicate a supplier’s popularity in the market. It is based upon their activity on ShipServ TradeNet, online customer reviews & ratings and agent authorizations verified by the brand owner. A high TradeRank indicates that the supplier is known and trusted by <a target="_blank" href="/info/the-community/">the ShipServ TradeNet buyer community</a>.
+		</div>
+	</div>
+	<div id="tradePerfBody" class="tooltip-panel-body">
+		<div>
+			<div style="float:left;width:164px">
+				<img src="/images/layout_v2/tr_popup/02_tradingperformance/icon_traderank_identity.gif" width="164" height="170"/>
+			</div>
+			<div style="float:left;width:33px"><img src="/images/layout_v2/tr_popup/02_tradingperformance/lines.gif" width="33" height="170"/></div>
+			<div style="float:left;width:277px">
+				<div id="trPerfTitle">Trading Performance</div>
+				<b>Trading Performance is based on many factors involved in a supplier's activity on ShipServ TradeNet, the world’s most widely used maritime e-commerce trading platform.</b>
+				<br/><br/>A strong track record of trading indicates a supplier is being trusted by the community with many repeat orders. Trading Performance is not just about number of orders – it's a complex calculation even including a supplier's quote-to-order ratio.
+				<br/><br/>
+				<div class="trade-rank" id="tradePerfTR-<?php echo $this->supplier->tnid;?>">
+					<i class="fa fa-users" aria-hidden="true"></i>
+					TradeRank
+					<div class="rank rank-<?=$this->supplier->tradeRank?>"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div id="revBody" class="tooltip-panel-body">
+		<div>
+			<div style="float:left;width:164px">
+				<img src="/images/layout_v2/tr_popup/03_reviews/icon_traderank_identity.gif" width="164" height="170"/>
+			</div>
+			<div style="float:left;width:33px"><img src="/images/layout_v2/tr_popup/03_reviews/lines.gif" width="33" height="170"/></div>
+			<div style="float:left;width:277px">
+				<div id="reviewsTitle">Reviews</div>
+				<b>On completion of an order on ShipServ TradeNet, buyers can use Pages to rate a supplier (from 1 to 5 stars), on the basis of delivered as described; on time; and customer service. They can also leave more fuller reviews. Together, ratings & reviews are powerful tools to inform you about a supplier's capabilities.</b>
+				<br/><br/>Every supplier trading on TradeNet can share customer ratings & reviews on Pages. Positive reviews give a boost to TradeRank.
+				<br/><br/>
+				<div class="trade-rank" id="tradePerfTR-<?php echo $this->supplier->tnid;?>">
+					TradeRank <div class="rank rank-<?=$this->supplier->tradeRank?>"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div id="verSysBody" class="tooltip-panel-body">
+		<div>
+			<div style="float:left;width:164px">
+				<img src="/images/layout_v2/tr_popup/04_verificationsystem/icon_traderank_identity.gif" width="164" height="170"/>
+			</div>
+			<div style="float:left;width:33px"><img src="/images/layout_v2/tr_popup/04_verificationsystem/lines.gif" width="33" height="170"/></div>
+			<div style="float:left;width:277px">
+				<div id="verSysTitle">Verification System</div>
+				<b>The ShipServ Verification System gives you the peace of mind that a supplier's authorized status is valid. That's because brand owners (such as manufacturers or industry associations) approve all authorization statuses, ensuring that those claiming authorized status are accurately representing themselves.</b>
+				<br/><br/>Verified suppliers get a boost to their TradeRank.
+				<br/><br/>
+				<div class="trade-rank" id="tradePerfTR-<?php echo $this->supplier->tnid;?>">
+					TradeRank <div class="rank rank-<?=$this->supplier->tradeRank?>"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<div class="tooltip-panel" style="width:58px;padding:220px 0 0 17px"><div id="scrollRightArrow"></div></div>
+<div class="clear"></div>
+<script type="text/javascript">
+	<!--
+	tooltipPanels = ['tradeRank','tradePerf','rev','verSys'];
+	function activateTooltipPanel(panelId){
+		for (i=0;i<=tooltipPanels.length;i++)
+		{
+			
+			if (tooltipPanels[i]==panelId)
+			{
+				$('#'+tooltipPanels[i]+'Tab').addClass("on");
+				$('#'+tooltipPanels[i]+'Body').show();
+			}
+			else
+			{
+				$('#'+tooltipPanels[i]+'Tab').removeClass("on");
+				$('#'+tooltipPanels[i]+'Body').hide();
+			}
+		}
+	};
+	$(document).ready(function(){
+		activateTooltipPanel ('<?php echo $this->activeTab;?>');
+		$('#scrollRightArrow').click(function (e) {
+			var currentTabIdent = $('#topTabBar > .on').attr('id');
+			currentTabIdent = currentTabIdent.substr(0,currentTabIdent.length-3);
+			for (i=0;i<=tooltipPanels.length;i++)
+			{
+				if (tooltipPanels[i]==currentTabIdent)
+				{
+					currentTabId = i;
+				}
+			}
+			if (currentTabId == tooltipPanels.length-1){
+				nextTabId = 0;
+			}
+			else
+			{
+				nextTabId = currentTabId+1;
+			}
+			activateTooltipPanel(tooltipPanels[nextTabId]);
+		});
+		$('#scrollLeftArrow').click(function (e) {
+			var currentTabIdent = $('#topTabBar > .on').attr('id');
+			currentTabIdent = currentTabIdent.substr(0,currentTabIdent.length-3);
+			for (i=0;i<=tooltipPanels.length;i++)
+			{
+				if (tooltipPanels[i]==currentTabIdent)
+				{
+					currentTabId = i;
+				}
+			}
+			if (currentTabId == 0){
+				nextTabId = tooltipPanels.length-1;
+			}
+			else
+			{
+				nextTabId = currentTabId-1;
+			}
+			activateTooltipPanel(tooltipPanels[nextTabId]);
+		});
+		$('.tooltip-tab').click(function (e) {
+			e.preventDefault();
+			var id = $(this).attr('id');
+			id = id.substr(0,id.length-3);
+			activateTooltipPanel(id);
+		});
+		$('#closeTooltipButton').click(function (e) {
+			e.preventDefault();
+			$('#mask').hide();
+			$('#traderankTooltip').hide();
+			$('#traderankTooltip').html('');
+		});
+
+	});
+	//-->
+</script>

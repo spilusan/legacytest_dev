@@ -1,0 +1,5 @@
+<?php if( $this->config['shipserv']['services']['sso']['cas']['backgroundCheck']['enable'] == 1 ){?>
+	<?php if ($this->user === false) {?>
+	<iframe style="display: none;" src="<?= $this->loginUrl ?>?x=0&pageLayout=new&service=<?= urlencode('https://' . $_SERVER['HTTP_HOST'] . '/user/cas-auth-check?method=iframe&loggedIn=' . (($this->user!=false) ? 1 : 0) . '') ?>&callback=?"></iframe>
+	<?php }?>
+<?php }?>

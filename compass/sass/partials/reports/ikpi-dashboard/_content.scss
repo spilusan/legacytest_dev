@@ -1,0 +1,77 @@
+#body {
+	&.liquid {
+		#content {
+			#innerContent {
+				#chart_div {
+					width: 958px;
+					height: 400px;
+					/* border: 1px solid red; */
+				}
+				width: 960px;
+				.center {
+					widht: 100%;
+					text-align: center;
+					padding: 24px 0px;
+					img {
+						display: inline-block;
+						vertical-align: middle;
+					}
+					p {
+						height: 20px;
+						color: gray;
+						display: inline-block;
+						font-size: 14px;
+						padding: 6px 0px 0px 6px;
+						vertical-align: middle;
+					}
+				}
+				.gmvTable {
+					margin: 12px;
+					font-size: 11px;
+					 color: #2E3235;
+					tr {
+						th {
+							background-color: #d6dce4;
+						 	font-weight: bold;
+							padding: 5px;
+							border-right: 1px solid #ffffff;
+							text-align: center;
+							min-width: 55px;
+						}	
+						td {
+							  vertical-align: middle;
+							  border-bottom: 1px solid #d6dce4;
+							  border-right: 1px solid #d6dce4;
+							  padding: 5px 3px 5px 3px;
+							  &.header {
+							  	font-size: 14px;
+							  	font-weight: bold;
+							  	color: black;
+							  	padding-top: 26px;
+							  	border-right: 1px solid #ffffff;
+							  }
+							  &.header:hover {
+								background-color: white;
+							  	color: black;
+							  }
+							  &.right {
+								text-align: right;
+							  }
+							  &.rowHead {
+							  	min-width: 150px;
+							  	overflow: hidden;
+							  	font-weight: bold;
+							  }
+						}
+					}
+					tr:hover {
+						background-color: #087ec5;
+	  					color: white;
+					}
+
+				}
+			}
+		}	
+	}
+}
+

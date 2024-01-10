@@ -1,0 +1,120 @@
+#body {
+	#content {
+		#innerContent {
+			color: #3d3e40;
+			.top-header {
+				position: relative;
+				margin: 5px;
+				height: 60px;
+				ul {
+					float: left;
+					width: 29%;
+					overflow: hidden;
+					li {
+						width: 95%;
+						height: 30px;
+						line-height: 30px;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+					}
+				}
+				div {
+					height: 60px;
+					position: absolute;
+					right: 0px;
+					a {
+						position: absolute;
+						top: 50%;
+						margin-top: -12px;
+						right: 3px;
+						padding: 6px 24px;
+						white-space: nowrap;
+					}
+				}
+			}
+
+			#drilldown{
+				margin-top: 12px;
+				font-size: 12px;
+				width: 100%;
+				min-width: 970px;
+				border-collapse: collapse;
+   				border-spacing: 0px;
+				th, td {
+					padding: 6px;
+					min-height: 30px;
+					vertical-align: middle;
+				}
+				th, td {
+					height: 35px;
+				}
+				th {
+					background-color: #ccecf9;
+					text-align: center;
+					width: 80px;
+					font-weight: bold;
+					&.tnid {
+						width: 80px;
+					}
+					&.actions {
+						width: 135px;
+						min-width: 135px;
+					}
+					
+					&.canBrake {
+                       /*  word-break: break-all; */
+                       overflow: hidden;
+                       text-overflow: ellipsis;
+                     }
+                    
+				}
+				td {
+					border: 1px solid #c9d0da;
+					text-align: center;
+					overflow: hidden;
+					position: relative;
+					&.left-align {
+						text-align: left;
+					}
+					a {
+						padding: 2px 5px;
+					}
+					.ddComparableIcon, .comparableIcon {
+						position: absolute;
+						right: 4px;
+						height: 26px;
+						cursor: pointer;
+						top: 50%;
+    					margin-top: -14px;
+					}
+				}
+
+				tbody {
+                  tr:hover > td {
+                    /* border: 1px solid #ccecf9 !important; */
+                  }
+                  tr {
+                  	td {
+                  		a {
+							clear: both;
+							width: 70px;
+							display: block;
+							padding: 6px;
+							margin: 3px;
+                  		}
+                  	}
+                  	&.highligted {
+                  		background-color: #e8f4f9;
+                  	}
+                }
+				
+				tr:hover > td  {
+                    /* background-color: #EDF8FC !important; */
+                 }
+               }
+				
+			}
+		}
+	}
+}

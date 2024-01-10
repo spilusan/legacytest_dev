@@ -1,0 +1,42 @@
+<section class="spr-filter row">
+	<form class="spr-filters">
+		<div class="gr-4 gr-12@tablet">
+			{{#ifCond buyerCount 1}}
+			<label>Buyer trading account</label>
+			<div class="content-box disabled">
+				{{firstBuyer.name}}
+			</div>
+			{{else}}
+			<label>Buyer trading account(s)</label>
+			<div id="item-buyer-content" class="content-box"></div>
+			<i id="buyer-btn-filter" class="fa fa-plus-square" aria-hidden="true"></i> {{/ifCond}}
+		</div>
+		<div class="gr-4 gr-12@tablet">
+			<label>Supplier(s)</label>
+			<div id="item-supplier-content" class="content-box"></div>
+			<i id="supplier-btn-filter" class="fa fa-plus-square inactive" aria-hidden="true"></i>
+			<p class="select-warning">Please select a buyer trading account before selecting a supplier</p>
+		</div>
+		<div class="gr-2 gr-6@tablet date-picker">
+			<label>Date range</label>
+			<select id="date-pick">
+				<option disabled selected>Select</option>
+				<option value="week default">Last 12 Full Weeks</option>
+				<option value="month default">Last 12 Full Months</option>
+				{{#if showCustomRange}}
+				<option value="week custom">Custom range / Weekly</option>
+				<option value="month custom"">Custom range / Monthly</option>
+				{{/if}}
+			</select>
+			{{#if showCustomRange}}
+			<input id="date-picker" type="text" name="customRange" placeholder="Select Date Range" readonly>
+			{{/if}}
+		</div>
+		<div class="gr-2 gr-6@tablet text-center">
+			<input id="run-report" type="submit" class="btn btn-block blue inactive" value="Run report">
+			<br>
+			<a href="#" class="print-report">
+				<i class="fa fa-print" aria-hidden="true"></i> Print report</a>
+		</div>
+	</form>
+</section>

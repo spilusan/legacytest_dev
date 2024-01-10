@@ -1,0 +1,27 @@
+<?php 
+if (false): //disable for new navigation prototype
+	$menuObj = Shipserv_Profile_Menuoptions::getInstance();
+	$menuObj->setParams($this->params);
+	$menuObj->setCustomPages($this->customPages);
+	$menuOptions = $menuObj->getShipmateTabOptions();
+?>
+<ul id="nav">
+	<?php foreach ($menuOptions as $option): ?>
+		<?php
+			$classText = $option['class'];
+			if ($option['selected']) {
+				$classText = ($classText == '') ? 'selected' : $classText.' selected';
+			}
+			$liOptions = '';
+			if ($classText !='') $liOptions.=' class="'.$classText.'"';
+			$aOptions = '';
+			if ($option['aClass'] !='') $aOptions .= ' class="'.$option['aClass'].'"';
+			if ($option['target'] !='') $aOptions .= ' target="'.$option['target'].'"';
+			if ($option['aStyle'] !='') $aOptions .= ' style="'.$option['aStyle'].'"';
+		?>
+		<li<?= $liOptions ?>>
+			<a<?= $aOptions ?> href="<?= $option['href'] ?>"><?= $option['title'] ?></a>
+		</li>
+	<? endforeach ?>
+</ul>
+<?php endif; ?>

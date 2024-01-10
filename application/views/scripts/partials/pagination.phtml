@@ -1,0 +1,82 @@
+<?php
+$pages = $this->pages;
+$pageCount = $pages['pages'] ? lg_count($pages['pages']) : 0;
+$style = $this->style; // if new, use the style from design guideline
+
+$pages['previous']['url'] = $this->searchUrl()->encodeForwardSlash($pages['previous']['url']);
+$pages['next']['url'] = $this->searchUrl()->encodeForwardSlash($pages['next']['url']);
+
+?>
+
+<?if($pageCount > 1):?>
+	<div id="search_next_previous" style="border-right: none;">
+		<?php
+		if ($pages['previous'])
+		{
+			?>
+			<a href="<?php echo $pages['previous']['url']; ?>" class="<?php echo $pages['previous']['class']; ?>" rel="nofollow">PREV</a>
+			<?php
+		}
+		else
+		{
+			?>
+			<p class="prev">PREV</p>
+			<?php
+		}
+		?>
+	</div>
+<?else:?>
+	<div id="search_next_previous" style="border-right: none; height: 52px;">&nbsp;</div>
+<?endif?>
+
+<div id="search_pagination">
+	<?php
+	if ($pages['pages'])
+	{
+		foreach ($pages['pages'] as $page => $details)
+		{
+			if ($details['prefixEllipses'])
+			{
+				?>
+				<a class="ellipses">...</a>
+				<?php
+			}
+			
+			$details['url'] = $this->searchUrl()->encodeForwardSlash($details['url']);
+				
+			?>
+			<a href="<?php echo $details['url']; ?>" class="<?php echo $details['class']; ?>" rel="nofollow"><?php echo $page; ?></a>
+			<?php
+			
+			if ($details['suffixEllipses'])
+			{
+				?>
+				<a class="ellipses">...</a>
+				<?php
+			}
+			
+		}
+	}
+	?>
+</div>
+
+<?if($pageCount > 1):?>
+	<div id="search_next_previous">
+		<?php
+		if ($pages['next'])
+		{
+			?>
+			<a href="<?php echo $pages['next']['url']; ?>" class="<?php echo $pages['next']['class']; ?>" rel="nofollow">NEXT</a>
+			<?php
+		}
+		else
+		{
+			?>
+			<p class="next">NEXT</p>
+			<?php
+		}
+		?>
+	</div>
+<?else:?>
+	<div id="search_next_previous" style="border-right: none; height: 52px;">&nbsp;</div>
+<?endif?>

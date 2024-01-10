@@ -1,0 +1,69 @@
+<div id="basic-listing-cta">
+	<div id="basic-listing-cta-lhs">
+		<div id="basic-listing-cta-owner">Owner of this listing?</div>
+		<div id="basic-listing-cta-free">
+			<?php
+			if (! $this->supplier->isVerified)
+			{
+				// Unverified
+				?>
+				Buyers ignore unverified listings. Update your details now for <strong>free</strong>.
+				<?php
+			}
+			else
+			{
+				// Verified
+				?>
+				Is the above an accurate description of your company? If not, edit your listing now.
+				<?php
+			}
+			?>
+		</div>
+		<?php
+		if (! $this->supplier->isVerified)
+		{
+			// "Verify your listing"
+			?>
+			<a href="http://www.shipserv.com/pages/admin/selfService/access-code-input.jsf" title="Verify your listing"><img id="basic-listing-cta-free-img" src="/images/layout_v2/stats/verify-cta.png"/></a>
+			<?php
+		}
+		else
+		{
+			// "Edit your listing"
+			?>
+			<a  href="http://www.shipserv.com/pages/admin/selfService/access-code-input.jsf" title="Edit your listing"><img id="basic-listing-cta-free-img" src="/images/layout_v2/stats/edit-cta.png"/></a>
+			<?php
+		}
+		// todo: add 3rd level for "Claim your listing"?
+		?>
+		<div id="basic-listing-cta-premium"><strong>20x more buyer RFQs</strong> go to your competitors who have Premium listings</div>
+		<a id="upgradeListingLink" href="/info/pages-for-suppliers/webstore" title="Upgrade your listing to a Premium Listing"><img id="basic-listing-cta-premium-img" src="/images/layout_v2/stats/upgrade-cta.gif"/></a>
+	</div>
+	<div id="basic-listing-cta-rhs">
+		<div id="basic-listing-cta-data">ShipServ Data</div>
+		<img id="basic-listing-cta-bar" src="<?php echo $this->CDNLink()->image('/images/layout_v2/stats/bar-graph.gif'); ?>"/>
+		<?php
+			$totalArr = Myshipserv_View_Helper_Stats::formatNumber($this->statsProfile->getMonthResult()->getTotal());
+		?>
+		<div id="basic-listing-cta-bar-text"><strong>$<?php echo $totalArr['v']; ?></strong><?php echo $totalArr['scale']; ?>
+			<?php
+			if (! $this->statsProfile->isTopLevel())
+			{
+				// Sector-specific stats
+				?>
+				ordered from suppliers in these categories (3 mths)
+				<?php
+			}
+			else
+			{
+				// Top-level generic stats
+				?>
+				ordered from suppliers on TradeNet (3 mths)
+				<?php
+			}
+			?>
+		</div>
+		<img id="basic-listing-cta-pie" src="<?php echo $this->CDNLink()->image('/images/layout_v2/stats/pie-chart.gif'); ?>"/>
+		<div id="basic-listing-cta-pie-text"><strong>20x</strong> more buyer RFQs go to Premium Profiles</div>
+	</div>
+</div>

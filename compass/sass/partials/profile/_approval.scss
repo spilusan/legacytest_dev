@@ -1,0 +1,101 @@
+/*
+Document   : _approval
+Created on : Jun 14, 2012, 10:15:06 AM
+Author     : gly
+Description: Approval related profile styles
+*/
+
+.approved-block, .pending-block, .rejected-block { 
+    border:1px solid #CDD2DE; 
+    width:468px; 
+    position:relative; 
+    margin:0 0 10px; 
+    padding:10px 0 0 10px;
+    @include border-radius(5px);
+    behavior: url(/css/PIE.htc);
+    
+     img.logo {
+        border:1px solid #d9d9d9; 
+        padding:1px;
+        
+        &.landscape {
+            width: 50px;
+        }
+        
+        &.portrait {
+            height: 50px;
+        }
+    }
+    
+    h3 {
+        margin-left:5px; 
+        font-size:14px; 
+        font-weight:700; 
+    }
+    
+    .icons-holder {
+        overflow:hidden; 
+        margin-bottom:10px;
+    }
+}
+
+.approved-block.v {
+  height: 155px;
+}
+
+.logo-holder {
+    float:left; 
+    margin-right:8px; 
+    height:50px; 
+    width:50px; 
+    text-align:center;
+	
+	&.pending {
+	    margin-bottom: 10px;
+	}
+}
+
+.pending-block, .rejected-block {
+    img.overlay {
+        float:none; 
+        position:absolute; 
+        top:37px; 
+        left:36px; 
+        margin:0;
+    }
+}
+
+#pending-companies, #approved-companies, #rejected-companies {
+    margin-bottom:15px; 
+}
+
+#pending-companies h3.pending-count, h3.info-message {
+    background:url(/images/layout_v2/profile/orange-info.png) 0 0 no-repeat !important; 
+    margin-bottom:10px; 
+    font-size:12.5px;
+    font-weight:700; 
+    height:22px; 
+    color:#fc630f; 
+    padding:5px 0 0 27px; 
+}
+
+.pending-block {
+    h3 {
+        color:#fc630f;
+    }
+}
+
+.approved-block, .pending-block, .rejected-block, .review-request-block {
+    h4 {
+        color:#333; 
+        font-weight:700; 
+        font-size:11px; 
+        margin-top:5px;
+    }
+}
+
+.rejected-block {
+    h4 {
+        color:#999!important;
+    }
+}

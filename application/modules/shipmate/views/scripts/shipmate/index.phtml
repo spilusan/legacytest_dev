@@ -1,0 +1,47 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/shipmate.css')
+					 ->appendStylesheet('/css/uniform.rfq.css');
+
+	if ($this->customPage) {
+		$urlToLoad = $this->customPage;
+	} else {
+		foreach($this->customPages as $name => $url) {
+			if( $urlToLoad == null ) $urlToLoad = $url;
+		}
+	}
+					
+	$this->requirejs()	->addModule('backbone/shipmate/views/mainView')
+						->addDefinition('shipmate/urlToLoad', '"'.$urlToLoad.'"');
+		
+	$user = Shipserv_User::isLoggedIn();
+
+	$shipservUser = ($user) ? $user->isShipservUser() : false;
+	$hash = $this->hash;
+	if($this->params['page']){
+		$page = $this->params['page'];
+	}
+	else {
+		$page = 1;
+	}
+?>
+
+<div id="body">
+	<div id="content">
+		<h1 class="styled">Welcome ShipMates</h1>
+		<div class="innerContent">
+			<div class="box">				
+				<iframe name="shipmateIFrame" id="shipmateIFrame" style="min-height: 620px;" src="<?= $urlToLoad?>" width="100%"></iframe>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody"></div>
+</div>
+<div id="waiting">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>

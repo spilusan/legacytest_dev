@@ -1,0 +1,6 @@
+<option value="">Please select a port</option>
+{{#each data}}
+	{{#ifCondNoType this.PRT_IS_RESTRICTED '0'}}
+		<option value="{{this.PRT_PORT_CODE}}">{{this.PRT_NAME}}</option>
+	{{/ifCondNoType}}
+{{/each}}

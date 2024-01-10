@@ -1,0 +1,558 @@
+#body {
+	#content {		
+		.innerContent {
+			table {
+				border-right: 1px solid #C9D0DA;
+				border-top: 1px solid #C9D0DA;
+				border-collapse: collapse;
+				table-layout: fixed;
+				width: 100%;
+
+				thead {
+					tr {
+						th {
+							background: #D6DCE4;
+							font-size: 14px;
+							padding: 5px;
+							text-align: center;
+							vertical-align: middle;
+
+							a.sort {
+								.arrow {
+									display: none;
+								}
+
+								&.sorted {
+									.arrow {
+										height: 9px;
+										display: block;
+										margin-top: 6px;
+									}
+
+									&.asc {
+										.arrow {
+											background: url(/img/prime-supplier/upArrow.png) no-repeat center center transparent;
+										}
+									}
+
+									&.desc {
+										.arrow {
+											background: url(/img/prime-supplier/downArrow.png) no-repeat center center transparent;
+										}
+									}
+								}
+							}
+
+							&.segmentName {
+								width: 350px;
+							}
+
+							&.supName {
+								width: 200px;
+							}
+
+							&.catName {
+								width: 515px;
+							}
+
+							&.sDate {
+								width: 75px;
+							}
+
+							&.actions {
+								width: 245px;
+							}
+
+							&.supplierActions {
+								width: 235px;
+							}
+
+							&.small {
+								padding: 5px;
+								text-align: center;
+								width: 25px;
+							}
+
+							&.tnid {
+								width: 55px;
+							}
+
+							&.country {
+								width: 70px;
+							}
+
+							&.monet {
+								width: 65px;
+							}
+
+							&.targeted {
+								width: 80px;
+							}
+
+							&.activeKey {
+								width: 60px;
+							}
+
+							&.segMatch {
+								width: 65px;
+							}
+
+							&.segQuot {
+								width: 70px;
+							}
+
+							&.segMatchAvQuot {
+								width: 80px;
+							}
+
+							&.segRfqEvent {
+								width: 75px;
+							}
+
+							&.quotWinRate {
+								width: 40px;
+							}
+
+							&.potSave {
+								width: 70px;
+							}
+
+							&.matchedGmv {
+								width: 70px;
+							}
+
+							&.compMatchRfqEv {
+								width: 75px;
+							}
+
+							&.won {
+								width: 35px;
+							}
+
+							&.cheapest {
+								width: 60px;
+							}
+
+							&.gmvTrend {
+								width: 85px;
+							}
+
+							&.responsiveness {
+								width: 110px;
+							}
+
+							&.compRfqEv {
+								width: 75px;
+							}
+
+							&.wonCand, &.cheapestCand {
+								width: 90px;
+							}
+
+							&.prevTarg {
+								width: 70px;
+							}
+
+							&.gmvTraded {
+								width: 90px;
+							}
+
+							&.respness {
+								width: 90px;
+							}
+
+							&.compRfqEv {
+								width: 90px;
+							}
+						}
+
+						&.white {
+							th {
+								background: #ffffff;
+								font-size: 14px;
+
+								&.greenBg {
+									background: #E5F8D8;
+								}
+
+								&.blueBg {
+									background: #CAEDF9;
+								}
+							}
+						}
+					}
+				}
+
+				tbody {
+					tr {
+						td {
+							font-size: 14px;
+							padding: 5px;
+							text-align: right;
+
+							&.center {
+								text-align: center;
+							}
+							
+							&.up {
+								color: #008B00;
+							}
+
+							&.down {
+								color: #E81E24;
+							}
+
+							&.small {
+								padding: 5px;
+								text-align: center;
+								width: 18px;
+							}
+
+							.actionButton, .remove {
+								position: relative;
+								top: 2px;
+								background: #F5F7FA;
+								padding: 6px 7px 5px 7px;
+								border: 1px solid #DBE0E7;
+								display: inline-block;
+								@include border-radius(6px);
+								behavior: url(/css/PIE.htc);
+
+								&.money {
+									padding: 2px 7px;
+    								top: 5px;
+								}
+
+								&.graph {
+									padding: 4px 7px;
+								}
+							}
+
+							.open {
+								position: relative;
+								background: #008B00;
+								color: #ffffff;
+								font-size: 13px;
+								border: 1px solid #DBE0E7;
+								display: inline-block;
+								@include border-radius(6px);
+								behavior: url(/css/PIE.htc);
+							}
+
+							.edit, .editS {
+								position: relative;
+								font-size: 13px;
+								display: inline-block;
+								@include border-radius(6px);
+								behavior: url(/css/PIE.htc);
+							}
+
+							.editS {
+								background: #ffffff;
+								color: #0058B0;
+								border: 1px solid #0058B0;
+							}
+
+							.open, .editS {
+								padding: 9px 30px;
+								top: -3px;
+							}
+						}
+					}
+				}
+
+				tr {
+					td, th {
+						color: #000000;
+						border-left: 1px solid #C9D0DA;
+						border-bottom: 1px solid #C9D0DA;
+						overflow: hidden;
+						text-overflow: ellipsis;
+
+						&.left {
+							text-align: left;
+						}
+					}
+				}
+
+				&.current {
+					thead {
+						tr {
+							th {
+								cursor: help;
+							}
+						}
+					}
+				}
+
+			}
+		}
+
+		.automatchSetup {
+			.innerContent {
+				table {
+				    @include display-flex-ie;
+				    flex-flow: column;
+				    height: 100%;
+				    width: 100%;
+				}
+				table thead {
+				    /* head takes the height it requires, 
+				    and it's not scaled when table is resized */
+				    flex: 0 0 auto;
+				    width: 100%;
+				}
+				table tbody {
+				    /* body takes all the remaining available space */
+				    flex: 1 1 auto;
+				    display: block;
+				    overflow-y: scroll;
+				}
+				table tbody tr {
+				    width: 100%;
+				}
+				table thead, table tbody tr {
+				    display: table;
+				    table-layout: auto;
+				}
+
+				table {
+					border: 0;
+					table-layout: auto;
+
+					thead {
+						tr {
+							th {
+								text-align: left;
+								border: 0;
+								font-size: 1px;
+								padding: 0;
+								padding-left: 10px;
+
+								&.keywSets {
+									font-size: 16px;
+								}
+
+								&.enabled {
+									font-size: 12px;
+									width: 55px;
+								}
+
+								span {
+									font-size: 14px;
+								}
+							}
+
+							&.last {
+								th {
+									border-bottom: 1px solid #C9D0DA;
+									padding-bottom: 10px;
+								}
+							}
+						}
+					}
+
+					tbody {
+						height: 360px;
+						overflow: hidden;
+						overflow-y: scroll;
+
+						tr {
+							td {
+								text-align: left;
+								padding: 10px;
+								font-size: 15px;
+								vertical-align: middle;
+
+								&.center {
+									text-align: center;
+								}
+
+								&.first {
+									border-left: 0;
+									width: 45px;
+									text-align: center;
+								}
+
+								&.buttons {
+									width: 135px;
+								}
+
+								img {
+									cursor: pointer;
+								}
+							}
+						}
+					}
+				}
+
+				.leftTable, .rightTable {
+					float: left;
+					border: 1px solid red;
+					height: 448px;
+					width: 565px;
+					margin-left: 10px;
+					border: 1px solid #C9D0DA;
+				}
+
+				.rightTable {
+					margin-left: 15px;
+
+					table {
+						tbody {
+							tr {
+								td {
+									&.buttons {
+										width: 40px;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.buttons {
+	margin-top: 15px;
+    margin-left: 10px;
+}
+
+.button.medium.blue {
+	background-image: none;
+	background: #005AAD;
+	color: #ffffff;
+	text-shadow: none;
+	font-weight: normal;
+}
+
+#modal {
+	.modalBody {
+		.modalContent {
+			form {
+				input[type="text"] {
+					width: 307px;
+				}
+
+				input.button.medium.green.uploadFile {
+					width: auto;
+					float: none;
+					padding-top: 5px;
+					padding-bottom: 5px;
+					margin: 0;
+				}
+
+				.button.medium.blue {
+					margin-bottom: 10px;
+    				margin-top: 5px;
+				}
+			}
+		}
+	}
+}
+
+#modalX {
+	.modalBody {
+		.modalContent {
+			height: 400px;
+			overflow: hidden;
+			overflow-y: auto;
+			
+			table {
+				border-right: 1px solid #C9D0DA;
+				border-top: 1px solid #C9D0DA;
+				border-collapse: collapse;
+				width: 100%;
+
+				tbody {
+					tr {
+						td {
+							font-size: 14px;
+							padding: 5px;
+							text-align: left;
+							color: #000000;
+							border-left: 1px solid #C9D0DA;
+							border-bottom: 1px solid #C9D0DA;
+							overflow: hidden;
+							text-overflow: ellipsis;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.legend {
+	background: #E9EDF1;
+	border: 0;
+	@include border-radius(6px);
+	height: 50px;
+
+	&.am {
+		margin: 20px 10px 0;
+
+		.icons {
+			width: 550px;
+			p.icon {
+				.actionButton {
+					top: 7px;
+					background: transparent;
+					padding: 0;
+					border: 0;
+				}
+
+				.iconName {
+					top: -1px;
+				}
+			}
+		}
+	}
+
+	.icons {
+		width: 1055px;
+		padding: 5px 0;
+		margin: 0 auto;
+		position: relative;
+		top: -1px;
+
+		p.icon {
+			display: inline-block !important;
+
+			.actionButton {
+				position: relative;
+				top: 2px;
+				background: #F5F7FA;
+				padding: 6px 7px 5px 7px;
+				border: 1px solid #DBE0E7;
+				display: inline-block;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+
+				&.money {
+					padding: 5px 7px 2px;
+					top: 5px;
+				}
+
+				&.graph {
+				    padding: 6px 7px 2px;
+				    position: relative;
+				    top: 5px;
+				}
+			}
+
+			.iconName {
+				display: inline-block;
+				position: relative;
+				top: 3px;
+				margin-left: 7px;
+				font-weight: bold;
+				font-size: 14px;
+			}
+			height: 28px;
+			margin-right: 15px;
+		}
+	}
+}

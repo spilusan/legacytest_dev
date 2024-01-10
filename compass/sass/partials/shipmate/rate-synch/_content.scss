@@ -1,0 +1,49 @@
+form {
+	
+	section {
+		padding: 12px;
+		min-height: 50px;
+		.rateBox {
+			margin: 6px 0px;
+			padding: 6px;
+			font-size: 11px;
+			line-height: 150%;
+			display: block;
+			width: 250px;
+			border: 1px solid gray;
+			
+			&.left {
+				float: left;
+			}	
+		
+			&.right {
+				float: right;
+			}
+		}
+	
+		#warning {
+			margin-top: 16px;
+			display: none;
+		    width: 545px;
+		    border: 1px solid red;
+		    padding: 12px;
+		    color: red;
+		    clear: both;
+		}
+	}
+
+	input[type="text"] {
+	    padding: 6px;
+	    width: 450px;
+	    border: 1px solid gray;
+	}
+
+	label {
+		color: gray;
+	}
+
+	input[type="button"] {
+		float: right;
+	}
+
+}

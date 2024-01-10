@@ -1,0 +1,77 @@
+#body {
+	&.print {
+		margin: 0;
+		padding: 0;
+		width: 792px;
+
+		#content {
+			padding:0;
+			width: 792px;
+			left: 0 !important;
+		}
+	}
+
+	#content {
+		.listInfo {
+			padding-bottom: 15px;
+			font-size: 18px;
+			font-weight: normal;
+
+			span {
+				font-weight: bold;
+			}
+			p {
+				font-size: 12px;
+				padding-top: 5px;
+			}
+
+			.cHelp {
+				position: relative;
+				float: none;
+				top: 3px;
+			}
+
+		}
+		.rfqDisplay {
+
+			h2 {
+				input {
+					float: right;
+					cursor: pointer;
+				}
+			}
+
+			.rfqFrame {
+				border: 1px solid #d6dce4;
+				background-color: #e9edf1;
+				padding: 20px;
+				margin-top: 5px;
+			}
+
+			&.print {
+				padding: 0;
+				.rfqFrame {
+					margin: 0;
+					border: 0;
+					background-color: #ffffff;
+					padding: 0;
+
+					.rfqContent {
+						padding: 15px;
+						padding-top: 30px;
+					}
+				}
+			}
+		}
+
+		input.back {
+			float: right;
+			cursor: pointer;
+			margin-left: 5px;
+		}
+	}
+}
+
+body.print {
+	background: #ffffff;
+}

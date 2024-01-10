@@ -1,0 +1,13 @@
+<div class="modal-checkbox-block{{#if inactive}} inactive{{/if}}">
+	<input type="checkbox" id="byb_{{id}}" name="byb[{{id}}]" value="{{id}}">
+	<label for="byb_{{id}}" class="checkbox-label">
+		{{name}}
+	</label>
+	<span>
+		{{#if inactive}}
+			Inactive
+		{{else}}
+			Active
+		{{/if}}
+	</span>
+</div>

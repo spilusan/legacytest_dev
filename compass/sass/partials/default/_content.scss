@@ -1,0 +1,343 @@
+/*
+Document   : _content
+Created on : Jun 13, 2012, 4:45:00 PM
+Author     : gly
+Description: Content related styles
+*/
+
+h2 {
+    &.styled {
+        position: relative;
+        display: block;
+        padding: 10px 18px;
+        line-height: 1.2;
+        vertical-align: middle;
+        background: #ffffff;
+        font-weight: normal;
+        font-size: 15px;
+        border: 1px solid #d6dce4;
+        @include border-radius(6px);
+        behavior: url(/css/PIE.htc);
+
+        &.white {
+            @include x-multiple-colored-gradient(#ffffff 0%, #f6f8fa 100%);
+            -pie-background: linear-gradient(top, #ffffff 0%, #f6f8fa 100%);
+
+            &.blue {
+                border-bottom: 2px solid #13b5ea;
+            }
+
+            &.green {
+                border-bottom: 2px solid #83cc4e;
+            }
+        }
+
+        &.grey {
+            background-image: linear-gradient(#E9EDF1, #D6DCE4);
+            @include x-multiple-colored-gradient(#e9edf1 0%, #d6dce4 100%);
+            -pie-background: linear-gradient(top, #e9edf1 0%, #d6dce4 100%);
+
+            &.blue {
+                border-bottom: 2px solid #13b5ea;
+            }
+
+            &.green {
+                border-bottom: 2px solid #83cc4e;
+            }
+        }
+    }
+}
+
+div.content_wide { 
+ 	margin: 10px 0 0 20px;
+    
+    &.new { 
+        width: 960px; 
+        background-color: #FFF; 
+        float: none; 
+        margin-bottom: 0;
+        
+        &.zz { 
+            margin-top: 20px; 
+            padding-top: 5px; 
+            @include border-radius(6px); 
+            behavior: url(/css/PIE.htc); 
+            background: none;
+            
+            div.content_right { 
+                background: #fff; 
+                @include border-radius(6px); 
+                width: 735px; 
+                padding: 5px; 
+                behavior: url(/css/PIE.htc);
+                
+                .inner_content {
+                    margin:15px;
+                }
+            }
+            
+            div.content_full { 
+                width: 920px; 
+                padding: 20px; 
+                background-color: #fff; 
+                @include border-radius(6px); 
+                behavior: url(/css/PIE.htc); 
+            }
+        }
+        
+            
+            &.no-marg {
+                margin-top: 0;
+            }
+    }
+    
+    div.header { 
+        width: 918px; 
+        height: 82px; 
+        border: 1px solid #ddd; 
+        border-top: 1px solid #FFF; 
+        @include border-radius(0 0 10px 10px); 
+        margin: 20px 0; 
+        margin-top: 0; 
+        background: #efefef;
+        @include x-multiple-colored-gradient(#ffffff 0%,#ebebeb 100%);
+        -pie-background: linear-gradient(top,#ffffff 0%,#ebebeb 100%);
+        behavior: url(/css/PIE.htc);
+        
+        h2 {
+            line-height: 82px; 
+            vertical-align:middle; 
+            color: #333333; 
+            font-size: 24px; 
+            /*font-weight: bold;*/ 
+            float:left; 
+            margin-left: 24px 
+        }
+    }
+    
+    div.zz {
+        &.header {
+            position: relative;
+            color: #fff; 
+            width: auto; 
+            height: 40px; 
+            @include border-radius(6px); 
+            background: #13b5ea;
+            @include x-multiple-colored-gradient(#13b5ea 0%,#087fc5 100%);
+            -pie-background: linear-gradient(top, #13b5ea 0%,#087fc5 100%); 
+            filter: none;
+            behavior: url(/css/PIE.htc);
+            
+            &.double { 
+                height: 95px; 
+            }
+            
+            h2 { 
+                font-size: 18px;
+                font-weight: normal;
+                color: #fff; 
+                line-height: 40px; 
+                vertical-align: middle; 
+                margin: 0; 
+                margin-left: 15px; 
+                float:left; 
+                height: 40px; 
+            }
+            
+            h3 { 
+                font-size: 13px; 
+                color: #fff;
+                line-height: 40px; 
+                vertical-align: middle; 
+                margin: 0; 
+                margin-left: 10px; 
+                float:left; 
+                height: 40px; 
+            }
+        }
+        
+        &.utility { 
+            background-color: #d6dce4; 
+            width: auto; 
+            height: 20px; 
+            padding: 5px; 
+            margin: -15px; 
+            margin-bottom: 20px; 
+            @include border-radius(6px); 
+            behavior: url(/css/PIE.htc);
+            
+            div.button { 
+                float: right; 
+            }
+        }
+        
+        &.page{
+            &.header { 
+                height: 40px; 
+                @include border-radius(6px); 
+                background: #13b5ea;
+                @include x-multiple-colored-gradient(#13b5ea 0%,#087fc5 100%);
+                -pie-background: linear-gradient(top, #13b5ea 0%,#087fc5 100%); 
+                behavior: url(/css/PIE.htc);
+                
+                h1 { 
+                    color: #fff; 
+                    font-size: 16px; 
+                    line-height: 40px; 
+                    vertical-align: middle; 
+                    margin-left: 15px; 
+                    font-weight: bold; 
+                }
+            }
+        }
+    }
+}
+
+div.zz {
+    &.header {
+        position: relative;
+        color: #fff; 
+        width: auto; 
+        height: 40px; 
+        @include border-radius(6px); 
+        background: #13b5ea;
+        @include x-multiple-colored-gradient(#13b5ea 0%,#087fc5 100%);
+        -pie-background: linear-gradient(top, #13b5ea 0%,#087fc5 100%); 
+        filter: none;
+        behavior: url(/css/PIE.htc);
+
+        &.double { 
+            height: 95px; 
+        }
+
+        h2 { 
+            font-size: 18px; 
+            color: #fff; 
+            line-height: 40px; 
+            vertical-align: middle; 
+            margin: 0; 
+            margin-left: 15px; 
+            float:left; 
+            height: 40px; 
+        }
+
+        h3 { 
+            font-size: 13px; 
+            color: #fff;
+            line-height: 40px; 
+            vertical-align: middle; 
+            margin: 0; 
+            margin-left: 10px; 
+            float:left; 
+            height: 40px; 
+        }
+    }
+
+    &.utility { 
+        background-color: #d6dce4; 
+        width: auto; 
+        height: 20px; 
+        padding: 5px; 
+        margin: -15px; 
+        margin-bottom: 20px; 
+        @include border-radius(6px); 
+        behavior: url(/css/PIE.htc);
+
+        div.button { 
+            float: right; 
+        }
+    }
+
+    &.page{
+        &.header { 
+            height: 40px; 
+            @include border-radius(6px); 
+            background: #13b5ea;
+            @include x-multiple-colored-gradient(#13b5ea 0%,#087fc5 100%);
+            -pie-background: linear-gradient(top, #13b5ea 0%,#087fc5 100%); 
+            behavior: url(/css/PIE.htc);
+
+            h1 { 
+                color: #fff; 
+                font-size: 16px; 
+                line-height: 40px; 
+                vertical-align: middle; 
+                margin-left: 15px; 
+                font-weight: bold; 
+            }
+        }
+    }
+}
+
+
+
+div.content_right { 
+	width: 721px; 
+	float: left; 
+}
+
+div.content { 
+	width: 920px; 
+	background-color: #fafafa; 
+	margin: 20px auto; 
+	float: none;  
+	@include border-radius(10px); 
+}
+
+#new-features_body {
+    width: 800px;
+    background: white;
+    @include border-radius(6px);
+    behavior: url(/css/PIE.htc);
+    padding: 5px;
+}
+
+div#einvoice_body, div#map_body, div#maxsuppliers_body {
+    width: 540px;
+    height: 330px;
+    background: white;
+    @include border-radius(6px);
+    behavior: url(/css/PIE.htc);
+    padding: 5px;
+
+    &.brand {
+        height: 270px;
+    }
+
+    &.verified {
+        height: 134px;
+    }
+}
+
+div#map_body {
+    width: auto;
+    height: auto;
+}
+
+div#maxsuppliers_body {
+    height: 140px;
+}
+
+div#einvoice_body .cont, div#map_body .cont, div#maxsuppliers_body .cont {
+    padding: 5px 15px 20px 15px;
+}
+
+div#einvoice_body .cont p, div#map_body .cont p, div#maxsuppliers_body .cont p {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    color: #2E3235;
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+div#einvoice_body .cont p strong, div#map_body .cont p strong, div#maxsuppliers_body .cont p strong {
+font-weight: bold;
+}
+
+div#einvoice_body .cont img, div#map_body .cont img {
+    margin-bottom: 20px;
+}
+
+div#einvoice_body .header, div#map_body .header, div#maxsuppliers_body .header {
+    margin: 0 0 20px 0;
+}

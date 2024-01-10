@@ -1,0 +1,218 @@
+/*
+Document   : reports/dashboard/_rfq.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: styles for rfqs on match dashboard
+*/
+
+#body {
+	#content {
+		.rfqs {
+			&.first {
+				padding-top: 30px;
+			}
+
+			.rfqContainer {
+				padding: 10px 0 0 0;
+
+				.box {
+					&.rfq {
+						padding: 0;
+						overflow: hidden;
+
+						.title {
+							display: block;
+							position: relative;
+							background: #caedf9;
+							line-height: 1.2;
+							padding: 10px 15px 0 15px;
+							@include border-radius(6px 6px 0 0);
+							behavior: url(/css/PIE.htc);
+
+							p {
+								font-weight: bold;
+								font-size: 12px;
+
+								span {
+									&.blue {
+										color: #005aad;
+									}
+								}
+
+								&.subject {
+									width: 470px;
+									overflow: hidden;
+									text-overflow: ellipsis;
+									white-space: nowrap;
+									display: block;
+								}
+
+								&.sent {
+									float: right;
+
+									span {
+										font-weight: normal;
+									}
+								}
+							}
+						}
+
+						.rfqInfo {
+							padding: 15px;
+							line-height: 1.2;
+
+							p {
+								font-weight: bold;
+								font-size: 11px;
+								margin-bottom: 0;
+								display: block;
+								padding-bottom: 2px;
+
+								span {
+									font-weight: normal;
+								}
+
+								&.best {
+									span {
+										float: right;
+									}
+								}
+
+								&.match {
+									span {
+										color: #008b00;
+										font-weight: bold;
+									}
+								}
+
+								&.ref {
+									span {
+										padding-left: 10px;
+									}
+								}
+
+								&.vessel {
+									span {
+										padding-left: 22px;
+									}
+								}
+							}
+
+							.left {
+								float: left;
+								width: 200px;
+							}
+						}
+
+						table {
+							border-collapse: collapse;
+							margin: 0 15px 15px 15px;
+							border-top: 1px solid #bec4cb;
+							border-left: 1px solid #bec4cb;
+
+							tr {
+
+								td, th {
+									padding: 10px 5px;
+									border-bottom: 1px solid #bec4cb;
+									border-right: 1px solid #bec4cb;
+									font-size: 11px;
+									line-height: 1.2;
+								}
+
+								th {
+									background: #e9edf1;
+									font-weight: bold;
+
+									span {
+										font-weight: normal;
+									}
+								}
+
+								td {
+									vertical-align: middle;
+									&.number {
+										text-align: right;
+									}
+
+									&.bold {
+										font-weight: bold;
+									}
+
+									&.match {
+										color: #0f920e;
+									}
+
+									.red {
+										color: #e81e24;
+									}
+
+									.indicator {
+										position: relative;
+										float: left;
+										text-align: left;
+										width: 45px;
+										height: 6px;
+										border: 1px solid #d6dce4;
+										padding: 1px;
+										background: #ffffff;
+										@include background-image(linear-gradient(#eaeef2 0%, #fcfcfd 100%));
+								  		-pie-background: linear-gradient(top, #eaeef2 0%, #fcfcfd 100%);
+								 		behavior: url(/css/PIE.htc);
+
+										.bar {
+											background: #939ba1;
+											height: 6px;
+
+											&.full {
+												background: #13b5ea;
+											}
+										}
+									}
+								}
+
+								&.green {
+									td {
+										background: #e5f8d8;
+										border-right: 1px solid #83cc4e;
+
+										&:last-child {
+											border-right: 1px solid #bec4cb;
+										}
+									}
+								}
+
+								&.yellow {
+									background: #fff0c5;
+									border-right: 1px solid #fdd45c;
+
+									&:last-child {
+										border-right: 1px solid #bec4cb;
+									}
+
+									span {
+										color: #ff7f04;
+
+										&.red {
+											color: #e81e24;
+										}
+									}
+								}
+							}
+						}
+
+						.message {
+							font-size: 12px;
+							color: #e81e24;
+							margin: 15px;
+							padding-top: 5px;
+							padding-bottom: 0;
+							line-height: 1.2;
+							display: block;
+						}
+					}
+				}
+			}
+		}
+	}
+}

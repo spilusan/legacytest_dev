@@ -1,0 +1,22 @@
+<table class="inbox table table-striped">
+    <tr>
+        <th>*</th>
+        <th>!</th>
+        <th>Reference</th>
+        <th>Vessel</th>
+        <th>Subject</th>
+        <th>Date</th>
+        <th>Print</th>
+    </tr>
+    <?foreach($this->requisitions as $req):?>
+    <tr>
+        <td></td>
+        <td></td>
+        <td><?=$req['REQ_INTERNAL_REF_NO']?></td>
+        <td><?=$req['REQ_VESSEL_NAME']?></td>
+        <td><?=$req['REQ_SUBJECT']?></td>
+        <td><?=$req['REQ_PREPARATION_DATE']?></td>
+        <td>Print</td>
+    </tr>
+    <?endforeach?>
+</table>

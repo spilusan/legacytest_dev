@@ -1,0 +1,73 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/shipmate.css')->appendStylesheet('/css/uniform.rfq.css')->appendStylesheet('/css/match-kpi.css');
+	$user = Shipserv_User::isLoggedIn();
+	$shipservUser = $user->isShipservUser();
+
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Vassels', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+
+<div id="body" class="usage" style="width: 1174px;">
+	<div id="content" style="width: 924px;">
+		<h1 class="styled">Vessels Report</h1>
+		<form class='new' method="GET">
+			<br/>
+			<label for="name">
+				Search by manager or owner name:
+				<input type="text" id="name" name="name" value="<?= $this->name ?>"/>
+			</label><br/>
+			<label for="country">
+				Country
+				<select id="country" name="country">
+					<option value="">- All Countries -</option>
+					<?php foreach ($this->allCountries as $country): ?>
+						<option value="<?= $country ?>" <?php if ($country==$this->country) echo 'selected'; ?>>
+							<?= $country ?>
+						</option>
+					<?php endforeach; ?>
+				</select>
+			</label><br/>
+			<label for="types">
+				Search by type
+				<input
+					type="checkbox" name="types[]" value="owner"
+					<?= ($this->byOwner? 'checked' : '') ?>
+				/>Owners (<?= $this->ownerCount ?> vessels)
+				<input
+					type="checkbox" name="types[]" value="manager"
+					<?= ($this->byManager? 'checked' : 'none') ?>
+				/>Managers (<?= $this->managerCount ?> vessels)
+			</label>
+			<br/><input type="submit" value="Submit">
+			<p style="font-size: 11px; color: #2e3235; text-align: right; padding-bottom: 0;">(<?= $this->totalCount ?> vessels are matching)</p>
+		</form>
+		<div class="data">
+			<br/>
+			<?php if ($this->results): ?>
+				<table id="resultsTab" border="0" cellpadding="0" cellspacing="0">
+					<thead>
+						<tr>
+							<?php foreach ($this->results[0] as $field => $value): ?>
+								<th><?= $field ?></th>
+							<?php endforeach; ?>
+						</tr>
+					</thead>
+					<?php foreach ($this->results as $row): ?>
+						<tr>
+							<?php foreach ($row as $field => $value): ?>
+								<td><?= $value ?></td>
+							<?php endforeach; ?>
+						</tr>
+					<?php endforeach; ?>
+				</table>
+			<?php elseif (($this->name || $this->country) && !$this->results): ?>
+				no results found...
+			<?php else: ?>				
+			<?php endif; ?>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

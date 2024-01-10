@@ -1,0 +1,91 @@
+<?php
+$this->headLink()
+->appendStylesheet('/css/reset.css')
+->appendStylesheet('/css/default.css')
+->appendStylesheet('/css/uniform.webreporter.css')
+->appendStylesheet('/css/webreporter/reports/webreporter/webreporter.css');
+
+if ($this->isPagesUser === true) {
+    $isPagesUser = 1;
+} else {
+    $isPagesUser = 0;
+}
+
+$isShipMate= $this->isShipMate;
+
+?>
+        <div class="divider"></div>
+        <!--End Header--> 
+        <!--Breadcrumbs-->
+        <div id="breadcrumbs">
+            <span class="title">You are here: </span>
+            <ul>
+                <li>
+                    <a href="/">Home</a>
+                </li>
+                <li>
+                    <span></span>
+                    <a href="/reports/match-new">Reports</a>
+                </li>
+                <li>
+                    <span></span>
+                    <a href="/webreporter/index">WebReporter</a>
+                </li>
+                <li class="current">
+                    <span></span>
+                    Help
+                </li>
+            </ul>
+        </div>
+        <!--End Breadcrumbs-->
+        <!--Start Content--> 
+        <div id="body">
+            <div id="content">
+                <h1 class="styled">Help</h1>
+                <div class="innerContent">
+                    <h2>Technical Support</h2>
+                    <p class="margin">All support questions relating to TradeNet orders, requisitions, passwords etc. should be directed to our <strong><a href="/info/support/">Support Page</a></strong>.</p>
+                    <h2>General Enquiries</h2>
+                    <p class="margin">If you'd like more information on any of our services, or have a general business enquiry, please send us a message using <strong><a href="/info/support/">Contact Us</a></strong> form.</p>
+                    <h2>Sales Enquiries</h2>
+                    <p class="margin">Contact one of our regional sales offices:</p>
+                    <div class="contactBox">
+                        <p>
+                            <strong>Europe, Middle East, Africa</strong><br />
+                            Email: <strong><a href="mailto:support@shipserv.com">support@shipserv.com</a></strong><br>
+                            Phone: +44 203 051 0255<br><br>
+
+                            Support hours:<br>
+                            0830-1700 CET(DK)<br>
+                            0730-1600 GMT
+                        </p>
+                    </div>
+                    <div class="contactBox">
+                        <p>
+                            <strong>Asia & Pacific</strong><br />
+                            Email: <strong><a href="mailto:support@shipserv.com">support@shipserv.com</a></strong><br>
+                            Phone: +852 2501 9210<br><br>
+
+                            Support hours:<br>
+                            0900-1800 Hong Kong<br>
+                            0100-1000 GMT
+                        </p>
+                    </div>
+                    <div class="contactBox last">
+                        <p>
+                            <strong>Americas</strong><br />
+                            Email: <strong><a href="mailto:support@shipserv.com">support@shipserv.com</a></strong><br>
+                            Phone: +1 732 374 3863<br><br>
+
+                            Support hours:<br>
+                            0830-1700 US East Coast<br>
+                            1230-2100 GMT
+                        </p>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+        </div>
+        <!--End Content-->
+        <div class="spacer"></div>
+<div class="clear"></div>

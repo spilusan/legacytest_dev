@@ -1,0 +1,13 @@
+<tr class="" data-tnid="{{tnid}}">
+    <td class="text-left">{{formatIsoDateToUK submitted_date}}</td>
+    <td class="text-left text-nowrap">{{po_ref}}</td>
+    <td class="text-left text-clip">{{formatTitleCase subject}}</td>
+    <td class="text-center">{{byb_tnid}}</td>
+    <td class="text-left">{{byb_name}}</td>
+    <td class="text-center">{{imo}}</td>
+    <td class="text-left text-clip">{{formatTitleCase ship}}</td>
+    <td class="text-right">${{formatCurrency po_value 2}}</td>
+    <td class="text-center btn-cell">
+        <button data-url="{{view_po_url}}" target="po_int_ref_no" class="view-po btn blue" {{#unless view_po_url}}disabled{{/unless}}>View PO</a>
+    </td>
+</tr>

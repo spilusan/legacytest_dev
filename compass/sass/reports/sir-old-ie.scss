@@ -1,0 +1,15 @@
+/*
+Document   : sir-old-ie.scss
+Created on : Jan 12, 2015
+Author     : Attila O
+CSS for old IE 
+*/
+
+.custHalf {
+	.rotatedColumn{
+		span { 
+		 	filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=1); 
+		 	left: 6px !important;
+		}
+	}
+}

@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Supplier Insight Report</title>
+		<style type="text/css">
+		
+			#outlook a { padding:0; } /* Force Outlook to provide a "view in browser" button. */
+			body { width:100% !important; } /* Force Hotmail to display emails at full width */
+			body { -webkit-text-size-adjust:none; } /* Prevent Webkit platforms from changing default text sizes. */		
+		
+			/* Reset Styles */
+			body { margin:0; padding:0; }
+			img { border:none; font-size:14px; font-weight:bold; height:auto; line-height:100%; outline:none; text-decoration:none; text-transform:capitalize; }
+			#container { margin:0; padding:0; width:636px !important; }
+			/*-*/
+		
+			body, #container { background-color: #f5f7fa; color: #2e3235; font-size: 12px; font-family: Arial, sans-serif; font-weight: normal; }
+			p, h1, h2, div, td { font-family: Arial, sans-serif; font-weight: normal; padding: 0; margin: 0; }
+			table { margin: 0; border: 0; padding: 0; }
+		
+			a { text-decoration: none; }
+		
+			h1.dear { font-size: 17px; font-weight: bold; color: #13b5ea; }
+			h2 { font-size: 16px; font-weight: bold; color: #2e3235; }
+			p.intro { font-size: 15px; margin-bottom: 20px; line-height: 1.1em; }
+			ul.points, ul.points li { /*list-style-position: inside;*/ margin: 0; text-align: left; }
+			ul.points { margin-top: 20px; margin-bottom: 20px; }
+			ul.points li { margin-bottom: 12px; padding: 2px; }
+		
+			div.dotted { border-bottom: 1px dotted #333333; height: 1px; width: 358px; margin: 20px auto; }
+		</style>
+
+		<!--[if gte mso 9]>
+		<style type="text/css">
+			ul.points { margin-left: 5px; }
+			ul.points li { padding: 0; margin-left: 14px; }
+		</style>
+		<![endif]-->
+
+	</head>
+
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="#f2f2f2">
+		<center>
+			<table id="container" border="0" cellpadding="0" cellspacing="0" width="636" bgcolor="#f2f2f2">
+				
+				<tr height="30">
+					<td>&nbsp;</td>
+				</tr>
+				
+				<tr valign="middle">
+					<td height="18">
+						<h1 class="dear">Dear <?= trim($this->supplierName) ?>,</h1>
+					</td>
+				</tr>
+				
+				<tr height="15" style="height:15px">
+					<td>&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td>
+						<?php /* var_dump( $this->isSalesforce ); echo $this->mode; */ ?>
+						<?php 
+							// if it's a salesforce user, use mockup data
+							if( $this->isSalesforce ){
+								$this->statistic->targetedSearch = 12390;
+								$this->statistic->profileView = 319;
+								$this->statistic->contactView = 79;
+								$this->statistic->pagesEnquiry = 34;
+							}
+						?>
+						<h2 style="margin-bottom:20px">TAKE A SHIPSERV Premium Profile FOR THREE MONTHS</h2>
+						
+						<?php if( $this->mode == "pages_user_accepting_enquiries" ){?>
+							<p class="intro">To mark the launch of our brand new Supplier Insight Reporting tool, we are giving you the EXCLUSIVE opportunity to take a THREE month Premium Profile to ShipServ Pages for the special price of only $295.</p>
+	
+							<p class="intro">As you can see from the snapshot of your Insight Report below, you are already receiving enquiries through your basic listing on ShipServ Pages, but with a new Premium Profile you will jump ahead of the pack and get even more contact views and genuine business enquiries.</p>
+							
+							<p class="intro">What's more, your purchase is 100% measurable in real time thanks to the new Supplier Insight Report, so you can see instantly what you are getting from your $295 investment.</p>
+	
+							<p class="intro">To get full access to your NEW SUPPLIER INSIGHT REPORT click <a href="<?=$this->url;?>">here</a> and you will be logged in automatically.</p>
+	
+							<p class="intro">Don't forget, ShipServ Pages also has a team of dedicated product specialists that will help you to optimise your listing ensuring you get in front of over 50,000 maritime buyers a week searching for the products and services that you provide.</p>
+	
+							<p class="intro">This offer will only be available till the end of March, so don't miss out. Sign up for a Premium Profile today and  start measuring instantly.</p>
+						<?php } else if( $this->mode == "pages_user_zero_enquiries" ){?>
+							<p class="intro">To mark the launch of our brand new Supplier Insight Reporting tool,  we are giving you the EXCLUSIVE opportunity to take a THREE month Premium Profile to ShipServ Pages for the special price of only $295.</p>
+							
+							<p class="intro">As you can see from the snapshot of your current Supplier Insight Report below, you haven't received any enquiries over the last twelve months, but a Premium Profile can change this immediately as it enables you to jump ahead of the pack and makes you more visible in relevant searches.</p>
+							
+							<p class="intro">What's more, your purchase is 100% measurable in real time thanks to the new Supplier Insight Report, so you can see instantly what you are getting from your $295 investment.</p>
+							
+							<p class="intro">To get full access to your NEW SUPPLIER INSIGHT REPORT click <a href="<?=$this->url;?>">here</a> and you will be logged in automatically.</p>
+							
+							<p class="intro">Don't forget, ShipServ Pages also has a team of dedicated product specialists that will help you to optimise your listing ensuring you get in front of over 50,000 maritime buyers a week searching for the products and services that you provide.</p>
+							
+							<p class="intro">This offer will only be available till the end of March, so don't miss out. Sign up for a Premium Profile today and  start measuring instantly.</p>
+						<?php } else if( $this->mode == "salesforce_user_accepting_enquiries" ){?>
+							<p class="intro">To mark the launch of our brand new Supplier Insight Reporting tool, we are giving you the EXCLUSIVE opportunity to take a THREE month Premium Profile to ShipServ Pages for the special price of only $295.</p>
+							
+							<p class="intro">Our example below shows the look and feel of the new report, but to get full access to your report visit <?=$this->url;?>. If you are new to ShipServ Pages you will also need to <a href="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/user/register-login/redirectUrl/reports#reg">Register</a> and select your company to get approval from your Administrator.</p>
+							
+							<p class="intro">As you will see from your Supplier Insight Report, you are already receiving enquiries through your basic listing on ShipServ Pages, but with a new Premium Profile you will jump ahead of the pack and get even more genuine business enquiries.</p>
+							
+							<p class="intro">What's more, your purchase is 100% measurable in real time thanks to the new Supplier Insight Report, so you can see instantly what you are getting from your $295 investment.</p>
+							
+							<p class="intro">Don't forget, ShipServ Pages also has a team of dedicated product specialists that will help you to optimise your listing ensuring you get in front of over 50,000 maritime buyers a week searching for the products and services that you provide.</p>
+							
+							<p class="intro">This offer will only be available till the end of March, so don't miss out. Sign up for a Premium Profile today and  start measuring instantly.</p>
+						<?php } else if( $this->mode == "salesforce_user_zero_enquiries" ){?>
+							<p class="intro">To mark the launch of our brand new Supplier Insight Reporting tool,  we are giving you the EXCLUSIVE opportunity to take a THREE month Premium Profile to ShipServ Pages for the special price of only $295.
+							
+							<p class="intro">Our example below shows the look and feel of the new report, but to get full access to your report visit <?=$this->url;?>. If you are new to ShipServ Pages you will also need to <a href="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/user/register-login/redirectUrl/reports#reg">Register</a> and select your company to get approval from your Administrator.</p>
+							
+							<p class="intro">Based on our statistics,  you haven't received any enquiries over the last twelve months, but a Premium Profile can change this immediately as it enables you to jump ahead of the pack and makes you more visible in relevant searches.</p>
+							
+							<p class="intro">What's more, your purchase is 100% measurable in real time thanks to the new Supplier Insight Report, so you can see instantly what you are getting from your $295 investment.</p>
+							
+							<p class="intro">Don't forget, ShipServ Pages also has a team of dedicated product specialists that will help you to optimise your listing ensuring you get in front of over 50,000 maritime buyers a week searching for the products and services that you provide.</p>
+							
+							<p class="intro">This offer will only be available till the end of March, so don't miss out. Sign up for a Premium Profile today and  start measuring instantly.</p>
+						<?php }?>
+						
+						<div class="dotted">&nbsp;</div>
+						
+						<h2>Summary of your Supplier Insight Report</h2>
+						<p class="intro">Shows data for <?= trim($this->supplierName) ?> for a 12 month-period from <?= $this->statistic->endDate; ?></p>
+					</td>
+				</tr>
+				
+				<tr height="200" style="height:200px">
+					<td style="background: url(<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/images/email/sir_invite/funnel_bg.png) no-repeat top left;">
+					<!--[if gte mso 9]>
+							<v:image xmlns:v="urn:schemas-microsoft-com:vml" id="" style='behavior: url(#default#VML); display:inline-block; position:absolute; height:200px; width:636px; top:0; left:0; border:0; z-index:1;' src="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/images/email/sir_invite/funnel_bg.png"/>
+							<v:shape xmlns:v="urn:schemas-microsoft-com:vml" id="over_funnel" style='behavior: url(#default#VML); display:inline-block; position:absolute; height:200px; width:636px; vertical-align:top; top:0; left:0; border:0; z-index:2;'>
+					<![endif]-->
+
+					<table border="0" cellpadding="0" cellspacing="0" width="636">
+						<tr height="110" style="height: 110px;">
+							<td width="159">
+								<table border="0" cellpadding="0" cellspacing="0" width="159" style="text-align: center; ">
+									<tr height="50" style="height: 50px;">
+										<td width="159" style="width: 159px;">&nbsp;</td>
+									</tr>
+									<tr height="16" style="height: 16px;">
+										<td style="font-weight: bold;">Search Impressions</td>
+									</tr>
+									<tr height="15" style="height: 15px;">
+										<td>&nbsp;</td>
+									</tr>
+									<tr height="29" style="height: 29px;">
+										<td style="line-height: 29px; height: 29px;"><span style="color: #fff; background-color: #008b00; line-height: 29px; padding: 6px; font-weight: bold; height: 29px; font-size: 15px;">&nbsp;<?=$this->statistic->targetedSearch?>&nbsp;</span></td>
+									</tr>
+									
+								</table>
+							</td>
+							<td width="159">
+								<table border="0" cellpadding="0" cellspacing="0" width="159" style="text-align: center; ">
+									<tr height="50" style="height: 50px;">
+										<td width="159" style="width: 159px;">&nbsp;</td>
+									</tr>
+									<tr height="16" style="height: 16px;">
+										<td style="font-weight: bold;">Profile Views</td>
+									</tr>
+									<tr height="15" style="height: 15px;">
+										<td>&nbsp;</td>
+									</tr>
+									<tr height="29" style="height: 29px;">
+										<td style="line-height: 29px; height: 29px;"><span style="color: #fff; background-color: #fec008; line-height: 29px; padding: 6px; font-weight: bold; height: 29px; font-size: 15px;">&nbsp;<?=$this->statistic->profileView?>&nbsp;</span></td>
+									</tr>
+									
+								</table>
+								
+							</td>
+							<td width="159">
+								<table border="0" cellpadding="0" cellspacing="0" width="159" style="text-align: center; ">
+									<tr height="50" style="height: 50px;">
+										<td width="159" style="width: 159px;">&nbsp;</td>
+									</tr>
+									<tr height="16" style="height: 16px;">
+										<td style="font-weight: bold;">Contact Views</td>
+									</tr>
+									<tr height="15" style="height: 15px;">
+										<td>&nbsp;</td>
+									</tr>
+									<tr height="29" style="height: 29px;">
+										<td style="line-height: 29px; height: 29px;"><span style="color: #fff; background-color: #ff7f04; line-height: 29px; padding: 6px; font-weight: bold; height: 29px; font-size: 15px;">&nbsp;<?=$this->statistic->contactView?>&nbsp;</span></td>
+									</tr>
+									
+								</table>
+							</td>
+							<td width="159">
+								<table border="0" cellpadding="0" cellspacing="0" width="159" style="text-align: center; ">
+									<tr height="50" style="height: 50px;">
+										<td width="159" style="width: 159px;">&nbsp;</td>
+									</tr>
+									<tr height="16" style="height: 16px;">
+										<td style="font-weight: bold;">Pages Enquiries</td>
+									</tr>
+									<tr height="15" style="height: 15px;">
+										<td>&nbsp;</td>
+									</tr>
+									<tr height="29" style="height: 29px;">
+										<td style="line-height: 29px; height: 29px;"><span style="color: #fff; background-color: #e81e24; line-height: 29px; padding: 6px; font-weight: bold; height: 29px; font-size: 15px;">&nbsp;<?= $this->statistic->pagesEnquiry; ?>&nbsp;</span></td>
+									</tr>
+								</table>
+							</td>							
+						</tr>
+						<tr height="90" style="height: 90px;"><td>&nbsp;</td></tr>
+					</table>
+
+					<!--[if gte mso 9]>
+						</v:shape>
+			      	<![endif]-->
+					
+					</td>
+				</tr>
+
+				<tr style="vertical-align: top;">
+					<td>
+						<table border="0" cellpadding="0" cellspacing="0" width="636" style="text-align: center; ">
+							<tr>
+								<td width="301" style="background-color: #fff; text-align: top; width: 301px;">
+										<p style="line-height: 1.4em; font-weight: bold; margin: 20px;">If you log into Pages you can view your full Supplier Insight Report any time you wish. The full report has these additional features:</p>
+										<ul class="points" style="margin: 20px;">
+											<li>Continually up to date</li>
+											<li>Allows you to customise results</li>
+											<li>Timeline view</li>
+											<li>Detailed data on searches and categories</li>
+											<li>Direct contact with an account manager</li>
+											<li>Extensive Help sections and definitions</li>
+										</ul>
+								</td>
+								<td width="331" style="width: 331px;">
+									<img src="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/images/email/sir_invite/graphic_right.png" alt="report screen shot graphic" width="331" height="306" style="padding: 0; margin: 0;" />
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+
+				<tr>
+					<td style="background-color: #00386e; color: #fff; text-align: center;">
+						<div style="padding: 20px;">
+							<p style="font-size: 26px; font-weight: bold; color: #fff; ">To view the full report go to ShipServ Pages</p>
+							<p style="font-size: 15px; font-weight: normal; color: #eef;">
+								Clicking 'View full report' will take you directly to your Supplier Insight Report on Pages 
+								<?php if( $this->mode != 'salesforce_user_accepting_enquiries' && $this->mode != 'salesforce_user_zero_enquiries' ){?><br/> (it will automatically log you in to Pages)<?php }?>
+							</p>
+							<p>&nbsp;</p>
+							<table border="0" cellpadding="0" cellspacing="0" width="636">
+								<tr style="height: 35px; vertical-align: middle;" valign="middle">
+									<td height="35" width="158" style="width: 208px;">&nbsp;</td>
+									
+									<td width="125" valign="middle" style="background-color: #e81e24; width: 220px; font-size: 18px; font-weight: bold; color: #fff; vertical-align: middle; text-align:center;"><a href="<?=$this->url;?>" style="color:#fff; text-decoration: none; vertical-align: middle; text-align:center;">View full report</a></td>
+									
+									<td width="20" style="width: 20px;">&nbsp;</td>
+									
+									<td width="125" valign="middle" style="background-color: #e81e24; width: 220px; font-size: 18px; font-weight: bold; color: #fff; text-align:center; vertical-align: middle; "><a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/pages-for-suppliers/webstore" style="color:#fff; text-decoration: none; vertical-align: middle; text-align:center;">Buy now</a></td>
+									
+									<td width="158" style="width: 208px;">&nbsp;</td>
+								</tr>
+							</table>
+							<p>&nbsp;</p>
+						</div>
+					</td>
+				</tr>
+
+				<tr>
+					<td height="50">
+						<p style="font-size: 10px; margin-top: 20px; margin-bottom: 20px;">
+							Your Supplier Insight Report is confidential to your company. Those in your company who are registered on Pages will be able to view the Supplier Insight Report, only when they are logged into Pages. Whomever in your company has ShipServ Pages Administrator Status controls access rights. <?php if( $this->mode != 'salesforce_user_accepting_enquiries' && $this->mode != 'salesforce_user_zero_enquiries' ){?>This email has been sent to you because you are registered as a Pages user for this company.<?php }?> 
+							If you are unable to view the graphics with your results click <a href="<?= $this->url?>">here</a> to access your new Supplier Insight or click <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/pages-for-suppliers/webstore">here</a> to sign up to our special offer.
+						</p>
+					</td>
+				</tr>
+
+				<tr>
+					<td style="color: #333333; font-size: 12px; " align="center" style="text-align:center">
+						ShipServ &copy; 2012 | <a href="https://www.shipserv.com/info/terms-of-use">Terms &amp; Conditions</a> | <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/privacy-policy/">Privacy Policy</a>
+					</td>
+				</tr>
+
+				<tr>
+					<td height="40">&nbsp;</td>
+				</tr>
+				
+			</table>
+			
+			
+		</center>
+	</body>
+</html>

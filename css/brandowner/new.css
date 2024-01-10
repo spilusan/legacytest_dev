@@ -1,0 +1,47 @@
+form.main {
+	padding-top: 105px;
+}
+
+form.main label {
+	width: 14.5em;
+}
+
+form.main input.textfield {
+	width: 330px;
+}
+
+form.main {
+	background: #FFF url(/img/brandowner/header.png) 0 0 no-repeat;
+}
+
+ul.validation.errors {
+	margin-top: 30px;
+	margin-bottom: 30px;
+	padding-bottom: 12px;
+}
+
+form.main label.error {
+	margin-left: 19.5em;
+	width: auto;
+	text-align: left;
+}
+
+form.main {
+	padding-bottom: 30px;
+}
+
+h2.success {
+	color: #2C2;
+	margin-bottom: 15px;
+	margin-left: 194px;
+	font-size: 14px;
+}
+
+ul.auto-complete-list {
+	/* Override JS applied styles from legacy plugin - KB*/
+	margin-top: 5px !important;
+}
+label.acceptconfirm {
+	font-size: 15px;
+	line-height: 20px !important;
+}

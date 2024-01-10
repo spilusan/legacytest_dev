@@ -1,0 +1,585 @@
+<?php 
+	$quote = $this->quote;
+	$rfq = $this->quote->getRfq();
+	$lineItemChanges = $quote->getLineItemChanges();
+	
+	function lineItemHasBeenChanged($changes, $lineItemNo, $column)
+	{
+		foreach( $changes as $change )
+		{
+			if( $change['RQLC_LINE_ITEM_NO'] == $lineItemNo )
+			{
+				if( $column == '' )
+				{
+					if( $change['RQLC_LINE_ITEM_STATUS'] == 'MOD')
+					{
+						return '<td style="color: #ff7f04; text-align: center;">changed</td>';
+					}
+					else
+					{
+						return '<td>&nbsp;</td>';
+					}
+				}
+				else 
+				{
+					if( $change[ $column ] != null )
+					{
+						return 'style="background-color: #fff0c5;"';
+					}
+					else 
+					{
+						return '';
+					}
+				}
+			}
+		}
+	}
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>ShipServ Match</title>
+		<style type="text/css">
+		
+			#outlook a { padding:0; } /* Force Outlook to provide a "view in browser" button. */
+			body { width:100% !important; } /* Force Hotmail to display emails at full width */
+			body { -webkit-text-size-adjust:none; } /* Prevent Webkit platforms from changing default text sizes. */		
+		
+			/* Reset Styles */
+			body { margin:0; padding:0; color: #2e3235; }
+			img { border:none; font-size:14px; font-weight:bold; height:auto; line-height:100%; outline:none; text-decoration:none; text-transform:capitalize; }
+			#container { margin:0; padding:0; width:636px !important; }
+			/*-*/
+		
+			body, #container { background-color: #f5f7fa; color: #2e3235; font-size: 12px; font-family: Arial, sans-serif; font-weight: normal; }
+			p, h1, h2, div, td { font-family: Arial, sans-serif; font-weight: normal; padding: 0; margin: 0; }
+			table { margin: 0; border: 0; padding: 0; }
+		
+			a { text-decoration: none; }
+		
+			h1.dear { font-size: 17px; font-weight: bold; color: #13b5ea; }
+			h2 { font-size: 16px; font-weight: bold; color: #2e3235; }
+			p.intro { font-size: 15px; margin-bottom: 20px; line-height: 1.1em; }
+			ul.points, ul.points li { /*list-style-position: inside;*/ margin: 0; text-align: left; }
+			ul.points { margin-top: 20px; margin-bottom: 20px; }
+			ul.points li { margin-bottom: 12px; padding: 2px; }
+		
+			div.line { border-bottom: 1px solid #c4ccd7; height: 1px; width: 100%; }
+			div.dotted { border-bottom: 1px dotted #333333; height: 1px; width: 100%; margin: 10px 0; }
+			
+			#lineItems { border-collapse: collapse; font-size: 10px; }
+			#lineItems td { border: 1px solid #d6dce4; padding-top: 4px; padding-bottom: 4px; padding-left: 2px; padding-right: 2px; }
+			#lineItems th { border: 1px solid #13b5ea; }
+		</style>
+
+		<!--[if gte mso 9]>
+		<style type="text/css">
+			ul.points { margin-left: 5px; }
+			ul.points li { padding: 0; margin-left: 14px; }
+		</style>
+		<![endif]-->
+
+	</head>
+
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="#f2f2f2">
+		<center>
+			<table id="container" border="0" cellpadding="0" cellspacing="0" width="636" bgcolor="#f5f7fa">
+				<!-- Additional seller bits-->
+				<tr>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>
+						<table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#f5f7fa">
+							<tr>
+								<td style="font-size: 14px; color: #000; padding-right: 20px;" rowspan="2">
+									<p style="margin-bottom: 13px;">We confirm that we have received your recent quote and we’ve already forwarded it to Golden Gate Ltd – see below to view the email we sent. They will be reviewing your quote and the information in your Supplier Profile on Pages.</p>
+								
+									<p style="color: #e81e24; margin-bottom: 13px;">As your Profile Complete Score is only 21% we recommend you edit and add to it as a matter of urgency.</p>
+									
+									<p style="font-weight:bold; color: #13b5ea; margin-bottom: 13px;">There are two benefits to doing this:</p>
+
+									<ul style="margin-bottom: 13px;">
+										<li>You’ll give this buyer more information on which to evaluate this quote, and </li>
+										<li>It will enable ShipServ Match to send you more, and better, RFQs.</li>
+									</ul>
+								
+									<p style="margin-bottom: 13px;">Kind regards<br/>ShipServ Match Team</p>
+								</td>
+							
+								<td height="164" width="264" style="border: 2px solid #d6dce4; background: #ffffff; font-size: 12px; padding: 10px;" valign="top">
+									<p style="font-size: 16px; margin-bottom: 20px;">Profile Complete Score</p>
+									<p style="color: #e81e24; margin-bottom: 12px; ">We recommend urgent action to add to your ShipServ Profile. </p>
+									<p>To view your current Profile <a href="#">click here</a></p>
+									<table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#eef1f4" style="border: 1px solid #d6dce3; font-size: 1px; background-color: #eef1f4; margin-top: 10px; margin-bottom: 10px;">
+										<tr>
+											<td width="20%" height="17" style="background-color: #f13930;">&nbsp;</td>
+											<td width="80%">&nbsp;</td>
+										</tr>
+									</table>
+									<p><a href="#"><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/edit_company_profile.png" alt="Edit company profile"></a></p>
+								</td>
+							</tr>	
+							<tr>
+								<td>&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				
+				<tr>
+					<td></td>
+				</tr>
+				
+				<tr>
+					<td>
+						<div class="dotted">&nbsp;</div>
+						<p style="font-weight:bold;">ShipServ Match sent this email to Golden Gate Ltd on 23/04/12 at 13:59 PM:</p>
+						<p>&nbsp;</p>
+					</td>
+				</tr>
+				
+				<!-- End seller -->
+				
+				<tr>					
+						<tr><td style="background-color: #13b5ea; padding-left: 15px; padding-top: 10px; padding-bottom: 10px; color: #ffffff; font-size: 15px; font-weight: bold;">Quote summary</td></tr>
+						
+						<tr><td>&nbsp;</td></tr>
+						
+						<tr>
+							<td>
+								<table border="0" cellpadding="0" cellspacing="0" width="636" bgcolor="#f5f7fa" style="font-size: 14px;">
+									<tr>
+										<td width="175" style="background-color: #ffffff; border: 1px solid #d6dce4; padding: 10px; padding-top: 13px; padding-bottom: 13px;">RFQ ref: <span style="color: #13b5e7; font-weight: bold;">&nbsp;<?= $quote->qotRfqInternalRefNo?></span></td>
+										<td width="3" style="font-size: 1px;">&nbsp;</td>
+										<td width="260" style="background-color: #ffffff; border: 1px solid #d6dce4; padding: 10px; padding-top: 13px; padding-bottom: 13px; ">Vessel name: <span style="color: #13b5e7; font-weight: bold;">&nbsp;<?= $rfq->rfqVesselName?></span></td>
+										<td width="3" style="font-size: 1px;">&nbsp;</td>
+										<td width="195" style="background-color: #ffffff; border: 1px solid #d6dce4; padding: 10px; padding-top: 13px; padding-bottom: 13px; ">Total price: <span style="color: #13b5e7; font-weight: bold;">&nbsp;$<?= $quote->qotTotalCost?></span></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						
+						<tr><td style="font-size:1px; height: 5px;">&nbsp;</td></tr>
+						
+						<tr>
+							<td>
+								<table border="0" cellpadding="0" cellspacing="0" width="636" bgcolor="#f5f7fa">
+									<tr>
+										<td width="316" style="background-color: #ffffff; border: 1px solid #d6dce4; padding: 10px; padding-top: 13px; padding-bottom: 13px;">
+											<table border="0" cellpadding="0" cellspacing="0" width="100%">
+												<tr>
+													<td style="font-weight: bold;">Requested delivery time:</td>
+													<td style="color: #13b5e7; font-weight: bold; text-align: right;"><?= ($rfq->rfqDateTime!=null) ? $rfq->rfqDateTime->format() : 'N/A'?></td>
+												</tr>
+												<tr>
+													<td style="font-weight: bold;">Supplier delivery time:</td>
+													<td style="color: #13b5e7; font-weight: bold; text-align: right;"><?= ($quote->qotDeliveryLeadTime!=null) ? $quote->qotDeliveryLeadTime : 'N/A'?></td>
+												</tr>
+											</table>
+										</td>
+										<td width="4" style="font-size: 1px;">&nbsp;</td>
+										<td width="316" style="background-color: #ffffff; border: 1px solid #d6dce4; padding: 10px; padding-top: 13px; padding-bottom: 13px; vertical-align: middle;"><strong>Delivery port:</strong> <span style="color: #13b5e7; font-weight: bold;">&nbsp;Copenhagen, DK</span></td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+
+
+						<tr><td height="20" style="height: 20px;">&nbsp;</td></tr>
+
+						<!-- ------------------- Supplier Details ------------------------ -->
+
+
+						<tr><td style="background-color: #13b5ea; padding-left: 15px; padding-top: 10px; padding-bottom: 10px; color: #ffffff; font-size: 15px; font-weight: bold;">Supplier details</td></tr>
+						
+						<tr><td>&nbsp;</td></tr>
+
+						<tr>
+							<td style="font-size: 14px; color: #00386e; padding-bottom: 10px; font-weight: bold;"><?= $quote->getSupplier()->name ?> 
+							<?php 
+								if ($quote->getSupplier()->smartSupplier)
+								{
+									?><span style="color: #13b5ea">(Smart Supplier)</span><?php
+								}
+			
+								if ($quote->getSupplier()->expertSupplier)
+								{
+									?><span style="color: #13b5ea">(Expert Supplier)</span><?php
+								}
+							?>
+							<br />
+							<a href="<?=$quote->getSupplier()->getUrl()?>" title="View profile on ShipServ Pages"><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/viewprofile.png" alt="View profile on ShipServ Pages" width="199" height="20" style="margin-top: 5px; margin-bottom: 3px;"></a></div>
+							</td>
+						</tr>
+
+						<tr><td style="font-size:1px; height: 3px;">&nbsp;</td></tr>
+
+						<tr><!-- Traderank start-->
+							<td style="background-color: #caedf9; padding-left: 2px; padding-right: 7px; padding-top: 10px; padding-bottom: 10px;">
+								<table border="0" cellpadding="0" cellspacing="0" width="100%">
+									<tr>
+										<td width="146" height="100%" style="height:100%; position: relative;">
+											<table border="0" cellpadding="0" cellspacing="0" width="100%" valign="middle">
+												<tr>
+													<td width="146"><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/traderank1.png" alt="TradeRank"></td>
+													
+												</tr>
+												<tr>
+													<td style="text-align: left;">
+														<?php 
+															$score = $quote->getSupplier()->tradeRank;
+															$stars = round($score/20 * 5,1);
+															for($i=1; $i<=floor($stars); $i++)
+															{
+																?><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/1tr.png" alt="3.5/5" style="float: left;"><?php 
+															}
+														?>
+														<?if( ($stars - floor($stars) >= 0.4) == true ){?><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/halftr.png" style="float: left;"><?}?>
+														<?php 
+															for($i=1; $i<=5-ceil($stars); $i++)
+															{
+																?><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/0tr.png" style="float: left;"><?php 
+															}
+														?>
+														
+													</td>
+												</tr>
+												
+												<tr>
+													<td style="text-align: center; padding-top: 20px;"> <a href="#" style="color: #005aad; font-size: 11px; font-weight: bold;">What is TradeRank?</a></td>
+												</tr>
+												
+											</table>
+										</td>
+										<td width="14" style="border-left: 2px solid #71cae8; font-size: 1px;">&nbsp;</td>
+										<td>
+								
+											<p style="font-weight: bold; font-size: 14px; line-height: 22px;">Reviews:</p>
+											<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ffffff; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; border: 1px solid #d6dce4; margin-bottom: 5px; ">
+												<tr>
+													<td width="189" style="border-right: 1px dotted #333333; padding-left: 10px;">
+														<p style="color: #58a32d; vertical-align: middle; line-height: 16px;"><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/positive.png" alt="positive" width="18" height="16"> <?php echo $this->reviews["countPositive"]?> positive review<?php if ($this->reviews["countPositive"]!=1) echo "s";?></p>
+														<p style="color: #939ba1; vertical-align: middle; line-height: 16px;"><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/neutral.png" alt="neutral" width="18" height="16"> <?php echo $this->reviews["countNeutral"]?> neutral review<?php if ($this->reviews["countNeutral"]!=1) echo "s";?></p>
+														<p style="color: #e81e24; vertical-align: middle; line-height: 16px;"><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/negative.png" alt="negative" width="18" height="16"> <?php echo $this->reviews["countNegative"]?> negative review<?php if ($this->reviews["countNegative"]!=1) echo "s";?></p>
+													</td>
+													<td width="253" style="padding-left: 10px;">
+														<table border="0" cellpadding="0" cellspacing="0" width="100%">
+															<tr>
+																<td>Delivered items as described:</td>
+																<td width="75" stlye="padding-left: 25px; text-align: right;">
+																	<?if($this->reviews["sumIAD"] != 0 && $this->reviews["countIAD"] != 0 ){?>
+																	<img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/<?= round($this->reviews["sumIAD"]/$this->reviews["countIAD"],0)?>stars.png">
+																	<?}else{?>
+																	No rating yet
+																	<?}?>
+																</td>
+															</tr>
+															<tr><td colspan="2" height="2" style="height: 2px; font-size:1px;">&nbsp;</td></tr>
+															<tr>
+																<td>On-time delivery:</td>
+																<td width="75" stlye="padding-left: 25px; text-align: right;">
+																	<?if($this->reviews["sumDOT"] != 0 && $this->reviews["countDOT"] != 0 ){?>
+																	<img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/<?= round($this->reviews["sumDOT"]/$this->reviews["countDOT"],0)?>stars.png">
+																	<?}else{?>
+																	No rating yet
+																	<?}?>
+																</td>
+															</tr>
+															<tr><td colspan="2" height="2" style="height: 2px; font-size:1px;">&nbsp;</td></tr>
+															<tr>
+																<td>Customer service:</td>
+																<td width="75" stlye="padding-left: 25px; text-align: right;">
+																	<?if($this->reviews["sumCS"] != 0 && $this->reviews["countCS"] != 0 ){?>
+																	<img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/<?= round($this->reviews["sumCS"]/$this->reviews["countCS"],0)?>stars.png">
+																	<?}else{?>
+																	No rating yet
+																	<?}?>
+																</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
+											</table>
+								
+											<p style="font-weight: bold; font-size: 14px; line-height: 22px;">Trading Performance:</p>
+											<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ffffff; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; border: 1px solid #d6dce4; margin-bottom: 5px;">
+												<tr>
+													<td style="padding-left: 10px;">
+															<p style="margin-bottom: 10px; font-weight: bold; font-size: 13px;"><span style="color: #e52929;"><?= lg_count($this->endorsements) . ' buyer' . ((lg_count($this->endorsements)>1)?"s":"") ?></span> (with <span style="color: #e52929;"><?= $quote->getSupplier()->getTotalTransactionInYear(5)?> transactions</span>) have traded with this Supplier in the last 5 years on TradeNet, including:</p> 
+															<p style="margin-bottom: 10px;">
+																<?php foreach( (array) $this->endorsements as $e ){$endorsee[] = $e['BYO_NAME']; } if(lg_count($e)) echo implode(', ', $endorsee);?>
+															</p>
+															<a href="<?= $quote->getSupplier()->getUrl()?>#reviews" title="View all buyers" style="color: #005aad; font-weight: bold;">View all buyers</a>
+												
+													</td>
+												</tr>
+											</table>
+											<?php 
+												$authorised = $notAuthorised = array();
+												foreach($quote->getSupplier()->brands as $brand )
+												{
+													if( $brand['isAuthorised'] == 'Y' )
+													{
+														if( $brand['authLevel'] != "LST" )
+														{
+															$authorised[ $brand['name'] ]['name'] = $brand['name']; 
+															$authorised[ $brand['name'] ]['brands'][] = Shipserv_BrandAuthorisation::$displayAuthNames[$brand['authLevel']];
+														}
+													}
+													else
+													{
+														if( $brand['authLevel'] != "LST" )
+														{
+															$notAuthorised[ $brand['name'] ]['name'] = $brand['name']; 
+															$notAuthorised[ $brand['name'] ]['brands'][] = Shipserv_BrandAuthorisation::$displayAuthNames[$brand['authLevel']];
+														}
+													}
+												}
+									
+											foreach( (array)$authorised as $b)
+											{
+												$a[] = '<strong>'.$b['name'] .'</strong> ('.implode(',', $b['brands']) .')';
+											}
+											foreach( (array)$notAuthorised as $b)
+											{
+												$c[] = '<strong>'.$b['name'] .'</strong> ('.implode(',', $b['brands']) .')';
+											}		
+											if( lg_count($c) > 0 || lg_count($a) > 0 )
+											{
+											?>
+											<p style="font-weight: bold; font-size: 14px; line-height: 22px;">Verification System:</p>
+											<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ffffff; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; border: 1px solid #d6dce4; ">
+												<tr>
+													<td style="padding-left: 10px;">
+														<table border="0" cellpadding="0" cellspacing="0" width="100%" style="vertical-align: top;" valign="top">
+															<?if( lg_count($a)>0 ){ ?>
+															<tr valign="top">
+																<td style="width: 150px; padding-bottom: 3px;"><strong>Verified as Agent for:</strong></td>
+																<td style="font-size: 11px;">
+																	<?= implode(", ", $a) ?>
+																</td>
+															</tr>
+															<?} if( lg_count($c)>0 ){?>
+															<tr valign="top">
+																<td><strong>Un-verified as Agent for:</strong></td>
+																<td style="font-size: 11px;" >
+																	<?= implode(", ", $c) ?>
+																</td>
+															</tr>
+															<?} ?>
+														</table>
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+								<?}?>
+							</td>
+						</tr>
+
+						<tr><td style="font-size:1px; height: 5px;">&nbsp;</td></tr>
+						
+						<tr><td>&nbsp;</td></tr>
+						
+						<!-- -------------------QUOTE DETAILS ------------------------ -->
+						
+						<tr><td style="background-color: #13b5ea; padding-left: 15px; padding-top: 10px; padding-bottom: 10px; color: #ffffff; font-size: 15px; font-weight: bold;">Quote details</td></tr>
+						<tr><td>&nbsp;</td></tr>
+						
+						<tr>
+							<td>
+								<table border="0" cellpadding="0" cellspacing="0" width="100%">
+									<tr>
+										<td width="50%" style="padding: 5px;" valign="top">
+											
+											<p><strong>Delivery port:</strong></p>
+											<p><?= ($rfq->getPort()!="") ? $rfq->getPort():"N/A"?></p>
+											<p>&nbsp;</p>
+											<p><strong>Delivery address:</strong></p>
+											<p><?= nl2br($rfq->rfqAddress)?></p>
+											<p>&nbsp;</p>
+											<div class="line">&nbsp;</div>
+											<p>&nbsp;</p>
+											<table border="0" cellpadding="0" cellspacing="0" width="100%">
+												<tr>
+													<td>RFQ Ref:</td>
+													<td><?= $rfq->rfqRefNo?></td>
+												</tr>
+												<tr>
+													<td>RFQ Date:</td>
+													<td><?= ($rfq->rfqDateTime!=null) ? $rfq->rfqDateTime->format():"N/A"?></td>
+												</tr>
+												<tr>
+													<td>Subject:</td>
+													<td><?= ($rfq->rfqSubject!="")?$rfq->rfqSubject:"N/A"?></td>
+												</tr>
+												<tr>
+													<td>Vessel:</td>
+													<td><?= ($rfq->rfqVesselName!="")?$rfq->rfqVesselName:"N/A"?></td>
+												</tr>
+												<tr>
+													<td>Port</td>
+													<td><?= ($rfq->getPort()!="")?$rfq->getPort():"N/A"?></td>
+													
+												</tr>
+												<tr>
+													<td>ETA/ETD:</td>
+													<td>
+														<?= ($rfq->rfqEstimatedArrivalTime) ? $rfq->rfqEstimatedArrivalTime->format():"--"?> / <?= ( $rfq->rfqEstimatedDepartureTime != null ) ? $rfq->rfqEstimatedDepartureTime->format() : "--"?>
+													</td>
+												</tr>
+											</table>
+											
+										</td>
+										<td width="50%" style="padding: 5px;" valign="top">
+											<p><strong>Requested delivery time:</strong></p>
+											<p><?= ($rfq->rfqDateTime!=null) ? $rfq->rfqDateTime->format() : 'N/A'?></p>
+											<p>&nbsp;</p>
+											<p><strong>Supplier delivery time:</strong></p>
+											<p><?= ($quote->qotDeliveryLeadTime!=null) ? $quote->qotDeliveryLeadTime : 'N/A'?></p>
+											<p>&nbsp;</p>
+											<p><strong>Order by:</strong></p>
+											<p><?= ($quote->qotOnTimeDeliveryTill!=null) ? $quote->qotOnTimeDeliveryTill->format() : 'N/A'?></p>
+											<p>&nbsp;</p>
+											<div class="line">&nbsp;</div>
+											<p>&nbsp;</p>
+											<table border="0" cellpadding="0" cellspacing="0" width="100%" valign="top">
+												<tr>
+													<td>Quote ref:</td>
+													<td><?= $quote->qotRefNo?></td>
+												</tr>
+												<tr>
+													<td>Quote date:</td>
+													<td><?= ($quote->qotSubmittedDate!=null) ? $quote->qotSubmittedDate->format() : 'N/A'?></td>
+												</tr>
+												<tr>
+													<td>Prices good until:</td>
+													<td><?= ($quote->qotExpiryDate!=null) ? $quote->qotExpiryDate->format() : 'N/A'?></td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+						
+						<tr><td>&nbsp;</td></tr>
+						
+						<!-- ------------------- Line Items ------------------------ -->
+						
+						<tr><td style="background-color: #ffffff; border: 1px solid #d6dce4; border-bottom: 3px solid #13b5ea; padding-left: 15px; padding-top: 10px; padding-bottom: 10px; font-size: 15px; font-weight: bold;">Line items (Currency: <?= $quote->qotCurrency?>)</td></tr>
+						<tr><td>&nbsp;</td></tr>
+						
+						<tr>
+							<td>
+								<table border="0" cellpadding="0" cellspacing="0" width="100%" valign="top" id="lineItems">
+									<tr style="background-color: #caedf9;">
+										<th style="padding: 9px;">#</th>
+										<th style="padding: 9px;">Qty</th>
+										<th style="padding: 9px;">Unit</th>
+										<th style="padding: 9px;">IdType&nbsp;/&nbsp;IdCode</th>
+										<th style="padding: 9px;">Description</th>
+										<th style="padding: 9px;">Unit&nbsp;price</th>
+										<th style="padding: 9px;">%</th>
+										<th style="padding: 9px;">Total&nbsp;price</th>
+										<th style="padding: 9px;">Status</th>
+									</tr>
+							
+									<?php 
+									foreach( $quote->getLineItem() as $line )
+									{ 
+										$no++;
+									?>
+									<tr style="background-color: #ffffff;">
+										<td><?= $line['QLI_LINE_ITEM_NUMBER'];?></td>
+										<td <?= lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_QUANTITY_CHANGE')?>><?= $line['QLI_QUANTITY']?></td>
+										<td <?= lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_UNIT_CHANGE')?>><?= $line['QLI_UNIT']?></td>
+										<td <?= lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_ID_TYPE_AND_CODE_CHANGE')?>><?= $line['QLI_ID_TYPE'] . " / " . $line['QLI_ID_CODE']?></td>
+										<td <?= lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_PRODUCT_DESC_CHANGE')?>><?= $line['QLI_DESC']?> <?= ($line['QLI_COMMENTS']!="") ? "<br /><div style=\"background-color:#fdd45c;\">Supplier comments: " . $line['QLI_COMMENTS']."</div>":""; ?></td>
+										<td align="right"><?= number_format($line['QLI_UNIT_COST'],2)?></td>
+										<td><?= $line['QLI_DISCOUNT_PERCENTAGE']?></td>
+										<td align="right"><?= number_format($line['QLI_TOTAL_LINE_ITEM_COST'],2)?></td>
+										<?= lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], '')?>
+									</tr>									
+									<?php }?>
+									<!-- summary -->
+							
+									<tr>
+										<td style="border: 0; font-size: 13px; text-align: right; padding-right: 9px;" colspan="7">Line Item Total:</td>
+										<td style="background-color: #e5f8d8; text-align: right;"><?= number_format($quote->qotSubtotal,2)?></td>
+										<td style="border: 0;">&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="border: 0; font-size: 13px; text-align: right; padding-right: 9px;" colspan="7">Discount (<?= $quote->qotDiscountPercentage?>%):</td>
+										<td style="background-color: #e5f8d8; text-align: right;"><?= number_format($quote->qotDiscountPercentage * $quote->qotSubtotal/100,2)?></td>
+										<td style="border: 0;">&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="border: 0; font-size: 13px; text-align: right; padding-right: 9px;" colspan="7">Discounted total:</td>
+										<td style="background-color: #e5f8d8; text-align: right;"><?= number_format($quote->qotSubtotal - ( $quote->qotDiscountPercentage * $quote->qotSubtotal/100 ),2 )?></td>
+										<td style="border: 0;">&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="border: 0; font-size: 13px; text-align: right; padding-right: 9px;" colspan="7">Freight:</td>
+										<td style="background-color: #e5f8d8; text-align: right;"><?= number_format($quote->qotShipping,2 )?></td>
+										<td style="border: 0;">&nbsp;</td>
+									</tr>
+									<tr>
+										<td style="border: 0; font-size: 13px; text-align: right; padding-right: 9px;" colspan="7"><strong>Total price (<?= $quote->qotCurrency?>):</strong></td>
+										<td style="background-color: #83cc4e; color: #ffffff; text-align: right;"><?= number_format($quote->qotTotalCost,2)?></td>
+										<td style="border: 0;">&nbsp;</td>
+									</tr>
+
+							
+								</table>
+							</td>
+						</tr>
+						
+						<tr><td>&nbsp;</td></tr>
+						
+						<!-- ------------------------------------------- -->
+						
+						<? if( $quote->qotComments != "" ){?>
+						<tr><td style="background-color: #ffffff; border: 1px solid #d6dce4; border-bottom: 3px solid #13b5ea; padding-left: 15px; padding-top: 10px; padding-bottom: 10px; font-size: 15px; font-weight: bold;">Supplier comments</td></tr>
+						<tr><td>&nbsp;</td></tr>
+						<tr>
+							<td>
+								<p><?= nl2br($quote->qotComments)?></p>
+							</td>
+						</tr>
+						<?php  } ?>
+					</td>
+					
+					<!-- --------------------  Footer ---------------------- -->
+					
+					<tr><td>&nbsp;</td></tr>
+					
+					<tr>
+						<td>
+							<table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-size: 11px; border-top: 1px dotted #d7dade; padding-top: 10px;">
+								<tr>
+									<td style="padding-right:4px;">ShipServ &copy; 2014<span style="color: #d7dade;">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="" style="color: #00386e;">Terms &amp; Conditions</a><span style="color: #d7dade;">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="" style="color: #00386e;">Privacy Policy</a></td>
+									<td style="text-align:right;"><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/logo_foot.png" alt="ShipServ"></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					
+					<tr><td>&nbsp;</td></tr>
+					
+				</tr>
+			</table>
+		</center>
+		<?php //var_dump( $quote );?>
+		<?php //var_dump( $lineItemChanges );?>
+		<?php //var_dump( $quote->getLineItem() );?>
+		<?php //var_dump( $rfq );?>
+		<?php //var_dump( $rfq->getBuyer() );?>
+		
+	</body>
+</html>
+
+

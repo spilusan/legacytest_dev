@@ -1,0 +1,167 @@
+/*
+Document   : store
+Created on : Jun 14, 2012, 3:22:00 PM
+Author     : gly
+Description: Webstore styles
+*/
+h1 {
+  text-align: center;
+}
+h1 span.a, h1 span.b {
+  font-size: 37px;
+  font-weight: bold;
+}
+h1 span.a {
+  color: #031d25;
+}
+h1 span.b {
+  color: #13b6ea;
+}
+h1 span.strap {
+  display: block;
+  margin-top: 13px;
+  color: #666666;
+  font-style: italic;
+  font-size: 20px;
+}
+
+div.content_wide {
+  padding: 5px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  behavior: url(/css/PIE.htc);
+}
+div.content_wide div.zz.header {
+  margin: 0;
+  margin-bottom: 20px;
+}
+div.content_wide .button {
+  margin-right: 5px;
+}
+
+div.checkout_btn.bottom {
+  float: right;
+  margin-right: 25px;
+  margin-bottom: 15px;
+}
+
+div.large p.description {
+  margin-bottom: 20px;
+}
+div.large p.description.first {
+  color: #000;
+}
+
+div.product {
+  margin: 20px;
+  border: 1px solid #eaeaea;
+  background-color: #f8f8f8;
+  overflow: auto;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  border-radius: 10px;
+  behavior: url(/css/PIE.htc);
+}
+div.product div.thumb {
+  width: 191px;
+  height: 153px;
+  float: left;
+  margin: 24px 24px 0px 24px;
+}
+div.product h2 {
+  color: #00478a;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 24px 24px 5px 24px;
+}
+div.product h3 {
+  color: #00478a;
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+div.product p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  color: #525c64;
+  margin: 0 0px;
+  float: right;
+  width: 657px;
+  line-height: 20px;
+  padding-right: 20px;
+}
+div.product div.button-set {
+  clear: both;
+  margin-left: 240px;
+}
+div.product div.button.blue {
+  margin-right: 10px;
+}
+div.product span.option {
+  margin-left: 24px;
+  font-weight: bold;
+  line-height: 40px;
+  color: #333;
+}
+div.product select.option {
+  height: 38px;
+  margin: 24px 0;
+}
+div.product div.tax {
+  font-size: 10px;
+  color: #525c64;
+}
+div.product span.red-text {
+  color: #e81e24;
+}
+div.product span.green-text {
+  color: #58a32d;
+}
+div.product span.old-price {
+  text-decoration: line-through;
+  font-weight: normal;
+}
+div.product.large form, div.product.large p {
+  margin-left: 239px;
+}
+div.product.large form {
+  margin-bottom: 20px;
+  margin-top: 5px;
+}
+
+div.introduction {
+  background-image: url("/images/store/img_message.jpg");
+  width: 769px;
+  height: 170px;
+  margin-left: 0px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 15px;
+  line-height: 18px;
+  color: #525c64;
+  overflow: auto;
+}
+div.introduction.contact {
+  font-weight: bold;
+  color: #13b5ea;
+}
+
+div.intro-text {
+  margin-top: 20px;
+  margin-left: 80px;
+  width: 650px;
+  line-height: 16px;
+}
+
+#tabbed_navigation ul.tabs li.tab.right.store {
+  background: #fff;
+  background-color: #fff;
+  -pie-background: #fff;
+}
+#tabbed_navigation ul.tabs li.tab.right.store span.title {
+  color: #525c64;
+  text-shadow: none;
+}

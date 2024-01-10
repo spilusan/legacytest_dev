@@ -1,0 +1,52 @@
+.content_body_new {
+  width: 460px;
+  float: right;
+  margin: 20px 20px 20px 0;
+}
+
+.content_wide_footer_cat {
+  height: 50px;
+}
+
+.content_wide_footer_cat {
+  .search_next_previous {
+    border-right: 1px solid #ccc;
+    width: auto;
+    float: left;
+
+    a {
+      display: block;
+      float: left;
+      margin: 0;
+      padding: 19px 10px;
+      font-size: 11px;
+
+      &.prev {
+        background: url(https://cdn1.shipserv.com/images/layout_v2/left_page_arrow.jpg) 10px 21px no-repeat;
+        padding-left: 20px;
+        border-left: none;
+      }
+
+      &.next {
+        background: url(https://cdn1.shipserv.com/images/layout_v2/right_page_arrow.jpg) 44px 21px no-repeat;
+        padding-right: 20px;
+      }
+    }
+
+    p {
+
+      &.prev {
+        border-left: none;
+        color: #666;
+        line-height: 52px;
+        padding: 0 20px;
+      }
+
+      &.next {
+        color: #666;
+        line-height: 52px;
+        padding: 0 20px;
+      }
+    }
+  }
+}

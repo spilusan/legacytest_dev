@@ -1,0 +1,30 @@
+/*
+Document   : partials/def/_content_sidebar.scss
+Created on : Aug 24, 2012, 4:00:43 PM
+Author     : gly
+Description: default styles for layout with content and sidebar
+*/
+
+#pagewidth {
+	width: 1105px;
+	margin: 0 auto;
+}
+
+#body {
+	margin: 0;
+	
+	&.left {
+		width: 750px;
+		float: left;
+	}
+}
+
+#sidebar {
+	position: relative;
+
+	&.right {
+		float: right;
+		width: 180px;
+		margin-left: 20px;
+	}
+}

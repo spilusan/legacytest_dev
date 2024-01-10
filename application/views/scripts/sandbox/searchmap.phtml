@@ -1,0 +1,28 @@
+<?php
+if ((int)Myshipserv_Config::getIni()->google->services->maps->display === 1) {
+    $this->headScript()->appendFile('/js/profile.js')
+                       ->appendFile('/js/jquery.urlparse.js')
+                       ->appendFile('/js/json2.js')
+                       ->appendFile('/js/jquery.jsoncookie.js')
+                       ->appendFile('/js/jquery.cookie.js')
+                       ->appendFile('/js/modules/backbone/lib/jquery.eventmap.js');
+    $this->headScript()->appendFile('https://maps.google.com/maps?file=api&v=2&key='.$this->googleMapsApiKey);
+
+    $this->headLink()->appendStylesheet('/css/map.css')."\n";
+?>
+
+<div id="map"></div>
+
+<div id="message" style="display: none;"></div>
+
+<script type="text/javascript">
+	<!--
+	$(document).ready(function(){
+		$('#map').eventMap({ showTrails: true,
+						     mapZoom: 3});
+	});
+	//-->
+</script>
+<?php
+}
+?>

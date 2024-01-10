@@ -1,0 +1,355 @@
+/*
+Document   : buttons
+Created on : Jun 13, 2012, 4:01:36 PM
+Author     : gly
+Description: Button styles
+*/
+
+/*added specific two-class selectors because I'm worried about conflicts with legacy stuff - KB */
+
+div.button {
+    &.large, &.normal, &.small, &.rounded, &.square { 
+        float: left; 
+        cursor: pointer; 
+        padding-left: 34px; 
+        padding-right: 7px; 
+        height: 31px; 
+        line-height: 31px; 
+        font-size: 12px; 
+        position: relative; 
+        font-weight: bold; 
+        color: #000; 
+        vertical-align: middle;
+        
+        &.disabled {
+            cursor: default;
+        }
+    }
+    
+    button, input {
+        background:none repeat scroll 0 0 transparent; 
+        border:0 none; 
+        font-family:inherit; 
+        font-size:inherit; 
+        font-weight:inherit; 
+        margin:0; 
+        overflow:visible; 
+        padding:0; 
+        position:relative; 
+        color: inherit; 
+        cursor: pointer;
+    }
+    
+    a {
+        background:none repeat scroll 0 0 transparent; 
+        border:0 none; 
+        font-family:inherit; 
+        font-size:inherit; 
+        font-weight:inherit; 
+        margin:0; 
+        overflow:visible; 
+        padding:0; 
+        position:relative; 
+        color: inherit; 
+        cursor: pointer;
+        position: relative !important;
+        display: inline;
+        
+        &:hover { 
+            text-decoration: none; 
+        }
+    }
+    
+    &.noicon {
+        padding-left: 7px;
+        
+        div.icon { 
+            background-image: none; 
+        }
+    }
+    
+    &.large { 
+        font-size: 18px; 
+        padding-right: 11px; 
+        padding-left: 38px; 
+        height: 38px; 
+        line-height: 38px; 
+        
+        button { 
+            font-size: 18px; 
+        }
+        
+        &.noicon { 
+            padding-left: 11px; 
+        }
+    }
+    
+    &.rounded { 
+        @include border-radius(6px); 
+        behavior: url(/css/PIE.htc);
+        
+        &.large { 
+            @include border-radius(7px);
+        }
+    }
+    
+    div.icon{ 
+        position: absolute; 
+        background-position: center; 
+        background-repeat: no-repeat; 
+        top: 0; 
+        left: 0; 
+        height: 100%; 
+        width: 30px; 
+    }
+    
+    &.logoright { 
+        padding-left: 11px; 
+        padding-right: 38px;
+        
+        div.icon { 
+            right: 0; 
+            left: auto;
+        }
+    }
+    
+    &.black { 
+        color: #FFF; 
+        border-top: 1px solid #394149; 
+        border: 1px solid #394149; 
+        border-bottom: 1px solid #394149; 
+        background: #525c64;
+        @include x-multiple-colored-gradient(#525c64, #293037);
+        -pie-background: linear-gradient(top,#525c64 0%,#293037 100%); 
+        behavior: url(/css/PIE.htc);
+    }
+    
+    &.green { 
+        color: #FFF; 
+        border: 1px solid #3b8026; 
+        background: #7aad14;
+        @include x-multiple-colored-gradient(#7aad14, #2e6d45); 
+        -pie-background: linear-gradient(top,#7aad14 0%,#2e6d45 100%); 
+        behavior: url(/css/PIE.htc); 
+    }
+    
+    &.red {
+        background: #dce7f4; /* Old browsers */
+        @include x-multiple-colored-gradient(#dce7f4 0%, #f54329 10%, #bf0000 100%); 
+        -pie-background: linear-gradient(top,  #dce7f4 0%,#f54329 10%,#bf0000 100%);
+        color: #FFF;   behavior: url(/css/PIE.htc); 
+    }
+    
+    &.orange { 
+        color: #FFF; 
+        border: 1px solid #fec0a7; 
+        background: #fec0a7;
+        @include x-multiple-colored-gradient(#fec0a7 0%,#f9673e 2%,#b1181a 100%); 
+        -pie-background: linear-gradient(top, #fec0a7 0%,#f9673e 2%,#b1181a 100%); 
+        behavior: url(/css/PIE.htc);  
+    }
+    
+    &.blue { 
+        color: #FFF; 
+        border: 1px solid #3b2680; 
+        background: #66bdf8;
+        @include x-multiple-colored-gradient(#66bdf8 0%,#0078ca 2%,#00579a 100%); 
+        -pie-background: linear-gradient(top, #66bdf8 0%,#0078ca 2%,#00579a 100%); 
+        behavior: url(/css/PIE.htc); 
+    }
+    
+    &.grey { 
+        color: #FFF; 
+        border: 1px solid #d3d3d3; 
+        background: #d3d3d3;
+        @include x-multiple-colored-gradient(#d3d3d3 0%,#c7c7c7 2%,#878787 100%); 
+        -pie-background: linear-gradient(top, #d3d3d3 0%,#c7c7c7 2%,#878787 100%); 
+        behavior: url(/css/PIE.htc); 
+    }
+    
+    &.black, &.green {
+        button {
+            color: #FFF; 
+        }
+    }
+    
+    &.add {
+        div.icon {
+            background-image: url('/images/icons/small/white/add.png');
+        }
+    }
+    
+    &.attach {
+        div.icon {
+            background-image: url('/images/icons/small/white/attach.png'); 
+        }
+    }
+    
+    &.send {
+        div.icon {
+            background-image: url('/images/icons/medium/white/tick.png');  
+        }
+    }
+    
+    &.continue {
+        div.icon {
+            background-image: url('/images/icons/small/white/arrow_right.png');  
+        }
+    }
+}
+
+/***Design Guideline 2012 Buttons***/
+
+/*General and sizes*/
+div.zz {
+    &.button { 
+        text-align: center; 
+        position: relative; 
+        float: left; 
+        font-weight: bold;
+        @include border-radius(6px);
+        border: 1px solid transparent;
+        border-color: #d3d3d3;
+        color: #fff; 
+        text-shadow:-1px -1px 1px rgba(0,0,0,0.28); 
+        -moz-text-shadow: -1px -1px 1px rgba(0,0,0,0.28); 
+        -webkit-text-shadow:-1px -1px 1px rgba(0,0,0,0.28);
+        behavior: url(/css/PIE.htc);
+        
+        button, a, input {
+            color: #fff; 
+            text-shadow:-1px -1px 1px rgba(0,0,0,0.28); 
+            -moz-text-shadow: -1px -1px 1px rgba(0,0,0,0.28); 
+            -webkit-text-shadow:-1px -1px 1px rgba(0,0,0,0.28);
+        }
+        
+        button, input {
+            background:none repeat scroll 0 0 transparent; 
+            border:0 none; 
+            font-family:inherit; 
+            font-size:inherit; 
+            font-weight:inherit; 
+            margin:0; 
+            overflow:visible; 
+            padding:0; 
+            position:relative; 
+            color: inherit; 
+            cursor: pointer;
+        }
+        
+        &.large {
+           height: 33px; 
+            line-height: 33px; 
+            padding-left: 30px; 
+            padding-right: 30px;
+            
+            button, input {
+                height: 33px; 
+                line-height: 33px;
+            }
+        }
+        
+        &.medium { 
+            height: 28px; 
+            line-height: 28px; 
+            padding-left: 20px; 
+            padding-right: 20px; 
+            font-size: 14px; 
+            
+            button, input {
+                height: 28px; 
+                line-height: 28px;
+            }
+        }
+        
+        &.small { 
+            height: 18px; 
+            line-height: 18px; 
+            padding-left: 10px; 
+            padding-right: 10px; 
+            font-size: 11px;
+            
+            button, input {
+                height: 18px; 
+                line-height: 18px;
+            }
+        }
+        
+        &.disabled {
+            cursor: default;
+            
+            background: #ffffff; 
+            @include x-multiple-colored-gradient(#ffffff 0%,#f5f7fa 100%); 
+            -pie-background: linear-gradient(top, #ffffff 0%,#f5f7fa 100%);
+            border-color: #e9edf1;
+            color: #e9edf1; 
+            text-shadow: none; 
+            -moz-text-shadow: none; 
+            -webkit-text-shadow: none; 
+            
+            input, a, button {
+                cursor: default;
+                color: #e9edf1; 
+                text-shadow: none; 
+                -moz-text-shadow: none; 
+                -webkit-text-shadow: none; 
+            }
+        }
+        
+        &.red { 
+            background: #ff765b;
+            @include x-multiple-colored-gradient(#ff765b 0%,#ffab9b 3%,#fe5c3f 6%,#e92125 98%,#cb1b1f 100%); 
+            -pie-background: linear-gradient(top, #ff765b 0%,#ffab9b 3%,#fe5c3f 6%,#e92125 98%,#cb1b1f 100%);
+            border-color: #E92125; 
+        }
+        
+        &.green { 
+            background: #98d56c;
+            @include x-multiple-colored-gradient(#98d56c 0%,#c9e9b3 3%,#7fca4b 6%,#048803 100%); 
+            -pie-background: linear-gradient(top, #98d56c 0%,#c9e9b3 3%,#7fca4b 6%,#048803 100%);
+            border-color: #85b95f;
+        }
+        
+        &.lblue { 
+            background: #3bc1ee;
+            @include x-multiple-colored-gradient(#3bc1ee 0%,#9adff6 3%,#12b2e9 6%,#047dd5 100%); 
+            -pie-background: linear-gradient(top, #3bc1ee 0%,#9adff6 3%,#12b2e9 6%,#047dd5 100%);
+            border-color: #0277cd;
+        }
+        
+        &.dblue { 
+            background: #92b8dc;
+            @include x-multiple-colored-gradient(#92b8dc 0%,#0059ab 2%,#00376c 100%); 
+            -pie-background: linear-gradient(top, #92b8dc 0%,#0059ab 2%,#00376c 100%);
+            border-color: #2b76bb;
+        }
+
+        &.dbluePushed { 
+            background: #0059ab;
+            @include x-multiple-colored-gradient(#0059ab 0%,#00376c 2%,#92b8dc 98%, #0059ab 100%); 
+            -pie-background: linear-gradient(top, #0059ab 0%, #00376c 2%,#92b8dc 98%, #0059ab 100%);
+            border-color: #0059ab;
+            a {
+                color: #d9d9d9;
+            }
+        }
+        
+        &.white { 
+            background: #ffffff;
+            @include x-multiple-colored-gradient(#ffffff 0%,#f5f7fa 100%); 
+            -pie-background: linear-gradient(top, #ffffff 0%,#f5f7fa 100%); 
+            border-color: #d6dce4;
+            color: #13b5ea; 
+            text-shadow: none; 
+            -moz-text-shadow: none; 
+            -webkit-text-shadow: none;
+            
+            a, input, button {
+                color: #13b5ea; 
+                text-shadow: none; 
+                -moz-text-shadow: none; 
+                -webkit-text-shadow: none;
+            }
+        }
+    }
+}

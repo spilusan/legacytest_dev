@@ -1,0 +1,34 @@
+/*
+Document   : partials/ma/_header.scss
+Created on : Oct 5, 2012, 9:34:15 AM
+Author     : gly
+Description: styles for header on ma page
+*/
+
+#header {
+	height: auto;
+	.nav {
+		.primary {
+			display: none;
+		}
+	}
+	
+	#logo {
+		h2 {
+			width: 256px;
+			height: 41px;
+			margin-top: 35px;
+			background: url(/img/header/shipserv_logo.png) 0 0 no-repeat transparent;
+		}
+	}
+
+	#userbox {
+		display: none;
+	}
+}
+
+.divider {
+	width: 100%;
+	height: 10px;
+	background: url(/img/header/divider.png) 0 0 repeat-x transparent;
+}

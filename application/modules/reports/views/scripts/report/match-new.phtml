@@ -1,0 +1,333 @@
+<?php
+$this->headLink()
+	->appendStylesheet('/css/shipmate.css')
+	->appendStylesheet('/css/reports/dashboard-new.css')
+    ->appendStylesheet('/css/uniform.default.new.css');
+
+if ($this->allowAcces) {
+    $this->getHelper('Requirejs')->addModule('backbone/reports/match/views/mainView')
+    							 ->addDefinition('reports/match/buyerId', '"' . $this->report->getBuyerId() . '"')
+    							 ->addDefinition('reports/match/vesselName', '"' . $this->report->getVesselName() . '"')
+    							 ->addDefinition('reports/match/fromDate', '"' . $this->report->startDateObject->format("d/m/Y") . '"')
+    							 ->addDefinition('reports/match/toDate', '"' . $this->report->endDateObject->format("d/m/Y") . '"')
+                                 ->addDefinition('reports/match/purchaser', '"' . $this->report->getPurchaserEmail() . '"');
+                         }
+
+$breadcrumbs = array(array('name' => 'Home',
+        'url' => '/search'),
+    array('name' => 'Analyse',
+        'url' => '/match-supplier-report'),
+    array('name' => 'Sourcing Engine Dashboard',
+        'url' => '/reports/match-new'));
+
+function format( $input )
+{
+	$output = number_format($input, 2);
+	return $output;
+}
+
+/*
+$user = Shipserv_User::isLoggedIn();
+$shipservUser = $user->isShipservUser();
+*/
+
+
+echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<? if ($this->allowAcces): ?>
+<div id="waiting" style="display: block;">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>
+<? endif ?>
+<div id="body" style="width:1185px;">
+	<div id="content" style="width:950px;">
+		<h1 class="styled">Sourcing Engine Usage and Savings Offered</h1>
+        <? if ($this->allowAcces === false): ?>
+        <div class="warning">You are not allowed to view this company</div>
+        <?php else : ?>
+    	<div class="filterSection"></div>
+    	<?php if($this->statsForGraph !== null){?>
+    	<div id="chart_div" style="width: 900px; height: 300px;"></div>
+        <?php } ?>
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" class="main" style="<? if($this->adoptionReport === null) { echo "display: none";} ?>">
+            <thead>
+                <tr>
+                    <th class="left">&nbsp;</th>
+                    <th>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tr>
+                                <td class="you" rowspan="2">You</td>
+                                <td colspan="2">Benchmark</td>
+                            </tr>
+                            <tr>
+                                <td class="avg">Average</td>
+                                <td>Highest</td>
+                            </tr>
+                        </table>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%" class="name first">
+                            <tr>
+                                <td>
+                                    Potential savings you could have made through Sourcing Engine usage
+                                    <!--
+                                    	<br />
+                                    	<a href="">Show RFQs with potential savings</a>
+                                    -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Actual savings you made through Sourcing Engine usage
+                                    <!--
+                                    	<br />
+                                    	<a href="">Show POs with savings</a>
+                                    -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Average actual savings per PO sent to the Sourcing Engine
+                                </td>
+                            </tr>
+                            <!--
+                            <tr>
+                                <td>
+                                    Match savings as a % of total PO value
+                                </td>
+                            </tr>
+                             -->
+                        </table>
+                    </td>
+                    <td>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tr>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="you">USD <?php echo format($this->adoptionReport['POTENTIAL_SAVINGS'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="avg">USD <?php echo format($this->adoptionReportAvg['POTENTIAL_SAVINGS'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="best">USD <?php echo format($this->adoptionReportBest['POTENTIAL_SAVINGS'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                            </tr>
+                            <tr class="last">
+                                <td class="spacer">&nbsp;</td>
+                                <td class="you">USD <?php echo format($this->adoptionReport['ACTUAL_SAVINGS'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="avg">USD <?php echo format($this->adoptionReportAvg['ACTUAL_SAVINGS'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="best">USD <?php echo format($this->adoptionReportBest['ACTUAL_SAVINGS'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="you">USD <?php echo format($this->adoptionReport['AVG_SAVING_PER_RFQ'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="avg">USD <?php echo format($this->adoptionReportAvg['AVG_SAVING_PER_RFQ'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="best">USD <?php echo format($this->adoptionReportBest['AVG_SAVING_PER_RFQ'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                            </tr>
+                            <!--
+                            <tr class="last">
+                                <td class="spacer">&nbsp;</td>
+                                <td class="you"><?php echo format($this->adoptionReport['MATCH_SAVING_OUT_OF_ALL_PO'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="avg"><?php echo format($this->adoptionReportAvg['MATCH_SAVING_OUT_OF_ALL_PO'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="best"><?php echo format($this->adoptionReportBest['MATCH_SAVING_OUT_OF_ALL_PO'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                            </tr>
+                             -->
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%" class="name">
+                            <tr>
+                                <td >
+                                    Number of RFQs you've sent to the Sourcing Engine
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    % of all RFQs you've sent to the Sourcing Engine
+                                </td>
+                            </tr>
+                            <!--
+                            <tr>
+                                <td>
+                                    Number of RFQs submitted without using Match
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Average number of Match Suppliers per RFQ
+                                </td>
+                            </tr>
+                            -->
+                        </table>
+                    </td>
+                    <td>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tr>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="you"><?php echo round($this->adoptionReport['RFQ_MATCH']); ?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="avg"><?php echo round($this->adoptionReportAvg['RFQ_MATCH']); ?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="best"><?php echo round($this->adoptionReportBest['RFQ_MATCH']); ?></td>
+                                <td class="spacer">&nbsp;</td>
+                            </tr>
+                            <tr class="last">
+                                <td class="spacer">&nbsp;</td>
+                                <td class="you"><?php echo format($this->adoptionReport['PC_RFQ_SENT_TO_MATCH']); ?>%</td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="avg"><?php echo format($this->adoptionReportAvg['PC_RFQ_SENT_TO_MATCH']); ?>%</td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="best"><?php echo format((($this->adoptionReportBest['PC_RFQ_SENT_TO_MATCH']>100?100:$this->adoptionReportBest['PC_RFQ_SENT_TO_MATCH']))); ?>%</td>
+                                <td class="spacer">&nbsp;</td>
+                            </tr>
+                            <!--
+                            <tr>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="you"><?php echo format($this->adoptionReport['RFQ_ALL'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="avg"><?php echo format($this->adoptionReportAvg['RFQ_ALL'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="best"><?php echo format($this->adoptionReportBest['RFQ_ALL'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                            </tr>
+                            <tr class="last">
+                                <td class="spacer">&nbsp;</td>
+                                <td class="you"><?php echo format($this->adoptionReport['SUPPLIERS_PER_RFQ'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="avg"><?php echo format($this->adoptionReportAvg['SUPPLIERS_PER_RFQ'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="best"><?php echo format($this->adoptionReportBest['SUPPLIERS_PER_RFQ'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                            </tr>
+                            -->
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%" class="name">
+                            <tr>
+                                <td>
+                                    Number of Quotes from recommended suppliers
+                                    <!--
+                                    	<br />
+                                    	<a href="">Show Quotes from Match Suppliers</a>
+                                     -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                     Average number of suppliers selected by Sourcing Engine per RFQ
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%" class="">
+                            <tr>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="you"><?php echo round($this->adoptionReport['QUOTES_RECEIVED_BY_MATCH']); ?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="avg"><?php echo round($this->adoptionReportAvg['QUOTES_RECEIVED_BY_MATCH']); ?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="best"><?php echo round($this->adoptionReportBest['QUOTES_RECEIVED_BY_MATCH']); ?></td>
+                                <td class="spacer">&nbsp;</td>
+                            </tr>
+                            <tr class="last">
+                                <td class="spacer">&nbsp;</td>
+                                <td class="you"><?php echo format($this->adoptionReport['SUPPLIERS_PER_RFQ'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="avg"><?php echo format($this->adoptionReportAvg['SUPPLIERS_PER_RFQ'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="best"><?php echo format($this->adoptionReportBest['SUPPLIERS_PER_RFQ'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%" class="name last">
+                            <tr>
+                                <td >
+                                    Number of POs placed with recommended suppliers
+                                    <!--
+                                    	<br />
+                                    	<a href="">Show POs placed with Match Suppliers</a>
+                                    -->
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td>
+                        <table cellpadding="0" cellspacing="0" border="0" width="100%" class="last">
+                            <tr class="last">
+                                <td class="spacer">&nbsp;</td>
+                                <td class="you"><?php echo round($this->adoptionReport['PO_BY_MATCH'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="avg"><?php echo round($this->adoptionReportAvg['PO_BY_MATCH'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                                <td class="best"><?php echo round($this->adoptionReportBest['PO_BY_MATCH'])?></td>
+                                <td class="spacer">&nbsp;</td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    <?php endif ?>
+    </div>
+</div>
+<div class="clear"></div>
+<?php if($this->statsForGraph !== null){?>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+
+var stats = <?php echo json_encode( (array)$this->statsForGraph )?>
+
+var data = [[
+	'Months in year',
+    'RFQs sent to the Sourcing Engine',
+    'RFQs forwarded by the Sourcing Engine',
+    'Quotes received via the Sourcing Engine'
+    //,
+    //'Quote rate (% rounded up)'
+]];
+
+data = data.concat(stats);
+
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback( function(){
+	var d = google.visualization.arrayToDataTable(data);
+
+    var options = {
+        title: '',
+        seriesType: "bars",
+        fontSize: 12,
+        vAxis: {title: "RFQs / Quotes", minValue: 0},
+
+        //,
+        //series: {3: {type: "line", targetAxisIndex:1}}
+    };
+    var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+    chart.draw(d, options);
+});
+
+
+</script>
+<?php }?>

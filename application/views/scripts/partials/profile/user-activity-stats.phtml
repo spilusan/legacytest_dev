@@ -1,0 +1,128 @@
+<?php
+
+	foreach( $this->data['stats'] as $key => $val ) {
+		if ($val['PUA_IS_SHIPSERV'] == 'Y') {
+			if ($_GET['ss'] == '1') {
+				$keys[$val['PUA_ACTIVITY']] = $val['PUA_ACTIVITY'];
+				$userDataByActivity[$val['PUA_ACTIVITY']][] = array('month' => $val['MONTH_YEAR'], 'total' => $val['TOTAL']);
+				$userDataByMonth [$val['MONTH_YEAR']][$val['PUA_ACTIVITY']] = $val['TOTAL'];
+			}
+		} else {
+			if (!isset($_GET['ss']) || $_GET['ss'] != '1') {
+				$keys[$val['PUA_ACTIVITY']] = $val['PUA_ACTIVITY'];
+				$userDataByActivity[$val['PUA_ACTIVITY']][] = array('month' => $val['MONTH_YEAR'], 'total' => $val['TOTAL']);
+				$userDataByMonth [$val['MONTH_YEAR']][$val['PUA_ACTIVITY']] = $val['TOTAL'];
+			}
+		}
+		
+	}
+	
+	$keys = array_keys($keys);
+	$x = new Shipserv_User_Activity();
+	
+	?>
+		<div style="font-size:10px;">
+		<? if (!isset($_GET['ss']) || $_GET['ss'] != '1') { ?>
+			<a href="/profile/activities?ss=1">Click here</a> to show ShipMate's activities
+		<? } else { ?>
+			<a href="/profile/activities">Click here</a> to show NON ShipMate's activities
+		<? } ?>
+		</div>
+	    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	    <script type="text/javascript">
+	      google.load("visualization", "1", {packages:["corechart"]});
+	      google.setOnLoadCallback(drawChart);
+	      function drawChart() {
+	        var data = new google.visualization.DataTable(
+	        	{
+					cols: [
+						{id:'month', label:'period', type:'string'}
+						<? foreach( $keys as $s){?>
+						, {id:'<?= $s?>', label:'<?= $x->translate($s)?>', type:'number'}
+						<? }?>
+					],
+					rows:[
+						<? foreach($userDataByMonth as $month => $data){?>
+					    {
+						    c:[
+							    {v:'<?= $month?>'}
+						    	<? foreach($keys as $k){?> 
+						    	, {v:<?= ((is_null($data[$k])?0:$data[$k]))?>}
+						    	<? }?>
+						    ]
+					    },
+					    <? }?>
+					]
+	           	}
+	        );
+	
+	        
+	        var options = {
+	          title: 'User activities'
+	          , legend: {position: 'bottom'}
+	          , enableInteractivity: true
+	        };
+	                
+	        var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+	        chart.draw(data, options);
+	      }
+	    </script>
+	
+	    <div id="chart_div" style="width:920px; height:500px;"></div>
+
+	    
+<?php 
+$keys = $userDataByMonth = array();
+$userDataByActivity = null;
+
+foreach( $this->data['search'] as $key => $val )
+{
+	$keys[$val['NAME']] = $val['NAME'];
+	$userDataByActivity[$val['NAME']][] = array('month' => $val['MONTH_YEAR'], 'total' => $val['TOTAL']);
+	$userDataByMonth [$val['MONTH_YEAR']][$val['NAME']] = $val['TOTAL'];
+}
+
+$keys = array_keys($keys);
+$x = new Shipserv_User_Activity();
+?>
+	    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	    <script type="text/javascript">
+	      google.load("visualization", "1", {packages:["corechart"]});
+	      google.setOnLoadCallback(drawChart);
+	      function drawChart() {
+	        var data = new google.visualization.DataTable(
+	        	{
+					cols: [
+						{id:'month', label:'period', type:'string'}
+						<? foreach( $keys as $s){?>
+						, {id:'<?= $s?>', label:'<?= $s?>', type:'number'}
+						<? }?>
+					],
+					rows:[
+						<? foreach($userDataByMonth as $month => $data){?>
+					    {
+						    c:[
+							    {v:'<?= $month?>'}
+						    	<? foreach($keys as $k){?> 
+						    	, {v:<?= ((is_null($data[$k])?0:$data[$k]))?>}
+						    	<? }?>
+						    ]
+					    },
+					    <? }?>
+					]
+	           	}
+	        );
+	
+	        
+	        var options = {
+	          title: 'Top categories search'
+	          , legend: {position: 'right'}
+	          , enableInteractivity: true
+	        };
+	                
+	        var chart = new google.visualization.LineChart(document.getElementById('chart_div2'));
+	        chart.draw(data, options);
+	      }
+	    </script>
+	
+	    <div id="chart_div2" style="width:920px; height:500px;"></div>

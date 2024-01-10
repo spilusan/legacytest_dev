@@ -1,0 +1,62 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/wp-styles.css');
+	$this->headLink()->appendStylesheet('/css/default-new.css');
+	$this->requirejs()	->addModule('backbone/shipmate/design-guidelines/views/mainView');
+	$user = Shipserv_User::isLoggedIn();
+?>
+
+<section class="grey registration-header clearfix">
+	<div class="wrapper">
+		<div class="left">
+			<h2><span>Page 1 of 2</span> Register</h2>
+		</div>
+		<div class="right">
+			<a href="#" class="btn transparent transparent-blue">I already have an account</a>
+		</div>
+	</div>	
+</section>
+
+<section class="white">
+	<div class="registration-form-wrapper">
+		<div class="wrapper">
+			<form>
+				<div class="inputs-wrapper">
+					<div class="inline">
+						<label for="name">First Name<span>*</span>: </label>
+						<input type="text" id="name" autofocus>
+					</div>
+					<div class="inline">
+						<label for="surname">Last Name<span>*</span>: </label>
+						<input type="text" id="name" autofocus>
+					</div>
+					<div class="inline">
+						<label for="email">Email<span>*</span>: </label>
+						<input type="text" id="name" autofocus>
+					</div>
+					<div class="inline">
+						<label for="password">Password<span>*</span>: </label>
+						<input type="text" id="name" autofocus>
+					</div>
+					<div class="inline">
+						<label for="password">Confirm Password<span>*</span>: </label>
+						<input type="text" id="name" autofocus>
+					</div>
+					<div class="inline">
+						<label for="companytype">Company type:<span>*</span>: </label>
+						<div class="select">
+							<select name="companytype">
+								<option value="GMT">Company</option>
+								<option value="CET">Company</option>
+								<option value="UTC">Company</option>
+							</select>
+						</div>
+					</div>
+					<p class="required">*Required information</p>
+					<div class="btn-container">
+						<a href="#" class="btn green medium">Next <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+					</div>
+				</div>	
+			</form>
+		</div>
+	</div>
+</section>

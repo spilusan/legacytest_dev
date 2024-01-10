@@ -1,0 +1,18 @@
+<table cellpadding="0" cellspacing="0" border="0">
+    <thead>
+        <tr>
+            <th>Trading Account</th>
+            <th class="col23">Activate AutoSource</th>
+            <th class="col23">Only forward comparison quotes when cheaper</th>
+        </tr>
+    </thead>
+    <tbody>
+		{{#each data}}
+        <tr>
+            <td>{{name}} - ({{branchId}})</td>
+            <td class="taCenter"><input class="acListCb" type="checkbox" name="automate[]" data-id="{{branchId}}"{{#if data.autoMatch.participant}} checked{{/if}}></td>
+            <td class="taCenter"><input class="acListCb" type="checkbox" name="onlyCheap[]" data-id="{{branchId}}"{{#if data.autoMatch.cheapQuotesOnly}} checked{{/if}}></td>
+        </tr>
+        {{/each}}
+    </tbody>    
+</table>

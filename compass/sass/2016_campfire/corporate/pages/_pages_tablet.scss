@@ -1,0 +1,391 @@
+/*
+Document   : partials/guidelines/pages/_pages_tablet.scss
+Created on : August 18, 2016
+Author     : Daniele Manca
+Description: tablet styles for pages sections
+*/
+
+
+/* Base */
+
+@media only screen and (max-width: 1024px) {
+    .icon {
+        width: 110px;
+        height: 110px;
+        .fa {
+            font-size: 58px;
+        }
+    }
+    section {
+        padding: 40px 0;
+        .wrapper {
+            max-width: 100%;
+            padding: 0 30px;
+            .centered {
+                ul {
+                    max-width: 80%;
+                    padding: 0 40px;
+                }
+            }
+        }
+        &.intro {
+            &.darkGrey {
+                .back-btn {
+                    right: 20px;
+                }
+            }
+        }
+        &.hero {
+            .inpage {
+                ul {
+                    width: 100%;
+                    margin: 0 50px;
+                    li {
+                        a {
+                            font-size: 16px;
+                            .fa-angle-down {
+                                top: 5px;
+                                font-size: 26px;
+                            }
+                        }
+                    }
+                }
+            }
+            h4 {
+                padding: 0 20px;
+                font-size: 20px;
+            }
+        }
+        &.solution {
+            .wrapper {
+                margin: 0 50px;
+                img,
+                p {
+                    width: 45%;
+                }
+            }
+            &.white.leftImg {
+                img {
+                    float: left;
+                }
+                p {
+                    float: right;
+                }
+            }
+        }
+        &.testimony {
+            .wrapper {
+                .quotes {
+                    .fa {
+                        font-size: 60px;
+                    }
+                }
+            }
+            p {
+                max-width: 80%;
+                width: 80%;
+            }
+            .trading {
+                .icon-container {
+                    width: 15%;
+                    .icon {
+                        margin-top: 0;
+                    }
+                }
+                .trading-text {
+                    width: 80%;
+                    margin: 0;
+                    p {
+                        max-width: 80%;
+                    }
+                }
+                .free-solution {
+                    width: 100%;
+                    margin-top: 40px;
+                }
+            }
+        }
+        .services-container {
+            .service {
+                @include flex(1 33%);
+                width: 33%;
+            }
+        }
+        .blog-post-container {
+            .blog-post {
+                @include flex(1 46%);
+                width: 46%;
+                margin-bottom: 20px;
+            }
+        }
+        .row {
+            &.variation-8 {
+                ul {
+                    padding-left: 10%;
+                }
+            }
+        }
+        .platforms-wrapper {
+            .circle {
+                transform: scale(0.9);
+            }
+        }
+        .togglebox {
+            .accordionItem {
+                .accordionItemContent {
+                    form {
+                        fieldset {
+                            .labels {
+                                label {
+                                    font-size: 18px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    .wp-footer {
+        .wrapper {
+            max-width: 100%;
+            padding: 0 30px;
+        }
+    }
+}
+
+@media only screen and (min-width: 961px) {
+    .help-videos {
+        .video {
+            &:nth-child(4n+0) {
+                margin-right: 0;
+            }
+            &:nth-child(4n+1) {
+                clear: both;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    .platforms-wrapper {
+        @include flex-direction(column);
+        .arrow {
+            transform: rotate(90deg);
+        }
+    }
+    .penetration {
+        .penetration-block {
+            width: calc(33% - 40px);
+        }
+    }
+    section {
+        .columns {
+            &.with-logo {
+                .company-logo {
+                    display: none;
+                }
+                .featured-img {
+                    @include flex-basis(35%);
+                }
+                .content {
+                    @include flex-basis(60%);
+                    padding: 0 0 0 5%;
+                }
+                &.left-logo {
+                    .content {
+                        @include flex-basis(60%);
+                        padding: 0 5% 0 0;
+                    }
+                }
+            }
+        }
+        .help {
+            &.fourColumns {
+                .help-block {
+                    width: 45%;
+                    margin-bottom: 20px;
+                    &:nth-child(2) {
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
+        .help-videos {
+            .video {
+                width: calc(33.33% - 15px);
+                &:nth-child(3n+0) {
+                    margin-right: 0;
+                }
+                &:nth-child(3n+1) {
+                    clear: both;
+                }
+            }
+        }
+        .faqs {
+            padding: 0 10%;
+        }
+    }
+}
+
+@media only screen and (max-width: 780px) {
+    section {
+        table {
+            th,
+            tr td {
+                font-size: 16px
+            }
+            &.greyHeader {
+                th,
+                th:last-child {
+                    font-size: 16px;
+                }
+                tr {
+                    td {
+                        font-size: 16px;
+                    }
+                }
+                &.mobile {
+                    th {
+                        &:last-child {
+                            width: 30%;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    section {
+        .wrapper {
+            .centered {
+                ul {
+                    max-width: 100%;
+                    padding: 0 60px;
+                }
+            }
+        }
+        &.hero {
+            h3 {
+                padding: 0 30px;
+                font-size: 22px;
+            }
+        }
+        .row.variation-8 {
+            ul {
+                padding-left: 14%;
+            }
+        }
+        .help {
+            .help-block {
+                width: calc(50% - 20px);
+                &:nth-child(3n+3) {
+                    margin-right: 20px;
+                }
+                &:nth-child(2n+2) {
+                    margin-right: 0;
+                }
+            }
+        }
+        .penetration {
+            .penetration-block {
+                width: calc(50% - 40px);
+            }
+        }
+        .togglebox {
+            width: 100%;
+            margin: 0 auto;
+            transform: translateZ(0);
+            list-style: none;
+        }
+        .switchable-tabs {
+            .content {
+                .togglebox {
+                    .accordionItem {
+                        label {
+                            font-size: 22px;
+                        }
+                        .accordionItemContent {
+                            form {
+                                width: 100%;
+                                margin-bottom: 80px;
+                                fieldset {
+                                    .labels {
+                                        label {
+                                            font-size: 16px;
+                                        }
+                                    }
+                                    .fields {
+                                        width: calc(100% - 170px);
+                                    }
+                                }
+                            }
+                            .contacts-container {
+                                width: 100%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .brochure {
+            figure {
+                width: 50%;
+                &:last-child {
+                    display: none;
+                }
+            }
+            div {
+                width: 50%;
+            }
+        }
+        .penetration {
+            &.variation {
+                @include flex-direction(column);
+                .penetration-block {
+                    width: 100%;
+                    padding: 0;
+                    .text {
+                        min-height: 150px;
+                        max-width: 100%;
+                    }
+                }
+            }
+        }
+        .membership-comparison {
+            width: 100%;
+            float: none;
+            margin-bottom: 10%;
+            .btn {
+                margin-top: 20px;
+            }
+            &:first-child {
+                margin-right: 0;
+            }
+            &:last-child {
+                margin-left: 0;
+            }
+            .column {
+                .row {
+                    h3 {
+                        margin-bottom: 0;
+                    }
+                    ul {
+                        width: 90%;
+                    }
+                }
+            }
+        }
+    }
+    .wp-footer {
+        .wrapper {
+            .footer-contact {
+                .btn {
+                    min-width: 200px;
+                }
+            }
+        }
+    }
+}

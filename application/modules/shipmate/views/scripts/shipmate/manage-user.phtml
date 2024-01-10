@@ -1,0 +1,101 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/shipmate-manage-user.css')
+					 ->appendStylesheet('/css/uniform.rfq.css');
+
+
+
+	$user = Shipserv_User::isLoggedIn();
+	$shipservUser = $user->isShipservUser();
+
+	$this->requirejs()
+		->addModule('backbone/shipmate-manage-user/views/mainView');
+
+?>
+
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+
+<?php
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'User and company management', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+
+</style>
+<script type="text/javascript">
+var autoCompleteUrl = '';
+</script>
+<div id="body">
+	<div id="content">
+		<h1 class="styled">User and company management</h1>
+
+		<div class="innerContent">
+			<div class="pane">
+				<div class="left">
+					<div class="control">
+						Search for: <br />
+						<select class="" name="searchType">
+							<option value="all">ALL</option>
+							<option value="usr">ALL USER</option>
+							<option value="spb">ALL SUPPLIER</option>
+							<option value="byo">ALL BUYER ORGANISATION</option>
+							<option value="byb">ALL BUYER BRANCH (TRADING)</option>
+
+							<optgroup label="SUPPLIER">
+								<option value="spb-basic">BASIC</option>
+								<option value="spb-premium">PREMIUM</option>
+								<option value="spb-non-0pc"> &gt; 0% MONETISATION</option>
+								<option value="spb-0pc">0% MONETISATION</option>
+								<option value="spb-test">TEST ONLY</option>
+
+								<option value="spb-with-user">>0 USERS</option>
+								<option value="spb-without-user">0 USERS</option>
+							</optgroup>
+							<optgroup label="BUYER BRANCH">
+								<option value="byb-match">MATCH ONLY</option>
+								<option value="byb-test">TEST ONLY</option>
+
+								<option value="byb-with-user">>0 USERS</option>
+								<option value="byb-without-user">0 USERS</option>
+
+							</optgroup>
+							<optgroup label="USER ACCOUNT">
+								<option value="usr-non-activated">NON ACTIVATED</option>
+								<option value="usr-not-trusted">NON TRUSTED</option>
+							</optgroup>
+                            <optgroup label="CONSORTIA">
+                                <option value="con">CONSORTIA COMPANIES</option>
+                                <option value="con_user">CONSORTIA USERS</option>
+                            </optgroup>
+						</select>
+						<br />
+						<br />
+						with keywords: <br />
+						<form name="searchForm" onsubmit="return false;">
+							<input class="uniform" type="text" value="" name="searchQuery" />
+							<input class="uxniform" type="button" name="search" value="search" />
+						</form>
+					</div>
+					<div class="content"></div>
+					<div class="clear"></div>
+
+				</div>
+				<div class="right">
+					<div id="xhrProgress"></div>
+					<div class="control">
+						<input type="button" value="Back" name="goBackBtn" id="goBackBtn" class="">
+<!-- 						<input type="button" value="Save" id="saveDataBtn" class="controlBtn"> -->
+<!-- 						<input type="button" value="Delete" id="deleteBtn" class="controlBtn"> -->
+<!-- 						<input type="button" value="Close" id="closeBtn" class="controlBtn"> -->
+					</div>
+					<div class="content"></div>
+				</div>
+ 				<div class="clear"></div>
+			</div>
+ 				<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

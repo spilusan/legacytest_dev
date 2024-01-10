@@ -1,0 +1,60 @@
+<td>
+	{{#if active}}<a href="{{url}}" target="_blank" title="{{name}}">{{/if}}{{name}}{{#if active}}</a>{{/if}} <br />
+	{{city}} 
+</td>
+<td class="mr">
+	<span>{{rank}}</span>
+</td>
+<td class="sourceStatus">{{matched}}</td>
+<td class="stat {{stat}}">
+	{{stat}} <br />
+	{{#ifCond stat "Quoted"}}<a href="#" class="excludeStat">{{#if quote_exclude}}Include in{{else}}Exclude from{{/if}} stats</a>{{/ifCond}}
+	{{#ifCond stat "Ordered"}}<a href="#" class="excludeStat">{{#if quote_exclude}}Include in{{else}}Exclude from{{/if}} stats</a>{{/ifCond}}
+	{{#ifCond stat "Yet to quote"}}<a href="#" class="sendRemind">Send reminder</a>{{/ifCond}}
+</td>
+<td>	
+	{{#if quote_date}}
+		{{quote_date_display}}
+		{{#if quote_price_hidden}}
+		{{else}}
+			<br/><a href="{{quote_url}}" target="_blank">View Quote</a>
+		{{/if}}
+		<br/>
+	{{/if}}
+</td>
+<td>{{quote_is_genuine}}</td> 
+<td>{{quote_payment_terms}}</td>
+<td>{{quote_delivery_terms}}</td>
+<td>{{quote_lead_time}}</td>
+<!--
+{{#if quote_supplier_last_order}}
+	<td>{{quote_supplier_last_order}}</td>
+{{/if}}
+{{#unless quote_supplier_last_order}}
+	<td>No orders yet</td>
+{{/unless}}
+<td>{{quote_shipping_cost}}</td>
+-->
+<td class="tpo">
+	{{#if quote_price_hidden}}
+		****
+	{{else}}
+		{{#if quote_price}}
+			{{formatCurrency quote_price}} {{quote_currency}}
+		{{/if}}
+	{{/if}}
+</td>
+<td class="tpu">
+	{{#if quote_price_hidden}}
+		****
+	{{else}}
+		{{#if quote_price_usd}}
+			{{formatCurrency quote_price_usd}} USD
+		{{/if}}
+	{{/if}}		
+</td>
+<td class="liq">
+	{{#if quote_share}}
+		{{quote_share}}%
+	{{/if}}
+</td>

@@ -1,0 +1,96 @@
+#body {
+	#content {
+		#innerContent {
+			#quote-table {
+				width: 100%;
+				border-collapse: collapse;
+   				border-spacing: 0px;
+   				font-size: 13px;
+   				tr {
+   					th {
+                     padding: 6px;
+                     overflow: hidden;
+                     text-align: center;
+                     font-weight: bold;
+                     height: 30px;
+                     border: 1px solid white;
+                     vertical-align: middle;
+                     &.col-gray {
+                        background-color: #d5dce4;
+                     }
+                     &.col-cyan {
+                        background-color: #cceefa;
+                     }
+                     &.col-green {
+                        background-color: #dcf0d4;
+                     }
+                     &.col-blue {
+                        background-color: #0090cc;
+                     }
+                     &.small {
+                        width: 80px;
+                     }
+                     &.medium {
+                        width: 100px;
+                     }
+                     &.fullDetails {
+                        width: 150px;
+                        min-width: 150px;
+                     }
+                     &.wide {
+                        width: 145px;
+                     }
+                     &.text-white {
+                        color: white;
+                     }
+                  }
+  					
+                  td {
+                     overflow: hidden;
+   						border: 1px solid #c4d0dc;
+   						padding: 6px;
+   						height: 30px;
+   						vertical-align: middle;
+                     &.col-lgray {
+                        background-color: #f7f8fa;
+                     }
+                     &.col-lcyan {
+                        background-color: #f4fcfe;
+                     }
+                     &.col-lgreen {
+                        background-color: #f5faf3;
+                     }
+                     &.col-lblue {
+                        background-color: #dbf3fd;
+                        font-weight: bold;
+                     }
+                     &.center {
+                        text-align: center;
+                     }
+                     .bold {
+                        font-weight: bold;
+                     }
+                     .fullBtn {
+                        padding: 10px 8px;
+                     }
+                     .comparableIcon, .fixComparableIcon {
+                        vertical-align: middle;
+                        margin-top: -2px;
+                     }
+                     
+   					}
+   				}
+
+               tbody {
+                  font-size: 12px;
+                  tr {
+                     cursor: pointer;
+                  }
+                  tr:hover > td  {
+                     background-color: #EDF8FC !important;
+                  }
+               }
+			}
+		}
+	}
+}

@@ -1,0 +1,97 @@
+#modalContact {
+	width: 600px;
+
+	.modalBody {
+		h1 {
+			margin-bottom: 10px;
+		}
+
+		.modalContent {
+			h2 {
+				font-size: 16px;
+				margin-bottom: 10px;
+				color: #2e3235;
+			}
+			ul {
+				list-style-type: disc;
+				padding-left: 15px;
+				margin-bottom: 15px;
+				li {
+					color: #2e3235;
+					line-height: 1.2;
+					margin-bottom: 5px;
+				}
+			}
+
+			form {
+				position: relative;
+				padding: 20px;
+				background: #f2f5f8;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+
+				.error {
+					margin-bottom: 10px;
+				}
+
+				label {
+					position: relative;
+					top: 0px;
+					font-size: 12px;
+					display: inline-block;
+					width: 100px;
+
+					&[for="bodyText"], &[for="fromText"], &[for="agree"]{
+						width: auto;
+						margin-bottom: 10px;
+					}
+
+					&[for="agree"]{
+						margin-left: 62px;
+						margin-bottom: 15px;
+					}
+				}
+
+				div#uniform-agree {
+					position: relative;
+					top: -10px;
+					cursor: pointer;
+
+					input {
+						cursor: pointer;
+					}
+				}
+
+				input[type="text"]{
+					width: 400px;
+				}
+
+				textarea[name="bodyText"] {
+					width: 500px;
+					height: 200px;
+				}
+
+				textarea[name="fromText"] {
+					width: 500px;
+					height: 50px;
+					margin-bottom: 15px;
+				}
+
+				p {
+					text-align: center;
+				}
+
+				div.agreement {
+					display: inline-block;
+
+				}
+
+				input[type="submit"]{
+					display: block;
+					width: 171px;
+					margin: 0 auto;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,99 @@
+<?php
+
+    $showMap = (int)Myshipserv_Config::getIni()->google->services->maps->display;
+	$this->headLink()->appendStylesheet('/css/reports/priceBenchmark.css')
+					 ->appendStylesheet('/css/uniform.default.new.css');
+
+    if ($showMap === 1) {
+        $this->headScript()->appendFile('//maps.googleapis.com/maps/api/js?v=3.exp');
+    }
+
+    $this->getHelper('Requirejs')->addDefinition('benchmark/showMap', $showMap);
+	$this->getHelper('Requirejs')->addModule('backbone/reports/priceBench/views/mainView');
+
+	$user = Shipserv_User::isLoggedIn();
+
+	$shipservUser = $user->isShipservUser();
+
+	$page = $this->params['page'] ?? 1;
+
+//	$this->getHelper('Requirejs')->addDefinition('buyer/rfq-outbox/tnid', $this->activeCompany->company->tnid);
+?>
+
+<?php
+if ($this->priceTracker) {
+    // prepare data for the frontend code to populate the filters and run the query
+    ?><script>var priceTrackerParams = <?= json_encode($this->priceTracker); ?>;</script><?php
+}
+?>
+
+<script>
+    var defaultFromDate = '<?php echo $this->defaultFromDate->format('d/m/y'); ?>';
+    var defaultToDate = '<?php echo $this->defaultToDate->format('d/m/y'); ?>';
+	var maxSelectedSupplier = '<?php echo $this->maxSelectedSuppliers; ?>';
+	var basketCookieName = '<?php echo $this->basketCookie['name']; ?>';
+	var basketCookieDomain = '<?php echo $this->basketCookie['domain']; ?>';
+	var basketCookiePath = '<?php echo $this->basketCookie['path']; ?>';
+</script>
+
+<div id="breadcrumbs">
+	<span class="title">You are here: </span>
+	<ul>
+		<li>
+			<a href="/">Home</a>
+		</li>
+		<li>
+			<span></span>
+			<a href="/reports">Analyse</a>
+		</li>
+		<li class="current">
+			<span></span>
+			Price Benchmark
+		</li>
+	</ul>
+</div>
+
+<div id="body" class="liquid">
+	<div id="content">
+		<h1 class="styled header">IMPA Price Benchmark <sup class="red">BETA</sup></h1>
+
+		<div id="innerContent">
+			<form class="filters new">
+
+			</form>
+
+			<ul class="tabs benchTab">
+				<li class="selected"><a href="#">Price</a></li>
+				<li><a href="#">Purchase History</a></li>
+                <?php if ($showMap === 1): ?>
+				    <li><a href="#">Units purchased by supplier location</a></li>
+                <?php endif ?>
+				<li><a href="#">Recommended Suppliers</a></li>
+			</ul>
+
+			<div class="dataBox">
+
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div id="modalInfo">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+
+    </div>
+</div>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody"></div>
+</div>
+<div id="waiting">
+	<div class="waitingMessage">
+		<div>
+			Loading. <br />
+			This report can take<br/> 
+			1 - 3 minutes to run...</div>
+		</div>
+	<div class="waitingMask"></div>
+</div>

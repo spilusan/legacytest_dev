@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<ruleset name="ShipServ">
+
+ <description>A coding standard based on an early Zend Framework coding standard, plus some specific norms by ShipServ</description>
+
+
+ <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+ <rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman"/>
+ <rule ref="Generic.PHP.DisallowShortOpenTag">
+  <exclude name="Generic.PHP.DisallowShortOpenTag.EchoFound"/>
+ </rule>
+ <rule ref="Generic.PHP.DeprecatedFunctions"/>
+ <rule ref="Generic.PHP.NoSilencedErrors">
+  <properties>
+   <property name="error" value="true"/>
+  </properties>
+ </rule>
+ <rule ref="Generic.CodeAnalysis.UnusedFunctionParameter"/>
+ <rule ref="Generic.PHP.LowerCaseKeyword"/>
+ <rule ref="Generic.PHP.LowerCaseConstant"/>
+ <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+ 
+ <!-- Visibility MUST be declared on all properties. The var keyword MUST NOT be used to declare a property. There MUST NOT be more than one property declared per statement. Property names SHOULD NOT be prefixed with a single underscore to indicate protected or private visibility. -->
+ <rule ref="PSR2.Classes.PropertyDeclaration"/>
+ 
+ <rule ref="PSR2.Classes.ClassDeclaration">
+  <exclude name="PSR2.Classes.ClassDeclaration.CloseBraceAfterBody"/>
+ </rule>
+ <rule ref="PEAR.Functions.ValidDefaultValue"/>
+ <rule ref="PEAR.NamingConventions.ValidClassName"/>
+ <rule ref="PEAR.NamingConventions.ValidVariableName"/>
+ <rule ref="PEAR.NamingConventions.ValidFunctionName">
+  <!-- exclude the rule that require public methods to not be declared with a leading underscore (which we would like to respect), because that would make mandatory also to have protected methods without a leading underscore (which we don't want to) -->
+  <exclude name="PEAR.NamingConventions.ValidFunctionName.PublicUnderscore"/>
+ </rule>
+ <rule ref="ShipservCodeSniffer.Commenting.FunctionComment">
+  <exclude name="ShipservCodeSniffer.Commenting.FunctionComment.SpacingAfterParamType"/>
+  <exclude name="ShipservCodeSniffer.Commenting.FunctionComment.SpacingAfterParamName"/>
+  <exclude name="ShipservCodeSniffer.Commenting.FunctionComment.MissingParamComment"/>
+  <exclude name="ShipservCodeSniffer.Commenting.FunctionComment.MissingReturn"/>
+ </rule>
+ <rule ref="ShipservCodeSniffer.Variable.VariableAnalysis">
+  <properties>
+   <property name="allowUnusedCaughtExceptions" value="true"/>
+  </properties>
+ </rule>
+ <rule ref="PEAR.Functions.FunctionDeclaration"/>
+ <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing">
+  <properties>
+   <property name="equalsSpacing" value="1"/>
+  </properties> 
+ </rule>
+ <rule ref="PEAR.ControlStructures.ControlSignature"/>
+ <rule ref="ShipservCodeSniffer.WhiteSpace.ScopeClosingBrace"/>
+ <rule ref="PEAR.Functions.FunctionCallSignature"/>
+ <rule ref="Generic.WhiteSpace.ScopeIndent">
+  <properties>
+   <property name="indent" value="4"/>
+   <property name="exact" value="false"/>
+   <property name="ignoreIndentationTokens" type="array" value="T_COMMENT,T_DOC_COMMENT_OPEN_TAG"/>
+  </properties>
+  <severity>4</severity>
+ </rule> 
+ <rule ref="ShipservCodeSniffer.Formatting.DisallowMultipleStatements"/>
+ <rule ref="Generic.Metrics.CyclomaticComplexity">
+  <properties>
+   <property name="complexity" value="20"/>
+   <property name="absoluteComplexity" value="25"/>   
+  </properties> 
+ </rule>
+ 
+ <rule ref="Squiz.Functions.GlobalFunction"/>
+ <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing"/> 
+
+ <!-- Lines should be 180 chars long, for the moment let's warn on 180 lenth and block commit at 1000 chars -->
+ <rule ref="Generic.Files.LineLength">
+  <properties>
+   <property name="lineLimit" value="180"/>
+   <property name="absoluteLineLimit" value="500"/>
+  </properties>
+  <severity>4</severity>
+ </rule>
+
+ <!--
+ excluded by Yuriy Akopov to allow committing files from Windows - they are committed and checked our properly
+ anyway because of git config core.autocrlf set to true
+ -->
+ <!-- Use Unix newlines -->
+ <!--
+ <rule ref="Generic.Files.LineEndings">
+  <properties>
+   <property name="eolChar" value="\n"/>
+  </properties>
+  <severity>4</severity>
+ </rule>
+-->
+</ruleset>

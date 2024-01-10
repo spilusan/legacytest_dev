@@ -1,0 +1,19 @@
+<tr class="{{#if isChild}}is-child{{/if}} {{#if has_child}}closed{{/if}}" data-tnid="{{tnid}}" {{#if parentId}}data-parent-tnid="{{parentId}}"{{/if}}>
+    <td class="text-center">{{tnid}}</td>
+    <td class="text-left name">{{name}}</td>
+    <td class="text-right">{{formatNumber po_cnt}}</td>
+    <td class="text-right">${{formatCurrency po_spend 2}}</td>
+    <td class="text-center btn-cell">
+        <button class="view-pos btn blue" {{#unless po_cnt}}disabled{{/unless}}>View POs</button>
+        <button class="view-suppliers btn transparent transparent-blue" {{#unless po_cnt}}disabled{{/unless}}>Suppliers</button>
+    </td>
+    {{#if drilldownEnabled}}
+    <td class="text-center">
+        {{#if has_child}}
+        <a href="#" class="show-children  fa fa-fw fa-angle-down" aria-hidden="true"></a>
+        <a href="#" class="hide-children  fa fa-fw fa-angle-up" aria-hidden="true"></a>
+        <i class="loader  fa fa-fw fa-spinner fa-pulse fa-fw"></i>
+        {{/if}}
+    </td>
+    {{/if}}
+</tr>

@@ -1,0 +1,65 @@
+<ul class="filters">
+
+</ul>
+
+<div class="setFilter">
+	
+	<form class="new">
+		<label for="keywords">Keywords:</label>
+		<input type="text" name="keywords" value="supplier name, reference, brand, port" class="blur"/>
+		<label for="vessel">Vessel:</label>
+		<select name="vessel" id="vesselSelect">
+			<option value="">All vessels</option>
+			{{#each vessel.models}}
+				<option value="{{this.attributes.name}}" {{#if this.attributes.selected}}selected="selected"{{/if}}>{{this.attributes.name}}</option>
+			{{/each}}
+		</select>
+		<label for="qotDateSelect">Quote Date:</label>
+		<select name="qotDate" id="qotDateSelect">
+            <option value="7">Last 7 days</option>
+            <option value="30">Last 30 days</option>
+            <option value="90">Last 3 months</option>
+            <option value="180">Last 6 months</option>
+            <option value="365">Last 12 months</option>
+            <!-- <option value="730">Last 2 years</option> -->
+		</select>
+
+        <!--
+        <label for="qotTypeSelect">Quote From</label>
+        <select name="qotType" id="qotTypeSelect">
+            <option value="">All suppliers</option>
+            <option value="match">Match selected suppliers</option>
+            <option value="buyer">Buyer selected suppliers</option>
+        </select>
+        -->
+
+		<!--<label for="matchStat">Match status:</label>
+		<select name="matchStat" id="matchStatus">
+			<option selected="selected" value="">All</option>
+			<option value="matched">Matched</option>
+			<option value="notmatched">Not matched</option>
+			<option value="savings">Potential savings</option>
+		</select>-->
+		<label for="qotStatus">Quote Status:</label>
+		<select name="qotStat" id="qotStatus">
+			<option value="">All</option>
+			<option value="ACC">Accepted</option>
+			<option value="DEC">Declined</option>
+			<option value="SUB">Open</option>
+		</select>
+		<label for="branchSelect">Buyer Branch:</label>
+		<select name="branch" id="branchSelect">
+			{{#each branch.models}}
+				<option value="{{this.attributes.id}}" {{#if this.attributes.selected}}selected="selected"{{/if}}>{{this.attributes.name}}</option>
+			{{/each}}
+		</select>
+		<div class="nameSelect">
+			<img src="/img/tooltip/selectTip.png" border="0" alt="tip">
+			<input type="text" name="filterName" /><input type="button" name="confirmSave" value="Save" class="button small green" />
+		</div>
+		
+		<input type="button" class="button small dblue" name="show" value="Show"/>
+		<!--<input type="button" class="button small white" name="save" value="Save" />
+		<input type="button" class="button small white" name="manage" value="Manage filters" />-->
+	</form>
+</div>

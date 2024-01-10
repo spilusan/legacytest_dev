@@ -1,0 +1,45 @@
+
+#body {
+	width: 1640px;
+	#sidebar {
+		ul#nav {
+			li.selected {
+				padding: 0;
+			}
+		}
+	}
+
+	#sidebar {
+		ul#nav {
+			li.selected {
+				padding: 0;
+			}
+		}
+	}
+
+	#content {
+		width: 1424px;
+
+
+
+		.innerContent {
+
+			.treeList {
+				margin-left: 25px;
+				ul {
+					margin-left: 15px; 
+					list-style-image: url('/img/icons/small/minus-sign.png');
+					li {
+						font-size: 12px;
+						line-height: 150%;
+
+					}
+				}
+
+			}
+
+			
+		}
+	}
+
+}

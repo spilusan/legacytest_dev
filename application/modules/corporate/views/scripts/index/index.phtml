@@ -1,0 +1,12 @@
+<?php
+$correctedPageTitle = $this->wpTitle . ' | ShipServ';
+
+$this->headLink()->appendStylesheet('/css/wp-styles.css');
+$this->requirejs()->addModule('backbone/shipmate/design-guidelines/views/mainView');
+$this->headTitle($correctedPageTitle, 'SET');
+if ($this->wpMetaDescription) {
+    $this->headMeta()->appendName('description', $this->wpMetaDescription);
+}
+
+echo $this->wpHtmlContent;
+?>

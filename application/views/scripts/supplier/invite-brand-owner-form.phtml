@@ -1,0 +1,92 @@
+<?
+
+	$this->compressedScript()->appendScript('var curvyCornersNoAutoScan = true;')
+							 ->appendFile('/js/curvycorners.js');
+?>
+
+<div id="topToolBar" style="height:40px;">
+		<div id="closeTooltipButton"></div>
+		<div class="clear"></div>
+</div>
+<div id="inv_brand_body">
+    <div class="zz header">
+        <h2>Remind Brand Owner to approve your authorisation status</h2>
+    </div>
+    <div class="cont">
+        <ul class="validation errors" style="display:none;">&nbsp;</ul>
+			
+        <form class="main" action="" method="POST" id="inviteBrandOwnerForm">
+
+            <input type="hidden" id="brandId" name="brandId" value="<?php echo $this->brand["ID"] ?>" />
+            <input type="hidden" id="companyId" name="companyId" value="<?php echo $this->companyId ?>" />
+            <input type="hidden" id="supplierId" name="supplierId" value="<?php echo $this->supplierId ?>" />
+            <input type="hidden" id="requestedAuthLevel" name="authLevel" value="<?php echo $this->authLevel ?>" />
+
+            <?if ($this->success):?>
+                <h2 class="success">Thanks. Your request for brand ownership has been received.</h2>
+            <?endif?>
+
+            <fieldset>
+                <div>
+                    <div class="field clearfix">
+                        <label class="required" for="supplier">Supplier's name: </label>
+                        <input type="text" class="textfield required" id="supplierName" readonly="readonly" name="supplier" value="<?php echo $this->supplierName ?>" maxlength="155"/>
+                    </div>
+
+                    <div class="field clearfix">
+                        <label class="required" for="name">Name:</label>
+                        <input type="text" class="textfield required" id="name" readonly="readonly" name="name" value="<?php echo $this->loggedUser->firstName . ' ' . $this->loggedUser->lastName ?>" maxlength="55" />
+                    </div>
+
+                    <div class="field clearfix">
+                        <label class="required" for="brand">Name of brand:</label>
+                        <input type="text" class="textfield required" id="brand" readonly="readonly" name="brand" maxlength="55" value="<?php echo $this->brandname ?>" />
+                    </div>
+                    <?php if( lg_count( $this->users ) > 0 ){ ?>					
+                    <div class="field clearfix">
+                        <label for="email">Email of brand owner:</label>
+                        <input type="text" class="textfield email" id="email" name="email" />
+                    </div>
+                    <?php }else{ ?>
+                    <div class="field clearfix">
+                        <label class="required" for="email">Email of brand owner:</label>
+                        <input type="text" class="textfield required email" id="email" name="email" />
+                    </div>
+                    <div class="clear"></div>
+                    <?php }?>
+                    <div class="field clearfix">
+                        <label for="message">Personal message:</label>
+                        <textarea name="message" id="message" class="textarea" maxlength="1044"></textarea>
+                    </div>
+                </div>
+
+            </fieldset>
+            <fieldset class="footer-block">
+                <div class="form-button">
+                    <label>&nbsp;</label> 
+                    <div class="zz medium green button" id="examplebutton"><input type="submit" value="Submit" id="submitBtn" name="submit" /></div> <div class="spinner"></div>
+
+                    <!-- <a id="cancelAction">Cancel</a> -->
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<script type="text/javascript">
+	<!--	
+	$(document).ready(function(){
+		$('#topToolBar #closeTooltipButton').click(function (e) {
+			e.preventDefault();
+			$('#brand_invitation_form_popup').hide();
+			$('#mask').hide();
+		});
+		
+        $('#mask').click(function (e) {
+			e.preventDefault();
+			$('#brand_invitation_form_popup').hide();
+            $('#mask').hide();
+		});
+
+	});
+	//-->
+</script>

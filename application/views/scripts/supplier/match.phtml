@@ -1,0 +1,216 @@
+<style>
+	h3 {
+		font-weight: bold;
+		margin: 20px;
+	}
+	
+	table { margin: 20px}
+	
+	table tr td {
+		border-bottom: 1px solid #c0c0c0;
+		border-right: 1px solid #c0c0c0;
+		padding: 5px;
+	}
+	
+	table thead tr th {
+		font-weight: bold;
+		border: px solid #c0c0c0;
+	}
+	
+	span {
+		margin: 5px 20px;
+		display: block;
+	}
+	p {
+		padding:0; 
+		margin:0; 
+		font-size: .8em!important;
+		line-height: 1.3em;
+	}
+</style>
+<form method="POST">
+	<h3>Enter RFQ Id:</h3>
+	<div style="margin: 20px;">
+		<input type="number" onkeyup="noSpace(this)" onblur="noSpace(this)" id="rfqid" name="txtRfqid" value="<?php echo $this->rfqid; ?>" /><input type="submit" />
+	</div>
+</form>
+
+<?php
+if (is_object($this->rfq)):
+	?>
+<div style="background-color: #FCCFE0;">
+	<h3>RFQ Number: <?php echo $this->rfqid; ?></h3>
+
+	<table border="1" style="border:1px solid #c0c0c0;">
+		
+		<thead>
+			<tr>
+				<th>Buyer</th>
+				<th>Line Item Count</th>
+				<th>Vessel Name</th>
+				<th>IMO No.</th>
+			</tr>
+			
+		</thead>
+		
+			
+		<tr>
+			<td width="160"><?php echo $this->rfq->rfq_header->rfqBybBranchCode; ?></td>
+			<td  width="140"><?php echo $this->rfq->rfq_header->rfqLineItemCount; ?></td>
+			<td  width="260"><?php echo $this->rfq->rfq_header->rfqVesselName; ?></td>
+			<td  width="270"><?php echo $this->rfq->rfq_header->rfqVesselImo; ?></td>
+		</tr>
+		<tr>
+			<td colspan="4"><strong>
+				Subject:
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4"><?php echo $this->rfq->rfq_header->rfqSubject; ?></td>
+		</tr>
+		<tr>
+			<td colspan="4"><strong>
+				Comments:
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4"><?php echo $this->rfq->rfq_header->rfqComments; ?></td>
+		</tr>
+		<tr>
+			<td><strong>Delivery Port</strong></td>
+			
+		</tr>
+		<tr>
+			<td colspan="4"><?php echo $this->rfq->rfq_header->rfqDeliveryPort; ?></td>
+		</tr>
+	</table>	
+	<h3>Line Items</h3>
+	<table cellpadding="10">
+		<thead>
+		<tr>
+		<th>Quantity</th>
+		<th>Item Name</th>
+		<th>Item Description</th>
+		<th>Details</th>
+		<th>Manufacturer</th>
+		<th>Model No.</th>
+		</tr>
+		</thead>
+	
+	<?php foreach($this->rfq->rfq_line_items as $item):?>
+	<tr>
+		<td width="40"><?php echo $item->rflQuantity; ?></td>
+		<td width="190"><?php echo $item->rflConfgName; ?></td>
+		<td width="240"><?php echo $item->rflConfgDesc; ?></td>
+		<td width="240"><?php echo $item->rflProductDesc; ?></td>
+		<td width="140"><?php echo $item->rflConfgManufacturer; ?></td>
+		<td width="140"><?php echo $item->rflConfgModelNo; ?></td>
+	</tr>
+	<?php 
+		
+	endforeach;
+?>
+</table>
+</div>
+<div style="background-color: #7AFFAD; clear: both; width:850px;" id="suppliers" >
+	<div style="width:550px; float: left;">
+	<h3>Matched Suppliers</h3>
+	<table>
+	<?php
+
+
+foreach ($this->results as $result):
+	$tmp = $result;
+	?>
+	<tr>
+		<td>
+	
+	<span style="width: 260px"><a href="<?php echo $result['url']; ?>"><?php echo $result['name']; ?> (TNID=<?php echo $result['tnid']; ?>, <strong>Score: <?php echo $result['score']; ?></strong>, Country: <?php echo $result['location']; ?>)</a></span>
+		
+	<span style="font-size:.7em;">
+		
+		<?php 
+		$loopCategories = array();
+		
+		if(lg_count($result['categories']) >= 20){
+			$loopCategories = array_slice($result['categories'], 20);
+		}else{
+			$loopCategories = $result['categories'];
+		}
+		
+		foreach($loopCategories as $category):
+		
+		echo $category['name'] . "; ";
+		
+		endforeach;?>
+		<?php if(lg_count($result['categories']) > 20):
+		?>...
+		<?php
+		endif;
+		?>	
+	
+	</span>
+		
+		
+		
+		</td>
+		<td>
+			<p style="">
+		<?php echo str_replace(";", "</p><hr><p>" ,$result['comment']); ?>
+			</p>
+		</td>
+	</tr>
+	
+	<?php
+endforeach;
+?></table></div>
+<div style="width: 300px; float:right;">
+		<h3>Actual RFQ Suppliers</h3>
+		<?php foreach($this->rfqSuppliers as $supplier):?>
+			<span><a href="<?php echo $supplier['url']; ?>"><?php echo $supplier['name']; ?></a></span><br />
+		<?php
+		endforeach;
+		?>
+	</div>
+</div>
+&nbsp;
+<div style="clear:both">&nbsp;</div>
+&nbsp;
+<div>
+<h3>RFQ Matched Brands</h3>
+<?php
+ foreach($this->rfqBrands as $brand):
+?>
+	<span><?php echo print_r($brand, true); ?></span><br />
+ <?php endforeach; ?>
+
+</div>
+
+	
+
+<h3>RFQ Tags</h3>
+<?php
+foreach($this->rfqTags as $tag):
+?>
+<span><?php echo $tag['tag']; ?></span><br />
+<?php endforeach; 
+
+
+?>
+<h3>RFQ Categories</h3>
+<?php
+foreach($this->rfqCategories as $tag):
+?>
+<span><?php echo $tag['tag']; ?></span><br />
+<?php endforeach; 
+
+endif;
+?>
+
+<script type="text/javascript">
+<!--
+function noSpace(obj) {
+     obj.value = obj.value.replace (/\s*/g, "");
+}
+//-->
+</script>

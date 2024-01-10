@@ -1,0 +1,28 @@
+<?
+ /**
+  * Textfield element for forms.css form style
+  * @param String name - parameter name
+  * @param String label - label to display for field. Empty label suppresses <label> element altogether
+  * @param String value - default value
+  * @param Boolean readonly - default false
+  */
+
+  //Defaults
+  if (!isset($this->value)) $this->value = 'checked';
+  if (!isset($this->checked)) $this->checked = false;
+  if (!isset($this->required)) $this->required = false;
+  if (!isset($this->disabled)) $this->disabled = false;
+
+  $divClass = 'field checkbox' . ($this->hasErrors ? ' invalid' : '') . (isset($this->div['class']) ? ' '.$this->div['class'] : '') . ($this->required ? ' required' : '');
+  $inputClass = 'checkbox' . ($this->hasErrors ? ' invalid' : '') . ' clearfix' . ($this->required ? ' required' : '') . (isset($this->input['class']) ? ' '.$this->input['class'] : '') . ($this->readonly ? ' readonly' : '' );
+  $labelClass = 'checkbox' . ($this->hasErrors ? ' invalid' : '') . ($this->required ? ' required' : '');
+
+  $id = isset($this->id) ? $this->id : $this->name.'-radio';
+?>
+
+<div class="<?=$divClass?>">
+	<input id="<?=$id?>" type="checkbox" name="<?=$this->name?>" class="<?=$inputClass?>" value="<?=$this->value?>" <?=($this->checked ? ' checked="checked"' : '')?> <?=$this->disabled ? ' disabled="disabled"' : ''?> <?if(isset($this->input['attr'])):?> <?foreach($this->input['attr'] as $attr => $val):?>  <?=$attr.'="'.$val.'"'?> <?endforeach?> <?endif?> />
+	<?if (!$this->noLabel):?>
+		<label class="<?=$labelClass?> clearfix" for="<?=$id?>"><?=$this->label?><?if($this->required){?><span class="asterisk">*</span><?}?></label>
+	<?endif?>
+</div>

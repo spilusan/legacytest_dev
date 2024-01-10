@@ -1,0 +1,307 @@
+/*
+Document   : partials/guidelines/_blog_base.scss
+Author     : Daniele Manca
+Description: basic styles for Shipserv's blog
+*/
+
+.more-info {
+	margin-top: 15px;
+	
+	position: relative;
+
+	.date, .tags {
+		p {
+			font-size: 16px;
+			text-align: left;
+
+			.fa {
+				font-size: 20px;
+				color: $dark-grey;
+			}
+			a {
+				font-size: 16px;
+			} 
+		}
+	}
+
+	.tags {
+		p {
+			word-wrap: break-word;
+		}
+	}
+
+	.btn {
+		right: 0;
+		bottom: 20px;
+		width: 120px;
+		padding: 10px;
+		position: absolute;
+	}
+
+	.pull-right {
+		right: 0;
+		bottom: 0;
+		width: 120px;
+		padding: 10px;
+		float: right;
+		position: relative;
+		top: -10px;
+		margin-left: 10px!important;
+	}
+}
+
+section {
+	&.blog {
+		background-color: $white;
+
+		.wrapper {
+			padding-top: 60px;
+		}
+	}
+	.blogWrapper {
+		width: 100%;
+		height: auto;
+		text-align: left;
+
+		.note {
+			text-align: left;
+		}
+		
+		.blogPostContainer {
+			width: 65%;
+			float: left;
+
+			.blogPost {
+				padding: 20px 0;
+				box-sizing: border-box;
+				border-bottom: 1px solid $mid-grey;
+
+				&.featured {
+					border: 0;
+					border-radius: 5px;
+					padding: 20px;
+					background-color: $lt-grey;
+				}
+
+				.blogPostWrapper {
+					@include display-flex-ie;
+
+					.featuredImage, .content {
+						@include flex-grow(1);
+					}
+
+					.featuredImage {
+						@include flex-basis(25%);
+					}
+
+					.content {
+						text-align: left;
+						padding-left: 5%;
+						@include flex-basis(70%);
+
+						.screen-reader-text {
+							display: none;
+						}
+						
+						p {
+							font-size: 16px;
+							text-align: left;
+						}
+
+						mark {
+							font-weight: 900;
+							background: none;
+						}
+
+						h5 {
+							color: $mid-blue;
+							margin: 15px 0;
+							font-weight: normal;
+							font-size: 30px;
+						}
+
+						&.no-padding {
+							padding-left: 0;
+						}
+					}
+				}
+			}
+
+			.post-content {
+				p {
+					text-align: left;
+				}
+			}
+
+			.blog-index {
+				padding-top: 10px;
+				border-bottom: 1px solid $mid-grey;
+				p {
+					text-align: left;
+
+					&.search-result {
+						color: $link-blue;
+					}
+				}
+			}
+
+			.social-media-share  {
+				margin-top: 50px;
+				ul {
+					@include display-flex-ie;
+					list-style-type: none;
+					padding-left: 0;
+
+					li {
+						margin-right: 10px;
+
+						a {
+							.fa {
+								font-size: 40px;
+
+								&.fa-twitter-square {
+									color: $cyan-blue;
+								}
+							}
+						}
+					}
+				}				
+			}
+
+			.navigation {
+
+				.screen-reader-text {
+					display: none;
+				}
+
+				.nav-links {
+					@include display-flex-ie;
+					@include flex-wrap(wrap);
+
+					.page-numbers {
+						color: #666;
+					    width: 20px;
+					    height: 20px;
+					    padding: 10px;
+					    font-size: 18px;
+					    margin: 20px 10px 40px 0;
+					    text-align: center;
+					    border-radius: 4px;
+					    display: inline-block;
+					    vertical-align: middle;
+					    border: 1px solid $dark-grey;
+
+					    &.current {
+					    	background: $lt-grey;
+					    }
+
+					    &.next {
+					    	.fa {
+								font-size: 18px;
+					    	}
+					    }
+					}
+				}
+			}
+		}
+		
+		.archive {
+			width: 25%;
+			float: right;
+			margin-left: 10%;
+
+			h6 {
+				font-size: 18px;
+				margin-bottom: 20px;
+			}
+
+			.posts-search {
+				margin-bottom: 32px;
+				
+				.input-box {
+					position: relative;
+					margin: 0;
+					max-width: 100%;
+
+					label {
+						border: 0;
+					    clip: rect(0 0 0 0);
+					    height: 1px;
+					    margin: -1px;
+					    overflow: hidden;
+					    padding: 0;
+					    position: absolute;
+					    width: 1px;
+					}
+
+					input {
+						width: 100%;
+						padding: 10px 0;
+						padding-left: 10px;
+						display: inline-block;
+						box-sizing: border-box;
+					}
+
+					button[type="submit"] {
+						top: 0;
+					    right: -2px;
+					    margin: 0;
+					    padding: 12.5px;
+						border: 0;
+						color: $white;
+						background: $link-blue;
+						position: absolute;
+						border-radius: 0 4px 4px 0;
+					}
+				}
+			}
+
+			.archive-list {
+				padding: 20px;
+				list-style: none;
+				padding-left: 0;
+				border-top: 1px solid $mid-grey;
+				
+				li {
+					font-size: 18px;
+					padding: 0 20px;
+					line-height: 1.5em;
+
+					&.active {
+						border-left: 2px solid $cyan-blue;
+						background-color: $grey;
+					}
+				}				
+			}
+
+			.newsletterSignUp {
+				padding: 20px;
+				background-color: $white;
+				border: 1px solid $dark-grey;
+				
+				h6 {
+					font-size: 18px;
+				}
+
+				p {
+					font-size: 17px;
+					text-align: left;
+					margin-bottom: 20px;	
+				}
+
+				label {
+					font-size: 17px;
+					margin-bottom: 10px;
+				}
+
+				.btn {
+					padding: 7px 20px;
+					width: 100%;
+				}
+
+			}
+		}
+	}
+
+}
+

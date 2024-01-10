@@ -1,0 +1,517 @@
+<div id="detailed" class="viewTabBody detailed">
+	<div id="detailed-graph"></div>
+</div>
+<div class="tables">
+	<h3 >Total & Unique</h3>
+	<div id="totalNUnique">
+		<div>
+			<table class="tNu profile">
+				<thead>
+					<tr class="title">
+						<th class="noBorder"></th>
+						<th colspan="{{#if comparePeriod}}{{#if compareMarket}}6{{else}}{{#if comparePeriod}}3{{else}}1{{/if}}{{/if}}{{/if}}{{#if compareMarket}}{{#if comparePeriod}}{{else}}2{{/if}}{{/if}}">Profile Views</th>
+					</tr>
+					<tr class="date">
+						<th class="noBorder"></th>
+						<th colspan="{{#if compareMarket}}2{{else}}1{{/if}}">{{fromDate}} - {{toDate}}</th>
+						{{#if comparePeriod}}<th colspan="{{#if compareMarket}}2{{else}}1{{/if}}" class="compare">{{fromDateComp}} - {{toDateComp}}</th>{{/if}}
+						{{#if comparePeriod}}<th colspan="{{#if compareMarket}}2{{else}}1{{/if}}" class="change">% Period change</th>{{/if}}
+					</tr>
+					<tr class="legend">
+						<th class="noBorder left">Total & Unique</th>
+						<th>You</th>
+						{{#if compareMarket}}<th>Market</th>{{/if}}
+						{{#if comparePeriod}}<th>You</th>{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}<th>Market</th>{{/if}}{{/if}}
+						{{#if comparePeriod}}<th>You</th>{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}<th>Market</th>{{/if}}{{/if}}
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="left">Total Number</td>
+						<td>{{supplier.impression-summary.impression.count}}</td>
+						{{#if compareMarket}}<td>{{roundOneUp market.impression.count}}</td>{{/if}}
+						{{#if comparePeriod}}<td>{{compare.impression-summary.impression.count}}</td>{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}<td>{{roundOneUp marketComp.impression.count}}</td>{{/if}}{{/if}}
+						{{#if comparePeriod}}
+						<td class="{{#ifCond supplier.impression-summary.impression.change.positive 1}}positive{{/ifCond}} {{#ifCond supplier.impression-summary.impression.change.positive 0}}negative{{/ifCond}}">
+							{{#ifCond supplier.impression-summary.impression.change.positive 1}}+{{/ifCond}}{{#if supplier.impression-summary.impression.change.amount}}{{supplier.impression-summary.impression.change.amount}}%{{/if}}
+						</td>
+						{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}
+						<td class="{{#ifCond market.impression.change.positive 1}}positive{{/ifCond}} {{#ifCond market.impression.change.positive 0}}negative{{/ifCond}}">
+							{{#ifCond market.impression.change.positive 1}}+{{/ifCond}}{{#if market.impression.change.amount}}{{market.impression.change.amount}}%{{/if}}
+						</td>
+						{{/if}}{{/if}}
+					</tr>
+					<tr>
+						<td class="left">By unique users</td>
+						<td>{{supplier.impression-summary.impression-by-unique-user.count}}</td>
+						{{#if compareMarket}}<td>{{roundOneUp market.impression-by-unique-user.count}}</td>{{/if}}
+						{{#if comparePeriod}}<td>{{compare.impression-summary.impression-by-unique-user.count}}</td>{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}<td>{{roundOneUp marketComp.impression-by-unique-user.count}}</td>{{/if}}{{/if}}
+						{{#if comparePeriod}}
+						<td class="{{#ifCond supplier.impression-summary.impression-by-unique-user.change.positive 1}}positive{{/ifCond}} {{#ifCond supplier.impression-summary.impression-by-unique-user.change.positive 0}}negative{{/ifCond}}">
+							{{#ifCond supplier.impression-summary.impression-by-unique-user.change.positive 1}}+{{/ifCond}}{{#if supplier.impression-summary.impression-by-unique-user.change.amount}}{{supplier.impression-summary.impression-by-unique-user.change.amount}}%{{/if}}
+						</td>
+						{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}
+						<td class="{{#ifCond market.impression-by-unique-user.change.positive 1}}positive{{/ifCond}} {{#ifCond market.impression-by-unique-user.change.positive 0}}negative{{/ifCond}}">
+							{{#ifCond market.impression-by-unique-user.change.positive 1}}+{{/ifCond}}{{#if market.impression-by-unique-user.change.amount}}{{market.impression-by-unique-user.change.amount}}%{{/if}}
+						</td>
+						{{/if}}{{/if}}
+					</tr>
+				</tbody>
+			</table>
+			<table class="tNu contact">
+				<thead>
+					<tr class="title">
+						<th colspan="{{#if comparePeriod}}{{#if compareMarket}}6{{else}}{{#if comparePeriod}}3{{else}}1{{/if}}{{/if}}{{/if}}{{#if compareMarket}}{{#if comparePeriod}}{{else}}2{{/if}}{{/if}}">Contact Views</th>
+					</tr>
+					<tr class="date">
+						<th colspan="{{#if compareMarket}}2{{else}}1{{/if}}">{{fromDate}} - {{toDate}}</th>
+						{{#if comparePeriod}}<th colspan="{{#if compareMarket}}2{{else}}1{{/if}}" class="compare">{{fromDateComp}} - {{toDateComp}}</th>{{/if}}
+						{{#if comparePeriod}}<th colspan="{{#if compareMarket}}2{{else}}1{{/if}}" class="change">% Period change</th>{{/if}}
+					</tr>
+					<tr class="legend">
+						<th>You</th>
+						{{#if compareMarket}}<th>Market</th>{{/if}}
+						{{#if comparePeriod}}<th>You</th>{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}<th>Market</th>{{/if}}{{/if}}
+						{{#if comparePeriod}}<th>You</th>{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}<th>Market</th>{{/if}}{{/if}}
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{supplier.impression-summary.contact-view.count}}</td>
+						{{#if compareMarket}}<td>{{roundOneUp market.contact-view.count}}</td>{{/if}}
+						{{#if comparePeriod}}<td>{{compare.impression-summary.contact-view.count}}</td>{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}<td>{{roundOneUp marketComp.contact-view.count}}</td>{{/if}}{{/if}}
+						{{#if comparePeriod}}
+						<td class="{{#ifCond supplier.impression-summary.contact-view.change.positive 1}}positive{{/ifCond}} {{#ifCond supplier.impression-summary.contact-view.change.positive 0}}negative{{/ifCond}}">
+							{{#ifCond supplier.impression-summary.contact-view.change.positive 1}}+{{/ifCond}}{{#if supplier.impression-summary.contact-view.change.amount}}{{supplier.impression-summary.contact-view.change.amount}}%{{/if}}
+						</td>
+						{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}
+						<td class="{{#ifCond market.contact-view.change.positive 1}}positive{{/ifCond}} {{#ifCond market.contact-view.change.positive 0}}negative{{/ifCond}}">
+							{{#ifCond market.contact-view.change.positive 1}}+{{/ifCond}}{{#if market.contact-view.change.amount}}{{market.contact-view.change.amount}}%{{/if}}
+						</td>
+						{{/if}}{{/if}}
+					</tr>
+					<tr>
+						<td>{{supplier.impression-summary.contact-view-by-unique-user.count}}</td>
+						{{#if compareMarket}}<td>{{roundOneUp market.contact-view-by-unique-user.count}}</td>{{/if}}
+						{{#if comparePeriod}}<td>{{compare.impression-summary.contact-view-by-unique-user.count}}</td>{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}<td>{{roundOneUp marketComp.contact-view-by-unique-user.count}}</td>{{/if}}{{/if}}
+						{{#if comparePeriod}}
+						<td class="{{#ifCond supplier.impression-summary.contact-view-by-unique-user.change.positive 1}}positive{{/ifCond}} {{#ifCond supplier.impression-summary.contact-view-by-unique-user.change.positive 0}}negative{{/ifCond}}">
+							{{#ifCond supplier.impression-summary.contact-view-by-unique-user.change.positive 1}}+{{/ifCond}}{{#if supplier.impression-summary.contact-view-by-unique-user.change.amount}}{{supplier.impression-summary.contact-view-by-unique-user.change.amount}}%{{/if}}
+						</td>
+						{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}
+						<td class="{{#ifCond market.contact-view-by-unique-user.change.positive 1}}positive{{/ifCond}} {{#ifCond market.contact-view-by-unique-user.change.positive 0}}negative{{/ifCond}}">
+							{{#ifCond market.contact-view-by-unique-user.change.positive 1}}+{{/ifCond}}{{#if market.contact-view-by-unique-user.change.amount}}{{market.contact-view-by-unique-user.change.amount}}%{{/if}}
+						</td>
+						{{/if}}{{/if}}
+					</tr>
+				</tbody>
+			</table>
+			<table class="tNu rfq">
+				<thead>
+					<tr class="title">
+						<th colspan="{{#if comparePeriod}}{{#if compareMarket}}6{{else}}{{#if comparePeriod}}3{{else}}1{{/if}}{{/if}}{{/if}}{{#if compareMarket}}{{#if comparePeriod}}{{else}}2{{/if}}{{/if}}">Pages RFQs</th>
+					</tr>
+					<tr class="date">
+						<th colspan="{{#if compareMarket}}2{{else}}1{{/if}}">{{fromDate}} - {{toDate}}</th>
+						{{#if comparePeriod}}<th colspan="{{#if compareMarket}}2{{else}}1{{/if}}" class="compare">{{fromDateComp}} - {{toDateComp}}</th>{{/if}}
+						{{#if comparePeriod}}<th colspan="{{#if compareMarket}}2{{else}}1{{/if}}" class="change">% Period change</th>{{/if}}
+					</tr>
+					<tr class="legend">
+						<th>You</th>
+						{{#if compareMarket}}<th>Market</th>{{/if}}
+						{{#if comparePeriod}}<th>You</th>{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}<th>Market</th>{{/if}}{{/if}}
+						{{#if comparePeriod}}<th>You</th>{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}<th>Market</th>{{/if}}{{/if}}
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>{{supplier.enquiry-summary.enquiry-sent.count}}</td>
+						{{#if compareMarket}}<td>{{roundOneUp market.enquiry-sent.count}}</td>{{/if}}
+						{{#if comparePeriod}}<td>{{compare.enquiry-summary.enquiry-sent.count}}</td>{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}<td>{{roundOneUp marketComp.enquiry-sent.count}}</td>{{/if}}{{/if}}
+						{{#if comparePeriod}}
+						<td class="{{#ifCond supplier.enquiry-summary.enquiry-sent.change.positive 1}}positive{{/ifCond}} {{#ifCond supplier.enquiry-summary.enquiry-sent.change.positive 0}}negative{{/ifCond}}">
+							{{#ifCond supplier.enquiry-summary.enquiry-sent.change.positive 1}}+{{/ifCond}}{{#if supplier.enquiry-summary.enquiry-sent.change.amount}}{{supplier.enquiry-summary.enquiry-sent.change.amount}}%{{/if}}
+						</td>
+						{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}
+						<td class="{{#ifCond market.enquiry-sent.change.positive 1}}positive{{/ifCond}} {{#ifCond market.enquiry-sent.change.positive 0}}negative{{/ifCond}}">
+							{{#ifCond market.enquiry-sent.change.positive 1}}+{{/ifCond}}{{#if market.enquiry-sent.change.amount}}{{market.enquiry-sent.change.amount}}%{{/if}}
+						</td>
+						{{/if}}{{/if}}
+					</tr>
+					<tr>
+						<td>{{supplier.enquiry-summary.enquiries-sent-by-unique-user.count}}</td>
+						{{#if compareMarket}}<td>{{roundOneUp market.enquiry-sent-by-unique-user.count}}</td>{{/if}}
+						{{#if comparePeriod}}<td>{{compare.enquiry-summary.enquiries-sent-by-unique-user.count}}</td>{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}<td>{{roundOneUp marketComp.enquiry-sent-by-unique-user.count}}</td>{{/if}}{{/if}}
+						{{#if comparePeriod}}
+						<td class="{{#ifCond supplier.enquiry-summary.enquiries-sent-by-unique-user.change.positive 1}}positive{{/ifCond}} {{#ifCond supplier.enquiry-summary.enquiries-sent-by-unique-user.change.positive 0}}negative{{/ifCond}}">
+							{{#ifCond supplier.enquiry-summary.enquiries-sent-by-unique-user.change.positive 1}}+{{/ifCond}}{{#if supplier.enquiry-summary.enquiries-sent-by-unique-user.change.amount}}{{supplier.enquiry-summary.enquiries-sent-by-unique-user.change.amount}}%{{/if}}
+						</td>
+						{{/if}}
+						{{#if comparePeriod}}{{#if compareMarket}}
+						<td class="{{#ifCond market.enquiry-sent-by-unique-user.change.positive 1}}positive{{/ifCond}} {{#ifCond market.enquiry-sent-by-unique-user.change.positive 0}}negative{{/ifCond}}">
+							{{#ifCond market.enquiry-sent-by-unique-user.change.positive 1}}+{{/ifCond}}{{#if market.enquiry-sent-by-unique-user.change.amount}}{{market.enquiry-sent-by-unique-user.change.amount}}%{{/if}}
+						</td>
+						{{/if}}{{/if}}
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<h3 >Category Searches/Clicks</h3>
+	<div class="catSearchClick">
+		<table class="large">
+			<thead>
+				<tr class="title">
+					<th class="noBorder"></th>
+					<th colspan="{{#if comparePeriod}}6{{else}}2{{/if}}">Global</th>
+					<th colspan="{{#if comparePeriod}}6{{else}}2{{/if}}" class="country">Your country</th>
+				</tr>
+				<tr class="date">
+					<th class="noBorder"></th>
+					<th colspan="2">{{fromDate}} - {{toDate}}</th>
+					{{#if comparePeriod}}<th colspan="2" class="compare">{{fromDateComp}} - {{toDateComp}}</th>{{/if}}
+					{{#if comparePeriod}}<th colspan="2" class="change">% Period change</th>{{/if}}
+					<th colspan="2">{{fromDate}} - {{toDate}}</th>
+					{{#if comparePeriod}}<th colspan="2" class="compare">{{fromDateComp}} - {{toDateComp}}</th>{{/if}}
+					{{#if comparePeriod}}<th colspan="2" class="change">% Period change</th>{{/if}}
+				</tr>
+				<tr class="legend">
+					<th class="noBorder left">Categories</th>
+					<th>Searches</th>
+					<th>Clicks</th>
+					{{#if comparePeriod}}<th>Searches</th>{{/if}}
+					{{#if comparePeriod}}<th>Clicks</th>{{/if}}
+					{{#if comparePeriod}}<th>Searches</th>{{/if}}
+					{{#if comparePeriod}}<th>Clicks</th>{{/if}}
+					<th>Searches</th>
+					<th>Clicks</th>
+					{{#if comparePeriod}}<th>Searches</th>{{/if}}
+					{{#if comparePeriod}}<th>Clicks</th>{{/if}}
+					{{#if comparePeriod}}<th>Searches</th>{{/if}}
+					{{#if comparePeriod}}<th>Clicks</th>{{/if}}
+				</tr>
+			</thead>
+			<tbody>
+				{{#each catSearch}}
+					<tr>
+						<td class="left">{{this.current.global.name}}</td>
+						<td>
+							{{#if this.current.global.search}}
+								{{this.current.global.search}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						<td>
+							{{#if this.current.global.click}}
+								{{this.current.global.click}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						{{#if this.compare}}
+						<td>
+							{{#if this.compare.global.search}}
+								{{this.compare.global.search}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						<td>
+							{{#if this.compare.global.click}}
+								{{this.compare.global.click}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						<td class="{{#ifCond this.current.global.searchChange.positive 1}}positive{{/ifCond}} {{#ifCond this.current.global.searchChange.positive 0}}negative{{/ifCond}}">
+							{{#ifCond this.current.global.searchChange.positive 1}}+{{/ifCond}}{{#if this.current.global.searchChange.amount}}{{this.current.global.searchChange.amount}}%{{/if}}
+						</td>
+						<td class="{{#ifCond this.current.global.clickChange.positive 1}}positive{{/ifCond}} {{#ifCond this.current.global.clickChange.positive 0}}negative{{/ifCond}}">
+							{{#ifCond this.current.global.clickChange.positive 1}}+{{/ifCond}}{{#if this.current.global.clickChange.amount}}{{this.current.global.clickChange.amount}}%{{/if}}
+						</td>
+						{{/if}}
+						<td>
+							{{#if this.current.local.search}}
+								{{this.current.local.search}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						<td>
+							{{#if this.current.local.click}}
+								{{this.current.local.click}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						{{#if this.compare}}
+						<td>
+							{{#if this.compare.local.search}}
+								{{this.compare.local.search}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						<td>
+							{{#if this.compare.local.click}}
+								{{this.compare.local.click}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						<td class="{{#ifCond this.current.local.searchChange.positive 1}}positive{{/ifCond}} {{#ifCond this.current.local.searchChange.positive 0}}negative{{/ifCond}}">
+							{{#ifCond this.current.local.searchChange.positive 1}}+{{/ifCond}}{{#if this.current.local.searchChange.amount}}{{this.current.local.searchChange.amount}}%{{/if}}
+						</td>
+						<td class="{{#ifCond this.current.local.clickChange.positive 1}}positive{{/ifCond}} {{#ifCond this.current.local.clickChange.positive 0}}negative{{/ifCond}}">
+							{{#ifCond this.current.local.clickChange.positive 1}}+{{/ifCond}}{{#if this.current.local.clickChange.amount}}{{this.current.local.clickChange.amount}}%{{/if}}
+						</td>
+						{{/if}}
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+	<h3 >Brand Searches/Clicks</h3>
+	<div class="brandSearchClick">
+		<table class="large">
+			<thead>
+				<tr class="title">
+					<th class="noBorder"></th>
+					<th colspan="{{#if comparePeriod}}6{{else}}2{{/if}}">Global</th>
+					<th colspan="{{#if comparePeriod}}6{{else}}2{{/if}}" class="country">Your country</th>
+				</tr>
+				<tr class="date">
+					<th class="noBorder"></th>
+					<th colspan="2">{{fromDate}} - {{toDate}}</th>
+					{{#if comparePeriod}}<th colspan="2" class="compare">{{fromDateComp}} - {{toDateComp}}</th>{{/if}}
+					{{#if comparePeriod}}<th colspan="2" class="change">% Period change</th>{{/if}}
+					<th colspan="2">{{fromDate}} - {{toDate}}</th>
+					{{#if comparePeriod}}<th colspan="2" class="compare">{{fromDateComp}} - {{toDateComp}}</th>{{/if}}
+					{{#if comparePeriod}}<th colspan="2" class="change">% Period change</th>{{/if}}
+				</tr>
+				<tr class="legend">
+					<th class="noBorder left">Categories</th>
+					<th>Searches</th>
+					<th>Clicks</th>
+					{{#if comparePeriod}}<th>Searches</th>{{/if}}
+					{{#if comparePeriod}}<th>Clicks</th>{{/if}}
+					{{#if comparePeriod}}<th>Searches</th>{{/if}}
+					{{#if comparePeriod}}<th>Clicks</th>{{/if}}
+					<th>Searches</th>
+					<th>Clicks</th>
+					{{#if comparePeriod}}<th>Searches</th>{{/if}}
+					{{#if comparePeriod}}<th>Clicks</th>{{/if}}
+					{{#if comparePeriod}}<th>Searches</th>{{/if}}
+					{{#if comparePeriod}}<th>Clicks</th>{{/if}}
+				</tr>
+			</thead>
+			<tbody>
+				{{#each brandSearch}}
+					<tr>
+						<td class="left">{{this.current.global.name}}</td>
+						<td>
+							{{#if this.current.global.search}}
+								{{this.current.global.search}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						<td>
+							{{#if this.current.global.click}}
+								{{this.current.global.click}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						{{#if this.compare}}
+						<td>
+							{{#if this.compare.global.search}}
+								{{this.compare.global.search}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						<td>
+							{{#if this.compare.global.click}}
+								{{this.compare.global.click}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						<td class="{{#ifCond this.current.global.searchChange.positive 1}}positive{{/ifCond}} {{#ifCond this.current.global.searchChange.positive 0}}negative{{/ifCond}}">
+							{{#ifCond this.current.global.searchChange.positive 1}}+{{/ifCond}}{{#if this.current.global.searchChange.amount}}{{this.current.global.searchChange.amount}}%{{/if}}
+						</td>
+						<td class="{{#ifCond this.current.global.clickChange.positive 1}}positive{{/ifCond}} {{#ifCond this.current.global.clickChange.positive 0}}negative{{/ifCond}}">
+							{{#ifCond this.current.global.clickChange.positive 1}}+{{/ifCond}}{{#if this.current.global.clickChange.amount}}{{this.current.global.clickChange.amount}}%{{/if}}
+						</td>
+						{{/if}}
+						<td>
+							{{#if this.current.local.search}}
+								{{this.current.local.search}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						<td>
+							{{#if this.current.local.click}}
+								{{this.current.local.click}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						{{#if this.compare}}
+						<td>
+							{{#if this.compare.local.search}}
+								{{this.compare.local.search}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						<td>
+							{{#if this.compare.local.click}}
+								{{this.compare.local.click}}
+							{{else}}
+								0
+							{{/if}}
+						</td>
+						<td class="{{#ifCond this.current.local.searchChange.positive 1}}positive{{/ifCond}} {{#ifCond this.current.local.searchChange.positive 0}}negative{{/ifCond}}">
+							{{#ifCond this.current.local.searchChange.positive 1}}+{{/ifCond}}{{#if this.current.local.searchChange.amount}}{{this.current.local.searchChange.amount}}%{{/if}}
+						</td>
+						<td class="{{#ifCond this.current.local.clickChange.positive 1}}positive{{/ifCond}} {{#ifCond this.current.local.clickChange.positive 0}}negative{{/ifCond}}">
+							{{#ifCond this.current.local.clickChange.positive 1}}+{{/ifCond}}{{#if this.current.local.clickChange.amount}}{{this.current.local.clickChange.amount}}%{{/if}}
+						</td>
+						{{/if}}
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+	<h3 >Supplier Profile Page Views Statistics</h3>
+	<div class="profileViewStats">
+		<table class="large">
+			<thead>
+				<tr class="date legend">
+					<th class="noBorder left fixed">Top searches that lead to profile views</th>
+					<th>{{fromDate}} - {{toDate}}</th>
+					{{#if comparePeriod}}
+					<th class="compare">{{fromDateComp}} - {{toDateComp}}</th>
+					<th class="change">% Period change</th>
+					{{/if}}
+				</tr>
+			</thead>
+			<tbody>
+				{{#each topSearch}}
+				<tr>
+					<td class="left">{{this.name}}</td>
+					<td>{{this.period1.var1}}</td>
+					{{#if this.period2}}
+					<td>{{this.period2.var1}}</td>
+					<td class="{{#ifCond this.change.positive 1}}positive{{/ifCond}} {{#ifCond this.change.positive 0}}negative{{/ifCond}}">
+						{{#ifCond this.change.positive 1}}+{{/ifCond}}{{#if this.change.amount}}{{this.change.amount}}%{{/if}}
+					</td>
+					{{/if}}
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		<table class="large">
+			<thead>
+				<tr class="date legend">
+					<th class="noBorder left fixed">Type of users that view your profile</th>
+					<th>{{fromDate}} - {{toDate}}</th>
+					{{#if comparePeriod}}
+					<th class="compare">{{fromDateComp}} - {{toDateComp}}</th>
+					<th class="change">% Period change</th>
+					{{/if}}
+				</tr>
+			</thead>
+			<tbody>
+				{{#each userType}}
+				<tr>
+					<td class="left">{{this.name}}</td>
+					<td>{{this.period1.var1}}</td>
+					{{#if this.period2}}
+					<td>{{this.period2.var1}}</td>
+					<td class="{{#ifCond this.change.positive 1}}positive{{/ifCond}} {{#ifCond this.change.positive 0}}negative{{/ifCond}}">
+						{{#ifCond this.change.positive 1}}+{{/ifCond}}{{#if this.change.amount}}{{this.change.amount}}%{{/if}}
+					</td>
+					{{/if}}
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+	<h3 >Pages RFQ Statistics</h3>
+	<div class="rfqStats">
+		<table class="large">
+			<thead>
+				<tr class="date legend">
+					<th class="noBorder left fixed">Top searches that lead to sending of Pages RFQ</th>
+					<th>{{fromDate}} - {{toDate}}</th>
+					{{#if comparePeriod}}
+					<th class="compare">{{fromDateComp}} - {{toDateComp}}</th>
+					<th class="change">% Period change</th>
+					{{/if}}
+				</tr>
+			</thead>
+			<tbody>
+				{{#each rfqKeyword}}
+				<tr>
+					<td class="left">{{this.name}}</td>
+					<td>{{this.period1.var1}}</td>
+					{{#if this.period2}}
+					<td>{{this.period2.var1}}</td>
+					<td class="{{#ifCond this.change.positive 1}}positive{{/ifCond}} {{#ifCond this.change.positive 0}}negative{{/ifCond}}">
+						{{#ifCond this.change.positive 1}}+{{/ifCond}}{{#if this.change.amount}}{{this.change.amount}}%{{/if}}
+					</td>
+					{{/if}}
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		<table class="large">
+			<thead>
+				<tr class="date legend">
+					<th class="noBorder left fixed">Type of users that send you Pages RFQ</th>
+					<th>{{fromDate}} - {{toDate}}</th>
+					{{#if comparePeriod}}
+					<th class="compare">{{fromDateComp}} - {{toDateComp}}</th>
+					<th class="change">% Period change</th>
+					{{/if}}
+				</tr>
+			</thead>
+			<tbody>
+				{{#each rfqUser}}
+				<tr>
+					<td class="left">{{this.name}}</td>
+					<td>{{this.period1.var1}}</td>
+					{{#if this.period2}}
+					<td>{{this.period2.var1}}</td>
+					<td class="{{#ifCond this.change.positive 1}}positive{{/ifCond}} {{#ifCond this.change.positive 0}}negative{{/ifCond}}">
+						{{#ifCond this.change.positive 1}}+{{/ifCond}}{{#if this.change.amount}}{{this.change.amount}}%{{/if}}
+					</td>
+					{{/if}}
+				</tr>
+				{{/each}}
+			</tbody>
+		</table>
+	</div>
+</div>

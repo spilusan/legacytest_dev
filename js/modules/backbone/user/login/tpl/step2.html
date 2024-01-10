@@ -1,0 +1,103 @@
+<div class="step2">
+	<div class="box">
+		<label for="jobType">Your Job type: <sup>*</sup></label>
+		<select name="jobType" id="jobType">
+			<option value="">Please Select</option>
+			{{#each jobTypes}}
+				<option value="{{this.attributes.id}}">{{this.attributes.name}}</option>
+			{{/each}}
+		</select>
+		<br />
+		<label for="jobOtherType">Other Job Type:</label>
+		<input type="text" name="jobOtherType" />
+		<br />
+		<label for="decision"><input type="image" src="/img/icons/small/help_light.png" alt="Info" name="decInfo"> Are you a decision maker?</label>
+		<input type="radio" name="decision" value="1" id="decYes"> <span class="dec">Yes</span>
+		<br />
+		<input type="radio" name="decision" value="0" id="decNo"> <span class="dec">No</span>
+		<div class="separate"></div>
+		<label for="companyName">Company Name: <sup>*</sup></label>
+		<input type="text" name="companyName" />
+		<br />
+		<label for="address1">Address line 1: <sup>*</sup></label>
+		<input type="text" name="address1" />
+		<br />
+		<label for="address2">Address line 2:</label>
+		<input type="text" name="address2" />
+		<br />
+		<label for="address3">Address line 3:</label>
+		<input type="text" name="address3" />
+		<br />
+		<label for="zip">Zip/Post Code: <sup>*</sup></label>
+		<input type="text" name="zip" />
+		<br />
+		<label for="country">Country: <sup>*</sup></label>
+		<select name="country" id="country">
+			<option value="">Please Select</option>
+			{{#each countries}}
+				<option value="{{this.attributes.id}}">{{this.attributes.name}}</option>
+			{{/each}}
+		</select>
+		<br />
+		<label for="phone">Telephone:</label>
+		<input type="text" name="phone" />
+		<br />
+		<label for="web">Website:</label>
+		<input type="text" name="web" />
+		<br />
+		<label for="spend"><input type="image" src="/img/icons/small/help_light.png" alt="Info" name="spendInfo">Your Spend in USD:</label>
+		<select name="spend" id="spend">
+			<option value="">Please Select</option>
+			{{#each annualBudget}}
+				<option value="{{this.attributes.id}}">{{this.attributes.name}}</option>
+			{{/each}}
+		</select>
+		<br />
+	</div>
+	<div class="vesselContainer">
+		<h3>Vessels</h3>
+		<div class="box">
+			<label for="vesselNo">No. of Vessels:</label>
+			<input type="text" name="vesselNo" />
+			<div class="types">
+				<div class="title">
+					Type of Vessels:
+				</div>
+				<div class="checks">
+					{{#each vessels}}
+						<input type="checkbox" value="{{this.attributes.id}}" name="vesselType[]" id="{{this.attributes.name}}">
+						<label for="vesselType[]">{{this.attributes.name}}</label>
+					{{/each}}
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="privacy">
+		<p>
+			<br />
+			Our <a href="/info/privacy-policy/" target="_blank">Privacy Policy</a> and <a href="/info/terms-of-use" target="_blank">Terms of Use</a> have been updated to enable us to share some of your information with suppliers. 
+			<b>By doing this, suppliers on our system have more reason to improve their profiles which gives users, such as you, a better experience.</b><br />
+			<br />
+			
+			<b>We only share your information with your consent.</b> The default setting is that we share only your job title and company, but not your name. However, you can change this setting at any time to a number of other options including anonymity. If you wish to change how we share your personal information you can do so by firstly agreeing to the changed Privacy Policy and Terms of Use, and thereafter go to Settings in the Account section, and change your settings.<br />
+		</p>
+	</div>
+	
+	<div class="agreement">
+		<input type="checkbox" value="agree" name="agree" />
+		<label for="agree">		
+		<sup>*</sup>  I have read and agree to the changed <a href="/info/privacy-policy/" target="_blank">Privacy Policy</a> and latest <a href="/info/terms-of-use" target="_blank">Terms of Use</a>.</strong></label>
+	</div>
+	
+	<div class="updates">
+		<input type="checkbox" value="news" name="news" checked />
+		<label for="news">Keep me up to date with all the latest news from the ShipServ community</label>
+		<br />
+		<input type="checkbox" value="keepLogged" name="keepLoggedIn" checked />
+		<label for="keepLoggedIn">Keep me logged in</label>
+	</div>
+	
+	<input type="button" value="Previous step" class="button medium white back">
+	<input type="submit" value="Register me" class="button medium green register" />
+</div>

@@ -1,0 +1,23 @@
+<h2 class="print-only">Funnel</h2>
+
+<div class="charts">
+	<div id="sprFunnel" class="c-spr-funnel">
+		<div class="loader">
+			<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i> Loading...
+		</div>
+		{{{funnelSVG}}}
+	</div>
+	<div class="print-only">
+		<p>
+			<i class="fa fa-info-circle" aria-hidden="true"></i>
+			<span id="direct-orders-tip"><strong>Direct orders</strong> are orders sent to the supplier where there was no preceding RFQ.</span>
+		</p>
+		
+		<p>
+			<i class="fa fa-info-circle" aria-hidden="true"></i>
+			<span id="competative-orders-tip"><strong>Competitive orders</strong> are orders where there is a preceding RFQ. Note that the RFQ may have been sent only to this supplier.
+			If an RFQ was sent to the supplier and that supplier went on to win the order but no intervening quote was detected, the
+			quote count assumes that a quote was issued but not via ShipServ.</span>
+		</p>
+	</div>
+</div>

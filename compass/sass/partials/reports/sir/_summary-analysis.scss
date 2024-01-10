@@ -1,0 +1,331 @@
+/*
+Document   : _summary-analysis.scss
+Created on : jan 05, 2015
+Author     : Attila O
+Desc	   : SIR middle section of summary
+*/
+
+#sir-analysis, #sir-analysisCompare {
+	display: block;
+	float: right;
+	color: #4f4f4f;
+	#poValueContent, #poValueContentCompare {
+		width: 244px;
+	}
+	table {
+		/* width: 760px; */
+		text-align: left;
+		td {
+			vertical-align: top;
+			min-height: 25px;
+		}
+
+	}
+
+	.winLoss {
+		width: 365px;
+		min-height: 565px;
+		margin: 12px 6px 12px 0px;
+		border-top: 4px solid #e81e24;
+		border-left: 1px solid #e81e24;
+		border-right: 1px solid #e81e24;
+		border-bottom: 1px solid #e81e24;
+			.b-right {
+				border-right: 1px solid #096393;
+			}
+			.b-bottom {
+				border-bottom: 1px solid #096393;
+			}
+			.b-top {
+				border-top: 1px solid #096393;
+			}
+
+			.helpCell {
+				width: 25px;
+				vertical-align: middle;
+
+			}
+			.winLossTopRow {
+				height: 135px
+			}
+			tbody {
+				font-size: 11px;
+				td {
+					vertical-align: top;
+				}
+			}
+			h4 {
+				display: block;
+				width: 130px;
+				margin: 3px;
+				padding: 3px;
+				
+				text-align: center;
+				border: 1px solid #a8a8a8;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+				clear: both;
+				line-height: 1.4em;
+
+			}
+		
+			th {
+				font-size: 15px;
+				vertical-align: middle;
+				font-weight: bold;
+				height: 30px;
+				text-indent: 3px;
+			}
+			.subTitle {
+				vertical-align: middle;
+				font-weight: bold;
+				height: 25px;
+				padding-left: 3px;
+			}
+	}
+
+	.content-table {			
+		margin: 2px;
+		width: 177px;
+		border-spacing: 3px;
+		tr {
+			td {
+				background-color: #e9edf1;
+				vertical-align: middle;
+				padding: 3px;
+				height: 33px;
+			}
+
+			td:nth-child(2) {
+				width: 50px;
+				text-align: right;
+				font-weight: bold;
+
+
+			}
+		}
+	}
+
+	.quote-table {
+		margin: 2px;
+		width: 174px;
+		border-spacing: 3px;
+		tr {
+			td {
+				background-color: #e9edf1;
+				vertical-align: middle;
+				padding: 1px;
+				height: 19px;
+			}
+			td:nth-child(1) {
+				font-weight: bold;
+				min-width: 25px;
+				font-size: 9px;
+			}
+			td:nth-child(2) {
+				text-align: right;
+				font-size: 10px;
+			}
+			
+			td:nth-child(3) {
+				width: 60px;
+			}
+			th {
+				font-size: 10px;
+				font-weight: normal;
+				height: 25px;
+				text-indent: 0px;
+			}
+			th:nth-child(4) {
+				text-align: right;
+			}
+		}
+	}
+
+	.text-red {
+		color: red;
+	}
+	.text-green {
+		color: green;
+	}
+	.alignRight {
+		float: right;
+	}
+	.quote-indicator {
+		position: relative;
+		display: block;
+
+		width: 60px;
+		background-color: #fff;
+		border: 1px solid #b3b3b3;
+		height: 8px;
+		.q-bg, .q-indicator {
+			position: absolute;
+			display: block;
+			left: 2px;
+			top: 2px;
+			height: 4px;
+			
+		}
+		.q-bg, {
+			background-color: #e81e24;
+			width: 56px;
+		}
+	
+		.q-indicator {
+			background-color: #57a140;
+			width: 24px;
+			border-right: 1px solid #fff;
+		}
+	}
+
+	#scrollWrapper {
+		display: block;
+		height: 360px;
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	.poValue {
+		width: 240px;
+		min-height: 565px;
+		margin: 12px 0px 12px 0px;
+		border-top: 4px solid #0a6c9d;
+		border-left: 1px solid  #0a6c9d;
+		border-right: 1px solid #0a6c9d;
+		border-bottom: 1px solid #0a6c9d;
+			th {
+				font-size: 15px;
+				vertical-align: middle;
+				font-weight: bold;
+				height: 56px;
+				padding-left: 12px;
+
+			}
+			
+			.margin6 {
+				margin-right: 6px;
+			}
+
+			.subTitle {
+				vertical-align: middle;
+				font-weight: bold;
+				height: 25px;
+				text-indent: 3px;
+				font-size: 11px;
+			}
+			.b-bottom {
+				border-bottom: 1px solid #096393;
+				&.padding-r {
+					padding-right: 6px;
+				}
+			}
+			.b-top {
+				border-top: 1px solid #096393;
+			}
+
+			.helpCell {
+				width: 25px;
+				vertical-align: middle;
+
+			}
+
+
+	}
+	.poTable {
+		margin: 10px 2px 2px 2px;
+		width: 218px;		
+		font-weight: normal;
+		border-spacing: 3px;
+
+		tr {
+			td, th {
+				&.poCol1 {
+					width: 100px;
+					max-width: 100px;
+				}
+			}
+			td {
+				background-color: #e9edf1;
+				vertical-align: middle;
+				padding: 0;
+				line-height: 1;
+				height: 9px;
+				min-height: 9px;
+				font-size: 9px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+
+
+				&.summaryC1 {
+					min-width: 80px;
+				}
+
+				span {
+					padding: 3px;
+				  	display: block;
+				  	width: 98px;
+					overflow: hidden;
+				  	text-overflow: ellipsis;
+				  	white-space: nowrap;
+				  	line-height: 1;
+				  }
+
+			}
+			th {
+				font-weight: normal;
+				 height: 5px; 
+				text-indent: 0px;
+				text-align: right;
+				font-size: 10px;
+				padding: 0px;
+			}
+			td:nth-child(1) {
+				text-align: left;
+				
+			}
+			td:nth-child(2) {
+				text-align: right;
+				width: 65px;
+				
+			}
+			td:nth-child(3) {
+				text-align: right;
+				width: 65px;
+			}
+		}
+	}
+	.btnFix {
+		width: 65px;
+		height: 23px;
+		display: inline-block;
+		padding: 0px;
+		text-align: center;
+		line-height: 23px;
+		text-shadow: 1px 1px #ffe1c0;
+		color: black;
+		
+	}
+	.reduceSize {
+		font-size: 70%;
+		font-weight: normal;
+	}
+	.htmlHintBox {
+		position: relative;
+		display: none;
+		span {
+			display: block;
+			background-color: #feffcb;
+			width: 120px;
+			color: black;
+			padding: 6px;
+			border: 1px solid #ababab;
+			@include border-radius(3px);
+			position: absolute;
+			left: 5;
+			top: 5;
+			z-index: 999;
+		}
+	}
+}

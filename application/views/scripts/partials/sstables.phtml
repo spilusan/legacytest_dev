@@ -1,0 +1,70 @@
+<?
+	/**
+	 * Shipserv Tables module.
+	 * TO USE: Just add this partial to a page - nothing else
+	 *
+	 * Gives ability to:
+	 *  - create tables with a JS datasource
+	 *  - respond to sort and pagination events
+	 * 
+	 * Allows:
+	 *  - specify a jsrender teplate for cells in a given column
+	 *  - repopulate with new data
+	 *
+	 * Usage: (first include partial, then in JS)
+	 *
+	 * require('sstable', function(sstable) {
+	 *   //---
+ 	 * })
+	 * 
+	 * Mechanics (for reference):
+	 * When partial is included on a page, it will add tests.js module to require js module list
+	 * and also a bunch of templates for form creation
+	 * the tests.js module will build tables when told to, using the templates
+	 * cell templates can be overriden for a given column using the options
+	 * 
+	 */
+?>
+
+<? $this->requirejs()->addModule('tables'); ?>
+
+<?/*Main table template*/?>
+<script id="sstableTable" type="text/x-jsrender">
+	<colgroup>
+		{{for cols}}
+			<col style="" class="{{:key}} {{oddOrEven/}}col" />
+		{{/for}}
+	</colgroup>
+	<thead>
+		<tr class="header {{oddOrEven/}}row">
+		{{for cols}}
+			<th data-key="{{:key}}">
+				{{render tmpl=headTemplate /}}
+			</th>
+		{{/for}}
+		</tr>
+	</thead>
+	<tbody>
+		{{for data}}
+			<tr class="{{oddOrEven/}}row">
+				{{render tmpl="sstableRow" /}}
+			</tr>
+		{{/for}}
+	</tbody>
+</script>
+
+<script id="sstableRow" type="text/x-jsrender">
+{{for cells}}
+	<td data-key="{{:key}}">{{render tmpl=cellTemplate /}}</td>
+{{/for}}
+</script>
+
+<?/*Default template for cell heading*/?>
+<script id="sstableColHeadingDefault" type="text/x-jsrender">{{:title}}</script>
+
+
+<?/*Default template for cell*/?>
+<script id="sstableCellDefault" type="text/x-jsrender">{{:value}}</script>
+
+<?/*Checkbox template for cell*/?>
+<script id="sstableCellCheckbox" type="text/x-jsrender"><input class="status" type="checkbox" {{if value}} checked {{/if}}></script>

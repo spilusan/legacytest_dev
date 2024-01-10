@@ -1,0 +1,26 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css','screen');
+	$this->headLink()->appendStylesheet('/css/trade/rfq-print.css','print');
+
+	$this->getHelper('Requirejs')->addModule('backbone/trade/rfq-inbox/views/viewRfqView');
+	
+	$hash = $this->hash;
+	$this->getHelper('Requirejs')->addDefinition('trade/rfq-inbox/hash', '"'.$this->hash.'"');
+	$this->getHelper('Requirejs')->addDefinition('trade/rfq-inbox/tnid', $this->params['tnid']);
+	$this->getHelper('Requirejs')->addDefinition('trade/rfq-inbox/pinId', $this->params['id']);
+	$this->getHelper('Requirejs')->addDefinition('trade/rfq-inbox/printMode', '"' . (($this->params['print'] == '0') ?'0':'1'). '"');
+	$this->getHelper('Requirejs')->addDefinition('trade/rfq-inbox/viewMode', '"' . (($this->params['view'] == '0') ?'0':'1'). '"');
+	
+	
+	$url = "/enquiry/view/enquiryId/" . $this->params['id'] ."/supplierBranchId/" . $this->params['tnid'] ."/hash/" . $this->params['hash'];
+	$url = $this->uri()->obfuscate($url);
+?>
+<div id="body" class="print">
+	<div id="content">
+		<?php if($this->params['view'] == '1' ){?>
+		<div class="nonSessionNotification">To respond to this RFQ please <a href="<?php echo 'https://' . $_SERVER['HTTP_HOST'] . '/auth/cas/login?x=0&pageLayout=new&service=' . urlencode('/user/register-login?redirectUrl='.$url.'&benc=1') ?>">click here</a>.</div>
+		<?php }?>
+		<div class="rfqDisplay print"></div>
+		<div></div>
+	</div>
+</div>

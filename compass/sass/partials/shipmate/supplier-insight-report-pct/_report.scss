@@ -1,0 +1,204 @@
+/*
+ * Specific CSS rules for Premium supplier in Supplier Insight report
+ * Only the differences from basic layout
+ */
+
+ #body {
+  #content {
+    #report_content {
+      width: 100%;
+
+      i {
+        &.fa-question-circle {
+          color: #cbd0d8;
+          vertical-align: bottom;
+        }
+      }
+      
+      .spacer {
+        clear: both;
+        width: 100%;
+        height: 18px;
+        background: transparent;
+        font-size: 1px;
+       }
+      
+      .pct-sir-white-block {
+        background: white;
+
+        h2 {
+          width: 100%;
+          text-align: center;
+          margin: 24px 0;
+          font-size: 22px;
+        }
+      }
+
+      .pct-sir-gray {
+        background: #e9ecf1;
+        padding: 12px 0;
+        
+        .rd-warning {
+          width: 1049px;
+          margin: 0 auto;
+          padding: 6px 0;
+          text-align: right;
+
+          span {
+            display: inline-block;
+            width: 55%;
+            text-align: left;
+          }
+        }
+
+        .pct-info {
+          display: block;
+          width: 1050px;
+          margin: 0 auto;
+          background: white;
+
+          div {
+            float: left;
+            
+            &.col1 {
+              width: 35px;
+              
+              i {
+                color: white;
+                font-size: 18px;
+                margin: 10px;
+              }
+            }
+            
+            &.col2 {
+              width: 260px;
+              h2 {
+                margin: 10px 0 0 11px;
+                font-weight: bold;
+                font-size: 16px;
+              }
+            }
+
+            div {
+              width: 735px;
+              clear: both;
+              padding: 0px;
+              height: 39px;
+              margin-bottom: 3px;
+
+              p {
+                padding: 0 6px;
+                line-height: 35px;
+              }
+
+              i {
+                margin: 8px;
+              }
+              
+              span {
+                border: 1px solid gray;
+                padding: 0 6px;
+                float: right;
+                width: 88px;
+                text-align: right;
+                line-height: 30px;
+                margin-top: 3px;
+              }
+            }
+
+            div:not(:last-child) {
+              border-bottom: 1px solid #e9ecf1;
+            }
+          }
+        }
+
+        .pct-search {
+          .col1 {
+            background: #27b6e9;
+            height: 128px;
+          } 
+        }
+
+        .pct-click {
+          .col1 {
+            background: #f98d2d;
+            height: 48px;
+          } 
+          div {
+            div {
+              border: 2px solid #52a353;
+              background: #e6f9e7;
+              margin-top: 2px;
+  
+              span {
+                border: none;
+                padding: 3px;
+              }
+            }
+          }
+        }
+
+        .pct-actions {
+          .col1 {
+            background: #1270ad;
+            height: 171px;
+          } 
+
+          .col2 {
+            div {
+              width: 80px;
+              padding: 0;
+              margin: 40px 0 0 10px;
+              border: 1px solid black;
+              height: 80px;
+
+              span, p {
+                width: 80px;
+                padding: 3px 0;
+                margin: 0;
+                text-align: center;
+              }
+
+              span {
+                background: #f5f6fa;
+                font-size: 12px;
+                border: none;
+                border-bottom: 1px solid black;
+              }
+
+              p {
+                font-size: 18px;
+                font-weight: bold;
+              }
+            }
+          }
+        }
+      }
+
+      div {
+        &.clear {
+          float: none !important;
+        }
+      }
+    }
+
+    .crblue {
+      &.basic {
+        border: 2px solid #20b3e6;
+      }
+    }
+
+    .crorange {
+      &.basic {
+        border: 2px solid #f7902d;
+      }
+    }
+
+    .crgreen {
+      &.basic {
+        border: 2px solid #18c21f;
+      }
+    }
+
+  }
+}

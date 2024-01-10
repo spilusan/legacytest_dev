@@ -1,0 +1,12 @@
+<span class="kw-label">{{mssName}}</span>
+<span>
+	{{#if keywordStatus}}
+		{{#if keywordStatus.ownership.enabled}}
+			<i class="fa fa-check-square-o" data-loadedstatus="checked" data-id="{{mssId}}" data-enabled="enabled" aria-hidden="true"></i>
+		{{else}}
+			<i class="fa fa-square-o" data-loadedstatus="unchecked" data-id="{{mssId}}" data-enabled="disabled" aria-hidden="true"></i>
+		{{/if}}
+	{{else}}
+		<i class="fa fa-square-o" data-loadedstatus="unchecked" data-id="{{mssId}}" data-enabled="unset" aria-hidden="true"></i>
+	{{/if}}
+</span>

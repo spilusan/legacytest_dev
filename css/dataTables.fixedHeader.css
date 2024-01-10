@@ -1,0 +1,14 @@
+
+
+div.FixedHeader_Cloned th,
+div.FixedHeader_Cloned td {
+	background-color: #d6dce4 !important;
+	font-size:11px;
+	padding: 3px 5px;
+	color: #2E3235;
+	font-weight: bold;
+	padding: 5px;
+	border-bottom: 0px !important;
+	/*padding-bottom: 9px !important;*/
+
+}

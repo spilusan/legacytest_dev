@@ -1,0 +1,33 @@
+<?php 
+	
+?><div id="breadcrumbs-for-search" style="margin:0; position:; width:960px; padding:10px 0px 10px 0px;">
+	<ul>
+		<?php
+		$this->breadcrumbs[lg_count($this->breadcrumbs)-1]['url'] = "";
+		$last = $this->breadcrumbs[lg_count($this->breadcrumbs)-1];
+		foreach ($this->breadcrumbs as $order => $crumb)
+		{
+			?>
+			<li <?= ( $last['url'] == $crumb['url'] ) ? 'class="active"':'' ?>>
+				<?php
+				if ($order > 0)
+				{
+					?><span></span><?php
+				}
+				if( $crumb['url'] == "" )
+				{
+					echo $crumb['name'];
+				}
+				else
+				{
+				?>
+				<? if($last['url'] != $crumb['url']) :?><a href="<?php echo $crumb['url']; ?>" title="<?php echo $crumb['name']; ?>"><?endif?><?php echo $crumb['name']; ?><? if($last['url'] != $crumb['url']) :?></a><?endif?> &gt; 
+				<?php 
+				}
+				?>
+			</li>
+			<?php
+		}
+		?>
+	</ul>
+</div>

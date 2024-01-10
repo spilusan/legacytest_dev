@@ -1,0 +1,335 @@
+<?
+	$this->headLink()->appendStylesheet('/css/reports/sir2.css')
+					 ->appendStylesheet('/css/uniform.rfq.css');
+
+	$this->getHelper('Requirejs')->addModule('backbone/reports/sir2/views/mainView')
+								 ->addDefinition('supplier/profile', json_encode($this->supplierProfile))
+								 ->addDefinition('supplier/sir/detailView', 1)
+								 ->addDefinition('supplier/tabToView', json_encode($this->tabToView))
+	;
+
+
+    $isShipMate = Shipserv_User::isLoggedIn()->isShipservUser();
+?>
+<div id="waiting" style="display: block;">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>
+<div id="breadcrumbs">
+	<span class="title">You are here: </span>
+	<ul>
+		<li>
+			<a href="/">Home</a>
+		</li>
+		<li class="current">
+			<span></span>
+			Reports
+		</li>
+	</ul>
+</div>
+
+<div id="body">
+	<div id="content">
+		<h1 class="styled"><a href="#" class="button medium dblue export">Export</a> <span><strong>Supplier Insight Report</strong> for <?=$this->supplierProfile->name?> (TNID: <?=$this->supplierProfile->tnid?>)</span></h1>
+		<div class="shipmateControlls">
+			<a href="<?=$this->supplierProfile->getUrl()?>" target="_blank" class="button small white">View profile and your Profile Complete Score</a>
+			<?if($this->user->isShipservUser() && $this->user->canPerform('PSG_FORWARD_SIR')):?>
+				<a href="#" class="button small white sendEmail">Send as email</a>
+			<?endif?>
+			<?if($this->user->isShipservUser() && $this->user->canPerform('PSG_VIEW_BILLING_REPORT')):?>
+				<a href="#" class="button small white viewGmv">GMV Report</a>
+			<?endif?>
+			<? if ($this->isShipMate == true): ?>
+				<a href="/reports/sir-stable?tnid=<?=$this->supplierProfile->tnid?>" class="button small white">Go to old version</a>
+			<? endif ?>
+			
+			<div class="clear"></div>
+		</div>
+		<div class="innerContent">
+			<?php include(APPLICATION_PATH.'/views/scripts/alert/outdatedAlert.phtml'); ?>
+			<? if($this->unactionedRfqCount > 0) {?>
+			<div class="box attention">
+				<div class="right">
+					<h4>Improve the relevance of future RFQs that you receive</h4>
+					<p>Specifying the reason for a declined RFQ will allow ShipServ to reduce the number of RFQs that you receive in the future that do not match the products &amp; services that you provide in the locations that you serve.</p>
+				</div>
+				<div class="left">
+					<div class="rfqInfo">
+						<p class="rfqCount count">&nbsp;</p>
+						<p>
+							<strong>Your unactioned RFQs</strong> <br />
+							(last 30 days) <a href="unactioned" class="cHelp light unactionedRfq"></a>
+						</p>
+					</div>
+					<div class="rfqInfo">
+						<p class="rfqCount rate">&nbsp;</p>
+						<p>
+							<strong>Unactioned RFQ rate</strong> <br />
+							(last 30 days) <a href="unactionedrate" class="cHelp light unactionedRfq"></a>
+						</p>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<?}?>
+
+			<div class="box filters">
+				
+			</div>
+			<div class="dataContainer"></div>
+			<div class="clear"></div>
+			<div class="contactUs">
+				<a href="/help/contact" class="button medium white contactButton">Contact us</a>
+				<div class="copy">
+					<?php				
+					// for basic lister
+
+					if( $this->supplierProfile->premiumListing == false )
+					{?>
+						<p><strong>To upgrade to full Membership (including a Premium Listing)</strong> <a href="/info/pages-for-suppliers/" target="_blank"><i>Why upgrade?</i></a></p>
+						<p><strong>Telephone Hotline:</strong> +44 207 048 7924, <strong>Email:</strong> <a href="mailto:support@shipserv.com">support@shipserv.com</a></p>	
+					<?}
+					else
+					{
+						if( !empty($this->supplierProfile->accountManagerName) )
+						{
+							// check field sales
+							if( !empty($fieldSales[$this->supplierProfile->accountManagerEmail]) )
+							{
+								$name = $fieldSales[$this->supplierProfile->accountManagerEmail]['name'];
+								$email = $this->supplierProfile->accountManagerEmail;
+								$phone = $fieldSales[$this->supplierProfile->accountManagerEmail]['phone'];
+							}
+							else 
+							{
+								$name = $this->supplierProfile->accountManagerName;
+								$email = $this->supplierProfile->accountManagerEmail;
+								$phone = '+44 207 048 7924';
+							}?>
+							<p> <strong>Your account manager:</strong> <?=$name?> (<a href="mailto:<?=$email?>"><?=$email?></a>, <?=$phone?>)</p>
+							<p> <strong>Our guides:</strong> <a href="/help/sir">SIR Guide</a>, <a href="/help/premium" target="_blank">Premium Profile Guide</a></p>
+						<?}
+						else
+						{?>
+							<p><strong>Contact information</strong></p>
+							<p><strong>Email:</strong> <a href="mailto:pages@shipserv.com">support@shipserv.com</a></p>	
+						<?}
+					}?>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+    	<h1 class="styled multi">
+    		<a href="#" class="selectorTab locTab selected">
+    			Countries & Ports <br />
+    			<span>Global</span>	
+    		</a>
+    		<a href="#" class="selectorTab brandTab">
+    			Brands <br />
+    			<span>All brands</span>	
+    		</a>
+    		<a href="#" class="selectorTab catsTab">
+    			Categories <br />
+    			<span>All categories</span>
+    		</a>
+    		<a href="#" class="selectorTab prodTab">
+    			ShipServ Services <br />
+    			<span>All services</span>
+    		</a>
+    		<div class="clear"></div>
+    	</h1>
+    	<div class="selectorHolder">
+    		<div class="tabcontent location item" data-tabname="location">			
+				<div class="location selectlist itemselector inner new form">
+					<div class="available list left">
+						<select id="continent">
+							<option value="NA" selected>North America</option>
+							<option value="SA">South America</option>
+							<option value="AN">Antarctica</option>
+							<option value="AF">Africa</option>
+							<option value="EU">Europe</option>
+							<option value="AS">Asia</option>
+							<option value="OC">Oceania (Australasia)</option>
+						</select>
+						<h3>Select ports:</h3>
+						<div class="textfilter">
+							<img src="/img/icons/medium/spyglass.png">
+							<input type="text" class="available location text filter" data-selectlist="location-available-selectlist" />
+						</div>
+						<ul class="available location selectlist" id="location-available-selectlist">
+
+						</ul>
+					</div>
+					<div class="divider"></div>
+					<div class="selected list right">
+						<select name="quickSelectLocation" id="quickSelectLocation" class="quickselect">
+					
+						</select>
+						<h3>Selected ports:</h3>
+						<div class="textfilter">
+							<img src="/img/icons/medium/spyglass.png">
+							<input type="text" class="selected location text filter" data-selectlist="location-selected-selectlist" />
+						</div>
+						<ul class="selected location selectlist" id="location-selected-selectlist">
+							<span class="default">Globally</span>
+						</ul>
+					</div>
+					<div class="clear"></div>
+					<div class="buttonContainer">
+				        <input type="button" class="apply button green medium" value="Apply changes">
+				    </div>
+				</div>
+			</div>
+			
+			<div class="tabcontent brands" data-tabname="brands" style="display: none;">			
+				<div class="brands selectlist itemselector inner new form">
+					<div class="available list left">
+						<h3>Select brands:</h3>
+						<div class="textfilter">
+							<img src="/img/icons/medium/spyglass.png">
+							<input type="text" class="available brands text filter" data-selectlist="brands-available-selectlist"></input>
+						</div>
+						<ul class="available brands selectlist" id="brands-available-selectlist">
+
+						</ul>
+					</div>
+					<div class="selected list right">
+						<select name="quickSelectBrands" id="quickSelectBrands" class="quickselect">
+					
+						</select>
+						<h3>Selected brands:</h3>
+						<div class="textfilter">
+							<img src="/img/icons/medium/spyglass.png">
+							<input type="text" class="selected brands text filter" data-selectlist="brands-selected-selectlist"></input>
+						</div>
+						<ul class="selected brands selectlist" id="brands-selected-selectlist" data-what="brands">
+							<span class="default">All brands</span>
+						</ul>
+					</div>
+					<div class="clear"></div>
+					<div class="buttonContainer">
+				        <input type="button" class="apply button green medium" value="Apply changes">
+				    </div>
+				</div>
+			</div>
+
+			<div class="tabcontent categories" data-tabname="categories" style="display: none;">		
+				<div class="categories selectlist itemselector inner new form">
+					<div class="available list left">
+						<h3>Select categories:</h3>
+						<div class="textfilter">
+							<img src="/img/icons/medium/spyglass.png">
+							<input type="text" class="available categories text filter" data-selectlist="categories-available-selectlist"></input>
+						</div>
+						<ul class="available categories selectlist" id="categories-available-selectlist">
+			
+						</ul>
+					</div>
+					<div class="selected list right">
+						<select name="quickSelectCategories" id="quickSelectCategories" class="quickselect">
+					
+						</select>
+						<h3>Selected categories:</h3>
+						<div class="textfilter">
+							<img src="/img/icons/medium/spyglass.png">
+							<input type="text" class="selected categories text filter" data-selectlist="categories-selected-selectlist"></input>
+						</div>
+						<ul class="selected categories selectlist" id="categories-selected-selectlist" data-what="categories">
+							<span class="default">All categories</span>
+						</ul>
+					</div>
+					<div class="clear"></div>
+					<div class="buttonContainer">
+				        <input type="button" class="apply button green medium" value="Apply changes">
+				    </div>
+				</div>
+			</div>
+
+			<div class="tabcontent prods" style="display: none;">
+
+			</div>
+
+    	</div>
+    </div>
+</div>
+<div id="modalInfo">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+
+    </div>
+</div>
+<div id="modalChanges">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+    	<div class="modalContent">
+    		<h2>We've made improvements to your Supplier Insight Report.</h2>
+    		<ul>
+    			<li>See all the key information on one screen</li>
+    			<li>New information added including the number of unique ShipServ buyers you have traded with</li>
+    			<li>Shows all the RFQs and quotes you've had on ShipServ on the first screen</li>
+    			<li>Easier to compare to previous period</li>
+    		</ul>
+    		<p>For more information about value events, place your mouse over the numbers.</p>
+    		<img src="/img/reports/sir/hover.png" alt="Hover over data" />
+    		<p>For more detailed report go to "Detailed breakdown" section.</p>
+    		<img src="/img/reports/sir/details.png" alt="Details" />
+    	</div>
+    </div>
+</div>
+<?if($this->user->isShipservUser() && $this->user->canPerform('PSG_FORWARD_SIR')):?>
+<div id="modalContact">
+	<div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+    	<h1 class="styled">Email this report to customer</h1>
+    	<div class="modalContent">
+    		<h2>The TNID of the SIR you want to send: <?=$this->supplierProfile->tnid?> (<?=$this->supplierProfile->name?>)</h2>
+    		<ul>
+    			<li>Only ShipMates will be able to send an SIR using this tool.</li>
+    			<li>Be very careful when you use this tool as you are sending a summary SIR with confidential data in it.</li>
+    			<li>You are NOT allowed to send one company's SIR to another company.</li>
+    			<li>It is your own personal responsibility to make sure that our customers' data, including SIR data, is protected and you use confidential data like this in accordance with the ShipServ company policy.</li>
+    		</ul>
+    		<form class="new">
+    			<input type="hidden" name="destinationTnid" value="<?=$this->supplierProfile->tnid?>" />
+    			<input type="hidden" name="startDate" />
+    			<input type="hidden" name="endDate" />
+    			<label for="emails[]">Email address 1<sup>*</sup></label>
+    			<input type="text" name="emails[]" class="firstEmail emails" />
+    			<label for="emails[]">Email address 2</label>
+    			<input type="text" name="emails[]" class="emails" />
+    			<label for="emails[]">Email address 3</label>
+    			<input type="text" name="emails[]" class="emails" />
+    			<label for="emails[]">Email address 4</label>
+    			<input type="text" name="emails[]" class="emails" />
+    			<label for="emails[]">Email address 5</label>
+    			<input type="text" name="emails[]" class="emails" />
+    			<label for="bodyText">Enter any message you want to go into the body copy (up to 1000 characters)<sup>*</sup></label>
+    			<textarea name="bodyText" maxlength="1000">Dear Customer,
+
+Please find below a summary of the Supplier Insight Report for <?= $this->supplierProfile->name?>
+
+
+Kind regards</textarea>
+    			<label for="fromText">Enter here who you want to show the email is from<sup>*</sup></label>
+    			<textarea name="fromText" maxlength="1000"><?= $this->user->firstName . " " . $this->user->lastName . "\nShipServ";?></textarea>
+    			<p><strong>This email CANNOT be recalled once sent, so click this box to confirm:</strong></p>
+    			<label for="agree">
+    				<div class="agreement">
+    					<input type="checkbox" name="agree" value="1" id="agree"/>
+    				</div>
+	    			<div class="agreement">
+	    				&bull; I have checked that this person is employed by this company<br />
+	    				&bull; I am sending this SIR to the right company
+	    			</div>
+    			</label>
+    			<input type="submit" value="Email the SIR now" class="button medium green" />
+    		</form>
+    	</div>
+    </div>
+</div>
+<?endif?>
+<div class="clear"></div>

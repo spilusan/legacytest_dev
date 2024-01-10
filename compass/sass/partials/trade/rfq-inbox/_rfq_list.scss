@@ -1,0 +1,189 @@
+#body {
+	#content {
+		.pagesRfqList{
+			h2 {
+				input {
+					float: right;
+					cursor: pointer;
+				}
+			}
+		}
+
+		table.rfqList {
+			table-layout: fixed;
+			border-collapse: collapse;
+			margin-top: 5px;
+			width: 100%;
+
+			thead {
+				border-top: 1px solid #d6dce4;
+				border-bottom: 1px solid #d6dce4;
+				border-left: 1px solid #d6dce4;
+
+				tr {
+					th {
+						height: 18px;
+						border-right: 1px solid #d6dce4;
+						padding: 10px 7px;
+						font-size: 12px;
+						font-weight: bold;
+						background-color: #f5f7fa;
+						vertical-align: middle;
+
+						&.icons {
+							width: 27px;
+
+							p {
+								display: block;
+								width: 27px;
+							}
+						}
+
+						&.attachments {
+							width: 10px;
+						}
+
+						&.date {
+							width: 96px;
+						}
+
+						&.buyer {
+							width: 20%;
+						}
+
+						&.name {
+							width: 15%;
+						}
+
+						&.email{
+							width: 15%;
+						}
+
+						&.status {
+							width: 114px;
+						}
+
+						p, img {
+							padding:0;
+							margin: 0;
+							height: 18px;
+						}
+					}
+				}
+			}
+
+			tbody {
+				tr {
+					background: #ffffff;
+					padding: 1px 0;
+					cursor: pointer;
+
+					td {
+						border-bottom: 1px dotted #b2b2b2;
+						height: 19px;
+						padding: 3px 7px;
+						font-weight: normal;
+						background-color: #ffffff;
+						vertical-align: middle;
+						overflow: hidden;
+						text-overflow: ellipsis;
+						font-size: 12px;
+
+						p {
+							padding: 6px 0;
+							white-space: nowrap;
+							overflow: hidden;
+							text-overflow: ellipsis;
+						}
+
+						span {
+							&.stat {
+								display: block;
+								float: left;
+								width: 21px;
+								height: 19px;
+								background: url(/img/icons/rfq-inbox/mail.png) no-repeat transparent;
+							}
+						}
+
+						img {
+							&.att {
+								margin-top: 3px;
+							}
+
+							&.attention {
+								margin-left: 5px;
+								margin-top: 5px;
+							}
+						}
+					}
+
+					&.unread {
+						td {
+							font-weight: bold;
+
+							span.stat {
+								background-position: left top;
+							}
+						}
+					}
+
+					&.read, &.quoted, &.declined {
+						td {
+							font-weight: normal;
+
+							span.stat {
+								background-position: left -19px;
+							}
+						}
+					}
+
+					&.open {
+						td {
+							background: #caedf9;
+						}
+					}
+				}
+			}
+		}
+
+		.pagination {
+			text-align: center;
+			padding-top: 15px;
+
+			ul {
+				height: 26px;
+				padding-top:10px;
+				text-align: center;
+
+				li {
+					display: inline;
+					margin-right: 5px;
+					padding: 9px;
+					cursor: pointer;
+
+					&.current {
+						cursor: default;
+						color: #008b00;
+					}
+
+					&.ellipsis {
+						padding: 0px;
+						cursor: default;
+					}
+
+					&.prev, &.next {
+						img {
+							position: relative;
+							top: 1px;
+						}
+
+						&.inactive {
+							cursor: default;
+						}
+					}
+				}
+			}
+		}
+	}
+}

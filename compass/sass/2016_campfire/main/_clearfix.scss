@@ -1,0 +1,14 @@
+/*
+Created on : Feb 15, 2017
+Author     : .:Claudio:.
+Description: clearfix common class
+*/
+
+
+.clearfix {
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}

@@ -1,0 +1,563 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/jquery.ui.js')
+						 ->appendFile('/js/jquery.tools.tooltip.min.js')
+						 ->appendFile('/js/jquery.selectmenu.js')
+						 ->appendFile('/js/pending-actions.js')
+						 ->appendFile('/js/fileuploader.js');
+
+$this->headLink()->appendStylesheet('/css/transition.css');
+$this->headLink()->appendStylesheet('/css/jquery.ui.smoothness.css')
+					->appendStylesheet('/css/membership-management.css')
+					->appendStylesheet('/css/jquery.selectmenu.css')
+					->appendStylesheet('/css/profile.css');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+               array('name' => 'Profile',
+						   'url'  => '/profile'),
+			   array('name' => 'Membership Management',
+						   'url'  => '/profile/company-memberships'));
+
+	foreach ($this->managedMemberships as $membership)
+	{
+		if ($membership["QO_ID"]==$this->selectedMembership)
+		{
+			$selectedMembership = $membership;
+		}
+	}
+
+?>
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		<div class="content_new-wide_body">
+			<?php
+			
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], 'company-memberships', $this->pendingUsers, $isAdmin)
+				)
+			);
+				
+			?>
+                <div class="profile-body-right" id="membershipManagement">
+				<div class="zz header">
+					<h2>Membership Management</h2>
+				</div>
+				<div class="profileContent">
+
+                    <div class="profile-body-header"></div>
+                    <div class="profile-body-group">
+                        <div>
+                            <?php
+                            if (lg_count($this->managedMemberships)>0)
+                            {
+                            ?>
+                            <h3 class="blue">Choose membership you would like to manage:</h3>
+
+                            <div>
+                                <div style="float:left;width:60px;position:relative">
+                                    <img id="membershipLogoImage" width="50" src="<?php echo (strpos($this->managedMemberships[$this->selectedMembership]["QO_LOGO_PATH"],"http")!==false)?$this->managedMemberships[$this->selectedMembership]["QO_LOGO_PATH"]:$this->logoUrlPrefix.$this->managedMemberships[$this->selectedMembership]["QO_LOGO_PATH"];?>"/>
+                                </div>
+                                <div style="float:left">
+                                    <form id="membershipsSelectForm" action="/profile/company-memberships/type/<?php echo $this->companyDetail['type']?>/id/<?php echo $this->companyDetail['id']?>">
+                                    <select id="membership" name="membership" onChange="javascript:$('#membershipsSelectForm').submit();" style="width:380px;">
+                                        <?php
+                                        foreach ($this->managedMemberships as $membership)
+                                        {
+                                            echo '<option value="'.$membership["QO_ID"].'" '.(($membership["QO_ID"]==$this->selectedMembership)?'selected="true"':'').' >'.$membership["BROWSE_PAGE_NAME"].'</option>';
+                                            if ($membership["QO_ID"]==$this->selectedMembership)
+                                            {
+                                                $selectedMembership = $membership;
+                                            }
+                                        }
+                                        ?>
+                                    </select>
+                                    </form>
+                                    <div style="position:relative;margin-top:5px;">
+                                        <form enctype="multipart/form-data" method="POST" id="logoUploadForm">
+                                            <a href="javascript:void(0)" id="uploadLink">Upload new logo</a>
+                                            <input type="file" id="membershipLogo" name="membershipLogo" name="file" style="display:none"/>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="dotted-line"></div>
+                        <div>
+                            <?php
+                            if (lg_count($this->pendingRequests)>0)
+                            {
+                            ?>
+                            <div id="pendingMembershipAuths">
+                            <h3 class="pending-count info-message">
+                                <span id="jqPendingCountRoot" class="jqPendingCount"><?php echo lg_count($this->pendingRequests);?></span>
+                                <span class="jqCompanyPlural"> compan<?php echo (lg_count($this->pendingRequests)>1)?"ies are":"y is";?></span> waiting for your authorisation
+                            </h3>
+                            <?php
+                                foreach ($this->pendingRequests as $request)
+                                {
+                                    ?>
+                                    <table class="wbox" id="membership-auth-request-<?php echo $request->companyId;?>">
+                                        <tr>
+                                            <td class="wbox-top-left"></td>
+                                            <td class="wbox-top"></td>
+                                            <td class="wbox-top-right"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="wbox-left"></td>
+                                            <td class="wbox-content" style="padding:3px">
+                                                <div class="membership-request-body">
+                                                    <div class="membership-request-company-info-column">
+                                                        <?php
+                                                            $companyInfo = $request->getCompanyInfo();
+                                                            echo '<div class="company-name" id="company-name-req-'.$request->companyId.'"><a target="_blank" title="View profile" href="'.$this->supplierProfileUrl(array("name"=>$companyInfo["SPB_NAME"],"tnid"=>$request->companyId)).'">'.$companyInfo["SPB_NAME"].'</a></div><div id="company-address-req-'.$request->companyId.'">';
+                                                            if (strlen($companyInfo["SPB_CITY"]>1))
+                                                            {
+                                                                echo $companyInfo["SPB_CITY"].', ';
+                                                            }
+                                                            echo $companyInfo["CNT_NAME"].'</div>';
+                                                        ?>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <div class="dotted-line"></div>
+                                                <div class="membership-actions">
+                                                    <div class="membership-action">
+                                                        <a href="javascript:void(0);" title="Authorise" class="membership-request-action-authorise" id="authorise-<?php echo $request->companyId?>">
+                                                            <img src="/images/icons/authorise_request_icon.gif" alt="Authorise" />
+                                                            <span>Authorise</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="membership-action">
+                                                        <a href="#" title="Reject" class="membership-request-action-reject" id="reject-<?php echo $request->companyId?>">
+                                                            <img src="/images/icons/reject_request_icon.gif" alt="Reject Request" />
+                                                            <span>Reject</span>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="clear"></div>
+                                                </div>
+                                            </td>
+                                            <td class="wbox-right"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="wbox-bottom-left"></td>
+                                            <td class="wbox-bottom"></td>
+                                            <td class="wbox-bottom-right"></td>
+                                        </tr>
+                                    </table>
+                                    <?php
+                                }
+                                ?>
+                                </div>
+                            <?php
+                            }
+                            ?>
+
+                            <div id="authorised-suppliers" style="padding-top:5px;">
+                                <div style="padding-bottom:10px">
+                                    <div class="blue-header">Authorised suppliers:</div>
+                                    <div id="addSupplierAuthButton"></div>
+                                    <div class="clear"></div>
+                                </div>
+                                <form action="/profile/company-memberships/type/<?php echo $this->companyDetail['type']?>/id/<?php echo $this->companyDetail['id']?>" id="addSupplierForm" method="post">
+                                <div id="addSupplierAuthsPanel" style="display:none;">
+                                    <input type="hidden" name="hdnAction" value="add"/>
+                                    <table class="wbox">
+                                        <tr>
+                                            <td class="wbox-top-left"></td>
+                                            <td class="wbox-top"></td>
+                                            <td class="wbox-top-right"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="wbox-left"></td>
+                                            <td class="wbox-content">
+                                                <h3 class="blue" style="padding:3px">Add new supplier</h3>
+                                                <input type="hidden" name="membership" value="<?php echo $this->selectedMembership;?>"/>
+                                                <input id="supplierToAddId" name="supplierToAddId" type="hidden" value=""/>
+                                                <div class="input-wrapper-sm">
+                                                    <input type="text" name="company_search" id="supplierToAdd" value="Type supplier name to add" />
+                                                </div>
+                                                <div class="dotted-line"></div>
+                                                <div id="addSupplierAuthNowButton"></div>
+                                            </td>
+                                            <td class="wbox-right"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="wbox-bottom-left"></td>
+                                            <td class="wbox-bottom"></td>
+                                            <td class="wbox-bottom-right"></td>
+                                        </tr>
+                                    </table>
+                                    <div id="inviteSuppliersButton"></div>
+                                </div>
+                                </form>
+                                <div style="padding:0 0 10px 0;">
+                                    <div style="float:left;background: url('/images/layout_v2/memberships/filter_textfield.gif') no-repeat scroll left top transparent;width:234px;height:28px;padding:5px 0 0 5px;">
+                                        <form id="nameFilterForm" action="/profile/company-memberships/type/<?php echo $this->companyDetail['type']?>/id/<?php echo $this->companyDetail['id']?>/membership/<?php echo $this->selectedMembership;?>/region/<?php echo $this->currentRegion;?>">
+                                        <input type="text" id="filterName" name="filterName" value="<?echo ($this->currentNameFilter==""?'Filter list by name':$this->currentNameFilter)?>" style="border:medium none transparent; height:14px; width:219px; padding:0;font-size: 11px;"/>
+                                        </form>
+                                    </div>
+
+                                <div id="filterByNameButton"></div>
+                                    <div style="float:right">
+                                        <form id="regionFilterForm" action="/profile/company-memberships/type/<?php echo $this->companyDetail['type']?>/id/<?php echo $this->companyDetail['id']?>/membership/<?php echo $this->selectedMembership;?>/filterName/<?php echo $this->currentNameFilter?>">
+                                            <select id="region" name="region" style="width:150px;" onChange="javascript:$('#regionFilterForm').submit();">
+                                                <option value="">All Continents</option>
+                                                <option value="AF" <? echo ($this->currentRegion =="AF")?' selected="true"':'';?>>Africa</option>
+                                                <option value="AS" <? echo ($this->currentRegion =="AS")?' selected="true"':'';?>>Asia</option>
+                                                <option value="EU" <? echo ($this->currentRegion =="EU")?' selected="true"':'';?>>Europe</option>
+                                                <option value="NA" <? echo ($this->currentRegion =="NA")?' selected="true"':'';?>>North America</option>
+                                                <option value="SA" <? echo ($this->currentRegion =="SA")?' selected="true"':'';?>>South America</option>
+                                                <option value="OC" <? echo ($this->currentRegion =="OC")?' selected="true"':'';?>>Oceania</option>
+                                            </select>
+                                        </form>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                                <form id="suppliersForm">
+                                    <input type="hidden" name="hdnAction" value="delete"/>
+                                <table cellpadding="0" cellspacing="0" width="100%" id="authorised-suppliers-table">
+                                    <tbody>
+                                    <tr style="background-color:#333333; color:white; font: bold 10px Arial;" height="46" id="authTableHeader">
+                                        <th height="46" width="21" valign="bottom" style="background:url('/images/layout_v2/memberships/left_grey_topbar.gif') top left no-repeat; background-color:#333333; border-left: none;"><input type="checkbox" name="selectAllSuppliers" id="selectAllSuppliers"/></th>
+                                        <th height="46" width="205" style="background-color:#333333;">Supplier Name</th>
+                                        <th height="46" width="205" style=" background:url('/images/layout_v2/memberships/right_grey_topbar.gif') top right no-repeat;background-color:#333333;">Location</th>
+                                    </tr>
+                                    <?php
+                                    foreach ($this->authorisations as $companyId=>$auth)
+                                    {
+                                        ?>
+                                        <tr id="company-auths-<?php echo $companyId;?>" class="companyMembershipAuths">
+                                            <td>
+                                                <input type="checkbox" name="selectedSupplierId[]" value="<?php echo $companyId;?>"/>
+                                            </td>
+                                            <td class="membership-auth-company-name" id="company-info-<?php echo $companyId;?>">
+                                                <?php
+                                                    echo '<div id="company-name-'. $companyId .'"><a target="_blank" title="View profile" href="'.$this->supplierProfileUrl(array("name"=>$auth["companyInfo"]["SPB_NAME"],"tnid"=>$companyId)).'">'.$auth["companyInfo"]["SPB_NAME"]."</a></div>";
+                                                ?>
+                                                <div id="region-<?php echo $companyId;?>" style="display:none"><?php echo $auth["companyInfo"]["CNT_CON_CODE"]?></div>
+                                            </td>
+                                            <td>
+                                                <?php
+                                                    echo "<span style='font-size:10px'>";
+                                                    if (strlen($auth["companyInfo"]["SPB_CITY"])>1)
+                                                    {
+                                                        echo $auth["companyInfo"]["SPB_CITY"].', ';
+                                                    }
+                                                    echo $auth["companyInfo"]["CNT_NAME"].'</span>';
+                                                ?>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                        <tr>
+                                            <td colspan="3" align="right">
+                                                <div class="membership-actions">
+                                                    <div class="membership-action" style="float:right;">
+                                                        <a href="javascript:$('#suppliersForm').submit();" title="Remove Supplier" class="membership-auth-delete">
+                                                            <img src="/images/icons/remove_icon.png" alt="Remove Supplier" />
+                                                            <span>Remove Selected Suppliers</span>
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="clear"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                </form>
+                            </div>
+                            <div style="padding-top:10px;">
+                                <?php
+                                    echo $this->partial('profile/pagination.phtml', array(
+                                        'currentPage' => $this->currentPage,
+                                        'recordCount' => $this->authsCount,
+                                        'pageSize'	=> 100,
+                                        'url'	=> "/profile/company-memberships/type/{$this->companyDetail['type']}/id/{$this->companyDetail['id']}/membership/". $this->selectedMembership ."/region/".$this->currentRegion ."/filterName/". $this->currentNameFilter
+                                    ));
+                                ?>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                    <div class="profile-body-footer"></div>
+                </div>
+			</div>
+			<div class="clear"></div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	<!--
+
+	$(document).ready(function(){
+
+		membershipDropdown = $('select#membership').selectmenu({style:'dropdown',width:'388px'});
+		regionFilterDropdown = $('select#region').selectmenu({style:'dropdown',width:'150px'});
+		$('#membershipLogo').change(function(){
+			$('#membershipLogo').slideUp(300);
+			if ($('#membershipLogo').val()!="")	$('#logoUploadForm').submit();
+		});
+		$("input#filterName").click(function() {
+			if (this.value == 'Filter list by name') {
+				$(this).val('');
+			}
+		})
+		.blur(function() {
+			if (this.value == '') {
+				$(this).val('Filter list by name');
+			}
+		});
+		$('#selectAllSuppliers').click(
+		   function()
+		   {
+			  $("INPUT[name='selectedSupplierId[]']").attr('checked', $('#selectAllSuppliers').is(':checked'));
+		   }
+		);
+
+		$('#addSupplierAuthButton').mouseover(function(){
+			$(this).addClass("hover");
+		})
+		.mouseout(function(){
+			$(this).removeClass("hover");
+		})
+		.click(function(){
+			if ($('#addSupplierAuthsPanel').is(':hidden'))
+			{
+				$('#addSupplierAuthsPanel').slideDown(300);
+			}
+			else
+			{
+				$('#addSupplierAuthsPanel').slideUp(300);
+				$('#supplierToAddId').val("");
+				$('#supplierToAdd').val("Type supplier name to add");
+			}
+
+		});
+
+
+		$('#uploadLink').click(function(){
+			if ($('#membershipLogo').is(':hidden'))
+			{
+				$('#membershipLogo').slideDown(300);
+			}
+			else
+			{
+				$('#membershipLogo').slideUp(300);
+				$('#membershipLogo').val("");
+			}
+
+		});
+
+		$('#filterByNameButton').click(function(){
+			if ($("input#filterName").val()=="Filter list by name"){
+				$("input#filterName").val('');
+			}
+			$('#nameFilterForm').submit();
+		});
+
+
+
+
+		$('#addSupplierAuthNowButton').mouseover(function(){
+			$(this).addClass("hover");
+		})
+		.mouseout(function(){
+			$(this).removeClass("hover");
+		})
+		.click(function(){
+			var companyId = $('#supplierToAddId').val().split('-')[1];
+
+			if (companyId == "")
+			{
+				alert ("Please, select company")
+			}
+			else
+			{
+				$('#addSupplierForm').submit();
+				$.post('/membership-auth/authorise-company/format/json/',
+						{
+							companyId: companyId,
+							membershipId: $('select#membership').val()
+						},
+						function(data) {
+							$('#addSupplierAuthsPanel').slideUp(300);
+							if (allVals.length>0)
+							{
+								if ($('#company-auths-'+companyId).length==0)
+								{
+									addCompanyRow(companyId,$('#supplierToAddName').val(),$('#supplierToAddLocation').val());
+								}
+							}
+
+							$('#supplierToAddId').val("");
+							$('#supplierToAddName').val("");
+							$('#supplierToAddLocation').val("");
+							$('#supplierToAdd').val("Type supplier name to add");
+
+
+						},
+						'json'
+					);
+				}
+
+
+
+
+		});
+
+
+		$('#supplierToAdd').click(function() {
+			if (this.value == 'Type supplier name to add') {
+				$(this).val('');
+			}
+		})
+		.blur(function() {
+			if (this.value == '') {
+				$(this).val('Type supplier name to add');
+			}
+		});
+
+		$('#inviteSuppliersButton')
+		.click(function(){
+			window.location='/profile/company-memberships-invite/type/<?php echo $this->companyDetail['type']?>/id/<?php echo $this->companyDetail['id']?>/membership/'+$('select#membership').val();
+		});
+
+		$('a[class="membership-request-action-authorise"]').click(function(){
+			if (confirm('Are you sure you want to authorise this request?')) {
+				var companyId = $(this).attr('id').replace('authorise-', '');
+
+
+				$.post('/membership-auth/authorise-membership-auth-request/format/json/',
+					{
+						companyId: companyId,
+						membershipId: $('select#membership').val()
+					},
+					function(data) {
+						$('#membership-auth-request-' + companyId).slideUp(200);
+
+						// update the pending count blocks around the page
+						var count = parseInt($('#jqPendingCountRoot').html());
+						count--;
+
+						$('span[class="jqPendingCount"]').html(function () {
+							return count;
+						});
+
+						// make sure the text makes sense
+						var plural = (count == 1) ? 'company is' : 'companies are';
+						$('span[class="jqCompanyPlural"]').html(function () {
+							return plural;
+						});
+
+						if (count == 0) {
+							$('#pendingMembershipAuths').slideUp(300);
+						}
+
+						window.location.reload();
+
+					},
+					'json'
+				);
+			}
+
+			return false;
+		});
+
+
+		$('a[class="membership-request-action-reject"]').click(function(){
+			if (confirm('Are you sure you want to reject this request?')) {
+				var companyId = $(this).attr('id').replace('reject-', '');
+
+
+				$.post('/membership-auth/reject-membership-auth-request/format/json/',
+					{
+						companyId: companyId,
+						membershipId: $('select#membership').val()
+					},
+					function(data) {
+						$('#membership-auth-request-' + companyId).slideUp(200);
+
+						// update the pending count blocks around the page
+						var count = parseInt($('#jqPendingCountRoot').html());
+						count--;
+
+						$('span[class="jqPendingCount"]').html(function () {
+							return count;
+						});
+
+						// make sure the text makes sense
+						var plural = (count == 1) ? 'company is' : 'companies are';
+						$('span[class="jqCompanyPlural"]').html(function () {
+							return plural;
+						});
+
+						if (count == 0) {
+							$('#pendingMembershipAuths').slideUp(300);
+						}
+
+						reduceCounters ();
+
+					},
+					'json'
+				);
+			}
+
+			return false;
+		});
+
+		$('#supplierToAdd').autoComplete({
+			backwardsCompatible: true,
+			ajax: '/profile/supplier-search/format/json',
+			useCache: false,
+			minChars: 3,
+			list: 'auto-complete-list-wide',
+			preventEnterSubmit: true,
+			onRollover: function(data) {
+				var companyId = data.code.split('-')[1];
+				$('#supplierToAdd').val(data.nonDisplay);
+				return false;
+			},
+			onSelect: function(data) {
+				var companyId = data.code.split('-')[1];
+				$('#supplierToAddId').val(companyId);
+				$('#supplierToAdd').val(data.nonDisplay);
+				return false;
+			},
+			width: 400
+		});
+
+	});
+
+
+	function reduceCounters ()
+	{
+		$('#global-pending-actions').pendingActions();
+		// update the pending count blocks around the page
+		var count = parseInt($('span[class="jq-pending-memberships-actions-span"]').html());
+		count--;
+
+		$('span[class="jq-pending-memberships-actions-span"]').html(function () {
+			return count;
+		});
+
+		if (count==0){
+			$('#jq-pending-memberships-actions').fadeOut('fast');
+		}
+	}
+
+	//-->
+</script>

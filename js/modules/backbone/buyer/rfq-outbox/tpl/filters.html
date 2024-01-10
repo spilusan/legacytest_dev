@@ -1,0 +1,64 @@
+<ul class="filters">
+
+</ul>
+
+<div class="setFilter">
+	
+	<form class="new">
+		<label for="vessel">Buyer Branchs:</label>
+		<select name="branch" id="branchSelect">
+			<option value="">All Companies</option>
+			{{#each branch.models}}
+				<option value="{{this.attributes.id}}" {{#if this.attributes.selected}}selected="selected"{{/if}}>{{this.attributes.name}}</option>
+			{{/each}}			
+		</select>
+		<label for="vessel">Vessel:</label>
+		<select name="vessel" id="vesselSelect">
+			<option selected="selected" value="">All vessels</option>
+			{{#each vessel.models}}
+				<option value="{{this.attributes.name}}">{{this.attributes.name}}</option>
+			{{/each}}
+		</select>
+		<label for="keywords">Keywords:</label>
+		<input type="text" name="keywords" value="reference, subject, description" class="blur"/>
+		<!--
+		<label for="category">Category:</label>
+		<select name="category" id="categorySelect">
+			<option selected="selected"  value="">All categories</option>
+			<option value="1">Ropes</option>
+			<option value="2">Paint</option>
+		</select>
+		-->
+		<label for="rfqDate">RFQ Date:</label>
+		<select name="rfqDate" id="rfqDateSelect">
+            <option value="7">Last 7 days</option>
+			<option value="30">Last 30 days</option>
+			<option value="90">Last 3 months</option>
+			<option value="180">Last 6 months</option>
+			<option value="365">Last 12 months</option>
+            <!-- <option value="730">Last 2 years</option> -->
+		</select>
+		<label for="matchStatus">Sourcing Status:</label>
+		<select name="matchStat" id="matchStatus">
+			<option selected="selected" value="">All</option>
+			<option value="match">SpotSource/AutoSource used</option><!-- only shows RFQs where at least one matched supplier is present -->
+			<option value="buyer">Buyer selected only</option><!-- only shows RFQs where no matched suppliers are present -->
+		</select>
+		<label for="rfqStat">RFQ Status:</label>
+		<select name="rfqStat" id="rfqStatus">
+			<option selected="selected" value="">All</option>
+			<option value="OPN">Open</option>
+			<option value="C">Closed</option>
+			<!-- <option value="DFT">Draft</option> -->
+		</select>
+		<div class="nameSelect">
+			<img src="/img/tooltip/selectTip.png" border="0" alt="tip">
+			<input type="text" name="filterName" /><input type="button" name="confirmSave" value="Save" class="button small green" />
+		</div>
+		
+		<input type="button" class="button small dblue" name="show" value="Show"/>
+		<img src="/img/ajax-loader.gif" alt="Loading" border="0" style="display: none;" class="smallSpin" />
+		<!--<input type="button" class="button small white" name="save" value="Save" />
+		<input type="button" class="button small white" name="manage" value="Manage filters" />-->
+	</form>
+</div>

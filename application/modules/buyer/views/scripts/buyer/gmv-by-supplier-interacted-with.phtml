@@ -1,0 +1,187 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()
+	->addModule('match/report')
+	->addDefinition('/match/reportType', '"buyer-gmv-breakdown"')
+	;
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+	table tr.child td {
+		background-color:#d6dce4;
+	}
+
+	table tr.bold td {
+		font-weight:bold;;
+	}
+	#body #content {
+		left: 0 !important;
+	}
+</style>
+
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'GMV Report', 'url'  => '/reports/gmv');
+	$breadcrumbs[] = array('name' => 'Buyer', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'Drilldown per supplier', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.CSV.css" media="screen" rel="stylesheet" type="text/css">
+
+<div id="body" class="buyerGmvDetailSPBInteractedWith">
+	<div id="content">
+		<h1 class="styled">GMV Report for Buyer - Supplier Interacted With</h1>
+		<form method="get" class="new">
+		    <table style="margin: auto;  width:100%;">
+		    	<tr>
+		        	<td>
+		        		<form action="/buyer/gmv" id="buyerGmvForm">
+			        		<table style="font-size:12px; ">
+								<tr>
+						            <td width="130">
+						            	Buyer TNID:
+						            </td>
+						            <td>
+						               <?= $this->buyer->bybBranchCode?>
+						            </td>
+								</tr>
+								<tr>
+						            <td width="130">
+						            	Buyer Name:
+						            </td>
+						            <td>
+						               <?= $this->buyer->bybName?>
+						            </td>
+								</tr>
+								<tr>
+						            <td width="130">
+						            	For period:
+						            </td>
+						            <td>
+						               <?= $this->report->startDate->format('d/M/Y');?> to <?= $this->report->endDate->format('d/M/Y');?>
+						            </td>
+								</tr>
+			        		</table>
+		        		</form>
+		        	</td>
+		        </tr>
+
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		            	<? if( lg_count($this->results) > 0 ){ ?>
+		                <table id="resultsTab" width="100%" style="display:block; ">
+		                    <thead>
+		                        <tr>
+		                            <th style="width:30px;"></th>
+		                            <th>Supplier TNID</th>
+		                            <th class="left" style="width: 340px;">Supplier Name</th>
+		                        	<th class="left">Region</th>
+		                            <th class="left">Country</th>
+									<th class="left">Level</th>
+		                           	<th>RFQs sent</th>
+		                        	<th>Number RFQs ignored</th>
+		                        	<th>Response Rate</th>
+		                        	<th>Quote Rate</th>
+		                        	<th>Win rate (%RFQ events where this supplier quoted and won) (</th>
+		                        	<th>%RFQ events where no PO resulted from any supplier</th>
+		                        	<th>RFQ events where sole supplier</th>
+		                        	<th>RFQ events where supplier was cheapest but no PO was raised</th>
+                                    <th>Estimated GMV Leakage (USD)</th>
+                                    <th>Estimated Revenue Leakage (USD)</th>
+                                    <th>Number competitive POs</th>
+                                    <th>Number direct POs</th>
+                                    <th>Total orders sent</th>
+                                    <th>Number trading units ordered for</th>
+                                    <th>Total Spend with this Supplier (USD) </th>
+                                    <th>%buyer’s total spend with this supplier</th>
+									<th>Total buyers using this supplier</th>
+									<th>%supplier revenue from this buyer</th>
+                                    <th>Average buyer spend with this supplier</th>
+                                    <th>Current Monetisation (USD)</th>
+                                    <th>Achieved Monetisation (USD)</th>
+									<th>Revenue (USD)</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php
+		                        foreach( (array) $this->results as $result )
+		                        {
+		                        	$totalGMVForBuyer += $result['ACTUAL_GMV'];
+		                        }
+
+		                        foreach ( (array) $this->results as $result)
+		                        {
+		                        	++$no;
+
+		                        	$supplier = Shipserv_Supplier::getInstanceById($result['SPB_BRANCH_CODE'], null, $true);
+		                        	?>
+		                            <tr>
+		                            	<td><?= $no?></td>
+		                                <td><?= $result['SPB_BRANCH_CODE']?></td>
+		                                <!-- <td class="left"><a href="<?= $supplier->getUrl()?>" target="_blank"><?= $supplier->name?></a></td> -->
+		                                <td class="left">
+		                                	<a href="<?= '/user/loading?u='.urlencode('/reports/supplier-stats?matchLevel=&accountManager=&spbName=&tnid='.$result['SPB_BRANCH_CODE'].'&region=&country=&type=&fromDate='.$this->report->startDate->format('d/m/Y').'&toDate='.$this->report->endDate->format('d/m/Y')) ?>" target="_blank">
+		                                	<?= $result['SPB_NAME'] //$supplier->name?>
+		                                	</a>
+		                                </td>
+		                                <td class="left"><?= $supplier->accountRegion?></td>
+		                                <td class="left"><?= $supplier->countryName?></td>
+										<td class="left"><?= str_replace("_SUPPLIER", "", $supplier->getIntegrationType())?></td>
+		                                <td><?= $result['TOTAL_RFQ_EVENT']?></td>
+		                                <td><?= $result['TOTAL_RFQ_EVENT_IGNORED']?></td>
+		                                <td class=""><?= round($result['RESPONSE_RATE'],0)?></td>
+                                        <td class=""><?= round($result['QUOTE_RATE'], 0)?></td>
+                                        <td><?= round($result['WIN_RATE'], 0)?></td>
+                                        <td class=""><?= round($result['NO_PO_RATE'], 0)?></td>
+		                                <td class=""><?= $result['TOTAL_RFQ_EVENT_SOLE_SPB']?></td>
+		                                <td class=""><?= $result['TOTAL_RFQ_EVENT_IS_CHEAPEST']?></td>
+		                                <td class="currency"><?= $result['TOTAL_LEAKAGE']?></td>
+                                        <td class="currency"><?= $result['TOTAL_REVENUE_LEAKAGE']?></td>
+		                                <td class=""><?= $result['TOTAL_COMPETITIVE_PO']?></td>
+                                        <td class=""><?= $result['TOTAL_DIRECT_PO']?></td>
+                                        <td class=""><?= $result['TOTAL_RFQ_EVENT_WITH_ORDER']?></td>
+                                        <td class=""><?= $result['TOTAL_VESSEL']?></td>
+
+		                                <td class="currency"><?= $result['ACTUAL_GMV']?></td>
+		                                <td class=""><?= round($result['ACTUAL_GMV']/$totalGMVForBuyer*100, 0)?></td>
+		                                <td><?= $result['TOTAL_BUYERS_PER_SUPPLIER'] ?><!-- Total buyers using this supplier --></td>
+										<td class="percentage"><?= $result['SUPPLIER_BUYER_REVENUE'] ?></td>
+		                                <td class="currency"><?= $result['AVG_GMV']?></td>
+
+	                                    <td class="percentage"><?= $result['MONETISATION_PC']?></td>
+                                        <td class="percentage"><?= $result['ACHIEVED_MONETISATION_PC']?></td>
+                                        <td class="currency"><?= $result['REVENUE']?></td>
+		                            </tr>
+		                        	<?
+		                        }
+		                        ?>
+		                    </tbody>
+		                </table>
+		                <?php }?>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+	function changeParentId(parentId){
+		$('#parentId').val(parentId);
+		$("#buyerGmvForm").submit();
+	}
+</script>

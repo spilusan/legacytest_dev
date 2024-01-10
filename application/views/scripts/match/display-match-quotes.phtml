@@ -1,0 +1,60 @@
+<style>
+	th {
+		font-weight: bold;
+		padding: 5px;
+		border-right: 1px solid #000;
+		border-bottom: 1px solid #000;
+		margin: 10px 0;
+	}
+	
+	td {
+		font-size: .9em;
+		padding: 5px;
+	}
+	
+	.altRow {
+		background-color: #BBCEF1;
+	}
+</style>
+<table>
+	<thead>
+		<tr>
+			<th>Buyer</th>
+			<th>RFQ Reference No</th>
+			<th>RFQ Last Updated Date</th>
+			<th>RFQ/Quote Type</th>
+			<th>Buyer Branch Code</th>
+			<th>Quote Submitted</th>
+			<th>Supplier</th>
+			<th>Quote Value (USD)</th>
+			<th>Terms of Payment</th>
+			<th>Supplier Country</th>
+			<th>Order Submitted</th>
+			<th>Order Currency</th>
+			<th>Quote Currency</th>
+			<th>Percentage of LineItems Quoted</th>
+			<th>Order Value (USD)</th>
+		</tr>
+	</thead>
+	<tbody>
+		
+		<?php 
+		$counter = 0;
+		foreach ($this->results as $result): ?>
+			<tr <?php if($counter % 2 == 1):?>style="altRow"<?php endif; ?>>
+				<?php
+				for ($index = 0; $index < lg_count(array_keys($result)); $index++) {
+					?><td>
+					<?php 
+					$var = array_values($result);
+					echo $var[$index]; 
+					
+					?></td><?php
+				}
+				?>
+			</tr>			
+		<?php 
+		$counter++;
+		endforeach; ?>
+	</tbody>
+</table>

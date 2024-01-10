@@ -1,0 +1,225 @@
+div.container-fluid { min-width: 900px; }
+
+.hidden { display: none; }
+
+.sidebar-nav li.nav-header { padding: 3px 5px; }
+
+#searchform { position: relative; }
+#searchform a.new { position: absolute; top: 10px; right: 10px; }
+
+form.transaction.search div.row { margin-left: 10px; }
+
+.transactionhistory.search { font-size: 12px; padding: 6px; margin-bottom: 10px; }
+
+.transactionhistory.search div.warning { font-size: 0.9em; line-height: 0.9em; color: #D00; font-weight: bold; }
+
+.transactionhistory.search .row-fluid { margin-bottom: 0px; }
+
+.transactionhistory.search legend { margin-top: 0; font-size: 12px; font-weight: bold; margin-bottom: 2px; line-height: 20px; border-bottom: 1px solid #ddd; }
+
+input.input-medium, input.input-small, select.input-medium { font-size: 12px; margin-bottom: 0;}
+
+select.input-medium { height: 20px; padding: 0; margin-bottom: 5px; }
+.transactionhistory.search input.text { height: 19px; line-height: normal; padding-top:0; padding-bottom: 0; width: 130px; min-width: 130px; }
+
+div.timezone.message { margin: 0; font-size: 0.9em; line-height: 0.9em; }
+
+select#buyerbranch { width: 480px; }
+
+.transactionhistory.search label { font-size: 0.9em; height: 20px; line-height: 20px; margin-bottom: 0; }
+.transactionhistory.search label.radio.inline { padding-top: 0; }
+
+.buyer.reference>label, .buyer.reference>input {
+    float: left;
+}
+
+.buyer.reference>input { clear: left; }
+
+.controls.reference.modifier {
+    float: left;
+}
+
+label.radio.inline {
+    margin-left: 5px;
+} 
+
+label.radio.inline input.radio {
+    margin-left: -15px;
+}
+
+div.controls.sort.order { float: left; margin-left: 5px; }
+div.controls.sort.order label { padding-top: 0; }
+#sortfield { float: left; }
+
+#tablefooter { width: 100%; }
+#tablefooter div.total { float: left; line-height: 30px; vertical-align: middle; font-style: italic;}
+#tablefooter div.buttons { float: left; clear: right; margin-left: 30px;}
+
+.btn.submit, .btn.reset {
+    margin-top: 8px;
+}
+
+.btn.submit {
+    width: 150px;
+}
+
+
+/*Results*/
+table.transactionhistory.results {
+    font-size: 12px;
+}
+
+#tablefooter div.buttons .btn { }
+
+.modal .btn.close { opacity: 0.7; margin-left: 5px; }
+
+#resendmodal img.spinner { display: block; margin: 0 auto; }
+
+#timezonemodal { width: 650px; margin-left: -325px;}
+
+#timezoneselect { width: 500px; }
+
+/*Tables*/
+
+.table th, .table td { 
+    padding: 2px 8px;
+}
+
+
+
+/*Imported from ESSM below*/
+
+/* Body */
+body {
+	margin : 0px;
+	font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+/* Header */
+.head {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : #022A52;
+	text-decoration : none;
+}
+
+table.head {
+	width: 100%;
+	border : none;
+}
+
+table.head td { padding: 0 2px 0 2px; }
+
+a:hover.head {
+	text-decoration : underline;
+}
+
+/* Footer */
+.foot {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Gray;
+	text-decoration : none;
+}
+
+table.foot {
+	width: 100%;
+	border : none;
+}
+
+a:hover.foot {
+	text-decoration : underline;
+}
+
+/* Top Navigation (main tabs) */
+
+table.nav, .nav {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 10pt;
+	color : #022A52;
+	text-decoration : none;
+    margin-bottom: 0;
+}
+
+td.nav {
+	border-top : 1px solid #022A52;
+	border-right : 1px solid #022A52;
+	background : Silver;
+    padding: 1px 3px 1px 3px;
+}
+
+a:hover.nav {
+	text-decoration : underline;
+}
+
+td.navOn {
+	background : #022A52;
+	font : bold;
+	color : White;
+}
+
+/* Second level navigation */
+
+.nav2 {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Silver;
+	text-decoration : none;
+	background : #022A52;
+    padding: 1px;
+}
+
+table.nav2 {
+	width : 100%;
+    padding: 1px;
+    margin-bottom: 10px;
+}
+
+a:hover.nav2 {
+	text-decoration : underline;
+}
+
+.nav2On {
+	font : bold;
+	color : White;
+}
+
+
+.menuOn {
+   font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+   font-weight: bold;
+   font-size: 8pt;
+   color: #FFFFFF;
+   text-decoration: underline;
+   background-color: #022A52;
+}
+
+.menuOff {
+   font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+   font-weight: bold;
+   font-size: 8pt;
+   color: #C0C0C0;
+   text-decoration: none;
+   background-color: #022A52;
+}
+
+A:hover.menuOff {
+   color: #FFFFFF;
+   text-decoration: none;
+}
+
+.bar {
+   font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+   font-weight: bold;
+   font-size: 8pt;
+   line-height: 8pt;
+   color: #C0C0C0;
+   text-decoration: none;
+   background-color: #022A52;
+}
+td.error
+{
+	color : #bb1111;
+	font-weight : bold;
+	text-align : center;
+}

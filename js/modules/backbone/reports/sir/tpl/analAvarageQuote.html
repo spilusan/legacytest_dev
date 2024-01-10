@@ -1,0 +1,50 @@
+							<table cellpadding="0" cellspacing="0" class="content-table">
+								<!--
+								{{#ifCond premium 0}}
+								<tr>
+									<td>All ShipServ</td>
+									<td>{{formatNumRoundOne attributes.all-suppliers-qot-ave}} hrs</td>
+								</tr>
+								{{/ifCond}}
+								-->
+								<tr>
+									<td>You</td>
+									<td><span class="text-red">{{#if hasSpinner}}<div class="spinnerIcon"></div>{{else}}{{formatNumRoundOne attributes.supplier-qot-ave }} hrs{{/if}}</span></td>
+								</tr>
+
+								<tr>
+									<!-- TOPD conditon-->
+									<td>Other suppliers <span class="reduceSize">(your quotes)</span></td>
+									<td id="otherSupplierQuotes{{#if isCompare}}Compare{{/if}}">{{#if premium}}<div class="spinnerIcon"></div>{{else}}<a href="upgrade" class="button yellow small read btnFix tHelp" target="_blank">Upgrade</a>{{/if}}</td>
+								</tr>
+							</table>
+
+							<table cellpadding="0" cellspacing="0" class="quote-table">
+								<thead>
+									<tr>
+										<th>Quote time</th>
+										<th>Quotes</th>
+										<th><span class="text-green">Won</span><span class="text-red alignRight">Lost</span></th>
+									</tr>
+								</thead>	
+								<tbody>
+									{{#if hasSpinner}}
+										<tr>
+											<td colspan="3">
+												<div class="spinnerIcon"></div>
+											</td>
+										</tr>
+									{{else}}
+										{{#each attributes.ave-time-periods}}
+										<tr>
+											<td>{{this.period}}</td>
+											<td class="quoteValue">{{formatNumRound this.qot-count}}</td>
+											<td>
+												<div class="quote-indicator"><div class="q-bg"></div><div class="q-indicator ind_{{this.won-count}}_{{this.lost-count}}"></div>
+												<div class="htmlHintBox"><span>Won: {{this.won-count}} ({{getPrecentOneDigit this.won-count this.lost-count}}%)<br>Lost: {{this.lost-count}} ({{getPrecentOneDigit this.lost-count this.won-count}}%)</span></div>
+											</td>
+										</tr>
+										{{/each}}
+									{{/if}}
+								</tbody>
+							</table>

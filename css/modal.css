@@ -1,0 +1,48 @@
+#ssModalMask { 
+    display: none; 
+    z-index: 9999; 
+    width: 100%; 
+    height: 100%; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    background: rgb(0, 0, 0) transparent; 
+    background: rgba(0, 0, 0, 0.8); 
+    filter: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#CC000000', EndColorStr='#CC000000'); 
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#CC000000, endColorstr=#CC000000)"; 
+    -pie-background: rgba(0, 0, 0, 0.8); 
+    behavior: url(/css/PIE.htc); 
+}
+
+#ssModalDialogue { 
+    z-index: 10000; position: absolute; 
+    top: 100px; 
+    left: 50%; 
+    background-color: #fff; 
+    margin-top: 50px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px; 
+    behavior: url(/css/PIE.htc);
+    padding: 20px; 
+    min-width: 350px; 
+    min-height: 150px 
+}
+
+#ssModalDialogue div.ssModal.button.close { 
+    position: absolute; 
+    top: -48px; 
+    right: 0; 
+}
+
+/* magic rule allows loading though requirejs & cssp */
+#cssp-ssModal { 
+    position: fixed; 
+    z-index: 12345; 
+}
+
+#ssModalDialogue div.zz.page.header {
+    margin: -15px !important;
+    margin-bottom: 20px !important;
+}

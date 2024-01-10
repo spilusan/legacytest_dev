@@ -1,0 +1,183 @@
+.filterContent {
+				margin-bottom: 0px !important;
+				min-height: 40px !important; 
+			}
+
+.transHead {
+	width: 100%;
+	div {
+		&.filterBlock {
+			display: block;
+			background:#e9edf1;
+			padding: 5px;
+			margin-top: 5px;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+			width: 48%;
+		}
+	}
+	.txLeft {
+		float: left;
+		min-height: 40px;
+			.topLeftTable {
+				border: 0px;
+				margin: 6px 10px 10px 10px;
+				width: 420px;
+
+				tbody {
+					tr {
+						td  {
+							text-indent: 6px;
+							font-size: 14px;
+							vertical-align: middle;
+							height: 25px;
+
+						}
+						td:nth-child(1), td:nth-child(2) {
+							
+							color: white;
+							border-bottom: 1px solid #e9edf1;
+
+
+						}
+						td:nth-child(2), td:nth-child(5) {
+							text-align: right; 
+							padding-right: 6px;
+
+						}
+						td:nth-child(3) {
+							width: 20px;
+
+						}
+
+						td:nth-child(4), td:nth-child(5) {
+							width: 65px;
+							background-color: #FFF;
+							border-bottom: 1px solid #e9edf1;
+
+						}
+					}
+				}
+
+			}
+
+		p {
+			margin: 0px 0px 0px 18px;
+			padding: 0 !important;
+			font-weight: bold;
+		}
+	}
+
+	.txRight {
+		float: right;
+		min-height: 40px;
+		.topRightTable {
+				border: 0px;
+				margin: 6px 10px 10px 10px;
+				width: 420px;
+				tbody {
+					tr {
+						td {
+							text-indent: 6px;
+							font-size: 14px;
+							vertical-align: middle;
+							height: 25px;
+							border-bottom: 1px solid #e9edf1;
+						}
+
+						td:nth-child(2) {
+							text-align: right; 
+							padding-right: 6px;
+							}
+					}
+
+				}
+
+		}
+
+		.darkBrown {
+			background-color: #7e7e7e;
+			color: white;
+		}
+
+		.lightBrown {
+			background-color: #a8a8a8;
+			color: white;
+		}
+		p {
+			margin: 0px 0px 0px 18px;
+			padding: 0 !important;
+			font-weight: bold;
+		}
+
+	}
+	.arrow-down-red, .arrow-green-up {
+		display: block;
+		margin-left: 6px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+
+	}
+
+	.arrow-down-red {
+
+		border-width: 10px 7.5px 0 7.5px;
+		border-color: #ff0000 transparent transparent transparent;
+	}
+	.arrow-green-up {
+
+		border-width: 0 7.5px 10px 7.5px;
+		border-color: transparent transparent #10930c transparent;
+	}
+	.red {
+		color: red;
+	}
+	.deepBlue {
+		background-color: #155e85;
+	}
+	.deepLtBlue {
+		background-color: #018bd4;
+	}
+}
+
+.noItems {
+	display: none;
+}
+
+.revenueTitle {
+		padding: 12px 0px 6px 0px;
+		clear: both;
+}
+
+table {
+	&.gmv {
+		a {
+			white-space: nowrap;
+		}
+		tr {
+			td {
+				a {
+					&.button {
+						display: none;
+					}
+					img[src="/img/essm/print.png"] {
+						display: none;
+					}
+				}
+			}
+		}
+		tbody {
+			&.accordion-body {
+				font-size: 11px;
+				tr {
+					 td {
+				 		&.icons {
+				 			width: 0px;
+				 		}
+					 }
+				}
+			}
+		}
+	}
+}

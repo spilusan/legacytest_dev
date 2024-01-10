@@ -1,0 +1,351 @@
+/*
+Document   : partials/guidelines/_nav_base.scss
+Created on : May 12, 2016, 14:24:15 AM
+Author     : .:Gly:.
+Description: basic styles for navigation
+*/
+
+
+/* Base */
+
+@import "2016_campfire/main/colours";
+body>.secondLevel+div main {
+    padding-top: 45px;
+}
+
+header {
+    overflow: visible;
+    .navigations {
+        height: 60px;
+        nav {
+            position: relative;
+            display: block;
+            float: left;
+            overflow: visible;
+			@include user-select(none);
+        }
+        .company {
+            display: none;
+        }
+        &.loggedIn {
+            .company {
+                display: block;
+                font-size: 13px;
+                color: $white;
+                position: absolute;
+                right: 11px;
+                top: 1px;
+                height: 28px;
+                overflow: hidden;
+                padding-left: 18px;
+                z-index: 800;
+                width: 320px;
+                z-index: 999;
+                i {
+                    &.fa-angle-down {
+                        position: absolute;
+                        font: normal normal normal 18px/1 FontAwesome;
+                        color: $white;
+                        font-weight: 400;
+                        margin-left: 10px;
+                        display: block;
+                        right: 0px;
+                    }
+                }
+                form {
+                    input {
+                        font-family: 'Lato', sans-serif;
+                        color: $white;
+                        font-size: 12px;
+                        position: relative;
+                        padding: 5px 10px;
+                        border: 1px solid $link-blue;
+                        margin: 0;
+                        width: 295px;
+                        @include border-radius(0);
+                        background: transparent;
+                        &:focus::-webkit-input-placeholder {
+                            color: transparent;
+                        }
+                        &:focus:-moz-placeholder {
+                            color: transparent;
+                        }
+                        /* FF 4-18 */
+                        &:focus::-moz-placeholder {
+                            color: transparent;
+                        }
+                        /* FF 19+ */
+                        &:focus:-ms-input-placeholder {
+                            color: transparent;
+                        }
+                        /* IE 10+ */
+                    }
+                }
+                .addWrapper {
+                    position: relative;
+                    a {
+                        position: absolute;
+                        right: 0;
+                        &.addCompany {
+                            color: $white;
+                            right: -94px;
+                            position: relative;
+                            top: 7px;
+                            .fa-stack-1x,
+                            .fa-stack-2x {
+                                position: absolute;
+                                left: 0;
+                                width: 100%;
+                                text-align: center;
+                                top: 1px;
+                            }
+                            .fa-stack-2x {
+                                font-size: 20px;
+                            }
+                            .fa-stack-1x {
+                                line-height: inherit;
+                                font-size: 11px;
+                                position: absolute;
+                                top: -1px;
+                            }
+                        }
+                    }
+                }
+                ul {
+                    list-style: none;
+                    position: relative;
+                    right: 0px;
+                    top: 0px;
+                    li {
+                        color: $white;
+                        font-size: 12px;
+                        position: relative; //padding: 6px 10px 2px 10px;
+                        margin: 0;
+                        background: $link-blue;
+                        line-height: 1.5;
+                        padding: 4px 10px 0px 12px;
+                        a {
+                            display: block;
+                            white-space: nowrap;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                            i {
+                                &.fa-circle-thin {
+                                    font-size: 21px;
+                                    position: relative;
+                                    top: -2px;
+                                    margin-right: 5px;
+                                    div {
+                                        position: absolute;
+                                        top: 5px;
+                                        left: 5px;
+                                        font-size: 12px;
+                                        font-weight: bold;
+                                    }
+                                }
+                            }
+                            span {
+                                display: inline;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                width: 285px;
+                                position: relative;
+                                top: -5px;
+                            }
+                        }
+                        &:first-child {
+                            border: 1px solid $link-blue;
+                            background: transparent;
+                            line-height: 1;
+                        }
+                        &:nth-child(2) {
+                            padding-top: 8px;
+                        }
+                        /*&:last-child {
+    						padding-bottom: 15px;
+    					}*/
+                        .fa-building {
+                            margin-right: 5px;
+                            top: -3px;
+                            position: relative;
+                        }
+                        &.selected {
+                            padding: 4px 10px 0px 10px;
+                            a {
+                                display: block;
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                i {
+                                    &.fa-circle-thin {
+                                        font-size: 21px;
+                                        position: relative;
+                                        top: -2px;
+                                        margin-right: 5px;
+                                        div {
+                                            position: absolute;
+                                            top: 5px;
+                                            left: 5px;
+                                            font-size: 12px;
+                                            font-weight: bold;
+                                        }
+                                    }
+                                }
+                                span {
+                                    display: inline;
+                                    white-space: nowrap;
+                                    overflow: hidden;
+                                    text-overflow: ellipsis;
+                                    width: 285px;
+                                    position: relative;
+                                    top: -5px;
+                                }
+                            }
+                        }
+                        &.single {
+                            &:first-child {
+                                padding-top: 7px;
+                                padding-bottom: 7px;
+                            }
+                            &:last-child {
+                                padding-bottom: 6px;
+                            }
+                            a {
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                width: 300px;
+                                display: block;
+                                white-space: nowrap;
+                            }
+                            &.selected {
+                                padding-top: 4px;
+                                padding-bottom: 1px;
+                            }
+                        }
+                        .fa-angle-down {
+                            font-size: 17px;
+                            margin-left: 5px;
+                            font-weight: bold;
+                            position: relative;
+                            top: 0px;
+                            float: right;
+                        }
+                        a {
+                            color: $white;
+                        }
+                    }
+                }
+                &.open {
+                    overflow: visible;
+                    ul {
+                        max-height: 400px;
+                        overflow-y: auto;
+                        background: $link-blue;
+                    }
+                }
+            }
+        }
+    }
+    i {
+        &.fa-bars {
+            float: right;
+            color: $white;
+            top: 1px;
+            position: relative;
+            font-size: 28px;
+            display: none;
+            padding: 15px;
+            cursor: pointer;
+        }
+    }
+}
+
+nav {
+    &.secondLevel {
+        display: block;
+        z-index: 2;
+        height: 45px;
+        background: $white;
+        float: none;
+        position: fixed;
+        top: 60px;
+        width: 100%;
+        z-index: 800;
+        @include box-shadow(0px 2px 5px 0px rgba(0, 0, 0, 0.6));
+        ul {
+            list-style: none;
+            li {
+                color: $white;
+                float: left;
+                padding: 0;
+                line-height: 1;
+                border-right: 1px solid $mid-grey;
+                a {
+                    display: block;
+                    padding: 15px;
+                    text-decoration: none;
+                    font-family: Lato, sans-serif;
+                    font-size: 15px;
+                    font-weight: normal;
+                    color: $black;
+                    &:active {
+                        background: $lt-grey;
+                    }
+                    i {
+                        display: none;
+                    }
+                }
+                &.selected {
+                    background: $mid-grey;
+                }
+            }
+        }
+    }
+    &.thirdLevel {
+        height: 50px;
+        background: $white;
+        @include border-radius(4px);
+        border: 1px solid $outline-blue-grey;
+        overflow: hidden;
+        ul {
+            list-style: none;
+            li {
+                margin: 0;
+                line-height: 1;
+                display: block;
+                height: 50px;
+                position: relative;
+                &:after {
+                    content: "";
+                    display: block;
+                    height: 50px;
+                    width: 50px;
+                    position: absolute;
+                    right: 0px;
+                    top: 0px;
+                    border-left: 1px solid $outline-blue-grey;
+                }
+                a {
+                    font-size: 20px;
+                    padding: 15px;
+                    color: $black;
+                    position: relative;
+                    margin: 0;
+                    display: block;
+                    &:after {
+                        content: "";
+                        width: 0;
+                        height: 0;
+                        border-style: solid;
+                        border-width: 10px 5px 0 5px;
+                        border-color: $outline-blue-grey transparent transparent transparent;
+                        position: absolute;
+                        right: 20px;
+                        top: 21px;
+                    }
+                }
+            }
+        }
+    }
+}

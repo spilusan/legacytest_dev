@@ -1,0 +1,208 @@
+<?php		   
+$this->headLink()->appendStylesheet('/css/uniform.default.new.css');
+$this->headLink()->appendStylesheet('/css/login.css');
+
+
+if( !empty($this->redirectUrl) )
+{
+	$redirectUrl = $this->redirectUrl;
+	$benc = 1;
+}
+
+$isLoggedIn = ($this->user == false) ? 0 : 1;
+$hasCompletedDetailedForm = ($this->user !== false && $this->user !== null && $this->user->hasCompletedDetailedInformation() )?1:0;
+$showVesselTypeFields = ($this->user !== false && in_array($this->user->pctId, array(1,2)) )?1:0;
+$passwordHasBeenSent = ($this->passwordHasBeenSent == false) ? 0 : 1;
+//$showVesselType = (($this->user !== false && $this->user-> ) );
+//print_r($this->user);
+$this
+	->getHelper('Requirejs')
+	->addDefinition('/user/redirectUrl', "'" . $redirectUrl . "'")
+	->addDefinition('/user/benc', "'" . $benc . "'")
+	->addDefinition('/user/isLoggedIn', $isLoggedIn)
+	->addDefinition('/user/hasCompleted', $hasCompletedDetailedForm)
+	->addDefinition('/user/passwordHasBeenSent', $passwordHasBeenSent)
+	->addDefinition('/user/showVesselType', $showVesselTypeFields)
+	
+	->addDefinition('/user/jobType', '"' . $this->user->pjf . '"')
+	->addDefinition('/user/companyName', '"' . $this->user->companyName . '"')
+	->addModule('backbone/user/login/main');
+?>
+<div class="loginBox login">
+	<div class="right">
+		<h2 class="styled grey blue">New User?</h2>
+		<h3>First time using ShipServ?</h3>
+		<h4>Join us today!</h4>
+		<p><span>It's FREE</span> and it will takes less than 2 minutes.</p>
+		<input type="button" name="register" value="Register" class="button medium lblue" />
+	</div>
+	<div class="left">
+		<h2 class="styled grey green">Existing User?</h2>
+		<div class="formContainer">
+			<form class="new pwdSent">
+				<div class="error success">Your password has been sent</div>
+			</form>
+			<?php
+			if (is_array($this->errors['top']))
+			{
+				?>
+				<div id="form_error" style="margin: 0 0 10px 0px;">
+					<?php
+					foreach ($this->errors['top'] as $error)
+					{
+						if (!is_array($error))
+						{
+							?>
+							<form class="new">
+								<div class="error"><?php echo $error; ?></div>
+							</form>
+							<?php
+						}
+					}
+					?>
+				</div>
+				<?php
+			}
+			?>
+		
+			<form class="new" id="login-form" action="/user/register-login" method="post">
+				<input type="hidden" id="loginRedirectUrl" name="redirectUrl" value="<?php echo $this->redirectUrl; ?>" />
+				<input type="hidden" value="<?= $benc?>" name="benc" />
+				
+			
+				<fieldset>
+					<input type="hidden" name="act" value="login" />
+					<label for="loginUsername">Email: <sup>*</sup></label>
+					<input type="email" name="loginUsername" value="<?= $this->emailForForgottenPassword ?>" />
+					<div class="clear"></div>
+					<?php if($this->errors['loginUsername']){?><div class="error_msg_arrow"></div><?php }?>
+					
+					<label for="loginPassword">Password: <sup>*</sup></label>
+					<input type="password" name="loginPassword" />
+					<div class="clear"></div>
+					<?php if($this->errors['loginPassword']){?><div class="error_msg_arrow"></div><?php }?>
+					
+					<input type="checkbox" name="loginRememberMe" checked id="keepLogged" />
+					<label for="loginRememberMe">Keep me logged in</label>
+				</fieldset>
+				<a href="#" class="forgotPwd">Have you lost your password?</a><br />
+				<p>Problems with sign in? Email us at <br />
+				<a href="mailto:support@shipserv.com">support@shipserv.com</a></p>
+				<input type="submit" name="signIn" class="button medium green" value="Sign in and continue" />
+				<br />
+			</form>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="loginBox forgot">
+	<div class="right">
+		<h2 class="styled grey blue">New User?</h2>
+		<h3>First time using ShipServ?</h3>
+		<h4>Join us today!</h4>
+		<p><span>It's FREE</span> and it will takes less than 2 minutes.</p>
+		<input type="button" name="register" value="Register" class="button medium lblue" />
+	</div>
+	<div class="left">
+		<h2 class="styled grey green">Forgotten Password?</h2>
+		<div class="formContainer">
+			<?php
+			if (is_array($this->errors['top']))
+			{
+				?>
+				<div id="form_error" style="margin: 0 0 10px 0px;">
+					<?php
+					foreach ($this->errors['top'] as $error)
+					{
+						if (!is_array($error))
+						{
+							?>
+							<form class="new">
+								<div class="error"><?php echo $error; ?></div>
+							</form>
+							<?php
+						}
+					}
+					?>
+				</div>
+				<?php
+			}
+			?>
+		
+			<form class="new" id="forgot-form" action="/user/register-login/forgot" method="post">
+				<input type="hidden" id="loginRedirectUrl" name="redirectUrl" value="<?php echo $this->redirectUrl; ?>" />
+				<input type="hidden" value="<?= $benc?>" name="benc" />
+				
+			
+				<fieldset>
+					<input type="hidden" name="act" value="forgot" />
+					<label for="loginUsername">Email: <sup>*</sup></label>
+					<input type="email" name="forgEmail" />
+					<div class="clear"></div>
+					<?php if($this->errors['forgotUsername']){?><div class="error_msg_arrow"></div><?php }?>
+				</fieldset>
+				<input type="submit" name="sendPass" class="button medium green" value="Send Password" />
+			</form>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="registerBox">
+	<h1 class="styled"><a href="#" class="button small dblue goLogin">I already have an account</a>Registration form </h1>
+	<p class="infoText">
+		 Before you proceed you need to agree to the changed <a href="/info/privacy-policy/" target="_blank">Privacy Policy</a> and latest <a href="/info/terms-of-use" target="_blank">Terms of Use</a> 
+		 and <strong>update your company profile information</strong>.
+	</p>
+	<div class="formContainer">
+		<div class="steps">
+			<p class="user">
+				Step 1 <br />
+				<span>User details</span>
+			</p>
+			<p class="company">
+				Step 2 <br />
+				<span>Company details</span>
+			</p>
+		</div>
+		<form class="new regForm">
+			<input type="hidden" value="<?= $redirectUrl?>" name="registerRedirectUrl" />
+			<input type="hidden" value="<?= $benc?>" name="benc" />
+			<div class="fields"></div>
+		</form>
+	</div>
+</div>
+
+<div id="modal" class="supplier">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody"></div>
+</div>
+
+<div class="modal decisionInfo">
+	<div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+    	<h1 class="styled">Decision Maker</h1>
+    	<div class="modalContent">
+    		<p>
+    			Do you have purchasing authority for your company?<br /><br />
+    			Or do you have significant influence on the purchasing and procurement process?
+    		</p>
+    	</div>
+    </div>
+</div>
+
+<div class="modal spendInfo">
+	<div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+    	<h1 class="styled">Your Spend in USD (US$)</h1>
+    	<div class="modalContent">
+    		<p>
+    			Your company’s spend in dollars for which you have authority for or significant influence over.
+    		</p>
+    	</div>
+    </div>
+</div>
+
+<div id="waiting">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>

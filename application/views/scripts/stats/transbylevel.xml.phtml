@@ -1,0 +1,44 @@
+<chart>
+	<chart_type>pie</chart_type>
+	
+	<legend bullet='circle' size='16' y='65' height='50' width='50' />
+	
+	<chart_label layout='hide' />
+	
+	<chart_border top_thickness='0'
+		bottom_thickness='0'
+		left_thickness='0'
+		right_thickness='0'
+		color='000000'
+	/>
+	
+	<chart_rect positive_color='FFFFFF' />
+	
+	<series_color>
+		<color>4B8AC0</color>
+		<color>56B10C</color>
+	</series_color>
+	
+	<chart_data>
+		<row>
+			<null/>
+			<?php foreach ($this->chartData as $cd)
+			{
+			?>
+			<string><?php echo $cd['label']; ?></string>
+			<?php
+			}
+			?>
+		</row>
+		<row>
+			<null/>
+			<?php foreach ($this->chartData as $cd)
+			{
+			?>
+			<number label=''><?php echo $cd['value']; ?></number>
+			<?php
+			}
+			?>
+		</row>
+	</chart_data>
+</chart>

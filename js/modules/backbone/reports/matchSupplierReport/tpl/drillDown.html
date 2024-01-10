@@ -1,0 +1,100 @@
+<div class="top-header">
+	<ul>
+		<!-- <li>Internal ref (ID): <b>{{summary.RFQ_INTERNAL_REF_NO}}</b></li> -->
+		<li>Buyer Ref: <b>{{summary.BUYER_REF}}</b></li>
+		<li>Vessel Name: <b>{{summary.RFQ_VESSEL_NAME}}</b></li>
+
+	</ul>
+
+	<ul>
+		<li>RFQ subject: <b>{{summary.SUBJECT}}</b></li>
+		<li>RFQ Date: <b>{{summary.DATE_SENT}}</b></li>
+	</ul>
+
+	<ul>
+		<!-- <li>Potential savings: <b>{{formatCurrency summary.POTENTIAL_SAVING}}</b></li> -->
+		<!--
+			<li>Actual savings: <b>{{formatCurrency summary.REALISED_SAVING}}</b></li>
+		-->
+	</ul>
+	<div>
+			<a href="{{summary.URL_FOR_BUYER}}" target="_blank" class="button white">View RFQ details</a>
+	</div>
+</div>
+<table id="drilldown">
+	<thead>
+		<tr>
+			<th class="tnid">Supplier TNID</th>
+			<th>Supplier Name</th>
+			<th>Country</th>
+			<th>Supplier Type</th>
+			<th>Quote Date</th>
+			<th>Quote Price (USD)</th>
+			<th class="canBrake">Quote Completeness</th>
+			<th>Delivery Terms</th>
+			<th>Quality</th>
+			<th>Lead Time (days)</th>
+			<th>Payment Terms</th>
+			<th>Potential Savings (USD)</th>
+			<th>Order Date</th>
+			<th>Order Price (USD)</th>
+			<th class="actions">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each data}}
+			{{#if attributes.QOT_INTERNAL_REF_NO}}
+				{{#ifNotCond attributes.QOT_TOTAL_PRICE_IN_USD 0}}
+					<tr{{#ifCondNoType attributes.TNID ../../../spbBranchCode }} class="highligted"{{/ifCondNoType}}>
+						<td>{{attributes.TNID}}</td>
+						<td class="left-align">{{attributes.SPB_NAME}}</td>
+						<td class="left-align">{{attributes.SPB_COUNTRY_NAME}}</td>
+						<td>
+							Selected By {{#ifCond attributes.RFQ_DESTINATION 'BUYER_SELECTED'}}Purchaser{{/ifCond}}{{#ifCond attributes.RFQ_DESTINATION 'MATCH_SELECTED'}}Sourcing Engine{{/ifCond}}
+						</td>
+						<td>{{attributes.QOT_SUBMITTED_DATE}}}</td>
+						<td>{{formatCurrency attributes.QOT_TOTAL_PRICE_IN_USD}}}</td>
+						<td>{{attributes.QOT_COMPLETENESS}}%</td>
+						<td>{{#if attributes.QOT_TERMS_OF_DELIVERY}}{{attributes.QOT_TERMS_OF_DELIVERY}}{{else}}Not specified{{/if}}</td>
+						<td>{{attributes.QOT_IS_GENUINE_SPARE}}</td>
+						<td>{{#if attributes.QOT_DELIVERY_LEAD_TIME}}{{attributes.QOT_DELIVERY_LEAD_TIME}}{{else}}Not specified{{/if}}</td>
+						<td>{{#if attributes.QOT_TERMS_OF_PAYMENT}}{{truncateText attributes.QOT_TERMS_OF_PAYMENT 40}}{{else}}Not specified{{/if}}</td>
+						
+						{{#ifCond attributes.RFQ_DESTINATION 'BUYER_SELECTED'}}
+							<td>N/A</td>
+						{{/ifCond}}
+
+						{{#ifCond attributes.RFQ_DESTINATION 'MATCH_SELECTED'}}
+							{{#if attributes.A_SAVING}}
+								{{#ifLowerThan attributes.QOT_COMPLETENESS 100}}
+									<td>Uncomparable</td>
+								{{else}}
+									<td>{{formatCurrency attributes.A_SAVING}}</td>
+								{{/ifLowerThan}}
+							{{else}}
+								<td>None</td>
+							{{/if}}
+						{{/ifCond}}
+
+						<td>{{attributes.ORD_SUBMITTED_DATE}}</td>
+						<td>{{formatCurrency attributes.ORD_TOTAL_PRICE_IN_USD}}</td>
+						<td>
+							<a href="{{attributes.URL_QOT}}" target="_blank" class="button green">View quote</a>
+							{{#if attributes.URL_ORD}}
+							<a href="{{attributes.URL_ORD}}" target="_blank" class="button dblue flowUnder">View order</a>
+							{{/if}}
+							{{#ifCond attributes.RFQ_DESTINATION 'MATCH_SELECTED'}}
+								{{#ifCond attributes.QOT_COMPLETENESS '100'}}
+									<img class="comparableIcon" src="/images/matchSupplierReport/comparable.png" data-id="{{attributes.QOT_INTERNAL_REF_NO}}" data-drilldown="1" alt="Comparable">
+								{{else}}
+									<img class="ddComparableIcon" src="/images/matchSupplierReport/comparable.png" alt="Comparable">
+								{{/ifCond}}
+
+							{{/ifCond}}
+						</td>
+					</tr>
+				{{/ifNotCond}}
+			{{/if}}
+		{{/each}}
+	</tbody>
+</table>

@@ -1,0 +1,56 @@
+<div class="detail">
+    <h2>{{name}}</h2>
+    <h3>Consortia{{#ifCond accountIsDeleted 'Y'}} (Deleted){{/ifCond}}</h3>
+
+    <div class="group">
+
+        <div class="group-row">
+            <div class="caption">Tradenet ID</div>
+            <div class="data-value">{{internalRefNo}}</div>
+        </div>
+
+        <div class="group-row">
+            <div class="caption">Name</div>
+            <div class="data-value">{{name}}</div>
+        </div>
+
+        <div class="group-row">
+            <div class="caption">Branding</div>
+            <div class="data-value">{{branding}}</a></div>
+        </div>
+
+        <div class="group-row">
+            <div class="caption">Created by %</div>
+            <div class="data-value">{{createdBy}}</a></div>
+        </div>
+
+        <div class="group-row">
+            <div class="caption">Created date</div>
+            <div class="data-value">{{createdDate}}</a></div>
+        </div>
+
+        <div class="group-row">
+            <div class="caption">Updated by</div>
+            <div class="data-value">{{updatedBy}}</a></div>
+        </div>
+
+        <div class="group-row">
+            <div class="caption">Updated date</div>
+            <div class="data-value">{{updatedDate}}</a></div>
+        </div>
+
+        <div class="group-row">
+            <div class="caption">Valid from</div>
+            <div class="data-value">{{validFrom}}</a></div>
+        </div>
+
+        <div class="group-row">
+            <div class="caption">Valid till</div>
+            <div class="data-value">{{validTill}}</a></div>
+        </div>
+
+        <h2>Connected users</h2>
+        <div class="company-membership"></div>
+
+    </div>
+</div>

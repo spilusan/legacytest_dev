@@ -1,0 +1,124 @@
+<?php
+
+$this->headMeta()->appendName('robots', 'noindex, follow');
+
+$this->googledfp()->addTargeting('keywords','ALL');
+$this->googledfp()->addTargeting('country','ALL');
+$this->googledfp()->addTargeting('port','ALL');
+$this->googledfp()->addTargeting('supplier','ALL');
+
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+				   ->appendFile('/js/jquery.metadata.js')
+				   ->appendFile('/js/jquery.footer.js');
+
+$this->googledfp()->add('TargetedOrGeneralAdSlot1');
+$this->googledfp()->add('TargetedOrGeneralAdSlot2');
+$this->googledfp()->add('TargetedOrGeneralAdSlot3');
+
+$this->googledfp()->render();
+				   
+$uri = $this->uri();
+
+echo $this->partial('searchbar.phtml', array('searchWhat'    => $this->searchValues['searchWhat'],
+											 'searchText'    => $this->searchText,
+											 'searchWhere'   => $this->searchValues['searchWhere'],
+											 'supplierCount' => $this->supplierCount));
+											 
+$this->CDNLink()->appendStylesheet('/css/search.css');
+
+?>
+
+<div id="main_content_area" style="margin-top:20px;"> 
+	<div class="content_wide" style="position:relative;">
+	
+		<div class="content_wide_header" >
+			<h1 style="margin-left:-10px;"><?php echo $this->mainTitle; ?></h1>
+			<div class="clear"></div>
+		</div>
+	
+		<div class="content_wide_body">
+			
+			<div class="browse_pagination">
+				<p class="indicator">
+					<?php
+					echo ($this->display == 'countries') ? 'Popular Countries' : 'Browse Continents';
+					?>
+				</p>
+				
+				<ul>
+					<?php
+					foreach ($this->continents as $conCode => $continent)
+					{
+						?>
+						<li><a title="Browse marine suppliers for countries in <?php echo $continent['name']; ?>" href="/supplier/country/marine-suppliers-in-<?php echo $uri->sanitise($continent['name']); ?>/-/con/<?php echo $conCode; ?>"><?php echo $continent['name'];?></a></li>
+						<?php
+					}
+					?>
+				</ul>
+				<div class="clear"></div>
+			</div>
+			
+			<?php
+			switch ($this->display)
+			{
+				case 'continents':
+					?>
+					<h3 class="continent"><?php echo $this->continent; ?></h3>
+					<?php
+					foreach ($this->countries as $cntCode => $country)
+					{
+						?>
+						<div class="browse_list">
+							<?php // echo $this->searchUrl()->searchText($country['name'])->searchWhere($cntCode)->sourceKey('BROWSE_COUNTRY') ?>
+							<a href="/country/<?php echo $this->string()->sanitiseForURI($country['name']); ?>/<?php echo $cntCode; ?>"
+							   title="Marine suppliers in <?php echo $country['name']; ?>"><span>Marine suppliers in </span><?php echo $country['name']; ?></a>
+							
+							<?php
+							if ($country['hasPortSuppliers'])
+							{
+								?>
+								<div class="end_link">
+									<a title="Browse marine suppliers for ports in <?php echo $country['name']; ?>" href="/supplier/browse-by-port/country/<?php echo $uri->sanitise($country['name']); ?>/cnt/<?php echo $cntCode; ?>">Browse by port</a>
+								</div>
+								<?php
+							}
+							?>
+								<div class="clear"></div>
+						</div>
+						<?php
+					}
+				break;
+				
+				case 'countries':
+					foreach ($this->countries as $country)
+					{
+						?>
+						<div class="browse_list">
+							<?php // echo $this->searchUrl()->searchText($country['CNT_NAME'])->searchWhere($country['CNT_COUNTRY_CODE'])->sourceKey('BROWSE_COUNTRY') ?>
+							<a href="/country/<?php echo $this->string()->sanitiseForURI($country['CNT_NAME']); ?>/<?php echo $country['CNT_COUNTRY_CODE']; ?>"
+							   title="Marine suppliers in <?php echo $country['CNT_NAME']; ?>"><span>Marine suppliers in </span><?php echo $country['CNT_NAME']; ?></a>
+							
+							<div class="end_link">
+								<a title="Browse marine suppliers for ports in <?php echo $country['CNT_NAME']; ?>" href="/supplier/browse-by-port/country/<?php echo $uri->sanitise($country['CNT_NAME']); ?>/cnt/<?php echo $country['CNT_COUNTRY_CODE']; ?>">Browse by port</a>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<?php
+					}
+				break;
+			}
+			
+			?>
+			
+		</div>   
+		<div class="content_wide_footer_shadow"></div>
+	</div>
+	
+	<div class="zone">
+		<?php echo $this->partial('general-google-ads.phtml'); ?>
+	</div>
+	
+	<div class="clear"></div>   
+
+</div> 
+<script type="text/javascript" src="<?php echo $this->CDNLink()->javascript('/js/jquery.searchvariables.js'); ?>" charset="utf-8"></script>

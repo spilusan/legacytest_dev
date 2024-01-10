@@ -1,0 +1,216 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+
+?>
+
+<div id="breadcrumbs">
+<?php
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Finance', 'url'  => '/supplier/value-event');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+</div>
+<style>
+	table .sf-detail
+	{
+		font-size:12px;
+	}
+</style>
+<div id="body" style="width:1500px;">
+	<div class="head">
+		<?php echo $this->partial('finance/tab.phtml', array('selected' => 'value-event')); ?>
+	</div>
+	<div id="content">
+		<h2 class="styled grey blue">
+			<a href="/reports/pages" class="button tab white medium active">Recalculate VBP Billing</a>
+		</h2>
+		<form method="get" class="new" id="report-form">
+		    <table width="100%">
+		        <tr style="position: relative;">
+		            <td>
+		            	<div style="font-size:12px; float: left; width: 300px;">
+		            		<table>
+		            			<tr>
+		            				<td>SF Account ID</td>
+		            				<td><input type="text" value="<?= $this->params['sf_account_id']?>" name="sf_account_id" /></td>
+		            			</tr>
+		            			<tr>
+		            				<td>Period start</td>
+		            				<td>	
+										<select name="start_month">
+											<option value="">month</option>
+											<?php 
+												for($i=1; $i<=12; $i++){
+													$t = mktime(0,0,0,$i,1,2014);
+													?><option <?= (($this->params['start_month'] == date("m", $t))?'selected="selected"':'') ?> value="<?= date("m", $t)?>">- <?= date("F", $t);?></option><?php 
+												}
+											?>
+										</select>
+										<select name="start_year">
+											<option value="">year</option>
+											<?php 
+												for($i=2016; $i>=2013; $i--){
+													?><option <?= (($this->params['start_year'] == $i)?'selected="selected"':'') ?> value="<?= $i?>">- <?= $i;?></option><?php 
+												}
+											?>
+										</select>		            				
+		            				</td>
+		            			</tr>
+		            			<tr>
+		            				<td>Period end</td>
+		            				<td>
+										<select name="end_month">
+											<option value="">month</option>
+											<?php 
+												for($i=1; $i<=12; $i++){
+													$t = mktime(0,0,0,$i,1,2014);
+													?><option <?= (($this->params['end_month'] == date("m", $t))?'selected="selected"':'') ?> value="<?= date("m", $t)?>">- <?= date("F", $t);?></option><?php 
+												}
+											?>
+										</select>
+										<select name="end_year">
+											<option value="">year</option>
+											<?php 
+												for($i=2016; $i>=2013; $i--){
+													?><option <?= (($this->params['end_year'] == $i)?'selected="selected"':'') ?> value="<?= $i?>">- <?= $i;?></option><?php 
+												}
+											?>
+										</select>		            				
+		            				</td>
+		            			</tr>
+		            			<tr>
+		            				<td></td>
+		            				<td align="right"><input type="submit" value="Continue" id="getAccountDetail"/></td>
+		            			</tr>
+		            		</table>
+            			</div>
+            			<div style="font-size:12px; float: left; width: 300px;">
+            				<b>Detail</b><br />
+            				Name: <?= $this->supplier->name; ?><br />
+            				Account manager: <?= $this->supplier->accountManagerName; ?> (<?= $this->supplier->accountManagerEmail; ?>)<br />
+            				Parent: 
+            			</div>
+		            </td>
+		            <?php 
+		            if( $this->app !== null )
+		            {
+		            if( $this->rateSet )
+		            ?>
+		        	<td>
+		        		<strong>Rate Sets</strong>
+		        		<table class="resultsTab" border="1">
+		        			<thead>
+			        			<tr>
+			        				<th>Id</th>
+			        				<th>Active?</th>
+			        				<th>PO Percentage <br />Fee</th>
+			        				<th>Fee per off <br />Shipserv lead <br />Unactioned RFQ</th>
+			        				<th>Fee per mile <br />targeted <br />impressions</th>
+			        				<th>Membership <br />fee</th>
+			        				<th>Valid from</th>
+			        			</tr>
+		        			<thead>
+		        			<tbody>
+		        			<?php
+		        				foreach( (array) $this->rateSet as $row )
+		        				{
+		        					?>
+		        					<tr>
+				        				<th><?= $row->Id?></th>
+				        				<th><?= $row->Active_Rates__c?></th>
+				        				<th><?= $row->PO_percentage_fee__c?></th>
+				        				<th><?= $row->Fee_per_Off_ShipServ_Lead_UCV__c?></th>
+				        				<th><?= $row->Fee_per_mile_targeted_impressions__c?></th>
+				        				<th><?= $row->Integrated_maintenance_fee__c?></th>
+				        				<th><?= $row->Valid_from__c?></th>
+				        			</tr>
+		        					<?php 
+		        				} 
+		        			?>
+		        			</tbody>
+		        		</table>
+		        	</td>
+		        </tr>
+				<tr>
+		        	<td>
+		        		<strong>Current value event (in Salesforce)</strong>
+						<table class="resultsTab">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Start Date</th>
+									<th>End Date</th>
+									<th>GMV</th>
+									<th>Unactioned <br />RFQ</th>
+									<th>Unique <br />Contact View</th>
+									<th>P1 Search <br />Impression</th>
+									<th>Rate Id</th>
+									<th>Transacting Account</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?
+								foreach((array)$this->valueEvent as $row){ 
+								?>
+								<tr>
+									<td><?= ++$numRows;?></td>
+									<td><?= $row->Period_start__c?></td>
+									<td><?= $row->Period_end__c?></td>
+									<td><?= $row->Gross_Merchandise_Value__c?></td>
+									<td><?= $row->Unactioned_RFQs__c?></td>
+									<td><?= $row->Unique_contact_views__c?></td>
+									<td><?= $row->Targeted_impressions__c?></td>
+									<td><?= $row->Rate__c?></td>
+									<td><?= $row->TransactionAccount__c?></td>
+								</tr>
+								<? }?>
+							</tbody>
+						</table>
+					</td>
+					
+		        	<td>
+		        		<strong>New Value events</strong>
+						<table class="resultsTab">
+							<thead>
+								<tr>
+									<th></th>
+									<th>Start Date</th>
+									<th>End Date</th>
+									<th>GMV</th>
+									<th>Unactioned <br />RFQ</th>
+									<th>Unique <br />Contact View</th>
+									<th>P1 Search <br />Impression</th>
+									<th>Rate Id</th>
+									<th>Transacting Account</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?
+								foreach((array)$this->valueEventToBeUploaded as $row){ 
+								?>
+								<tr>
+									<td><?= ++$numRows2;?></td>
+									<td><?= $row['startDateYMD']?></td>
+									<td><?= $row['endDateYMD']?></td>
+									<td><?= $row['gmv']?></td>
+									<td><?= $row['unactioned']?></td>
+									<td><?= $row['uniqueContactView']?></td>
+									<td><?= $row['searchImpression']?></td>
+									<td><?= $row['sf']['rateSetId']?></td>
+									<td><?= $row['sf']['transactingAccount']?></td>
+								</tr>
+								<? }?>
+							</tbody>
+						</table>
+						<input type="button" value="Upload to Salesforce" id="up"/>
+					</td>					
+		        </tr>
+		        <?php }?>
+		    </table>
+		</form>
+	</div>
+</div>

@@ -1,0 +1,18 @@
+/*
+Document   : match-kpi.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: combining partials for rfq styles
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+@import "partials/def/datepicker";
+@import "partials/def/modal_new";
+@import "partials/def/left_nav";
+
+@import "partials/profile/manageGroup/form";
+@import "partials/profile/manageGroup/body";
+
+

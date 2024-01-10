@@ -1,0 +1,261 @@
+/*
+Document   : reports/dashboard/_content.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: styles for match dashboard content
+*/
+
+#body {
+	#sidebar {
+		ul#nav {
+			li {
+				&.selected {
+					padding: 8px 15px;
+				}
+			}
+		}
+	}
+	#content {
+		.box {
+			position: relative;
+			border: 1px solid #d6dce4;
+			padding: 5px 10px;
+			background: #f5f7fa;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+			margin: 20px 0;
+
+			.error {
+				position: relative;
+				left: 418px;
+				top: 0px;
+				padding-bottom: 8px;
+			}
+
+			.selector {
+				margin-top: 0;
+				width: 315px;
+				margin-bottom: 0;
+
+				span {
+					width: 290px;
+				}
+
+				select {
+					width: 330px;
+				}
+			}
+
+			label {
+				display: inline-block;
+				top: 0px;
+				&[for="purchaser"], &[for="vessel"]{
+					width: 60px;
+				}
+				
+			}
+
+			.filters {
+				width: 399px;
+				border-right: 1px dotted #000000;
+				float: left;
+				margin-right: 10px;
+			}
+
+			.period {
+				padding-top: 13px;
+
+				label {
+					top: -1px;
+				}
+
+				input[type="text"] {
+					width: 75px;
+					padding: 6px 5px;
+				}
+
+				input[name="show"] {
+					margin-left: 25px;
+				}
+
+				input[type="button"], input[type="submit"] {
+					padding: 6px 10px;
+				}
+			}
+		}
+
+		table.main {
+			border-collapse: collapse;
+
+			thead {
+				tr {
+					th {
+						padding: 0;
+
+						&.left {
+							width: 477px;
+						}
+
+						table {
+							border-collapse: separate;
+							border-spacing: 2px;
+							width: 100%;
+							margin-bottom: 3px;
+
+							tr {
+								td {
+									border: 1px solid #d6dce4;
+									text-align: center;
+									font-size: 12px;
+									color: #2e3235;
+									padding: 5px;
+
+									&.you {
+										background: #e5f8d8;
+										border: 1px solid #83cc4e;
+										font-size: 15px;
+										color: #2e3235;
+										vertical-align: middle;
+										width: 136px;
+									}
+
+									&.avg {
+										width: 125px;
+										background: transparent;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			tbody {
+				tr {
+					td {
+						padding: 0;
+
+						table {
+							border-collapse: collapse;
+							width: 100%;
+							margin-bottom: 10px;
+							position: relative;
+
+							&.up {
+								top: -7px;
+							}
+
+							&.last {
+								top: 1px;
+							}
+
+							tr {
+								td {
+									border-top: 1px solid #d6dce4;
+									border-left: 1px solid #d6dce4;
+									text-align: center;
+									font-size: 12px;
+									color: #2e3235;
+									padding: 5px;
+									height: 30px;
+									vertical-align: middle;
+
+									&.spacer {
+										border: 0;
+										width: 2px;
+										font-size: 1px;
+										padding: 0;
+										line-height: 1;
+									}
+
+									&.you {
+										width: 136px;
+										font-size: 15px;
+										font-weight: bold;
+										background: #a0e170;
+										border: 1px solid #83cc4e;
+
+										&.red {
+											border-color: #e81e24;
+											background: #ffcbc9;
+											vertical-align: middle;
+
+											img {
+												vertical-align: middle;
+												width: 20px;
+											}
+										}
+									}
+
+									&.avg {
+										width: 125px;
+										background: #e9edf1;
+										border-right: 1px solid #d6dce4;
+									}
+
+									&.best {
+										background: #dfe4e9;
+										border-right: 1px solid #d6dce4;
+									}
+
+									a {
+										font-size: 10px;
+									}
+								}
+
+								&.last {
+									td.avg, td.best {
+										border-bottom: 1px solid #d6dce4;
+									}
+								}
+							}
+
+							&.name {
+								border-collapse: collapse;
+								border-left: 1px solid #d6dce4;
+								border-top: 1px solid #d6dce4;
+								position: relative;
+								top: -1px;
+
+								&.first {
+									top: -1px;
+								}
+
+								&.last {
+									top: 0px;
+								}
+
+								tr {
+									td {
+										border-right: 1px solid #d6dce4;
+										border-bottom: 1px solid #d6dce4;
+										font-size: 13px;
+										text-align: left;
+										background:#fdfdfe;
+										vertical-align: middle;
+
+
+										&.red {
+											color: #e81e24;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	.warning {
+		padding: 12px 0px;
+    	text-align: center;
+		margin-top: 12px;
+		width: 96%;
+		margin: 2%;
+		border: 1px solid red;
+		color: red;
+		@include border-radius(6px);
+		behavior: url(/css/PIE.htc);
+}
+}

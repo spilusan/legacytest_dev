@@ -1,0 +1,56 @@
+<div class="searchFeedback">
+	<div class="questionPane">
+		<div class="question">Did you find what you're looking for? Rate this search result: <a class="yesBtn"><img src="/images/search-feedback/up.png"></a> <a class="noBtn"><img src="/images/search-feedback/down.png"></a></div>
+		<div class="result hidden"><img src="/images/search-feedback/ok_icon.jpg" /> <div>Thank you for your vote!</div></div>
+	</div>
+	
+	<div class="feedbackPane hidden">
+		<form onsubmit="return false;">
+			<input type="hidden" name="uri" value="<?php echo  Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$_SERVER['HTTP_HOST'] . $_SERVER["REQUEST_URI"]; ?>" />
+			<input type="hidden" name="mood" value="" />
+			<div class="result"><img src="/images/search-feedback/ok_icon.jpg" /> <div>Thank you for your vote!</div></div>
+			<div class="intro">Help us improve our search engine by giving a little more information.</div>
+			<div class="feedbackForm">
+				<br />
+				<b>Reason why you are not happy: *</b>
+			
+				<div class="inputs">
+					<br /><label><input type="radio" name="reason" value="Too few results" /> Too few results</label>
+					<br /><label><input type="radio" name="reason" value="Too many results" /> Too many results</label>
+					<br /><label><input type="radio" name="reason" value="Results are not relevant" /> Results are not relevant</label>
+					<br /><label><input type="radio" name="reason" value="Order of results is not right" /> Order of results is not right</label>
+					<br /><label><input type="radio" name="reason" value="Other" /> Other</label>
+				</div>
+				<br />
+				<br />
+				<div class="row">
+					<div class="left"><b>Comments:</b></div>
+					<div class="right">
+						<textarea name="message" rows="10" maxlength="1000" style="width:300px"></textarea><br /><br /><label><input type="checkbox" class="optInSearchEngine" name="optIn" value="yes">Please notify me about search engine improvements</label>
+					</div>
+				</div>
+				<div class="personalDetailForm hidden">
+					<div class="row">
+						<div class="left"><b>Your name:</b></div> 
+						<div class="right"><input type="text" name="name" value=""></div>
+					</div>
+					<div class="row">
+						<div class="left"><b>Your email:</b></div>
+						<div class="right"><input type="text" name="email" value=""></div>
+					</div>
+				</div>
+				<br />
+				<br />
+				<div class="actionButton">
+					<img src="/images/search-feedback/button_send_feedback.jpg"	id="sendFeedbackBtn" />
+					<a class="close">Cancel</a>
+				</div>
+			</div>
+			<input type="hidden" id="negform-displayed" name="negform-displayed" value="N" />
+		</form>
+	</div>
+	
+	<div class="thankYouPane hidden">
+		<div class="result"><img src="/images/search-feedback/ok_icon.jpg" /> <div>Thank you for your vote!</div></div>
+	</div>
+</div>

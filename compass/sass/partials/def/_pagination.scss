@@ -1,0 +1,129 @@
+/*
+Document   : partials/def/_pagination.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: default styles for pagination
+*/
+
+#body {
+	.pagination {
+		height: 30px;
+		text-align: center;
+		padding-bottom: 20px;
+		padding-top: 15px;
+
+		a {
+			position: relative;
+			top: -2px;
+			display: -moz-inline-stack;
+   			display: inline-block;
+   			zoom: 1;
+   			*display: inline;
+			height: 28px;
+			_height: 28px;
+			color: #13b5ea;
+			font-size: 14px;
+			line-height: 28px;
+			font-weight: bold;
+			vertical-align: middle;
+			padding: 0 9px;
+
+			&.prev, &.next {
+				width: 8px;
+				border: 1px solid #d6dce4;
+				@include border-radius(6px);
+				@include background-image(linear-gradient(#ffffff 0%, #f5f7fa 100%));
+		  		-pie-background: linear-gradient(top, #ffffff 0%, #f5f7fa 100%);
+		 		behavior: url(/css/PIE.htc);
+
+		 		span {
+		 			display: block;
+		 			width: 8px;
+		 			height: 28px;
+		 			background: url(/img/global/arrows_pagination.png) no-repeat transparent;
+		 			overflow: hidden;
+		 		}
+			}
+
+			&.prev {
+				margin-right: 16px;
+
+				span {
+					background-position: 0 0;
+				}
+
+				&.disabled {
+					cursor: default;
+					border-color: #e9edf1;
+
+					span {
+						background-position: 0 -28px;
+					}
+				}
+			}
+
+			&.next {
+				margin-left: 16px;
+
+				span {
+					background-position: -8px 0;
+				}
+
+				&.disabled {
+					cursor: default;
+					border-color: #e9edf1;
+
+					span {
+						background-position: -8px -28px;
+					}
+				}
+
+			}
+		}
+
+		ul {
+			display: -moz-inline-stack;
+   			display: inline-block;
+   			zoom: 1;
+   			*display: inline;
+   			height: 28px;
+   			_height: 28px;
+
+			li {
+				position: relative;
+				display: -moz-inline-stack;
+       			display: inline-block;
+       			zoom: 1;
+       			*display: inline;
+				height: 28px;
+				_height: 28px;
+				color: #525c64;
+				font-weight: bold;
+				font-size: 14px;
+				line-height: 28px;
+				border: 1px solid #d6dce4;
+				vertical-align: middle;
+				@include border-radius(6px);
+				@include background-image(linear-gradient(#ffffff 0%, #f5f7fa 100%));
+		  		-pie-background: linear-gradient(top, #ffffff 0%, #f5f7fa 100%);
+		 		behavior: url(/css/PIE.htc);
+		 		cursor: pointer;
+
+		 		&.ellipsis {
+		 			font-size: 12px;
+		 			font-weight: normal;
+		 			border: 0;
+		 			background: transparent;
+		 		}
+
+				&.current {
+					padding: 0 9px;
+					color: #008b00;
+				}
+				&.inactive {
+					cursor: default;
+				}
+			}
+		}
+	}
+}

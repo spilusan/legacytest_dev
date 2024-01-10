@@ -1,0 +1,113 @@
+<?php
+    $this->headLink()->appendStylesheet('/css/user/login-to-tradenet.css');
+    $this->headScript()->appendFile('/js/login-to-tradenet.js');
+    $this->getHelper('Requirejs')->addModule('backbone/user/login-to-tradenet/views/mainView');
+?>
+<form id="loginForm" name="loginForm" class="cform" action="" method="post">
+	<div id="page" class="buyer">
+		<div>
+			<a id="logo" title="Go to the Shipserv homepage" href="/search">
+				<img src="/img/tnet/shipserv-logo.bmp" alt="Shipserv: Information rules the waves" border="0" />
+			</a>
+		</div>
+		<div id="none">
+			<table width="977" border="0" align="left" cellpadding="0" cellspacing="0">
+				<tr>
+					<td align="left" valign="top" bordercolor="#FFFFFF" bgcolor="#FFFFFF">
+						<table width="750" border="0" cellspacing="0" cellpadding="0">
+							<tr>
+								<td height="289" valign="top" class="tradenet loginBox">
+									<table width="660" border="0" cellspacing="0" cellpadding="0">
+										<tr>
+											<td width="63">
+												<img src="/img/tnet/spacer.gif" width="43" height="100" />
+											</td>
+											<td width="350" style="padding-top: 30px">
+												<img style="position: relative; left: -35px" src="/img/tnet/tradenetlogo.jpg">
+											</td>
+											<td width="150" class="padMe">
+												<span class="style10"><br/>Important Message for Integrated TradeNet Buyer Customers</span>
+												<span class="style11"><br /><br />
+													You can now access all relevant services, including Transaction Monitor and Web Reporter, via the 
+													<a href="/auth/cas/login?pageLayout=new&service=<?= $this->Cas()->getRootDomain() ?>/user/cas/redirect=/search">main sign-in page</a>.
+												</span>
+											</td>
+										</tr>
+										<tr>
+											<td width="63" height="140">&nbsp;</td>
+											<td width="350" height="135"  valign="top">
+												<p class="style1">
+													<span class="style5">ShipServ Login</span>
+													<?php if ($this->displayLoginError) { ?>
+													<br><span id="credentials.errors" class="style6"><?= $this->displayLoginError; ?></span>
+													<?php } ?>													
+												</p>
+    											<?php if ($this->isLockedOut) { ?>
+                            					<p class="style1">
+                            						Your account has been locked temporarily following too many failed login attempts. 
+                            		                Please try again after 30 minutes, eventually following the 
+                            		                <a href="/auth/cas/passwordManager?pmTask=forgotPassword">forgot password</a> procedure
+                            					</p>												
+    											<?php } ?>												
+                                                <p class="new-username-and-password-p">
+                                                	<label for="username">Username:</label>
+                                                    <input id="userid" name="username" class="loginInput" type="text" maxlength="32" value="<?php echo _htmlspecialchars($this->userName); ?>"><br>
+                                                    <label for="username">Password:</label>
+                                                    <input id="password" class="loginInput" name="password" type="password" maxlength="32" value="" /><br>
+                                                    <input type="hidden" name="BrowserName" id="BrowserName">
+                                                </p>
+                                				<?php if ($this->displayCaptcha): ?>                
+                                    				<?php if ($this->displayCaptchaError): ?>
+                                					<p class="style6" style="margin: 0;"><?= $this->displayCaptchaError; ?></p>
+                                    				<?php endif; ?>	
+                            		        		<div class="g-recaptcha" style="transform:scale(0.85);-webkit-transform:scale(0.85);transform-origin:0 0;-webkit-transform-origin:0 0;" data-sitekey="<?= Myshipserv_Controller_Action_Helper_GoogleReCaptcha::SITE_KEY; ?>"></div>    				
+                                		        <?php endif; ?> 													
+												<input type="submit" id="submitbtn"></input>
+
+												<p class="style1">
+													Forgot your password? <a href="/auth/cas/passwordManager?pmTask=forgotPassword" target="_blank" class="style9"> &raquo;</a><br />
+													Bookmark this page <a href="javascript:launchBiggerWindow('https://www.shipserv.com/ShipServ/Html/howto-bookmark.html');" class="style9"> &raquo;</a><br />
+													Support <a href="/info/support/" class="style9">&raquo;</a><br /> <br />
+												</p>
+												<?php
+												$advisoryMsgFile = Zend_Registry::get('config')->shipserv->maintenance->tradenetLoginAdvisoryMsgFile;
+												if (file_exists($advisoryMsgFile)) { 
+												    echo file_get_contents($advisoryMsgFile);
+												}
+												?>
+                                            													
+												<span class="style7">
+													If you require assistance, please <a href="/info/contact-us">contact support</a>
+												</span>
+												<br><br>
+											</td>
+											<td width="150" height="135" class="padMe"><span class="style11"><br />
+												This route into the system offers an improved user experience and access to new services, such as supplier recommendations for RFQs sent via ShipServ, enhanced reporting services and numerous user and company configuration options. Use your email address as your username and use the 
+												<a href="/auth/cas/passwordManager?pmTask=forgotPassword" target="_blank">password reset</a> 
+												feature if required. If you do not have an account, contact your ShipServ account administrator or 
+												<a href="/info/contact-us">contact our support team</a>. <br /><br /> 
+												WebBuyer users should continue to login through this page. </span>
+												<br /><br /> 
+											</td>
+										</tr>									
+									</table>
+								</td>
+								<td width="59" height="405">&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<div id="footer">
+				<p>
+					<a href="/info/legal-notes/">Legal notes</a> | 
+					<a href="/info/privacy-policy/">Privacy</a> | 
+					<a href="/info/contact-us/">Contact us</a>
+				</p>
+			</div>
+		</div>
+	</div>
+	<input type="hidden" name="lt" value="LT-3076-zQ4dMnGGFsAvvTNhInkOuv39j1mM0p" />
+	<input type="hidden" name="execution" value="e2s1" />
+	<input type="hidden" name="_eventId" value="submit" />
+</form>

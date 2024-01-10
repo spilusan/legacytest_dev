@@ -1,0 +1,8 @@
+<input type="image" src="/img/icons/small/smallredx.png" alt="Remove" class="remove">
+<span>{{attributes.name}}</span>
+<img class="smallWaitIcon" src="/images/layout_v2/file_icons/spinner.gif" alt="...">
+<select class="munit">
+{{#each attributes.units}}
+	<option{{#ifCond ../selectedUnit this}} selected{{/ifCond}}>{{this}}</option>
+{{/each}}
+</select>

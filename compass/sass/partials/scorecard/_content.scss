@@ -1,0 +1,77 @@
+#body {
+	#content {
+		/* HT temporaryliy added, can be removed when we move to new layout */
+		h2 {
+			font-family: 'Open Sans', sans-serif;
+			display: block;
+			font-size: 20px;
+			font-weight: 400px;
+			color: #005AAD;
+			margin-bottom: 20px;
+		}
+		form {
+			.select {
+				width: 89px;
+				/*select {
+					width: 109px;
+				}
+				*/
+			}
+			fieldset {
+				height: 40px;
+				width: 100%;
+				clear: both;
+			}
+			label {
+				
+				width: 200px;
+				font-size: 14px;
+				display: block;
+				float: left;
+				line-height: 30px;
+			    text-align: right;
+			    padding-right: 12px;
+			}
+			input[type="button"] {
+				vertical-align: top;
+				margin-top: 0px;
+				min-width: 97px;
+				/* Height temporaryliy added, can be removed when we move to new layout */
+				height: 33px;
+				padding: 5px 20px;
+				font-weight: normal;
+			}
+			input[type="text"] {
+				width: 85px;	
+			}
+		}
+		ul {
+			padding: 6px;
+			clear: both;
+			font-size: 14px;
+			li {
+				line-height: 125%;
+				color: #333333;
+			}
+		}
+		section {
+			border-top: 1px solid #9BA7BA;
+			margin-top: 10px;
+			padding: 12px 6px;
+			&.bgcolor {
+				&.cyan-blue {
+					background-color: #BBEAFA;
+					border: 1px solid #005AAD;
+					border-radius: 4px;
+				}
+			}
+		}
+
+		div.scorecardWarning {
+			padding: 10px 10px 0px 10px;
+			p {
+				padding: 0px 5px;
+			}
+		}
+	}
+}

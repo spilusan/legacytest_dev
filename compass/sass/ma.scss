@@ -1,0 +1,44 @@
+/*
+Document   : ma.scss
+Created on : Oct 5, 2012, 9:34:15 AM
+Author     : gly
+Description: mariner app stylesheet combining default and mariner specific partials
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+.clear {
+	display: block;
+	height: 1px;
+	line-height: 1px;
+	clear: both;
+}
+
+a {
+	text-decoration: none;
+	color: #005aad;
+}
+
+strong {
+	font-weight: bold;
+}
+
+@import "partials/def/header";
+@import "partials/def/nav";
+@import "partials/def/buttons";
+@import "partials/def/content";
+@import "partials/def/modal";
+@import "partials/ma/header";
+@import "partials/ma/content";
+
+@media (max-device-width: 320px){
+	@import "partials/def/iphone_header";
+	@import "partials/ma/iphone";
+	@import "partials/def/iphone_modal";
+}
+
+@media (max-device-width : 320px) and (orientation: landscape) {
+	@import "partials/ma/iphoneL";
+	@import "partials/def/iphone_modal_L";
+}

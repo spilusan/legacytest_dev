@@ -1,0 +1,257 @@
+<?php
+    $this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+	$this->headLink()->appendStylesheet('/css/billing/gmv.css');
+	$this->headLink()->appendStylesheet('/css/reports/adnetwork.css');
+	$this->headLink()->appendStylesheet('/css/uniform.rfq.css');
+	
+	//$this->requirejs()->addModule('match/match');
+	$this->getHelper('Requirejs')
+		->addModule('match/dashboard/publisher')
+		->addDefinition('match/dashboard/publisherData', json_encode((object)$this->data) );
+	
+    function format($num, $precision = 2)
+    {
+    	$num = number_format($num, $precision);
+    	return $num;
+    }
+    
+    function getMonth($number)
+    {
+    	$dateObj   = new DateTime;
+    	$dateObj->setDate('2014', $number, '1');
+    	$monthName = $dateObj->format('M'); // March
+    	return ucwords($monthName);
+    }
+    
+?>
+
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Publisher', 'url'  => '/shipmate');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<div id="body">
+    <div id="content">
+        <h1 class="styled">Ad Network Dashboard</h1>
+        
+        <? if( $this->user->canPerform('PSG_ACCESS_MANAGE_PUBLISHER') === true ){ ?>
+        <div class="adminPanel">
+        	<br />
+        	Connect a publisher to ShipServ Buyer or Supplier here. When you connect publisher account to a company,
+        	you will give access the user of that company to see this page below.
+        	<br />
+        	<br />
+        	<br />
+        	<div style="float:left; ">
+        		<form action="/reports/publisher">
+        			<input type="hidden" name="admin" value="1" />
+        			<input type="hidden" name="adminAction" value="<?= (($this->params['oldCompanyId']!="")?'update':'insert')?>" />
+        			<input type="hidden" name="oldCompanyId" value="<?= $this->params['oldCompanyId']?>" />
+        			<input type="hidden" name="oldSiteId" value="<?= $this->params['oldSiteId']?>" />
+        			<input type="hidden" name="companyType" value="SPB" />
+		        	<b>Add new/edit publisher</b>
+		        	<hr />
+		        	<table>
+		        		<tr>
+		        			<td>Supplier TNID</td>
+		        			<td><input type="text" class="uniform" value="<?= $this->params['oldCompanyId']?>" name="companyId"></td>
+		        		</tr>
+		        		<tr>
+		        			<td>Site Id</td>
+		        			<td>
+		        			
+								<select name="siteId" class="uniform">
+								<?php foreach($this->site as $id => $name){ ?>
+									<option value="<?= $id?>" <?= ($this->params['oldSiteId']==$id)?'selected="selected"':''; ?>><?=$name . " (ID: " . $id . ")" ?></option>
+						        <?php }?>
+						        </select>
+		        			</td>
+		        		</tr>
+		        		<tr>
+		        			<td></td>
+		        			<td>
+								<input type="submit" value="Save" id="runReport" class="button dblue medium"/>
+		        			</td>
+		        		</tr>
+		        	</table>
+	        	</form>
+        	</div>
+        	<div style="float:left; margin-left:20px; border-left: 1px solid grey; padding-left:10px;  ">
+	        	<b>Connected publishers</b>
+	        	<hr />
+	        	<table>
+	        		<tr>
+	        			<td style="width:70px;">TNID</td>
+						<td style="width:70px;">Site Id</td>
+	        			<td></td>
+	        		</tr>
+	        		<? foreach($this->data as $row){?>
+	        		<tr>
+	        			<td><?= $row['PCP_COMPANY_TNID']?></td>
+	        			<td><?= $row['PCP_ADZERK_SITE_ID']?></td>
+	        			<td>
+	        				<a href="/reports/publisher/?adminAction=edit&oldSiteId=<?= $row['PCP_ADZERK_SITE_ID']?>&oldCompanyId=<?= $row['PCP_COMPANY_TNID']?>&companyType=<?= $row['PCP_COMPANY_TYPE']?>">[Edit]</a> 
+	        				<a href="/reports/publisher/?admin=1&adminAction=delete&siteId=<?= $row['PCP_ADZERK_SITE_ID']?>&companyId=<?= $row['PCP_COMPANY_TNID']?>">[Delete]</a>
+	        			</td>
+	        		</tr>
+	        		
+	        		<? }?>
+	        	</table>
+        	</div>
+        	<div class="clear"></div>
+        </div>
+        <div class="clear"></div>
+        <?php }?>
+        <div class="mainControl">
+	        <form method="get" action="/reports/publisher" class="new report options">
+	        	<div class="dateInput">
+	        		<label>
+	        			Site: 
+	        			<select name="siteId" class="uniform" style="width:200px;">
+						<?php foreach($this->site as $id => $name){ ?>
+				        	<option value="<?= $id?>" <?= ($this->params['siteId']==$id)?'selected="selected"':''; ?>><?=$name . " (ID: " . $id . ")" ?></option>
+				        <?php }?>
+					    </select>
+	        		</label>
+	        	</div>
+	            <div class="dateInput">
+	                <label>
+	                    Start: <input type="text" name="datefrom" class="uniform datepicker" value="<?= $this->params['datefrom'] != "" ? $this->params['datefrom']: 'dd/mm/yyyy'?>">
+	                </label>
+	            </div>
+	            <div class="dateInput to">
+	                <label>
+	                    End: <input type="text" name="dateto" class="uniform datepicker" value="<?= $this->params['dateto'] != "" ? $this->params['dateto']: 'dd/mm/yyyy'?>">
+	                </label>
+	            </div>
+	            <input type="submit" value="Generate Report" class="button medium lblue generate" name="generate">
+	            <div class="clear"></div>
+	    	</form>
+    	</div>
+	    
+	    <?php 
+	   	    $impressions = array();
+	   	    $clicks = array();
+	   	    $ctr = array();
+	   	    $revenue = array();
+	   	    if($this->report !== false && $this->report !== null){
+		    	foreach((array)$this->report->Result->Records as $row){
+					$tmp = explode('-', $row->FirstDate);
+					$month = ucwords(getMonth( $tmp[1]));
+					$year = ($tmp[0]);
+					$impressions[$month . ' ' . str_replace('20', "", $year)] = $row->Impressions;
+					$clicks[$month . ' ' . str_replace('20', "", $year)] = $row->Clicks;
+					$ctr[$month . ' ' . str_replace('20', "", $year)] = $row->CTR;
+					$revenue[$month . ' ' . str_replace('20', "", $year)] = $row->TrueRevenue;
+				}
+				$d['Impressions'] = $impressions;
+				$d['Clicks'] = $clicks;
+				$d['CTR'] = $ctr;
+				$d['Revenue'] = $revenue;
+				$this->data = $d;
+				
+	    ?>
+	    
+		<div class="clear"></div>
+	    <div class="b">
+	    	Impressions
+	    	<div class="v"><?= format($this->report->Result->TotalImpressions, 0) ?></div>
+	    </div>
+	    
+	    
+	    <div class="b">
+	    	Clicks
+	    	<div class="v"><?= format($this->report->Result->TotalClicks, 0)?></div>
+	    </div>
+	    
+	    <div class="b">
+	    	CTR %
+	    	<div class="v"><?= format($this->report->Result->TotalCTR, 0) ?></div>
+	    </div>
+	    
+	    <div class="b">
+	    	Revenue
+	    	<div class="v">$<?= format($this->report->Result->TotalTrueRevenue)?></div>
+	    </div>
+	    
+	    <div class="clear"></div>
+	    
+        <div style="font-size:14px; margin-top:20px; font-weight: bold;" id="titleBuyerName"></div>
+        <div class="clear"></div>
+        <div id="chart_div" style="width: 1100px; height: 400px;"></div>
+			
+		<div class="chartControl">
+			<div>
+				<label><input type="radio" name="chart" value="Revenue" onclick="draw(this.value);" checked="checked" /> Revenue</label>			
+			</div>
+				    
+			<div>
+				<label><input type="radio" name="chart" value="Impressions" onclick="draw(this.value);" /> Impressions</label>			
+			</div>
+			<div>
+				<label><input type="radio" name="chart" value="Clicks" onclick="draw(this.value);"  /> Clicks</label>
+			</div>
+			<div>
+				<label><input type="radio" name="chart" value="CTR" onclick="draw(this.value);" /> CTR</label>
+			</div>
+		</div>
+		<?php }?>
+    </div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+<script>
+	var allData = JSON.parse('<?php echo json_encode( $this->data )?>');
+
+	function getData(name){
+		var data = {};
+		data[name] = allData[name];
+		finalData = [['Month', name]];
+		for (var key in data) {
+			var obj = data[key];
+			for (var prop in obj) {
+				if(obj.hasOwnProperty(prop)){
+					value=parseFloat(obj[prop]);
+					if( key==name ){
+						finalData.push(new Array(prop, value));
+					}
+				}
+			}
+		}
+		return finalData;
+		
+	} 
+	
+	function draw(statsName){
+		if( typeof statsName == 'object' ) statsName = 'Revenue';
+		
+		data = getData(statsName);
+		
+	 	var d = google.visualization.arrayToDataTable(data);
+
+	 	var options = {
+			 title: '',
+			 vAxes: [
+				{ title: ''}
+			 ],
+			 hAxis: {title: ""},
+			 seriesType: "Line",
+	         pointSize: 10,
+	         series: {
+	        	 0: { pointShape: 'circle' },
+	         }
+	 	};
+	 
+	 	var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+	 	chart.draw(d, options);
+		
+	}
+
+
+
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(draw);
+</script>

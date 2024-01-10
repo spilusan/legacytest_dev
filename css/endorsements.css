@@ -1,0 +1,869 @@
+/*** Reputation Tab ***/
+
+
+.active-star {
+	float:left;
+	width:13px;
+	height:13px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/star-a-green.gif') no-repeat top left;
+}
+
+.passive-star {
+	float:left;
+	width:13px;
+	height:13px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/star-p.gif') no-repeat top left;
+}
+
+#ratingsSummary .active-star {
+	width:18px;
+	height:18px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/star_a.png') no-repeat top left;
+}
+
+#ratingsSummary .passive-star {
+	width:18px;
+	height:18px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/star_p.png') no-repeat top left;
+}
+
+/*** Submit Review ***/
+
+.content_wide_header h1.review {
+	padding-top: 18px;
+	font: bold 18px Arial;
+}
+
+#review_box {
+	padding:30px 35px 30px 35px;
+}
+
+#review_box h2 {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font: bold 16px Arial, helvetica;
+}
+
+#review_box h2 span {
+	color: #77C8F3;
+}
+
+#review_box .radiobutton {
+	float:left;
+	padding:5px;
+	border: 0;
+	cursor: pointer;
+}
+#review_box input.textBox {
+	border: 0px;
+	font-size: 15px;
+	width: 483px;
+}
+
+#review_box textarea {
+	border: 0px;
+	font-size: 17px;
+	width: 483px;
+	height:130px;
+}
+
+#review_box #labelColumn {
+	float:left;
+	width:230px;
+}
+
+#review_box #ratingColumn {
+	float:left;
+	width:130px;
+}
+
+#review_box #detailedRaiting .rating-label {
+	color: #00498B;
+	font: bold 13px Arial, helvetica;
+	height:25px;
+	width:230px;
+	padding-left:20px;
+}
+
+#review_box #hintColumn {
+	float:left;
+	width:100px;
+}
+
+#review_box .rating-hint {
+	height: 21px;
+	font: normal 10px Arial, helvetica;
+	color: #05346a;
+	padding-top:4px;
+}
+
+.rating-label img {
+	float:left;
+	cursor: pointer;
+}
+
+.reviewTextBox {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/input_box_1line.gif') no-repeat top left;
+	width: 493px;
+	height:20px;
+	padding:5px 10px 5px 10px;
+}
+
+.reviewCommentBox {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/input_comment_box.gif') no-repeat top left;
+	width: 483px;
+	height:130px;
+	padding:10px;
+}
+
+#review_box #submitReview {
+	cursor: pointer;
+}
+
+.grey-text {
+	color: #999999;
+}
+
+#reputation_box {
+	padding: 20px 20px 30px 15px;
+	font: normal 11px Arial,helvetica;
+}
+
+#reputation_box h2 {
+	color: black;
+	font: bold 19px Arial, helvetica;
+}
+
+#reputation_box #reputationSummaryBox {
+	width:705px;
+	margin-bottom: 20px;
+}
+
+#reputationSummaryBox h3 {
+	color:#00488c;
+	font: bold 16px Arial;
+}
+
+#reviewsSummaryHeader {
+	width:395px;
+	height:40px;
+	float:left;
+}
+
+#summaryBox #reviewsSummary {
+	padding-right:13px;
+	width:287px;
+	float:left;
+}
+
+#summaryBox #ratingsSummary {
+	width:405px;
+	float:left;
+}
+
+.reviews-summary-box {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/opinionpanel_middle.gif') repeat-x top left;
+	margin:10px 0 10px 0;
+        height: 38px;
+}
+.reviews-summary-box .box-left {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/opinionpanel_left.gif') no-repeat top left;
+	width:7px;
+	height:38px;
+	float:left;
+}
+.reviews-summary-box .box-content {
+	height:38px;
+	float:left;
+	min-width: 0;
+}
+
+.reviews-summary-box .box-right {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/opinionpanel_right.gif') no-repeat top left;
+	width:7px;
+	height:38px;
+	float:right;
+}
+
+.reviews-summary-box .reviews-summary-text {
+	font: bold 13px Arial;
+	padding: 10px;
+	height:18px;
+}
+.reviews-summary-box .rating-summary {
+	padding: 10px 10px 0 10px;
+	height:18px;
+}
+.reviews-summary-box .ratings-summary-text {
+	font: bold 13px Arial;
+	padding: 10px;
+	height:18px;
+	width:210px;
+	text-align: right;
+}
+
+.reviews-summary-box .baloon {
+	width:31px;
+	height:26px;
+	margin:6px 0;
+}
+
+#positiveReviewsSummary .reviews-summary-text {
+	color: #5f9e06;
+}
+
+#neutralReviewsSummary .reviews-summary-text {
+	color: #a3a3a6;
+}
+
+#negativeReviewsSummary .reviews-summary-text {
+	color: #952900;
+}
+
+#positiveReviewsSummary .baloon {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/positive_tick.png') no-repeat center center;
+}
+
+#neutralReviewsSummary .baloon {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/neutral_tick.png') no-repeat center center;
+}
+
+#negativeReviewsSummary .baloon {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/negative_tick.png') no-repeat center center;
+}
+
+#reviewsSummaryData .active-star {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/star-a-gr.gif') no-repeat top left;
+}
+
+#reviewsSummaryData .passive-star {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/star-p-gr.gif') no-repeat top left;
+}
+
+#customerReviewsHeader {
+	margin-left:15px;
+}
+
+#customersReviewsHeader {
+	width: 703px;
+	height: 42px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/references/bottom-banner.png') no-repeat top left;
+	color: #999999;
+	position: relative;
+}
+
+#customersReviewsHeader h3 {
+	position: absolute;
+	top: 15px;
+	color: #ffffff;
+}
+
+#customersReviewsHeader #reviewsHeaderCompany {
+	left: 10px;
+	top: 10px;
+	font-size: 16px;
+	font-weight: bold;
+}
+
+#customersReviewsHeader #reviewsHeaderFrequency {
+	left: 205px;
+}
+
+#customersReviewsHeader #reviewsHeaderOpinion {
+	left: 305px;
+}
+
+#customersReviewsHeader #reviewsHeaderRating {
+	left: 367px;
+}
+
+#customersReviewsList {
+	width: 703px;
+}
+
+#customersReviewsList .snapshot {
+	margin-top: 10px;
+}
+
+#customersReviewsList .endorser-name {
+	width: 185px;
+	padding: 0 0 8px 3px;
+	float: left;
+	font: bold 14px Arial, helvetica;
+}
+
+#customersReviewsList .endorser-country {
+	color: #a9a9a9;
+	font: normal 11px Arial, helvetica;
+}
+
+#customersReviewsList .frequency {
+	width: 91px;
+	padding: 0 0 8px 5px;
+	float: left;
+	color: #000000;
+	font: bold 12px Arial, helvetica;
+}
+
+#customersReviewsList .opinion {
+	width: 60px;
+	text-align: center;
+	float: left;
+}
+
+#customersReviewsList .opinion h4 {
+	font-size: 11px;
+}
+
+h4.positive {
+	color: #5f9e06;
+}
+
+h4.neutral {
+	color: #a3a3a6;
+}
+
+h4.negative {
+	color: #952900;
+}
+
+#customersReviewsList .latest-comment {
+	width: 312px;
+	padding-left:10px;
+	float: left;
+}
+
+.last-review-top {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/review_top.gif') no-repeat top left;
+	width:312px;
+	height:7px;
+	font-size: 1px;
+}
+
+.last-review-text {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/review_middle.gif') repeat-y top left;
+	font: normal 11px Arial, helvetica;
+	color: #1e78ff;
+	padding:0 10px 0 10px;
+}
+
+.last-review-bottom {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/review_bottom.gif') no-repeat top left;
+	width:312px;
+	height:11px;
+	font-size: 1px;
+}
+
+
+.last-review-response-top {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/response_top.gif') no-repeat top left;
+	width:302px;
+	height:13px;
+	font-size: 1px;
+}
+
+.last-review-response-text {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/response_middle.gif') repeat-y top left;
+	font: normal 11px Arial, helvetica;
+	color: #23a72a;
+	padding:0 10px 0 10px;
+}
+
+.last-review-response-bottom {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/response_bottom.gif') no-repeat top left;
+	width:302px;
+	height:8px;
+	font-size: 1px;
+}
+
+.latest-comment .last-review-response {
+	padding-left: 10px;
+}
+
+.latest-comment .no-reviews {
+	padding: 13px 0 0 15px;
+}
+
+.no-reviews .no-reviews-text {
+	color:#999999;
+	float: left;
+}
+
+#customerReviewsFooter {
+	width:705px;
+	height:14px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/reviews-summary-footer-bg.gif') no-repeat top left;
+}
+
+#customerReviewsBox {
+	padding:30px 20px 30px 15px;
+	font: normal 11px Arial,helvetica;
+}
+
+#customerReviewsHeader {
+	width:705px;
+}
+
+#customerReviewsHeader #endorserInfo {
+	width:610px;
+	float:left;
+	height:60px;
+}
+#customerReviewsHeader #back {
+	width:95px;
+	float:left;
+	height:60px;
+}
+
+#endorserInfo #endorserName {
+	font: normal 19px Arial,helvetica;
+}
+
+#otherInfo #location {
+	color: #009900;
+}
+
+#customerReviews #tableHeader {
+	width: 702px;
+	height: 63px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/references/review-top.png') no-repeat top left;
+	position: relative;
+}
+
+#customerReviews #tableHeader h3 {
+	font-size: 11px;
+	position: absolute;
+	top: 15px;
+	color: #ffffff;
+}
+
+#customerReviews #tableFooter {
+	width:702px;
+	height:16px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/references/review-bottom.png') no-repeat top left;
+}
+
+#customerReviews #headerReviewText {
+	font-size: 16px !important;
+	font-weight: bold;
+	left: 10px;
+}
+
+#customerReviews #headerOverall {
+	left: 358px;
+}
+
+#customerReviews #headerIAD {
+	left: 455px;
+	width: 70px;
+}
+
+#customerReviews #headerDOT {
+	left: 538px;
+	width: 70px;
+}
+
+#customerReviews #headerCS {
+	left: 620px;
+	width: 80px;
+}
+
+#customerReviewsList .active-star {
+	
+}
+
+#customerReviewsList .passive-star { }
+
+#customerReviewsList .separator {
+	width:700px;
+	height:2px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/reviews-table-separator.gif') no-repeat top left;
+}
+
+#customerReviewsList .customerReview {
+	padding:10px 0 10px 0;
+	position: relative;
+}
+
+.customerReview .review-text {
+	width: 320px;
+	padding: 0 0 0 10px;
+}
+
+.customerReview .review-text h3 {
+	font: bold 14px Arial;
+	color: #000000;
+}
+
+.customerReview .review-text h3 span {
+	margin-left: 8px;
+}
+
+.customerReview .review-text p {
+	font: normal 12px Arial;
+	margin-top: 10px;
+	padding-bottom: 5px;
+	color: #222222;
+}
+
+.review-text .details {
+	font: normal 11px Arial;
+	padding-bottom: 5px;
+}
+
+.customerReview .review-overall-impression {
+	position: absolute;
+	top: 8px;
+	left: 350px;
+	height: 40px;
+	text-align: center;
+	width:90px;
+}
+
+.customerReview .review-overall-impression h4 {
+	font-size: 11px;
+}
+
+.customerReview .review-iad {
+	position: absolute;
+	top: 15px;
+	left: 445px;
+	width:74px;
+}
+
+.customerReview .review-dot {
+	position: absolute;
+	top: 15px;
+	left: 528px;
+	width:74px;
+}
+
+.customerReview .review-cs {
+	position: absolute;
+	top: 15px;
+	left: 610px;
+	width:74px;
+}
+
+
+p.reply-option a {
+	font-size: 10px;
+}
+
+div.reply-block {
+	
+}
+
+div.reply-block textarea {
+	width: 330px;
+	height: 100px;
+	border: 1px solid #cccccc;
+	padding: 5px;
+	color: #222222;
+	margin-bottom: 8px;
+}
+
+p.reply {
+	
+}
+
+p.reply span {
+	font-weight: bold;
+}
+
+.request-review-block .request-label {
+	margin:15px 0 15px 0;
+	padding-left:3px;
+}
+
+.request-label .request-label-text {
+	float:left;
+	width:180px;
+	font: bold 12px Arial;
+}
+
+.request-label .request-label-hint {
+	float:left;
+	width:461px;
+	font: normal 12px Arial;
+	color:#999999;
+}
+
+.request-label .request-label-action {
+	float:left;
+	width:15px;
+}
+
+.request-review-textbox .request-review-textbox-top {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/top_text_box.gif') no-repeat top left;
+	height:9px;
+	width:664px;
+	font-size: 1px;
+}
+
+.request-review-textbox .request-review-textbox-middle {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/middle_text_box.gif') repeat-y top left;
+	width:644px;
+	padding:0 10px 0 10px;
+}
+
+.request-review-textbox-middle textarea {
+	width:644px;
+	height:100px;
+	font: bold 12px Arial;
+}
+
+.request-review-textbox .request-review-textbox-bottom {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/endorsement/bottom_text_box.gif') no-repeat top left;
+	height:9px;
+	width:664px;
+        font-size: 1px;
+}
+
+.request-review-block .request-buttons {
+	text-align: right;
+}
+
+.snapshot .request-result {
+	height:40px;
+	margin: 20px;
+	background-color: #e5e5e5;
+	padding:10px 5px 10px 175px;
+}
+
+.request-result .result-image,.review-result .result-image {
+	float:left;
+}
+
+.request-result .result-text, .review-result .result-text {
+	float:left;
+	padding:15px 0 0 10px;
+	color:#229600;
+	font: bold 14px Arial;
+}
+
+.profile-review h3 {
+	font: bold 14px Arial;
+}
+
+.profile-review .text {
+	font: normal 12px Arial, helvetica;
+	padding:10px 0;
+}
+
+.ago-text {
+	color: #a9a9a9;
+	font: normal 11px Arial, helvetica;
+}
+
+.profile-review  h4 {
+	font-size: 11px;
+	float: left;
+	margin: 3px 0 0 4px;
+}
+
+.profile-review .rating-opinion {
+	float:left;
+	width:100px;
+	height:30px;
+}
+
+.profile-review .rating-opinion img {
+	float:left
+}
+
+.profile-review .rating-iad {
+	float:left;
+	width:80px;
+}
+
+.profile-review .rating-dot {
+	float:left;
+	width:80px;
+}
+
+.profile-review .rating-cs {
+	float:left;
+	width:80px;
+}
+
+.profile-endorsement {
+	font: 12px Arial, helvetica;
+}
+
+.profile-endorsement h3 {
+	font: bold 15px Arial, helvetica;
+}
+
+.profile-endorsement .trading-frequency {
+	font: 11px Arial;
+	padding: 10px 0px;
+}
+.review-by-buyer h4 {
+	font: bold 12px Arial;
+}
+
+.review-by-buyer .rating-label {
+	font:10px Arial;
+}
+.review-by-buyer .rating-stars {
+	padding-top:10px;
+}
+
+.review-by-buyer .review-text {
+	padding-top:10px;
+}
+
+#addReviewForm #labelColumn {
+	float:left;
+	padding-top: 20px;
+	width:170px;
+}
+
+#labelColumn .rating-label {
+	font: 11px Arial;
+	height:19px;
+}
+#addReviewForm #ratingColumn
+{
+	padding-top: 20px;
+	float:left;
+	width:65px;
+}
+
+#ratingColumn .rating-stars {
+	height:19px;
+}
+#addReviewForm #overallImpression {
+	float:left;
+}
+#overallImpression .radio-button {
+	border:0 none;
+	cursor:pointer;
+	float:left;
+}
+
+#addReviewForm {
+	display:none;
+}
+
+#addReviewForm h4 {
+	font: 12px Arial;
+}
+
+#addReviewForm #submitReview {
+	width:157px;
+	height:32px;
+	background:url("/images/layout_v2/endorsement/bulkreviews/submit_review_sprite.gif") no-repeat 0 0 transparent;
+	cursor:pointer;
+	float:right;
+}
+
+#addReviewForm #submitReview.hover {
+	background:url("/images/layout_v2/endorsement/bulkreviews/submit_review_sprite.gif") no-repeat 0 -32px transparent;
+}
+
+.profile-pagination {
+	float:right;
+}
+
+.profile-pagination .big-page-button {
+	width: 68px;
+	height:17px;
+	float:left;
+	text-align: center;
+	font:11px Arial;
+	padding-top:3px;
+	cursor:pointer;
+	margin:0px 3px 0px 0px;
+	color:black;
+	background:url("/images/layout_v2/endorsement/bulkreviews/pagination_previous_next.gif") no-repeat 0 0 transparent;
+}
+
+.profile-pagination .small-page-button {
+	width: 20px;
+	height:17px;
+	float:left;
+	text-align: center;
+	font:11px Arial;
+	padding-top:3px;
+	cursor:pointer;
+	margin:0px 3px 0px 0px;
+	color:black;
+	background:url("/images/layout_v2/endorsement/bulkreviews/pagination_normal.gif") no-repeat 0 0 transparent;
+}
+
+.profile-pagination .small-page-button-selected {
+	background:url("/images/layout_v2/endorsement/bulkreviews/pagination_selected.gif") no-repeat 0 0 transparent;
+	color:white;
+}
+
+a.small-page-button:hover, a.big-page-button:hover {
+	text-decoration: none;
+}
+
+a.reviews-order-button {
+	width: 78px;
+	height:17px;
+	float:right;
+	text-align: center;
+	font:11px Arial;
+	padding-top:3px;
+	cursor:pointer;
+	margin:0px 0px 0px 10px;
+	color:black;
+	background:url("/images/layout_v2/endorsement/bulkreviews/normal_top_filter.gif") no-repeat 0 0 transparent;
+}
+
+a.reviews-order-button-on {
+	background:url("/images/layout_v2/endorsement/bulkreviews/selected_top_filter.gif") no-repeat 0 0 transparent;
+	color:white;
+}
+
+a.reviews-order-button:hover {
+	text-decoration: none;
+}
+
+.review-result h2 {
+	font:bold 16px Arial;
+	color:#696969;
+	padding-bottom: 20px;
+}
+
+.review-result .summary {
+	padding: 30px 40px 20px 80px;
+}
+
+.review-result .summary-action {
+	padding: 5px 0 25px 0;
+}
+
+.summary-action .summary-action-icon {
+	float:left;
+	width:70px;
+}
+
+.summary-action .summary-action-text {
+	float:left;
+	width:460px;
+	color:#333333;
+	font: 12px Arial;
+}
+
+.summary-action-text h3 {
+	color:#142D99;
+	font:bold 13px Arial;
+	padding-bottom: 5px;
+}
+
+#addReviewBigButton {
+	background:url("https://cdn1.shipserv.com/images/layout_v2/endorsement/add_review_button.gif") no-repeat 0 0 transparent;
+	width:131px;
+	height:34px;
+	float: right;
+	cursor:pointer;
+}
+
+#addReviewBigButton:hover {
+	background:url("https://cdn1.shipserv.com/images/layout_v2/endorsement/add_review_button.gif") no-repeat 0 -34px transparent;
+}

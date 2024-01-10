@@ -1,0 +1,74 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+?>
+<!--[if IE]>
+<link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+<link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+    tr.auto td {
+        font-weight: bold;
+    }
+
+    table#resultsTab tr td {
+        max-width: 200px;
+    }
+
+</style>
+
+<div id="breadcrumbs">
+    <?php
+    $breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+    $breadcrumbs[] = array('name' => 'Match', 'url'  => '/match/inbox');
+    $breadcrumbs[] = array('name' => 'Forwarding', 'url'  => '');
+    echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+    ?>
+</div>
+
+<div id="body" class="inbox">
+    <div id="content">
+        <h1>RFQ forwarding report</h1>
+        <br/>
+        <p>
+            You have forwarded RFQ <?php echo $this->rfqId; ?> to <?php echo lg_count($this->forwardedRfqs); ?> matched suppliers.
+            Below are their TNIDs along with the forwarding result:
+        </p>
+
+        <table class="resultsTab" border="1">
+            <tr>
+                <th><strong>Supplier Branch TNID</strong></th>
+                <th>&nbsp;</th>
+                <th><strong>Forwarded RFQ ID</strong></th>
+            </tr>
+            <?php
+            foreach ($this->forwardedRfqs as $supplierId => $rfqId) {
+                ?>
+                <tr>
+                    <td><?php echo $supplierId; ?></td>
+                    <td>&nbsp;</td>
+                    <td><?php
+                        if ($rfqId === false) {
+                            ?>ERROR<?php
+                        } else {
+                            echo 'SUCCESS (' . $rfqId . ')';
+                        }
+                        ?></td>
+                </tr>
+            <?php
+            }
+            ?>
+        </table>
+
+        <p>
+            You can now return to <a href="/match/inbox">Match Inbox</a>
+            or go back to the <a href="/match/tag/?txtRfqid=<?php echo $this->rfqId; ?>">same RFQ</a>.
+        </p>
+
+    </div>
+</div>

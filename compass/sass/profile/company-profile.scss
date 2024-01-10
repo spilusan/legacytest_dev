@@ -1,0 +1,91 @@
+/*
+Document   : company-profile
+Created on : Jul 5, 2012, 3:38:38 PM
+Author     : gly
+Description: Specific styles for company profile page
+*/
+
+p {
+    &.small {
+        &.top {
+            top:83px;
+        }
+    }
+}
+
+.pcs-alert {
+    width: 24px;
+    height: 19px;
+    margin-right: 25px !important;
+    
+    &.stat {
+        margin-right: 8px !important;
+        margin-left: 6px;
+    }
+}
+
+.profile-completeness {
+    margin-top: 14px !important;
+        .pc-indicator {
+            margin-left: 10px !important;
+        }
+}
+
+table {
+    border: 1px solid #d6dce4;
+    border-bottom: 0;
+    border-right:0;
+    layout: fixed;
+    
+    tr {
+        td {
+            border-bottom: 1px solid #d6dce4;
+            border-right: 1px solid #d6dce4;
+            background-color: #f5f7fa;
+            padding: 10px;
+            font-size: 12px;
+            line-height: 1px;
+            vertical-align: middle;
+            word-break: break-word;
+            
+            &.basic {
+                color: #e81e24;
+                font-weight: bold;
+            }
+            &.premium {
+                color: #037b02;
+                font-weight: bold;
+            }
+            
+            &.type {
+                width: 65px;
+                border-right:0;
+                text-align: center;
+            }
+            
+            &.btn {
+                width: 95px;
+            }
+            
+            div.zz.small {
+                float: right;
+            }
+            
+            .check, .cross {
+                 float: left;
+             }
+             
+             .cross {
+                 margin-left: 23px;
+             }
+             
+             .check {
+                 margin-left: 19px;
+             }
+             div.zz.small.green.button {
+                 margin-right: 9px;
+             }
+        }
+    }
+}
+

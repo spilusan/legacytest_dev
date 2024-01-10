@@ -1,0 +1,7 @@
+
+
+S13336
+** Changes to the way we're syncing account manager, we're now syncing acc manager from SF for both buyer and supplier
+** Changes to contracted vessel syncing
+** oracle/DDL_changes/SSERVDBA/S13336-account-manager-for-byb.sql need to be applied
+** 

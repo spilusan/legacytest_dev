@@ -1,0 +1,196 @@
+<?php 
+
+
+	$supplierName = trim($this->supplier->name);
+?><html>
+<head>
+	<title></title>
+</head>
+<body style="margin:0; padding: 0;">
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+		<tr>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+			<td style="background-color: #d6dce4; text-align: right; padding: 20px 0;" width="610">
+				<img src="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/img/email/sales/logo.png" alt="ShipServ" border="0" />
+			</td>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+			<td style="background-color: #012b54; padding:30px;" width="610">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+					<tr>
+						<td style="text-align: left;">
+							<table width="300" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+								<tr>
+									<td style="text-align: center; vertical-align: middle; height: 35px; background-color: #012b54; border: 1px solid #395e81; font-family: Arial, Helvetica, sans-serif; font-size: 24px; color: #13b5ea; font-weight: bold;">Supplier <span style="font-family: Arial, Helvetica, sans-serif; font-size: 24px; color: #fdd45c; font-weight: bold;">MEMBERSHIP</span></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td style="height: 80px;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td style="font-family: Arial, Helvetica, sans-serif; color: #ffffff; font-size: 27px; font-weight: normal; font-style: italic; text-align: left;">
+							<?php if( $this->segmentId == 'A' ){?>
+								Upgrade to Membership and process your <? echo  $this->statistic->data['supplier']['tradenet-summary']['RFQ']['count']?> RFQs <strong>easier</strong>, and <strong>get more leads</strong>.
+							<?php }else if( $this->segmentId == 'B' ){ ?>
+								Upgrade to Membership and get more <strong>profile views, contact views</strong> and <strong>RFQs</strong>
+							<?php }else if( $this->segmentId == 'C' ){ ?>
+								Upgrade to Membership and get more <strong>profile views, contact views</strong> and <strong>RFQs</strong>
+							<?php }?>
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+			<td width="610" style="background-color: #ffffff; padding: 30px 30px 30px 25px;">
+				<table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+					<tr>
+						<td style="font-family: Arial, Helvetica, sans-serif; color: #2e3235; font-weight: bold; font-size: 18px; text-align: left; ">
+							With ShipServ Membership <?php echo iconv('UTF-8', 'UTF-8//IGNORE', $this->supplier->name); ?> will benefit from:
+						</td>
+					</tr>
+					<tr>
+						<td style="height: 30px;">&nbsp;</td>
+					</tr>
+					<tr>
+						<td>
+							<table width="100%" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+								<?php if( $this->segmentId == 'A' ){?>
+								<tr>
+									<td style="height: 21px; font-size: 28px; font-family: Arial, Helvetica, sans-serif; color: #1b9810;" width="38">
+										&#10004;
+									</td>
+									<td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #2e3235; font-weight: normal; vertical-align: middle; text-align: left;">Outlook-style inbox to <strong>process RFQs faster</strong>  - no individual emails anymore</td>
+								</tr>
+								<tr>
+									<td style="height: 21px; font-size: 28px; font-family: Arial, Helvetica, sans-serif; color: #1b9810;" width="38">
+										&#10004;
+									</td>
+									<td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #2e3235; font-weight: normal; vertical-align: middle; text-align: left;">New feature enables you to see the RFQs that have <strong> already been won</strong>  by another supplier</td>
+								</tr>
+								<tr>
+									<td style="height: 21px; font-size: 28px; font-family: Arial, Helvetica, sans-serif; color: #1b9810;" width="38">
+										&#10004;
+									</td>
+									<td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #2e3235; font-weight: normal; vertical-align: middle; text-align: left;">File and sort RFQs and other transactions so you can <strong> find them quicker</strong></td>
+								</tr>
+								<?php } else { ?>
+								<tr>
+									<td style="height: 21px; font-size: 28px; font-family: Arial, Helvetica, sans-serif; color: #1b9810;" width="38">
+										&#10004;
+									</td>
+									<td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #2e3235; font-weight: normal; vertical-align: middle; text-align: left;">
+										A Premium listing which gives you a much <strong>higher profile</strong> on ShipServ Pages
+									</td>
+								</tr>
+								<tr>
+									<td style="height: 21px; font-size: 28px; font-family: Arial, Helvetica, sans-serif; color: #1b9810;" width="38">
+										&#10004;
+									</td>
+									<td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #2e3235; font-weight: normal; vertical-align: middle; text-align: left;">Higher ranking</td>
+								</tr>
+								<tr>
+									<td style="height: 21px; font-size: 28px; font-family: Arial, Helvetica, sans-serif; color: #1b9810;" width="38">
+										&#10004;
+									</td>
+									<td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #2e3235; font-weight: normal; vertical-align: middle; text-align: left;">
+										More likely to be seen by the <strong>tens of thousands of buyers</strong> using ShipServ
+									</td>
+								</tr>								
+								<tr>
+									<td style="height: 21px; font-size: 28px; font-family: Arial, Helvetica, sans-serif; color: #1b9810;" width="38">
+										&#10004;
+									</td>
+									<td style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #2e3235; font-weight: normal; vertical-align: middle; text-align: left;">
+										<strong>Measure</strong> the results with Supplier Insight Report
+									</td>
+								</tr>								
+								
+								<?php }?>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+			<td width="610" style="background-color: #ffffff; padding: 0px 30px 30px 30px; font-family: Arial, Helvetica, sans-serif; font-size: 14px; color: #2e3235; font-weight: normal; text-align: left;">
+				<?php if( $this->segmentId == 'A' ){?>
+				Membership also gives you an expanded Premium profile which enables you to <strong>get more leads</strong>. There is currently a <strong>special offer</strong> available on Membership price including a free branding offer.
+				<?php } else if ($this->segmentId == 'B' ) { ?>
+				Membership also brings other benefits such as <strong>brand verification</strong> and <strong>faster RFQ processing.</strong>
+				There is currently a <strong>special offer</strong> available on Membership price including a free branding offer.
+				<?php } else if ($this->segmentId == 'C' ) { ?>
+				Membership also brings other benefits such as <strong>brand verification.</strong>
+				There is currently a <strong>special offer</strong> available on Membership price including a free branding offer.
+				<?php }?>
+			</td>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+			<td width="610" style="background-color: #ffffff; text-align: left; padding: 0px 30px 30px 30px;">
+				<table width="310" border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse;">
+					<tr>
+						<td style="background-color: #fdd45c; vertical-align: middle; text-align: center; height: 43px; color: #000000 !important;">
+							<?php if( $this->segmentId == 'A' ){?>
+							<a href="http://lp.shipserv.com/Smart.html" style="padding: 10px 20px !important; font-family: Arial, Helvetica, sans-serif; color: #000000 !important; font-weight: bold; font-size: 20px; text-decoration: none; display: block;">
+								Click here to find out more
+							</a>
+							<?php }else{?>
+							<a href="http://lp.shipserv.com/LeadGeneration.html" style="padding: 10px 20px !important; font-family: Arial, Helvetica, sans-serif; color: #000000 !important; font-weight: bold; font-size: 20px; text-decoration: none; display: block;">
+								Click here to find out more
+							</a>							
+							<?php }?>
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+			<td style="background-color: #d6dce4; text-align: left; padding: 25px 0 10px 0; font-family: Arial, Helvetica, sanas-serif; font-size: 10px; color: #525c64;" width="610">
+				To contact ShipServ please email: <a href="mailto: offer@shipserv.com" style="font-family: Arial, Helvetica, sans-serif; font-size: 10px; font-weight: normal, text-decoration: none; color: #005aad;">offer@shipserv.com</a> or see here for our other <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/contact-us/" style="font-family: Arial, Helvetica, sans-serif; font-size: 10px; font-weight: normal, text-decoration: none; color: #005aad;">contact information</a>.
+			</td>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+			<td style="background-color: #d6dce4; text-align: left; padding: 0px 0 10px 0; font-family: Arial, Helvetica, sanas-serif; font-size: 10px; color: #525c64;" width="610">
+				To stop receiving special offers from ShipServ, <a href="http://lp.shipserv.com/opt_out_promotions.html" style="font-family: Arial, Helvetica, sans-serif; font-size: 10px; font-weight: normal, text-decoration: none; color: #005aad;">click here</a>.
+			</td>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+			<td style="background-color: #d6dce4; text-align: left; padding: 0px 0 10px 0; font-family: Arial, Helvetica, sanas-serif; font-size: 10px; color: #525c64;" width="610">
+				All ShipServ Suppliers can view their Profile views, contact views, RFQs and total value of orders in their Supplier Insight Report.  In order to keep this secure and confidential to each supplier, you need a ShipServ Pages login to view.  For more information information <a href="https://www.shipserv.com/help/sellerfaq/register" style="font-family: Arial, Helvetica, sans-serif; font-size: 10px; font-weight: normal, text-decoration: none; color: #005aad;">click here</a>. 
+			</td>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+			<td style="background-color: #d6dce4; text-align: left; padding: 0px 0 25px 0; font-family: Arial, Helvetica, sanas-serif; font-size: 10px; color: #525c64;" width="610">
+				Terms and conditions apply to this special offer. This offer 
+				is only available until 20 December 2013. Please also see the
+				<a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/shipserv-membership-and-definitions/" style="font-family: Arial, Helvetica, sans-serif; font-size: 10px; font-weight: normal, text-decoration: none; color: #005aad;">ShipServ Membership</a>. 
+				This offer is not available to  existing ShipServ customers.    
+              	<br><br>
+              	<a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/legal-notes/terms-and-conditions/" style="font-family: Arial, Helvetica, sans-serif; font-size: 10px; font-weight: normal, text-decoration: none; color: #005aad;">ShipServ &copy; 2014</a>
+                <span style="font-family: Verdana, Arial, Helvetica, sans-serif; "> | </span>
+                <a style="font-family: Arial, Helvetica, sans-serif; font-size: 10px; font-weight: normal, text-decoration: none; color: #005aad;" href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/privacy-policy/">Privacy Policy</a>
+			</td>
+			<td style="background-color: #d6dce4;">&nbsp;</td>
+		</tr>
+	</table>
+</body>
+</html>

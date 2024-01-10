@@ -1,0 +1,61 @@
+/*
+Document   : user-management
+Created on : Jun 14, 2012, 11:29:45 AM
+Author     : gly
+Description: Profile User management styles
+*/
+
+@import "compass/css3";
+
+form {
+    &.main {
+        width:auto;
+        margin: 15px 0 0 0;
+
+        ul {
+            list-style: square outside none;
+        }
+
+        fieldset {
+            background-color: #E9EDF1;
+            border:1px solid #bec4cb;
+            padding:10px;
+            font-size:12px;
+            line-height:14px;
+            @include border-radius(5px);
+            behavior: url(/css/PIE.htc);
+        }
+
+        input.textfield, textarea.textarea {
+            width:200px;
+            margin-left:0px;
+        }
+
+        div.field{
+            &.radiobutton {
+                input{
+                    &.radiobutton {
+                        margin-left:0px;
+                    }
+                }
+            }
+        }
+
+        .user-container {
+            margin-left:130px;
+        }
+    }
+    
+    h3 {
+        font-weight:bold;
+        border-bottom: 1px solid #EBEBEB;
+        font-weight: 700;
+        margin-bottom: 20px;
+        padding-bottom: 14px;
+        padding-top: 20px;	
+    }
+}
+
+strong {
+	font-weight:bold;
+}

@@ -1,0 +1,101 @@
+/*
+Document   : home/_searchForm.scss
+Created on : Dec 17, 2013, 3:00:43 PM
+Author     : gly
+Description: styles for search form
+*/
+.formContainer {
+	background: url(/img/home/search_bg_texture.png) left top repeat-x transparent;
+	margin-bottom: 30px;
+
+	.formImg {
+		width: 960px;
+		height: 192px;
+		margin: 0 auto;
+		background: url(/img/home/search_bg.png) -275px top no-repeat transparent;
+
+		h1.slogan {
+			width: 960px;
+			padding: 25px 0 20px;
+			margin: 0 auto 20px;
+			font-weight: normal;
+			font-family: Arial, Helvetica, sans-serif;
+			font-size: 23px;
+			color: #ffffff;
+			border-bottom: 1px dashed #78a0c6;
+		}
+
+		form#anonSearch {
+			position: relative;
+			width: 960px;
+			padding: 0;
+			margin: 0px auto 20px;
+			@include border-radius(6px);
+			background: transparent;
+
+			fieldset {
+				float: left;
+				display: block;
+				margin-right: 20px;
+
+				h2 {
+					font-size: 20px;
+					color: #ffffff;
+					font-weight: normal;
+					margin-bottom: 10px;
+				}
+
+				label {
+					display: block;
+					color: #59c5eb;
+					font-size: 11px;
+					top: 0;
+					widht: 90%;
+				}
+
+				input[type="text"] {
+					margin-bottom: 10px;
+					height: 25px;
+					font-size: 14px;
+
+					&.blur {
+						color: #898989;
+					}
+				}
+
+				&.searchFor {
+					input[type="text"] {
+						width: 450px;
+					}
+				}
+
+				&.searchLoc {
+					input[type="text"] {
+						width: 245px;
+					}
+				}
+			}
+
+			.buttonContainer {
+				padding-top: 38px;
+
+				a {
+					font-size: 18px;
+					padding: 7px 40px;
+					font-weight: normal;
+					letter-spacing: 1px;
+
+					span {
+						position: relative;
+						top: -2px;
+						@include inline-block;
+						width: 23px;
+						height: 22px;
+						margin-right: 2px;
+						background: url(/img/icons/large/spy-white.png) no-repeat left top transparent;
+					}
+				}
+			}
+		}
+	}
+}

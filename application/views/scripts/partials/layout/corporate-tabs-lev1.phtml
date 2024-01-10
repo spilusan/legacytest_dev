@@ -1,0 +1,41 @@
+<nav id="corporateNav">
+    <ul class="top">
+    <?php
+    foreach ($this->corporateNav()->getFullNav() as $navItem) { 
+        echo $this->partial('layout/corporate-tab-lev1.phtml', $navItem);
+    } ?>
+    <li>
+    <?php
+
+    //CAS Login Auth handling
+    $urlForCASLogin = $this->cas()->getCasRestTradenetLogin(false);
+    if (!is_object($this->user) && is_object($this->userTradenet)) {
+        $urlForCASLogin = Myshipserv_CAS_CasRoleRedirector::getInstance()->getRedirectUrl($this->userTradenet->username);
+    }
+    ?>    
+        <a href="<?= $urlForCASLogin; ?>" title="Tradenet" target="_blank">TradeNet</a>
+    </li>
+     
+    <?php if (!is_object($this->user)) { ?>
+        <li>
+        <?php
+            // handling pages login
+            // --------------------------------------------------------
+
+            $action = $this->params['action'] ?? null;
+            $requestUrl =  $_SERVER['REQUEST_URI'] ?? '';
+            $redirectUrl = $this->params['redirectUrl'] ?? '';
+            $redirectUrl = $action != 'register-login' ? $requestUr : $redirectUrl;
+            $serviceUrl =  'https://' . $_SERVER['HTTP_HOST'] . '/user/cas?redirect='.urlencode($redirectUrl);
+            $urlForCASLogin = $this->cas()->getCasRestLogin().'&service='.urlencode($serviceUrl);
+        ?>
+        <a title="Sign in or register new account" href="<?php echo ($urlForCASLogin) ?>">Sign in</a>
+        </li>
+    <?php } else { ?>
+        <li>
+            <a href="/user/logout" title="Sign out <?= ($this->user->firstName? _htmlspecialchars($this->user->firstName) : ''); ?>">Sign out <?= ($this->user->firstName!="")?_htmlspecialchars($this->user->firstName):"Pages user"; ?></a>
+        </li>
+    <?php } ?>
+    </ul>
+</nav>
+<div class="clear"></div>

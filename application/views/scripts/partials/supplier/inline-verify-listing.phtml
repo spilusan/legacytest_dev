@@ -1,0 +1,106 @@
+<style>
+	#inline-verification{
+		background-image:url("/images/layout_v2/inline-bg.gif");
+		width:430px;
+		height:131px;
+		overflow:hidden;
+	}
+	#inline-verification-inner{
+		margin:20px;
+	}
+	
+	#inline-verification h1, #inline-verification img{
+		float:left;
+	}
+	#inline-verification h1{
+		font-weight:bold;
+		margin: 0;
+		margin-left:10px;
+		font-size:20px;
+		line-height:24px;
+	}
+	
+	#inline-verification-buttons{
+		clear:both;
+	}
+	#correctBtn {
+		background: url('/images/layout_v2/inline-correct.gif') 0 0 no-repeat;
+		width: 190px;
+		height: 50px;
+		cursor: pointer;
+		float:left;
+		border: none;
+		margin-top:20px;
+		margin-right:10px;
+	}
+	#correctBtn:hover{
+		background: url('/images/layout_v2/inline-correct.gif') 0 -49px no-repeat;
+	}
+	#incorrectBtn {
+		background: url('/images/layout_v2/inline-incorrect.gif') 0 0 no-repeat;
+		width: 190px;
+		height: 50px;
+		cursor: pointer;
+		float:left;
+		border: none;
+		margin-top:20px;
+	}
+	#incorrectBtn:hover{
+		background: url('/images/layout_v2/inline-incorrect.gif') 0 -49px no-repeat;
+	}
+	
+</style>
+<div id="inline-verification">
+	<div id="inline-verification-inner">
+		<div id="inline-verification-form">
+			<img src="/images/layout_v2/inline-ex-mark.gif">
+			<h1>Is your listing up to date?</h1>
+			<!--<div id="inline-verification-buttons">-->
+				<input type="button" value="" id="correctBtn" tnid="<?php echo $this->tnid?>" /> 
+				<input type="button" value="" id="incorrectBtn" tnid="<?php echo $this->tnid?>" /> 
+			<!--</div>-->
+		</div>
+		<div id="inline-verification-complete" class="hidden" style="padding-top:20px;">
+			<img src="/images/icons/success.png" style="margin-left:100px;">
+			<h1 style="margin-top:20px;">Thank you</h1>
+		</div>
+	</div>
+</div>
+<?php 
+	// pull proper url for each actions
+	$positive =  $this->alert->getActionByType( Myshipserv_AlertManager_Action::POSITIVE_ACTION)->toArray();
+	$negative =  $this->alert->getActionByType( Myshipserv_AlertManager_Action::NEGATIVE_ACTION)->toArray();
+?>
+<!-- use AJAX for the action -->
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#correctBtn, #incorrectBtn").live('click', function(){
+			var id = $(this).attr("id");
+			var tnid = $(this).attr("tnid");
+			if( id == "correctBtn" ){
+				$.ajax({
+					url: '<?php echo $positive["url"];?>',
+					type: 'GET',
+					cache: false,
+				    error: function(request, textStatus, errorThrown) {
+				    	response = eval('(' + request.responseText + ')');
+				    	alert("ERROR " + request.status + ": " + response.error);					    	
+				    },
+					success: function( response ){
+						$("#inline-verification-form").hide();
+						$("#inline-verification-complete").fadeIn();
+						setTimeout(function(){
+							$("#inline-verification").animate({height:"0px"}, 400).hide();
+						},2000);
+					},
+					beforeSend: function(xhr) {
+						// header authentication for security (addon)
+						xhr.setRequestHeader("SS-auth", "somekey");
+					}
+				});
+			}else{
+				location.href="<?php echo $negative["url"]; ?>";
+			}
+		});
+	});
+</script>

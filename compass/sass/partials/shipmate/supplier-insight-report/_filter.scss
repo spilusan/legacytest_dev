@@ -1,0 +1,34 @@
+/*
+ * CSS rules for filter section in Supplier Insight report
+ */
+
+.header-container {
+  #jpegdownload {
+    margin-top: -8px;
+    float: right;
+  }
+}
+
+form.sirFilterForm {
+  h1 {
+    display: inline-block;
+    background: #087EC5;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: normal;
+    font-size: 20px;
+    color: #FFFFFF;
+    padding: 15px;
+    margin: 0 16px 0 0;
+  }
+
+  span {
+    line-height: 50px;
+    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    margin-right: 12px;
+  }
+}
+input#date-picker {
+  width: 210px;
+  height: 30px;
+  text-align: center;
+}

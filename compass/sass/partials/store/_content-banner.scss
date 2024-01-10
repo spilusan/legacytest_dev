@@ -1,0 +1,31 @@
+#modal {
+	width: 800px;
+}
+
+#body {
+	#content {
+		.section {
+			ul.checkList {
+				margin-bottom: 25px;
+				list-style-image:url(/img/icons/small/check.png);
+				padding-left: 27px;
+
+				li {
+					font-size: 15px;
+					font-weight: bold;
+					color: #2e3235;
+					margin-bottom: 5px;
+
+					span {
+						font-size: 12px;
+						font-weight: normal;
+					}
+				}
+			}
+
+			.contactBox {
+				margin-bottom: 0;
+			}
+		}
+	}
+}

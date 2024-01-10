@@ -1,0 +1,22 @@
+/*
+Document   : rfq-inbox.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: combining partials for rfq-inbox styles
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+@media print {
+	@import "partials/def/content";
+	@import "partials/trade/rfq-inbox/content";
+	@import "partials/trade/rfq-inbox/rfq_list";
+	@import "partials/trade/rfq-inbox/rfq_display";
+	@import "partials/trade/rfq-inbox/rfq_printable";
+	@import "partials/trade/rfq-inbox/rfq_line-items";
+
+	div.lineItems {
+		page-break-before:always;
+	}
+}

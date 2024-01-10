@@ -1,0 +1,12 @@
+<? $this->headLink()->appendStylesheet('/css/erroneous-trans-landing.css'); ?>
+<div id="body">
+   <div id="content" class="size3">
+        <h1 class="styled">Erroneous Transaction</h1>    
+        <div class="inner_content">
+            <?php //echo $this->partial('erroneous/header.phtml', array('response' => $this->response)) ?>
+            <div class="greenInfo"><i class="fa fa-exclamation-triangle"></i></i>You already submitted your answer</div>
+            <a href="/" class="homePageBtn">Go to Homepage</a>
+            <?php //echo $this->partial('erroneous/line-items.phtml', array('data' => $this->response['rows'])) ?>
+       </div>        
+	</div>
+</div>

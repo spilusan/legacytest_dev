@@ -1,0 +1,18 @@
+# Use an official PHP 8.2 image as the base
+FROM aolb/php82-apache-oci:v1 
+
+COPY ./docker/sites-available/000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY ./dev-application.ini /prod/application.ini
+
+RUN echo "SetEnv APPLICATION_ENV development" >> /etc/apache2/apache2.conf \
+    && echo "memory_limit=2048M" > /usr/local/etc/php/conf.d/memory-limit.ini \
+    && echo "error_reporting = E_ERROR | E_PARSE" > /usr/local/etc/php/conf.d/error-reporting.ini
+
+# add required directories
+RUN mkdir -p /var/log/apache2/ \
+    && mkdir -p /prod/logs/webreporter/backend/logs /var/www/devphpreports/php-webreporter/logs /prod/logs/pages /prod/logs/match \
+    && touch /prod/logs/match/match-log.log && touch /prod/logs/match/match-memcache.log \
+    && chown -R www-data:www-data /prod/logs/pages/ /prod/logs/match/ /var/www/devphpreports/php-webreporter/logs \
+    && chmod -R 777 /prod/logs/pages/ /prod/logs/match/ /var/www/devphpreports/php-webreporter/logs /prod/logs/webreporter/backend/logs
+
+ENTRYPOINT [ "/var/www/html/install-pages.sh" ]

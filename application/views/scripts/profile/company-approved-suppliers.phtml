@@ -1,0 +1,113 @@
+<?php
+
+	$this->headLink()->appendStylesheet('/css/profile/company-approved-suppliers.css')
+					 ->appendStylesheet('/css/profile.css')
+					 ->appendStylesheet('/css/transition.css');
+	$this->CDNLink()->appendStylesheet('/css/uniform.default.new.css');
+	$this->getHelper('Requirejs')->addModule('backbone/profile/companyApprovedSuppliers/views/mainView');
+	$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Approved Suppliers',
+						   'url'  => '/profile/company-approved-suppliers'));	
+			
+?>
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], ''),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], 'company-approved-suppliers', $this->pendingUsers, $isAdmin)
+				)
+			);
+			?>
+			<div class="profile-body-right">
+				<div class="zz header">
+		 			<label for="scopeFile" class="button dblue medium scopeFile" title="Text or CSV file with TNIDs separated by commas">Import List</label>
+					<input type="file" name="supplierIdFile" id="scopeFile" style="height: 0; width: 0; overflow: hidden;" />		
+ 					<a href="/data/source/supplier/approvedsupplierexport"  class="button dblue medium" title="Export to excel">Export List</a>
+					<a class="button dblue medium" id="editBtn" title="Edit Suppliers">Edit List</a>
+					<h2>Approved Suppliers</h2>
+				</div>
+				<div class="profileContent">
+					<div id="filters"></div>
+					<div id="generatedContent"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
+<div id="modal">
+	<!--
+    <div class="modalControls">
+    	<div class="close" data-dismiss="modal" aria-hidden="true">Close</div>
+    </div>
+	-->
+    <div class="modalBody">
+        <h1 class="styled">
+            Suppliers
+        </h1>
+        <div class="selectorHolder">
+            <div class="tabcontent item">          
+                <div class="location selectlist itemselector inner new form">
+                    <div class="available list left" style="position: relative;">
+                        <h3>Search for supplier:</h3>
+                        <div class="textfilter">
+                            <img src="/img/icons/medium/spyglass.png">
+                            <input type="text" class="available supplierList text filter" value="Search for Supplier to add (by name or TNID)"/>
+                        </div>
+                        <div class="spinnerFwd"></div>
+                        <div class="available selectlist">
+
+                        </div>
+                    </div>
+                    <div class="divider"></div>
+                    <div class="selected list right">
+                        <h3>Your selected suppliers:</h3>
+                        <div class="textfilter">
+                            <img src="/img/icons/medium/spyglass.png">
+                            <input type="text" class="selected selectedList text filter" data-selectlist="location-selected-selectlist" />
+                        </div>
+                        <ul class="selected selectlist">
+
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="buttonContainer">
+                    	<input type="button" class="close button green medium" value="Cancel">
+                        <input type="button" class="apply button green medium" value="Apply changes">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="emialmodal">
+    <div class="modalControls"></div>
+    <div class="modalBody">
+    	<div id="emailModalContact">
+	        <h1 class="styled">
+	            Automatic Compliance Monitor
+	        </h1>
+	        <p>Add email address</p>
+	        <input type="text" name="addEmailAddress" value=""  placeholder="E-mail address">
+	        <button tupe="button" class="button small dblue cancel">Cancel</button>
+   	        <button tupe="button" class="button small dblue add">Add</button>
+    	</div>
+    </div>
+</div>
+<div id="waiting">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>
+
+

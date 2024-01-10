@@ -1,0 +1,11 @@
+<nav id="pagesNav">
+    <ul class="primaryNavUl">
+    <?php 
+    $user = (isset($this->user)? $this->user : null);
+    $activeCompany = (isset($this->activeCompany)? $this->activeCompany : null);
+    foreach ($this->pagesNav($user, $activeCompany) as $tab) {
+        echo $this->partial('layout/tab.phtml', $tab);
+    }
+    ?>
+    </ul>
+</nav>

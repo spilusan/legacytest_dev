@@ -1,0 +1,92 @@
+
+#body {
+	#content {
+		.rfqContent {
+			.dataBox.lineItems {
+				table {
+					border-collapse: collapse;
+					border-left: 1px solid #bec4cb;
+					border-bottom: 1px solid #bec4cb;
+					margin: 5px 0 0 0;
+					padding: 0;
+
+					tr {
+						th, td {
+							border-right: 1px solid #bec4cb;
+							border-top: 1px solid #bec4cb;
+							font-size: 11px;
+							line-height: 1.5;
+							vertical-align: middle;
+						}
+
+						th {
+							background-color: #e9edf1; 
+							font-weight: bold;
+							padding: 8px 6px;
+							
+							&.top {
+								padding: 0;
+							}
+
+							&.no {
+								width: 13px;
+							}
+
+							&.pt {
+								width: 82px
+							}
+
+							&.pno {
+								width: 84px
+							}
+
+							&.qty {
+								width: 33px
+							}
+
+							&.unt {
+								width: 63px;
+							}
+
+							table {
+								border: 0;
+								background: transparent;
+								border-bottom: 0;
+								margin: 0;
+
+								tr {
+									background: transparent;
+
+									td {
+										border-bottom: 0;
+										border-top: 0;
+										padding: 8px 6px;
+									}
+								}
+							}
+						}
+
+						td {
+							font-weight: normal;
+							background-color: transparent;
+							padding: 2px 6px;
+							font-size: 12px;
+
+							&.number {
+								text-align: right;
+							}
+
+							&.section {
+								width: 210px;
+							}
+
+							&.fdt {
+								border-right: 0;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

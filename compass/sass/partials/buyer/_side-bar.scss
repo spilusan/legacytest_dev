@@ -1,0 +1,143 @@
+#body {
+	#sidebar {
+		ul {
+			&.filters {
+				margin-top: 29px;
+				li {
+					display: block;
+					position: relative;
+					border: 1px solid #d6dce4;
+					color: #2e3235;
+					padding: 7px;
+					@include border-radius(6px);
+					behavior: url(/css/PIE.htc);
+					text-align: right;
+					font-size: 11px;
+					font-weight: normal;
+					margin-bottom: 3px;
+					cursor: pointer;
+
+					a {
+						display: block;
+						float: left;
+						padding: 0;
+						width: 135px;
+						height: 13px;
+						overflow: hidden;
+						white-space: nowrap;
+						text-overflow: ellipsis;
+						text-align: left;
+						border-right: 1px dotted #000000;
+						font-size: 11px;
+						font-weight: normal;
+						margin: 0;
+						margin-right: 5px;
+					}
+
+					&.selected {
+						border: 3px solid #13b5ea;
+						padding: 5px;
+						cursor: default;
+						a {
+							color: #2e3235;
+							cursor: default;
+							width: 135px;
+						}
+					}
+
+					span {
+						position: relative;
+						top: 1px;
+					}
+				}
+			}
+		}
+
+		.setFilter {
+			position: relative;
+			border: 1px solid #d6dce4;
+			@include border-radius(6px);
+			padding: 4px;
+			font-size: 9px;
+			font-weight: normal;
+			margin-top: 15px;
+
+			&.selected {
+				border: 3px solid #13b5ea;
+				padding: 2px;
+			}
+
+			label {
+				display: block;
+				top: 0;
+				margin-bottom: 4px;
+				font-size: 9px;
+				font-weight: bold;
+			}
+
+			input[type="text"], div.selector {
+				margin-bottom: 4px;
+			}
+
+			input[type="text"]{
+				font-size: 9px;
+				padding: 6px 5px 4px;
+				width: 169px;
+
+				&.blur {
+					color: #939ba1;
+				}
+			}
+
+			input {
+				&.button {
+					padding: 3px 5px;
+					margin: 0;
+				}
+
+				&[name="show"] {
+					padding: 2px 5px;
+				}
+			}
+
+			div.selector{
+				width: 173px;
+				left: -2px;
+				span {
+					width: 148px;
+				}
+			}
+
+			div.nameSelect {
+				display: none;
+				z-index: 21;
+				position: absolute;
+				overflow: visible;
+				width: 225px;
+				background-color: #505961;
+				top: 295px;
+				left: 45px;														
+				padding: 3px;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+				padding: 6px 5px 4px;
+
+				img {
+					position: absolute;
+					top: -10px;
+					left: 10px;
+				}
+
+				input[type="button"] {
+					margin-left: 5px;
+					position: relative;
+					top: 2px;
+				}
+
+				input[type="text"] {
+					padding: 2px 5px 3px;
+				}
+			}
+		}
+	}
+}

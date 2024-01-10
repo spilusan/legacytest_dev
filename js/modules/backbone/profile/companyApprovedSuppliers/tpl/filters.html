@@ -1,0 +1,31 @@
+<form id="filterForm" method="post" action="">
+ <p class="savedMsg">Your settings have been saved.</p>
+ 	<div class="filterRow">
+ 		<div class="functionArea">
+			<p class="toptext">Automatic Compliance Monitoring</p>
+			<p>Activate this feature to raise alerts if transactions are sent to suppliers not on the approved list.</p>
+			<p><div class="checkboxHolder">
+				<input id="allowNotification" type="checkbox">
+			</div><label for="allowNotification">Activate Automatic Compliance Monitoring</label></p>
+			<p>Alert emails will be sent to:</p>
+				<div id="emailList" class="emailList">
+				</div>
+				<div class="emailList">
+					<div class="emailItemRow">
+						<a href="#" id="addEmailButton">(add new)</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+			
+			<div class="clear"></div>
+ 		</div>
+ 		<div class="clear"></div>
+ 	</div>
+
+	<div class="filterRow">
+		<label class="main" for="keyword">Search:</label>
+		<input type="text" name="keyword" id="keyword" value="" autocomplete="off" placeholder="Please type search term here">
+		<input type="button" id="showBtn" value="Show" class="button medium green">
+	</div>
+</form>
+

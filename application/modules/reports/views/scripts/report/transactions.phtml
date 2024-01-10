@@ -1,0 +1,152 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Usage', 'url'  => '/reports/transactions');
+	$breadcrumbs[] = array('name' => 'Tradenet', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<div id="body" class="tradenet">
+	<div id="content">
+        <h1 class="styled">Tradenet usage</h1>
+        <?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<form method="get" class="new" id="report-form">
+		    <table style=";">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+						<div style="font-size:12px; background-color:#f5f7fa; padding:5px;">
+                            	Supplier: <input type="text" name="spbBranchCode" value="<?= $this->params['spbBranchCode']?>" />
+                            	Buyer: <input type="text" name="bybBranchCode" value="<?= $this->params['bybBranchCode']?>" />
+                            	Year: 
+                            	<select name="yyyy" onchange="$('#report-form').submit();">
+                            		<? 
+                            		for($i=2000; $i<=date('Y'); $i++)
+									{
+										$selectedYear = ($_GET['yyyy']=="")? date('Y') : $_GET['yyyy'];
+										?>
+                            			<option value="<?= $i?>" <?php echo ($selectedYear == $i)?'selected="selected"':"" ?>><?=$i?></option>
+                            			<? 
+									}
+									?>
+                            	                            	</select>
+                            	<input type="submit" value="Change">
+                            	
+            			</div>
+                        <div style="clear:both; margin-bottom:0px;"></div>
+		            
+		            	<div id="chart_div" style="width: 1500px; height: 400px;"></div>
+            			<div style="clear:both; margin-bottom:10px;"></div>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>
+
+<script type="text/javascript">
+	var rfq = JSON.parse('<?php echo json_encode( $this->report->getRfqStats() )?>');
+	var qot = JSON.parse('<?php echo json_encode( $this->report->getQuoteStats() )?>');
+	var ord = JSON.parse('<?php echo json_encode( $this->report->getOrderStats() )?>');
+	var buyer = JSON.parse('<?php echo json_encode( $this->report->getBuyerCreatedStats() )?>');
+	var supplier = JSON.parse('<?php echo json_encode( $this->report->getSupplierCreatedStats() )?>');
+</script>
+<?php $this->report->getRfqStats()?>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+function number_format (number, decimals, dec_point, thousands_sep) {
+	//return number;
+    // http://kevin.vanzonneveld.net/techblog/article/javascript_equivalent_for_phps_number_format/
+    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+    var n = !isFinite(+number) ? 0 : +number,
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+        s = '',
+        toFixedFix = function (n, prec)
+        {
+            var k = Math.pow(10, prec);
+            return '' + Math.round(n * k) / k;
+        };
+    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    if (s[0].length > 3)
+    {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec)
+    {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
+}
+
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(function(){
+var totalRfq = totalQot = totalOrd = totalBuyer = totalSupplier = 0;
+	for(var i=1; i<53; i++){
+		totalRfq += parseInt(typeof rfq[i] == 'undefined' ? 0:rfq[i]);
+		totalQot += parseInt(typeof qot[i] == 'undefined' ? 0:qot[i]);
+		totalOrd += parseInt(typeof ord[i] == 'undefined' ? 0:ord[i]);
+		<?php if($this->params['spbBranchCode'] == "" && $this->params['bybBranchCode'] == "" ){?>
+		totalBuyer += parseInt(typeof buyer[i] == 'undefined' ? 0:buyer[i]);
+		totalSupplier += parseInt(typeof supplier[i] == 'undefined' ? 0:supplier[i]);
+		<?php }?>
+	}
+	var data = [[
+         	'Weeks in year', 
+             'RFQ (' + number_format(totalRfq, ".", 2) + ')', 
+             'Quote (' + number_format(totalQot, ".", 2) + ')', 
+             'Order (' + number_format(totalOrd, ".", 2) + ')'
+             <?php if($this->params['spbBranchCode'] == "" && $this->params['bybBranchCode'] == "" ){?>
+             ,
+             'Buyer created (' + number_format(totalBuyer, ".", 2) + ')',
+             'Supplier created (' + number_format(totalSupplier, ".", 2) + ')'
+             <?php }?> 
+     	]];
+
+	for(var i=1; i<53; i++){
+		x = new Array();
+		x.push( i );
+		x.push( typeof rfq[i] == 'undefined' ? 0:rfq[i]);
+		x.push( typeof qot[i] == 'undefined' ? 0:qot[i]);
+		x.push( typeof ord[i] == 'undefined' ? 0:ord[i]);
+		<?php if($this->params['spbBranchCode'] == "" && $this->params['bybBranchCode'] == "" ){?>
+		x.push( typeof buyer[i] == 'undefined' ? 0:buyer[i]);
+		x.push( typeof supplier[i] == 'undefined' ? 0:supplier[i]);
+		<?php }?>
+		data.push(x);
+	} 	
+	var d = google.visualization.arrayToDataTable(data);
+
+    var options = {
+      	title: '',
+        vAxes: [
+    		{ title: 'Companies'}
+    		, { title: 'Documents'}
+        ],
+        hAxis: {title: "Weeks"},
+        seriesType: "bars",
+        series: 
+			{
+        		0: {type: "line", targetAxisIndex:1},
+        		1: {type: "line", targetAxisIndex:1},
+        		2: {type: "line", targetAxisIndex:1}
+			}
+			
+		
+   	};
+        
+            
+    var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+    chart.draw(d, options);
+});
+</script>

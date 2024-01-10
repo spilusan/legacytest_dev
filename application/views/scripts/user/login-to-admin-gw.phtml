@@ -1,0 +1,20 @@
+<?php
+/*
+* Warning to login again, session expired
+*/
+$this->CDNLink()->appendStylesheet('/css/uniform.default.new.css');
+$this->CDNLink()->appendStylesheet('/css/forgot-password.css');
+?>
+<div class="loginBox forgot wide">
+	<div class="center">
+		<h2 class="styled grey green">Admin  Gateway</h2>
+		<div class="formContainer">
+			<p style="margin: 12px; text-align: center; line-height: 150%; font-size: 16px;">
+				Your Admin Gateway session expired<br>
+				<a href="<?php echo $this->loginUrl ?>">Please click here to login again</a>
+			</p>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+

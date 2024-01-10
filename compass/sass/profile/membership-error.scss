@@ -1,0 +1,38 @@
+/*
+Document   : membership-error
+Created on : Jul 21, 2017
+Author     : AO
+Description: Membership Error
+*/
+
+@import "compass/css3";
+@import "2016_campfire/main/colours";
+
+#body {
+	width: 100%;
+	#content {
+		width: 100%;
+		float: left;
+		background: transparent !important;
+		text-align: center;
+		h2 {
+			font-size: 24px;
+			font-weight: bold;
+			 color: $text-grey;
+		}
+		p {
+			width: 100%;
+		    max-width: 450px;
+		    margin: 0 auto;
+		    font-size: 15px;
+		    color: $text-grey;
+		}
+		i {
+			&.fa-ship {
+				font-size: 110px;
+				color: $dark-grey;
+				margin: 50px 0px 34px 0px
+			}
+		} 
+	}
+}

@@ -1,0 +1,356 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/adoption');
+
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+	table tr.child td {
+	}
+	
+	table tr.bold td {
+		font-weight:bold;;
+	}
+
+	#header, .divider, #footer {
+		width: 2156px !important;
+	}
+</style>
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Match Reports', 'url'  => '/match/adoption-kpi');
+	$breadcrumbs[] = array('name' => 'Adoption Rate', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+	$startDate = ((isset($_GET['fromDate']) && $_GET['fromDate'])? _htmlspecialchars($_GET['fromDate']) : $this->startDate);
+	$endDate =  ((isset($_GET['toDate']) && $_GET['toDate'])? _htmlspecialchars($_GET['toDate']) : $this->endDate);	
+?>
+
+<div id="body" class="adoption">
+	<div id="content">
+		<h1 class="styled">Adoption Rate</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>		
+		<form method="get" class="new">
+		    <table style="margin: auto;  width:100%;">
+		        <tr>
+		            <td width="130">
+		                <label class="date">From:</label>
+		                <input type="text" name="fromDate" id="fromDate" value="<?php echo $startDate; ?>" class="datepicker" />
+		            </td>
+		            <td width="130">
+		                <label class="date">To:</label>
+		                <input type="text" name="toDate" id="toDate" class="datepicker" value="<?php echo $endDate; ?>"/>
+		            </td>
+		            <td width="30" class="buttonCell">
+		            	<input type="submit" value="Go"  class="button dblue medium"/>
+		            </td>
+		            <td width="" style="">
+		            	<div class="clear"></div>
+		            	<div style="font-size:14px; font-weight:bold; margin-left:800px;">
+	                    	<?php 
+	                    	$overallTotalBuyer = 0;
+	                    	foreach ((array)$this->results as $key => $result)
+	                    	{	                    			
+	                    		if( $result['DEPTH'] == 1 )
+	                    		{
+		                    		if( $result['ADOPTION_PROFILE'] == 'Regular' )
+		                    		{
+		                    			++$overallTotalRegularMatchBuyer;
+		                    		}
+		                    		
+		                    		$total['RFQ_EVENT_IN_PERIOD'] += $result['RFQ_EVENT_IN_PERIOD'];
+		                    		$total['RFQ_MATCH'] += $result['RFQ_MATCH'];
+		                    		
+		                    		$total['PO_BY_MATCH'] += $result['PO_BY_MATCH'];
+		                    		$total['PO_BY_MATCH_N_BUYER'] += $result['PO_BY_MATCH_N_BUYER'];
+		                    		$total['TOTAL_RFQ_SENT_TO_BOTH'] += $result['TOTAL_RFQ_SENT_TO_BOTH'];
+		                    		
+	                    		}
+	                    			
+	                    		++$overallTotalBuyer;
+	                    	}
+	                    	
+	                    	$overallAdoptionRate = @round( $total['RFQ_MATCH'] / $this->totalRfqEvent * 100, 2 );
+
+							$totalRfqSentToBoth = $total['TOTAL_RFQ_SENT_TO_BOTH'] ?? 0;
+							$matchMinustotalRfqSentToBoth = $total['RFQ_MATCH'] - $totalRfqSentToBoth;
+							
+	                    	$overallSwitchRate =
+								($totalRfqSentToBoth <> 0 && $matchMinustotalRfqSentToBoth <> 0) ?
+									@round(
+											(
+													($total['PO_BY_MATCH'] - $total['PO_BY_MATCH_N_BUYER'])
+													/
+													$matchMinustotalRfqSentToBoth
+											)
+											+
+											(
+												$totalRfqSentToBoth * 100
+											)
+											, 2
+									) : 0;
+	                    	
+	                    	?>
+	                    	<table width="300">
+	                    		<tr>
+	                    			<td>Adoption rate</td>
+	                    			<td><?= number_format($overallAdoptionRate,2)?>%</td>
+	                    		</tr>
+	                    		<tr>
+	                    			<td>Switch rate</td>
+	                    			<td><?= number_format($overallSwitchRate,2)?>%</td>
+	                    		</tr>	                    		
+	                    		<tr>
+	                    			<td>Regular match buyer</td>
+	                    			<td><?= $overallTotalRegularMatchBuyer?></td>
+	                    		</tr>	                    		
+	                    	</table>
+	                    	 
+		            	</div>		            
+		            </td>
+		        </tr>
+		        <tr style="display: none;">
+		            <td width="500" colspan="4" style="font-size:12px; line-height:18px;">
+		            	<label style=" float:left;">Show:</label> 
+		            	<label style=" float:left;"><input type="radio" name="showBuyer"  value="match">Match buyer</label>
+		            	<label style=" float:left;"><input type="radio" name="showBuyer" value="all">All buyer</label>
+		            </td>
+		        </tr>
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		            	<span style="font-size:10px;">
+		            		Data is updated daily. 
+		            	</span>
+		                <table id="resultsTab" style="display:block; ">
+		                    <thead>
+		                        <tr>
+		                            <!-- 1. -->
+		                            <th class="narrow">TNID</th>
+		                            <!-- 2. -->
+		                            <th class="narrow left" style="width:240px;">Name</th>
+		                            <!-- 3. -->
+		                            <th class="narrow left" style="width:20px;">Cou<br />ntry</th>
+		                            <!-- 5. -->
+		                            <th class="narrow left" style="width:30px;">Con<br />tract<br />Type</th>
+		                            <!-- 6. -->
+		                            <th class="left">Sts</th>
+		                            <!-- 7. -->
+		                            <th class="narrow left">Total Con-<br />tracted Vessels</th>
+		                            <!-- 8. -->
+		                            <th class="narrow left">Number of Vessels using Match During Period</th>
+		                            <!-- 9. -->
+		                            <th class=" left" style="width:120px;">Date of first RFQ to match</th>
+		                            <!-- 10. -->
+		                            <th class="left" style="width:120px;">Date of last RFQ to match</th>
+									<!-- 11. -->
+		                            <th class="narrow">Total RFQ events in period</th>
+		                            <!-- 12. -->
+		                            <th class="narrow">Total RFQ events since first match RFQ in period</th>
+		                            <!-- 13. -->
+		                            <th class="narrow">Avg RFQs/mo</th>
+		                            <!-- 14. -->
+		                            <th class="narrow">Total RFQs to Match<img alt="" src="/img/icons/small/sort-grey-desc.png"></th>
+		                            <!-- 15. -->
+									<th class="narrow">RFQs to match where buyer also selected some suppliers</th>
+									<!-- 16. -->
+		                            <th class="narrow">Adoption Rate (%)<br />(based on first Match RFQ date)</th>
+		                            <!-- 17. -->
+									<th class="narrow left">Adoption Profile</th>
+		                            <!-- 18. -->
+		                            <th class="narrow">RFQs from Match</th>
+		                            <!-- 19. -->
+		                            <th class="narrow">Match Suppliers<br />/RFQ<?php //: Rfq from match / rfq to match = supplier/rfq?></th>
+		                            <!-- 20. -->
+		                            <th class="narrow">Quotes received by Match</th>
+		                            <!-- 21. -->
+		                            <th class="narrow">Quote rate (%)</th>
+		                            <!-- 22. -->
+		                            <th class="narrow">Match POs</th>
+		                            <!-- 23. -->
+		                            <th class="narrow">PO to match suppliers where buyers <br />also selected their own suppliers</th>
+		                            <!-- 24. -->
+		                            <th title="Win rate" class="narrow">Match Only Switch Rate (%)<?php // - Number of Match POs where only supplier selected for RFQ was Match)?></th>
+		                            <!-- 25. -->
+		                            <th title="Win rate" class="narrow">Switch Rate (vs Buyer Selected) (%)<?php // - RFQ to match where buyer also selected divided by PO to match suplier where buyer selected suome suppleirs too?></th>
+		                            <!-- 26. -->
+		                            <th title="Win rate" class="narrow">Overall switch rate (%)<?php // - RFQ to match where buyer also selected divided by PO to match suplier where buyer selected suome suppleirs too?></th>
+		                            <!-- 27. -->
+		                            <th class="narrow currencyHead">Potential Savings ($)</th>
+		                            <!-- 28. -->
+									<th class="narrow currencyHead last">Actual Savings ($)</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                    	<tr class="handCursor backBtn" style="display: none;"><td colspan="30" style="text-align:left"> &lt;&lt; Back</td></tr>
+		                    	<!-- Buyer branches are mapped to other branches in Gateway (Parent Contract TNID). -->
+		                        <?php 
+		                        foreach ((array)$this->results as $key => $result)
+		                        {
+		                        	++$parentIds[$result['PARENT_BRANCH_CODE']]; 
+		                        }
+		                        
+		                        foreach ($parentIds as $key => $value)
+		                        {
+		                        	if( $value == 1 )
+		                        	unset($parentIds[$key]);
+		                        }
+
+		                        $parentIds = array_keys($parentIds);
+		                        foreach ((array)$this->results as $key => $result) 
+		                        { 
+		                        	//if( $result['RFQ_MATCH'] > 0 )
+		                        	//{
+		                        ?>
+		                            <tr class="trRow handCursor <?php if($result['DEPTH'] == 1 && in_array($result['BUYER_TNID'], $parentIds) !== false ) {?>parent<?php }?> <?php if($result['DEPTH'] == 2 ) :?> child <?php endif;?>" parentId="<?= $result['PARENT_BRANCH_CODE'] ?>" buyerTnid="<?php echo $result['BUYER_TNID']; ?>">
+		                                <!-- 1. -->
+		                                <td style="text-align: left;">
+		                                	<?php echo ( ($result['DEPTH'] == 1) ? '' : "&#8627 " ) . $result['BUYER_TNID']; ?>
+		                                </td>
+		                                <!-- 2. -->
+		                                <td class="left">
+		                                	<?php echo $result['BUYER_NAME']; ?>
+		                                	<div class="detail hidden"> 
+		                                		<?php if( $result['RFQ_FORWARDED_BY_MATCH_DETAIL'] != "" ){?>
+			                                		<br />
+		                                			RFQ Forwarded by match:<br />
+			                                		<?php echo $result['RFQ_FORWARDED_BY_MATCH_DETAIL']; ?><br />
+		                                		<?php }?>
+		                                		
+		                                		<?php if( $result['QOT_RCVD_BY_M_DET'] != "" ){?>
+		                                			<br />
+			                                		Quotes received by match:<br />
+			                                		<?php echo $result['QOT_RCVD_BY_M_DET']; ?><br />
+		                                		<?php }?>
+		                                		
+		                                		
+		                                		<?php if( $result['PO_BY_MATCH_DETAIL'] != "" ){?>
+		                                			<br />
+			                                		PO raised:<br />
+			                                		<?php echo $result['PO_BY_MATCH_DETAIL']; ?><br />
+		                                		<?php }?>
+		                                	</div>       
+		                                </td>
+		                                <!-- 3. -->
+		                                <td class="left"><?php echo $result['BYB_COUNTRY_CODE']; ?>  </td>
+		                                <!-- 5. -->
+		                                <td class="left"><?php echo str_replace('STANDARD', 'STD', $result['BYB_CONTRACT_TYPE']); ?>  </td>
+		                                <!-- 6. -->
+		                                <td class="left"><?php echo $result['BYB_TRADING_STATUS']; ?>  </td>
+		                                <!-- 7. -->
+		                                <td class="left"><?php echo $result['BYB_NO_OF_TRADING_SHIPS']; ?>  </td>
+		                                <!-- 8. -->
+		                                <td class="left"><?php echo $result['TOTAL_SHIPS_IN_PERIOD']; ?>  </td>
+		                                <!-- 9. -->
+		                                <td class="left"><?php echo $result['FIRST_MATCH_RFQ_BY_BYB']; ?>  </td>
+		                                <!-- 10. -->
+		                                <td><?php echo $result['LAST_TXN_DATE_TO_MATCH']; ?></td>
+		                        		<!-- 11. -->
+		                        		<td><?php echo $result['RFQ_EVENT_IN_PERIOD']; ?></td>
+		                                <!-- 12. -->
+		                        		<td><?php echo $result['RFQ_EVENT_MATCH_START']; ?></td>
+		                                <!-- 13. -->
+		                                <td><?php echo $result['AVG_SENT_PER_MONTH']; ?></td>
+		                                <!-- 14. -->
+		                                <td>
+		                                	<span class="groupTotal"><?= $result['RFQ_MATCH'] ?></span>
+		                                	<span >
+			                                 	<a class="individualTotal" target="_blank" style="font-weight: bold;" title="click to see the drilldown" href="/match/breakdown-per-buyer?buyerId=<?php echo $result['BUYER_TNID']; ?>&startDate=<?php echo $startDate; ?>&endDate=<?php echo $endDate; ?>&countryCode=<?= $result['BYB_COUNTRY_CODE']?>&accountRegion=<?= $result['BYB_ACCOUNT_REGION']?>&contractType=<?= $result['BYB_CONTRACT_TYPE']?>">
+			                                		<?php echo $result['RFQ_MATCH_PER_BRANCH']; ?>
+			                                	</a>
+		                                	</span>  
+		                                </td>
+		                                <!-- 15. -->
+									    <td><?php echo $result['TOTAL_RFQ_SENT_TO_BOTH']?>        </td>
+		                                <!-- 16. -->
+		                                <td class="percentage"><?php echo $result['ADOPTION_RATE_IN_PC']; ?> %     </td>
+		                                <!-- 17. -->
+									    <td class="left"><?php echo $result['ADOPTION_PROFILE']; ?></td>
+		                                <!-- 18. -->
+									    <td><?php echo $result['RFQ_FORWARDED_BY_MATCH']; ?>    </td>
+		                                <!-- 19. -->
+		                                <td class="currency"><?php echo $result['SUPPLIERS_PER_RFQ']; ?> </td>
+		                                <!-- 20. -->
+		                                <td><?php echo $result['QUOTES_RECEIVED_BY_MATCH']; ?> </td>
+		                                <!-- 21. -->
+		                                <td class="percentage"><?php echo $result['QUOTE_RATE']; ?></td>
+		                                <!-- 22. -->
+		                                <td><?php echo $result['PO_BY_MATCH']; ?> </td>
+		                                <!-- 23. -->
+		                                <td><?php echo $result['PO_BY_MATCH_N_BUYER']; ?> </td>
+		                                <!-- 24. -->
+		                                <!-- DIFFERENCES TOTAL RFQ TO MATCH and TOTAL RFQ TO MATCH WITH BUYER SELECTED NEEDS TO DIVIDE MATCH PO - PO TO MATCH + BUYER SELECTED -->
+		                                <td class="percentage">
+			                                <?php
+			                                	echo 
+												($result['RFQ_MATCH'] - $result['TOTAL_RFQ_SENT_TO_BOTH']) <> 0 ?
+			                                		@round(
+				                                		($result['PO_BY_MATCH'] - $result['PO_BY_MATCH_N_BUYER'])
+				                                		/
+				                                		($result['RFQ_MATCH'] - $result['TOTAL_RFQ_SENT_TO_BOTH'])
+														*100
+														, 2
+													) : '-';
+			                                	;
+			                                ?>
+		                                </td>
+		                                <!-- 25. -->
+		                                <td class="percentage"><?php echo isset($result['TOTAL_RFQ_SENT_TO_BOTH']) && $result['TOTAL_RFQ_SENT_TO_BOTH'] <> 0 ? @($result['PO_BY_MATCH_N_BUYER']/$result['TOTAL_RFQ_SENT_TO_BOTH']) * 100 : '-' // RFQ to match where buyer also selected divided by PO to match suplier where buyer selected suome suppleirs too?></td>
+		                                <!-- 26. -->
+		                                <td class="percentage">
+		                                	<?php 
+			                                	echo
+												isset($result['RFQ_MATCH']) && $result['RFQ_MATCH'] <> 0 ?
+			                                	@round(
+			                                			(
+			                                					($result['PO_BY_MATCH']
+			                                					/
+			                                					$result['RFQ_MATCH'] * 100)
+			                                			)
+			                                			, 2
+			                                	) : '-';		                                	
+		                                		/*
+			                                	echo
+			                                	@round(
+														(
+				                                			($result['PO_BY_MATCH'] - $result['PO_BY_MATCH_N_BUYER'])
+				                                			/
+				                                			($result['RFQ_MATCH'] - $result['TOTAL_RFQ_SENT_TO_BOTH'])
+														)
+														+
+														(
+															$result['PO_BY_MATCH_N_BUYER']/$result['TOTAL_RFQ_SENT_TO_BOTH'] * 100
+														)
+			                                			, 2
+			                                	);	
+			                                	*/	                                	
+		                                	?>
+		                                </td>
+		                                <!-- 27. -->
+		                                <td class="currency"><?php echo $result['POTENTIAL_SAVINGS']; ?> </td>
+		                                <!-- 28. -->
+		                                <td class="currency last"><?php echo $result['ACTUAL_SAVINGS']; ?> </td>
+									</tr>
+		                        <?php 
+		                        	//}
+		                        }
+		                        ?>
+		                    </tbody>
+		
+		                </table>
+		                <table id="header-fixed"></table>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>

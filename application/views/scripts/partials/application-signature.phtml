@@ -1,0 +1,25 @@
+<?php if($_SERVER['APPLICATION_ENV'] == "development" && isset($_SERVER['FEATURE_THEME']) && $_SERVER['FEATURE_THEME'] != "" ){ ?>
+<!-- 
+--------------------------------------------------------------------------------------------------
+- Application detail
+--------------------------------------------------------------------------------------------------
+
+<?php
+	ob_start();
+	passthru("svn info", $result);
+	$content=ob_get_contents();
+	ob_end_clean();
+	$content = str_replace("URL: ", "", $content);
+	$content = str_replace("Revision: ", "", $content);
+	$content = str_replace("/public", "", $content);
+	$content = str_replace("/public", "", $content);
+	$content = explode("\n", $content);
+	echo $_SERVER['FEATURE_THEME'] . " (main feature)\n";
+	echo "codebase: " . $content[1] . "\n";
+	echo "revision:" . $content[4] . "\n";
+	echo "note: this only appear on DEV only\n";
+?>
+
+--------------------------------------------------------------------------------------------------
+-->
+<?php } ?>

@@ -1,0 +1,13 @@
+{
+    "data":
+	[{
+	    "name": "Decline Reason",
+	    "data": [
+	        ["Don't supply product", 35],
+	        ["Don't supply location", 18],
+	        ["Don't want to supply this buyer", 17],
+	        ["Unable to meet quote or delivery deadline", 18],
+	        ["Other", 12]
+	    ]
+	}]
+}

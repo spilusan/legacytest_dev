@@ -1,0 +1,151 @@
+/*
+Document   : default.scss
+Created on : May 12, 2016, 14:24:15 AM
+Author     : .:Gly:.
+Description: main stylesheet combining default partials
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+@import "font-awesome";
+
+@import "2016_campfire/main/colours";
+@import "2016_campfire/main/tables";
+@import "2016_campfire/main/forms";
+@import "2016_campfire/main/buttons";
+
+body {
+	background: $white;
+
+	main {
+		overflow: scroll;
+	}
+}
+
+#body {
+	width: 100%;
+	display: table;
+	position: relative;
+    margin: 0;
+    padding: 0;
+    /* Fix for IOS */
+    -webkit-text-size-adjust: 100%;
+
+	#sidebar {
+		display: table-cell;
+		float: none;
+		vertical-align: top;
+		margin: 0;
+		padding: 0 20px 0 20px;
+	}
+
+	#content {
+		display: table-cell;
+		width: auto;
+		float: none;
+		vertical-align: top;
+		padding: 0 20px 0 0;
+	}
+}
+
+.buttons {
+	height: 50px;
+	margin: 0 0 10px;
+}
+
+.btn {
+	position: relative;
+	margin-right: 10px;
+	top: 16px;
+}
+
+table {
+	tr {
+		td {
+			&.color {
+				width: 100px;
+				height: 100px;
+
+				&.white {
+					background: $white;
+				}
+
+				&.lt-grey {
+					background: $lt-grey;
+				}
+
+				&.mid-grey {
+					background: $mid-grey;
+				}
+
+				&.highlight-grey {
+					background: $highlight-grey;
+				}
+
+				&.dark-grey {
+					background: $dark-grey;
+				}
+
+				&.text-grey {
+					background: $text-grey;
+				}
+
+				&.light-cyan-blue {
+					background: $light-cyan-blue;
+				}
+
+				&.mid-cyan-blue {
+					background: $mid-cyan-blue;
+				}
+
+				&.cyan-blue {
+					background: $cyan-blue;
+				}
+
+				&.mid-blue {
+					background: $mid-blue;
+				}
+
+				&.link-blue {
+					background: $link-blue;
+				}
+
+				&.dk-navy {
+					background: $dk-navy;
+				}
+
+				&.pink {
+					background: $pink;
+				}
+
+				&.orange {
+					background: $orange;
+				}
+
+				&.red {
+					background: $red;
+				}
+
+				&.green {
+					background: $green;
+				}
+			}
+
+			&.space {
+				width: 15px;
+				background: $white !important;
+			}
+
+			&.text {
+				background: $white !important;
+			}
+		}
+
+		&.hspace {
+			td {
+				height: 15px;
+				background: $white !important;
+			}
+		}
+	}
+}

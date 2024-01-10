@@ -1,0 +1,1188 @@
+/* CSS Document */
+* {margin:0;padding:0}
+/* mac hide \*/
+html,body{height:100%;width:100%;}
+/* end hide */
+/* Body */
+BODY {
+	text-align:center;
+    margin-top: 0px;
+	background-color: #D8D8D8;
+}
+
+/* Header 
+.head {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Black;
+	text-decoration : none;
+}
+
+TABLE.head {
+	width: 100%;
+	border : none;
+}
+
+A:HOVER.head {
+	text-decoration : underline;
+}
+
+/* Footer Y */
+.foot {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Gray;
+	text-decoration : none;
+}
+
+TABLE.foot {
+	width: 100%;
+	border : none;
+}
+
+A:HOVER.foot {
+	text-decoration : underline;
+}
+
+/* Top Navigation (main tabs) 
+
+.nav {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 10pt;
+	color : Black;
+	text-decoration : none;
+}
+
+TD.nav {
+	border-top : 1px solid Black;
+	border-right : 1px solid Black;
+	background : Silver;
+}
+
+A:HOVER.nav {
+	text-decoration : underline;
+}
+
+TD.navOn {
+	background : Black;
+	font : bold;
+	color : White;
+}
+
+/* Second level navigation 
+
+.nav2 {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Silver;
+	text-decoration : none;
+	background : Black;
+}
+
+TABLE.nav2 {
+	width : 100%;
+}
+
+A:HOVER.nav2 {
+	text-decoration : underline;
+}
+
+.nav2On {
+	font : bold;
+	color : White;
+}
+
+/* Document banner */
+
+.bnr {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: bold;
+	font-size: 12pt;
+	color: Black;
+	background-color: Silver;
+}
+
+TABLE.bnr {
+	border: solid 1px Black;
+	table-layout : fixed;
+}
+
+TD.bnr {
+	padding : 2px;
+}
+
+.bnr2 {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: normal;
+	font-size: 8pt;
+	color: Black;
+	background-color: #E0E0E0;
+}
+
+TABLE.bnr2 {
+	border-left: solid 1px Black;
+	border-right: solid 1px Black;
+	border-bottom: solid 1px Black;
+	table-layout : fixed;
+}
+
+TD.bnr2 {
+	padding : 2px;
+}
+
+A:hover.bnr2 {
+   color: #FFFFFF;
+   text-decoration: none;
+   background-color: Black;
+}
+
+/*Canvas/background areas Y */
+
+.canv {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Black;
+	/*background : #FDF5E6;*/
+    
+}
+
+TABLE.canv {
+	width : 100%;
+}
+
+A:HOVER.canv {
+	color: #FFFFFF;
+	background: Black;
+	text-decoration : none;
+}
+
+TD.canvBt {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Black;
+	/*background : #FDF5E6; */
+	border-top: 1px solid Black;
+}
+
+/*List headings*/
+
+.listHd {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Black;
+	background : Silver;
+}
+
+TABLE.listHd {
+	width : 100%;
+}
+
+TD.listHd {
+	border-left : 1px solid Black;
+	border-top : 1px solid Black;
+	border-bottom : 1px solid Black;
+	padding : 2px;
+}
+
+TD.listHdRt {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Black;
+	background : Silver;
+	border-left : 1px solid Black;
+	border-right : 1px solid Black;
+	border-top : 1px solid Black;
+	border-bottom : 1px solid Black;
+	padding : 2px;
+}
+
+
+A:hover.listHd {
+   color: #FFFFFF;
+   text-decoration: none;
+   background-color: Black;
+}
+
+/* List data row (1 table per row)*/
+
+.list {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Black;
+	background : White;
+}
+
+TABLE.list {
+	width : 100%;
+}
+
+TD.list {
+	border-left : 1px solid White;
+	border-bottom : 1px solid Silver;
+	padding : 2px;
+}
+
+A:hover.list {
+   color: #FFFFFF;
+   text-decoration: none;
+   background-color: Black;
+}
+
+/*icons*/
+
+.iconHi {
+   font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+   font-weight: bold;
+   font-size: 8pt;
+   color: #FFFFFF;
+   background-color: #FF0000;
+}
+
+.iconLo {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: normal;
+	font-size: 8pt;
+	color: #FFFFFF;
+	background-color: Gray;
+}
+
+.iconArcv {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: normal;
+	font-size: 8pt;
+	color: #FFFFFF;
+	background-color: Gray;
+}
+
+.iconDrft {
+   font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+   font-weight: normal;
+   font-size: 8pt;
+   color: #FFFFFF;
+   background-color: #008000;
+}
+
+.iconActn {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: bold;
+	font-size: 8pt;
+	color: #FFFFFF;
+	background-color: Black;
+	text-decoration: none;
+}
+
+/*Buttons*/
+
+INPUT.but {
+    font-family: 'MS Sans Serif', 'Arial', 'Helvetica'; 
+    font-size: 8pt;
+	 height: 24px;
+    cursor: hand; 
+}
+
+INPUT.but75 {
+    font-family: 'MS Sans Serif', 'Arial', 'Helvetica'; 
+    font-size: 8pt;
+	 height: 22px;
+    cursor: hand; 
+	width: 75px;
+}
+
+.butSml {
+    font-family: 'MS Sans Serif', 'Arial', 'Helvetica'; 
+    font-weight: bold; 
+    font-size: 8pt; 
+    color: #FFFFFF; 
+    background-color: Black; 
+	text-decoration: none;
+}
+
+INPUT.butBlu { 
+    font-family: 'MS Sans Serif', 'Arial', 'Helvetica'; 
+    font-weight: bold; 
+    font-size: 8pt; 
+    color: #FFFFFF; 
+    cursor: hand; 
+    background-color: Black; 
+	border : 2px outset Silver;
+}
+
+INPUT.butBlu120 { 
+    font-family: 'MS Sans Serif', 'Arial', 'Helvetica'; 
+    font-weight: bold; 
+    font-size: 8pt; 
+    color: #FFFFFF; 
+    cursor: hand; 
+    background-color: Black; 
+	border : 2px outset Silver;
+	width: 120px;
+}
+
+INPUT.butWhi {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: bold;
+	font-size: 8pt;
+	color: Black;
+	cursor: hand;
+	background-color: #FFFFFF;
+	border : 2px outset Silver;
+}
+
+INPUT.butSml {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: normal;
+	font-size: 8pt;
+	color: Black;
+	cursor: hand;
+	background-color: #D6D3CE;
+	border : 2px outset;
+	width: 20px;
+}
+
+/*Form areas - data entry and read-only Y */
+
+.form {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: normal;
+	font-size: 8pt;
+	color: Black;
+	background-color: Silver;
+}
+
+TABLE.form {
+	border: solid 1px Black;
+	table-layout : fixed;
+}
+
+TD.form {
+	padding : 2px;
+}
+
+A:hover.form {
+   color: #FFFFFF;
+   text-decoration: none;
+   background-color: Black;
+}
+
+TD.formHd {
+	border-bottom : 1px solid Black;
+	font : bold;
+	padding : 2px;
+}
+
+TD.formHdInp {
+	border-bottom : 1px solid Black;
+}
+
+.formRd {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: normal;
+	font-size: 8pt;
+	color: Black;
+	background-color: #E0E0E0;
+}
+
+TD.formRd {
+	padding : 2px;
+	border-left : 1px solid Gray;
+	border-right : 1px solid Gray;
+	border-bottom : 1px solid Gray;
+	background : #E0E0E0;
+	word-wrap: break-word;
+}
+
+A:hover.formRd {
+   color: #FFFFFF;
+   text-decoration: none;
+   background-color: Black;
+}
+
+TD.formRdB {
+	padding : 2px;
+	border-bottom : 1px solid Gray;
+	background : #E0E0E0;
+}
+
+TD.formRdT {
+	padding : 2px;
+	border : 1px solid Gray;
+	background : #E0E0E0;
+}
+
+.formTop {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: bold;
+	font-size: 8pt;
+	color: Black;
+	background-color: Silver;
+}
+
+TABLE.formTop {
+	border-top: solid 1px Black;
+	border-left: solid 1px Black;
+	border-right: solid 1px Black;
+	border-bottom: none;
+	padding : 2px;
+	table-layout : fixed;
+}
+
+/*Home (login) page Main Box for Buyer Include File Y */
+
+.home {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: normal;
+	font-size: 8pt;
+	color: #606060;
+	background-color: White;
+}
+
+TABLE.home {
+	border: solid 1px Black;
+	table-layout : fixed;
+}
+
+TD.home {
+	padding : 2px;
+}
+
+A:hover.home {
+   color: #FFFFFF;
+   text-decoration: none;
+   background-color: #606060;
+}
+
+/* Helper popup */
+
+.help {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: normal;
+	font-size: 8pt;
+	color: #515151;
+	background-color: #FFFACD;
+}
+
+TABLE.help {
+	border: 2px ridge;
+}
+
+TD.help {
+	padding : 5px;
+	border: none;
+}
+
+A:hover.help {
+   color: #FFFACD;
+   text-decoration: none;
+   background-color: #515151;
+}
+
+/*Popup dialogue box (accept/decline) */
+
+.popup {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: normal;
+	font-size: 8pt;
+	color: Black;
+	background-color: Silver;
+}
+
+TABLE.popup {
+	border: 2px ridge;
+	table-layout : fixed;
+}
+
+TD.popup {
+	padding : 2px;
+}
+
+A:hover.popup {
+   color: #FFFFFF;
+   text-decoration: none;
+   background-color: Black;
+}
+
+TD.popupHd {
+	border-bottom : 1px solid Black;
+   color: #FFFFFF;
+   background-color: Black;
+	font : bold;
+	padding : 2px;
+}
+
+/*ShipServ banner Y */
+
+.banner {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: normal;
+	font-size: 8pt;
+	color: #606060;
+	background-color: White;
+}
+
+TABLE.banner {
+	border: solid 1px Black;
+	table-layout : fixed;
+}
+
+TD.banner {
+	padding : 2px;
+}
+
+TD.bannerBlu {
+	padding : 2px;
+	background-color: #A8D1E5;
+}
+
+A:hover.banner {
+   color: #FFFFFF;
+   text-decoration: none;
+   background-color: #606060;
+}
+
+/* Form inputs */
+
+.inp {
+	background : White;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;
+}
+
+.inpRd {
+	background : #D6D3CE;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;
+}
+
+
+SELECT.inp {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';  /*Arial is slightly taller resulting un full size arrow*/
+}
+
+.inp200 {
+	background : White;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;
+}
+
+INPUT.inp200 {
+	width : 200px;
+}
+
+TEXTAREA.inp200 {
+	width : 200px;
+}
+
+TEXTAREA.inp {
+    width: 280px;
+}
+
+.inpDesc {
+	background : White;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;
+}
+
+TEXTAREA.inpDesc {
+	width : 313px;
+	height: 30px;
+}
+
+.inpCmnt {
+	background : White;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;
+}
+
+INPUT.inpCmnt {
+	width : 190px;
+}
+
+.inp566 {
+	background : White;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;
+}
+
+TEXTAREA.inp566 {
+	width : 566px;
+}
+
+/* Line item tables (1 table per item) */
+
+.item {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Black;
+	background : #F0F0F0;
+}
+
+.item2 {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Black;
+	background : #E0E0E0;
+}
+
+TABLE.item {
+	width : 100%;
+	table-layout : fixed;
+	}
+
+TABLE.item2 {
+	width : 100%;
+	table-layout : fixed;
+}
+
+TD.item {
+	border-left : 1px solid #F0F0F0;
+	padding : 2px 2px 5px 2px;
+}
+
+TD.item2 {
+	border-left : 1px solid #E0E0E0;
+	padding : 2px 2px 5px 2px;
+}
+
+TD.itemLft {
+	border-left : 1px solid Black;
+	padding : 2px;
+	}
+
+TD.itemLft2 {
+	border-left : 1px solid Black;
+	padding : 2px;
+}
+
+A:hover.item {
+   color: #FFFFFF;
+   text-decoration: none;
+   background-color: Black;
+}
+
+A:hover.item2 {
+   color: #FFFFFF;
+   text-decoration: none;
+   background-color: Black;
+}
+
+TD.itemInp {
+	border-left : 1px solid #F0F0F0;
+	padding : 1px 1px 5px 1px;
+}
+
+TD.itemInp2 {
+	border-left : 1px solid #E0E0E0;
+	padding : 1px 1px 5px 1px;
+}
+
+TD.itemInpRt {
+	border-left : 1px solid #F0F0F0;
+	border-right : 1px solid Black;
+	padding : 1px 1px 5px 1px;
+}
+
+TD.itemInpRt2 {
+	border-left : 1px solid #E0E0E0;
+	border-right : 1px solid Black;
+	padding : 1px 1px 5px 1px;
+}
+
+TD.itemRdRt {
+	border-left : 1px solid #F0F0F0;
+	border-right : 1px solid Black;
+	padding : 2px;
+}
+
+TD.itemRdRt2 {
+	border-left : 1px solid #E0E0E0;
+	border-right : 1px solid Black;
+	padding : 2px;
+}
+
+/* Line-item Comment */
+
+.itemCmnt {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: normal;
+	font-size: 8pt;
+	color: Black;
+	background-color: #F0F0F0;
+}
+
+TABLE.itemCmnt {
+	width : 100%;
+	table-layout : fixed;
+	border : 1px solid Gray;
+	padding : 2px;
+}
+
+TD.itemCmntInp {
+	padding : 0px;
+}
+
+.itemCmnt2 {
+	font-family: 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-weight: normal;
+	font-size: 8pt;
+	color: Black;
+	background : #E0E0E0;
+}
+
+TABLE.itemCmnt2 {
+	width : 100%;
+	table-layout : fixed;
+	border : 1px solid Gray;
+	padding : 2px;
+}
+
+/*Line item header rows*/
+
+.itemHd {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Black;
+	background : Silver;
+}
+
+TABLE.itemHd {
+	width : 100%;
+	table-layout : fixed;
+}
+
+TD.itemHd {
+	padding : 2px;
+	border-left : 1px solid Black;
+	border-top : 1px solid Black;
+	border-bottom : 1px solid Black;
+}
+
+TD.itemHdRt {
+	padding : 2px;
+	border-right : 1px solid Black;
+	border-top : 1px solid Black;
+	border-bottom : 1px solid Black;
+}
+
+TD.itemHdRtInp {
+	padding : 1px;
+	border-right : 1px solid Black;
+	border-top : 1px solid Black;
+	border-bottom : 1px solid Black;
+}
+
+TD.itemHd2 {
+	padding : 2px;
+	border-left : 1px solid Black;
+	border-bottom : 1px solid Black;
+}
+
+TD.itemHd2Inp {
+	padding : 1px;
+	border-left : 1px solid Black;
+	border-bottom : 1px solid Black;
+}
+
+TD.itemHd2Rt {
+	padding : 2px;
+	border-left : 1px solid Black;
+	border-right : 1px solid Black;
+	border-bottom : 1px solid Black;
+}
+
+/* Line-item footer rows */
+
+.itemFt {
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size : 8pt;
+	color : Black;
+	background : Silver;
+}
+
+TABLE.itemFt {
+	width : 100%;
+	table-layout : fixed;
+}
+
+TD.itemFt {
+	border-left : 1px solid Black;
+	padding : 2px;
+}
+
+TD.itemFtInp {
+	border-left : 1px solid Black;
+	padding-left : 2px;
+}
+
+TD.itemFtTp {
+	border-top : 1px solid Black;
+	border-left : 1px solid Black;
+	padding : 2px;
+}
+
+TD.itemFtBt {
+	border-left : 1px solid Black;
+	border-top : 2px solid Black;
+	border-bottom : 1px solid Black;
+	padding : 2px;
+}
+
+TD.itemFtBtMd {
+	border-top : 2px solid Black;
+	border-bottom : 1px solid Black;
+	padding : 2px;
+}
+
+TD.itemFtBtRt {
+	border-left : 1px solid Gray;
+	border-right : 1px solid Black;
+	border-top : 2px solid Black;
+	border-bottom : 1px solid Black;
+	padding : 2px;
+	background : #F0F0F0;
+}
+
+TD.itemFtRt {
+	padding : 2px;
+	border-left : 1px solid Gray;
+	border-right : 1px solid Black;
+	border-bottom : 1px solid Gray;
+	background : #F0F0F0;
+}
+
+TD.itemFtRtInp {
+	border-left : 1px solid Gray;
+	border-right : 1px solid Black;
+	background : #F0F0F0;
+}
+
+TD.itemFtRtTp {
+	padding : 2px;
+	border-top : 1px solid Black;
+	border-left : 1px solid Gray;
+	border-right : 1px solid Black;
+	border-bottom : 1px solid Gray;
+	background : #F0F0F0;
+}
+
+TD.itemFtRtTpInp {
+	border-top : 1px solid Black;
+	border-left : 1px solid Gray;
+	border-right : 1px solid Black;
+	border-bottom : 1px solid Gray;
+	background : #F0F0F0;
+}
+
+INPUT.inpQty {
+	background : White;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;
+	width : 54px;
+}
+
+INPUT.inpDesc {
+	background : White;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;
+	width : 453px;
+}
+
+INPUT.inpPr {
+	background : White;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;
+	width : 72px;
+	text-align: right;
+    padding-right:2px;
+}
+
+INPUT.inpCalc {
+	background : #F0F0F0;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;
+	width : 72px;
+	border: 2px solid #F0F0F0;
+	text-align: right;
+}
+
+INPUT.inpCalcBld {
+	background : #F0F0F0;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;
+	width : 87px;
+	border: 2px solid #F0F0F0;
+	text-align: right;
+	font-weight: bold;
+}
+
+INPUT.inpCalc2 {
+	background : #E0E0E0;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;
+	width : 72px;
+	border: 2px solid #E0E0E0;
+	text-align: right;
+}
+
+FORM {
+	display : inline;
+}
+
+#cal {
+	position:absolute;
+	visibility:hidden;
+	top:250;
+	left:370;
+}
+
+INPUT.customerid {
+	background : #c0c0c0;
+	font-family : 'MS Sans Serif', 'Arial', 'Helvetica';
+	font-size: 8pt;
+	color: Black;	
+	border: 2px solid #c0c0c0;
+	text-align: left;
+}
+
+.announcement{
+	left: 749px;
+	position:absolute;
+	top: 13px;
+	width:247px
+}
+
+/******4 mpu ads *****/
+
+/****** view *****/
+#content-view{
+    width:100%;
+    display:table;
+}
+
+#container-view {
+	text-align:center;
+    display:table-cell;
+}
+
+#inner-view {
+    width: 1000px;text-align:center;margin-left:auto;margin-right:auto;
+}
+
+#inner-view-large {
+    width: 1155px !important;
+    width: 1170px;
+    text-align: left;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+
+.rfq-4ads{
+    margin-top:12px;
+    position:relative;
+    float:left;
+	margin-left:20px;
+    width:179px;
+    top:0px;
+    z-index:2
+}
+
+.rfq-4ads-banner{
+    padding-bottom:20px
+}
+
+#rfq{
+    /*position:relative;*/
+    float:left;
+    width: 720px;
+    padding-bottom:0px;
+    z-index:15
+}
+
+#rfq2{
+    float:left;
+    width: 926px;
+    padding-bottom:0px;
+    z-index:15
+}
+
+#rfq-large{
+    float:left;
+    /*position:relative;*/
+    width: 940px !important;
+    width: 700px;
+    padding-bottom:0px;
+    z-index: -1
+}
+
+.box-header {
+	background-image:url(/start/resources/images/top_bg.jpg);
+	background-position:top;
+	background-repeat:repeat-x;
+	text-align:center;
+	width:100%;
+	height: 132px;
+	z-index:77
+}
+
+.box-header-logo {
+	text-align:left;
+	height: 104px;
+	width: 1009px;
+	margin-left:auto;
+	margin-right:auto;
+	z-index:88
+}
+
+.header-logo{
+	position:absolute;
+	z-index:99;
+	width:280px
+}
+
+.banner-Ads{
+	position:relative;
+	width:1009px;
+	z-index:88;
+	top:13px	
+}
+
+/***** footer *****/
+#outer-footer{
+	width:100%;
+	height:64px;
+	display:table;
+	vertical-align:middle;
+}
+#container-footer {
+	text-align: center;
+	height:64px;
+	position:relative;
+	vertical-align:middle;
+	display:table-cell;
+}	
+#inner-footer {
+	width: 1000px;
+	height:64px;	
+	text-align: center;
+	margin-left:auto;
+	margin-right:auto;
+	vertical-align:middle;
+}
+
+.footer-login-text{
+	text-align: left;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #747474
+}
+
+.footer-login-text A{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #747474;
+	text-decoration:underline
+}
+
+.footer-login-text A:active{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #747474;
+	text-decoration:underline
+}
+
+.footer-login-text A:link{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #747474;
+	text-decoration:underline
+}
+.footer-login-text A:visited{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #747474;
+	text-decoration:underline
+}
+.footer-login-text A:hover{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #64a6d9;
+	text-decoration:underline
+}
+
+/****** Leaderboard Adslot *****/
+#outer-leaderboard{
+	width:100%;
+	display:table;
+    background-color:#01488A;
+}
+#container-leaderboard {
+	text-align: center;
+	display:table-cell;
+}	
+#inner-leaderboard {
+	width: 1000px;
+	text-align: center;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+/****** shadow effect *****/
+#content-shadow{
+    height:23px;
+    width:100%;
+    display:table;
+	background-image: url(/start/resources/images/login_bg_shadow.jpg)
+}
+
+#container-shadow {
+	text-align:center;
+    position:relative;
+    display:table-cell;
+}
+
+#inner-shadow {
+    width: 979px;text-align:center;margin-left:auto;margin-right:auto;
+}
+
+
+#outer-mpu{
+	width:100%;
+	display:table;
+	/*vertical-align:middle;*/
+}
+#container-mpu {
+	text-align: center;
+	position:relative;
+	/*vertical-align:middle;*/
+	display:table-cell;
+}	
+#inner-mpu {
+	width: 979px;
+	text-align: center;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+.mpu-banner1{
+	width:300px;padding-left:19px; height:250px;position:relative;float:left
+}
+
+.mpu-banner2{
+	width:300px; height:250px;position:relative;float:left;margin-left:30px
+}
+
+.mpu-banner3{
+	width:300px; height:250px;position:relative;float:right
+}

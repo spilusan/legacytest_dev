@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if egrep -qs "(^| )(\w{3,5}\-[0-9]{1,}|hotfix|Hotfix|HOTFIX|hot fix|Merge branch)($| |:)" $1; then 
+	echo "ok";
+else
+	echo "------- ERROR: You need to declare a Jira key in your commit message --------";
+	exit 1;
+fi;
+
+
+

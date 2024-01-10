@@ -1,0 +1,28 @@
+<?php
+    $this->headLink()->appendStylesheet('/css/uniform.default.new.css');
+    $this->headLink()->appendStylesheet('/css/profile/promoLanding.css');
+
+    $breadcrumbs = array(array('name' => 'Home',
+                               'url'  => '/search'),
+                         array('name' => 'Profile',
+                               'url'  => '/profile'),
+                         array('name' => 'Set Active Promotion Status',
+                               'url'  => '/profile/active-promo-landing'));
+    $this->getHelper('Requirejs')->addModule('backbone/profile/targetCustomers/views/landing')
+                                  ->addDefinition('profile/targetCustomers/supplierId', $this->data['spbBranchCode'])
+                                  ->addDefinition('profile/targetCustomers/buyerId', $this->data['bybBranchCode']);
+
+    $relationshipName = ($this->params['relationship'] == 'excluded') ? 'Exclude' : 'Active Promotion';
+    $targetingUserName = ($this->params['targetingUser']->firstName . $this->params['targetingUser']->lastName == '' ) ? explode('@',$this->params['targetingUser']->username)[0] : $this->params['targetingUser']->firstName . ' ' .$this->params['targetingUser']->lastName;
+?>
+<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+<div id="body">
+    <h1 class="styled">Active Promotion Status already set</h1>
+    <div id="content">
+            <div class="messageBox">
+              <p>This Active Promotion status for this customer has already been set to <b>&quot;<?= $relationshipName ?>&quot;</b> by <span class="lgBlue"><?= $targetingUserName ?></span> at <?= $this->params['validFrom']->format('H:i:s') ?> on <?= $this->params['validFrom']->format('d M Y') ?></p>
+              <br />
+            <a class="button medium green"href="/profile/target-customers/type/v/id/<?= $this->params['supplierid'] ?>/?tab=<?= ($this->params['relationship'] == 'targeted') ? 'promo' : 'exclude'; ?>">View Active Promotion Settings</a>
+            </div>
+    </div>
+</div>

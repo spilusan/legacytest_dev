@@ -1,0 +1,198 @@
+<?php
+/**
+ * A partial view for tag.phtml displaying the search results
+ *
+ * @author  Yuriy Akopov
+ * @date    2013-09-27
+ */
+foreach ($this->results as $feedType => $feedData) {
+    $feedCount = lg_count($feedData);
+    ?>
+    <a name="feed_<?php echo $feedType; ?>"></a>
+    <h3><?php echo $this->feedTypes[$feedType]; ?> (<?php echo $feedCount; ?>)</h3>
+    <?php
+
+    if ($feedCount === 0) {
+        continue;
+    }
+
+    foreach ($feedData as $index => $result) {
+        $position = $index + 1;
+        ?>
+        <a name="supplier_<?php echo $result['tnid']; ?>"></a>
+
+        <div class="supplier feed_<?php echo $feedType; ?> <?php if ($result['original']) { ?>original_supplier<?php } ?>">
+
+            <div class="supplier_name">
+                <div style="float: left; margin-right: 5px;">
+                    <div style="width: 25px; display: inline-block;">
+                        <strong><?php echo $position; ?>.</strong>
+                    </div>
+
+                    <?php if (!$result['original']) { ?>
+                    <input
+                        type="checkbox"
+                        class="supplier_checkbox"
+                        supplierId="<?php echo $result['tnid']; ?>"
+                        supplierTitle="<?php echo htmlentities($result['name']); ?>"
+                        supplierPosition="<?php echo $position; ?>"
+                        matchScore="<?php echo $result['score']; ?>"
+                        matchComment="<?php echo htmlentities($result['comment']);?>"
+                    />
+                    <?php } ?>
+                </div>
+                <div style="float: left; word-wrap: break-word; width: 550px;">
+                    <a target="_blank" href="<?php echo $result['url']; ?>">
+                        <?php echo htmlentities($result['name']); ?>
+                    </a>
+                    <?php if ($result['original']) { ?>
+                        <a href="#orig_supplier_<?php echo $result['tnid']; ?>" title="Go to original supplier list">&#8680;</a>
+                    <?php } ?>
+
+                    <br/><span style="margin-top: 10px; font-size: 85%;"><?php echo htmlentities($result['address_short']); ?></span>
+                </div>
+                <div style="clear: both;"></div>
+
+                <div style="font-size: 10pt; margin-top: 10px;">
+                    <div style="width: 25px; display: inline-block;"></div>
+                    <?php   // commented out as we don't need an option of amending the stored search feeds yet
+                    /*
+                    <input
+                        type="checkbox"
+                        class="supplier_at_risk_checkbox"
+                        <?php if ($result['at_risk']) { ?>checked="checked" originallyAtRisk="true" <?php } ?>
+                        supplierId="<?php echo $result['tnid']; ?>"
+                    >
+                    */ ?>
+                    <?php if ($result['at_risk']) { ?>
+                        <span class="at_risk">Supplier is at risk of churn</span>
+                    <?php } ?>
+                </div>
+            </div>
+
+            <div class="supplier_info_left">
+                <h3>Supplier properties:</h3>
+
+                <div class="supplier_properties">
+                    <table>
+                        <tr>
+                            <td class="label">Match Score:</td>
+                            <td class="figure"><?php echo $result['score']; ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">TradeNet ID:</td>
+                            <td class="figure"><?php echo $result['tnid']; ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Country:</td>
+                            <td class="figure"><?php echo $result['location']; ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Contact:</td>
+                            <td class="figure"><?php echo implode('<br/>', $result['address']); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Monetisation %:</td>
+                            <td class="figure"><?php echo (strlen($result['monetisation']) ? sprintf('%.3f', $result['monetisation']) . '%' : 'N/A'); ?></td>
+                        </tr>
+                        <tr>
+                            <td class="label">Categories (<?php echo lg_count($result['categories']); ?>):</td>
+                            <td class="figure">
+                                <?php
+                                if (lg_count($result['categories']) > 0) {
+                                    $maxDisplayCategories = 20;
+                                    if (lg_count($result['categories']) >= $maxDisplayCategories) {
+                                        $loopCategories = array_slice($result['categories'], 0, $maxDisplayCategories);
+                                    } else {
+                                        $loopCategories = $result['categories'];
+                                    }
+
+                                    foreach ($loopCategories as $category) {
+                                        echo $category['NAME'] . "<br/>";
+                                    }
+
+                                    if (lg_count($result['categories']) > $maxDisplayCategories) {
+                                        ?>...<?php
+                                    }
+                                } else {
+                                    ?>N/A<?php
+                                }
+                                ?>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>Supplier stats:</h3>
+                <div class="supplier_stats supplier_stats_<?php echo $result['tnid']; ?>" supplierId="<?php echo $result['tnid']; ?>" buyerId="<?php echo $this->rfqBuyerId; ?>">
+                    <img class="loader" src="/images/longloader.gif">
+                </div>
+            </div>
+
+            <div class="supplier_info_right">
+                <?php
+                $lines = explode(';', $result['comment']);
+                ?>
+                <h3>Matched keywords (<?php echo lg_count($lines); ?>):</h3>
+                <div class="matched_info matched_info">
+                    <ul>
+                        <?php foreach ($lines as $line) { ?>
+                            <li><?php echo $line; ?></li>
+                        <?php } ?>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="breaker"></div>
+        </div>
+
+        <?php
+    }
+}
+?>
+
+<script>
+    function loadSupplierStats(container) {
+        var supplierId = container.attr('supplierId');
+        var buyerId = container.attr('buyerId');
+
+        container.html('<img class="loader" src="/images/longloader.gif">');
+
+        $.ajax({
+            type:   'GET',
+            url:    '/match/supplier_stats',
+            data:   'supplierId=' + supplierId + '&buyerId=' + buyerId
+        }).done(function(response) {
+            var htmlStats = '<table><tbody>';
+
+            $.each(response, function(key, item) {
+                htmlStats += '<tr>';
+                htmlStats += '<td class="label">' + item.label + '</td>';
+                htmlStats += '<td class="figure">' + item.value + '</td>';
+                htmlStats += '</tr>';
+            });
+
+            htmlStats += '</tbody></table>'
+
+            container.html(htmlStats);
+            container.off('click');
+        }).fail(function(response) {
+            container.html('Failed to load stats, click to try again');
+            container.click(function(event) {
+                loadSupplierStats(container);
+            });
+        });
+    }
+
+    $(document).ready(function() {
+        $('div.supplier_stats').each(function(index, element) {
+            var container = $(element);
+            var delay = Math.ceil(Math.random() * 3 * 1000); // 0-3 secs
+
+            window.setTimeout(function() {
+                loadSupplierStats(container);
+            },
+            delay);
+        });
+    });
+</script>

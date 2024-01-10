@@ -1,0 +1,131 @@
+<?php 
+	$supplierName = trim($this->supplierName);
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Pages RFQs</title>
+		<style type="text/css">
+		
+			#outlook a { padding:0; } /* Force Outlook to provide a "view in browser" button. */
+			body { width:100% !important; } /* Force Hotmail to display emails at full width */
+			body { -webkit-text-size-adjust:none; } /* Prevent Webkit platforms from changing default text sizes. */		
+		
+			/* Reset Styles */
+			body { margin:0; padding:0; }
+			#container { margin:0; padding:0; width:700px !important; }
+			/*-*/
+		
+			body, #container { color: #2e3235; font-size: 12px; font-family: Arial, sans-serif; font-weight: normal; }
+			p, h1, h2, div, td { font-family: Arial, sans-serif; font-weight: normal; padding: 0; margin: 0; }
+			table { margin: 0; border: 0; padding: 0; }
+			td{ padding:10px; }
+			a { text-decoration: none; }
+		
+			h1.dear { font-size: 17px; font-weight: bold; color: #13b5ea; }
+			h2 { font-size: 16px; font-weight: bold; color: #2e3235; }
+			p.intro { font-size: 15px; margin-bottom: 20px; line-height: 1.1em; line-height:1.5; }
+			ul.points, ul.points li { /*list-style-position: inside;*/ margin: 0; text-align: left; }
+			ul.points { margin-left:20px; margin-top: 20px; margin-bottom: 20px; }
+			ul.points li { margin-bottom: 5px; padding: 0px; font-weight:bold; font-size:15px; }
+			p.footer {  }
+			p.footer ul.small-points li { font-size:12px; color: #939ba1; }
+			div.dotted { border-bottom: 1px dotted #333333; height: 1px; width: 358px; margin: 20px auto; }
+		</style>
+
+		<!--[if gte mso 9]>
+		<style type="text/css">
+			ul.points { margin-left: 5px; }
+			ul.points li { padding: 0; margin-left: 14px; }
+		</style>
+		<![endif]-->
+
+	</head>
+
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+		<table id="container" border="0" cellpadding="0" cellspacing="0" width="700">
+			
+			<tr valign="middle">
+				<td>
+					
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<p class="intro">
+						<?php if($this->supplierType == 'STARTSUPPLIER'){?>
+						<h1 class="dear">Dear ShipServ StartSupplier,</h1>
+						<br />
+						We are writing to inform you that from 29th Oct you will start receiving both Pages and TradeNet RFQs from ShipServ buyers in your StartSupplier notification emails.<br />
+						<br />
+						This means that you will be able to receive and respond through StartSupplier to all your RFQs ensuring that you do not miss out on any business leads.<br />
+						<br />
+						To respond to the RFQ you just need to click on the link as previously and sign in to your StartSupplier account. We have set up a dedicated FAQ section to help explain the change in further detail. Please click below: <br /><br /><a href="https://www.shipserv.com/help/sellerfaq#22">https://www.shipserv.com/help/sellerfaq#22</a><br />
+						<br /> 
+						Please remember if you want to block a buyer for any reason just log in to your Pages account and maintain the blocked list from there.  To find out more about blocking a buyer please click here: <a href="https://www.shipserv.com/help/sellerfaq/maximise">https://www.shipserv.com/help/sellerfaq#17</a>.<br />
+						<br />
+						If you have any questions about the changes to your RFQ notification emails please do not hes itate to contact a member of the ShipServ Customer Support Team at <a href="mailto:support@shipserv.com">support@shipserv.com</a><br />
+						<?php }else if($this->supplierType == 'SMARTSUPPLIER'){?>
+						<h1 class="dear">Dear ShipServ SmartSupplier,</h1>
+						<br />
+						We are writing to inform you that from 29th Oct you will start receiving both Pages RFQs  and TradeNet RFQs from ShipServ buyers in your SmartSupplier Inbox.<br /> 
+						<br />
+						This means that you will be able to receive and respond through SmartSupplier to all RFQs ensuring that you do not miss out on any business leads.<br />
+						<br />
+						The screenshot below highlights how the ShipServ Pages RFQs will be displayed in your SmartSupplier and you respond just the same way you would any other RFQ.<br /> 
+						<br />
+						<img src="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/img/email/smart-supplier-screenshot.gif" /><br />
+						<br />
+						We have also set up a dedicated FAQ section to help explain the change in further detail. Please click below: <br /><br /><a href="https://www.shipserv.com/help/sellerfaq#23">https://www.shipserv.com/help/sellerfaq#23</a><br /> 
+						<br />
+						Please remember if you want to block a buyer for any reason just log in to your Pages account and maintain the blocked list from there.  To find out more about blocking a buyer please click here: <a href="https://www.shipserv.com/help/sellerfaq/maximise">https://www.shipserv.com/help/sellerfaq#17</a>.<br />
+ 						<br />
+ 						If you have any questions about the addition of Pages RFQs please do not hesitate to contact a member of the ShipServ Customer Support Team at <a href="mailto:support@shipserv.com">support@shipserv.com</a><br />
+						<?php } else if( $this->supplierType == "PAGES"){?>
+							<?php 
+								if( $this->data['ENABLED_PRODUCT'] == "STARTSUPPLIER")
+								{
+									?>
+										<h1 class="dear">Dear ShipServ Pages User,</h1>
+										<br />
+										In order to improve the service we offer to our customers, we will now combine both Pages and TradeNet RFQs sent by ShipServ buyers into your StartSupplier solution.<br />
+										<br /> 
+										This means you will no longer receive Pages RFQ to this email address from 29th Oct and all future RFQs will be sent to the registered StartSupplier email address stated below:<br />
+										<br /> 
+										<?= $this->data['NEW_EMAIL_RECIPIENT']?><br />
+										<br />
+										<br /> 
+										If you would like to change this address, please contact our customer service on <a href="mailto:support@shipserv.com">support@shipserv.com</a><br />
+									<?php 
+								}
+								else if( $this->data['ENABLED_PRODUCT'] == "SMARTSUPPLIER")
+								{
+									?>
+										<h1 class="dear">Dear ShipServ Pages User,</h1>
+										<br />
+										In order to improve the service we offer to our customers, we will now combine both Pages and TradeNet RFQs sent by ShipServ buyers into your SmartSupplier solution.<br />
+										<br /> 
+										This means you will no longer receive Pages RFQ to this email address from 29th Oct and all future RFQs can be seen by your company’s registered SmartSupplier user in their SmartSupplier Inbox.<br />
+										<br /> 
+										Your company’s registered SmartSupplier user is:<br />
+										<br /> 
+										<?= $this->data['NEW_EMAIL_RECIPIENT']?><br />
+										<br />
+										If you would like to change this address, please contact our customer service on <a href="mailto:support@shipserv.com">support@shipserv.com</a><br />
+									<?php
+								}
+							?>
+						<?php }?>
+						<br />
+						Best Regards,<br />
+						<br />
+						<br />
+						ShipServ
+						
+					</p>
+				</td>
+			</tr>
+			</table>
+	</body>
+</html>

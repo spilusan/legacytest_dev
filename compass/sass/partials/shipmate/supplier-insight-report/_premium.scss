@@ -1,0 +1,47 @@
+/*
+ * Specific CSS rules for Premium supplier in Supplier Insight report
+ *  Only the differences from basic layout
+ */
+
+#body {
+  #content {
+    #report_content {
+      .userTypeLabel {
+        &.premium {
+          background-color: #ecf9ff;
+          border: 1px solid #21b4e9;
+
+          span {
+            width: 178px;
+            font-weight: bold;
+            font-size: 20px;
+            background-color: #3eccfd;
+            color: #032b54;
+
+            i.fa-check {
+              vertical-align: sub;
+              color: white;
+              font-size: 34px;
+              margin-right: 6px;
+            }
+          }
+
+          p {
+            color: #333333;
+            font-size: 17px;
+            padding: 0px 12px;
+            line-height: 60px;
+          }
+        }
+      }
+
+      .description {
+        &.premium {
+          background-color: #f6f5d8;
+          border: 1px solid #9ba8ba;
+          color: #333;
+        }
+      }
+    }
+  }
+}

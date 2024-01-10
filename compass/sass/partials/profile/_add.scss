@@ -1,0 +1,52 @@
+/*
+Document   : _add
+Created on : Jun 14, 2012, 10:09:21 AM
+Author     : gly
+Description: Profile add blocks
+*/
+
+#add-company-block {
+    .input-wrapper-sm {
+        background:url(/images/layout_v2/profile/input-bg-451.png) no-repeat;
+        width:445px;
+        height:28px;
+        padding:7px 6px;
+        
+        input {
+            display:block;
+            border:none;
+            font-weight:700;
+            font-size:13px;
+            height:21px;
+            width:439px;
+            border-color:transparent;
+            margin:0;
+            padding:0;
+        }
+    }
+}
+
+#add-people-block {
+    .profile-body-group {
+        input[type="text"] {
+            background:url(/images/layout_v2/profile/add-person-input.png) no-repeat;
+            width:288px;
+            height:35px;
+            border:none;
+            font-weight:700;
+            font-size:13px;
+            border-color:transparent;
+            margin:0;
+            padding:0 10px;
+            margin-bottom: 15px;
+        }
+        
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+    }
+}
+
+div.zz.header div.zz.medium.button {
+    margin-top: 5px;
+}

@@ -1,0 +1,100 @@
+/*
+Document   : profile
+Created on : Jun 14, 2012, 9:02:59 AM
+Author     : gly
+Description: Profile stylesheet combining Profile partials
+*/
+
+@import "compass/css3";
+
+@import "partials/def/modal_new";
+/*@import "partials/def/cloud_list";*/
+@import "partials/def/autocomplete";
+@import "partials/def/autocomplete-new";
+
+@import "partials/def/forms";
+
+@import "partials/profile/general";
+@import "partials/profile/body";
+@import "partials/profile/add";
+@import "partials/profile/buttons";
+@import "partials/profile/misc";
+@import "partials/profile/approval";
+@import "partials/profile/review";
+@import "partials/profile/icons";
+@import "partials/profile/sub";
+@import "partials/profile/box";
+@import "partials/profile/search";
+@import "partials/profile/messages";
+@import "partials/profile/menu";
+@import "partials/profile/table";
+@import "partials/def/left_nav";
+
+#main_content_area {
+	width: 960px;
+	margin: 0 0 0 0;
+}
+
+.profile-body-right .profileContent {
+	padding-top: 0;
+}
+
+div.matchLevelHolder, div.miscHolder {
+	/*display: none;*/
+}
+
+ul.matchSupplierDisplay, ul.forwardSupplierDisplay {
+	position: relative;
+}
+
+input[name="supplierWhitelist"], input[name="supplierBlacklist"]{
+	width: 350px;
+	margin-top: 5px;
+}
+
+.spinnerMatch, .spinnerFwd, .spinnerSave {
+	position: relative;
+	left: 7px;
+	top: 7px;
+	width: 20px;
+	height: 20px;
+	background: url(/images/layout_v2/file_icons/spinner.gif) no-repeat scroll 0 0 transparent;
+	display: inline-block;
+	display: none;
+}
+
+.spinnerMatch, .spinnerFwd {
+	top: 5px;
+}
+
+.profile-body-right .profileContent h3.blacklistTitle {
+	//margin-top: 15px;
+	//padding-top: 15px;
+	display: block;
+	//border-top: 1px solid #d6dce4;
+}
+
+body p.savedMsg {
+	display: none;
+	text-align: center;
+	margin-bottom: 10px;
+	font-size: 16px;
+	color: #008b00;
+}
+
+hr {
+	border: 0;
+	border-top:1px solid #d6dce4;
+	margin:15px 0px;
+	
+}
+
+div.radio {
+	top: 0;
+}
+
+div.subnav > ul a:hover {
+	text-decoration: none;
+}
+//Item selector component
+@import "partials/itemselector/selector";

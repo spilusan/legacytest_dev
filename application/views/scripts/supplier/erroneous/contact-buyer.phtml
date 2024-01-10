@@ -1,0 +1,12 @@
+<? $this->headLink()->appendStylesheet('/css/erroneous-trans-landing.css'); ?>
+<div id="body">
+   <div id="content" class="size1">
+        <h1 class="styled">Purchase Order decline confirmation</h1>    
+        <div class="inner_content">
+            <?php echo $this->partial('erroneous/header.phtml', array('response' => $this->response, 'display' => 'buyer')) ?>
+            <div class="greenInfo"><i class="fa fa-check-square"></i>The Purchase order has now ben declined</div>
+            <a href="/" class="homePageBtn">Go to Homepage</a>
+            <?php //echo $this->partial('erroneous/line-items.phtml', array('data' => $this->response['rows'])) ?>
+       </div>        
+	</div>
+</div>

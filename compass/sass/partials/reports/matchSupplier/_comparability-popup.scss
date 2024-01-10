@@ -1,0 +1,94 @@
+.comparabilityPopup {
+	display: none;
+	.fadeBg {
+		position: fixed;
+		display: block;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 998;
+		background-color: black;
+		@include opacity(0.7);
+	}
+
+	.activePopup {
+		position: fixed;
+		color: #030303;
+		/* letter-spacing: 0.5px; */
+		font-size: 14px;
+		width: 546px;
+		height: 446px;
+		z-index: 999;
+		background-color: white;
+		left: 50%;
+		top: 50%;
+		margin-left: -273px;
+		margin-top: -223px;
+		border: 1px solid white;
+		@include border-radius(6px);
+		behavior: url(/css/PIE.htc);
+
+		h1 {
+			display: block;
+			padding: 0;
+			margin: 10px;
+			height: 45px;
+			line-height: 45px;
+			text-indent: 15px;
+			width: 485px; 
+			background-color: #00a8e6;
+			color: #f1f1f1;
+			font-size: 18px;
+			font-weight: bold;
+			float: left;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+		}
+		h2 {
+			float: left;
+			margin: 15px 0 40px 25px;
+			width: 460px;
+			line-height: 20px;
+		}
+
+		.coCloseBtn {
+			color: #00376d;
+			cursor: pointer;
+			float: left;
+			margin: 18px 0 0 0;
+		}
+		label {
+			display: block;
+			float: left;
+			width: 310px;
+			margin: 4px 60px 25px 0;
+			&.indented {
+				margin-left: 45px;
+			}
+		}
+
+
+		a {
+			&.coOkBtn, &.coCancelBtn {
+				margin-top: 25px;
+				display: inline-block;
+			}
+
+			&.coOkBtn {
+				margin-left: 152px;
+			}
+
+			&.coCancelBtn {
+				margin-left: 12px;
+			}
+
+		}
+
+		.controlHolder {
+			display: block;
+			float: left;
+			margin: 0 10px 0 122px;
+		}
+	}
+}

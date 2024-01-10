@@ -1,0 +1,418 @@
+/*
+Document   : _summary-calculator.scss
+Created on : jan 06, 2015
+Author     : Attila O
+Desc	   : SIR middle section of summary, calculator
+*/
+#sir-calculator {
+	display: block;
+	float: right;
+	clear: both;
+	width: 932px;	
+	height: 571px;
+	background: transparent url(/img/reports/sir/calculator-bg.png) no-repeat;
+	border-spacing: 0px;
+	h2 {
+		display: block;
+		padding: 0px;
+		width: 728px;
+		height: 70px;
+		line-height: 75px;
+		margin: 0px auto;
+		font-size: 22px;
+		font-weight: bold;
+		color: #525c64;
+	}
+	.calcTable {
+		width: 728px;
+		margin: 0px auto;
+			a {
+				&.tHelp {
+					font-size: 12px;
+				}
+			}
+
+			tr {
+				&.grayBg {
+					background-color: #f6f7fb;
+				}
+				&.separator {
+					height: 8px;
+					font-size: 1px;
+				}
+				&.orphan {
+					height: 25px;
+				}
+			}
+			td {
+				border-top: 1px solid #b2bbc4;
+				position: relative;
+				span {
+					&.footerText {
+						display: block;
+						margin-left: 1px;
+						margin-top: 40px;
+						height: 56px;
+						font-size: 11px;
+						color: #09426b;
+					}
+				}
+				&.textRight {
+					text-align: right;
+					color: #525c64;
+					font-weight:bold;
+					font-size: 24px;
+				}
+
+
+			}
+			td, th {
+				vertical-align: middle;
+				
+
+			}
+			th {
+				padding: 0px 6px 0px 6px;
+				color: #525c64;
+			}
+
+			td:nth-child(1) {
+				width: 223px;
+
+			}
+			td:nth-child(2)  {
+				width: 114px;
+				padding: 0px 6px 0px 6px;
+			}
+
+			td:nth-child(5) {
+				padding: 0px 10px 0px 0px;
+			}
+
+			td:nth-child(3), td:nth-child(4) {
+				width: 132px;
+				padding: 0px 6px 0px 6px;
+			}
+
+			td:nth-child(1), td:nth-child(2), td:nth-child(3), td:nth-child(4), th:nth-child(1), th:nth-child(2), th:nth-child(3), th:nth-child(4) {
+				border-right: 1px dotted black;
+			}
+
+			tr:nth-child(1), tr:nth-child(3), tr:nth-child(5) {
+				/* height: 38px;  */
+				border-top: 1px solid black;
+
+			}
+			
+			/*
+			tr:nth-child(2), tr:nth-child(4)  {
+				height: 5px; 
+				padding: 0px;
+				font-size: 12px;
+
+			}
+			*/
+			tr:nth-child(6) {
+				/* height: 28px;  */
+
+			}
+
+			.increaseSummary {
+				height: 50px;
+				color: #525c64;
+				font-weight: bold;
+				background-color: #7dc94a;
+				text-align: right;
+				div {
+					float: left;
+					line-height: 48px;
+					text-indent: 6px;
+					height: 48px;
+					font-size: 20px;
+				}
+				span {
+					font-size: 10px;
+					float: right;
+					padding: 6px;
+				}
+				.alignRight {
+					float: right;
+					margin-right: 6px;
+				}
+			}
+
+			.bfont {
+				position: absolute;
+				top: 2px;
+				right: 5px;
+				display: block;
+				font-size: 42px;
+				font-weight: bold;
+			}
+		}
+
+		.b-grayRight {
+			border-right: 1px solid #b2bbc4;
+			
+		}
+		.nullPadding {
+			padding: 0px !important;
+		}
+		.triangle1 {
+			border-color: transparent transparent transparent #007fb6;
+		}
+		.arrow1 {
+			width: 110px;
+			background-color: #007fb6; 
+			@include x-multiple-colored-gradient(left, #47c3f5, #007fb6);
+ 			-pie-background: linear-gradient(left, #47c3f5, #007fb6);
+
+		}
+		.triangle2 {
+			border-color: transparent transparent transparent #058d03;
+		}
+		.arrow2 {
+			width: 125px;
+			background-color: #058d03; 
+			@include x-multiple-colored-gradient(left, #83cc4e, #058d03);
+ 			-pie-background: linear-gradient(left, #83cc4e, #058d03);
+		}
+
+		.arrow3 {
+			width: 160px;
+			background-color: #007fb6; 
+			@include x-multiple-colored-gradient(left, #47c3f5, #007fb6);
+ 			-pie-background: linear-gradient(left, #47c3f5, #007fb6);
+		}
+
+		.arrow4 {
+			width: 185px;
+			background-color: #058d03; 
+			@include x-multiple-colored-gradient(left, #83cc4e, #058d03);
+ 			-pie-background: linear-gradient(left, #83cc4e, #058d03);
+		}
+		.triangle {
+			display: block;
+			float: left;
+			width: 0;
+			height: 0;
+			border-style: solid;
+			border-width: 25px 0 25px 32px;
+		}
+
+		.triangleLarge {
+			display: block;
+			float: left;
+			width: 0;
+			height: 0;
+			border-style: solid;
+			/*border-width: 50px 0 50px 32px; */
+			border-width: 25px 0 25px 32px;
+			/* margin: 6px 0px; */
+			position: absolute;
+			top: 0;
+			left: 125px;
+		}
+
+		.getArrow {
+			display: block;
+			float: left;
+			color: white;
+			&.height1 {
+				height: 50px;
+			}
+			&.height2 {
+				position: absolute;
+				left: 0;
+				top: 0;
+				height: 50px; 
+				/* margin: 6px 0px; */
+				
+			}
+			span {
+				&.disp1 {
+					display: block;
+					margin: 4px 0px 0px 6px;
+					font-size: 14px;
+				}
+				&.disp2 {
+					display: block;
+					margin: 8px 0px 0px 6px; 
+					line-height: 125%; 
+					font-size: 14px;
+				}
+				&.disp3 {
+					display: block;
+					margin: 18px 0px 0px 6px;
+					font-size: 18px;
+					font-weight: bold;
+				}
+				&.disp4 {
+					display: block;
+					margin: 18px 0px 0px 6px;
+					font-size: 14px;
+				}
+			}
+		}
+		.btnFix {
+			display: block;
+			position: absolute;
+			top: 5px;
+			left: 5px;
+			width: 60px;
+			height: 30px;
+			color: white;
+			/* text-shadow: 1px 1px #ccc; */
+			font-size: 11px;
+			font-weight: normal;
+        	background: transparent url('/img/sir3/sir3-green-button.png') no-repeat;
+			text-align: left;
+			padding: 5px 0px 0px 25px;
+		}
+
+		.greenBg {
+			display: block;
+			position: absolute;
+			top: 5px;
+			left: 10px;
+			width: 71px;
+			height: 80px;
+			color: white;
+			/* text-shadow: 1px 1px #ccc; */
+			font-size: 12px;
+        	background: transparent url('/img/sir3/sir3-green-bg.png') no-repeat;
+			text-align: left;
+			padding: 6px;
+			
+		}
+		.tableSpace {
+			display: block;
+			width: 100%;
+			height: 10px;
+		}
+		.calcResultTable {
+			margin-top: 20px;
+			width: 728px;
+
+			margin: 0px auto;
+				td {
+					font-weight: normal;
+					font-size: 12px;
+					vertical-align: middle;
+					height: 34px;
+					line-height: 34px;
+					&.empty {
+						width: 216px;
+					}
+					&.dkblue {
+						background-color: #0e436a;
+						color: white;
+						text-indent: 6px;
+					}
+					&.bold {
+						font-weight: bold;
+					}
+					&.totals {
+						width: 125px;
+						div {
+							width: 119px;
+							line-height: 28px;
+							padding-right: 6px;
+							background-color: #fff;
+							color: #525c64;
+							font-weight: bold;
+							border: 3px solid #0e436a;
+							text-align: right;
+							font-size: 14px;
+						}
+					}
+					&.borderTopBottom {
+						border-top: 1px solid white;
+						border-bottom: 1px solid white;
+					}
+				}
+			}
+
+		.spinner, .spinner-caption {
+			dispay: block;
+			float: left;
+			
+			/* border: 1px solid red; */
+
+		}
+		.spinner {
+			position: relative;
+			width: 75px;
+			input {
+				width: 65px;
+				height: 34px;
+				line-height: 34px;
+				backgound-color: white;
+				border: 1px solid #babec1;
+				@include border-radius(6px);
+				/* behavior: url(/css/PIE.htc); */
+				text-align: right;
+				font-size: 18px;
+				padding-right: 6px;
+			}
+		}
+		.spinner-caption2 {
+			line-height: 36px;
+			width: 30px;
+			overflow: hidden;
+			font-size: 18px;
+			height: 38px;
+
+		}
+		.spinner-caption {
+			/* line-height: 36px; */
+			width: 50px;
+			overflow: hidden;
+			font-size: 10px;
+			margin-top: 8px;
+			margin-left: 5px;
+
+		}
+		.spin-up, .spin-down {
+			display: block;
+			position: absolute;
+			width: 18px;
+			height: 14px;
+			cursor: pointer;
+			border: 1px solid #d6dce4;
+			@include x-multiple-colored-gradient(top, #fefefe, #ebeff2);
+ 			-pie-background: linear-gradient(left, #fefefe, #ebeff2);
+ 			left: 5px;
+ 			z-index: 999;
+		}
+		.spin-up {
+			top: 2px;
+			div {
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 0 5px 7px 5px;
+				border-color: transparent transparent #084886 transparent;
+				margin: 3px 0px 0px 4px;
+			}
+		}
+		.spin-down {
+			top: 19px;
+			div {
+
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 7px 5px 0 5px;
+				border-color: #084886 transparent transparent transparent;
+				margin: 5px 0px 0px 4px;
+			}
+		}
+
+}
+.sir-bannerImg {
+			width: 930px;
+			margin: 24px 0px;
+			clear: both;
+			float: left;
+		}

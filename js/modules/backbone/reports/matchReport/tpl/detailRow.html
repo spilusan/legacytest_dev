@@ -1,0 +1,17 @@
+<td class="detail first" title="{{SPB_NAME}}"><a href="{{SUPPLIER_URL}}" target="_blank">{{SPB_NAME}}</a></td>
+<td class="detail" title="{{TNID}}">{{TNID}}</td>
+<td class="detail {{#if matchedStyle}}matched{{/if}}" title="{{type}}">{{type}}</td>
+<td class="detail" title="{{QOT_SUBMITTED_DATE}}">{{QOT_SUBMITTED_DATE}}</td>
+<td class="detail" title="{{ORD_SUBMITTED_DATE}}">{{ORD_SUBMITTED_DATE}}</td>
+<td class="detail" title="{{QOT_TOTAL_PRICE_IN_USD}}">{{formatCurrency QOT_TOTAL_PRICE_IN_USD}}</td>
+<td class="detail" title="{{ORD_TOTAL_PRICE_IN_USD}}">{{formatCurrency ORD_TOTAL_PRICE_IN_USD}}</td>
+<td class="detail" title="{{QOT_COMPLETENESS}}">{{QOT_COMPLETENESS}}</td>
+<td class="detail" title="{{QOT_TERMS_OF_DELIVERY}}">{{QOT_TERMS_OF_DELIVERY}}</td>
+<td class="detail" title="{{QOT_TERMS_OF_PAYMENT}}">{{QOT_TERMS_OF_PAYMENT}}</td>
+<td class="detail" title="{{QOT_IS_GENUINE_SPARE}}">{{QOT_IS_GENUINE_SPARE}}</td>
+
+
+<td class="detail action {{#if URL_QOT}}{{#if URL_ORD}}wide{{/if}}{{/if}}" title="Action">
+	{{#if URL_QOT}}<a href="{{URL_QOT}}" class="button small white viewq" target="_blank">View quote</a>{{/if}} 
+	{{#if URL_ORD}}<a href="{{URL_ORD}}" class="button small white viewo" target="_blank">View order</a>{{/if}}
+</td>

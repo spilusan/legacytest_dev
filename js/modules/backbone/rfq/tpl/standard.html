@@ -1,0 +1,151 @@
+<h1 class="styled">
+	<span>* mandatory fields</span>
+	Send new RFQ or Enquiry
+</h1>
+<div id="content">
+	<form id="standard" class="rfq new" action="/enquiry/rfq" method="post" enctype="multipart/form-data">
+		<div class="details">
+			<div class="right">
+				<fieldset class="delivery">
+					<input type="text" name="dDeliveryTo" tabindex="3"/>
+					<label for="dDeliveryTo">Delivery to:</label>
+					<div class="clear"></div>
+					<input type="text" name="dDeliveryBy" class="date closeDel" tabindex="4" value="mm/dd/yyyy" readonly="readonly"/>
+					<label for="dDeliveryBy">Delivery by:</label>
+					<div class="clear"></div>
+					<input type="button" id="showDetails" class="button link small" value="More delivery details"/>
+					<div id="delDets">
+						<input type="text" name="dAddress1" tabindex="-1"/>
+						<label for="dAddress1">Address 1:</label>
+						<div class="clear"></div>
+						<input type="text" name="dAddress2" tabindex="-1"/>
+						<label for="dAddress2">Address 2:</label>
+						<div class="clear"></div>
+						<input type="text" name="dCity" tabindex="-1"/>
+						<label for="dCity">City:</label>
+						<div class="clear"></div>
+						<input type="text" name="dProvince" tabindex="-1"/>
+						<label for="dProvince">State/Province:</label>
+						<div class="clear"></div>
+						<input type="text" name="dPostcode" class="short" tabindex="-1"/>
+						<label for="dPostcode">ZIP/Postcode:</label>
+						<div class="clear"></div>
+						<select name="dCountry" id="dc" tabindex="-1">
+							<option value="">Please select a country</option>
+							{{#each this.country}}
+								<option value="{{this.code}}">{{this.name}}</option>
+							{{/each}}
+						</select>
+						<label for="dCountry">Country:</label>
+						<div class="clear"></div>
+						<select name="dDeliveryPort" id="dp" tabindex="-1">
+							<option value="" disabled="disabled">Please select a country first</option>
+						</select>
+						<label for="dDeliveryPort">Delivery Port:</label>
+						<div class="clear"></div>
+						<select name="dTransportMode" id="tp" tabindex="-1">
+							<option value="">Please select a transport mode</option>
+							<option value="_1">Maritime</option>
+							<option value="_2">Rail</option>
+							<option value="_3">Road</option>
+							<option value="_4">Air</option>
+						</select>
+						<label for="dTransportMode">Transport Mode:</label>
+						<div class="clear"></div>
+						<textarea name="dPackagingInstructions" class="last pack" tabindex="-1"></textarea>
+						<label for="dPackagingInstructions">Packaging Instructions:</label>
+						<div class="clear"></div>
+					</div>
+					<input type="button" id="hideDetails" class="button link small" value="Hide delivery details" />
+					<div class="clear"></div>
+				</fieldset>
+			</div>
+			<div class="left">
+				<fieldset class="reqisition vessel">
+					<input type="hidden" name="bTnid" value="{{user.companyTnid}}"/>
+					<input type="hidden" name="bEmail" value="{{user.email}}"/>
+					<input type="hidden" name="bName" value="{{user.name}}"/>
+					<input type="hidden" name="bCompanyName" value="{{user.companyName}}"/>
+					<input type="text" name="rRfqSubject" tabindex="1"/>
+					<label for="rRfqSubject">RFQ Subject:<span>*</span></label>
+					<div class="clear"></div>
+					<input type="text" name="vVesselName" tabindex="2"/>
+					<label for="vVesselName">Vessel Name:</label>
+					<div class="clear"></div>					
+					<input type="button" id="showReqDetails" class="button link small" value="More details"/>
+					<div id="reqDets">
+						<input type="button" class="button link small find" value="Find vessel" />
+						<input type="text" name="vImoNumber" class="short imo" tabindex="-1"/>
+						<label for="vImoNumber">IMO Number:</label>
+						<div class="clear"></div>
+						<input type="text" name="rRfqReference" tabindex="-1"/>
+						<label for="rRfqReference">RFQ Reference:</label>
+						<div class="clear"></div>
+						<input type="text" name="rReplyBy" class="date last" tabindex="-1" value="mm/dd/yyyy" readonly="readonly"/>
+						<label for="rReplyBy">Reply by:</label>
+						<div class="clear"></div>
+					</div>
+					<input type="button" id="hideReqDetails" class="button link small" value="Hide details" />
+					<div class="clear"></div>
+				</fieldset>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="infoNew blue"><div class="infoIcon"></div><p>Send your RFQ as free text or as line items.</p></div>
+		<div class="rfqDet">
+			<div class="detailBox">
+				<ul class="detailTabs">
+					<li class="freeText selected">Free text</li>
+					<li class="lineItms">Line Items</li>
+				</ul>
+				<div class="infoArrow"><div>Break your RFQ into line items and get a quicker response!</div></div>
+				<div class="clear"></div>
+				<div class="detailBorder">
+					<div class="infoNew free"><div class="infoIcon"></div><p>Specify your RFQ details below and click “Send RFQ” button.</p></div>
+					<div class="infoNew line"><div class="infoIcon"></div><p>List items and quantity below and click “Send RFQ” button.</p></div>
+					<div class="info rfqinfo" id="rfqInfo">
+						<img src="/img/icons/medium/attention.png" />
+						<span>You must either fill out 'Free text', 'Line Items' or upload an attachment.</span>
+					</div>
+					<div class="sectionList"></div>
+					<p class="commentLabel">Comments:</p>
+					<textarea name="lBuyerComments" tabindex="5" ></textarea>
+					<label for="lBuyerComments"></label>
+				</div>
+			</div>
+			<div class="documents">
+				 <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+				 <strong>Attachments</strong>
+			    <div class="row fileupload-buttonbar">
+		            <div class="button white small uploadFile"><input type="file" name="files[]" multiple id="fUp" />Attach Documents</div>
+	                
+	                <input type="hidden" name="hash" value="{{hash}}"/>
+	                <div class="clear"></div>
+				</div>
+				<!-- The global progress information -->
+	            <div class="span5 fileupload-progress fade">
+	                <!-- The global progress bar -->
+	                <div class="progress progress-success active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+	                    <div class="bar" style="width:0%;"></div>
+	                </div>
+	                <!-- The extended global progress information -->
+	                
+	            </div>
+			    <table role="presentation" class="table table-striped">
+			    	<tbody class="files" data-toggle="modal-gallery" data-target="#modal-gallery">
+			    	</tbody>
+			    </table>
+			</div>
+			<div class="suppliers">
+				<strong>Selected Suppliers</strong>
+				<ul></ul>
+				<div class="clear"></div>
+			</div>
+		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="Send RFQ" class="button large red" />
+			 <!-- <input type="button" value="Save Draft" class="button large lblue" /> -->
+		</div>
+	</form>
+</div>

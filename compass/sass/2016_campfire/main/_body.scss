@@ -1,0 +1,117 @@
+/*
+Document   : partials/guidelines/_body.scss
+Created on : May 12, 2016, 14:24:15 AM
+Author     : .:Gly:.
+Description: default styles for body
+*/
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
+@import url(https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic);
+
+html[data-useragent*='MSIE 10.0'],
+html[data-useragent*='rv:11.0']  {
+	.scrollWrapper {
+		display: table;
+		height: calc(100vh - 60px);
+
+		> * {
+			display: table-row;
+		}
+	}
+
+	.mainFooter > .wrapper {
+		height: 560px;
+		display: table-cell;
+		text-align: center;
+
+		> * {
+			display: block;
+			max-width: 1024px;
+			margin: auto;
+			text-align: left;
+			overflow: auto;
+		}
+
+		.column {
+			float: left;
+			width: 25%;
+		}
+	}
+}
+
+
+html {
+	height: 100%;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;	
+	background: $white;
+	font-weight: 400;
+	min-width: auto;
+	height: 100%;
+	
+	/* Fix for IOS */
+    -webkit-text-size-adjust: 100%;
+
+	.clear {
+		height: 1px;
+		clear: both;		
+		display: block;
+		line-height: 1px;
+	}
+
+	&.app main {
+		flex: 1;
+	}
+
+	.scrollWrapper {
+		width: 100%;
+		min-height: calc(100vh - 60px);
+		display: flex;
+		flex-direction: column;
+
+		> main {
+			
+			.text {
+				max-width: 600px;
+			}
+
+			#breadcrumbs {
+				padding-top: 60px;
+			}
+		}
+
+	}
+}
+
+@media only screen and (max-width : 640px) {
+	body {
+		main {
+			#breadcrumbs {
+				width: auto;
+			}
+		}
+	}
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.capitalize {
+	text-transform: capitalize;
+}
+
+hr {
+	clear: both;
+	border-bottom: 0 0 1px 0 solid $dark-grey;
+}

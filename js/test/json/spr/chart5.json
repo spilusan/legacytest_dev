@@ -1,0 +1,11 @@
+{
+    "data":
+	[{
+		"name": "Percentage ",
+		"data": [
+		    ["This supplier<br>with you", 23.7],
+		    ["All suppliers<br>with you", 16.1],
+		    ["ShipServ<br>average", 14.2]
+		]
+	}]
+}

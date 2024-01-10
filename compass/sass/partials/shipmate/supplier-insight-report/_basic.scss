@@ -1,0 +1,133 @@
+/*
+ * Specific CSS rules for Basic supplier in Supplier Insight report
+ */
+
+/*
+ * Specific CSS rules for Premium supplier in Supplier Insight report
+ */
+
+#body {
+  #content {
+    #report_content {
+      p {
+        color: #333;
+        i.fa {
+          color: #99a9b8;
+        }
+      }
+
+      .userTypeLabel {
+        &.basic {
+          background-color: #fef5f6;
+          border: 1px solid #e7282f;
+
+          span {
+            width: 98px;
+            font-weight: bold;
+            font-size: 20px;
+            background-color: #e7282f;
+            color: white;
+
+            i.fa-check {
+              color: white;
+              font-size: 34px;
+              margin-right: 6px;
+            }
+          }
+
+          p {
+            color: #333333;
+            font-size: 16px;
+            padding: 0px 12px;
+            line-height: 60px;
+          }
+        }
+      }
+
+      .dataBox {
+        &.basic {
+          background-color: #5c7090;
+          color: white;
+          div {
+            &.col2 {
+              div {
+                border: 1px solid white;
+                background-color: #3eccfd;
+                color: black;
+              }
+            }
+
+            &.col3 {
+              div {
+                border-top: 1px solid white;
+              }
+
+              div:last-child {
+                border-bottom: 1px solid white;
+              }
+            }
+          }
+        }
+      }
+
+      .description {
+        &.basic {
+          background-color: #fef5f6;
+          border: 1px solid #e7282f;
+          color: #333;
+        }
+      }
+
+      .description-attachment {
+        &.basic {
+          background-color: #e7282f;
+          color: white;
+        }
+      }
+
+      .crblue {
+        &.basic {
+          background-color: #7ad6f5;
+          border: 2px solid #20b3e6;
+        }
+      }
+
+      .crorange {
+        &.basic {
+          background-color: #fea850;
+          border: 2px solid #f7902d;
+        }
+      }
+
+      .crgreen {
+        &.basic {
+          background-color: #81dc82;
+          border: 2px solid #18c21f;
+        }
+      }
+
+      .explanation {
+        &.basic {
+          border-right: 1px solid #d3dce3;
+
+          i.fa {
+            color: #9ba8ba;
+          }
+        }
+      }
+
+      .explanation {
+        &.basic:last-child {
+          border-right: none;
+        }
+      }
+
+      .reportfooter {
+        &.basic {
+          border-top: 1px solid #e6e9f0;
+          border-bottom: 1px solid #e6e9f0;
+        }
+      }
+    }
+  }
+}

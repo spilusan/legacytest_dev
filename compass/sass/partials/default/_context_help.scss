@@ -1,0 +1,103 @@
+/*
+Document   : _context_help
+Created on : Jun 13, 2012, 4:49:58 PM
+Author     : gly
+Description: Contextual help related styles
+*/
+
+/*Contextual help*/
+
+div.help {
+    &.panel { 
+        width: 440px; 
+        min-height: 140px; 
+        position: fixed; 
+        left: 50%; 
+        top: 50%; 
+        padding: 5px;
+        @include border-radius(7px);
+        behavior: url(/css/PIE.htc);
+        background: #fff;
+
+        p, h2 { 
+            margin-left: 70px; 
+            width: 320px; 
+        }
+
+        h2 { 
+            color: #4f4f4f; 
+            font-size: 15px; 
+            font-weight: bold; 
+            margin-top: 29px; 
+        }
+
+        p { 
+            color: #2E3235; 
+            line-height:15px;
+            font-size: 12px; 
+            padding: 15px;
+            width: auto;
+            margin: 0;
+        }
+
+        .button.close {
+            position: absolute;
+            top: -48px;
+            right: 0;
+        }
+    }
+}
+
+div.contextual{
+    &.help { 
+        background: url(/images/icons/small/blue/help.png) no-repeat center; 
+        width: 20px; 
+        height: 15px; 
+        cursor: help;
+        
+        &.inline { 
+            margin-left: 5px; 
+            display: -moz-inline-stack; 
+            display: inline-block; 
+            vertical-align: middle; 
+            zoom: 1; 
+            *display: inline; 
+        }
+    }
+}
+
+div.fsmask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: url(/img/mask_bg.png) left top repeat transparent;
+  z-index: 9999;
+  behavior: url(/css/PIE.htc);
+}
+
+div.zz.page.header {
+  height: 40px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  background: #13b5ea;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #13b5ea), color-stop(100%, #087fc5));
+  background-image: -webkit-linear-gradient(#13b5ea 0%, #087fc5 100%);
+  background-image: -moz-linear-gradient(#13b5ea 0%, #087fc5 100%);
+  background-image: -o-linear-gradient(#13b5ea 0%, #087fc5 100%);
+  background-image: linear-gradient(#13b5ea 0%, #087fc5 100%);
+  -pie-background: linear-gradient(top, #13b5ea 0%, #087fc5 100%);
+  behavior: url(/css/PIE.htc);
+}
+div.zz.page.header h1 {
+  color: #fff;
+  font-size: 16px;
+  line-height: 40px;
+  vertical-align: middle;
+  margin-left: 15px;
+  font-weight: bold;
+}

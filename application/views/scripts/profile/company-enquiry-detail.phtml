@@ -1,0 +1,129 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/my-companies.js');
+					 
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Companies',
+						   'url'  => '/profile/companies'),
+					 array('name' => $this->companyDetail['name'],
+						   'url'  => "/profile/company-people/type/{$this->companyDetail['type']}/id/{$this->companyDetail['id']}"));
+					 
+$enquiry = $this->enquiries;
+$statistic = $this->statistic;
+
+// redirect user if company changes by the input box on the top
+if( $this->params['id'] != $this->activeCompany->id )
+{
+	?><script>location.href='/profile/company-enquiry/type/<?php echo $this->activeCompany->type?>/id/<?php echo $this->activeCompany->id?>';</script><?php
+}
+$this->headLink()->appendStylesheet('/css/transition.css');
+
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->CDNLink()->css('/css/profile.css'); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->CDNLink()->css('/css/profile/company-enquiry.css'); ?>" />
+<div id="main_content_area">	
+	<div class="clear"></div>
+	<div class="content_wide">
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], 'company-enquiry', $this->pendingUsers, $isAdmin)
+				)
+			);
+				
+			?>
+			<div class="profile-body-right enquiries">
+				<div class="zz header">
+					<h2><?= $enquiry->pinSubject?></h2>
+				</div>
+				<div class="profileContent">
+				
+					<div class="caption">Sent:</div>
+					<div class="info"><?= $enquiry->pinCreationDate?></div>
+					<div class="clear"></div>					
+
+					<div class="caption">Company/Buyer:</div>
+					<div class="info"><?= $enquiry->pinCompany?></div>
+					<div class="clear"></div>					
+						
+					<div class="caption">Name:</div>
+					<div class="info"><?= $enquiry->pinName?></div>
+					<div class="clear"></div>					
+
+					<div class="caption">Email:</div>
+					<div class="info"><?= $enquiry->pinEmail?></div>
+					<div class="clear"></div>				
+					
+					<div class="caption">Phone:</div>
+					<div class="info"><?= $enquiry->pinPhone?></div>
+					<div class="clear"></div>					
+
+					<div class="caption">Country:</div>
+					<div class="info"><?= $enquiry->pinCountry?></div>
+					<div class="clear"></div>					
+					
+					<hr class="dotted">
+
+					<div class="caption">Vessel Name:</div>
+					<div class="info"><?= $enquiry->pinVesselName?></div>
+					<div class="clear"></div>		
+					
+					<div class="caption">IMO:</div>
+					<div class="info"><?= $enquiry->pinImo?></div>
+					<div class="clear"></div>		
+
+					<div class="caption">Delivery date:</div>
+					<div class="info"><?= $enquiry->pinDeliveryDate?></div>
+					<div class="clear"></div>					
+
+					<div class="caption">Delivery location:</div>
+					<div class="info"><?= $enquiry->pinDeliverLocation?></div>
+					<div class="clear"></div>					
+										
+					<hr class="dotted" />
+												
+					<div class="caption">RFQ details:</div>
+					<div class="info"><?= nl2br($enquiry->pinInquiryText)?></div>
+					
+					<?php
+					if (lg_count($enquiry->getAttachments()) > 0)
+					{
+						?>
+						<div class="clear"></div>
+						<br /><br />
+						<div class="caption">Attachments:</div>
+						<div class="info">
+							
+							<ul class="attachments">
+								<?php
+								foreach ($enquiry->getAttachments() as $attachment)
+								{
+									$url = Myshipserv_Helper_CdnDecorate::decorateImgUrl($attachment['url']);
+									?>
+									<li><a href="<?= $url; ?>" title=""><?= $attachment['filename']; ?></a> (<?= number_format($attachment['size'] / 1024, 2); ?> KB)</li>
+									<?php
+								}
+								?>
+							</ul>
+						</div>
+						
+						<?php
+					}
+					?>
+					
+					<hr class="dotted">
+					<div class="zz medium grey button"><button class="enquiry-detail-button" onclick="location.href='<?= $this->uri()->deobfuscate($this->params['r']);?>';">Back to list</button></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

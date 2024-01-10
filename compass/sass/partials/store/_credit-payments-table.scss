@@ -1,0 +1,51 @@
+#body {
+	#content {
+		.section {
+			table.creditPayments {
+				width: 490px;
+				border-top: 1px solid #d6dce4;
+				border-left: 1px solid #d6dce4;
+				border-collapse: collapse;
+				margin-bottom: 30px;
+
+				thead {
+					tr {
+						th {
+							border-bottom: 1px solid #d6dce4;
+							border-right: 1px solid #d6dce4;
+							background-color: #e9edf1;
+							font-size: 14px;
+							font-weight: bold;
+							color: #2e3235;
+							padding: 9px 0;
+							text-align: center;
+						}
+					}
+				}
+
+
+				tbody {
+					tr {
+						td {
+							border-bottom: 1px solid #d6dce4;
+							border-right: 1px solid #d6dce4;
+							font-size: 13px;
+							color: #2e3235;
+							padding: 9px 18px 9px 2px;
+							text-align: right;
+							a {
+								margin-left: 9px;
+							}
+						}
+						td:nth-child(3) {
+							width: 145px;
+						}
+						td:nth-child(4) {
+							width: 145px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

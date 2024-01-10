@@ -1,0 +1,155 @@
+/*
+Document   : partials/guidelines/_footer.scss
+Created on : May 12, 2016, 14:24:15 AM
+Author     : .:Gly:.
+Description: default styles for footer
+*/
+.mainFooter {
+	height: auto;
+	padding: 0 15px;
+	padding-bottom: 50px;
+	background: $dk-navy;
+	min-width: 1170px;
+
+	p, h6 {
+		color: $white;
+		font-family: 'Open Sans', sans-serif;
+	}
+
+	h6 {
+		font-weight: bold;
+		font-size: 16px;
+	}
+
+	ul {
+		li {
+	    	margin-bottom: 10px;
+	    }
+	}
+
+	a {
+		font-weight: 300;
+		font-family: 'Open Sans', sans-serif;
+		font-size: 14px;
+		line-height: 1.5;
+
+		.fa {
+			font-size: 40px;
+		}		
+	}
+
+	.wrapper {
+		width: 100%;
+		margin: 0 auto;
+		max-width: 1170px;
+	}
+
+	.footerTopRow {
+		padding: 25px 0 20px; 
+
+		.footerLogo {
+			float: left;
+		}
+
+		.socialMedia {
+			float: right;
+
+			ul li {
+				display: inline-block;
+				margin-left: 10px;
+
+				a {
+				color: #087EC5;
+				font-weight: 300;
+				font-family: 'Open Sans', sans-serif;
+
+					.fa {
+						font-size: 40px;
+					}		
+				}
+			}
+		}
+
+	}
+
+	.footerMiddleRow {
+		padding: 50px 0;
+		@include display-flex-ie;
+		@include flex-wrap(wrap);
+		border-top: 1px solid $link-blue;
+
+		.column {
+			@include flex(1 25%);
+			width: 25%;
+
+			&:nth-of-type(3) {
+				@include flex(1 50%);
+				width: 50%;
+			}
+
+			h6 {
+				font-size: 18px;
+				margin-bottom: 15px;
+			}
+
+			ul {
+				list-style: none;
+
+				li {
+					line-height: 1.5;
+					font-size: 16px;
+					margin-bottom: 14px;
+				}	
+
+				a {
+					color: $white;
+					font-weight: 300;
+				}
+			}
+		}
+	}
+
+	.footerBottomRow {
+		padding: 20px 0;
+		margin-bottom: 20px;
+		text-align: center;
+		border-top: 1px solid $link-blue;
+		border-bottom: 1px solid $link-blue;
+
+		p {
+			margin-bottom: 0;
+			font-size: 15px;
+			font-weight: 300;
+		}
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	.mainFooter {
+		padding-bottom: 0;
+
+		.footerTopRow {
+			.socialMedia {
+				text-align: left;
+			}
+		}
+
+		.footerTopRow {
+			.footerLogo {
+				display: none;
+			}
+
+			.socialMedia {
+				float: none;
+				text-align: left;
+			}
+		}
+
+		.footerBottomRow {
+			border-bottom: 0;
+			p {
+				text-align: left;
+			}
+		}
+	}
+}

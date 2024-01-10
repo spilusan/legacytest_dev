@@ -1,0 +1,15 @@
+/*
+Document   : profile/promoLanding.scss
+Created on : Mar 8, 2016, 11:00:43 PM
+Author     : gly
+Description: combining partials for active promotion landing page styles
+*/
+
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/min";
+@import "font-awesome";
+
+@import "partials/def/modal_new";
+
+@import "partials/profile/promoLanding/content";

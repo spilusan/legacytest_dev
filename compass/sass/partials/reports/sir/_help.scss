@@ -1,0 +1,38 @@
+.winHelp {
+	ul {
+		margin: 0 0 14px 14px;
+		list-style: disc;
+	}
+
+	table {
+    	border-spacing: 0px;
+    	border-collapse: collapse;
+    		th {
+    			width: 120px;
+    		}
+    		th, td {
+    			border: 1px solid black; 
+    			font-size: 10px
+    		}
+	}
+	.gr {
+		color: #43a573;
+	}
+	.rd {
+		color: #e81e24;
+	}
+	h2 {
+		font-size: 14px;
+		font-weight: bold;
+		margin: 0px;
+		padding: 6px 0px;
+	}
+}
+
+body {
+	h1 {
+		&.styled {
+			margin-bottom: 10px;
+		}
+	}
+}

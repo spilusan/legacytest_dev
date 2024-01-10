@@ -1,0 +1,204 @@
+<?php
+$this->headScript()->appendFile('/js/json2.js');
+				   
+$this->CDNLink()->appendStylesheet('/css/enquiries.css')
+				->appendStylesheet('/css/enquiry/rfq.css');
+$this->getHelper('Requirejs')->addModule('enquiry/reject');
+
+$breadcrumbs = array(array('name' => 'Home',
+			'url'  => '/search'),
+		array('name' => 'RFQs from Pages',
+					'url'  => '/trade/rfq/page/' . $this->params['page'] .''),
+			array('name' => 'RFQ',
+					'url'  => $this->enquiry->getUrl() . "/page/" . $this->params['page']),
+					array('name' => 'Reject',
+					'url'  => '/enquiry/reject'));
+?>
+<div id="main_content_area">
+<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));?>
+<?php 
+if( $this->mode == "survey" )
+{ 
+?>
+
+	<div id="validation-message" class="hidden clearfix">
+		<div style="float:left; width:20px;"><img src="/images/icons/large/blue/info.png" width="30" align="middle" /></div>
+		<div style="float:left; width: 510px; margin-left:30px;">
+			<div class="question-header">You have not provided a reason for declining this RFQ</div>
+			<br />
+			<div class="validation-message-intro">
+				This information will help to reduce the number of unwanted RFQs, and will 
+				also help us learn which RFQs are the most likely to be responded to. <br />
+	
+				Will you please take a few seconds to provide this information?
+			</div>
+			<div class="clearfix" style="margin-top:20px;">
+				<div class="big-button">
+					<div class="big-button-content">
+						<div class="zz medium red button clearfix" style="margin-left:35px;" id="big-button-continue-without">No thanks</div>
+						<div class="clear"></div>
+						<div class="description-for-button" style="margin-top: 4px;">I would not like to provide any additional information at this time</div>
+					</div>
+				</div>
+				
+				<div class="big-button">
+					<div class="big-button-content">
+						<div class="zz medium green button clearfix" style="margin-left:60px;" id="big-button-continue-with">Yes</div>
+						<div class="clear"></div>
+						<div class="description-for-button" style="margin-top: 4px;">I will provide a reason for the decline</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="content_wide new clearfix rej">
+		<div class="zz header">
+			<h2>
+				Decline RFQ and Block Buyer
+			</h2>
+		</div>
+		<div class="survey-container ">
+			<div class="survey clearfix">
+				<form class="main" method="post">
+					<input type="hidden" name="enquiryId" value="<? echo $this->enquiryId ?>" />
+					<input type="hidden" name="supplierBranchId" value="<? echo $this->tnid ?>" />
+					<input type="hidden" name="hash" value="<? echo $this->hash ?>" />
+					
+					<div class="question-header">Please provide a reason for the decline (check all that apply):</div>
+					<div>
+						<?=$this->partial('/forms/regular/checkbox.phtml',
+							array(
+								'id'		=> 'option1',
+								'name'      => 'reason[]',
+							  	'label'     => 'We do not supply the product or service that has been requested.',
+								'required'	=> false,
+								'value'     => "We do not supply the product or service that has been requested",
+								'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+								'div'		=> array('class' => '')
+						 ))?>
+				
+						<?=$this->partial('/forms/regular/checkbox.phtml',
+							array(
+								'id'		=> 'option2',
+								'name'      => 'reason[]',
+							  	'label'     => 'The request is for a port/region that we do not cover.',
+								'required'	=> false,
+								'value'     => "The request is for a port/region that we do not cover",
+								'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+								'div'		=> array('class' => '')
+						 ))?>
+				
+						<?=$this->partial('/forms/regular/checkbox.phtml',
+							array(
+								'id'		=> 'option3',
+								'name'      => 'reason[]',
+							  	'label'     => 'The buyer has not provided sufficient time for a reply.',
+								'required'	=> false,
+								'value'     => "The buyer has not provided sufficient time for a reply",
+								'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+								'div'		=> array('class' => '')
+						 ))?>
+				
+						<?=$this->partial('/forms/regular/checkbox.phtml',
+							array(
+								'id'		=> 'option4',
+								'name'      => 'reason[]',
+							  	'label'     => 'The buyer has not sufficiently specified the RFQ.',
+								'required'	=> false,
+								'value'     => "The buyer has not sufficiently specified the RFQ",
+								'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+								'div'		=> array('class' => '')
+						 ))?>
+					
+						<?=$this->partial('/forms/regular/checkbox.phtml',
+							array(
+								'id'		=> 'option5',
+								'name'      => 'reason[]',
+							  	'label'     => 'We do not recognise the name of the requesting company.',
+								'required'	=> false,
+								'value'     => "We do not recognise the name of the requesting company",
+								'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+								'div'		=> array('class' => '')
+						 ))?>
+					
+						<?=$this->partial('/forms/regular/checkbox.phtml',
+							array(
+								'id'		=> 'option6',
+								'name'      => 'reason[]',
+							  	'label'     => 'Other.',
+								'required'	=> false,
+								'value'     => "",
+								'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+								'div'		=> array('class' => '')
+						 ))?>
+						 
+						 <div class="clear"></div>
+						 
+						 <?=$this->partial('/forms/regular/textarea.phtml',
+							array(
+								'name'      => 'other',
+							  	'required'	=> false,
+								'value'     => "",
+								'maxchar'	=> 1000,
+								'div'		=> array('class' => '')
+						 ))?>
+						 
+						 <?=$this->partial('/forms/regular/checkbox.phtml',
+							array(
+								'id'		=> 'option7',
+								'name'      => 'only_send_to_shipserv',
+							  	'label'     => 'Send information to ShipServ only - do not send a mesage to buyer.',
+								'required'	=> false,
+								'value'     => "Y",
+								'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+								'div'		=> array('class' => '')
+						 ))?>
+						
+						 <div class="clear"></div>
+						 <?php //if ($this->isAdmin || !empty($this->user) ): ?>
+	 				 				<br /><br />
+	 				 				<div class="question-header">Block this buyer</div>
+		 				 
+							<?=$this->partial('/forms/regular/checkbox.phtml',
+							array(
+								'id'		=> 'option8',
+								'name'      => 'block_buyer',
+							  	'label'     => 'Block this buyer from submitting Pages RFQs in the future. <a target="_blank" href="/profile/company-blocked-user-list/type/' . 'v'  . '/id/' . $this->tnid . '">Edit Blocked List</a>',
+								'required'	=> false,
+								'value'     => "Y",
+								'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+								'div'		=> array('class' => '')
+						 ))?>
+						<div class="clear"></div>
+						<?php// else: ?>
+						<!-- 
+						<div style="font-size:12px; width:500px; line-height:20px; margin-top:30px;">
+						<b>Block this buyer:</b> If you wish, you may block getting any further RFQs from this person. 
+						This tool is only available to logged in Pages users. 
+						If you can see this instruction then this means you are not logged in! 
+						To login, <a href="/user/register-login">click here</a>.  After logging in, you will return to this page, where 
+						you will be able to use the 'block' feature.
+						</div>
+						 -->
+						<?php// endif; ?>
+						<div class="clear" style="margin-top:20px;"></div>
+						<div class="zz medium grey button clearfix"><button type="button" id="decline">Send Survey</button></div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+<?php  
+} else if( $this->mode == "completed" ) {
+?>
+<div class="success-box">
+	<div class="positive"></div>
+	<h2>Thank you for your feedback</h2>
+	
+	<a href="/search/" style="left:185px; margin-left: 0;" class="new-search"></a> 
+</div>
+<?php 
+} 
+?>
+</div>
+

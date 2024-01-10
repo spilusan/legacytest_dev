@@ -1,0 +1,78 @@
+<td>{{id}}</td>
+<td>{{name}}</td>
+<td>{{city}}</td>
+<td>{{country}}</td>
+<td class="engLevel">
+	{{#if engLevel}}
+		<div class="lvl {{engLevel}}">&nbsp;</div>
+	{{/if}}
+</td>
+<td class="right">{{formatNumber gmv}}</td>
+<td>{{membershipLevel}}</td>
+<td>{{listingLevel}}</td>
+<td>{{dateCompanyCreated}}</td>
+<td>{{profileCompleteScore}}</td>
+<td>{{spotlightListing}}</td>
+<td>{{bannerAdvert}}</td>
+<td>{{catalogueUploaded}}</td>
+<td>{{ssoListing}}</td>
+<td>{{brandOwner}}</td>
+<td>{{adNetwork}}</td>
+<td>{{showCustomersPrivacySetting}}</td>
+<td>{{verifiedUserAccounts}}</td>
+<td>{{nonVerifiedActiveUserAccounts}}</td>
+<td>{{pendingJoinRequests}}</td>
+<td>
+	{{#if successfulSignIns}}
+	<a href="#userActivity" class="openDrilldown" data-id="user">
+		{{successfulSignIns}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if failedSignIns}}
+	<a href="#userActivity" class="openDrilldown" data-id="failed_login">
+		{{failedSignIns}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>{{searchEvents}}</td>
+<td>{{supplierPageImpressions}}</td>
+<td>
+	{{#if contactRequests}}
+	<a href="#userActivity" class="openDrilldown" data-id="contact_requests">
+		{{contactRequests}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>{{pagesRfqsSent}}</td>
+<td>
+	{{activePromotion}}
+</td>
+<td>
+	{{#if activePromotionReportViews}}
+	<a href="#userActivity" class="openDrilldown" data-id="active_promotion">
+		{{activePromotionReportViews}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>{{buyersOnApPendingList}}</td>
+<td>{{buyersOnApPromoteList}}</td>
+<td>{{buyersOnApExcludeList}}</td>
+<td>
+	{{#if sir3ReportViews}}
+	<a href="#userActivity" class="openDrilldown" data-id="sir">
+		{{sir3ReportViews}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>

@@ -1,0 +1,31 @@
+<chart>
+	<chart_type>pie</chart_type>
+	<legend bullet='circle' size='16'/>
+	
+	<chart_border top_thickness='0'
+		bottom_thickness='0'
+		left_thickness='0'
+		right_thickness='0'
+		color='000000'
+    />
+	
+	<chart_rect positive_color='FFFFFF' />
+	
+	<series_color>
+		<color>57AF0E</color>
+		<color>87CCFF</color>
+	</series_color>
+	
+	<chart_data>
+      <row>
+         <null/>
+         <string>Basic</string>
+         <string>Premium</string>
+      </row>
+      <row>
+         <null/>
+         <number>20</number>
+         <number>80</number>
+      </row>
+	</chart_data>
+</chart>

@@ -1,0 +1,64 @@
+<a id="results-stats-modal-close" href="#" class="close"><img src="/images/layout_v2/stats/close-stats-button.png" /></a>
+<img src="/images/layout_v2/stats/tradedata-logo.gif" />
+<div id="results-stats-modal-title">Trading by these suppliers in the last 3 months</div>
+<div class="window3-graph-container">
+	<script language="JavaScript" type="text/javascript">
+	AC_FL_RunContent(
+		'codebase', 'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,45,0',
+		'width', '350',
+		'height', '150',
+		'scale', 'noscale',
+		'salign', 'TL',
+		'bgcolor', '#FFFFFF',
+		'wmode', 'opaque',
+		'movie', '/maani/charts',
+		'src', '/maani/charts',
+		'FlashVars', 'library_path=/maani/charts_library&xml_source=<?php echo $this->byMonth['xmlUrl']; ?>', 
+		'id', 'my_chart',
+		'name', 'my_chart',
+		'menu', 'true',
+		'allowFullScreen', 'true',
+		'allowScriptAccess','sameDomain',
+		'quality', 'high',
+		'align', 'middle',
+		'pluginspage', 'http://www.macromedia.com/go/getflashplayer',
+		'play', 'true',
+		'devicefont', 'false'
+	);
+	</script>
+	<div id="results-stats-modal-month-feature">
+		<div id="results-stats-modal-big">$ <?php echo $this->byMonth['total']; ?></div>
+		<div>total (3 months)</div>
+	</div>
+</div>
+<div class="window3-graph-container">
+	<script language="JavaScript" type="text/javascript">
+	AC_FL_RunContent(
+		'codebase', 'http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=9,0,45,0',
+		'width', '350',
+		'height', '150',
+		'scale', 'noscale',
+		'salign', 'TL',
+		'bgcolor', '#FFFFFF',
+		'wmode', 'opaque',
+		'movie', '/maani/charts',
+		'src', '/maani/charts',
+		'FlashVars', 'library_path=/maani/charts_library&xml_source=<?php echo $this->byLevel['xmlUrl']; ?>', 
+		'id', 'my_chart',
+		'name', 'my_chart',
+		'menu', 'true',
+		'allowFullScreen', 'true',
+		'allowScriptAccess','sameDomain',
+		'quality', 'high',
+		'align', 'middle',
+		'pluginspage', 'http://www.macromedia.com/go/getflashplayer',
+		'play', 'true',
+		'devicefont', 'false'
+	);
+	</script>
+	<div id="results-stats-modal-level-feature">
+		<div id="results-stats-modal-big">20x more RFQs</div>
+		<div>went to Premium Profiles</div>
+		<a href="#"><img src="/images/layout_v2/stats/get-premium-red.gif" style="margin-top: 20px;" /></a>
+	</div>
+</div>

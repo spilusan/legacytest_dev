@@ -1,0 +1,18 @@
+<? $this->headLink()->appendStylesheet('/css/erroneous-trans-landing.css'); ?>
+<div id="body">
+   <div id="content" class="size1">
+        <h1 class="styled">Request Buyer corrects and re-issues PO</h1>    
+        <div class="inner_content">
+            <?php echo $this->partial('erroneous/header.phtml', array('response' => $this->response, 'display' => 'buyer')) ?>
+            <div class="greenInfo"><i class="fa fa-check-square"></i>
+              <?php if ($this->response['emailSentToBuyer']): ?>
+                   A request to correct and re-issue the PO has been sent to the Buyer
+              <?php else: ?>
+                 A request to correct and re-issue the PO was already sent to the Buyer
+              <?php endif ?>
+             </div>
+            <a href="/" class="homePageBtn">Go to Homepage</a>
+            <?php //echo $this->partial('erroneous/line-items.phtml', array('data' => $this->response['rows'])) ?>
+       </div>        
+  </div>
+</div>

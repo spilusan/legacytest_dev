@@ -1,0 +1,299 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/wp-styles.css');
+	$this->headLink()->appendStylesheet('/css/default-new.css');
+	$this->requirejs()	->addModule('backbone/shipmate/design-guidelines/views/mainView');
+	$user = Shipserv_User::isLoggedIn();
+?>
+
+<script>
+	$(document).on("change", "input[type='checkbox']", function () {
+		$(this).parent()[this.checked ? "addClass" : "removeClass"]("checked");
+	});
+</script>
+
+<section class="grey registration-header clearfix">
+	<div class="wrapper">
+		<div class="left">
+			<h2><span>Page 2 of 2</span> Register</h2>
+		</div>
+	</div>	
+</section>
+
+<section class="white">
+	<div class="registration-form-wrapper">
+		<div class="wrapper">
+			<form>
+				<div class="inputs-wrapper">
+					<div class="inline custom">
+						<label for="name">Your job type<span>*</span>: </label>
+						<div class="select">
+							<select name="jobtype">
+								<option value="GMT">Please select</option>
+								<option value="CET">Please select</option>
+								<option value="UTC">Please select</option>
+							</select>
+						</div>
+					</div>
+					<div class="inline">
+						<label>Are you a decision maker?</label>
+						<input type="radio" name="yes" value="yes"> Yes
+						<input type="radio" name="no" value="no"> No				
+					</div>
+					<div class="inline">
+						<label for="company-name">Company name<span>*</span>: </label>
+						<input type="text" id="company-name">
+					</div>
+					<div class="inline">
+						<label for="address-line-1">Address line 1<span>*</span>: </label>
+						<input type="text" id="address-line-1">
+					</div>
+					<div class="inline">
+						<label for="address-line-2">Address line 2: </label>
+						<input type="text" id="address-line-2">
+					</div>
+					<div class="inline">
+						<label for="address-line-3">Address line 3: </label>
+						<input type="text" id="address-line-3">
+					</div>
+					<div class="inline smaller">
+						<label for="zipcode">Zip code/Postcode: </label>
+						<input type="text" id="zipcode">
+					</div>
+					<div class="inline custom">
+						<label for="country">Country<span>*</span>: </label>
+						<div class="select">
+							<select name="country">
+								<option value="GMT">Please select</option>
+								<option value="CET">Please select</option>
+								<option value="UTC">Please select</option>
+							</select>
+						</div>
+					</div>
+					<div class="inline">
+						<label for="phone">Telephone:</label>
+						<input type="text" id="phone">
+					</div>
+					<div class="inline">
+						<label for="website">Website:</label>
+						<input type="text" id="website">
+					</div>
+					<div class="inline">
+						<label for="spend">Your spend in USD:</label>
+						<div class="select">
+							<select name="spend">
+								<option value="GMT">Please select</option>
+								<option value="CET">Please select</option>
+								<option value="UTC">Please select</option>
+							</select>
+						</div>
+					</div>
+					
+					<p class="required">*Required information</p>
+					
+					<h4>Vessels</h4>
+					
+					<div class="inline smaller">
+						<label for="vessels">Number of vessels: </label>
+						<input type="text" id="vessels">
+					</div>
+
+					<p class="vessels">Type of vessels</p>
+
+				</div>	
+
+				<div class="checkboxes-wrapper clearfix">
+					<div class="checkbox-container">
+						<input type="checkbox" id="barges" name="barges">
+						<label for="barges" class="checkbox-label">
+							Barges
+						</label>
+					</div>	
+					<div class="checkbox-container">
+						<input type="checkbox" id="bulk" name="bulk">
+						<label for="bulk" class="checkbox-label">
+							Bulk
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="carcarrier" name="carcarrier">
+						<label for="carcarrier" class="checkbox-label">
+							Car Carrier
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="chemicalcarrier" name="chemicalcarrier">
+						<label for="chemicalcarrier" class="checkbox-label">
+							Chemical Carriers
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="coastal" name="coastal">
+						<label for="coastal" class="checkbox-label">
+							Coastal
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="containerfeeder" name="containerfeeder">
+						<label for="containerfeeder" class="checkbox-label">
+							Container Feeder
+						</label>
+					</div>		
+					<div class="checkbox-container">
+						<input type="checkbox" id="containerliner" name="containerliner">
+						<label for="containerliner" class="checkbox-label">
+							Container Liner
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="cruise" name="cruise">
+						<label for="cruise" class="checkbox-label">
+							Cruise
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="dredger" name="dredger">
+						<label for="dredger" class="checkbox-label">
+							Dredger
+						</label>
+					</div>	
+					<div class="checkbox-container">
+						<input type="checkbox" id="fspo" name="fspo">
+						<label for="fspo" class="checkbox-label">
+							FSPO
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="ferries" name="ferries">
+						<label for="ferries" class="checkbox-label">
+							Ferries
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="generalcargo" name="generalcargo">
+						<label for="generalcargo" class="checkbox-label">
+							General Cargo
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="heavylift" name="heavylift">
+						<label for="heavylift" class="checkbox-label">
+							Heavy Lift
+						</label>
+					</div>	
+					<div class="checkbox-container">
+						<input type="checkbox" id="hospitalship" name="hospitalship">
+						<label for="hospitalship" class="checkbox-label">
+							Hospital Ship
+						</label>
+					</div>	
+					<div class="checkbox-container">
+						<input type="checkbox" id="lng" name="lng">
+						<label for="lng" class="checkbox-label">
+							LNG
+						</label>
+					</div>		
+					<div class="checkbox-container">
+						<input type="checkbox" id="lpg" name="lpg">
+						<label for="lpg" class="checkbox-label">
+							LPG
+						</label>
+					</div>	
+					<div class="checkbox-container">
+						<input type="checkbox" id="osv" name="osv">
+						<label for="osv" class="checkbox-label">
+							OSV
+						</label>
+					</div>	
+					<div class="checkbox-container">
+						<input type="checkbox" id="offshore" name="offshore">
+						<label for="offshore" class="checkbox-label">
+							Offshore Drilling Rigs
+						</label>
+					</div>		
+					<div class="checkbox-container">
+						<input type="checkbox" id="reefer" name="reefer">
+						<label for="reefer" class="checkbox-label">
+							Reefer
+						</label>
+					</div>	
+					<div class="checkbox-container">
+						<input type="checkbox" id="research" name="research">
+						<label for="research" class="checkbox-label">
+							Research
+						</label>
+					</div>	
+					<div class="checkbox-container">
+						<input type="checkbox" id="roro" name="roro">
+						<label for="roro" class="checkbox-label">
+							RoRo
+						</label>
+					</div>	
+					<div class="checkbox-container">
+						<input type="checkbox" id="seismic" name="seismic">
+						<label for="seismic" class="checkbox-label">
+							Seismic
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="speciality" name="speciality">
+						<label for="speciality" class="checkbox-label">
+							Speciality
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="tankers" name="tankers">
+						<label for="tankers" class="checkbox-label">
+							Tankers
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="trawlers" name="trawlers">
+						<label for="trawlers" class="checkbox-label">
+							Trawlers
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="tugboat" name="tugboat">
+						<label for="tugboat" class="checkbox-label">
+							Tugboat
+						</label>
+					</div>
+					<div class="checkbox-container">
+						<input type="checkbox" id="yacht" name="yacht">
+						<label for="yacht" class="checkbox-label">
+							Yacht
+						</label>
+					</div>
+				</div>
+
+				<div class="terms-and-cons">
+					<p>Our Privacy policy and Terms of Use have been updated to enable us to share some of your information with suppliers. By doing this, suppliers on our system have more reason to improve their profiles which gives users, such as you, a better experience.</p>
+					<p>We only share your information with your consent. The default seting is that we share only your job title and company, but not your name. However, you can change this setting at any time to a number of other options including anonymity. If you wish to change how we share your personal information you can do so firstly by agreeing to the changed Privacy Policy and Terms of Use, and thereafter go to settings in the Accounts section, and change your settings</p>
+					<p>
+						<input type="checkbox" id="agreement" name="agreement">
+						<label for="agreement" class="checkbox-label">
+							* I have read and agreed to the changed Privacy Policy and Terms of use.
+						</label>
+					</p>
+					<p>
+						<input type="checkbox" id="news" name="news" checked>
+						<label for="news" class="checkbox-label">
+							Keep me up to date with all the latest news from the ShipServ community
+						</label>
+					</p>
+					<p>
+						<input type="checkbox" id="logged" name="logged" checked>
+						<label for="logged" class="checkbox-label">
+							Keep me logged in
+						</label>
+					</p>
+				</div>
+
+				<div class="btn-container submit clearfix">
+					<a href="#" class="btn transparent transparent-blue"><i class="fa fa-angle-left" aria-hidden="true"></i> Back</a>
+					<input type="submit" class="btn green medium" value="Register me">
+				</div>
+			</form>
+		</div>
+	</div>
+</section>

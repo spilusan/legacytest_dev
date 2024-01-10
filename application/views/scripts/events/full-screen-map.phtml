@@ -1,0 +1,28 @@
+<?php
+if ((int)Myshipserv_Config::getIni()->google->services->maps->display === 1) {
+    $this->compressedScript()->appendFile('/js/jquery.urlparse.js')
+        ->appendFile('/js/jquery.urlparse.js')
+        ->appendFile('/js/json2.js')
+        ->appendFile('/js/jquery.jsoncookie.js')
+        ->appendFile('/js/jquery.cookie.js');
+
+    $this->CDNLink()->appendStylesheet('/css/home.css')
+        ->appendStylesheet('/css/map.css')
+        ->appendStylesheet('/css/fullmap.css') . "\n";
+
+    ?>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $this->googleMapsApiKey; ?>&sensor=false"
+            type="text/javascript"></script>
+    <script src="/js/lib/gMapInfobox.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/js/modules/backbone/lib/jquery.eventmap.js"></script>
+    <div id="full-screen-map"></div>
+    <script type="text/javascript">
+        <!--
+        $(document).ready(function () {
+            $('#full-screen-map').eventMap({mapZoom: 4, fullScreen: true});
+        });
+        //-->
+    </script>
+<?php
+}
+?>

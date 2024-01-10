@@ -1,0 +1,38 @@
+.profile-body-right input {
+	padding-top: 10px;
+	height: 26px;
+}
+
+.profile-body-right input.administrator {
+	padding-top: 3px;
+}
+
+.profile-body-right .checkbox, .profile-body-right input[type="checkbox"], .profile-body-right input[type="radio"]{
+	height:auto;
+	padding:0px;
+	position: relative;
+	top: 2px;
+	margin-right: 3px;
+}
+
+.profile-body-right input[type="radio"] {
+	top: 0;
+}
+
+.profile-body-right .icons-holder {
+	overflow: hidden;
+}
+
+.profile-body-right .remove-user {
+	position: relative;
+	top: 0px;
+}
+
+#add-people-block .profile-body-group input {
+	padding-top: 10px !important;
+}
+
+#upper_header .userinfo .usermessage form#shipMate input[type="text"]{ 
+	position: relative;
+	top: 2px;
+}

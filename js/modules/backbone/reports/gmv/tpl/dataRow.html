@@ -1,0 +1,35 @@
+{{#each rows}}
+    <tr>
+        <td>
+        	<a href="{{this.url-p}}" target="_blank"><img src="/img/essm/print.png" height="15" align="middle"></a>
+			
+        </td>
+    	<td>{{this.doc-type}}</td>
+        <td>{{this.ord-ref-no}}</td>
+        <td>{{this.poc-ref-no}}</td>
+        <td>{{this.vessel-name}}</td>
+        <td>{{this.imo}}</td>
+        <td>{{this.submitted-date}}</td>
+        <td>{{this.currency}}</td>
+        <td class="right">{{formatCurrency this.total-cost}}</td>            
+        <td class="right">{{this.currency-rate}}</td>
+        <td class="right">{{#if this.is-price-corrected}}<span class="correction">***</span>{{/if}} {{formatCurrency this.total-cost-usd}}</td>
+        <td class="right">{{formatCurrency this.adjusted-cost}}</td>
+
+        <td class="right">{{#ifCond this.rate-standard "1"}}S{{else}}T{{/ifCond}}</td>
+        <td class="right">{{this.rate-value}}</td>
+        <td class="right">{{this.doc-status}}</td>
+        
+        <td class="right">
+            {{#unless this.is-txn-invalid }}
+                {{#if this.canMark}}
+                <a href="{{this.url-i}}" target="_blank" title="Mark transaction as Invalid" class="button extrasmall lblue setInValid">Mark as Invalid</a>
+                <!-- <a href="{{this.url-i}}" target="_blank"><img title="Mark transaction as Invalid" src="/img/icons/small/icon.png" height="15" align="middle"></a> -->
+                {{/if}}
+            {{else}}
+                Invalid
+            {{/unless}}
+        </td>
+        
+    </tr>
+{{/each}}

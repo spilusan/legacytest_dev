@@ -1,0 +1,219 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+$rfq = $this->rfq;
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+	.rfqDetail td{
+		padding-bottom:0px !important;
+	}
+	#header, .divider, #footer {
+		width: 2156px !important;
+	}
+</style>
+<div id="breadcrumbs">
+<?php
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Match', 'url'  => '/match/inbox');
+	$breadcrumbs[] = array('name' => 'Reports', 'url'  => '/match/adoption-kpi');
+	$breadcrumbs[] = array('name' => 'Adoption rate', 'url'  => '/match/adoption-kpi');
+	$breadcrumbs[] = array('name' => 'Buyer drilldown for ' . $this->buyerName, 'url'  => 'match/breakdown-per-buyer?buyerId=' . _htmlspecialchars($_REQUEST['buyerId']) . '&startDate=01/04/2012&endDate=27/09/2013');
+	$breadcrumbs[] = array('name' => 'RFQ drilldown for ' . _htmlspecialchars($_REQUEST['rfqId']), 'url'  => '');
+	
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); 
+?>
+</div>
+<div id="body" class="adoptionRfqBreakdown">
+	<div id="content">
+		<h1 class="styled">Adoption rate - per RFQ</h1>
+		<form method="POST" class="new">
+			<div style="float:right; margin-right:20px; font-size:20px; font-weight:bold;"><?= $this->buyerName?></div>
+		    <table style="margin: auto;  width:100%;">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		            	<div style="font-size:12px; margin-top:10px; margin-bottom:10px; line-height:16px;">
+		            		<table class="rfqDetail">
+		            			<tr><td width="140" title="RFQ sent to match">Internal ref (ID)</td><td><?php echo $rfq->rfqInternalRefNo?></td></tr>
+		            			<tr><td>Buyer ref</td><td><?php echo $rfq->rfqRefNo?></td></tr>
+		            			<tr><td>Subject</td><td><?php echo $rfq->rfqSubject?></td></tr>
+		            			<tr><td>Sent to match</td><td><?php echo $rfq->rfqCreatedDate?></td></tr>
+		            			<tr><td>Potential saving</td><td>$ <?php $x = $rfq->getPotentialSaving(); echo (($x===null)?"NA":number_format($x, 2));?></td></tr>
+		            			<tr><td>Realised saving</td><td>$ <?php echo number_format($rfq->getActualSaving(),2)?></td></tr>
+		            		</table>
+						</div>
+		                <table id="resultsTab" width="100%">
+		                    <thead>
+		                        <tr>
+			                        <th class="minimal"></th>
+									<th class="minimal">Rfq ref no</th>
+			                        <th class="minimal">Rfq</th>
+									<th class="minimal">Quote</th>
+                        			<th class="minimal">Order</th>
+									<th class="minimal">TNID</th>
+			                        <th class="left">Supplier Name</th>
+									<th class="narrow">Type</th>
+									<th class="narrow">Imported</th>
+									<th class="narrow">Declined</th>
+									<th class="narrow">Rfq Date</th>
+									<th class="narrow">Quote date – blank if supplier has not yet quoted</th>
+									<th class="narrow">Order date – blank if supplier has not yet place order</th>
+									<th class="narrow">Quote price (USD) – or ‘Yet to Quote’ if supplier has not quoted</th>
+									<th class="narrow">Order price (USD)</th>
+									<th class="narrow last">Quote completeness as %; blank if supplier has not quoted.</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php foreach ((array)$this->report->getData() as $key => $result) : ?>
+		                        	<?php 
+		                        		$quote = null;
+		                        		$order = null;
+		                        		if( $result['QOT_INTERNAL_REF_NO'] != "" )
+		                        		{
+		                        			$quote = Shipserv_Quote::getInstanceById($result['QOT_INTERNAL_REF_NO'], true);
+		                        		}
+		                        		if( $result['ORD_INTERNAL_REF_NO'] != "" )
+		                        		{
+		                        			$order = Shipserv_Order::getInstanceById($result['ORD_INTERNAL_REF_NO'], true);
+		                        		}
+		                        		
+		                        		try
+										{
+		                        			$rfq = Shipserv_Rfq::getInstanceById($result['RFQ_INTERNAL_REF_NO'], null, true);
+		                        		}
+		                        		catch(Exception $e)
+		                        		{
+		                        			//echo $e->getMessage();
+		                        		}
+
+		                        		$color = "";
+		                        		if( $result['RFQ_DESTINATION'] == 'MATCH_SELECTED' )
+		                        		{
+		                        			$rfqType = "Match";
+		                        			$color = "lgreen";
+		                        		}
+		                        		else
+		                        		{
+		                        			$rfqType = "Buyer";
+		                        		}
+		                        		if( $result['ORD_INTERNAL_REF_NO'] != "" )
+		                        		{
+		                        			$color = "yellow";
+		                        		}
+		                        		
+		                        		//
+		                        	?>
+		                            <tr class="<?php echo $color?>">
+		                                <td><?= ($key + 1)?></td>
+		                                <td class="left"><?php echo $result['RFQ_REF_NO']?></td>
+										<td><a target="_blank" href="<?php echo ($rfq!==null)?$rfq->getUrl():"";?>"><?php echo $result['RFQ_INTERNAL_REF_NO']?></a></td>
+										<td><a target="_blank" href="<?php echo ($quote!==null)?$quote->getUrl():"";?>" style="<?= ($result['IS_DECLINED']>0)?'text-decoration: line-through;':''?>">
+										<?
+											if( $result['QOT_INTERNAL_REF_NO'] != "" )
+											{
+												echo $result['QOT_INTERNAL_REF_NO'] . ' ' . $result['QOT_IMPORTED'];
+											}
+											else 
+											{
+												if($result['IS_DECLINED']>0)
+												{
+													echo "Declined";
+												}
+											}
+										?>
+										</a></td>
+										<td><a target="_blank" href="<?php echo ($order!==null)?$order->getUrl():"";?>"><?php echo $result['ORD_INTERNAL_REF_NO']?></a></td>
+										<td><?php echo $result['TNID']?></td>
+										<td class="left"><?php echo $result['SPB_NAME']?></td>
+										<td><?php echo $rfqType?></td>
+										<td><?php echo ($result['IS_IMPORTED']>0)?'Y':'N'?></td>
+										<td><?php echo ($result['IS_DECLINED']>0)?'Y':'N'?></td>
+										<td><?php echo $result['RFQ_SUBMITTED_DATE']?></td>
+										<td><?php echo $result['QOT_SUBMITTED_DATE']?></td>
+										<td><?php echo $result['ORD_SUBMITTED_DATE']?></td>
+										<td class="currency qotStatus"><?php echo ($result['QOT_SUBMITTED_DATE']=="")?"":round($result['QOT_TOTAL_PRICE_IN_USD'],2)?></td>
+										<td class="currency qotStatus"><?php echo round($result['ORD_TOTAL_PRICE_IN_USD']);?></td>
+										<td class="percentage last"><?php echo ($result['QOT_SUBMITTED_DATE']=="")?"":round($result['QOT_COMPLETENESS'],0)?></td>
+									</tr>
+		                        <?php endforeach; ?>
+		                	</tbody>
+		                </table>
+		                <table id="header-fixed"></table>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".toggleDetail").click(function(){
+			$(this).parent().parent().find(".detail").toggle();
+		});
+		function isNumber(n) {
+			return !isNaN(parseFloat(n)) && isFinite(n);
+		}
+
+		function number_format (number, decimals, dec_point, thousands_sep) {
+			//return number;
+		    // http://kevin.vanzonneveld.net/techblog/article/javascript_equivalent_for_phps_number_format/
+		    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+		    var n = !isFinite(+number) ? 0 : +number,
+		        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+		        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+		        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+		        s = '',
+		        toFixedFix = function (n, prec)
+		        {
+		            var k = Math.pow(10, prec);
+		            return '' + Math.round(n * k) / k;
+		        };
+		    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+		    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+		    if (s[0].length > 3)
+		    {
+		        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+		    }
+		    if ((s[1] || '').length < prec)
+		    {
+		        s[1] = s[1] || '';
+		        s[1] += new Array(prec - s[1].length + 1).join('0');
+		    }
+		    return s.join(dec);
+		}
+					
+		$("#resultsTab tbody tr td").each(function(){
+			if( $.trim($(this).html()) == "" ) {
+				if ($(this).hasClass('qotStatus')) $(this).html("Yet to quote");
+				else $(this).html("N/A");
+			}
+			
+			if( $(this).hasClass('currency') ) {
+				//html = '<div class="sign">$</div><div class="value">' + number_format($(this).html(), 2, '.', ',') + '</div><div class="clear"></div>';
+				if( isNaN($(this).html()) == false ) {
+					html = '' + number_format($(this).html(), 2, '.', ',') + '';
+					$(this).html( html );
+				}
+			}
+			
+			if( $(this).hasClass('percentage') ) {
+				if( $(this).html() != "N/A" ){
+					html = '<div class="sign">%</div><div class="value">' + number_format($(this).html(), 0, '.', ',') + '</div><div class="clear"></div>';
+					html = '' + number_format($(this).html(), 2, '.', ',') + '';
+					$(this).html( html );
+				}
+			}
+			
+		});
+
+	});
+</script>
+<div class="clear"></div>

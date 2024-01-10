@@ -1,0 +1,12 @@
+<?php
+if (isset($this->result['generalZoneResultCount']) and ((int)$this->result['generalZoneResultCount'] > (int)$this->result['documentsFound']) && !$this->isZone)
+{
+?>
+<a href="<?php echo $this->result['generalZoneResultUrl'] ?>">
+<div class="zone-exit-box">
+	We found <?php echo $this->result['generalZoneResultCount']?> supplier<?php if ($this->result['generalZoneResultCount']>1) echo "s";?> in the main directory that match your search criteria. <br/><span class="zone-exit-link" style="color:#91caff;">Click here to view.</span>
+</div>
+</a>
+<?php
+}
+?>

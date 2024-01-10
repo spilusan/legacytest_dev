@@ -1,0 +1,258 @@
+<?php
+$this->headLink()->appendStylesheet('/css/shipmate.css')
+->appendStylesheet('/css/uniform.rfq.css');
+
+
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+
+function numberFormat($number, $currency = false)
+{
+	if( $number == 222222222220 )
+	{
+		return "not transitioned";
+	}
+	else if( $number == 11111111110 )
+	{
+		return "no data";
+	}
+	else
+	{
+		return ( ($currency===true)?"$ ":"" ) . number_format($number, ($currency === true)?2:0);
+	}
+}
+
+$numRows = 1;
+?>
+
+<style>
+	td{
+		font-size:12px;
+	}
+	td b{
+		font-size:16px;
+		line-height:20px;
+	}
+</style>
+
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+	.billing-form{
+		font-size:12px;
+	}
+	#data{
+		margin-top:20px; margin-bottom:20px;
+	}
+	#data, #data tr, #data td {
+		border:1px solid #caedf9;
+		font-size:12px;
+	}
+	#data .table-head{
+		background-color:#caedf9;
+		font-weight:bold;
+		font-size:14px;
+	}
+	#data td{
+		vertical-align:center;
+		text-align:left;
+		padding:5px;
+	}
+	
+	#data td img{
+		height:14px;
+		float: left;
+		display:none;
+	}
+	#data .right{
+		text-align:right;
+	}
+	
+	#data .table-head td{
+		font-weight:bold;
+		font-size:16px;
+	}
+	
+	#data .table-head td.date-info{
+		font-size:10px;
+	}
+	
+	#data tbody td{
+		height: 16px;
+	}
+	#data .detail{
+		text-align:left;
+	
+	}
+	
+	#data .attributes{
+		font-size:10px;
+		margin-top:5px;
+		margin-bottom:5px;
+	}
+	#data .secondary-row td{
+		font-size:12px;
+	}
+	#data .exportable-column{
+		height:16px;
+		width:110px;
+	}
+	#data .ctr{
+		background-color:#f5f7fa;
+	}
+	
+	#data .ca-rate{
+		background-color:#e9edf1;
+		font-weight:bold;
+	}
+	
+	.content_wide .ppc-metric-container{
+		margin:10px;
+	}
+
+	.border-head{
+		border-right: 1px #fff solid !important; 
+	}
+</style>
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Salesforce', 'url'  => '/shipmate/value-event');
+	$breadcrumbs[] = array('name' => 'Value event upload', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<div id="body" style="width:1655px;">
+	<div id="content" style="width: 1400px;">
+		<h1 class="styled">Billing</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<div class="innerContent">
+			<div class="">	
+			
+			
+<!--  -->
+		<form class="billing-form" action="/reports/billing" method="get" onsubmit="return checkForm();">
+			<input type="hidden" id="key" value="<?= $this->key?>" />
+			<label><input type="checkbox" <?= ( ( $this->params['supplier'] == 'all') ? 'checked="checked"':'' )?> value="all" name="supplier" />
+			All VBP suppliers for: </label>
+			<label>
+				<select name="month">
+					<option value="">month</option>
+					<?php 
+						for($i=1; $i<=12; $i++){
+							$t = mktime(0,0,0,$i,1,2014);
+							?><option <?= (($this->params['month'] == date("m", $t))?'selected="selected"':'') ?> value="<?= date("m", $t)?>">- <?= date("F", $t);?></option><?php 
+						}
+					?>
+				</select>
+			</label>
+			<label>
+				<select name="year">
+					<option value="">year</option>
+					<?php 
+						for($i=2014; $i>=2010; $i--){
+							?><option <?= (($this->params['year'] == $i)?'selected="selected"':'') ?> value="<?= $i?>">- <?= $i;?></option><?php 
+						}
+					?>
+				</select>
+			</label>
+			billing
+			<input type="submit" value="Generate" name="a" class="button small lblue"/>
+			<?php if( $this->data !== null ){?>
+			<br />
+			<!-- Running the report on this month for the previous -->
+			<br />- <b>GMV</b> and <b>Page 1 Search Impression</b> is using [selected month]-1 calendar month period
+			<br />- <b>Unactioned RFQs</b> and <b>Unique Contact View</b> is using [selected month]-2 calendar month period
+			<br />- Rollover on the GMV to export the breakdown information
+			<? if( $this->mcStatus === false ){ ?><br />- <span style="color:red; font-weight:bold;">Memcache isn't running, you are not able to export data out of this page. Please contact IT Support</span><? }?>
+			<?php }?>
+			
+			<input type="hidden" name="h" value="<?= md5(rand(0,100)) ?>">
+		</form>	
+		<?php if( $this->data !== null ){?>
+		<table width="100%" id="data">
+			<thead class="table-head">
+				<tr>
+					<td></td>
+					<td>Supplier</td>
+					<td>Transition <br />date</td>
+					<td>GMV</td>
+					<td>Unactioned <br />RFQ</td>
+					<td>Unique <br />Contact View</td>
+					<td>P1 Search <br />Impression</td>
+				</tr>
+			</thead>
+			<tbody>
+				<? foreach($this->data as $row){ ?>
+				<tr>
+					<td><?= $numRows++;?></td>
+					<td><?= $row['supplier']->tnid . ' - ' . $row['supplier']->name?></td>
+					<td><?= strtolower($row['data']['transitionDate'])?></td>
+					<td class="right <? if( $this->mcStatus !== false ) { echo 'exportable-column'; }?>" title="<?= $row['data']['gmvP1siDate']?>"><?= numberFormat($row['data']['gmv'], true)?> 		<img colName="gmv" tnid="<?= $row['supplier']->tnid?>" month="<?= $this->params['month']?>" year="<?= $this->params['year']?>" src="/images/ms-excel.gif" title="<?= ($this->mcStatus !== false)?"export detail to csv":"memcached is not running, please contact IT support"?>" /></td>
+					<td class="right" title="<?= $row['data']['ucvUrfqDate']?>"><?= numberFormat($row['data']['unactioned'])?>		<img colName="unactionedRfq" tnid="<?= $row['supplier']->tnid?>" src="/images/ms-excel.gif" title="export detail to csv" /></td>
+					<td class="right" title="<?= $row['data']['ucvUrfqDate']?>"><?= numberFormat($row['data']['uniqueContactView'])?>	<img colName="uniqueContactView" tnid="<?= $row['supplier']->tnid?>" src="/images/ms-excel.gif" title="export detail to csv" /></td>
+					<td class="right" title="<?= $row['data']['gmvP1siDate']?>"><?= numberFormat($row['data']['searchImpression'])?>	<img colName="page1SearchImpression" tnid="<?= $row['supplier']->tnid?>" src="/images/ms-excel.gif" title="export detail to csv" /></td>
+				</tr>
+				<? }?>
+			</tbody>
+		</table>
+		<input type="submit" <? if( $this->mcStatus == false ) { echo 'disabled="disabled" title="Sorry, you cannot export this data. Memcached isn\'t running Please contact IT Support!"';} ?> value="Export to CSV for Salesforce" name="a" onclick="location.href='/reports/billing?a=export&key=<?= $this->key?>';" />
+		<?php }?>
+			
+<!--  -->						
+			
+						
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="clear"></div>
+	<script type="text/javascript">
+		function checkForm()
+		{
+			if( $("select[name='month']").val() == "" || $("select[name='year']").val() == "" )
+			{
+				alert("Please check the month and year of the report");
+				$("select[name='month']").focus();
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+
+		$(document).ready(function(){
+			$(".exportable-column").hover(
+				function(){
+					var html = $(this).html();
+					if( html.indexOf('not transitioned') == -1 && html.indexOf('no data') == -1 )
+					{
+						$(this).find("img").show();
+						$(this).css("cursor", "pointer");
+					}
+				}, 
+				function(){
+					$(this).find("img").hide();
+				}
+			)
+			;
+			$(".exportable-column img").click(function(){
+				if(confirm("Would you like to export this to CSV? This can take up to 30 mins depending on the txn of the suppliers."))
+				{
+					url = "/reports/billing?a=export&t=" + $(this).attr("colName") + "&month=" + $(this).attr("month") + "&year=" + $(this).attr("year") + "&tnid=" + $(this).attr("tnid") + "&h=" + (Math.random() * 1000 + "&key=" + $("#key").val() );
+					location.href=url;
+				}
+			});
+		});
+	</script>

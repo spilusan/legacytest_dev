@@ -1,0 +1,138 @@
+#body {
+	#content {
+		.greyBox {
+			background: #EFF1F5;
+			padding: 20px;
+			margin-bottom: 20px;
+
+			.red {
+				color: #E81E24;
+			}
+		}
+		.messageBox {
+			background: #EFF1F5;
+			padding: 12px 5px 24px 5px;
+			text-align: center;
+			margin-bottom: 20px;
+			margin: 0px;
+			p {
+				font-size: 16px;
+				.lgBlue {
+					color: #1b6bb4;
+				}
+			}
+		}
+
+		.float {
+			float: left;
+		}
+
+		.logoContainer {
+			width: 155px;
+			margin-right: 10px;
+		}
+
+		.companyDets {
+			width: 345px;
+			margin-right: 10px;
+			line-height: 1.5;
+		}
+
+		.tradeStatus {
+			width: 490px;
+			margin-left: 25px;
+			line-height: 1.2;
+			color: #0090D4;
+			span {
+				display: block;
+				padding-top: 3px;
+				color: #000000;
+				line-height: 1.5;
+			}
+		}
+
+		.box {
+			width: 525px;
+			margin-top: 20px;
+			margin-right: 20px;
+
+			&.excludeBox {
+				margin-right: 0;
+			}
+
+			.boxHead {
+				text-align: center;
+				padding: 15px;
+				height: 36px;
+				font-size: 20px;
+				color: #ffffff;
+
+				span {
+					position: relative;
+					top: -9px;
+				}
+
+				&.green {
+					background: #008B00;
+				}
+
+				&.grey {
+					background: #333333;
+				}
+			}
+
+			.boxBody {
+				padding: 15px;
+				line-height: 1.5;
+
+				&.green {
+					border: 1px solid #008B00;
+					border-top: 0;
+
+					.button {
+					    font-weight: normal;
+					    text-shadow: none;
+					    background-image: none;
+					    background: #008B00;
+					    color: #ffffff;
+					    font-size: 18px;
+					    margin: 0 auto;
+					    padding: 10px 20px;
+					    display: block;
+					    width: 249px;
+					    text-align: center;
+					}
+				}
+
+				&.grey {
+					border: 1px solid #333333;
+					border-top: 0;
+					height: 192px;
+
+					.button {
+					    font-weight: normal;
+					    text-shadow: none;
+					    background-image: none;
+					    background: #333333;
+					    color: #ffffff;
+					    font-size: 18px;
+					    margin: 0 auto;
+					    padding: 10px 20px;
+					    display: block;
+					    width: 249px;
+					    text-align: center; 
+					    position: relative;
+					    top: 24px;
+					}
+				}
+			}
+		}
+	}
+	i {
+		&.fa {
+			font-size: 22px;
+			vertical-align: middle;
+			margin: -2px 3px 0px 0px;
+		}
+	}
+}

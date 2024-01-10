@@ -1,0 +1,7 @@
+<?php
+$endorserInfo = $this->review->getEndorserInfo();
+?>
+<h2>Following review was edited by <?php echo $endorserInfo["BYO_NAME"] ?></h2>
+<p>	You may see and post reply to this review by going to:<br/>
+	<a href="<?php echo $this->data["link"]?>"><?php echo $this->data["link"]?></a>
+</p>

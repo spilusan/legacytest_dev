@@ -1,0 +1,28 @@
+<?
+ /**
+  * Select element for forms-complex.css form style
+  * @param String name - parameter name
+  * @param String label - label to display for field. Empty label suppresses <label> element altogether
+  * @param String options - array in the format 'value' => 'title'
+  * @param String selected - the value of the selected option
+  */
+	
+  //Defaults
+  if (!isset($this->options)) $this->options = array();
+  if (!isset($this->disabled)) $this->disabled = false;
+  if (!isset($this->selected)) $this->selected = '';
+
+  $divClass = 'field select' . ($this->hasErrors ? ' invalid' : '') . (isset($this->div['class']) ? ' '.$this->div['class'] : '');
+  $selectClass = 'select' . ($this->hasErrors ? ' invalid' : '') . ' ' . ($this->required ? ' required' : '') . (empty($this->label) ? ' nolabel' : '') . (isset($this->select['class']) ? ' '.$this->select['class'] : '') . ($this->disabled ? ' disabled' : '');
+?>
+
+<div class="<?=$divClass?>">
+	<?if (!empty($this->label)):?>
+		<label class="<?=($this->hasErrors ? 'invalid' : '')?>" for="<?=$this->name?>"><?=$this->label?></label>
+	<?endif?>
+	<select class="<?=$selectClass?>" name="<?=$this->name?>" <?=$this->disabled ? ' disabled="disabled"' : '' ?>>
+		<?foreach($this->options as $value => $title):?>
+			<option value="<?=$value?>" <?=($value === $this->selected) ? 'selected="selected"' : ''?>><?=$title?></option>
+		<?endforeach?>
+	</select>
+</div>

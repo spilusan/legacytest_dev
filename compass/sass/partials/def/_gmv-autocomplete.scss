@@ -1,0 +1,15 @@
+/* Auto complete part, added by Attila O 10/11/2014 */
+.tnidAutocomplete,  {
+	position: relative;
+	left: 7px;
+	top: 7px;
+	width: 20px;
+	height: 20px;
+	background: url(/images/layout_v2/file_icons/spinner.gif) no-repeat scroll 0 0 transparent;
+	display: inline-block;
+	display: none;
+}
+.auto-complete-list-wide {
+	width: 305px !important;
+	margin-left: 10px !important; 
+}

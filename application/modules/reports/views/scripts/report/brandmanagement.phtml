@@ -1,0 +1,155 @@
+<?php
+
+$this->headLink()->appendStylesheet('/css/brand-dashboard.css');
+$this->headScript()->appendFile('/js/modules/backbone/lib/jquery.dataTables.min.js');
+
+//$this->headLink()->appendStylesheet('/css/jquery.dataTables.css');
+
+$this->requirejs()
+	->addModule('match/report')	
+		->addDefinition('/match/reportType', '"brand-management"');
+
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Usage report', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'Brand Management Dashboard', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+
+?>
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+
+<div id="body" class="liquid">
+	<div id="content">
+		<h1 class="styled">Brand Management Dashboard</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+
+			<ul class="tabs">
+				<li class="selected"><a href="#">Summary</a></li>
+				<li><a href="#">Details</a></li>
+			</ul>
+
+			<div id="summaryTab">
+				<form method="get" class="new">
+					<table>
+						<tbody>
+							<tr>
+								<td><?= $this->summaryInfo['BRAND_NAME'] ?></td>
+								<td>Total number of brands</td>
+							</tr>
+
+							<tr>
+								<td><?= ($this->summaryInfo['BRAND_NAME'] != 0) ? number_format(round($this->summaryInfo['SYNONYM_LIST'] / $this->summaryInfo['BRAND_NAME'] *100 ,1 ), 1, '.', '') : '-' ?>%</td>
+								<td>of brands have at least one defined synonym</td>
+							</tr>
+
+							<tr>
+								<td><?= ($this->summaryInfo['BRAND_NAME'] != 0) ? number_format(round($this->summaryInfo['OWNER_LIST'] / $this->summaryInfo['BRAND_NAME'] *100 ,1 ), 1, '.', '') : '-' ?>%</td>
+								<td>of brands have a defined owner</td>
+							</tr>
+
+							<tr>
+								<td><?= ($this->summaryInfo['BRAND_NAME'] != 0) ? number_format(round($this->summaryInfo['IS_ACTIVELY_MANAGED'] / $this->summaryInfo['BRAND_NAME'] *100 ,1 ), 1, '.', '') : '-' ?>%</td>
+								<td>of brands have an owner that is listed as actively managing</td>
+							</tr>
+
+							<tr>
+								<td><?= $this->summaryInfo['TOTAL_SUPPLIER_BRAND_LINKS'] ?></td>
+								<td>Total defined links between suppliers and brands</td>
+							</tr>
+
+							<tr>
+								<td><?= ($this->summaryInfo['TOTAL_SUPPLIER_BRAND_LINKS'] != 0) ? number_format(round($this->summaryInfo['TOTAL_AUTHORISED_CLAIMS'] / $this->summaryInfo['TOTAL_SUPPLIER_BRAND_LINKS'] *100 ,1 ), 1, '.', '') : '-' ?>%</td>
+								<td>Of links to brands, supplier is claiming authorised status</td>
+							</tr>
+
+							<tr>
+								<td><?= ($this->summaryInfo['TOTAL_SUPPLIER_BRAND_LINKS'] != 0) ? number_format(round($this->summaryInfo['LISTED_ONLY_COUNT'] / $this->summaryInfo['TOTAL_SUPPLIER_BRAND_LINKS'] *100 ,1 ), 1, '.', '') : '-' ?>%</td>
+								<td>Of links to brands, supplier is not claiming any authorised status</td>
+							</tr>
+
+							<tr>
+								<td><?= ($this->summaryInfo['TOTAL_AUTHORISED_CLAIMS'] != 0) ? number_format(round($this->summaryInfo['VERIFIED_CLAIMS'] / $this->summaryInfo['TOTAL_AUTHORISED_CLAIMS'] *100 ,1 ), 1, '.', '') : '-' ?>%</td>
+								<td>of authorised claims verified by brand owner</td>
+							</tr>
+
+							<tr>
+								<td><?= ($this->summaryInfo['TOTAL_AUTHORISED_CLAIMS'] != 0) ? number_format(round($this->summaryInfo['CLAIMS_WHERE_BRAND_IS_OWNED'] / $this->summaryInfo['TOTAL_AUTHORISED_CLAIMS'] *100 ,1 ), 1, '.', '') : '-' ?>%</td>
+								<td>of authorised claims would be verified if brands owners dealt with pending verfication requests</td>
+							</tr>
+
+							<tr>
+								<td><?= ($this->summaryInfo['CLAIMS_WHERE_BRAND_IS_OWNED'] != 0) ? number_format(round($this->summaryInfo['CLAIMS_PENDING_VERIFICATION'] / $this->summaryInfo['CLAIMS_WHERE_BRAND_IS_OWNED'] *100 ,1 ), 1, '.', '') : '-' ?>%</td>
+								<td>of claims made against owned brands are still pending a decision</td>
+							</tr>
+
+							<tr>
+								<td><?= $this->summaryInfo['TOTAL_SUPPLIER_BRAND_LINKS_0'] ?></td>
+								<td>Brands that are not related to any suppliers</td>
+							</tr>
+
+							<tr>
+								<td><?= number_format(round($this->summaryInfo['TOTAL_SUPPLIER_BRAND_LINKS_AVG'],1), 1, '.', '') ?></td>
+								<td>Average supplier relationships per brand</td>
+							</tr>
+
+							<tr>
+								<td><?= ($this->summaryInfo['CLAIMS_WHERE_BRAND_IS_OWNED'] != 0) ? number_format(round($this->summaryInfo['VERIFIED_CLAIMS'] / $this->summaryInfo['CLAIMS_WHERE_BRAND_IS_OWNED'] *100 ,1 ), 1, '.', ''): '-' ?>%</td>
+								<td>of claims where brand is owned have been verified</td>
+							</tr>
+						</tbody>
+					</table>	
+				</form>
+			</div>
+
+			<div id="detailsTab">
+				<form method="get" class="new" id="report-form">
+				    <table id="reportTab">
+				        <tr style="position: relative;">
+				            <td colspan="5">
+									<table id="resultsTab">
+										<thead>
+											<tr>
+												<th>Id</th>
+												<th>Brand Name</th>
+												<th>Synonym List</th>
+												<th>Owner List</th>
+												<th>Is Actively Managed</th>
+												<th>Total Supplier Brand Links</th>
+												<th>Total Authorised Claims</th>
+												<th>Listed Only Count</th>
+												<th>Verified Claims</th>
+												<th>Claims Where Brand Is Owned</th>
+												<th>Claims Pending Verification</th>
+												<th>Percent Claims Verified</th>
+												<th>Auth Agent Total</th>
+												<th>Auth Agent Verified</th>
+												<th>Auth Agent Pending</th>
+												<th>Auth Agent Not Verified</th>
+												<th>Oem Total</th>
+												<th>Oem Verified</th>
+												<th>Oem Pending</th>
+												<th>Oem Not Verified</th>
+												<th>Rep Total</th>
+												<th>Rep Verified</th>
+												<th>Rep Pending</th>
+												<th>Rep Not Verified</th>
+												<th>Related Category Count</th>
+												<th>Related Category List</th>
+											</tr>
+				                  		</thead>
+				                </table>
+				                </div>
+				        	</td>
+				        </tr>
+				    </table>
+				</form>
+		</div>
+	</div>
+</div>
+<br><br>
+<div class="clear"></div>
+
+<div id="waiting">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>

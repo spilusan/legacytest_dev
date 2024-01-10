@@ -1,0 +1,267 @@
+div#body {
+	#content {
+		#innerContent {
+			.dataBox {
+				display: none;
+				position: relative;
+				@include border-radius(6px 6px 6px 6px);
+				background: #ffffff;
+				border: 1px solid #dadada;
+				z-index: 1;
+				padding: 15px 10px 10px 10px;
+				width: 935px;
+				behavior: url(/css/PIE.htc);
+
+				#recItemList {
+					width: 940px;
+				}
+
+				.avg {
+					padding: 10px;
+
+					h2 {
+						font-size: 15px;
+						color: #2e3235;
+						font-weight: normal;
+					}
+
+					p {
+						font-size: 11px;
+						color: #2e3235;
+						font-weight: normal;
+						padding: 0;
+					}
+
+					h2, p {
+						position: relative;
+						top: 8px;
+					}
+
+					.value {
+						font-size: 27px;
+						color: #2e3235;
+						font-weight: bold;
+						padding: 8px 8px;
+						float: right;
+						min-width: 135px;
+						text-align: right;
+					}
+				}
+
+				.dataContainer {
+					margin-top: 5px;
+					padding: 5px 5px 25px 5px;
+
+					form {
+						.spy {
+							position: relative;
+							top: 5px;
+						}
+
+						input[name="filterRight"] {
+							width: 52%;
+						}
+
+
+						input[name="filterLeft"] {
+							width: 69%;
+						}
+
+						input[name="submitLeft"], input[name="submitRight"] {
+							margin-left: 5px;
+						}
+					}
+
+					.data {
+						position: relative;
+						background: #f5f7fa;
+						border: 1px solid #a2bec7;
+						padding: 3px;
+						height: 664px;
+						overflow-y: auto;
+						@include border-radius(6px);
+						behavior: url(/css/PIE.htc);
+
+						table {
+							border-collapse: collapse;
+
+							thead {
+								tr {
+									th {
+										padding: 5px;
+										background: #f5f7fa;
+										border-left: 1px solid #d6dce4;
+										border-top: 1px solid #d6dce4;
+										border-bottom: 1px solid #d6dce4;
+
+										&.descr {
+											width: 32%;
+										}
+
+										&.descrR {
+											width: 66%;
+										}
+
+										&.poRef {
+											width: 7%;
+										}
+
+										&.date {
+											width: 5%;
+										}
+
+										&.sup {
+											width: 18%;
+										}
+
+										&.qty {
+											width: 5%;
+										}
+
+										&.unt {
+											width: 9%;
+										}
+
+										&.qtyR {
+											width: 8%;
+										}
+
+										&.unPrice, &.ttlPrice, {
+											width: 10%;
+										}
+
+										 &.avgPrice {
+										 	width: 16%;
+										 }
+
+										&.last {
+											border-right: 1px solid #d6dce4;
+										}
+
+										a {
+											font-size: 11px;
+											font-weight: bold;
+										}
+
+										&.ord {
+											a {
+												padding-right: 17px;
+											}
+
+											&.desc {
+												a {
+													background: url(/img/icons/small/sort-blue-desc.png) no-repeat right center transparent;
+												}
+											}
+
+											&.asc {
+												a {
+													background: url(/img/icons/small/sort-blue-asc.png) no-repeat right center transparent;
+												}
+											}
+										}
+									}
+								}
+							}
+
+							tbody {
+								tr {
+									td {
+										font-size: 11px;
+										font-weight: normal;
+										color: #2e3235;
+										text-align: left;
+										padding: 8px 5px;
+										border-bottom: 1px dotted #b2b2b2;
+										background: #ffffff;
+										overflow: hidden;
+										text-overflow: ellipsis;
+
+										&.descr {
+											width: 33%;
+										}
+
+										&.descrR {
+											width: 67%;
+										}
+
+										&.poRef {
+											width: 8%;
+										}
+
+										&.date {
+											width: 6%;
+										}
+
+										&.sup {
+											width: 19%;
+										}
+
+										&.qty {
+											width: 6%;
+										}
+
+										&.qtyR {
+											width: 9%;
+										}
+
+										&.unPrice, &.ttlPrice, {
+											width: 11%;
+										}
+
+										 &.avgPrice {
+										 	width: 17%;
+										 }
+
+										&.right {
+											text-align: right;
+										}
+
+										.delete {
+											display: block;
+											width: 15px;
+											height: 15px;
+											padding: 0;
+											margin:0 auto;
+											background: url(/img/icons/small/close-grey.png) no-repeat left top transparent;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				.leftData {
+					width: 60%;
+					float: left;
+
+					.avg, .dataContainer {
+						background:#caedf9;
+						border: 1px solid #59c5eb;
+
+						.value {
+							background:#e0f3fa;
+							border: 1px solid #59c5eb;
+						}
+					}
+				}
+
+				.rightData {
+					width: 39%;
+					float: right;
+
+					.avg, .dataContainer {
+						background:#e5f8d8;
+						border: 1px solid #83cc4e;
+
+						.value {
+							background:#f0fce8;
+							border: 1px solid #83cc4e;
+						}
+					}
+				}
+			}
+		}
+	}
+}

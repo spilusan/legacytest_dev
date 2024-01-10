@@ -1,0 +1,23 @@
+<div class="removeSupplier">
+	<div class="fadeBg"></div>
+	<div class="activePopup">
+		<h1>Remove Supplier from Supplier Recommendations</h1>
+		<i class="fa fa-times-circle fa-2x rsCloseBtn"></i>
+		<h2>Please select an option:</h2>
+		<div class="controlHolder">
+			<input type="radio" name="blacklistAction" id="blacklistOtion1" value="0">
+		</div>
+		<label for="option1">Stop AutoSourcing this supplier but still consider them for SpotSource (Recommended)</label>
+		<div class="controlHolder">
+			<input type="radio" name="blacklistAction" id="blacklistOtion2" value="1">
+		</div>
+		<label for="option2">Prevent any further RFQs being sent to this supplier by either SpotSource or AutoSource</label>
+		<h3>You can reverse this setting at a later date via Spend Management settings under the account tab.</h3>
+		<label class="indented">Please specify a reason<span class="red">*</span></label>
+		<textarea name="blacklistReasonText"></textarea>
+		<label class="red push">* Required</label>
+		<div id="validationWarning">Please fill in the * Required field</div>
+		<a href="#" class="button green large rsOkBtn">OK</a>
+		<a href="#" class="button grey large rsCancelBtn">Cancel</a>
+	</div>
+</div>

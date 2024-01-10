@@ -1,0 +1,102 @@
+<h2 class="print-only">Competitiveness</h2>
+
+<div class="container charts">
+    <div class="row">
+
+        <div class="gr-4 gr-12@tablet gr-12@mobile">
+            <h3>Competitive quote situations
+                <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="quote-situationse-tip"></i>
+            </h3>
+
+            <div class="hide" id="quote-situationse-tip">
+                The breakdown of the number of competitive quote situations the supplier has been in. A competitiveness quote situation or
+                CQS is where at least one other supplier has been chosen to quote on an RFQ. The number of situations is
+                shown and the number of times the supplier is cheapest or their response is fastest. We also show the average
+                percentage the supplier was cheaper or more expensive comparing to the nearest cheapest or most expensive
+                quote respectively.
+            </div>
+
+            <div id="table-quote-situations">
+            </div>
+        </div>
+
+        <div class="push-1 push-0@tablet gr-7 gr-12@tablet gr-12@mobile">
+            <h4>Trend</h4>
+
+            <div class="chart" id="line-quote-situation">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="gr-5 gr-12@tablet gr-12@mobile chart-min-height">
+            <h3>Price sensitivity
+                <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="price-sensitivity-tip"></i>
+            </h3>
+
+            <div class="hide" id="price-sensitivity-tip">
+                Shows the percentage win rate when the supplier is cheapest and is benchmarked against your suppliers and the ShipServ average.
+                We isolate competitive quote situations to where all suppliers quoted within 24 hours of receiving the RFQ,
+                and therefore assume price sensitivity to be a factor in winning the order.
+            </div>
+
+            <div id="column-price-sensitivity">
+            </div>
+        </div>
+
+        <div class="push-2 push-0@tablet gr-5 gr-12@tablet gr-12@mobile chart-min-height">
+            <h3>Time sensitivity
+                <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="time-sensitivity-tip"></i>
+            </h3>
+
+            <div class="hide" id="time-sensitivity-tip">
+                Shows the percentage win rate when the supplier is fastest in responding and is benchmarked against your suppliers and the
+                ShipServ average. We isolate competitive quote situations to where suppliers have quoted on all the same
+                items and the total quoted prices are similar. We therefore assume that time sensitivity is a factor in winning
+                the order.
+            </div>
+
+            <div id="column-time-sensitivity">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="gr-12">
+            <h3>Co-quoters
+                <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="co-quoters-tip"></i>
+            </h3>
+
+            <div class="hide" id="co-quoters-tip">
+                A breakdown of the percentage of times other suppliers have been asked to quote and a breakdown in the table of the most
+                common suppliers being asked to quote against this supplier showing the number of competitive quotes issued,
+                percentage of times that supplier was cheaper and the potential savings from those cheaper quotes.
+            </div>
+        </div>
+
+        <div class="gr-4 gr-12@tablet gr-12@mobile chart-min-height">
+            <h4>Number of other suppliers invited to quote</h4>
+
+            <div id="pie-co-quoters">
+            </div>
+        </div>
+
+        <div class="push-1 push-0@tablet gr-7 gr-12@tablet gr-12@mobile chart-min-height">
+            <h4 class="hide@mobile hide@tablet">&nbsp;</h4>
+
+            <div class="chart" id="table-co-quoters">
+            </div>
+
+            <div class="text-center margin-top">
+                <a id="more-table-co-quoters" class="btn btn-inline-block transparent transparent-blue margin-top">Show 10 more</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- <div class="row recomended-alternatives">
+        <div class="gr-12">
+            <h3>Alternative suppliers</h3>
+        </div>
+		<div id="alternative-suppliers"></div>
+    </div> -->
+</div>

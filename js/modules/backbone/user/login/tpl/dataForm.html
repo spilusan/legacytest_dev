@@ -1,0 +1,75 @@
+<h1 class="styled">Please update your profile information</h1>
+<div class="registerBox">
+	<p class="infoText">
+		 Before you continue, please agree to the latest version of our Pages terms and conditions and <strong>update your company profile information</strong>.
+	</p>
+	<div class="formContainer">
+		<form class="new regForm popup">
+			<div class="box left">
+				<label for="address1">Address line 1: <sup>*</sup></label>
+				<input type="text" name="address1" />
+				<br />
+				<label for="address2">Address line 2:</label>
+				<input type="text" name="address2" />
+				<br />
+				<label for="address3">Address line 3:</label>
+				<input type="text" name="address3" />
+				<br />
+				<label for="zip">Zip/Post Code: <sup>*</sup></label>
+				<input type="text" name="zip" />
+				<br />
+				<label for="country">Country: <sup>*</sup></label>
+				<select name="country" id="country">
+					<option value="">Please Select</option>
+					{{#each countries}}
+						<option value="{{this.attributes.id}}">{{this.attributes.name}}</option>
+					{{/each}}
+				</select>
+				<br />
+				<label for="phone">Telephone:</label>
+				<input type="text" name="phone" />
+				<br />
+				<label for="web">Website:</label>
+				<input type="text" name="web" />
+				<br />
+				<label for="spend"><input type="image" src="/img/icons/small/help_light.png" alt="Info" name="spendInfo">Your Spend in USD:</label>
+				<select name="spend" id="spend">
+					<option value="">Please Select</option>
+					{{#each annualBudget}}
+						<option value="{{this.attributes.id}}">{{this.attributes.name}}</option>
+					{{/each}}
+				</select>
+				<br />
+				<label for="decision"><input type="image" src="/img/icons/small/help_light.png" alt="Info" name="decInfo"> Are you a decision maker?</label>
+				<input type="radio" name="decision" value="1" id="decYes"> <span class="dec">Yes</span>
+				<br />
+				<input type="radio" name="decision" value="0" id="decNo"> <span class="dec">No</span>
+				<br />
+			</div>
+			<div class="vesselContainer">
+				<div class="box">
+					<label for="vesselNo">No. of vessels:</label>
+					<input type="text" name="vesselNo" />
+					<div class="types">
+						<div class="title">
+							Type of Vessels:
+						</div>
+						<div class="checks">
+							{{#each vessels}}
+								<input type="checkbox" value="{{this.attributes.id}}" name="vesselType">
+								<label for="vesselType">{{this.attributes.name}}</label>
+							{{/each}}
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+			<div class="agreement">
+				<input type="checkbox" value="agree" name="agree" />
+				<label for="agree"><sup>*</sup>  I have read and agree to changed Terms of Use. <span>View the latest Terms of Use<a href="/info/terms-of-use" target="_blank">here</a>.</span></label>
+			</div>
+			<input type="submit" value="Continue" class="button medium green" />
+			<label class="mandatory"><sup>*</sup> mandatory fields</label>
+		</form>
+	</div>
+</div>

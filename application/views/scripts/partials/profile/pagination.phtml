@@ -1,0 +1,55 @@
+<?php
+if ($this->recordCount > $this->pageSize)
+{
+	$lastPageIsDisplayed = false;
+	$totalPages = ceil($this->recordCount/$this->pageSize);
+	if( $this->currentPage == $totalPages ) $lastPageIsDisplayed = true;
+	?>
+	<div class="profile-pagination">
+		<?php
+			if ($this->currentPage>1)
+			{
+				?>
+					<a href="<?php echo $this->url;?>/page/<?php echo ($this->currentPage-1);?>" class="big-page-button">Previous</a>
+				<?
+			}
+			
+			for ($i=max(array(($this->currentPage-5),1));$i<$this->currentPage;$i++)
+			{
+				?>
+					<a href="<?php echo $this->url;?>/page/<?php echo $i;?>" class="small-page-button"><?php echo $i?></a>
+				<?
+				if( $i == $totalPages ) $lastPageIsDisplayed = true;
+			}
+			?>
+				<a href="<?php echo $this->url;?>/page/<?php echo $this->currentPage;?>" class="small-page-button small-page-button-selected"><?php echo $this->currentPage?></a>
+			<?
+			
+			for ($i=($this->currentPage+1);$i<=min(array(($this->currentPage+5),$totalPages));$i++)
+			{
+				if( $i == $totalPages ) $lastPageIsDisplayed = true;
+				?>
+					<a href="<?php echo $this->url;?>/page/<?php echo $i;?>" class="small-page-button"><?php echo $i?></a>
+				<?
+			}
+
+			if( $lastPageIsDisplayed === false )
+			{
+			?>
+				<?php if( $this->currentPage+5 != $totalPages - 1 ){?><span style="float:left; margin-right:2px;  ">...</span><?php }?> 
+				<a href="<?php echo $this->url;?>/page/<?php echo $totalPages;?>" class="small-page-button"><?php echo $totalPages?></a>
+			<?
+			}
+			
+			if ($this->currentPage<$totalPages)
+			{
+				?>
+					<a href="<?php echo $this->url;?>/page/<?php echo ($this->currentPage+1);?>" class="big-page-button">Next</a>
+				<?
+			}
+		?>
+		<div class="clear"></div>
+	</div>
+	<?php
+}
+?>

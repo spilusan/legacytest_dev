@@ -1,0 +1,19 @@
+<?php
+
+$this->headLink()->appendStylesheet('/css/default-new.css');
+
+$this->compressedScript()
+    ->appendFile('/js/lib/moment.js')
+    ->appendFile('/js/lib/daterangepicker.js');
+
+$this->headLink()
+    ->appendStylesheet('/css/consortia.css', 'all')
+    ->appendStylesheet('/css/grid.css', 'all');
+
+$this->getHelper('Requirejs')
+    ->addModule('backbone/consortium/views/mainView')
+    ->addDefinition('salesforce/rateManagament', null);
+
+?>
+
+<div id="mainContent"></div>

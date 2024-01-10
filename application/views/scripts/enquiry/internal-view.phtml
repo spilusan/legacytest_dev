@@ -1,0 +1,179 @@
+<?php
+$this->compressedScript()->appendFile('/js/json2.js')
+						 ->appendFile('/js/jquery-ui-1.8.4.custom.min.js')
+						 ->appendFile('/js/jquery.urlparse.js')
+						 ->appendFile('/js/jquery.textarea.js') 
+						 ->appendFile('/js/jquery.jsoncookie.js')
+						 ->appendFile('/js/jquery.cookie.js');
+						 
+$this->CDNLink()->appendStylesheet('/css/wide-layout.css')
+				->appendStylesheet('/css/enquiries.css')
+				->appendStylesheet('/css/jquery-ui-1.8.4.custom.css');
+
+if( strstr($_SERVER['HTTP_REFERER'], 'search') !== false )
+{
+	$breadcrumbs = array(array('name' => 'Home',
+			'url'  => '/search'),
+			array('name' => 'Search Results',
+					'url'  => $this->backToSearch()->getUrl()),
+			array('name' => 'RFQ',
+					'url'  => '/enquiry'));
+	
+}
+else if( strstr($_SERVER['HTTP_REFERER'], 'enquiry') !== false || strstr($_SERVER['HTTP_REFERER'], 'user-activity') !== false )
+{
+	$supplier = Shipserv_Supplier::fetch( $this->params['supplierBranchId'] );
+	$breadcrumbs = array(array('name' => 'Home',
+			'url'  => '/search'),
+			array('name' => 'Profile',
+					'url'  => '/profile'),
+			array('name' => 'RFQs from Pages',
+					'url'  => ($supplier->isPublished()==true)?'/user/switch-company?tnid=v' . $this->params['supplierBranchId'] .'&redirect=/profile/company-enquiry/type/v/id/' . $this->params['supplierBranchId'] .'':""),
+			array('name' => 'RFQ',
+					'url'  => '/enquiry'));
+}	
+
+// redirect user if company changes by the input box on the top
+if( $this->params['supplierBranchId'] != $this->activeCompany->id )
+{
+	?><script>location.href='/profile/company-enquiry/type/<?php echo $this->activeCompany->type?>/id/<?php echo $this->activeCompany->id?>';</script><?php
+} 
+
+?>
+<div id="main_content_area">
+	<?php if(lg_count($breadcrumbs)>0) echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); else echo '<br />';?>
+	<div class="content_wide new clearfix">
+		<div class="zz header">
+			<h2>RFQ</h2>
+		</div>
+	
+        <div class="inner_content clearfix" id="rfq">
+	
+            <div class="left">
+                <?php
+                echo $this->partial('enquiry/account-status.phtml', array('params'		=> $this->params,
+                                                                        'supplier'    => $this->supplier,
+                                                                        'user'   		=> $this->user,
+                                                                        'accountData' => $this->accountData));
+                            ?>
+            </div>
+
+            <div class="right">
+                <?php
+                if ($this->accountData['PEA_IS_PAYMENT_OVERDUE'])
+                {
+                    ?>
+                    <h2 class="warning">Your payment is overdue. Please call +44 203 111 9700.</h2>
+                    <?php
+                }
+                ?>
+
+                <fieldset>
+                    <?php
+                    echo $this->partial('enquiry/view-field.phtml', array('name'  => 'enquiry-subject',
+                                                                        'value' => $this->enquiry->subject,
+                                                                        'type'  => 'text',
+                                                                        'label' => 'Subject',
+                                                                        'class' => 'wide'));
+
+                    echo $this->partial('enquiry/view-field.phtml', array('name'  => 'enquiry-text',
+                                                                        'value' => nl2br($this->enquiry->enquiryText),
+                                                                        'type'  => 'paragraph',
+                                                                        'label' => 'RFQ Details',
+                                                                        'class' => 'enquiry-text-large'));
+
+                    if (lg_count($this->enquiry->attachments) > 0)
+                    {
+                        ?>
+                        <h3>Attachments</h3>
+
+                        <ul class="attachments">
+                            <?php
+                            foreach ($this->enquiry->attachments as $attachment)
+                            {
+                            	$url = Myshipserv_Helper_CdnDecorate::decorateImgUrl($attachment['url']);
+                                ?>
+                                <li><a href="<?php echo $url; ?>" title=""><?php echo $attachment['filename']; ?></a> (<?php echo number_format($attachment['size'] / 1024, 2); ?> KB)</li>
+                                <?php
+                            }
+                            ?>
+                        </ul>
+                        <?php
+                    }
+                    ?>
+
+                </fieldset>
+
+                <fieldset id="vessel-data">
+                    <div>
+                        <?php
+                        echo $this->partial('enquiry/view-field.phtml', array('name'     => 'vessel-name',
+                                                                            'value'    => $this->enquiry->vesselName,
+                                                                            'type'     => 'text',
+                                                                            'label'    => 'Vessel Name'));
+
+                        echo $this->partial('enquiry/view-field.phtml', array('name'     => 'delivery-location',
+                                                                            'value'    => $this->enquiry->deliveryLocation,
+                                                                            'type'     => 'text',
+                                                                            'label'    => 'Delivery Location',
+                                                                            'class' => 'deliveryLoc'));
+                        ?>
+                    </div>
+
+                    <div>
+                        <?php
+                        echo $this->partial('enquiry/view-field.phtml', array('name'     => 'imo',
+                                                                            'value'    => $this->enquiry->imo,
+                                                                            'type'     => 'text',
+                                                                            'label'    => 'IMO'));
+
+                        $deliveryDate = (strtotime($this->enquiry->deliveryDate) > 0) ? date('j M Y', strtotime($this->enquiry->deliveryDate)) : '';
+                        echo $this->partial('enquiry/view-field.phtml', array('name'     => 'delivery-date',
+                                                                            'value'    => $deliveryDate,
+                                                                            'type'     => 'text',
+                                                                            'label'    => 'Delivery Date'));
+                        ?>
+                    </div>
+                </fieldset>
+
+                <fieldset class="noborder">
+                    <?php
+                    echo $this->partial('enquiry/view-field.phtml', array('name'     => 'sender-name',
+                                                                        'value'    => $this->enquiry->senderName,
+                                                                        'type'     => 'text',
+                                                                        'label'    => "Buyer's Name",
+                                                                        'class'    => 'wide'));
+
+                    echo $this->partial('enquiry/view-field.phtml', array('name'     => 'company-name',
+                                                                        'value'    => $this->enquiry->senderCompany,
+                                                                        'type'     => 'text',
+                                                                        'label'    => 'Company/Buyer Name',
+                                                                        'class'    => 'wide'));
+
+                    echo $this->partial('enquiry/view-field.phtml', array('name'     => 'sender-phone',
+                                                                        'value'    => $this->enquiry->senderPhone,
+                                                                        'type'     => 'text',
+                                                                        'label'    => 'Phone',
+                                                                        'class'    => 'wide'));
+
+                    echo $this->partial('enquiry/view-field.phtml', array('name'      => 'sender-email',
+                                                                        'value'     => $this->enquiry->senderEmail,
+                                                                        'type'      => 'text',
+                                                                        'label'     => 'Email',
+                                                                        'class'     => 'email wide'));
+                    ?>
+                </fieldset>
+                <br />
+
+				<?php if( !empty($this->params['r'])){?>
+                <div class="zz medium grey button" style="margin-right:5px;"><button class="enquiry-detail-button" onclick="location.href='<?= $this->uri()->deobfuscate($this->params['r']);?>';">Back to RFQs list</button></div>
+				<?php }else{?>
+				<div class="zz medium grey button" style="margin-right:5px;"><button class="enquiry-detail-button" onclick="history.back();">Back</button></div>
+				<?php }?>
+            </div>
+        </div>
+
+        <div class="clear"></div>
+    </div>
+	
+</div>

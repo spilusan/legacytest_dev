@@ -1,0 +1,61 @@
+<table border="1" cellspacing="3" cellpadding="5"><?php
+$db = $this->db;
+
+
+foreach ($this->rfqs as $rfqno) :
+	$rfqQuery = "Select * from (SELECT * FROM SSREPORT2.w_request_for_quote where rfq_internal_ref_no = :refno) where rownum = 1";
+	$rfqArrayParams = array('refno' => $rfqno);
+	$liQuery = "SELECT * FROM sservdba.rfq_line_item where RFL_RFQ_INTERNAL_REF_NO = :rrefno";
+	$lItems = $db->fetchAll($liQuery,array('rrefno' => $rfqno));	
+	$rfq = $db->fetchAll($rfqQuery, $rfqArrayParams);
+	
+	?>
+	<tr bgcolor='#D3D3D3'>
+		<td width="60"><strong>RFQ Subject</strong></td>
+		<td width="60"><strong>Delivery Port</strong></td>
+		<td colspan="8"></td>	
+	</tr>
+	<tr bgcolor="#D3D3D3">
+		<td><?php echo $rfq[0]['RFQ_SUBJECT']; ?></td>
+		<td><?php echo $rfq[0]['RFQ_DELIVERY_PORT']; ?></td>
+		<td colspan="8"></td>
+	</tr>
+	<tr bgcolor="#FFFFE0"><td colspan="10"><strong>Line Items</strong></td></tr>
+	<tr>
+		<td></td>
+		<td><strong>Name</strong></td>
+		<td><strong>Description</strong></td>
+		<td><strong>Manufacturer</strong></td>
+		<td><strong>Model No.</strong></td>
+		<td><strong>Serial No.</strong></td>
+		<td><strong>Drawing No.</strong></td>
+		<td><strong>Comments</strong></td>
+		<td><strong>Unit Type</strong></td>
+		<td><strong>Quantity</strong></td>
+		
+	</tr>
+	<?php		 
+		foreach ($lItems as $li) :
+		?>
+	
+	<tr bgcolor="#FFFFE0">
+		<td></td>
+		<td><?php echo $li['RFL_CONFG_NAME']; ?></td>
+		<td><?php echo $li['RFL_PRODUCT_DESC']; ?></td>
+		<td><?php echo $li['RFL_CONFG_MANUFACTURER']; ?></td>
+		<td><?php echo $li['RFL_CONFG_MODEL_NO']; ?></td>
+		<td><?php echo $li['RFL_CONFG_SERIAL_NO']; ?></td>
+		<td><?php echo $li['RFL_SERIAL_DRAWING_NO']; ?></td>
+		<td><?php echo $li['RFL_COMMENTS']; ?></td>
+		<td><?php echo $li['RFL_UNIT']; ?></td>
+		<td><?php echo $li['RFL_QUANTITY']; ?></td>
+	</tr>
+		<?php
+		endforeach;
+	?>
+	<tr><td colspan="2">&nbsp;</td></tr>
+	<tr><td colspan="2">&nbsp;</td></tr>
+	<?php
+endforeach;
+?>
+</table>

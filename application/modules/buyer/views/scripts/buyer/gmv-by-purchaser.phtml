@@ -1,0 +1,149 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()
+	->addModule('match/report')
+	->addDefinition('/match/reportType', '"buyer-gmv-breakdown"')
+	;
+
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+	table tr.child td {
+		background-color:#d6dce4;
+	}
+
+	table tr.bold td {
+		font-weight:bold;;
+	}
+	#body #content {
+		left: 0 !important;
+	}
+</style>
+
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'GMV Report', 'url'  => '/reports/gmv');
+	$breadcrumbs[] = array('name' => 'Buyer', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'Drilldown by purchaser', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.CSV.css" media="screen" rel="stylesheet" type="text/css">
+<div id="body" class="buyerGmvDetail">
+	<div id="content">
+		<h1 class="styled">GMV Report for Buyer - Purchaser list</h1>
+		<form method="get" class="new">
+		    <table style="margin: auto;  width:100%;">
+		    	<tr>
+		        	<td>
+		        		<form action="/buyer/gmv" id="buyerGmvForm">
+			        		<table style="font-size:12px; ">
+								<tr>
+						            <td width="130">
+						            	Buyer TNID:
+						            </td>
+						            <td>
+										<?= $this->buyer->bybBranchCode?>
+						            </td>
+								</tr>
+								<tr>
+						            <td width="130">
+						            	Buyer Name:
+						            </td>
+						            <td>
+						               <?= $this->buyer->bybName?>
+						            </td>
+								</tr>
+								<tr>
+						            <td width="130">
+						            	For period:
+						            </td>
+						            <td>
+						               <?= $this->report->startDate->format('d/M/Y');?> to <?= $this->report->endDate->format('d/M/Y');?>
+						            </td>
+								</tr>
+
+			        		</table>
+		        		</form>
+		        	</td>
+		        </tr>
+
+		        <tr>
+		            <td colspan="5">
+		            	<? if( lg_count($this->results) > 0 ){ ?>
+		                <table id="resultsTab">
+		                    <thead>
+		                        <tr>
+		                            <th class="" style="width:30px;"></th>
+		                            <th class="left" style="width: 340px;">Purchaser Name</th>
+		                        	<th class="left">Time using Shipserv with this company (in years)</th>
+		                            <th class="left">Number RFQs Events Raised</th>
+									<th class="left">Resulting Orders Sent</th>
+									<th class="left">Direct Orders Sent</th>
+		                           	<th class="">Value Orders Raised (Use GMV Traded in USD</th>
+									<th class="">RFQ Events with no PO</th>
+									<th class="">%RFQ Events with no PO</th>
+		                        	<th class="">Average Supplier Selected</th>
+		                        	<th class="">Estimated GMV Leakage (USD)</th>
+		                        	<th class="">Estimated Revenue Leakage (USD)</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php
+		                        foreach( (array) $this->results as $result )
+		                        {
+		                        	$totalGMVForBuyer += $result['TOTAL_GMV'];
+		                        }
+
+		                        foreach ( (array) $this->results as $result)
+		                        {
+		                        	++$no;
+
+		                        	$supplier = Shipserv_Supplier::getInstanceById($result['SPB_BRANCH_CODE'], null, $true);
+		                        	?>
+		                            <tr>
+										<td class="" style="width:30px;"><?= $no?></td>
+										<td class="left" style="width: 340px;"><?= ucwords($result['PURCHASER_DETAIL']) ?></td>
+										<td class="left"><?= $result['ACTIVITY_IN_YEARS'] ?></td>
+										<td class="left currency"><?= $result['UNIQUE_EVENT_HASH'] ?></td>
+										<td class="left currency"><?= $result['TOTAL_PO'] ?></td>
+										<td class="left currency"><?= $result['TOTAL_DIRECT_PO'] ?></td>
+										<td class="currency"><?= $result['TOTAL_ORD_VALUE_USD'] ?></td>
+										<td class="currency"><?= round(($result['UNIQUE_EVENT_HASH']-$result['TOTAL_PO'])) ?></td>
+										<td class="percentage"><?= round(($result['UNIQUE_EVENT_HASH']-$result['TOTAL_PO'])/$result['UNIQUE_EVENT_HASH']*100, 0) ?></td>
+										<td class="emptyas0"><?= round($result['AVG_SPB'], 2) ?></td>
+										<td class="currency"><?= ($result['LEAKAGE_GMV']=="")?"0":$result['LEAKAGE_GMV'] ?></td>
+										<td class="currency"><?= ($result['LEAKAGE_REVENUE']=="")?"0":$result['LEAKAGE_REVENUE'] ?></td>
+		                            </tr>
+		                        	<?
+		                        }
+		                        ?>
+		                    </tbody>
+		                </table>
+		                <?php }?>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+	function changeParentId(parentId){
+		$('#parentId').val(parentId);
+		$("#buyerGmvForm").submit();
+	}
+</script>

@@ -1,0 +1,131 @@
+#map {
+	overflow: hidden;
+	width:1024px;
+	height:1024px;
+	margin: 10px 10px 10px 10px;
+}
+
+#map span {
+	font-size: xx-small !important;
+}
+
+.container {
+	background-color: #012a52;
+	position: relative;
+}
+
+#footer {
+	margin-top: 0 !important;
+}
+
+#full-screen-map {
+	overflow: hidden;
+	width:1920px;
+	height:1080px;
+	margin: 0 auto;
+	padding: 1px;
+	border: 1px solid white;
+}
+
+#full-screen-map span {
+	font-size: xx-small !important;
+}
+
+#homemap {
+	width: 500px;
+	height: 320px;
+	margin: 10px 10px 10px 10px;
+}
+
+#message {
+	position: absolute;
+	padding: 5px 15px 12px 43px;
+	width: 171px;
+	height: 61px;
+	cursor: pointer;
+}
+
+#message h3 {
+	font-weight: bold;
+	font-size: 12px;
+	color: white;
+	margin-bottom: 5px;
+	line-height: 14px;
+}
+
+#message h4 {
+	font-weight: bold;
+	font-size: 11px;
+	color: #79cbf3;
+}
+
+.ticker {
+	position: absolute;
+	top: 900px;
+	left: 0;
+	background-image: -webkit-linear-gradient(top, #141414 0%, #012a52 100%);  
+    background-image: -moz-linear-gradient(top, #141414 0%, #012a52 100%);  
+    background-image: -ms-linear-gradient(top, #141414 0%, #012a52 100%);  
+    background-image: -o-linear-gradient(top, #141414 0%, #012a52 100%);
+	background-image: linear-gradient(top, #141414 0%, #012a52 100%);  
+	height: 165px;
+	width: 100%;
+	padding-top: 30px;
+}
+
+.ticker p.title {
+	font-size: 36px;
+	color: #adadad;
+	text-align: center;
+	cursor: pointer;
+}
+
+.ticker p.title strong {
+	color: #ffffff;
+	font-weight: bold;
+}
+
+div.counter {
+	text-align: center;
+}
+
+.ticker p.usd {
+	font-size: 80px;
+	font-weight: bold;
+	color: #82d002;
+	display: inline-block;
+	position: relative;
+	top: 20px;
+	margin-right: 25px;
+}
+
+#counter {
+	display: inline-block;
+	position: relative;
+	top: -35px;
+}
+
+.topBar {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	background-color: blue;
+	height: 100px;
+	width: 100%;
+	background-image: -webkit-linear-gradient(top, #012a52 0%, #141414 100%);  
+    background-image: -moz-linear-gradient(top, #012a52 0%, #141414 100%);  
+    background-image: -ms-linear-gradient(top, #012a52 0%, #141414 100%);  
+    background-image: -o-linear-gradient(top, #012a52 0%, #141414 100%);
+	background-image: linear-gradient(top, #012a52 0%, #141414 100%); 
+}
+
+.logo {
+	width: 482px;
+	height: 99px;
+	background: url(/img/map/live-logo.png) left top no-repeat transparent;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 999;
+}

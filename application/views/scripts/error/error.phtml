@@ -1,0 +1,37 @@
+<?php
+$this->CDNLink()->appendStylesheet('/css/error.css');
+?>
+<div class="text center generalShipservError">
+		<i class="fa fa-laptop  warning" aria-hidden="true"></i>
+		<h2><?php echo Myshipserv_Exception_HttpResponseName::getErrorName($this->errorCode); ?></h2>
+		<?php if (isset($this->displayMessage)) : ?>
+			<h3><?php echo $this->displayMessage; ?></h3>
+		<?php else: ?>
+			<h3>
+				<?php if ($this->errorCode !== 404): ?>
+					We have been informed of the issue and will look at it shortly.
+				<?php endif ?>
+			</h3>
+		<?php endif ?>
+		<div class="clear"></div>
+		<?php if ($this->userError == false) { ?>
+			<div class="buttons">
+				<a class="btn white-black borderless" href="javascript:window.history.go(-1);">Go back to previous page</a>
+			</div>
+			<div class="buttons">
+				<a class="btn white-black borderless" href="/search">Go to homepage</a>
+			</div>
+		<?php }?>
+		<div class="clear"></div>
+		<?php if ($this->displayErrorDetails || $_SERVER['APPLICATION_ENV'] != 'production' ): ?>
+			<div class="left" style="<?= ($_SERVER['APPLICATION_ENV']== 'testing') ? 'display:none;':''?>">
+				<h3>Exception information:</h3>
+				<h5><b>Message:</b> <?= $this->exception->getMessage() ?></h5>
+				<h3>Stack trace:</h3>
+				<pre><?= $this->exception->getTraceAsString() ?></pre>
+				<h3>Request Parameters:</h3>
+				<pre><?php var_dump($this->request->getParams()) ?></pre>
+			</div>
+		<?php endif; ?>
+</div>
+<div class="clear"></div>

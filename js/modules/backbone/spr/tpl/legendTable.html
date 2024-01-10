@@ -1,0 +1,24 @@
+<table class="legend-table">
+    <thead>
+        <tr>
+            <th class="text-center">Key</th>
+            <th class="text-center">Quality</th>
+            <th class="text-center">No. of quotes</th>
+            <th class="text-center">% of total</th>
+            <th class="text-center">Converted to order</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each this}}
+            <tr>
+                <td class="text-center">
+                    <span class="legend-key" style="border-color: {{color}}"></span>
+                </td>
+                <td class="text-left">{{quality-level}}</td>
+                <td class="text-center">{{qot-count}}</td>
+                <td class="text-center">{{percent-of-total-qot}}%</td>
+                <td class="text-center">{{percent-of-conv-order}}%</td>
+            </tr>
+        {{/each}}
+    </tbody>
+</table>

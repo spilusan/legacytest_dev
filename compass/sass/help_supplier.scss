@@ -1,0 +1,119 @@
+/*
+Document   : help_supplier.scss
+Created on : Nov 7, 2012, 14:02:59 PM
+Author     : gly
+Description: Profile stylesheet combining Profile partials
+*/
+
+@import "compass/css3";
+
+#body {
+	width: 970px;
+	background: transparent;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	-ms-border-radius: 0;
+	-o-border-radius: 0;
+	border-radius: 0;
+	padding: 0;
+
+	#content {
+		padding: 5px;
+	}
+}
+
+ol {
+	&.pagenav {
+		font-size: 18px;
+		color: #4f4f4f;
+		font-weight: bold;
+
+		li {
+			margin-bottom: 5px;
+			position: relative;
+
+			span {
+				position: absolute;
+				top: 7px;
+				right: 20px;
+				width: 11px;
+				height: 11px;
+				overflow: hidden;
+				background: url(/img/icons/small/blue_arrows_sprite.png) left -11px no-repeat transparent;
+				margin-top: 2px;
+				cursor: pointer;
+
+				&.active {
+					background-position: left 2px;
+				}
+			}
+
+			a {
+				display: block;
+				position: relative;
+				width: 663px;
+				&:hover {
+					cursor: pointer;
+				}
+			}
+
+			ul {
+				padding: 0 21px;
+
+				li {
+					padding-bottom: 5px;
+					p {
+						font-weight: normal;
+					}
+
+					h3 {
+						color: #2e3235;
+						margin: 15px 0 10px;
+						font-size: 14px;
+					}
+
+					a {
+						display: inline;
+						font-size: 12px;
+					}
+
+					.qnav {
+						padding-top: 20px;
+						a {
+							display: block;
+							padding-bottom: 10px;
+
+							&:hover {
+								text-decoration: underline !important;
+							}
+						}
+					}
+
+					ol {
+						list-style: decimal;
+						list-style-position: inside;
+						color: #2e3235;
+						font-size: 12px;
+
+						li {
+							ol {
+								font-weight: normal;
+							}
+						}
+					}
+
+					ul {
+						list-style: disc;
+						color: #13b5ea;
+						padding-bottom: 10px;
+						li {
+							font-size: 12px;
+							font-weight: normal;
+							color: #2e3235;
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,20 @@
+/*
+Document   : transition
+Created on : Jun 13, 2012, 9:34:15 AM
+Author     : gly
+Description: default stylesheet combining default partials
+*/
+
+@import "compass/css3";
+
+/* New bits from default.css, prior to full migration */
+/* Default styles for every layout */
+
+
+@import "partials/default/buttons";
+@import "partials/default/content";
+@import "partials/default/subnav";
+@import "partials/default/trade_rank_tt";
+@import "partials/default/context_help";
+@import "partials/default/misc";
+@import "partials/default/leftover";

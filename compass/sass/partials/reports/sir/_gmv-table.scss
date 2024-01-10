@@ -1,0 +1,131 @@
+table.gmv.report {
+    font-size: 12px;
+    width: 100%;
+    color: #000;
+    border-collapse: collapse;
+
+    tr {
+        td {
+            word-break:break-all;
+            &.icons {
+                width: 40px;
+            }
+        }
+    }
+    
+    .accordion-head {
+        border: 0;
+        cursor: pointer;
+        background-color: white;
+        
+        tr.title {
+            line-height: 16px;
+            font-size: 12px;
+            
+            td {
+                border: 1px solid #e9edf1;
+                padding-left: 22px;
+                background: transparent url('/img/icons/small/blue_arrows_sprite.png') 4px -9px no-repeat;
+            }
+        }
+
+        &.ui-state-active {
+        	
+            tr.title {
+            	background-color:#59c5eb;
+                td {
+                    background: transparent url('/img/icons/small/blue_arrows_sprite.png') 4px 7px no-repeat;
+                }
+            }
+            
+        }
+        
+        tr.spacer {
+            line-height: 4px;
+            font-size: 1px;
+            height: 5px;
+            background-color: #FFF;
+            
+            td {
+                border: 0;
+            }
+        }
+    }
+    
+    .accordion-body {
+        background-color: white;
+        
+        td {
+            color: #888;
+            
+            border-bottom: 1px solid #e9edf1;
+            text-align: left;
+            padding: 1px 2px;
+        	line-height:16px;
+            &.right {
+                text-align: right;
+            }
+        }
+        
+        tr.thead{
+            
+            td {
+            	color: #000;
+                line-height: 20px;
+                vertical-align: middle;
+            }
+        }
+        
+        tr {
+            line-height: 14px;
+            vertical-align: middle;
+            
+            &.footer-txn {
+            	background-color:#d6dce4;
+            	td {
+            		color:#000;
+            	}
+            }
+        }
+    }
+}
+
+a.view.csv, a.expandAll, a.collapseAll, a.collapseSel, a.expandSel {
+    font-size: 11px;
+}
+
+textarea.csv {
+    font-size: 11px;
+    width: 800px;
+    height: 420px;
+    border: 1px solid #ccc;
+}
+
+p.info, p.error {
+    margin-left: 20px;
+    margin-bottom: 40px;
+}
+
+p.error {
+    color: red ;
+}
+
+.parent {
+    margin-left: 30px;
+    width: 890px!important;
+}
+
+.child {
+    margin-left: 60px;
+    width: 830px!important;
+    margin-top: 5px;
+}
+
+.noItems {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    color: red;
+    margin-bottom: 15px;
+    display: none;
+}

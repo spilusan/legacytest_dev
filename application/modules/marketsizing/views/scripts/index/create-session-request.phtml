@@ -1,0 +1,97 @@
+<?php
+$this->headLink()->appendStylesheet('/css/reports/marketSizing.css')
+    ->appendStylesheet('/css/uniform.rfq.css');
+
+$user = Shipserv_User::isLoggedIn();
+$shipservUser = $user->isShipservUser();
+
+?>
+<div id="breadcrumbs">
+    <span class="title">You are here: </span>
+    <ul>
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <span></span>
+            <a href="/buy/rfq">Analyse</a>
+        </li>
+        <li class="current">
+            <span></span>
+            Market Sizing Tool
+        </li>
+        <li class="current">
+            <span></span>
+            Create Request
+        </li>
+    </ul>
+</div>
+
+<div id="body">
+    <div id="content">
+        <h1 class="styled">Market Sizing Tool</h1>
+
+        <div id="innerContent">
+            <p>Your Market Sizing request has been logged under ID <?= $this->requestId; ?>.</p>
+            <p><a href="/reports/market-sizing">Return to request form.</a></p>
+        </div>
+
+        <h1 class="styled">Active sessions</h1>
+        <br/>
+        <form class="filters">
+            <?php
+            if (empty($this->activeSessions)) {
+                ?>
+                <p>None</p>
+                <?php
+            } else {
+                foreach ($this->activeSessions as $session) {
+                    ?>
+                    <p>
+                        <strong>Request ID <?= $session['ID']; ?></strong>
+                    </p>
+                    <p style="padding-left: 20px;">
+                        <strong>Placed by:</strong> <?= $session['EMAIL']; ?>
+                        <br/>
+                        <strong>Placed at:</strong> <?= $session['PLACED']; ?>
+                        <br/>
+                        <strong>Started at:</strong> <?= $session['STARTED']; ?>
+                        <br/>
+                        <strong>Keywords:</strong> <?= substr($session['KEYWORDS'], 0, 100); ?>
+                    </p>
+                    </p>
+                    <?php
+                }
+            }
+            ?>
+        </form>
+
+        <h1 class="styled">Pending requests</h1>
+        <br/>
+        <form class="filters">
+            <?php
+            if (empty($this->pendingRequests)) {
+                ?>
+                <p>None</p>
+                <?php
+            } else {
+                foreach ($this->pendingRequests as $request) {
+                    ?>
+                    <p>
+                        <strong>Request ID <?= $request['ID']; ?></strong>
+                    </p>
+                    <p style="padding-left: 20px;">
+                        <strong>Placed by:</strong> <?= $request['EMAIL']; ?>
+                        <br/>
+                        <strong>Placed at:</strong> <?= $request['PLACED']; ?>
+                        <br/>
+                        <strong>Keywords:</strong> <?= substr($request['KEYWORDS'], 0, 100); ?>
+                    </p>
+                    <?php
+                }
+            }
+            ?>
+        </form>
+    </div>
+    <div class="clear"></div>
+</div>

@@ -1,0 +1,32 @@
+<?php
+if (false): /*Disabled for new navigation prototype*/
+/*
+<div class="content-shaded-header">
+	<?php
+	if ($this->headerButton)
+	{
+		?>
+		<div class="headerButton">
+			<a href="<?php echo $this->headerButton['url']; ?>" title="<?php echo $this->headerButton['title']; ?>"><img src="<?php echo $this->headerButton['img']; ?>" alt="" /></a>
+		</div>
+		<?php
+	}
+	
+	if( $this->headerLeft != "" ){
+	?>
+	<h1 id="profile-heading" class="profile"><?php echo $this->headerLeft ?> <span id="profile-subheading"><?php echo $this->headerRight ?></span></h1>
+	<?php }?>
+</div>
+*/?>
+<div id="profile-menu" class="subnav">
+<?php 
+echo $this->partial('profile/menu-items.phtml', array('menuItems' => $this->menuItems['menuItems']));
+
+$sessionActiveCompany = Myshipserv_Helper_Session::getActiveCompanyNamespace();
+if( $sessionActiveCompany->id !== null && lg_count( $this->menuItemsCompany['menuItems'] ) > 0 )
+{
+	echo $this->partial('profile/menu-items-company.phtml', array('menuItems' => $this->menuItemsCompany['menuItems']));
+}
+?>
+</div>
+<?php endif; ?>

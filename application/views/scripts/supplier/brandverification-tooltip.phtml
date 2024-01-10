@@ -1,0 +1,34 @@
+<div id="topToolBar" style="height:40px;">
+		<div id="closeTooltipButton"></div>
+		<div class="clear"></div>
+</div>
+<div id="einvoice_body" class="brand">
+    <div class="zz header">
+        <h2>Brand verification</h2>
+    </div>
+    <div class="cont">
+        <p>This supplier has been confirmed as the brand owner of this brand.</p>
+        <p>Any supplier who is an authorised agent, installer or repairer of this brand can submit, through ShipServ, a request to have their authorised status shown in search results.  Authorised suppliers are given a significant boost in the search rankings.  These requests are forwarded to, and approved by, the Brand Owner (not ShipServ).</p>
+        <p><strong>If you are an authorised supplier and want this to be shown in your profile, go to your Self Service Tool.</strong></p>
+        <p><strong>If you are a brand owner who wishes to claim ownership of your brand on ShipServ Pages: <a href="/brand-auth/add-brand-owner/brand">click here</a>.</strong></p>
+        <p><strong>For help contact <a href="mailto:support@shipserv.com">support@shipserv.com</a>.</strong></p>
+    </div>
+</div>
+<script type="text/javascript">
+	<!--	
+	$(document).ready(function(){
+		$('#closeTooltipButton').click(function (e) {
+			e.preventDefault();
+			$('#mask').hide();
+			$('#einvoice_tooltip').hide();
+			$('#einvoice_tooltip').html('');
+		});
+        $('#mask').click(function (e) {
+			e.preventDefault();
+			$('#einvoice_tooltip').hide();
+			$('#einvoice_tooltip').html('');
+		});
+
+	});
+	//-->
+</script>

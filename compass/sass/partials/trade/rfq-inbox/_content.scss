@@ -1,0 +1,132 @@
+/*
+Document   : rfq-inbox/_content.scss
+Created on : SDec 5, 2012, 1:00:43 PM
+Author     : gly
+Description: styles for rfq-inbox content
+*/
+#modal .modalBody .modalContent .red.button {
+	color: #ffffff;
+}
+	
+#body {
+	&.liquid {
+		min-width: 1155px;
+	}
+	#sidebar {
+		ul#nav {
+			li.selected {
+				a {
+					padding: 0;
+				}
+			}
+		}
+	}
+	.head {
+		padding: 0 15px 5px;
+
+		ul {
+			bottom: -5px;
+		}
+	}
+
+	#content {
+		padding: 5px;
+		left: 0px !important;
+
+		&.rfqView {
+			float: left;
+			top: 0px;
+			left: 51px !important;
+			width: 921px;
+		}
+
+		.innerContent {
+			padding: 15px 10px 10px 10px;
+
+			.unread {
+				color: #e81e24;
+			}
+
+			.waiting {
+				color: #ff7f04;
+			}
+
+			.quoted {
+				color: #008b00;
+			}
+
+			.summary {
+				padding-bottom: 20px;
+			}
+
+			.box {
+				position: relative;
+				float: left;
+				width: 208px;
+				padding: 17px 6px;
+				margin-right: 10px;
+				border: 1px solid #d6dce4;
+				@include border-radius(6px);
+				@include x-multiple-colored-gradient(#ffffff 0%, #f5f7fa 100%);
+				-pie-background: linear-gradient(#ffffff 0%, #f5f7fa 100%);
+				behavior: url(/css/PIE.htc);
+
+				&.last {
+					margin-right: 0;
+				}
+
+				p {
+					font-size: 14px;
+					padding: 0;
+					margin: 0;
+				}
+			}
+
+			.smartInfo {
+				padding-top: 15px;
+				font-weight: bold;
+				vertical-align: middle;
+
+				img, span {
+					vertical-align: middle;
+				}
+
+				span {
+					padding-left: 10px;
+				}
+			}
+		}
+	}
+}
+
+#resultsTab {
+	tr {
+		td {
+			i {
+				&.taHelp {
+					color: #005AAD;
+					cursor: pointer;
+					font-size: 18px;
+					margin-left: 2px;
+				}
+			
+				&.taHelp:hover {
+					color: #005AFF;
+					
+				}
+			}
+		}
+	}
+}
+
+#engLevelTooltip {
+	display: none;
+}
+.sh-tooltip {
+	h2 {
+		font-weight: bold;
+	}
+	p {
+		margin: 6px;
+	}
+}

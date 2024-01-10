@@ -1,0 +1,75 @@
+<div id="backendErrorMsg"></div>
+<form class="new">
+	<div class="dropDown">
+		<div class="periodSel">
+			{{dateFromPretty}} - {{dateToPretty}}
+		</div>
+		<div class="details">
+			<select name="quickPeriod" id="quick" class="quickSel">
+				<option value="0">Quick selection</option>
+				<option value="7">Last week</option>
+				<option value="30">Last month</option>
+				<option value="90">Last quarter</option>
+				<option value="365">Last year</option>
+				<option value="13-25-now">13-24 months back from now</option>
+				
+			</select>
+			<br />
+			<div class="dateField from">
+				<label for="dateFrom">From:</label>
+				<input type="text" name="dateFrom" class="date from" />
+				<br />
+				dd/mm/yyyy
+			</div>
+			<div class="dateField to">
+				<label for="dateToFirst">To:</label>
+				<input type="text" name="dateTo" class="date to" />
+				<br />
+				dd/mm/yyyy
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="checker periodComp">
+		<input type="hidden" value="0" name="periodComp" />
+	</div>
+	<div class="label">Compare to:</div>
+	<div class="dropDown">
+		<div class="periodSel compare inactive">
+			{{dateFromCompPretty}} - {{dateToCompPretty}}
+			<input type="hidden" value="" name="comparePeriod">
+		</div>
+		<div class="details">
+			<select name="quickPeriodComp" id="quickCompare" class="quickSel">
+				<option value="0">Quick selection</option>
+				<option value="7">Last week</option>
+				<option value="30">Last month</option>
+				<option value="90">Last quarter</option>
+				<option value="365">Last year</option>
+				<option value="13-25-now">13-24 months back from now</option>
+			</select>
+			<br />
+			<div class="dateField from">
+				<label for="dateFromCompare">From:</label>
+				<input type="text" name="dateFromCompare" class="date from" />
+				<br />
+				dd/mm/yyyy
+			</div>
+			<div class="dateField to">
+				<label for="dateToCompare">To:</label>
+				<input type="text" name="dateToCompare" class="date to" />
+				<br />
+				dd/mm/yyyy
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+	<!--
+	<div class="checker marketComp checked">
+		<input type="hidden" value="1" name="marketComp" />
+	</div>
+	<div class="label">Compare to market (<a href="#" class="editMarket">edit</a>)</div>
+	<a href="market" class="cHelp light"></a>-->
+	<input type="button" class="button  green medium apply" value="Apply" name="apply"/>
+	<div class="clear"></div>
+</form>

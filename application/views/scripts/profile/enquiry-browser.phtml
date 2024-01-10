@@ -1,0 +1,153 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/my-companies.js');
+
+$this->requirejs()->addModule('help')
+				  ->addModule('modal');
+					  						 
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'RFQs from Pages',
+						   'url'  => '/profile/companies'));
+					 
+
+$statistic = $this->statistic;
+
+$this->headLink()->appendStylesheet('/css/transition.css');
+?>
+<script>
+$(document).ready(function(){
+	$(".enquiry").each(function(){
+		if ($(this).find('.enquiry-detail').innerHeight() < 80){
+			$(this).find('.archived-enquiry-detail-button').hide();
+		}
+	})
+	
+	$(".enquiry-detail-button").live('click', function(){
+		location.href = $(this).attr('link');
+	});
+
+	$(".archived-enquiry-detail-button").live('click', function(){
+
+		if( $(this).html() == 'more' )
+		{
+			$('#enquiry-' + $(this).attr('id') + ' .enquiryText' ).css({'max-height':'inherit'});
+			$(this).html('less');
+			$(this).attr('title', 'click here to see less of this message');
+		}else{
+			$('#enquiry-' + $(this).attr('id') + ' .enquiryText' ).css({'max-height':'80px'});
+			$(this).html('more');
+			$(this).attr('title', 'click here to see more of the message');
+		}
+			
+	});
+
+	$(".archived-enquiry-detail-button-page").live('click', function(){
+		var url = "/profile/company-enquiry-detail/type/v/id/<?= $this->params['tnid']?>/enquiryId/" + $(this).attr('link');
+		url += '/r/<?= $this->uri()->obfuscate($_SERVER['REQUEST_URI']);?>';
+		location.href = url;
+	});
+
+	// bind action for top right utility buttons (export, print, etc)
+	$('#exportToExcel').live('click', function(){
+		if ($(this).is('.disabled')) return false;
+		
+		$(this).parent().addClass('disabled');
+        $(this).parent().removeClass('dblue');
+		$(this).find('exportToExcel').text('Exporting');
+		var object = $(this);
+		
+		var url = '/profile/export-enquiry-to-excel?tnid=' + $('input[name="tnid"]').val();
+		
+		$.ajax({
+			url: url,
+			type: 'GET',
+			cache: false,
+		    error: function(request, textStatus, errorThrown) {
+		    	var response = eval('(' + request.responseText + ')');
+		    	alert("ERROR " + request.status + ": " + response.error);	
+				object.removeClass('disabled');
+				object.attr('disabled', false);
+				object.find('button').text('Exporting');
+		    },
+			success: function( response ){
+				object.parent().removeClass('disabled');
+                object.parent().addClass('disabled');
+				object.attr('disabled', false);
+				object.text('Export to Excel');
+
+				if( typeof response.data != "undefined"){
+					location.href='/profile/download?fileName=' + response.data;
+				}else{
+					alert("Sorry, there is a problem exporting this report. Please try again.")
+				}
+				return false;
+			}
+		});	
+		return false;
+	});    
+});
+</script>
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->CDNLink()->css('/css/profile.css'); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->CDNLink()->css('/css/profile/company-enquiry.css'); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->CDNLink()->css('/css/profile/user-management.css'); ?>" />
+
+<div id="main_content_area">	
+	<div class="clear"></div>
+	<div class="content_wide">
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], 'company-enquiry', $this->pendingUsers, $isAdmin)
+				)
+			);
+						?>
+			<div class="profile-body-right enquiries">
+				<div class="zz header">
+                    <div class="zz medium <?= ( $this->supplier->tnid != "" ) ? 'dblue':'disabled'?> button add_btn">
+						<form onsubmit="return false;">
+                            <input id="enq-tnid" type="hidden" value="<?= $this->supplier->tnid ?>" name="tnid" />
+                            <a href="#" id="exportToExcel" class="button" title="Export to Excel">Export to excel</a>
+                        </form>
+                    </div>
+					<h2>RFQs from Pages</h2>
+				</div>
+				<div class="profileContent">
+					<?php if( $this->supplier->tnid != "" ){?>
+						<?php
+							echo $this->partial('profile/enquiry-list.phtml', array(
+								'config' => $this->config,
+								'enquiries' => $this->enquiries,
+								'user' => $this->user,
+								'statistic' => $statistic,
+								'supplier' => $this->supplier,
+								'period' => $this->period,
+								'params' => $this->params,
+								'currentPage' => $this->currentPage,
+								'totalFound' => $this->totalFound,
+								'pageSize'	=> $this->pageSize,
+								'isShipservMode' => true
+							));
+						?>
+					
+					<?php } else {
+                                if( $this->params['tnid'] != "" ){?>
+                                    Supplier: <?= $this->params['tnid'] ?> cannot be found
+                                <?}else{?>
+                                    Please enter your TNID above!
+                                <?}?>
+					<?php }?>
+				</div>	
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

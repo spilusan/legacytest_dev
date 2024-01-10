@@ -1,0 +1,36 @@
+<div class="info">
+	<?php 
+		$ordDate = '';
+		if ($this->response['order']->ordSubmittedDate) {
+		    $date = new DateTime($this->response['order']->ordSubmittedDate);
+		   // $ordDate = $date->format('d M Y H:i:s');
+		    $ordDate = $date->format('d M Y');
+		}
+		Shipserv_Ord
+	?>
+	<h2>Purchase Order: <?php echo $this->response['order']->ordRefNo ?></h2>
+	<a class="topbtn bgray" href="<?= $this->response['printable'] ?>" target="_blank">View this order</a>
+	<hr>
+	<div>
+		<label>Subject:</label><span><?php echo $this->response['order']->ordSubject ?></span>
+	</div>
+	<? if ($this->display == 'supplier'): ?>
+		<div>
+			<label>Supplier:</label><span><?php echo $this->response['supplier']->name ?> (<?php echo $this->response['supplier']->tnid ?>)</span>
+		</div>
+	<? endif ?>
+	<? if ($this->display == 'buyer'): ?>
+		<div>
+			<label>Buyer:</label><span><?php echo $this->response['buyer']->bybName ?> (<?php echo $this->response['buyer']->bybBranchCode ?>)</span>
+		</div>
+	<? endif ?>
+	<div>
+		<label>Vessel:</label><span><?php echo $this->response['order']->ordVesselName ?> (<?php echo $this->response['order']->ordImoNo ?>)</span>
+	</div>
+	<div>
+		<label>PO sent date:</label><span><?php echo $ordDate ?></span>
+	</div>
+	<?php //var_dump($this->response) ?>
+</div>
+
+

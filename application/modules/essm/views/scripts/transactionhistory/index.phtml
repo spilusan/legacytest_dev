@@ -1,0 +1,944 @@
+<?
+$displayCancel = false; //Turn on/off the cancel RFQ functionality 
+$user = Shipserv_User::isLoggedIn();
+
+$shipmate = ($user) ? $user->isShipservUser() : false;
+
+$isTradenetAdmin = ($this->userTradenet) ? $this->userTradenet->isAdmin : false;
+
+$documentType = $documentType ?? null;
+
+$this->headTitle()->exchangeArray(array()); //Clear other headTitle sections (S8105)
+$this->headTitle('Shipserv Transaction Monitor');
+
+$this->headLink()->appendStylesheet('/css/uniform.default.new.css')->appendStylesheet('/css/font-awesome.css');
+if ($this->fromPages) {
+    $this->headLink()->appendStylesheet('/css/reports/txnmon.css');
+} else {
+    $this->headLink()->appendStylesheet('/css/reports/oldlooktxnmon.css');
+    $this->headLink()->appendStylesheet('/css/essm/bootstrap.min.css');
+    
+}
+//Temporary hack to use https for CDN in transaction monitor always
+$this->getHelper('Requirejs')->addModule('backbone/reports/txnMon/views/mainView');
+
+?>
+
+<?php if ($this->fromPages) : ?>
+    <?php echo $this->partial('partials/breadcrumbs.phtml', array()); ?>
+<?php endif ?>
+
+<div id="body" class="liquid">
+    <div id="content">
+       <?php if ($this->fromPages) : ?>
+        <h1 class="styled header">Transaction Monitor</h1>
+       <?php endif ?>
+
+        <div class="innerContent">
+
+            <form id="searchform" class="new" action="<?php if ($this->forceShipmate): ?>/shipmate<?php endif ?>/txnmon/<?= ($this->fromPages) ? 'n' : '' ?>search" method="GET">
+            <input type="hidden" name="page" value="1">
+            <div class="searchFilters">
+
+                <input type="hidden" value="<?= _htmlspecialchars($_REQUEST['childbranch']) ?>" id="childIsSelected" name="childbranch">
+                <div class="actions">
+                <?php if (lg_count($this->buyercompanies) > 1): ?><div class="singleRow">&nbsp;</div><?php endif ?>
+                <div class="singleRow">
+                    <label for="dateto" class="forSelect">To</label>
+                    <input type="text" name="dateto" id="dateto" class="date" value="<?= _htmlspecialchars($_REQUEST['dateto']); ?>" maxlength="11">
+                </div>
+                <div class="singleRow">&nbsp;</div>
+                <div class="singleRow">
+                    <label for="status" class="forSelect">Status</label>
+                    <select id="status" name="status">
+                        <option value="all" <?=$_REQUEST['status'] == 'all' ? 'selected' : ''?>>All</option>
+                        <option value="ACC" <?=$_REQUEST['status'] == 'ACC' ? 'selected' : ''?>>Accepted</option>
+                        <option value="CON" <?=$_REQUEST['status'] == 'CON' ? 'selected' : ''?>>Confirmed</option>
+                        <option value="DEC" <?=$_REQUEST['status'] == 'DEC' ? 'selected' : ''?>>Declined</option>
+                        <option value="NREP" <?=$_REQUEST['status'] == 'NREP' ? 'selected' : ''?>>Not replied to - ALL</option>
+                        <option value="OPN" <?=$_REQUEST['status'] == 'OPN' ? 'selected' : ''?>>Opened</option>
+                        <option value="SENT" <?=$_REQUEST['status'] == 'SENT' ? 'selected' : ''?>>Sent</option>
+                        <option value="NEW" <?=$_REQUEST['status'] == 'NEW' ? 'selected' : ''?>>Unopened</option>
+                        <option value="QUO" <?=$_REQUEST['status'] == 'QUO' ? 'selected' : ''?>>Quoted</option>
+                    </select>
+                </div>
+                
+                <?php if (isset($this->vessels) && isset($this->supplierNames)):?>
+                     <div class="singleRow">
+
+                        <label for="buyercontact" class="forSelect">Buyer Contact Name</label>
+                        <select id="buyercontact" name="buyercontact">
+                            <option value="ALL" <?=$_REQUEST['buyercontact'] == 'ALL' ? 'selected' : ''?>>Any</option>
+                            <?php foreach($this->buyerContacts as $buyerContact):?>
+                                <option value="<?=$buyerContact["BUYER_CONTACT"]?>" <?=$_REQUEST['buyercontact'] == $buyerContact["BUYER_CONTACT"] ? 'selected' : ''?>><?=$buyerContact["BUYER_CONTACT"]?></option>
+                            <?php endforeach?>
+                        </select>
+                        </div>
+
+                <?php endif ?>
+
+                    <div class="singleRow">
+                    <input name="runReport" type="submit" value="Search" class="button large green" />
+                    </div>
+
+                    <?php if(isset($this->results)):?>
+	                     <div class="singleRow">
+							<?php if ($this->fromPages) : ?>
+			                        <label>&nbsp;</label><a class="button small dblue" href="<?php if ($this->forceShipmate): ?>/shipmate<?php endif ?>/txnmon<?= ($this->fromPages) ? "/new" : ""; ?>">Clear result</a>
+		                     <?php else: ?>
+			                     	<label>&nbsp;</label><a class="newsearchbutton" href="<?php if ($this->forceShipmate): ?>/shipmate<?php endif ?>/txnmon<?= ($this->fromPages) ? "/new" : ""; ?>">Clear result</a>
+		                     <?php endif ?>
+						</div>
+
+                    <?php endif?>
+
+                </div>
+                <div class="filters">
+
+                        <p>N.B. The Transaction Monitor page shows transactions with 5-10 minutes delay.</p>
+
+                    <fieldset class="reportInfo">
+                        <div id="rptMainFilters">
+                        <script type="text/javascript">
+                        
+                            $(document).ready(function(){
+                                fillUpBuyerBranches($("#buyerbranch"));
+                                $("#buyerbranch").bind('change', function(){
+                                    fillUpBuyerBranches($(this));
+                                });
+                            });
+
+                            function fillUpBuyerBranches( element )
+                            {
+                                var v = $(element).val();
+                                var ids = [];
+
+                                if( v == 'ALL' ){
+                                    $(element).find("option").each(function(){
+                                        if( $(this).attr('value') != 'ALL' )
+                                        ids.push($(this).attr('value'));
+                                    });
+                                }else{
+                                    $(element).find("option[parentId='" + v + "']").each(function(){
+                                        ids.push($(this).attr('value'));
+                                    });
+
+                                    if( ids.length == 0 ){
+                                        ids.push(v);
+                                    }
+                                }
+
+                                $("#allBuyerBranches").val(ids.join(","));
+                             }
+                        </script>
+
+                        <?php if (lg_count($this->buyercompanies) > 1) { ?>
+
+                           <div class="singleRow">
+                            <label for="buyerbranch" class="forSelect">Buyer Company: </label>
+                            <input type="hidden" id="allBuyerBranches" value="<?= _htmlspecialchars($_REQUEST['allBuyerBranches']); ?>" name="allBuyerBranches" />
+                            <select name="buyerbranch" id="buyerbranch">
+                               <?php if($this->user && ($this->user->isAdmin || $this->user->isShipservUser())): ?>
+                                    <?php if (!$this->forceShipmate) :?>
+                                        <option child="0" value="ALL" <?= (!isset($_REQUEST['buyerbranch']) || $_REQUEST['buyerbranch'] == "ALL")? 'selected' : ''?>>All my companies</option>
+                                    <?php endif ?>
+                                    <?php foreach ($this->buyercompanies as $company): ?>
+                                        <option value="<?=$company["BYB_BRANCH_CODE"] ?>" <?= $_REQUEST['buyerbranch'] == $company["BYB_BRANCH_CODE"] ? 'selected' : ''?>>
+                                        	<?=$company["BYB_NAME"]?>
+                                    	</option>
+                                    <?php endforeach ?>
+                                <?php else: ?>
+                                    <option child="0" value="ALL" <?= (!isset($_REQUEST['buyerbranch']) || $_REQUEST['buyerbranch'] == "ALL")? 'selected' : ''?>>All my companies</option>
+
+                                    <?php // FOR PAGES USER?>
+                                    <?php if ($this->userTradenet->isPagesUser) { ?>
+                                        <?php foreach ($this->buyercompanies as $company): ?>
+                                            <option value="<?= $company["BYB_BRANCH_CODE"]; ?>" <?= ($_REQUEST['buyerbranch']==$company["BYB_BRANCH_CODE"] || (!$_REQUEST['buyerbranch'] == 'ALL' && $company["PUC_IS_DEFAULT"]))? 'selected' : '' ?>>
+                                        		<?= $company["BYB_NAME"] ?>
+                                    		</option>
+                                        <?php endforeach ?>
+                                    <?php  // FOR OTHER USER ?>
+                                    <?php } else { ?>
+                                        <option child="0" value="<?=$this->buyercompanies[0]["BYB_BRANCH_CODE"]?>" <?=$_REQUEST['buyerbranch'] == $this->buyercompanies[0]["BYB_BRANCH_CODE"] ? 'selected' : ''?>><?=$this->buyercompanies[0]["BYB_NAME"]?> (<?=$this->buyercompanies[0]["BYB_BRANCH_CODE"]?>)</option>
+                                        <?php if (lg_count($this->buyercompanies) > 1) { ?>
+                                            <optgroup label="Child companies">
+                                                <?php for ($i = 1; $i < lg_count($this->buyercompanies); $i++): ?>
+                                                    <option child="1" value="<?=$this->buyercompanies[$i]["BYB_BRANCH_CODE"]?>" <?=($_REQUEST['buyerbranch'] == $this->buyercompanies[$i]["BYB_BRANCH_CODE"] || (!$_REQUEST['buyerbranch'] && $company["PUC_IS_DEFAULT"]))? 'selected' : ''?>>- <?=$this->buyercompanies[$i]["BYB_NAME"]?> (<?=$this->buyercompanies[$i]["BYB_BRANCH_CODE"]?>)</option>
+                                                <?php endfor ?>
+                                            </optgroup>
+                                        <?php } ?>
+                                    <?php } ?>
+                                <?php endif ?>
+                            </select>
+                            </div>
+                        <?php } else { ?>
+                            <?php if (lg_count($this->buyercompanies) == 1): ?>
+                                <?php if($this->user && ($this->user->isAdmin || $this->user->isShipservUser())):?>
+                                    <input type="hidden" name="buyerbranch" id="buyerbranch" value="<?=$this->buyercompanies[0]["BYB_BRANCH_CODE"]?>">
+                                <?php else: ?>
+                                    <?php if ($_REQUEST['buyerbranch'] == "ALL"): ?>
+                                        <input type="hidden" name="buyerbranch" id="buyerbranch" value="ALL">
+                                    <?php else: ?>
+                                        <input type="hidden" name="buyerbranch" id="buyerbranch" value="<?=$this->buyercompanies[0]["BYB_BRANCH_CODE"]?>">
+                                    <?php endif ?>
+                                <?php endif ?>
+                            <?php else: ?>
+                                <input type="hidden" name="buyerbranch" id="buyerbranch" value="ALL">
+                            <?php endif ?>
+                        <?php } ?>
+                            <div class="singleRow">
+                            <label for="daterange" class="forSelect">Date Range</label>
+                            <select name="daterange" id="daterange">
+                                <option value="0" <?=$_REQUEST['daterange'] == '0' ? 'selected' : ''?>>Select range</option>
+                                <option value="1 day" <?=$_REQUEST['daterange'] == '1 day' ? 'selected' : ''?>>1 day (all since yesterday)</option>
+                                <option value="1 week" <?=$_REQUEST['daterange'] == '1 week' ? 'selected' : ''?>>Last 1 week</option>
+                                <option value="2 weeks" <?=$_REQUEST['daterange'] == '2 weeks' ? 'selected' : ''?>>Last 2 weeks</option>
+                                <option value="3 weeks" <?=$_REQUEST['daterange'] == '3 weeks' ? 'selected' : ''?>>Last 3 weeks</option>
+                                <option value="1 month" <?=$_REQUEST['daterange'] == '1 month' ? 'selected' : ''?>>Last 1 month</option>
+                                <option value="2 months" <?=$_REQUEST['daterange'] == '2 months' ? 'selected' : ''?>>Last 2 months</option>
+                                <option value="3 months" <?=$_REQUEST['daterange'] == '3 months' ? 'selected' : ''?>>Last 3 months</option>
+                                <option value="6 months" <?=$_REQUEST['daterange'] == '6 months' ? 'selected' : ''?>>Last 6 months</option>
+                                <option value="9 months" <?=$_REQUEST['daterange'] == '9 months' ? 'selected' : ''?>>Last 9 months</option>
+                                <option value="12 months" <?=$_REQUEST['daterange'] == '12 months' ? 'selected' : ''?>>Last 12 months</option>
+                            </select>
+                            <div class="textBlock">OR</div>
+                            </div>
+
+                            <div class="singleRow">
+                               <label class="forSelect">&nbsp;</label>
+                            </div>
+                            <div class="singleRow">
+
+                            <label for="suppliertype" class="forSelect">Supplier Type</label>
+                            <select id="suppliertype" name="suppliertype">
+                                <option value="all" <?=$_REQUEST['suppliertype'] == 'all' ? 'selected' : ''?>>All types</option>
+                                <option value="startsupplier" <?=$_REQUEST['suppliertype'] == 'startsupplier' ? 'selected' : ''?>>StartSupplier</option>
+                                <option value="tradenetsupplier" <?=$_REQUEST['suppliertype'] == 'tradenetsupplier' ? 'selected' : ''?>>TradeNetSupplier</option>
+                            </select>
+                            </div>
+
+                            <div class="singleRow">
+
+                            <label for="buyerreference" class="forField">Buyer Reference</label>
+                            <input id="buyerreference" class="buyerreference" type="text" name="buyerreference" value="<?=$_REQUEST['buyerreference']?>">
+                            <?php if ($this->fromPages): ?>
+                              <label>&nbsp;</label>
+                            <?php else: ?>
+                                <div class="clear"></div>
+                                <label>&nbsp;</label>
+                            <?php endif ?>
+                              <div class="radiobox">
+                                <label>
+                                  <input type="radio" name="searchtype" value="1" <?=$_REQUEST['searchtype'] == '1' ? 'checked="checked"' : ''?>>
+                                  Starts with
+                                </label>
+                                <label>
+                                  <input type="radio" name="searchtype" value="50" <?=$_REQUEST['searchtype'] == '50' ? 'checked="checked"' : ''?>>
+                                  Anywhere
+                                </label>
+                            </div>
+
+                            </div>
+                            <?php if (isset($this->vessels) && isset($this->supplierNames)):?>
+
+                        <div class="singleRow">
+
+                                <label for="supplierbranch" class="forSelect">Supplier Name</label>
+                                <select id="supplierbranch" name="supplierbranch">
+                                    <option value="0" <?=$_REQUEST['supplierbranch'] == '0' ? 'selected' : ''?>>Any</option>
+                                    <?php foreach($this->supplierNames as $supp):?>
+                                        <option value="<?=$supp["SPB_BRANCH_CODE"]?>" <?=$_REQUEST['supplierbranch'] == $supp["SPB_BRANCH_CODE"] ? 'selected' : ''?>><?=$supp["SPB_NAME"]?></option>
+                                    <?php endforeach?>
+                                </select>
+                         </div>
+
+                            <?php endif ?>
+                        </div>
+
+                    </fieldset>
+                    <fieldset class="reportDates">
+                            <?php if (lg_count($this->buyercompanies) > 1): ?><div class="singleRow">&nbsp;</div><?php endif ?>
+                            <div class="singleRow">
+                            <label for="datefrom" class="forField">From</label>
+                            <input class="date" type="text" name="datefrom" id="datefrom" value="<?=_htmlspecialchars($_REQUEST['datefrom'])?>" maxlength="11">
+                            </div>
+
+                            <div class="singleRow">&nbsp;</div>
+
+                            <div class="singleRow">
+
+                            <label for="documenttype" class="forSelect">Doc Type</label>
+                            <select id="documenttype" name="documenttype">
+                                <option value="all" <?=$documentType == 'all' ? 'selected' : ''?>>All (No REQs)</option>
+                                <option value="all-req" <?=$documentType == 'all-req' ? 'selected' : ''?>>All (Inc REQs)</option>
+                                <option value="req" <?=$documentType == 'req' ? 'selected' : ''?>>REQs</option>
+                                <option value="rfq" <?=$documentType == 'rfq' ? 'selected' : ''?>>RFQs</option>
+                                <option value="po" <?=$documentType == 'po' ? 'selected' : ''?>>POs</option>
+                                <option value="sent" <?=$documentType == 'sent' ? 'selected' : ''?>>RFQs &amp; POs</option>
+                                <option value="qot" <?=$documentType == 'qot' ? 'selected' : ''?>>QOTs</option>
+                                <option value="poc" <?=$documentType == 'poc' ? 'selected' : ''?>>POCs</option>
+                                <option value="inv" <?=$documentType == 'inv' ? 'selected' : ''?>>INVs</option>
+                                <option value="recv" <?=$documentType == 'recv' ? 'selected' : ''?>>QOTs &amp; POCs</option>
+                            </select>
+
+                            </div>
+
+                            <div class="singleRow">
+
+                            <label for="sortfield" class="forSelect">Order results by:</label>
+                            <select id="sortfield" name="sortfield">
+                                <option value="submitted_date" <?=$_REQUEST['sortfield'] == 'submitted_date' ? 'selected' : ''?>>Date</option>
+                                <option value="doc_type" <?=$_REQUEST['sortfield'] == 'doc_type' ? 'selected' : ''?>>Doc type</option>
+                                <option value="buyer_reference" <?=$_REQUEST['sortfield'] == 'buyer_reference' ? 'selected' : ''?>>Buyer reference</option>
+                                <option value="supplier_reference" <?=$_REQUEST['sortfield'] == 'supplier_reference' ? 'selected' : ''?>>Supplier reference</option>
+                                <option value="spb_name" <?=$_REQUEST['sortfield'] == 'spb_name' ? 'selected' : ''?>>Supplier Name</option>
+                                <option value="spb_branch_code" <?=$_REQUEST['sortfield'] == 'spb_branch_code' ? 'selected' : ''?>>Supplier ID</option>
+                                <option value="vessel_name" <?=$_REQUEST['sortfield'] == 'vessel_name' ? 'selected' : ''?>>Vessel</option>
+                                <option value="status" <?=$_REQUEST['sortfield'] == 'status' ? 'selected' : ''?>>Status</option>
+                                <?php if ($this->isRFQDeadlineAllowed): ?>
+                                    <option value="rfq_advice_before_date" <?= $_REQUEST['sortfield'] == 'rfq_advice_before_date' ? 'selected' : ''?>>Quote Deadline</option>
+                                <?php endif ?>
+                            </select>
+                            </div>
+
+                            <div class="singleRow">
+
+                              <label>&nbsp;</label>
+
+                            <div class="radiobox">
+                                <label for="sortdirection">
+                                    <input id="sortdirection" type="radio" name="sortdirection" value="ASC" <?=$_REQUEST['sortdirection'] == 'ASC' ? 'checked="checked"' : ''?>>Asc
+                                </label>
+                                <label>
+                                    <input type="radio" name="sortdirection" value="DESC" <?=$_REQUEST['sortdirection'] == 'DESC' ? 'checked="checked"' : ''?>>Desc
+                                </label>
+                             </div>
+                             </div>
+
+                    <?php if (isset($this->vessels) && isset($this->supplierNames)):?>
+                        <div class="singleRow">
+                        <label for="vessel" class="forSelect">Vessel</label>
+                        <select id="vessel" name="vessel">
+                            <option value="all" <?=$_REQUEST['vessel'] == 'all' ? 'selected' : ''?>>Any</option>
+                            <option value="NO VESSEL NAME" <?=$_REQUEST['vessel'] == 'NO VESSEL NAME' ? 'selected' : ''?>>NO VESSEL NAME</option>
+                            <?php foreach($this->vessels as $vessel):?>
+                                <option value="<?=$vessel["VESSEL_NAME"]?>" <?=$_REQUEST['vessel'] == $vessel["VESSEL_NAME"] ? 'selected' : ''?>><?=$vessel["VESSEL_NAME_FULL"]?></option>
+                            <?php endforeach ?>
+                        </select>
+                        </div>
+
+                    <?php endif ?>
+                    <?php if ($this->isRFQDeadlineAllowed): ?>
+                        <div class="singleRow">
+                            <label for="qotdeadline" class="forField">Quote Deadline</label>
+                            <input class="date" type="text" name="qotdeadline" id="qotdeadline" value="<?=$_REQUEST['qotdeadline']?>" maxlength="11">
+                        </div>
+                    <?php endif ?>
+
+                    </fieldset>
+                    
+                    <div class="singleRow">
+                        <div class="mainFilterbox">
+                            <label>Filters</label>
+                        </div>
+                        <div class="txFilterBox">
+                            <span class="filterLabel">Urgency</span>
+                            <label for="urgentCb">
+                                <input type="checkbox" id="urgentCb" name="urgent" value="PRI"<?= isset($_REQUEST['urgent']) ? ' checked' : ''; ?>><span>Urgent</span>
+                            </label><br>
+                            <label for="notUrgentCb">
+                                <input type="checkbox" id="notUrgentCb" name="noturgent" value="NOPRI"<?= isset($_REQUEST['noturgent']) ? ' checked' : ''; ?>><span>Not Urgent</span>
+                            </label>
+                        </div>
+
+                        <div class="txFilterBox">
+                            <span class="filterLabel">Variance</span>
+                            <label for="varianceCb">
+                                <input type="checkbox" id="varianceCb" name="variance" value="VAR"<?= isset($_REQUEST['variance']) ? ' checked' : ''; ?>><span>With Variance</span><br>    
+                            </label><br>
+                            <label for="noVarianceCb">
+                                <input type="checkbox" id="noVarianceCb" name="novariance" value="NOVAR"<?= isset($_REQUEST['novariance']) ? ' checked' : ''; ?>><span>Without Variance</span><br>    
+                            </label>                            
+                        </div>
+
+                        <div class="txFilterBox">
+                            <span class="filterLabel">Attachment</span>
+                            <label for="attachmentCb">
+                                <input type="checkbox" id="attachmentCb" name="attachment" value="ATT"<?= isset($_REQUEST['attachment']) ? ' checked' : ''; ?>><span>With Attachment</span><br>
+                            </label><br>
+                            <label for="noAttachmentCb">
+                                <input type="checkbox" id="noAttachmentCb" name="noattachment" value="NOATT"<?= isset($_REQUEST['noattachment']) ? ' checked' : ''; ?>><span>Without Attachment</span><br>
+                            </label>                            
+                        </div>
+                    </div>
+
+                     <?php if (!$this->isRFQDeadlineAllowed): ?>
+                         <div class="delayInfo">
+                            <div class="">Timezone is <b><?=$_REQUEST['timezone']?></b> for display purposes only - <a id="changetimezone">change timezone</a>. NB: Changing the displayed timezone does not affect the search criteria or the printable view, both of which are in GMT.</div>
+                            <input type="hidden" id="timezone" name="timezone" value="<?= _htmlspecialchars($_REQUEST['timezone']); ?>">
+                        </div>
+                    <?php endif ?>
+
+                </div>
+
+
+                </div>
+
+<!-- document result  -->
+<?php if (isset($this->results)):?>
+
+<div class="reportData" style="display: block;">
+                        <div class="sticky-wrapper"><div class="toStick">
+                                <div class="clear"></div>
+                            <table class="data head" style="display: table;">
+                                <thead>
+                                <tr>
+                                    <th class="tcol1">Date</th>
+                                    <th class="tcol2">Doc</th>
+                                    <th class="tcol3"></th>
+                                    <th class="tcol3">Priority</th>
+                                    <th class="tcol3">Variance</th>
+                                    <th class="tcol4">Buyer Ref</th>
+                                    <th class="tcol5">Supp. Ref</th>
+                                    <th class="tcol7">Supplier ID</th>
+                                    <th class="tcol6">Supplier Name</th>
+                                    <?php if($_REQUEST["buyerbranch"] == "ALL" && (lg_count($this->buyercompanies) > 1)){?>
+                                    	<th class="tcol8">Buyer ID</th>
+                                    	<th class="tcolBname">Buyer Name</th>
+                                    <?php }?>
+                                    <th class="tcolVessel">Vessel</th>
+                                    <th class="tcol9">Status</th>
+                                    <th class="tcol10" style="text-align:center; ">Resend</th>
+                                    <?php if ($displayCancel === true): ?>
+                                        <th class="tcol10" style="text-align:center; ">Cancel</th>
+                                    <?php endif ?>
+                                    <?php if ($shipmate || $this->user->isAdmin || $isTradenetAdmin): ?>
+                                    <th class="tcol11" style="text-align:center; ">Auto-Reminder</th>
+                                    <?php endif ?>
+
+                                    <?php if ($this->isRFQDeadlineAllowed & ($documentType == 'all' || $documentType == 'all-req' || $documentType == 'rfq' || $documentType == 'sent' || $documentType == 'qot' || $documentType == 'recv')): ?>
+
+                                        <th class="tcol11" style="text-align:center; ">RFQ deadline</th>
+                                        <th class="tcol11" style="text-align:center; ">RFQ Protected</th>
+                                        <th class="tcol11" style="text-align:center; ">Passed Deadline</th>
+                                        <th class="tcol11" style="text-align:center; ">Action</th>
+                                    <?php endif ?>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php foreach((array)$this->results as $result):?>
+                                    <?php if(isset($result['mc']) && $result['mc'] != "" ){ ?><input type="hidden" name="mckey" id="mckey" value="<?= $result['mc'];?>" /><?php }?>
+                                    <tr <?php
+                                        foreach ($result as $key => $value) {
+                                            echo " data-" . strtolower($key) . '="' . addslashes(htmlentities($value)) .'"';
+                                        }
+                                    ?>>
+                                        <td><?php echo $result['CH_SUBMITTED_DATE']; ?></td>
+                                        <td><?=$result["DOC_TYPE"]?></td>
+                                        <td>
+                                            <?php
+                                            if( $_REQUEST['buyerbranch'] == 'ALL' && $result['BYB_BRANCH_CODE'] != "" )
+                                            {
+                                                $adapter = new Shipserv_Oracle_User_Tradenet();
+                                                if( $otherUsers[$result['BYB_BRANCH_CODE']] === null )
+                                                {
+                                                    $otherUsers[$result['BYB_BRANCH_CODE']] = $adapter->fetchOneUserByBybBranchCode($result['BYB_BRANCH_CODE']);
+                                                }
+                                                $urlToPrintable = $this->printable()->generateURL($result["DOC_TYPE"], $result['INTERNAL_REF_NO'], $otherUsers[$result['BYB_BRANCH_CODE']], $result['BYB_BRANCH_CODE'], $result['SPB_BRANCH_CODE']);
+                                            }
+                                            else
+                                            {
+                                                $urlToPrintable = $this->printable()->generateURL($result["DOC_TYPE"], $result['INTERNAL_REF_NO'], ($this->childBranch) ? $this->otherUser:$this->userTradenet, $result['BYB_BRANCH_CODE'], $result['SPB_BRANCH_CODE']);
+                                            }
+
+                                            ?>
+                                            <a href="<?= $urlToPrintable ?>" target="_blank" title="Print - opens in new tab or window"><img src="/img/essm/print.png" alt="Print"></a>
+
+                                            <?php
+                                            if($result['ATTTXNID']!="")
+                                            {
+                                                ?>
+                                                <a attTxnId="<?= $result['ATTTXNID']?>" class="attachmentDetail"><img src="/img/icons/rfq-inbox/attachment_black.png" /></a>
+                                                <div class="hidden" id="attachmentList<?= $result['ATTTXNID']?>">
+                                                    <table width="70%" style="font-size:12px;">
+                                                    <?
+                                                        foreach(Application_Model_Transaction::getAttachmentByTxnId($result['ATTTXNID'], $result['DOC_TYPE']) as $attachment)
+                                                        {
+                                                            $qs = array(
+                                                                'action' => 'view'
+                                                                , 'docType' => $result["DOC_TYPE"]
+                                                                , 'bCode' => $result['BYB_BRANCH_CODE']
+                                                                , 'atfID' => $attachment['ATT_ATF_ID']
+                                                                , 'cby' => (( $result['DOC_TYPE'] === "POC" || $result['DOC_TYPE'] === "QOT" ) ? $result['SPB_BRANCH_CODE']:$result['BYB_BRANCH_CODE'])
+                                                            );
+                                                            ?>
+                                                                <tr>
+                                                                    <td>
+                                                                        <a target="_blank" href="<?php echo '/FileAttachment?' . http_build_query($qs)?>">
+                                                                            <?= $attachment['ATF_FILE_NAME_ORIG']?>
+                                                                        </a>
+                                                                    </td>
+                                                                    <td align="right">
+                                                                        <?= number_format($attachment['ATF_FILE_SIZE'] / 1024, 2);?> kb
+                                                                    </td>
+                                                                </tr>
+                                                            <?
+                                                        }
+                                                    ?>
+                                                    </table>
+                                                <div>
+                                                <?
+                                            }
+                                            ?>
+                                        </td>
+                                        <td style="text-align:center">
+                                        <?php if ((int)$result["PRIORITY"]): ?>
+                                            <span style="color:red; font-size:18px; font-weight:bold">
+                                                <i class="fa fa-flag" aria-hidden="true"></i>
+                                            </span>
+                                        <?php endif ?>
+                                        </td>
+                                        <td style="text-align:center">
+                                        <?php if ((int)$result["VARIANCE"]): ?>
+                                            <span style="color:red; font-size:18px; font-weight:bold">
+                                                <i class="fa fa-flag" aria-hidden="true"></i>
+                                            </span>
+                                        <?php endif ?>
+                                        </td>
+                                        <td><?=$result["BUYER_REFERENCE"]?></td>
+                                        <td><?=$result["SUPPLIER_REFERENCE"]?></td>
+                                        <td><?=$result["SPB_BRANCH_CODE"]?></td>
+                                        <td><span title="<?=$result["SPB_CONNECT_TYPE"]?>"><?=$result["SPB_NAME"]?></span></td>
+                                        <?php if($_REQUEST["buyerbranch"] == "ALL" && (lg_count($this->buyercompanies) > 1)){?>
+                                        	<td><?=$result["BYB_BRANCH_CODE"]?></td>
+                                        	<td><?=$result["BYB_NAME"]?></td>
+                                        <?php }?>
+                                        <td><?=$result["VESSEL_NAME"]?></td>
+                                        <td><?=$result["STATUS_READABLE"]?></td>
+                                        <td style="text-align:center; font-size:11px; line-height:12px;">
+                                            <?php if(($result['DOC_TYPE'] == 'RFQ' || $result['DOC_TYPE'] == 'PO') && $result["SPB_CONNECT_TYPE"] == 'STARTSUPPLIER' /*&& $result["ALERT_LAST_SENT"] == null*/) :?>
+                                                <a class="resend">
+                                                    <img src="/img/essm/send.png" alt="re-send">
+                                                    <?= ($result["ALERT_LAST_SENT"]!="") ? " <br />resent on " . $result["ALERT_LAST_SENT"] . "":" - "?>
+                                                </a>
+                                            <?php endif?>
+                                        </td>
+                                        <?php if ($displayCancel === true): ?>
+                                            <td style="text-align:center; font-size:11px; line-height:12px;">
+                                                <?php if($result['DOC_TYPE'] == 'RFQ') :?>
+                                                    <a class="cancelRfq">
+                                                        <img src="/img/essm/send.png" alt="re-send">
+                                                        <?= ($result["ALERT_LAST_SENT"]!="") ? " <br />resent on " . $result["ALERT_LAST_SENT"] . "":" - "?>
+                                                    </a>
+                                                <?php endif?>
+                                            </td>
+                                        <?php endif ?>
+                                        <?php if ($shipmate || $this->user->isAdmin || $isTradenetAdmin): ?>
+                                        <td style="text-align:center; font-size:11px; line-height:12px;">
+                                            <?php if ($result['REMINDER_COMPLETED'] == 1): ?>
+                                                <a class="autorem" data-lastsent="<?= $result["REMINDER_LAST_SENT"] ?>" data-total="<?= $result["REMINDER_TOTAL"] ?>">
+                                                    <img src="/img/essm/send.png" alt="info">
+                                                    <?php if ($result["REMINDER_TOTAL"] == 1): ?>
+                                                        <?= ($result["REMINDER_LAST_SENT"]!="") ? " <br />sent on<br>" .str_replace(' ', '<br>', $result["REMINDER_LAST_SENT"]) . "":" - "?>
+                                                    <?php else: ?>
+                                                        <?= ($result["REMINDER_LAST_SENT"]!="") ? " <br />resent on<br>" . str_replace(' ', '<br>', $result["REMINDER_LAST_SENT"]) . "":" - "?>
+                                                    <?php endif ?>
+                                                </a>
+                                            <?php endif?>
+                                            </td>
+
+                                        <?php endif ?>
+                                        <?php if ($this->isRFQDeadlineAllowed & ($documentType == 'all' || $documentType == 'all-req' || $documentType == 'rfq' || $documentType == 'sent' || $documentType == 'qot' || $documentType == 'recv')): ?>
+
+                                        <!-- Qoute Deadline -->
+                                        <td style="text-align:center; font-size:11px; line-height:12px;">
+                                            <?php if ($result['DOC_TYPE'] == 'RFQ'): ?>
+                                                <?= $result["RFQ_ADVICE_BEFORE_DATE"] ?>
+                                            <?php endif ?>
+                                        </td>
+
+                                        <!-- RFQ Protected -->
+                                        <?php $protected = false ?>
+                                        <td style="text-align:center; font-size:11px; line-height:12px;">
+                                           <?php if ($result['DOC_TYPE'] == 'RFQ'): ?>
+                                            <?php $protected = ((bool)$result["RFQ_DEADLINE_ALLOW_MGR_UNLOCK"]); ?>
+                                                <?php if ($protected): ?>
+                                                    Yes
+                                                <?php else: ?>
+                                                    No
+                                                <?php endif ?>
+                                            <?php endif ?>
+                                         </td>
+
+                                         <!-- Passed deadline -->
+                                         <?php $passedDeadline = null ?>
+                                        <td style="text-align:center; font-size:11px; line-height:12px;">
+                                           <?php if ($result['DOC_TYPE'] == 'RFQ'): ?>
+                                                <?php if ($result["RFQ_ADVICE_BEFORE_DATE"] != ''): ?>
+                                                <?php 
+                                                    if ($result['RFQ_QUOTED_DATE'] !== null) {
+                                                        $selectedTimezone = new DateTimeZone($this->timeZoneName);
+                                                        $rfqQuotedOriginalDate = new DateTime($result["RFQ_QUOTED_DATE"]);
+                                                        $rfqQuotedOriginalDate->setTimezone($selectedTimezone);
+                                                        $correctedTime = strtotime($rfqQuotedOriginalDate->format('Y-m-d H:i:s'));
+                                                        $passedDeadline = ($correctedTime > strtotime($result["RFQ_ADVICE_BEFORE_DATE"]) );
+                                                    } else {
+                                                        //Correct Date to keppel timezone for deadline expiration comparison
+                                                        $selectedTimezone = new DateTimeZone($this->timeZoneName);
+                                                        $datetime = new DateTime();
+                                                        $datetime->setTimezone($selectedTimezone);
+                                                        $correctedTime = strtotime($datetime->format('Y-m-d H:i:s'));
+                                                        $passedDeadline = ($correctedTime > strtotime($result["RFQ_ADVICE_BEFORE_DATE"]) );
+                                                    }
+                                                    if ( $passedDeadline ):
+                                                ?>
+                                                        Yes
+                                                    <?php else: ?>
+                                                        No
+                                                    <?php endif ?>
+                                                <?php endif ?>
+                                           <?php endif ?>
+                                         </td>
+
+                                        <!-- Unlocked date -->
+                                        <td style="text-align:center; font-size:11px; line-height:12px;">
+
+                                            <?php if ($result['DOC_TYPE'] == 'RFQ'): ?>
+                                                <?php if($result["RFQ_DEADLINE_MGR_UNLOCKED_DATE"] == null): ?>
+                                                    <?php 
+                                                        //if ((bool)$result["RFQ_DEADLINE_ALLOW_MGR_UNLOCK"] && $this->isRFQDeadlineMgr): 
+                                                        //if ($this->isRFQDeadlineMgr && ($passedDeadline === true || $protected === false )): 
+                                                        if ($this->isRFQDeadlineMgr && ($this->isPagesUser !== true || ($this->isPagesUser && $this->userTradenet->canAccessTransactionMonitorAdm(null,$result['BYB_BRANCH_CODE'])))): 
+                                                    ?>
+                                                        <a href="#" class="unlockBtn" data-id="<?= $result['INTERNAL_REF_NO'] ?>" data-doctype="<?= $result['DOC_TYPE'] ?>" data-buyerref="<?=htmlspecialchars($result["BUYER_REFERENCE"])?>">
+                                                            Close
+                                                        </a>
+                                                    <?php else: ?>
+                                                        &nbsp;
+                                                    <?php endif ?>
+                                                <?php else: ?>
+                                                    <?= $result["RFQ_DEADLINE_MGR_UNLOCKED_DATE"] ?>
+                                                <?php endif ?>
+                                            <?php endif ?>        
+                                        </td>
+
+                                        <?php endif ?>
+                                    </tr>
+                                <?php endforeach?>
+                            </tbody>
+                            </table>
+                            </div>
+                        </div>
+</div>
+
+<div id="tablefooter" class="clearfix">
+    <div class="recordInfo">Total of <b><?=$this->numResults?> documents</b> found. <?php if($this->numResults > 0):?>Viewing <b>page <?=$this->currentPage?> of <?=$this->numPages?></b><?php endif?></div>
+    <div class="buttons">
+        <?php if($this->currentPage > 1):?>
+            <?php if($this->currentPage > 2):?>
+                <button type="button" class="button white medium paginate" name="paginator" data-id="1">&lt;&lt; First</button>
+            <?php endif?>
+                <button type="button" class="button white medium paginate" name="paginator" data-id="<?=$this->currentPage-1?>">&lt; Prev</button>
+        <?php endif?>
+        <?php if($this->currentPage < $this->numPages):?>
+
+            <button type="button" class="button white medium paginate" name="paginator" data-id="<?=$this->currentPage+1?>">Next &gt;</button>
+            <?php if($this->numPages > 2 && $this->currentPage < $this->numPages -1):?>
+                <button type="button" class="button white medium paginate" name="paginator" data-id="<?=$this->numPages?>">Last &gt;&gt;</button>
+            <?php endif?>
+        <?php endif?>
+    </div>
+</div>
+
+<?php endif?>
+
+</form>
+
+    <div class="hidden resend dialog"></div>
+
+    <div class="modal hide" id="timezonemodal">
+
+        <?php if ($this->fromPages): ?>
+        <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+        <div class="modalBody"><h1 class="styled">Change Display Timezone</h1>
+
+        <div class="modalContent">
+            <select id="timezoneselect">
+                <?php
+                foreach($this->timezones as $timezoneCode => $timezoneName) {
+                    ?>
+                    <option value="<?php echo $timezoneCode; ?>" <?php if ($timezoneCode === $this->timezone) echo("selected"); ?>>
+                        <?php echo $timezoneName; ?>
+                    </option>
+                    <?php
+                }
+                ?>
+            </select>
+            <p><b>Note: Changing the displayed timezone will not affect the search criteria or the printable view, both of which are in GMT.</b></p>
+        </div>
+
+        <div class="modal-footer">
+
+           <a class="button white medium close">Cancel</a>
+           <a id="timezonesave" class="button green medium resendBtn">Change</a>
+
+        </div>
+        </div>
+        <?php else: ?>
+         <div class="modal-header">
+             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+             <h3>Change Display Timezone</h3>
+         </div>
+         <div class="modal-body">
+                <select id="timezoneselect">
+                        <?php
+                        foreach($this->timezones as $timezoneCode => $timezoneName) {
+                            ?>
+                            <option value="<?php echo $timezoneCode; ?>" <?php if ($timezoneCode === $this->timezone) echo("selected"); ?>>
+                                <?php echo $timezoneName; ?>
+                            </option>
+                            <?php
+                        }
+                        ?>
+                </select>
+                <p><b>Note: Changing the displayed timezone will not affect the search criteria or the printable view, both of which are in GMT.</b></p>
+            </div>
+            <div class="modal-footer">
+              <a href="javascript:void(0)" class="btn close">Cancel</a>
+              <a id="timezonesave" href="javascript:void(0)" class="btn btn-primary change">Change</a>
+            </div>
+        <?php endif ?>
+        </div>
+    </div>
+
+    <div class="modal hide" id="resendmodal">
+    <?php if ($this->fromPages): ?>
+            <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+            <div class="modalBody"><h1 class="styled">Resend Document</h1>
+            <div class="modalContent">
+                <img src="/images/layout_v2/file_icons/spinner_big.gif" alt="loading" class="loading spinner hide">
+                <form class="horizontal">
+                    <div class="group">
+                        <label for="email1">Email #1</label>
+                        <div>
+                            <input type="text" id="email1" placeholder="Email address #1">
+                        </div>
+                    </div>
+                    <div class="group">
+                        <label for="email2">Email #2</label>
+                        <div class="controls">
+                            <input type="text" id="email2" placeholder="Email address #2">
+                        </div>
+                    </div>
+                </form>
+          </div>
+          <div class="modal-footer">
+            <a class="button white medium close">Cancel</a>
+            <a class="button green medium resendBtn">Send</a>
+          </div>
+        </div>
+    <?php else: ?>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Resend Document</h3>
+        </div>
+        <div class="modal-body">
+            <img src="/images/layout_v2/file_icons/spinner_big.gif" alt="loading" class="loading spinner hide">
+            <form class="form form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="email1">Email #1</label>
+                    <div class="controls">
+                        <input type="text" id="email1" placeholder="Email address #1">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="email2">Email #2</label>
+                    <div class="controls">
+                        <input type="text" id="email2" placeholder="Email address #2">
+                    </div>
+                </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn close">Cancel</a>
+        <a href="javascript:void(0)" class="btn btn-primary send resendBtn">Send</a>
+      </div>
+    <?php endif ?>
+    </div>
+
+    <div class="modal hide" id="showAutoRemDetailsModal">
+    <?php if ($this->fromPages): ?>
+            <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+            <div class="modalBody"><h1 class="styled">Auto-Reminder Details</h1>
+            <div class="modalContent">
+
+                 <table width="100%" cellpadding="6" cellspacing="0">
+                    <tr>
+                        <td>Reminder Completed</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Reminder Total</td>
+                        <td id="modalReminderTotal"></td>
+                    </tr>
+                    <tr>
+                        <td>Reminder Last Sent</td>
+                        <td id="modalReminderLastSent"></td>
+                    </tr>
+                </table>
+
+          </div>
+          <div class="modal-footer">
+            <a class="button white medium close">OK</a>
+          </div>
+        </div>
+    <?php else: ?>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Auto-Reminder Details</h3>
+        </div>
+        <div class="modal-body">
+
+                <table width="100%" cellpadding="6" cellspacing="0">
+                    <tr>
+                        <td>Reminder Completed</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td>Reminder Total</td>
+                        <td id="modalReminderTotal"></td>
+                    </tr>
+                    <tr>
+                        <td>Reminder Last Sent</td>
+                        <td id="modalReminderLastSent"></td>
+                    </tr>
+                </table>
+      </div>
+      <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn close">OK</a>
+      </div>
+    <?php endif ?>
+    </div>
+
+    <!-- Cancel RFQ modals  -->
+    <div class="modal hide" id="cancelRfqModal">
+    <?php if ($this->fromPages): ?>
+            <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+            <div class="modalBody"><h1 class="styled">Cancel Document</h1>
+            <div class="modalContent">
+                <img src="/images/layout_v2/file_icons/spinner_big.gif" alt="loading" class="loading spinner hide">
+                <form class="horizontal">
+                    <div class="group">
+                        <label for="cancelemail1">Email #1</label>
+                        <div>
+                            <input type="text" id="cancelemail1" placeholder="Email address #1">
+                        </div>
+                    </div>
+                    <div class="group">
+                        <label for="cancelemail2">Email #2</label>
+                        <div class="controls">
+                            <input type="text" id="cancelemail2" placeholder="Email address #2">
+                        </div>
+                    </div>
+                </form>
+          </div>
+          <div class="modal-footer">
+            <a class="button white medium close">Cancel</a>
+            <a class="button green medium cancelRfqBtn">Send</a>
+          </div>
+        </div>
+    <?php else: ?>
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Cancel Document</h3>
+        </div>
+        <div class="modal-body">
+            <img src="/images/layout_v2/file_icons/spinner_big.gif" alt="loading" class="loading spinner hide">
+            <form class="form form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="cancelemail1">Email #1</label>
+                    <div class="controls">
+                        <input type="text" id="cancelemail1" placeholder="Email address #1">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="cancelemail2">Email #2</label>
+                    <div class="controls">
+                        <input type="text" id="cancelemail2" placeholder="Email address #2">
+                    </div>
+                </div>
+            </form>
+      </div>
+      <div class="modal-footer">
+        <a href="javascript:void(0)" class="btn close">Cancel</a>
+        <a href="javascript:void(0)" class="btn btn-primary send cancelRfqBtn">Send</a>
+      </div>
+    <?php endif ?>
+    </div>   
+    <!-- End of Cancel RFQ modals  -->
+
+    <div class="modal hide" id="attachmentModal">
+    <?php if ($this->fromPages): ?>
+        <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+        <div class="modalBody"><h1 class="styled">Attachments</h1>
+            <div class="modalContent">
+                <div id="listOfAttachment"></div>
+            </div>
+            <div class="modal-footer">
+                <a class="btn close">Cancel</a>
+                <a class="btn btn-primary send">Send</a>
+            </div>
+        </div>
+    <?php else: ?>
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Attachments</h3>
+        </div>
+        <div class="modal-body">
+            <div id="listOfAttachment"></div>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" class="btn close">Cancel</a>
+            <a href="javascript:void(0)" class="btn btn-primary send">Send</a>
+        </div>
+    <?php endif ?>
+    </div>
+
+    <!-- Manager Unclock popup --> 
+
+    <div class="modal hide" id="managerUnlockModal">
+    <?php if ($this->fromPages): ?>
+        <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+        <div class="modalBody"><h1 class="styled">Close</h1>
+            <div class="modalContent">
+                <img src="/images/layout_v2/file_icons/spinner_big.gif" alt="loading" class="loading spinner hide">
+                <span class="confirmText">Are you sure?</span>
+                
+            </div>
+         <div class="modal-footer">
+            <a class="button white medium close">Cancel</a>
+            <a class="button green medium unlockerBtn">Unlock</a>
+          </div>
+        </div>
+    <?php else: ?>
+        <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Close</h3>
+        </div>
+        <div class="modal-body">
+            <img src="/images/layout_v2/file_icons/spinner_big.gif" alt="loading" class="loading spinner hide">
+           <span class="confirmText">Are you sure?</span>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0)" class="btn close">Cancel</a>
+            <a href="javascript:void(0)" class="btn btn-primary unlockerBtn">Unlock</a>
+        </div>
+    <?php endif ?>
+    </div>
+
+    <!-- End Manager Unclock popup --> 
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>

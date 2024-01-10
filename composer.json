@@ -1,0 +1,27 @@
+{
+	"name":	"shipserv/pages",
+	"description": "ShipServ Pages code base",
+    "autoload": {
+        "psr-4": {
+            "": "psr4/"
+        },
+        "files": [
+            "helpers/Legacy.php"
+        ]
+    },
+	"require": {
+        "everyman/neo4jphp": "dev-master",
+        "googleads/googleads-php-lib": "40.0.0",
+        "solarium/solarium": "2.*",
+        "maxcdn/php-maxcdn": "2.*",
+        "codeplex/phpexcel": "1.7.6",
+        "shardj/zf1-future": "^1.23",
+        "predis/predis": "^1.1",
+		"zendframework/zend-xmlrpc": "^2.5"
+    },
+	"require-dev": {
+		"squizlabs/php_codesniffer": "^3.8",
+		"phpstan/phpstan": "^1.10",
+		"phpcompatibility/php-compatibility": "^9.3"
+	}
+}

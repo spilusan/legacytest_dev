@@ -1,0 +1,30 @@
+<div id="topToolBar" style="height:40px;">
+		<div id="closeTooltipButton"></div>
+		<div class="clear"></div>
+</div>
+<div id="einvoice_body" class="verified">
+    <div class="zz header">
+        <h2>Brand verification</h2>
+    </div>
+    <div class="cont">
+        <p>The manufacturer or owner of this brand has verified that this supplier is an authorised agent, installer or distributor and/or supplies certified genuine/original spares.</p>
+    </div>
+</div>
+<script type="text/javascript">
+	<!--	
+	$(document).ready(function(){
+		$('#closeTooltipButton').click(function (e) {
+			e.preventDefault();
+			$('#mask').hide();
+			$('#einvoice_tooltip').hide();
+			$('#einvoice_tooltip').html('');
+		});
+        $('#mask').click(function (e) {
+			e.preventDefault();
+			$('#einvoice_tooltip').hide();
+			$('#einvoice_tooltip').html('');
+		});
+
+	});
+	//-->
+</script>

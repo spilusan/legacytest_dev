@@ -1,0 +1,31 @@
+/*
+ * Print layout for report
+ */
+@media print {
+  header, .header-container, .header-space, .mainFooter {
+    display: none !important;
+  }
+
+  h1 {
+    &.pages {
+      display: none;
+    }
+  }
+
+  div {
+    &.basic, &.premium {
+      page-break-inside: avoid;
+    }
+  }
+
+  body {
+    background: white;
+    zoom: 70%;
+  }
+
+  @page {
+    size: 210mm 297mm;
+    margin: 10mm 10mm 10mm 5mm;
+    padding: 0;
+  }
+}

@@ -1,0 +1,18 @@
+/*
+Document   : home.scss
+Created on : Dec 17, 2013, 3:00:43 PM
+Author     : gly
+Description: combining partials for homepage styles
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+@import "partials/def/context_help";
+@import "partials/def/modal_new";
+@import "partials/def/autocomplete-new";
+
+@import "partials/home/content";
+@import "partials/home/searchForm";
+@import "partials/home/leftContent";
+@import "partials/home/rightContent";

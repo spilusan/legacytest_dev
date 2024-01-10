@@ -1,0 +1,54 @@
+<?php
+$this->headLink()->appendStylesheet('https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic')
+->appendStylesheet('https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic')
+->appendStylesheet('/css/shipmate/buyer-usage-dashboard-drill.css');
+
+$hostname = $this->config['shipserv']['application']['hostname'];
+
+$this->getHelper('Requirejs')->addModule('backbone/shipmate/buyer-usage-dashboard/views/drilldownView')
+->addDefinition('buyer/org', json_encode($this->byo))
+->addDefinition('buyer/params', json_encode($this->params));
+
+$user = Shipserv_User::isLoggedIn();
+$shipservUser = $user->isShipservUser();
+
+$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+$breadcrumbs[] = array('name' => 'Buyer Usage Dashboard', 'url'  => '');
+echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<div id="waiting" style="display: none;">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>
+<div id="body">
+	<div id="content">
+		<h1 class="pages"><?php echo $this->title ?></h1>
+		<!-- TODO refactor it later as this is not a form, but in our design guide we do not have style for headers like that yet -->
+		<form class="filters">
+			<b>Company Name:</b> <?php echo $this->byo->name; ?><br>
+			<br>
+			<b>Org Id:</b> <?php echo $this->byo->byoOrgCode; ?><br>
+			<br>
+			<b>Period</b>
+			<?php if ($this->params['range'] == 1): ?>
+				Last 30 days
+			<?php else: ?>
+				Last <?php echo $this->params['range']; ?> months
+			<?php endif ?><br>
+		</form>
+		<!-- TODO remove this inline style as soon as there is a proper class for it -->
+		<table style="min-width: 960px">
+			<thead>
+				
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+		<div class="btnContainer">
+			<input type="button" name="export" value="Export" class="btn white">
+		</div>
+	</div>
+</div>
+<div class="clear"></div>

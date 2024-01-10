@@ -1,0 +1,60 @@
+<!-- White block -->
+<div class="pct-sir-white-block">
+    <!-- Premium profile header -->
+    {{#if premium}}
+        <div class="pct-sir-profile premium">
+            <div>
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <p>
+                    You have a<br>
+                    <b>Premium Profile</b>
+                </p>
+            </div>
+            <div>
+                <p>
+                    Thank you for having a <b>PREMIUM PROFILE</b> with ShipServ. You have the highest level of listing on ShipServ Pages.
+                </p>
+            </div>
+        </div>
+    {{else}}
+    <div class="pct-sir-profile basic">
+        <div>
+            <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            <p>
+                You only have a<br>
+                <b>Basic Listing</b>
+            </p>
+        </div>
+        <div>
+            <p>
+                A <b>BASIC LISTING</b> is the lowest level of listing on ShipServ Pages. As a result, you are not making the most of your company profile. Please consider upgrading to <b>PREMIUM PROFILE</b>
+            </p>
+        </div>
+    </div>
+    {{/if}}
+    <!-- Premium Profile Header -->
+
+    <div class="pct-sir-premium-text">
+        <p>
+            <i class="fa fa-info-circle filterTooltip" aria-hidden="true" data-tooltip="The world's largest marine search engine with 4.5m searches a year."></i>
+            On average, Premium Profiles get <b>6x more Profile Click-Throughs</b> than they used to before upgrading.
+        </p>
+    </div>
+
+    <div class="pct-sir-filter">
+        <div>
+            <span>Company Name:</span>
+            <div class="border">{{name}} ({{tnid}})</div>
+        </div>
+        <form>
+            <label for="daterange">
+                <div>Date Period:</div>
+                <input type="text" id="date-picker" name="daterange" readonly>
+                <input type="button" name="run" value="Apply" class="btn green">
+            </label>
+        </form>
+    </div>
+</div>
+<!-- End White block --> 
+
+

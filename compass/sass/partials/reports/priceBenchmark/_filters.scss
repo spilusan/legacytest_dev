@@ -1,0 +1,189 @@
+div#body {
+	#content {
+		#innerContent {
+			.filters {
+				position: relative;
+				background:#f5f7fa;
+				border: 1px solid #d6dce4;
+				padding: 7px 12px;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+					
+				.impaItemDisplay {
+					padding: 12px 0px 12px 100px;
+					width: 75%;
+
+				}
+				.keywordsAutocomplete {
+						position: relative;
+						left: 7px;
+						top: 7px;
+						width: 20px;
+						height: 20px;
+						background: url(/images/layout_v2/file_icons/spinner.gif) no-repeat scroll 0 0 transparent;
+						display: inline-block;
+						display: none;
+				}
+				/* Impa items text */
+				ul {
+					&.cloud {
+						li {
+							span {
+							  width: 300px;
+							  display: inline-block;
+							  text-overflow: ellipsis;
+							  overflow: hidden;
+							  white-space: nowrap;
+							  top: 3px;
+							}
+							select {
+								min-width: 55px;
+								margin-left: 6px;
+							}
+							img {
+								position: relative;
+								top: 5px;
+							}
+						}
+					}
+				}
+
+				fieldset {
+					display: block;
+					min-height: 35px;
+					div {
+						&.radio {
+							margin-right: 6px;
+						}
+					}
+					&.topBordered {
+						border-top: 1px solid #d6dce4;
+						position: relative;
+
+						.align {
+							position: absolute;
+							width: 90px;
+							height: 100%;
+							right: 0px;
+							z-index: 998;
+							.button {
+								z-index: 999;
+								position: absolute;
+								top: 50%;
+								margin-top: -13px;
+							}
+						}
+					}
+				}
+
+				div.locs {
+					line-height: 1.5;
+					width: 80%;
+				}
+
+				input[name="keywords"]{
+					width: 41%;
+					font-size: 16px;
+					font-weight: bold;
+					height: 20px;
+					margin-right: 10px;
+				}
+				
+				input[name="keywordselect"]{
+					width: 473px;
+					font-size: 16px;
+					font-weight: bold;
+					height: 20px;
+				}
+
+				span.info {
+					font-size: 12px;
+					font-style: italic;
+					color: #2e3235;
+					background: url(/img/icons/medium/info.png) 0 0 no-repeat transparent;
+					padding: 10px 0 15px 20px;
+				}
+
+				span.locationDisp {
+					font-size: 12px;
+					font-weight: normal;
+					color: #2e3235;
+					margin-left: 5px;
+				}
+
+				a.help {
+					@include inline-block;
+					width: 15px;
+					height: 15px;
+					margin-left: 5px;
+					background: url(/img/icons/small/help_light.png) no-repeat left top transparent;
+				}
+
+				.selector {
+					width: 215px;
+					margin: 0;
+
+					span {
+						width: 186px;
+					}
+
+					select {
+						width: 222px;
+					}
+				}
+
+
+				input[name="dateFrom"], input[name="dateTo"] {
+					width: 65px;
+					margin-bottom: 10px;
+				}
+
+				label {
+					font-size: 12px;
+					font-weight: bold;
+					top: 0;
+					&.radioLabel {
+						top: 2px;
+					}
+
+					&[for="keywords"], &[for="bought"], &[for="dateFrom"]  {
+						display: inline-block;
+						width: 100px;
+						height: 25px;
+					}
+
+					&[for="dateTo"] {
+						font-weight: normal;
+					}
+				}
+
+				.buttonBox {
+					position: absolute;
+					right: 0;
+					top: 0;
+					@include border-radius(0 6px 6px 0);
+					background: #e9edf1;
+					behavior: url(/css/PIE.htc);
+					height: 100%;
+					width: 83px;
+					padding-left: 27px;
+					padding-right: 28px;
+					margin-left: 10px;
+					z-index: 900;
+
+					.align {
+						position: relative;
+						width: 83px;
+						height: 100%;
+
+						.button {
+							position: absolute;
+							top: 50%;
+							margin-top: -17px;
+						}
+					}
+				}
+			}
+		}
+	}
+}

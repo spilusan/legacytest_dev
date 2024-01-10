@@ -1,0 +1,55 @@
+<div <?php if ($this->errors) echo 'class="error"'; ?>>
+	<label for="<?php echo $this->name; ?>" <?php if ($this->required) echo 'class="required"'; ?>>
+		<?php echo $this->label; ?>
+		<?php if ($this->required) echo '*'; ?>
+		<?php if ($this->labelSpan) echo '<span>'.$this->labelSpan.'</span>'; ?>
+		<?if($this->includeHowToUse):?>
+			<div class="inline contextual help howtouse">&nbsp;</div>
+		<?endif?>
+	</label>
+
+	<?php
+	if ($this->errors)
+	{
+		?>
+		<ul>
+			<?php
+			foreach ($this->errors as $error)
+			{
+				?>
+				<li><?php echo $error; ?></li>
+				<?php
+			}
+			?>
+		</ul>
+		<?php
+	}
+	
+	if ($this->errors)
+	{
+		?>
+		<div class="error-footer"></div>
+		<?php
+	}
+	?>
+</div>
+
+<?php
+switch ($this->type)
+{
+	case 'text':
+		?>
+		<input type="text" <?php if ($this->class) echo 'class="'.$this->class.'"'; ?>  <?php if ($this->maxlength) echo 'maxlength="'.$this->maxlength.'"'; ?> name="<?php echo $this->name; ?>" id="<?php echo $this->name; ?>" value="<?php echo $this->value; ?>" />
+		<?php
+	break;
+	case 'select':
+		?>
+		<select name="<?php echo $this->name; ?>" id="<?php echo $this->name; ?>">
+			<option></option>
+			<?php foreach( $this->options as $option ){?>
+			<option value="<?php echo $option['value']; ?>" <?php if( $this->value != "" && $option['value'] == $this->value ){ echo 'selected="selected"';}?>><?php echo $option['label']?></option>
+			<?php }?>
+		</select>
+		<?php 
+	break;
+}

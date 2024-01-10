@@ -1,0 +1,222 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->headLink()->appendStylesheet('/css/uniform.rfq.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->requirejs()
+	->addModule('match/report')
+	->addDefinition('/match/reportType', '"supplier-conversion-competitiveness-report"')
+;
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+	table tr.child td {
+		background-color:#d6dce4;
+	}
+
+	table tr.bold td {
+		font-weight:bold;;
+	}
+	#body #content {
+		left: 0 !important;
+	}
+
+	.left{
+		text-align:left;
+	}
+
+	.red{
+		color: red;
+	}
+
+	.green{
+		color: green;
+	}
+
+
+</style>
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.CSV.css" media="screen" rel="stylesheet" type="text/css">
+
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'GMV Report', 'url'  => '/reports/gmv');
+	$breadcrumbs[] = array('name' => 'Supplier', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'Conversion', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'RFQs', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<style>
+.{
+	width:50px !important;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+
+}
+</style>
+
+
+<div id="body" class="conversionRfqDrilldown">
+	<div id="content">
+		<h1 class="styled">Conversion Report for Supplier - RFQ list</h1>
+		<form method="get" class="new">
+		    <table>
+		        <tr style="position: relative;">
+		            <td colspan="5">
+
+		            	<? if( lg_count($this->results) > 0 ){ ?>
+		            	<?php
+		            		foreach ( (array) $this->results as $result)
+		            		{
+                        		if( $result['SPB_NAME'] == $result['WINNING_SUPPLIER'] )
+                        		{
+                        			$total += $result['ORD_TOTAL_COST_USD_SUPPLIER'];
+                        			$x[] = $result['ORD_SENT_TO_OTHER'];
+                        		}
+		            		}
+                        ?>
+
+		                <table id="resultsTab" class="stripe">
+		                    <thead>
+		                    	<tr>
+		                    		<th>Internal RFQ ID</th>
+		                    		<th class=" left">Buyer's RFQ Reference</th>
+		                    		<th class=" left">Date RFQ Submitted</th>
+		                        	<th class=" left">Supplier Name</th>
+		                        	<th class=" left">Supplier TNID</th>
+		                        	<th class=" left">Supplier Country</th>
+		                        	<th class=" left">Buyer <br />Branch name</th>
+		                        	<th class=" left">Buyer <br />Branch TNID</th>
+		                        	<th class=" left">RFQ Source</th>
+		                        	<th class=" left">New customer</th>
+		                        	<th class=" left">Vessel name</th>
+		                        	<th class=" left">RFQ Subject</th>
+		                        	<th class=" left">Delivery <br />Required To</th>
+		                        	<th class=" left">Status</th>
+									<th class="">Declined Reason</th>
+									<th class="">Price Quoted (USD)</th>
+									<th class="">Quote Date</th>
+
+		                        	<th class="">Resp time (d)</th>
+
+		                        	<th class="">(%) Items Quoted</th>
+		                        	<th class="">Number of competitor</th>
+		                        	<th class="">Number of competitor Quotes</th>
+									<th class="">Avg Resp time of competitors (d)</th>
+
+		                        	<th class="">Average Competitor Price Quoted (USD)</th>
+		                        	<th class="">Cheapest Competitor Price Quoted (USD)</th>
+		                        	<th class="">Winning Supplier</th>
+		                        	<th class="">Winner Resp time (d)</th>
+
+									<th class="">Total PO Amount (USD)</th>
+									<th class="">PO Date</th>
+
+		                        	<th class="">Price Compe<br />titive<br />ness (%)</th>
+		                        	<th class=" sectionEnd">Speed Compe<br />titive<br />ness (%)</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php
+		                        $supplierDetail = array();
+		                        $totalRow = lg_count($this->results);
+
+		                        foreach ( (array) $this->results as $result)
+		                        {
+		                        	++$no;
+									$quote = null;
+									$order = null;
+									$rfq = null;
+		                        	if( $result['QOT_INTERNAL_REF_NO'] != "" )
+		                        	{
+										try{
+											$quote = Shipserv_Quote::getInstanceById($result['QOT_INTERNAL_REF_NO']);
+										}catch(Exception $e){}
+		                        	}
+
+		                        	if( $result['ORD_SENT_TO_OTHER'] != "" )
+		                        	{
+										try{
+											$order = Shipserv_Order::getInstanceById($result['ORD_SENT_TO_OTHER']);
+										}catch(Exception $e){}
+		                        	}
+
+		                        	try
+		                        	{
+		                        		$rfq = Shipserv_Rfq::getInstanceById($result['RFQ_INTERNAL_REF_NO']);
+		                        	}
+		                        	catch(Exception $e) {}
+
+		                        	?>
+			                    	<tr>
+			                    		<td class=" left"><a target="_blank" href="<?php echo ($rfq!==null)?$rfq->getUrl():"";?>"><?php echo $result['RFQ_INTERNAL_REF_NO']?></a></</td>
+			                    		<td class=" left"><?= $result['RFQ_REF_NO']?></td>
+			                    		<td class=" left"><?= $result['RFQ_SUBMITTED_DATE']?></td>
+			                        	<td class=" left"><?= $result['SPB_NAME']?></td>
+			                        	<td class=" left"><?= $result['SPB_BRANCH_CODE']?></td>
+			                        	<td class=" left"><?= $result['SPB_COUNTRY_CODE']?></td>
+			                        	<td class=" left"><?= ($result['MATCH_BUYER_NAME']!="")?$result['MATCH_BUYER_NAME']:$result['BYB_NAME'] ?></td>
+			                        	<td class=" left"><?= ($result['MATCH_BUYER_TNID'])?$result['MATCH_BUYER_TNID']:$result['BYB_BRANCH_CODE']?></td>
+			                        	<td class=" left"><?= $result['RFQ_SOURCE']?></td>
+			                        	<td class=" left"><?= $result['BYB_IS_NEW']?></td>
+			                        	<td class=" left"><?= $result['RFQ_VESSEL_NAME']?></td>
+			                        	<td class=" left"><?= $result['RFQ_SUBJECT']?></td>
+			                        	<td class=" left"><?= $result['DELIVERY_DETAIL']?></td>
+			                        	<td class=" left"><?= $result['RFQ_STATUS']?></td>
+										<td class=" left"><?= $result['RFQ_DECLINE_REASON']?></td>
+			                        	<td class="">
+											<?
+												if( $quote!==null && $quote->getUrl() != "" ){
+													?><a target="_blank" href="<?php echo ($quote!==null)?$quote->getUrl():"#";?>"><?= number_format($result['QOT_TOTAL_COST_USD'], 2)?></a><?
+												}
+											?>
+										</td>
+										<td class=""><?= $result['QOT_SUBMITTED_DATE']?></td>
+			                        	<td class=""><?= $result['SUPPLIER_RESPONSE_TIME']?></td>
+
+			                        	<td class=" percentage"><?= $result['QOT_ITEMS_QUOTED']?></td>
+			                        	<td class=""><?= $result['NUMBER_OF_COMPETITOR']?></td>
+			                        	<td class=""><?= $result['NUMBER_OF_COMPETITOR_QUOTED']?></td>
+
+										<td class=""><?= $result['AVG_RESPONSE_TIME']?></td>
+			                        	<td class=" currency"><?= $result['AVERAGE_QUOTED_PRICE']?></td>
+			                        	<td class=" currency"><?= $result['CHEAPEST_QUOTED_PRICE']?></td>
+			                        	<td class=""><?= $result['WINNING_SUPPLIER']?></td>
+			                        	<td class=""><?= $result['WINNER_RESPONSE_TIME']?></td>
+
+			                        	<td class="">
+			                        		<a target="_blank" href="<?php echo ($order!==null)?$order->getUrl():"";?>">
+											<?= number_format($result['ORD_TOTAL_COST_USD_SUPPLIER'], 2)?>
+			                        		</a>
+			                        	</td>
+																<td class=""><?= $result['ORD_SUBMITTED_DATE']?></td>
+			                        	<td class=" percentage colored"><?= $result['PRICE_COMPETITIVENESS']?></td>
+			                        	<td class=" percentage colored sectionEnd"><?= $result['SPEED_COMPETITIVENESS']?></td>
+			                        </tr>
+		                        	<?
+		                        }
+		                        ?>
+		                    </tbody>
+		                </table>
+		                <?php }else{?>
+		                No data found
+		                <?php }?>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>

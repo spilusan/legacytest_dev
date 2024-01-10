@@ -1,0 +1,175 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
+#spbChart {
+	$circle-size: 150px;
+	$circle-background: #d6dadc;
+	/*$circle-color: #008900; */
+	$circle-color: #7bc047; 
+	$inset-size: 105px;
+	$inset-color: #fbfbfb;
+	$transition-length: 1s;
+	$shadow: 6px 6px 10px rgba(0,0,0,0.2);
+	$percentage-color: #23272a;
+	$percentage-font-size: 36px;
+	$percentage-text-width: 105px;
+		.chartLeft, .chartRight {
+			padding: 6px;
+			display: block;
+			float: left;
+			height: 200px;
+			p {
+				font-weight: bold;
+				font-size: 13px;
+			}
+		}
+
+		.chartLeft {
+			text-align: center;
+			width: 200px;
+		}
+
+		.chartRight {
+			width: 685px;
+
+			.progressBar {
+				display: inline-block;
+				height: 25px;
+				width: 0px;
+				background-color: #fec92b; 
+				@include x-multiple-colored-gradient(#fec92b 0%, #fef0c5 30%, #fec92b 100%);
+				-pie-background: linear-gradient(top, #fec92b 0%, #fef0c5 30%, #fec92b 100%);
+				behavior: url(/webreporter/css/PIE.htc);
+				vertical-align: middle;
+				transition: width $transition-length;
+				-webkit-transition: width transition-length;
+			}
+
+			hr {
+				 border:none;
+				 border-top:1px dotted #000;
+				 color:#fff;
+				 background-color:#fff;
+				 height:1px;
+				 width:100%;
+				 margin: 12px 0px;
+			}
+
+			label, span {
+				height: 25px;
+				line-height: 25px;
+				vertical-align: middle;
+				font-weight: normal;
+			}
+
+			span {
+				margin-left: 10px;
+			}
+
+			label {
+				margin-right: 25px;
+			}
+
+		}
+
+
+		.radial-progress {
+			display: inline-block;
+			margin: 6px;
+			width:  $circle-size;
+			height: $circle-size;
+
+			background-color: $circle-background;
+			border-radius: 50%;
+			.circle {
+				.mask, .fill, .shadow {
+					width:    $circle-size;
+					height:   $circle-size;
+					position: absolute;
+					border-radius: 50%;
+				}
+				.shadow {
+					box-shadow: $shadow inset;
+				}
+				.mask, .fill {
+					-webkit-backface-visibility: hidden;
+					transition: -webkit-transform $transition-length;
+					transition: -ms-transform $transition-length;
+					transition: transform $transition-length;
+					border-radius: 50%;
+				}
+				.mask {
+					clip: rect(0px, $circle-size, $circle-size, $circle-size/2);
+					.fill {
+						clip: rect(0px, $circle-size/2, $circle-size, 0px);
+						background-color: $circle-color;
+					}
+				}
+			}
+			.inset {
+				width:       $inset-size;
+				height:      $inset-size;
+				position:    absolute;
+				margin-left: ($circle-size - $inset-size)/2;
+				margin-top:  ($circle-size - $inset-size)/2;
+
+				background-color: $inset-color;
+				border-radius: 50%;
+				box-shadow: $shadow;
+				.percentage {
+					height:   $percentage-font-size;
+					width:    $percentage-text-width;
+					overflow: hidden;
+
+					position: absolute;
+					top:      ($inset-size - $percentage-font-size) / 2;
+					left:     ($inset-size - $percentage-text-width) / 2;
+
+					line-height: 1;
+					.numbers {
+						margin-top: -$percentage-font-size;
+						transition: width $transition-length;
+						span {
+							width:          $percentage-text-width;
+							display:        inline-block;
+							float: left;
+							vertical-align: top;
+							text-align:     center;
+							/* font-weight:    400; */
+							font-size:      $percentage-font-size;
+							font-family:    "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+							color: #969ea3;
+							b {
+								color: $percentage-color;
+							}
+							
+
+						}
+					}
+				}
+			}
+
+			$i: 0;
+			$increment: 180deg / 100;
+
+			@while $i <= 100 {
+				&[data-progress="#{$i}"] {
+					.circle {
+						.mask.full, .fill {
+							-webkit-transform: rotate($increment * $i);
+							-ms-transform: rotate($increment * $i);
+							transform: rotate($increment * $i);
+						}	
+						.fill.fix {
+							-webkit-transform: rotate($increment * $i * 2);
+							-ms-transform: rotate($increment * $i * 2);
+							transform: rotate($increment * $i * 2);
+						}
+					}
+					.inset .percentage .numbers {
+						width: $i * $percentage-text-width + $percentage-text-width;
+					}
+				$i: $i + 1;
+			}
+		}
+	}
+}
+

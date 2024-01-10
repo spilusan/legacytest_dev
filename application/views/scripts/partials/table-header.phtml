@@ -1,0 +1,22 @@
+<div class="table-head">
+	<div class="table-head-left"><img src="<?php echo $this->CDNLink()->image('/images/layout_v2/table_header_left.gif'); ?>" width="8" height="50"/></div>
+	
+	<div class="table-head-columns">
+	<?php
+
+	$firstColumn = true;
+	$columnsCount = lg_count($this->columns);
+	for ($i=0;$i<$columnsCount;$i++)
+	{
+		if (!$firstColumn)
+		{
+			echo '<div class="table-head-stripe"></div>';
+		}
+		echo '<div class="table-head-column" style="' .((isset($this->columns[$i]["width"]))?'width:'.$this->columns[$i]["width"].';':'').'"><div class="column-text"><p>'.$this->columns[$i]["text"].'</p></div></div>';
+		$firstColumn = false;
+	}
+	?>
+	</div>
+	<div class="table-head-right"><img src="<?php echo $this->CDNLink()->image('/images/layout_v2/table_header_right.gif'); ?>" width="8" height="50"/></div>
+	<div class="clear"></div>
+</div>

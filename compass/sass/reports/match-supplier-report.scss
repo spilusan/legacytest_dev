@@ -1,0 +1,28 @@
+/*
+Document   : rfq-inbox.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: combining partials for rfq-outbox styles
+*/
+@import "font-awesome";
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/min";
+
+@import "partials/def/left_nav";
+@import "partials/def/context_help";
+@import "partials/def/modal_new";
+@import "partials/def/datepicker";
+
+@import "partials/reports/matchSupplier/content";
+@import "partials/reports/matchSupplier/filters";
+@import "partials/reports/matchSupplier/table";
+@import "partials/reports/matchSupplier/profile-content";
+@import "partials/reports/matchSupplier/quote-table";
+@import "partials/reports/matchSupplier/drilldown";
+@import "partials/reports/matchSupplier/pagination";
+@import "partials/reports/matchSupplier/newHelp";
+@import "partials/reports/matchSupplier/smallHelp";
+@import "partials/reports/matchSupplier/remove_supplier";
+@import "partials/reports/matchSupplier/comparability-popup";
+@import "partials/reports/matchSupplier/uncomp-mess-popup";

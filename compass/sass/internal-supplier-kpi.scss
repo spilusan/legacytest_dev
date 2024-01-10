@@ -1,0 +1,18 @@
+/*
+Document   : brand-management.scss
+Created on : Jul 13, 2015, 15:47:43 PM
+Author     : Attila O
+Description: combining partials for internal KPI dashboard styles
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+@import "partials/def/modal_new";
+@import "partials/def/left_nav";
+@import "partials/match/form";
+@import "partials/def/tab_nav";
+
+@import "partials/reports/ikpi-dashboard/content";
+
+

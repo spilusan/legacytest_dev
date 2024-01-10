@@ -1,0 +1,144 @@
+<?php
+/**
+ * A partial view for tag.phtml displaying the chosen suppliers sidebar form
+ *
+ * @author  Yuriy Akopov
+ * @date    2013-10-08
+ */
+?>
+<form action="/match/process-rfq" id="sendRfqForm" method="POST">
+    <input type="hidden" name="rfq" value="<?php echo $this->rfq->rfq_header->rfqInternalRefNo; ?>" />
+
+    <ul id="suppliersToSendTo">
+        <li>
+            <label>TNID:</label>
+            <input type="text" class="extra_supplier_id" value="">
+            <input type="button" class="add_extra_supplier" value="Add to list">
+        </li>
+    </ul>
+    <br/>
+    <input type="button" class="send_rfq" value="Send RFQ to suppliers above" />
+</form>
+
+<form action="/match/removerfqs" id="deleteRfqForm" method="POST">
+    <input type="hidden" name="removeId" value="<?php echo $this->rfq->rfq_header->rfqInternalRefNo;; ?>" />
+    <input type="button" class="delete_rfq" value="Delete RFQ" />
+</form>
+
+<script>
+    function addChosenSupplier(supplierId, score, comment, title, position) {
+        if ($('#originalSuppliersList').find('li[supplierId=' + supplierId + ']').length) {
+            return;
+        }
+
+        var ul = $('#suppliersToSendTo');
+        if (ul.find('li[supplierId=' + supplierId + ']').length) {
+            return;
+        }
+
+        var checkbox = $('.supplier_checkbox[supplierId=' + supplierId + ']');
+
+        if (typeof title == 'undefined') {
+            if (checkbox.length) {
+                title = checkbox.attr('supplierTitle');
+            } else {
+                title = 'Extra supplier ID ' + supplierId;
+            }
+        }
+
+        if (typeof position == 'undefined') {
+            if (checkbox.length) {
+                position = checkbox.attr('supplierPosition');
+            } else {
+                position = 'N/A';
+            }
+        }
+
+        var newLi = $('<li>').attr('supplierId', supplierId).append(
+            $('<span>').addClass('hint').attr('title', 'Scored ' + score + ' at position ' + position).append(
+                title
+            )
+        );
+
+        if (position !== 'N/A') {
+            newLi.append($('<a>').attr('href', '#supplier_' + supplierId).append(
+                '&#8678;'
+            ));
+        }
+
+        newLi.append(
+            $('<input>').attr('type', 'hidden').attr('name', 'suppliers[]').attr('value', supplierId),
+            $('<input>').attr('type', 'hidden').attr('name', 'scores[]').attr('value', score),
+            $('<input>').attr('type', 'hidden').attr('name', 'comments[]').attr('value', comment),
+
+            $('<input>').attr('type', 'button').attr('value', 'X').click(function (event) {
+                var li = $(event.target).closest('li');
+                var ul = li.closest('ul');
+
+                var supplierId = li.attr('supplierId');
+
+                $('.supplier_checkbox[supplierId=' + supplierId + ']:not(:disabled)').attr('checked', false);
+                ul.find('li[supplierId=' + supplierId + ']').remove();
+            })
+        );
+
+        ul.append(newLi);
+
+        $('.supplier_checkbox[supplierId=' + supplierId + ']').attr('checked', true);
+    }
+
+    $(document).ready(function() {
+        $('.add_extra_supplier').click(function (event) {
+            var div = $(event.target).parent();
+
+            var supplierIds = div.find('input[class=extra_supplier_id]').val().split(',');
+
+            $.each(supplierIds, function(index, supplierId) {
+                if (supplierId.length == 0) {
+                    return;
+                }
+
+                addChosenSupplier(supplierId, 0, 'Manually added supplier');
+            });
+
+            div.find('input[class=extra_supplier_id]').attr('value', '');
+        });
+
+        $('.supplier_checkbox').click(function (event) {
+            var checkbox = $(event.target);
+
+            var title = checkbox.attr('supplierTitle');
+            var position = checkbox.attr('supplierPosition');
+            var supplierId = checkbox.attr('supplierId');
+            var score = checkbox.attr('matchScore');
+            var comment = checkbox.attr('matchComment');
+
+            if (checkbox.attr('checked')) {
+                addChosenSupplier(supplierId, score, comment, title, position);
+            } else {
+                $('#suppliersToSendTo').find('li[supplierId="' + supplierId + '"]').remove();
+            }
+        });
+
+        $('.send_rfq').click(function (event) {
+            var size = $('#suppliersToSendTo li').size() - 1;
+
+            if (size < 1) {
+                alert('No suppliers chosen to send to!');
+                return;
+            }
+
+            if (!confirm('You are about to forward this RFQ to ' + size + ' suppliers listed above. Proceed?')) {
+                return;
+            }
+
+            $('#sendRfqForm').submit();
+        });
+
+        $('.delete_rfq').click(function (event) {
+            if (confirm("Do you really want to remove this RFQ from the inbox?")) {
+                $('#deleteRfqForm').submit();
+            }
+        });
+    });
+</script>

@@ -1,0 +1,341 @@
+<div class="microprofile-header"></div>
+<div class="top">
+	<div class="left">
+			<?php if (lg_count($this->supplier->categories) > 0) {
+			?>
+			<h5>Categories</h5>
+			<?php
+			}
+			?>
+			<ul style="margin:5px 0;">
+				<?php
+				$i = 0;
+				
+				foreach ($this->supplier->categories as $cat)
+				{
+					$i++;
+					if ($i <= 5)
+					{    
+						?>
+						<li id="<?php echo $cat['id'];?>"><?php echo $cat['name'];?></li>
+						<?php
+					}
+					else
+					{
+						break;
+					}
+				}
+				?>
+			</ul>
+			
+			<?php
+			if (lg_count($this->supplier->categories) > 5)
+			{
+				?>
+				<p class="more">
+					<a href="<?php echo $this->supplierProfileUrl($this->supplier, 'SEARCH') ?>#profile">and <?php echo (lg_count($this->supplier->categories) - 5);?> more categories</a>
+				</p>
+				<?php
+			}
+			?>
+
+		    <?php 
+			//Dirty Name Clipper - Do something better later set at 40 
+			$summary = $this->supplier->description;
+			$limit   = 200;
+
+			if (strlen($summary) > $limit) 
+			{
+				$summary = substr($summary, 0, strrpos(substr($summary, 0, $limit), ' ')) . '...';
+				echo '<p>'.$summary.'.<br/> <a href="' . $this->supplierProfileUrl($this->supplier, 'SEARCH') . '#profile">Read more</a>.</p> ';
+			}
+			elseif (strlen($summary) > 0 && strlen($summary) < $limit)
+			{
+				echo '<p>'.$summary.'.<br/> <a href="' . $this->supplierProfileUrl($this->supplier, 'SEARCH') . '#profile">Read more</a>.</p>';
+			}
+			else
+			{
+				echo '<p></p>';
+			}
+		 	?>
+		
+		
+		<h5>Find us:</h5> 
+		
+		<p class="address">
+			<?php
+			if ($this->supplier->address1)
+			{
+				echo $this->supplier->address1 .'<br/>';
+			}
+			
+			if ($this->supplier->address2)
+			{
+				echo $this->supplier->address2 .'<br/>';
+			}
+			
+			echo $this->supplier->city;
+			if ($this->supplier->state && $this->string()->alphaStringLength($this->supplier->state) > 1)
+			{
+				echo ', '.$this->supplier->state;
+			}
+			?><br />
+			<?php if ($this->supplier->zipCode){?><?php echo $this->supplier->zipCode;?><br/><?}?> 
+			
+			<?php echo $this->supplier->countryName;
+			?>
+		</p>
+		
+		<div id="map_<?php echo $this->supplier->tnid;?>" class="map">
+			<img src="/images/layout_v2/nomap.jpg" alt=""/>
+		</div>
+		
+		<script type="text/javascript">
+			<!--
+			var map = new GMap(document.getElementById("map_<?echo $this->supplier->tnid;?>"));
+			var geocoder = new GClientGeocoder();
+			function showAddress(address) {
+			  geocoder.getLatLng(
+				"<?echo $this->supplier->address1;?>,<?echo $this->supplier->city;?>,<?echo $this->supplier->countryName;?>",
+				function(point) {
+				  if (!point) {
+					$('#map_<?echo $this->supplier->tnid;?>').html('<h3 style="padding:50px 0 0 40px;">No Map Available</h3>')
+				  } else {
+					map.setCenter(point, 13);
+					var marker = new GMarker(point);
+					map.addOverlay(marker);
+				  }
+				}
+			  );
+			}
+			showAddress();
+			map.getContainer().style.overflow="hidden";
+			//-->
+		</script>
+		
+	</div>
+		
+	<div class="right">
+
+			<?php
+			if ($this->supplier->brands)
+			{
+				?>
+				<div class="brands">
+					<h5>Brands</h5>
+					
+					<ul>
+						<?php
+						$i = 0;
+						foreach ($this->supplier->brands as $brand)
+						{
+							$i++;
+							if ($i <= 3)
+							{
+								?>
+								<li id="<?php echo $brand['id'];?>" class="<?php echo ($brand['authorizedInstaller'] || $brand['authorizedAgent']) ? 'authorised' : 'unauthorised'; ?>"><?php echo $brand['name'];?></li>
+								<?php
+							}
+							else
+							{
+								break;
+							}
+						}
+						?>
+					</ul>
+				</div>
+
+				<?php
+				if (lg_count($this->supplier->brands) > 3)
+				{
+					?>
+					<p style="margin-left:10px;">
+						<a href="<?php echo $this->supplierProfileUrl($this->supplier, 'SEARCH'); ?>#profile">and <?php echo (lg_count($this->supplier->brands) - 3);?> more brands</a>
+					</p>
+					<?php
+				}
+			}
+			?>
+
+
+
+			<?php
+			if ($this->supplier->memberships)
+			{
+				?>
+				<div class="affiliations">
+					<h5>Memberships</h5>  
+					<ul>
+						<?php
+						foreach ($this->supplier->memberships as $membership)
+						{
+
+							?>
+							<li 
+							<?php
+								if (strlen($membership["logoFileName"])>0) {
+									if (strpos($membership["logoFileName"],"http")!==false)
+									{
+										echo 'style="background:url(' . $this->CDNLink()->image('/images/layout_v2/memberships/'.$membership['id'].'.gif') . ') 0 0 no-repeat;"';
+									}
+									else
+									{
+										echo 'style=\'background: url("'.$this->supplier()->smallAffiliateLogo($membership["logoFileName"]).'") no-repeat scroll 0pt 0pt transparent;\'';
+									}
+								}
+							?>
+							><?php echo $membership['name'];?></li>
+							<?php
+						}
+						?>
+					</ul>
+				</div>
+				<?php
+			}
+
+			if ($this->supplier->certifications)
+			{
+				?>
+				<div class="affiliations">
+					<h5>Certifications</h5>
+					<ul>
+						<?php
+						foreach ($this->supplier->certifications as $certification)
+						{
+
+							?>
+							<li
+							<?php
+								if (strlen($certification["logoFileName"])>0) {
+									if (strpos($certification["logoFileName"],"http")!==false)
+									{
+										echo 'style="background:url(' . $this->CDNLink()->image('/images/layout_v2/memberships/'.$certification['id'].'.gif') . ') 0 0 no-repeat;"';
+									}
+									else
+									{
+										echo 'style=\'background: url("'.$this->supplier()->smallAffiliateLogo($certification["logoFileName"]).'") no-repeat scroll 0pt 0pt transparent;\'';
+									}
+								}
+							?>
+							><?php echo $certification['name'];?></li>
+							<?php
+						}
+						?>
+					</ul>
+				</div>
+				<?php
+			}
+			?>
+			
+			
+		    <?php
+			if ($this->supplier->ports)
+			{
+				?> 
+				<div class="ports">
+					<h5>Ports</h5>
+					<ul>
+						<?php
+						$i = 0;
+						foreach ($this->supplier->ports as $port)
+						{
+							$i++;
+							if ($i <= 5)
+							{
+								?>
+								<li id="<?php echo $port['code'];?>"><?php echo $port['name'];?>, <?php echo $port['countryCode'];?></li>
+							<?php
+							}
+							else
+							{
+								break;
+							}
+						}
+						?>
+					</ul>
+					
+					<?php
+					if (lg_count($this->supplier->ports) > 5)
+					{
+						?>
+						<p>
+							<a href="<?php echo $this->supplierProfileUrl($this->supplier, 'SEARCH'); ?>#profile">and <?php echo lg_count($this->supplier->ports) - 5;?> more ports served</a>
+						</p>
+						<?php
+					}
+					?> 
+				</div>
+				<?php
+			}
+			
+			// Mariners Annual attachments
+			if ($this->supplier->maAttachments)
+			{
+				$thumbCount = 0;
+				?>
+				<div class="ma-preview">
+					<ul>
+						<?php
+						foreach ($this->supplier->maAttachments as $attachment)
+						{
+							foreach ($attachment['thumbnailUrls'] as $thumbnailUrl)
+							{
+								$thumbCount++;
+								?>
+								<li><a href="<?php echo $attachment['url']; ?>" target="_blank"><img width="191" height="263" src="<?php echo $thumbnailUrl; ?>" alt="" /></a></li>
+								<?php
+							}
+							
+						}
+						?>
+					</ul>
+				</div>
+				
+				<?php
+				if ($thumbCount > 1)
+				{
+					?>
+					<div class="ma-buttons">
+						<a href="#" class="prev">&laquo; &laquo; Prev</a>
+						<a href="#" class="next">Next &raquo; &raquo;</a>
+					</div>
+					<?php
+				}
+				?>
+				
+				<script type="text/javascript">
+					$(function() {
+						$(".ma-preview").jCarouselLite({
+							<?php
+							if ($thumbCount > 1)
+							{
+								?>
+								btnNext: ".next",
+								btnPrev: ".prev",
+								<?php
+							}
+							?>
+							visible: 1
+						});
+					});
+				</script>
+				<?php
+			}
+			?>
+			
+		<div class="clear"></div>
+	</div>
+</div>
+<div class="clear"></div> 
+
+<div class="bottom">
+	 
+		<p style="margin-top:6px;margin-bottom:2px;font-size:11px;margin-left:26px;"><a style="font-size:11px;" href="<?php echo $this->supplierProfileUrl($this->supplier, 'SEARCH'); ?>#profile">Profile</a>&nbsp;&nbsp;&nbsp;&nbsp;<a style="font-size:11px;" href="<?php echo $this->supplierProfileUrl($this->supplier, 'SEARCH'); ?>#contact_box">Contact Details</a>&nbsp;&nbsp;&nbsp;&nbsp; <?php if ($this->supplier->onlineCatalogue) echo '<a style="font-size:11px;" href="' . $this->supplierProfileUrl($this->supplier, 'SEARCH') . '#catalogue">eCatalogue</a>'; ?></p>
+
+		<a href="/enquiry/index/clearBasket/1/tnid/<?php echo $this->supplier->tnid; ?>" id="supplier-tnid-<?php echo $this->supplier->tnid; ?>" class="contact_now_detail_button"><img src="/images/layout_v2/buttons/little-send-enquiry.png" /></a>
+		
+	<div class="clear"></div>
+</div>
+
+<div class="clear"></div>
+<div class="microprofile-footer"></div>

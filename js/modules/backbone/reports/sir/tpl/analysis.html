@@ -1,0 +1,51 @@
+<table cellpadding="0" cellspacing="0">
+	<tr>
+		<td id="winLossContent{{#if isCompare}}Compare{{/if}}">
+				<table cellpadding="0" cellspacing="0" class="winLoss">
+				<thead>
+					<tr>
+						<th class="b-bottom" colspan="4">Win/Loss Analysis</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="b-bottom subTitle">Time to Quote</td>
+						<td class="b-right b-bottom helpCell"><a href="winloss-timetoquote" class="cHelp light"></a></td>
+						<td class="b-bottom subTitle">Price Sensitivity</td>
+						<td class="helpCell b-bottom"><a href="winloss-price-sens" class="cHelp light"></a></td>
+					</tr>
+					<tr class="winLossTopRow">
+						<td id="timeToQuote{{#if isCompare}}Compare{{/if}}"  class="b-right" colspan="2">
+							<!-- Time to quote -->
+							<div class="spinnerIcon"></div>
+						</td>
+						<td id="analPriceSensitivity{{#if isCompare}}Compare{{/if}}" colspan="2">
+							<!-- Price sensitivity -->
+							<div class="spinnerIcon"></div>
+						</td>
+					</tr>
+					<tr>
+						<td class="b-bottom b-top subTitle">Average quote time</td>
+						<td class="b-right b-bottom b-top helpCell"><!--<a href="avgQuotTime" class="cHelp light"></a>--></td>
+						<td class="subTitle" colspan="2">
+							<!--
+							<a href="#">Analyse by transaction</a>
+							-->
+						</td>
+					</tr>
+					<tr>
+						<td id="analAgarageQuoteTime{{#if isCompare}}Compare{{/if}}" class="b-right" colspan="2">
+							<!-- Analize by quote time -->
+						</td>
+						<td colspan="2">&nbsp;</td>
+					</tr>
+					<tr>
+						<td class="subTitle b-right" colspan="2"><a class="tHelp" href="reduce-ttquote">Help me reduce my time to quote</a></td>
+						<td colspan="2">&nbsp;</td>
+					</tr>	
+				</tbody>
+			</table>
+		</td>
+		<td id="poValueContent{{#if isCompare}}Compare{{/if}}"></td>
+	</tr>
+</table>

@@ -1,0 +1,633 @@
+.sidebar_body ul ul li input {
+	position: absolute;
+	top: -2px;
+	left: -24px;
+}
+
+.content_wide_body {
+	position: relative;
+}
+
+.content_wide_body .sidebar {
+	float: left;
+	margin: 20px 0 20px 6px;
+}
+
+#searchResults {
+	margin-right: 10px;
+	margin-bottom: 0;
+}
+
+.sidebar_apply_button input {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/apply_small_button.png') no-repeat;
+}
+
+.content_wide_nav a.enquiry_send {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/send_enquiry_down.jpg') 0 0 no-repeat;
+}
+
+.content_wide_nav_top a.enquiry_send {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/send_enquiry_down.jpg') 0 0 no-repeat;
+}
+
+.content_wide_nav a.enquiry_send:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/send_enquiry_down_on.jpg') 0 0 no-repeat;
+}
+
+.content_wide_nav_top a.enquiry_send:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/send_enquiry_down_on.jpg') 0 0 no-repeat;
+}
+
+.content_wide_footer a.enquiry_send_bottom {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/send_enquiry_up.jpg') 0 0 no-repeat;
+}
+
+.content_wide_footer a.enquiry_send_bottom:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/send_enquiry_up_on.jpg') 0 0 no-repeat;
+}
+
+#home-search {
+	z-index: 9999;
+}
+
+#searchResults .searchResult p.links {
+	font-size: 11px;
+	position: absolute;
+	left: 160px;
+	top: 6px;
+}
+
+#searchResults .searchResult .tradenetbottom {
+	height: 25px;
+	background: #4F92D8;
+}
+
+.content_wide_body_left .tradenetbottom {
+	height: 25px;
+	background: #4F92D8;
+}
+
+#contact_content table tr td .tradenet_large_bottom, #competitors ul li .tradenet_large_bottom {
+	background: #4F92D8;
+}
+
+#contact_content table tr td .tradenet_large_top {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/traderank_front_large_ie.png') no-repeat;
+}
+
+#competitors ul li .tradenet_large_top {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/traderank_comp_large_ie.png') no-repeat;
+}
+
+#contact_content table tr td h2 {
+	margin-bottom: 0px !important;
+}
+
+#searchResults .searchResult a.expand {
+	width: 61px;
+	height: 23px;
+	float: right;
+	margin: 0px 10px 10px -10px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/expand_button_v2.gif') no-repeat;
+}
+
+#searchResults .searchResult a.expand_on {
+	width: 61px;
+	height: 23px;
+	float: right;
+	margin: 0px 10px 10px -10px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/expand_on_button_v2.gif') no-repeat;
+}
+
+.content_wide_body_left {
+	margin: 20px 0 20px 10px;
+}
+
+#header ul#navigation {
+	bottom: -1px;
+}
+
+#header ul#navigation li {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/top_nav.jpg') no-repeat;
+}
+
+#header ul#navigation li:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/top_nav.jpg') no-repeat;
+}
+
+#header ul#navigation li.on {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/top_nav_on.jpg') no-repeat;
+}
+
+input.registerSubmit_2 {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/register_me.jpg') no-repeat;
+}
+
+input.registerSubmit_2:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/register_me.jpg') no-repeat;
+	cursor: pointer;
+}
+
+.content_slim_header a.i_already_have_account {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/already_have_account_button.jpg') no-repeat;
+	width: 178px;
+}
+
+.content_slim_header a.i_already_have_account:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/already_have_account_button.jpg') no-repeat;
+}
+
+input.sign_in_and_continue {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/sign_in_and_continue.jpg') no-repeat;
+	width: 222px;
+}
+
+input.sign_in_and_continue:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/sign_in_and_continue.jpg') no-repeat;
+}
+
+a.view_more_countries {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/view_more_countries_sprite.gif') no-repeat;
+}
+
+a.view_more_countries:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/view_more_countries_sprite.gif') no-repeat;
+}
+
+
+a.view_more_suppliers {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/view_more_suppliers_sprite.gif') no-repeat;
+}
+
+a.view_more_suppliers:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/view_more_suppliers_sprite.gif') no-repeat;
+}
+
+a.browse_all_categories {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/browse_all_categories_sprite.gif') no-repeat;
+}
+
+a.browse_all_categories:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/browse_all_categories_sprite.gif') no-repeat;
+}
+
+a.back {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/back_sprite.gif') no-repeat;
+}
+
+a.back:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/back_sprite.gif') no-repeat;
+}
+
+#modal_form input.attach_files {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/attach_files.jpg') no-repeat;
+	margin-top: 20px;
+}
+
+#modal_form input.attach_files:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/attach_files.jpg') no-repeat;
+}
+
+#modal_form .form_inner_body {
+	margin: 0px;
+	padding: 0;
+}
+
+#modal_form input {
+	margin: 0px 0px 0px 0px;
+	width: 460px;
+}
+
+#modal_form input.half {
+	width: 200px;
+}
+
+#modal_form input#registerMarketingUpdated {
+	width: 20px;
+	border: none;
+	background: none;
+}
+
+#modal_form input#registerRememberMe {
+	width: 20px;
+	border: none;
+	background: none;
+}
+
+#modal_form input#loginRememberMe {
+	width: 20px;
+	border: none;
+	background: none;
+}
+
+#modal_form textarea {
+	margin: 0px;
+}
+
+.modal_right {
+	margin-left: 10px;
+}
+
+#modal_form .modal_right ul {
+	margin-top: 0px;
+	margin-right: 10px;
+	padding: 0;
+}
+
+#modal_form .modal_right li {
+	padding: 0 8px 14px 4px;
+	line-height: 20px;
+	font-weight: normal;
+	margin: 0;
+	color: #0568ff;
+	text-align: left;
+	font-size: 11px;
+	position: relative;
+	padding-left: 0px;
+}
+
+#modal_form .modal_right li input {
+	border: none;
+}
+
+#modal_form p {
+	padding: 15px 5px 10px 5px;
+}
+
+#form_info {
+	margin: 0 0px 0 0px;
+}
+
+#modal_form table.ie_fix {
+	margin: 0 0 0 0;
+}
+
+#modal_form p.subtext {
+	font-weight: bold;
+	color: #00478a;
+	font-size: 13px;
+	margin: 0;
+	text-align: left;
+	padding: 26px 0px 6px 0px;
+	width: 440px;
+}
+
+#header h1.logo a {
+	background: url(/images/layout_v2/logo.jpg) no-repeat;
+}
+
+.product_items {
+	width: 440px;
+	padding: 0px 0 10px 0;
+	margin :0 0px 0px 10px;
+	float: right;
+	position: relative;
+}
+
+.product_items_end {
+	width: 380px;
+	padding: 10px 0 10px 0;
+	margin :0 10px 0px 10px;
+	float: right;
+	position: relative;
+}
+
+.product_items .text {
+	width: 370px;
+	margin-left: 20px;
+	float: left;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+
+/*(------The Corner Piece----)*/
+
+.the_corner_piece {
+	width: 11px;
+	height: 11px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/corner.jpg') no-repeat;
+	position: absolute;
+	bottom: -14px;
+	right: 3px;
+}
+
+
+/* FileTree */
+
+ul.jqueryfiletree {
+	margin: 0;
+	padding: 0;
+}
+
+ul.jqueryfiletree ul.jqueryfiletree {
+	margin-top: 10px;
+}
+
+ul.jqueryfiletree a {
+	text-decoration: none;
+	display: block;
+	padding: 0px 2px;
+	border: none;
+	margin: 0;
+}
+
+ul.jqueryfiletree li {
+	margin: 0;
+	padding: 0;
+}
+
+ul.jqueryfiletree li a {
+	list-style: none;
+	font-size: 11px;
+	font-weight: bold;
+	padding: 0px;
+	margin: 0px;
+	padding-left: 10px;
+	line-height: 24px;
+	border-bottom: 1px solid #ccc;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/black_down_arrow.jpg') 180px 10px no-repeat;
+}
+
+ul.jqueryfiletree li li a {
+	border: none;
+	font-weight: normal;
+	background: none;
+	padding-left: 20px;
+	color: #0F6FFF;
+	margin: 0;
+}
+
+ul.jqueryfiletree li li li a {
+	padding-left: 30px;
+}
+
+ul.jqueryfiletree li li li li a {
+	padding-left: 40px;
+}
+
+ul.jqueryfiletree li li li li li a {
+	padding-left: 50px;
+}
+
+ul.jqueryfiletree li li a {
+	border: none;
+	color: #0F6FFF;
+}
+
+ul.jqueryfiletree a:hover {
+	background: #bdf;
+}
+
+/* FileTree Styles */
+.jqueryfiletree li.directory {
+/*background: url(../images/filetree/arrow_right.gif) left 3px no-repeat;*/
+}
+.jqueryfiletree .expanded {
+	font-weight: bold;
+	/*background:url('https://cdn1.shipserv.com/images/layout_v2/black_down_arrow.jpg') 180px 10px no-repeat;*/
+}
+
+.jqueryfiletree .expanded a {
+}
+
+.jqueryfiletree li.expanded_file a {
+	color: #fff;
+	background: #0F6FFF;
+}
+
+.jqueryfiletree li.collapsed a {
+}
+.jqueryfiletree li.file {
+/*background: url(../images/filetree/file.png) left 3px no-repeat;*/
+}
+
+.jqueryfiletree li.ext_txt {
+/*background: url(../images/filetree/circle.gif) left 3px no-repeat;*/
+}
+/* End FileTree */
+
+#searchResults .searchResultdetail {
+	z-index: -1;
+	position: relative;
+	min-height: 300px;
+	height: auto !important;
+	height: 300px;
+}
+
+#searchResults .searchResultdetail .map {
+	width: 200px;
+	height: 106px;
+	bottom: 10px;
+	left: 0px;
+}
+
+#searchResults .searchResultdetail .left {
+	min-height: 300px;
+	height: auto !important;
+	height: 300px;
+	position: relative;
+}
+
+#searchResults .searchResultdetail .right {
+	min-height: 300px;
+	height: auto !important;
+	height: 300px;
+}
+
+#searchResults .searchResult {
+	padding: 0 0 20px 0;
+	margin: 0 0 20px 0;
+}
+
+#searchResults .premium {
+	min-height: 40px;
+	height: 40px;
+	margin-bottom: 0px;
+	padding: 0 0 0px 0;
+}
+
+.form_error {
+	margin: 10px 0px 20px 0px;
+}
+
+#modal_form .form_info {
+	margin: 0 0px 0 0px;
+	width: auto;
+}
+
+.error_msg_arrow {
+	bottom: -18px;
+}
+
+#searchResults .searchResult .basebar {
+	width: 490px;
+	position: relative;
+	bottom: 0;
+	left: 0;
+}
+
+#searchResults .premium .basebar {
+	width: 490px;
+	position: relative;
+	bottom: 20px;
+	height: 20px;
+	left: 0;
+}
+
+#searchResults .spotlight {
+	width: 490px;
+	position: relative;
+	bottom: 32px;
+	height: 20px;
+	left: 0;
+}
+
+#searchResults .footer {
+	position: absolute;
+	bottom: 0px;
+	height: 21px;
+	width: 100%;
+	background: #fff url('https://cdn1.shipserv.com/images/layout_v2/spotlight_footer.jpg') no-repeat;
+}
+
+#searchResults .searchResult .basebar .tradenet {
+	width: 122px;
+	height: 25px;
+	background: #ccc;
+	position: absolute;
+	left: -10px;
+	top: 4px;
+}
+
+#searchResults .premium .basebar .tradenet {
+	width: 122px;
+	height: 25px;
+	background: #ccc;
+	position: absolute;
+	left: 48px;
+	top: 4px;
+}
+
+p.browse_list a.end_link {
+	right: 24px;
+	top: 13px;
+}
+
+#success_box_header {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/ie/message_header.jpg') no-repeat;
+}
+
+#success_box_footer {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/ie/message_footer.jpg') no-repeat;
+}
+
+#success_box a.back_to_results {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/back_to_results_sprite_2.gif') 0 -1px no-repeat;
+}
+
+#success_box a.back_to_results:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/back_to_results_sprite_2.gif') 0 -1px no-repeat;
+}
+
+#success_box a.new_search {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/new_search_sprite_2.gif') 0 -1px no-repeat;
+}
+
+#success_box a.new_search:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/new_search_sprite_2.gif') 0 -1px no-repeat;
+}
+
+.content_wide_header a.send_enquiry_button {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/send_enquiry_sprite.gif') no-repeat;
+}
+
+.content_wide_header a.send_enquiry_button:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/send_enquiry_sprite.gif') no-repeat;
+}
+
+#searchResults .searchResultdetail .top .brands ul li.authorised {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/mini_red_tick.gif') 3px 5px no-repeat;
+	padding-left:14px;
+}
+
+#searchResults .searchResultdetail .top .brands ul li.unauthorised {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/red_dot.gif') 3px 5px no-repeat;
+	padding-left:14px;
+}
+
+#competitors {
+	padding-left: 0px;
+}
+
+#competitors ul li.first {
+	margin-left: 10px;
+}
+/*** Zones ***/
+#search_box.zone_search_box a.search-button {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/search_zone.png') 0 0 no-repeat;
+}
+
+#search_box.zone_search_box a.search-button:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/search_zone.png') 0 0 no-repeat;
+	cursor: pointer;
+}
+
+#search_box.zone_search_box a.zone-exit-button {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/back_to_main.png') 0 0 no-repeat;
+}
+
+#search_box.zone_search_box a.zone-exit-button:hover {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/buttons/ie6/back_to_main.png') 0 0 no-repeat;
+	cursor: pointer;
+}
+
+.zone_invite {
+	background: url('https://cdn1.shipserv.com/images/layout_v2/zones/zone_invite_arrow_blue.gif') right center no-repeat;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.profile-body-right input {
+	padding-top: 10px;
+	height: 26px;
+}
+
+.headerButton {
+	float: right;
+	margin: 17px 35px 0 0;
+}
+
+.alert-notice {
+	margin: 10px 0px 0px 0px;
+}
+
+select#companyType {
+	display: block;
+	margin: 10px 0px;
+	width: 200px;
+}
+
+select#jobFunction {
+	display: block;
+	margin: 10px 0px;
+	width: 200px;
+}
+
+#add-people-block .profile-body-group input {
+	height: 19px;
+	padding: 8px 10px;
+}
+
+#ie6warning {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	height: 45px;
+	width: 100%;
+	border-top: 1px solid black;
+	background-color: #dddddd;
+}
+
+#rfq div.large, #rfq p.large {
+	height: 190px;
+}

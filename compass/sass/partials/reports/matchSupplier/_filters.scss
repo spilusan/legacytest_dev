@@ -1,0 +1,180 @@
+#body {
+	#titleText {
+		.infoBtn {
+			position: absolute;
+			text-decoration: none !important;
+			right: 6px;
+			top: 5px;
+			padding: 7px 6px 6px 30px;
+			background: transparent url('/images/matchSupplierReport/blue-info.png') no-repeat top 5px left 3px;
+			font-weight: normal;
+			text-decoration: underline;
+			color: white;
+			font-size: 12px;
+			cursor: pointer;
+		}
+		.infoBtn:hover {
+			text-decoration: underline !important;
+		}		
+	}
+	#content {
+		#innerContent {
+			#filter {
+				width: 100%;
+				margin: 10px 0px 1px 0px;
+				background-color: #eef2f5; 
+				padding: 20px 0px;
+				.filter-center {
+					width: 1290px;
+					margin: 0px auto;
+					fieldset {
+						padding: 6px 0px;
+						float: left;
+						position: relative;
+						
+						select {
+							width: 230px;
+						}
+						
+						.selector {
+							width: 230px;
+							span {
+								width: 201px;
+							}
+						}
+					
+						
+						&.col1 {
+							width: 355px;
+							label {
+								width: 105px;
+							}
+						
+							.spinner {
+								left: 117px;
+								width: 200px;
+							}
+						}
+					
+						&.col2 {
+							width: 395px;
+							label {
+								width: 145px;
+							}
+						
+							.spinner {
+								left: 157px;
+								width: 200px;
+							}
+						}
+						
+						&.col3 {
+							width: 360px;
+							label {
+								width: 110px;
+							}
+						
+							.spinner {
+								left: 125px;
+								width: 200px;
+							}
+						
+							label[for="sameq"] {
+								display: inline;
+							}
+						
+							div {
+								&.checker {
+									margin: -3px 2px 0 -9px;
+								}
+							}
+
+						}
+						
+						label {
+							display: inline-block;
+							text-align: right;
+							font-weight: bold;
+							font-size: 13px;
+							height: 25px;
+							line-height: 25px;
+							text-indent: 3px;
+						}
+
+						input[type="button"] {
+							padding: 7px 65px;
+						}
+						&.show {
+							width: 177px;
+							text-align: center;
+						}
+					}
+				}
+				.spinner {
+					position: absolute;
+					z-index: 999;
+					height: 20px;
+					bottom: 9px;
+					background: url(/images/layout_v2/file_icons/spinner.gif) no-repeat scroll 0 0 white;
+					display: inline-block;
+					display: block;		
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width: 1480px) {
+	#body {
+		#content {
+			#innerContent {
+				#filter {
+					.filter-center {
+						width: 970px;
+						fieldset {
+							width: 970px;
+							&.col1 {
+								width: 247px;
+								label {
+									text-align: left;
+								}
+								.spinner {
+									left: 7px;
+								}
+							}
+							
+							&.col2 {
+								width: 247px;
+								label {
+									text-align: left;
+								}
+								.spinner {
+									left: 7px;
+								}
+							}
+							
+							&.col3 {
+								width: 247px;
+								label {
+									text-align: left;
+									&.space {
+										display: none;
+									}
+								}
+								.spinner {
+									left: 7px;
+								}
+							}
+							&.show {
+								width: 225px;
+								input[type="button"] {
+									margin-top: 25px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,102 @@
+<form class="new">
+<div class="custHalf left">
+	<div class="filterLabel">
+		Select time period:
+	</div>
+	<div class="filterContent">
+		<div class="dropDown">
+			<div id="customersPeriodSel" class="custPeriodSel">
+				{{dateFromPretty}} - {{dateToPretty}}
+			</div>
+			<div class="details">
+				<select name="quickPeriod" id="quick" class="quickSelCust">
+					<option value="0">Quick selection</option>
+					<option value="1">12 months back from today</option>
+					<option value="2">13 to 24 months back from today</option>
+					<option value="3">This month to now</option>
+					<option value="4">Last full month</option>
+					<option value="5">This quarter to now</option>
+					<option value="6">Last quarter</option>
+					<option value="7">This year to now</option>
+					<option value="8">Last full calendar year</option>
+					<option value="-">None</option>
+				</select>
+				<br />
+				<div class="dateField from">
+					<label for="dateFrom">From: (dd/mm/yyyy)</label>
+					<input type="text" name="dateFrom" class="date from" value="{{dateFrom}}" />
+					<br />
+					
+				</div>
+				<div class="dateField to">
+					<label for="dateToFirst">To: (dd/mm/yyyy)</label>
+					<input type="text" name="dateTo" class="date to" value="{{dateTo}}" />
+					<br />
+				</div>
+				<div class="clear"></div>
+				<input type="button" class="button  green medium customersapply" value="Apply">
+				<div class="clear"></div>
+			</div>
+		</div>
+		<!-- 
+		<div class="checker newCustomer">
+			<input type="hidden" value="0" name="newCustomer" />
+		</div>
+		<div class="label">New customers</div>
+
+		<div class="checker oldCustomer">
+			<input type="hidden" value="0" name="oldCustomer" />
+		</div>
+		<div class="label">Old customers</div>
+		-->
+		<div class="clear"></div>
+	</div>
+	<div id="contentColumn1"></div>
+</div>
+<div class="custHalf right">
+	<div class="filterLabel">
+		Compare to:
+	</div>
+	<div class="filterContent">
+
+	<div class="dropDown">
+		<!-- div class="periodSel compare inactive"> -->
+		<div id="customersPeriodSelCompare" class="custPeriodSel compare">
+			{{dateFromCompPretty}} - {{dateToCompPretty}}
+		</div>
+		<input type="hidden" value="" name="comparePeriod">
+		<div class="details">
+			<select name="quickPeriodComp" id="quickCompare" class="quickSelCust">
+					<option value="0">Quick selection</option>
+					<option value="1">12 months back from today</option>
+					<option value="2">13 to 24 months back from today</option>
+					<option value="3">This month to now</option>
+					<option value="4">Last full month</option>
+					<option value="5">This quarter to now</option>
+					<option value="6">Last quarter</option>
+					<option value="7">This year to now</option>
+					<option value="8">Last full calendar year</option>
+					<option value="-">None</option>
+			</select>
+			<br />
+			<div class="dateField from">
+				<label for="dateFromCompare">From: (dd/mm/yyyy)</label>
+				<input type="text" name="dateFromCompare" class="date from" value="{{dateFromComp}}" />
+				<br />
+			</div>
+			<div class="dateField to">
+				<label for="dateToCompare">To: (dd/mm/yyyy)</label>
+				<input type="text" name="dateToCompare" class="date to" value="{{dateFromComp}}" />
+				<br />
+			</div>
+			<div class="clear"></div>
+			<input type="button" class="button  green medium customersapply" value="Apply">
+			<div class="clear"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	</div>
+	<div id="contentColumn2"></div>
+</div>
+	<div id="contentColumn3"></div>
+</form>

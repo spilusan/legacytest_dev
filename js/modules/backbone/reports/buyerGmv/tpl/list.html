@@ -1,0 +1,36 @@
+<h1 class="styled">Title</h1>
+<div class="modalContent">
+	<form class="tradingAccForm new">
+		<input id="tradingAccountUserId" type="hidden" name="userId" value="">
+		<table>
+			<thead>
+				<tr>
+					<th class="first"></th>
+					<th>TNID</th>
+					<th>Branch name (Trading Account)</th>
+					<th class="center">Default</th>
+				</tr>
+			</thead>
+			<tbody>
+				{{#each models}}
+					<tr>
+						<td class="first">
+							<input id="cb{{this.attributes.id}}" type="checkbox" class="buyerBranchCode" name="bybBranchCode[]" value="{{this.attributes.id}}" {{#if this.attributes.selected }}checked="checked"{{/if}} /> 
+						</td>
+						<td>
+							{{this.attributes.id}}
+						</td>
+						<td>
+							<label for="cb{{this.attributes.id}}">{{this.attributes.name}}</label>
+						</td>
+						<td class="center">
+							<input type="radio" name="defaultBybBranchCode" value="{{this.attributes.id}}" {{#if this.attributes.defaulted }}checked="checked"{{/if}} /> 
+						</td>			
+					</tr>
+				{{/each}}
+			</tbody>
+		</table>
+		<input type="button" class="button medium green save" name="save" value="Save"/>
+	</form>
+	
+</div>

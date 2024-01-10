@@ -1,0 +1,91 @@
+ <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header-wrapper">
+      <div class="modal-header">
+        Search for suppliers
+      </div>
+    </div>    
+    <form class="modal-suppliers-selection">
+      <div class="supplier-name-container">
+        <div class="supplier-name">
+          <input type="text" id="supplier-name" autocomplete="off" placeholder="Supplier name">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </div>        
+      </div>
+
+      <!-- Data container -->
+
+      <div class="data-container">        
+        <!-- Data Box  -->
+        <div class="data-box">
+          <div class="data-row data-header" id="supplier-selector-head">
+            <div class="data-cell">
+              <span>Supplier</span>
+            </div>
+            <div class="data-cell"> 
+              <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>                         
+            </div>
+            <div class="data-cell">
+              <span>TNID</span>
+            </div>
+            <div class="data-cell">
+              <span>Used in last 12 mths</span>
+            </div>
+            <div class="data-cell">
+              <span>Add</span>
+            </div>
+          </div>
+          
+          <!-- Data Body (to separate the data rows from the header for scrollability) -->
+          <img class="supplier-selector-spinner" src="/images/layout_v2/file_icons/spinner.gif">
+
+          <div id="supplier-selector-body" class="data-body">
+          </div><!-- end of data body --> 
+
+        </div><!-- end of data box -->
+      </div><!-- end of data container -->
+      
+       <!-- Data container -->
+
+      <div class="data-container">     
+        <h4>Your selected suppliers</h4>
+        <!-- Data Box  -->
+        <div class="data-box">
+          <div id="supplier-selected-head" class="data-row data-header">
+            <div class="data-cell">
+              <span>Supplier</span>
+            </div>
+            <div class="data-cell"> 
+              <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>                         
+            </div>
+            <div class="data-cell">
+              <span>TNID</span>
+            </div>
+            <div class="data-cell">
+              <span>Used in last 12 mths</span>
+            </div>
+            <div class="data-cell">
+              <span>Remove</span>
+            </div>
+          </div>
+          
+          <!-- Data Body (to separate the data rows from the header for scrollability) -->
+
+          <div id="supplier-added-body" class="data-body">
+          </div><!-- end of data body --> 
+
+        </div><!-- end of data box -->
+        <a href="#" id="supplier-clear-all" class="btn transparent transparent-blue">Clear all</a>
+      </div><!-- end of data container -->
+
+      <footer class="modal-footer">
+        <div class="modal-footer-inner">
+          <div class="right">
+            <input id="supplier-selector-submit" class="btn link-blue" type="submit" value="OK">
+            <input class="btn transparent transparent-blue supplier-cancel-btn" type="submit" value="Cancel">
+          </div>
+        </div>          
+      </footer>
+
+    </form>
+  </div>

@@ -1,0 +1,123 @@
+<div id="competitors">
+	<h2>
+		<?php
+		if ($this->supplier->isVerified)
+		{
+			?>
+			This is a basic listing. Also consider these alternative suppliers:
+			<?php
+		}
+		else
+		{
+			?>
+			This is an unverified basic listing. You should consider these suppliers:
+			<?php
+		}
+		?>
+	</h2>
+	
+	<ul>
+		<?php
+		foreach ($this->competitors as $i => $competitor)
+		{
+			?>
+			<li class="competitor <?php if ($i == 0) echo 'first'; ?>">
+				<div class="block">
+					<div class="top">
+						<?php
+						if ($competitor->logoUrl)
+						{
+							?>
+							<div class="avatar">
+								<img src="<?php echo $competitor->logoUrl; ?>" alt="<?php echo $competitor->name; ?>" />
+							</div>
+							<?php
+						}
+						else
+						{
+							?>
+							<div class="avatar">
+								<img class="no-logo" src="/images/layout_v2/profile/no-logo.png" alt="<?php echo $competitor->name; ?>" />
+							</div>
+							<?php
+						}
+						?>
+					</div>
+					
+					<h3><a title="<?php echo $competitor->name; ?>" href="<?php echo $this->supplierProfileUrl($competitor, 'COMPETITOR'); ?>"><?php echo $this->string()->shorten($competitor->name, 50); ?></a></h3>
+					
+					<h4><?php echo $competitor->city; ?>, <?php echo $competitor->countryName; ?></h4>
+					
+					<?php
+					if ($competitor->tradeRank == 0)
+					{
+						?>
+						<img style="position: absolute; top: 80px; left: 15px" src="<?php echo $this->CDNLink()->image('/images/layout_v2/traderank-no-data-greybg.gif'); ?>" alt="No Trade Rank Data" />
+						<?php
+					}
+					else
+					{
+						?>
+						<div class="tradeRank">
+							<div class="tradenet_large">
+								<div class="tradenet_large_bottom" style="width:<?php echo $this->supplier()->traderankCompetitor($competitor); ?>px;"></div>
+								<div class="tradenet_large_top">
+								</div>
+							</div>
+						</div>
+						<?php
+					}
+					?>
+					
+					<div class="affiliations">
+						<ul>
+							<?php
+							$mcount = 0;
+							foreach ($competitor->memberships as $membership)
+							{
+								if ($mcount <= 3)
+								{
+									?>
+									<li style="background:url('<?php echo $this->CDNLink()->image('/images/layout_v2/memberships/'.$membership['id'].'.png'); ?>') 3px 0 no-repeat;<!--[if IE 6]>background:url('/images/layout_v2/memberships/<?php echo $membership['id'];?>.gif') 3px 0 no-repeat;<![endif]-->">&nbsp;</li>
+									<?php
+								}
+								
+								$mcount++;
+							}
+							?>
+						</ul>
+					</div>
+				</div>
+				
+				<h4 class="listingLevel">
+					<?php
+					if ($competitor->premiumListing)
+					{
+						echo 'Premium';
+					}
+					
+					if ($competitor->smartSupplier)
+					{
+						echo ' Smart Supplier';
+					}
+					elseif ($competitor->expertSupplier)
+					{
+						echo ' Expert Supplier';
+					}
+					elseif ($competitor->premiumListing)
+					{
+						echo ' Listing';
+					}
+					
+					if (!$competitor->premiumListing && !$competitor->smartSupplier && !$competitor->expertSupplier)
+					{
+						echo 'Verified Basic Listing';
+					}
+					?>
+				</h4>
+			</li>
+			<?php
+		}
+		?>
+	</ul>
+</div>

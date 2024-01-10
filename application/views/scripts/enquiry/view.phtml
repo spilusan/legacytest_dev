@@ -1,0 +1,296 @@
+<?php
+$this->compressedScript()->appendFile('/js/json2.js')
+						 ->appendFile('/js/jquery-ui-1.8.4.custom.min.js')
+						 ->appendFile('/js/jquery.urlparse.js')
+						 ->appendFile('/js/jquery.textarea.js') 
+						 ->appendFile('/js/jquery.jsoncookie.js')
+						 ->appendFile('/js/jquery.cookie.js');
+						 
+$this->CDNLink()->appendStylesheet('/css/wide-layout.css')
+				->appendStylesheet('/css/enquiries.css')
+				->appendStylesheet('/css/jquery-ui-1.8.4.custom.css');
+				
+$this->getHelper('Requirejs')->addModule('enquiry/view');
+
+if( strstr($_SERVER['HTTP_REFERER'], 'search') !== false )
+{
+	$breadcrumbs = array(array('name' => 'Home',
+			'url'  => '/search'),
+			array('name' => 'Search Results',
+					'url'  => $this->backToSearch()->getUrl()),
+			array('name' => 'RFQ',
+					'url'  => '/enquiry'));
+	
+}
+else if( strstr($_SERVER['HTTP_REFERER'], 'company-enquiry') !== false )
+{
+	$breadcrumbs = array(array('name' => 'Home',
+			'url'  => '/search'),
+			array('name' => 'Profile',
+					'url'  => '/profile'),
+			array('name' => 'RFQs from Pages',
+					'url'  => '/profile/company-enquiry/type/v/id/' . $this->params['supplierBranchId'] .''),
+			array('name' => 'RFQ',
+					'url'  => '/enquiry'));
+	
+}		
+
+$e = Shipserv_Enquiry::getInstanceByIdAndTnid($this->enquiryId, $this->tnid );
+if( $this->user !== false  )
+{
+	if( $_SERVER['HTTP_REFERER'] != null && $this->params['supplierBranchId'] != $this->activeCompany->id )
+	{
+		?><script>location.href='/profile/company-enquiry/type/<?php echo $this->activeCompany->type?>/id/<?php echo $this->activeCompany->id?>';</script><?php
+	}
+} 
+?>
+
+
+<div id="main_content_area">
+	<?php if(lg_count($breadcrumbs)>0) echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); else echo '<br />';?>
+	<div class="content_wide new clearfix">
+		<div class="zz header">
+			<h2>RFQ</h2>
+		</div>
+	
+        <div class="inner_content clearfix" id="rfq">
+            <div class="left">
+                <?php
+                echo $this->partial('enquiry/account-status.phtml', array('params'		=> $this->params,
+                                                                        'supplier'    => $this->supplier,
+                                                                        'user'   		=> $this->user,
+                                                                        'accountData' => $this->accountData));
+                ?>
+            </div>
+
+            <div class="right">
+                <?php
+                if ($this->accountData['PEA_IS_PAYMENT_OVERDUE'])
+                {
+                    ?>
+                    <h2 class="warning">Your payment is overdue. Please call +44 203 111 9700.</h2>
+                    <?php
+                }
+                ?>
+
+                <fieldset>
+                    <?php
+                    echo $this->partial('enquiry/view-field.phtml', array('name'  => 'enquiry-subject',
+                                                                        'value' => $this->enquiry->subject,
+                                                                        'type'  => 'text',
+                                                                        'label' => 'Subject',
+                                                                        'class' => 'wide enquiry-subject'));
+
+                    echo $this->partial('enquiry/view-field.phtml', array(	'name'  => 'enquiry-text',
+	                                                                        'value' => $this->enquiry->enquiryText,
+	                                                                        'type'  => 'paragraph',
+	                                                                        'label' => 'RFQ Details',
+	                                                                        'class' => 'enquiry-text-large',
+                    													    'nl2br' => true
+                    														));
+
+                    if (lg_count($this->enquiry->attachments) > 0)
+                    {
+                        ?>
+                        <h3>Attachments</h3>
+
+                        <ul class="attachments">
+                            <?php
+                            foreach ($this->enquiry->attachments as $attachment)
+                            {
+                            	$url = Myshipserv_Helper_CdnDecorate::decorateImgUrl($attachment['url']);
+                                ?>
+                                <li><a href="<?= $url; ?>" title=""><?= $attachment['filename']; ?></a> (<?= number_format($attachment['size'] / 1024, 2); ?> KB)</li>
+                                <?php
+                            }
+                            ?>
+                        </ul>
+                        <?php
+                    }
+                    ?>
+
+                </fieldset>
+
+                <fieldset id="vessel-data">
+                    <div>
+                        <?php
+                        echo $this->partial('enquiry/view-field.phtml', array('name'     => 'vessel-name',
+                                                                            'value'    => $this->enquiry->vesselName,
+                                                                            'type'     => 'text',
+                                                                            'label'    => 'Vessel Name'));
+
+                        echo $this->partial('enquiry/view-field.phtml', array('name'     => 'delivery-location',
+                                                                            'value'    => $this->enquiry->deliveryLocation,
+                                                                            'type'     => 'text',
+                                                                            'label'    => 'Delivery Location',
+                                                                            'class' => 'deliveryLoc'));
+                        ?>
+                    </div>
+
+                    <div>
+                        <?php
+                        echo $this->partial('enquiry/view-field.phtml', array('name'     => 'imo',
+                                                                            'value'    => $this->enquiry->imo,
+                                                                            'type'     => 'text',
+                                                                            'label'    => 'IMO'));
+
+                        $deliveryDate = (strtotime($this->enquiry->deliveryDate) > 0) ? date('j M Y', strtotime($this->enquiry->deliveryDate)) : '';
+                        echo $this->partial('enquiry/view-field.phtml', array('name'     => 'delivery-date',
+                                                                            'value'    => $deliveryDate,
+                                                                            'type'     => 'text',
+                                                                            'label'    => 'Delivery Date'));
+                        ?>
+                    </div>
+                </fieldset>
+
+                <fieldset class="noborder">
+                    <?php
+                    echo $this->partial('enquiry/view-field.phtml', array('name'     => 'sender-name',
+                                                                        'value'    => $this->enquiry->senderName,
+                                                                        'type'     => 'text',
+                                                                        'label'    => "Buyer's Name",
+                                                                        'class'    => 'wide'));
+
+                    echo $this->partial('enquiry/view-field.phtml', array('name'     => 'company-name',
+                                                                        'value'    => $this->enquiry->senderCompany,
+                                                                        'type'     => 'text',
+                                                                        'label'    => 'Company/Buyer\'s Name',
+                                                                        'class'    => 'wide'));
+
+                    echo $this->partial('enquiry/view-field.phtml', array('name'     => 'sender-phone',
+                                                                        'value'    => $this->enquiry->senderPhone,
+                                                                        'type'     => 'text',
+                                                                        'label'    => 'Phone',
+                                                                        'class'    => 'wide'));
+
+                    echo $this->partial('enquiry/view-field.phtml', array('name'      => 'sender-email',
+                                                                        'value'     => $this->enquiry->senderEmail,
+                                                                        'type'      => 'text',
+                                                                        'label'     => 'Email',
+                                                                        'class'     => 'email wide'));
+                    ?>
+                </fieldset>
+                <br />
+
+                <?php if( $this->user === false || $this->user->isShipservUser() === false || ( $this->user->isShipservUser() === true && $this->user->isPartOfSupplier( $this->tnid ) === true) ){ ?>
+
+                    <?php if($this->user === false || $this->user !== false && $this->user->isPartOfSupplier( $this->tnid ) === true){?>
+                    <?php 
+                        $actor = ($e->getUserWritingResponse()->firstName!="")?$e->getUserWritingResponse()->firstName . ' (' . $e->getUserWritingResponse()->email . ')':'';
+                        $url = '/enquiry/post-respond-survey/enquiryId/' . $this->enquiryId .'/supplierBranchId/' . $this->tnid .'/hash/' . $this->hash;
+                    ?>
+                    
+					<?php 
+						// check if supplier is integrated and this RFQ sent through TN
+						if( $this->config->shipserv->enquiry->integrationToTradeNet == 1 && $e->pirRfqInternalRefNo != "" )
+						{
+							if( $this->supplier->hasValidPublicBranch() )
+							{
+								$publicSupplier = Shipserv_Supplier::fetch($this->supplier->publicTnid, "", true);
+								?>
+								<div style="border:1px dotted grey; padding:5px; line-height:16px; font-size:12px; background-color: #8d0307; color:white; font-weight:bold;">
+									Due to your account settings, you can only view the details of this RFQ, not respond.<br />
+									<br />
+									Only <?= $publicSupplier->name . " (TNID: " . $publicSupplier->tnid . ")" ?> can respond.<br />
+									<br />
+									To change this, please contact ShipServ. Click <a href="/help/contact" style="color:white;">here</a>
+									<br />
+								</div>
+								
+			                    <?php if( ( $this->user === false || ($this->user !== false && $this->user->isPartOfSupplier( $this->tnid ) === true) )  ){?>
+			                    <br />
+			                    <br />
+			                    <div class="zz medium red button" style="margin-right:5px;"><button id="block-user" tnid="<?= $this->tnid?>" userId="<?= $this->enquiry->userId ?>">Block Buyer</button></div>
+			                    <?php }?>
+											
+							<?
+							}
+							else
+							{
+								if( $this->supplier->getIntegrationType() == "START_SUPPLIER" )
+								{
+									// generate url
+									$urlToStartSupplier = Myshipserv_Config::getApplicationProtocol() . '://' . Myshipserv_Config::getApplicationHostName() . "/viewrfq?login=" . $this->supplier->tnid . '&rfqrefno=' . $e->pirRfqInternalRefNo;
+									?>
+				                    <div class="zz medium green button" style="margin-right:5px;">
+				                        <button onclick="window.open('<?= $urlToStartSupplier ?>', '_blank');" >Respond to buyer via StartSupplier</button>
+				                    </div>								
+									<?php 
+								}
+								else if( $this->supplier->getIntegrationType() == "SMART_SUPPLIER" )
+								{
+									?>
+				                    <div class="zz medium green button" style="margin-right:5px;">
+				                        <button onclick="alert('Please login to your SmartSupplier to respond to this RFQ');" >Respond to buyer via SmartSupplier</button>
+				                    </div>								
+									<?php 
+								}
+								else if( $this->supplier->getIntegrationType() == "EXPERT_SUPPLIER" )
+								{
+									?>
+				                    <div class="zz medium green button" style="margin-right:5px;">
+				                        <button onclick="alert('Please login to your ExpertSupplier to respond to this RFQ');" >Respond to buyer via ExpertSupplier</button>
+				                    </div>	
+									<?php 
+								}
+								
+								if( ( $this->user === false || ($this->user !== false && $this->user->isPartOfSupplier( $this->tnid ) === true) )  )
+								{
+									?>
+				                    <div class="zz medium red button" style="margin-right:5px;"><button id="block-user" tnid="<?= $this->tnid?>" userId="<?= $this->enquiry->userId ?>">Block Buyer</button></div>
+									<?php 
+								}								
+							}
+						}
+						else
+						{
+							?>
+		                    <div class="zz medium green button" style="margin-right:5px;">
+		                        <button id="reply-button" actor="<?= $actor ?>" repliedDate="<?= $e->pirRepliedDate ?>" declinedDate="<?= $e->pirDeclinedDate ?>" status="<?= $e->getStatus()?>" enquiryId="<?= $this->enquiryId; ?>" url="<?= $url;?>" tnid="<?= $this->tnid; ?>" class="enquiry-detail-button" mailto='mailto:<?= $this->enquiry->senderEmail; ?>?subject=RE:<?= $this->enquiry->subject; ?>' >Respond to buyer via this email address</button>
+		                    </div>
+		                    
+		                    <form id="decline-form" name="decline-form" method="get" action="/enquiry/reject/">
+		                        <input type="hidden" name="supplierBranchId" id="supplierBranchId" value="<?= $this->tnid; ?>" />
+		                        <input type="hidden" name="declineSource" id="declineSource" value="VIEW" />
+		                        <input type="hidden" name="enquiryId" id="enquiryId" value="<?= $this->enquiryId; ?>" />
+		                        <input type="hidden" name="hash" id="hash" value="<?= $this->hash; ?>" />
+		                        <div class="zz medium grey button" style="margin-right:5px;">
+		                            <button type="button" id="decline-button" class="enquiry-detail-button" actor="<?= $actor ?>" declinedDate="<?= $e->pirDeclinedDate ?>" repliedDate="<?= $e->pirRepliedDate ?>" status="<?= $e->getStatus()?>" enquiryId="<?= $this->enquiryId; ?>">Decline to quote</button>
+		                        </div>
+		                    </form>
+				                    
+		                    <?php if( ( $this->user === false || ($this->user !== false && $this->user->isPartOfSupplier( $this->tnid ) === true) ) ){?>
+		                    <div class="zz medium red button" style="margin-right:5px;"><button id="block-user" tnid="<?= $this->tnid?>" userId="<?= $this->enquiry->userId ?>">Block Buyer</button></div>
+		                    <?php }?>
+				                    
+							<?php 							
+						}
+					?>                    
+
+                    <div class="clear"></div>
+
+                    <br />
+                    <?php }?>
+                    <?php if( !empty($this->params['r'])){?>
+                    <a href="<?= $this->uri()->deobfuscate($this->params['r']);?>">Back to RFQs list</a>
+					<?php }?>
+	                    
+                <?php }?>
+            </div>
+        </div>
+	</div>
+	
+	<div class="clear"></div>
+	
+</div>
+<?php if( !empty($this->params['block'])){?>
+	<?php if( $this->user === false || ($this->user !== false && $this->user->isPartOfSupplier( $this->tnid ) === true) ){?>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				setTimeout(function(){
+					$("#block-user").trigger("click");
+				},1000);
+			});
+		</script>
+	<?php }?>
+<?php }?>

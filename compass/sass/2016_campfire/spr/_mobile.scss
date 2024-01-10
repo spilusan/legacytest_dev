@@ -1,0 +1,98 @@
+@media only screen and (max-width: 768px) {
+
+	#body {
+		width: 100%;
+		margin: 0 auto;
+	}
+	.charts {
+		div {
+			.btn {
+				&.export {
+					position: relative !important;
+					display: table;
+					left: 50%;
+					margin: 16px 0 0 -82px;
+					width: 100px;
+				}
+			}
+		}
+	}
+
+	.profile-main {
+
+		h3 {
+			&.grey-bg {
+				font-size: 18px;		
+			}
+		}
+
+		.first-level-data {
+			.company-wrapper, .office-map {
+				width: 100%;
+			}
+
+			.profile {
+				display: none;
+				padding: 0;
+			}
+
+			.company-wrapper {
+				padding-left: 2px;
+			}
+
+		}
+
+
+
+		.second-level-data {
+			.btn {
+				max-width: 100%;
+			}
+
+			.data-block {
+
+				span {
+					font-size: 16px;
+				}
+			}
+		}
+
+		.description {
+			p {
+				font-size: 16px !important;
+			}
+		}
+
+		.scope {
+
+			.scope-column {
+				width: 100%;
+			    margin-right: 0;			    
+			    margin-bottom: 20px;
+			    &:not(:last-child) {
+			    	border-right: 0;
+			    }
+
+			    ul {
+			    	li {
+			    		font-size: 16px;
+			    	}
+			    }
+			}
+		}
+
+		.reviews {
+			p {
+				font-size: 16px !important;
+			}
+		}
+
+		.contacts {
+			.contact-block {
+				width: 100%;
+				margin-right: 0;
+			}
+		}
+	}
+	
+}

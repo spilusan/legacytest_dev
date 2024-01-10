@@ -1,0 +1,1293 @@
+#main_content_area {
+	width: 960px;
+	margin: 0 0 0 20px;
+}
+
+.sidebar{float:left; margin:0; }
+.sidebar_apply_button input:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/apply_small_sprite.png) 0 -24px no-repeat; cursor:pointer; }
+.zone{float:right; text-align:center; margin:0; }
+.google_zone_ad{text-align:center; border-top:1px solid #ccc; border-bottom:1px solid #ccc; padding:10px 0; }
+.google_zone_ad h4{font-variant:small-caps; color:#c3c3c3; font-size:10px; text-align:left; padding:0 0 10px 10px; }
+.content{float:left; width:520px; margin:0 0 0 20px; }
+.content p{line-height:18px; font-size:13px; margin:0; padding:10px; }
+.content p.profile{line-height:18px; font-size:13px; margin:0 20px; padding:10px; }
+.content_header{background:url(https://cdn1.shipserv.com/images/layout_v2/search_content_header.gif) no-repeat; width:520px; height:35px; }
+.content_header h1{padding:20px 20px 20px 30px; }
+.content_header h5{float:left; font-size:14px; color:#fff; margin:10px 0 0 40px; }
+.content_header h5 a{color:#666; padding:6px; }
+.content_header h5 a:hover{-moz-border-radius:6px; -webkit-border-radius:6px; background:#fff; }
+.content_header h5.on a{-moz-border-radius:6px; -webkit-border-radius:6px; background:#666; color:#fff; }
+.content_body{width:520px; }
+.content_footer{margin-top:-1px; width:520px; background:url(https://cdn1.shipserv.com/images/layout_v2/search_content_footer.gif) no-repeat; clear:both; position:relative; z-index:100; height:200px; }
+.content_slim{width:591px; margin:0 auto 30px; padding:0; }
+.content_slim_wrapper{margin:0; padding:30px; }
+.content_slim_header{background:url(https://cdn1.shipserv.com/images/layout_v2/content_slim_header.jpg) no-repeat; width:537px; height:65px; position:relative; }
+.content_slim_header h1{color:#fff; font-size:20px; padding:24px 20px 0 30px; }
+.content_slim_header img{position:absolute; top:22px; right:20px; }
+.content_slim_header a.i_dont_have_account{position:absolute; top:22px; right:20px; width:208px; height:21px; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/i_dont_have_account_sprite.png) no-repeat; }
+.content_slim_header a.i_dont_have_account:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/i_dont_have_account_sprite.png) 0 -22px no-repeat; }
+.content_slim_header a.i_already_have_account{position:absolute; top:22px; right:20px; width:158px; height:21px; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/i_already_have_account_sprite.png) no-repeat; }
+.content_slim_header a.i_already_have_account:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/i_already_have_account_sprite.png) 0 -22px no-repeat; }
+.content_wide{float:left; width:740px; margin-bottom:30px; }
+.content_wide_wrapper{width:740px; margin:auto; }
+.content_wide_header{background:url(https://cdn1.shipserv.com/images/layout_v2/supplier_detail_header_bk.jpg) no-repeat; width:740px; min-height:55px; position:relative; }
+.content-shaded-header{background:url(https://cdn1.shipserv.com/images/layout_v2/new-wide-header.png) no-repeat; width:742px; height:73px; position:relative; }
+.content_wide_header_divide{width:735px; height:1px; border-bottom:1px solid #041b3b; background:#054fbd url(https://cdn1.shipserv.com/images/layout_v2/side_shadow.jpg) 735px repeat-y; }
+.content_wide_header h1,.content-shaded-header h1{color:#fff; font-size:19px; padding:19px 20px 4px 30px; }
+.content_wide_header h1.profile{padding-top:10px; font-weight:400; max-width:500px; }
+.content-shaded-header h1.profile{font-size:17px!important; font-weight:700; padding-top:22px; }
+.content_wide_header h2,.content-shaded-header h2{color:#a1cdff; font-size:11px; margin-left:31px; }
+.content_wide_header a.send_enquiry_button,.content-shaded-header a.send_enquiry_button{width:153px; height:43px; background:url(/images/layout_v2/buttons/send_enquiry_sprite.png) no-repeat; text-indent:-5000px; border:none; position:absolute; right:20px; top:8px; }
+
+.content_wide_header span.send_enquiry_button_disabled,.content-shaded-header span.send_enquiry_button_disabled {
+    width: 153px;
+    height: 43px;
+    background: url(/images/layout_v2/buttons/send_enquiry_sprite_dis.png) no-repeat;
+    text-indent: -5000px;
+    border: none;
+    position: absolute;
+    right: 20px;
+    top: 8px;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+
+.content_wide_header a.send_enquiry_button:hover,.content-shaded-header a.send_enquiry_button:hover{background:url(/images/layout_v2/buttons/send_enquiry_sprite.png) 0 -43px no-repeat; cursor:pointer; }
+
+.content_wide_header a.contact_supplier_button,  .content_supplier_wrapper a.contact_supplier_button, .content_supplier_full_wrapper a.contact_supplier_button {
+	background: #E81E24;
+	display: inline-block;
+	padding: 12px 24px;
+	color: white;
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 3px;
+}
+
+.content_wide_header a.contact_supplier_button {
+	position: absolute;
+    right: 20px;
+    top: 8px;
+}
+
+.content_supplier_wrapper {
+    padding: 12px 0;
+}
+
+.content_supplier_full_wrapper {
+	padding: 8px 0;
+}
+
+.content_supplier_full_wrapper a.contact_supplier_button {
+	width: 382px;
+	text-align: center;
+}
+
+.content_supplier_full_wrapper a.contact_supplier_button span {
+	margin: 0 15px;
+	font-size: 22px;
+}
+
+.content_supplier_full_wrapper a.contact_supplier_button i {
+	font-size: 28px;
+	vertical-align: baseline;
+}
+
+.content_weblink_wrapper {
+	padding-top: 12px;
+	font-size: 14px;
+}
+
+.supplier_detail_location{color:#a1cdff; font-size:14px; margin-left:20px; }
+.content_wide_nav{background:#00478A url(https://cdn1.shipserv.com/images/layout_v2/straight_top_content_wide_nav.jpg) repeat-y; width:740px; height:50px; position:relative; }
+.content_wide_nav ul{width:500px; position:absolute; top:13px; left:32px; padding:0; }
+.content_wide_nav ul li{font-size:11px; float:left; width:85px; height:23px; margin-right:5px; text-align:center; line-height:23px; }
+.content_wide_nav h6{position:absolute; top:16px; left:246px; color:#fff; font-size:16px; }
+.content_wide_nav a.enquiry_send{position:absolute; top:4px; right:16px; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_enquiry_down_sprite.png) 0 0 no-repeat; width:194px; height:41px; }
+.content_wide_nav .search_wide_nav{position:absolute; top:11px; right:22px; width:220px; height:31px; background:url(/images/layout_v2/form/search_catalogue_field.gif) no-repeat; }
+.content_wide_nav .search_wide_nav input{border:none; background:#fff; font-size:11px; position:absolute; top:4px; left:5px; color:#666; padding:5px 4px 3px 4px; width:175px; }
+.content_wide_nav .search_wide_nav input.magnifer{width:12px; height:14px; position:absolute; top:4px; left:194px; }
+.content_wide_nav_top{background:url(https://cdn1.shipserv.com/images/layout_v2/supplier_detail_header_bk.jpg) no-repeat; width:740px; height:65px; position:relative; }
+.content_wide_nav_top ul{width:500px; position:absolute; top:23px; left:32px; padding:0; }
+.content_wide_nav_top ul li{font-size:11px; float:left; width:85px; height:23px; margin-right:18px; text-align:center; line-height:23px; }
+.content_wide_nav_top h6{position:absolute; top:26px; left:246px; color:#fff; font-size:16px; }
+.content_wide_nav_top a.enquiry_send{position:absolute; top:14px; right:16px; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_enquiry_down_sprite.png) no-repeat; width:194px; height:41px; }
+.content_wide_body{width:740px; margin-top:-5px; background:#fff url(https://cdn1.shipserv.com/images/layout_v2/side_shadow.jpg) 735px repeat-y; min-height:400px; height:auto!important; }
+.content_new-wide_body{width:742px; background:#fff url(https://cdn1.shipserv.com/images/layout_v2/new-wide-bg.png) 0 0 repeat-y; padding-bottom:20px; }
+.content_new-wide_footer{width:742px; height:12px; font-size:1px; background:#f0f0f0 url(https://cdn1.shipserv.com/images/layout_v2/new-wide-footer.png) 0 0 no-repeat; }
+.content_wide_footer{width:740px; background:#f0f0f0 url(https://cdn1.shipserv.com/images/layout_v2/side_shadow.jpg) 735px repeat-y; border-top:1px solid #d6d6d6; position:relative; }
+.content_wide_footer_shadow{width:100%; height:8px; background:url(https://cdn1.shipserv.com/images/layout_v2/footer_shadow.jpg) repeat-x; }
+a.ellipsis{color:#fff; padding:10px 10px 18px; }
+.content_wide_footer #search_next_previous a {text-decoration:none; border-left:1px solid #ccc; border-top:1px solid #ccc; border-right:1px solid #fff; border-bottom:none; color:#15B; background:#f0f0f0; margin:0; padding:19px 8px; }
+.content_wide_footer #search_page p{text-decoration:none; border-left:1px solid #ccc; border-top:1px solid #ccc; border-right:1px solid #fff; border-bottom:none; color:#000; background:#f0f0f0; display:block; float:left; margin:0; padding:19px 8px; }
+.content_wide_footer #search_pagination .current{color:#000; border-left:1px solid #ccc; border-right:1px solid #fff; border-bottom:none; border-top:none; font-size:13px; background:#fff; margin:0; padding:19px 8px; }
+.content_wide_footer_cat{width:460px; background:#f0f0f0; border:1px solid #d6d6d6; margin-left:-10px; }
+.content_wide_footer_cat #search_next_previous a {text-decoration:none; border-left:1px solid #ccc; border-top:1px solid #ccc; border-right:1px solid #fff; border-bottom:none; color:#15B; background:#f0f0f0; margin:0; padding:19px 10px; }
+.content_wide_footer_cat #search_pagination .current{color:#000; border-left:1px solid #ccc; border-right:1px solid #fff; border-bottom:none; border-top:none; font-size:13px; background:#fff; margin:0; padding:19px 10px; }
+.content_wide_body .sidebar{float:left; margin:20px 0 20px 14px; }
+.content_wide_body .sidebar_header{background:#00478a; -moz-border-radius-topleft:6px; -webkit-border-top-left-radius:6px; -moz-border-radius-topright:6px; -webkit-border-top-right-radius:6px; border-bottom:1px solid #ccc; width:200px; }
+.content_wide_body .sidebar_header h3{font-size:13px; font-weight:700; color:#fff; line-height:18px; margin:0; padding:10px 10px 10px 15px; }
+.content_wide_body .sidebar_browse_header{background:#f0f0f0; -moz-border-radius-topleft:6px; -webkit-border-top-left-radius:6px; -moz-border-radius-topright:6px; -webkit-border-top-right-radius:6px; border-bottom:1px solid #ccc; width:220px; position:relative;border-bottom: 1px solid #efefef; }
+.content_wide_body .sidebar_browse_header p a{background:#016fd7; -moz-border-radius:4px; -webkit-border-radius:4px; color:#fff; font-size:11px; position:absolute; right:10px; top:10px; text-decoration:none; padding:4px 8px; }
+.content_wide_body .sidebar_browse_header h3{font-size:13px; font-weight:700; color:#000; line-height:18px; margin:0; padding:10px 10px 10px 15px; }
+.content_wide_body .content_body{width:460px; float:right; margin:20px 20px 20px 0; }
+.content_wide_body_left{float:left; width:420px; position:relative; margin:20px 0 20px 30px; }
+.content_wide_body_right{
+	float:right;
+	display: none;
+	width:220px;
+	position:relative;
+	margin:20px 30px 20px 0;
+}
+
+#topProfileIcons .tradenet {
+	cursor: help;
+}
+
+.content_wide_body_left .tradenet,#traderankTooltip .tradenet, #topProfileIcons .tradenet{
+    margin-left: 10px;
+}
+.tradenet .trade-rank {
+    color: #3178c2;
+    border: 1px solid #ccc;
+    background: #ffffff;
+    background: -moz-linear-gradient(top, #ffffff 0%, #f6f6f6 47%, #ededed 100%);
+    background: -webkit-linear-gradient(top, #ffffff 0%,#f6f6f6 47%,#ededed 100%);
+    background: linear-gradient(to bottom, #ffffff 0%,#f6f6f6 47%,#ededed 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ededed',GradientType=0 );
+    font-size: 12px;
+    display: inline-block;
+    border-radius: 2px;
+    height: 27px;
+    padding: 0 5px;
+    line-height: 29px;
+}
+.tradenet .trade-rank .rank {
+    position: relative;
+    top: 1px;
+}
+.content_wide_body_left .tradenetbottom,#traderankTooltip .tradenetbottom, #topProfileIcons .tradenetbottom{position:absolute; height:29px; top:0; left:0; background:url(https://cdn1.shipserv.com/images/layout_v2/tradenet_bottom.png) 32px 0 no-repeat; }
+.content_wide_body_left .tradenettop,#traderankTooltip .tradenettop, #topProfileIcons .tradenettop{width:148px; height:29px; position:absolute; top:0; left:0; background:url(/images/layout_v2/profile/traderank_stars_cutout.png) no-repeat; }
+.content_wide_body_left p.links{background:url(https://cdn1.shipserv.com/images/layout_v2/shipserv_icon.jpg) 0 3px no-repeat; text-decoration:none; line-height:20px; margin-left:10px; color:#71A3DA; position:absolute; left:130px; top:0; font-size:11px; padding:2px 0 6px 20px; }
+.content_wide_body_left p.lasttrans{text-decoration:none; color:#666; line-height:16px; position:absolute; right:10px; top:0; font-size:11px; }
+.content_wide_body_left ul.icons{border:none; }
+.content_wide_body_left ul.icons li{font-size:11px; margin-right:10px; line-height:20px; float:left; border:none; width:100px; }
+.content_wide_body_left ul.icons li.impa{background:url(https://cdn1.shipserv.com/images/layout_v2/impa.gif) no-repeat; list-style:none; font-weight:700; padding:4px 0 0 30px; }
+.content_wide_body_left ul.icons li.issa{background:url(https://cdn1.shipserv.com/images/layout_v2/issa.gif) no-repeat; list-style:none; font-weight:700; padding:4px 0 0 30px; }
+.content_wide_body_left ul.icons li.tradenet{background:url(https://cdn1.shipserv.com/images/layout_v2/tradenet.gif) no-repeat; list-style:none; font-weight:700; position:relative; padding:4px 0 0 30px; }
+.content_wide_body_left p.desc{font-size:13px; color:#000; line-height:18px; margin:10px 0 20px; }
+.content_wide_body_left p.desc strong {font-weight: bold;}
+.content_wide_body_left .section_header{border-bottom:1px solid #E3E3E3; -moz-border-radius-topleft:6px; -webkit-border-top-left-radius:6px; -moz-border-radius-topright:6px; -webkit-border-top-right-radius:6px; width:100%; margin:20px 0; padding:8px 0; }
+.content_wide_body_left .section_header_blue{border-bottom:1px solid #E3E3E3; background:url(/images/layout_v2/profile/table_top_blue_header.gif) no-repeat; width:420px; margin:20px 0 0 0; padding:8px 0 8px 10px; height:16px; }
+.content_wide_body_left .section_subheader{background:url(/images/layout_v2/profile/table_sub_category_gradient.gif) no-repeat; width:396px; padding:8px 0 7px 34px; height:14px; font-weight:700; font-size:13px; color:#000; text-indent:0; }
+.content_wide_body_left .section_subheader_complex{background:url(/images/layout_v2/profile/table_sub_category_gradient.gif) no-repeat; width:396px; padding:0px 0 0px 34px; height:29px; font-weight:700; font-size:13px; color:#000; text-indent:0; }
+.content_wide_body_left .section_header h4{font-weight:700; font-size:13px; color:#000; text-indent:0; }
+.content_wide_body_left .section_header_blue h4{font-weight:700; font-size:13px; color:#fff; text-indent:0; }
+.content_wide_body_left .section_body{border-left:1px solid #E3E3E3; border-right:1px solid #E3E3E3; border-bottom:1px solid #E3E3E3; padding:10px; }
+.content_wide_body_left ul.basic li{font-size:12px; line-height:16px; background:url(/images/layout_v2/profile/bullet_blue.gif) 0 4px no-repeat; margin:0 0 5px 0; padding:0 0 0 20px; }
+.content_wide_body_left ul.affiliations li{font-size:12px; line-height:16px; background:url(/images/layout_v2/profile/bullet_blue.gif) 0 4px no-repeat; font-weight:700; margin:0 0 5px 0; padding:5px 0 5px 25px; }
+.content_wide_body_left ul.basic li.authorised{background:url(/images/layout_v2/profile/bullet_blue.gif) 0 4px no-repeat!important; list-style:none!important; font-weight:400!important; padding:2px 0 2px 15px !important; }
+.content_wide_body_left p.more a{font-size:11px; color:#016fd7; padding:8px 0 8px 28px; }
+.content_wide_body_left .map_large{width:420px; height:400px; margin-top:-30px; }
+.content_wide_body_right .map{width:215px; height:106px; }
+.content_wide_body_right p.address{font-size:13px; font-weight:400; color:#000; line-height:20px; margin:20px 0; }
+.content_wide_body_right ul.ports{list-style:none; margin:20px 0; padding:0; }
+.content_wide_body_right ul.ports li{font-size:12px; line-height:18px; color:#129d3e; }
+.content_wide_body_right ul.basic li{font-size:12px; line-height:16px; background:url(https://cdn1.shipserv.com/images/layout_v2/file_icons/txt.png) no-repeat; margin:0 0 5px -10px; padding:0 0 0 20px; }
+.content_wide_body_right ul.basic li.doc{background:url(https://cdn1.shipserv.com/images/layout_v2/file_icons/doc.png) no-repeat; }
+.content_wide_body_right ul.basic li.pdf{background:url(https://cdn1.shipserv.com/images/layout_v2/file_icons/pdf.png) no-repeat; }
+.content_wide_body_right ul.basic li.xls{background:url(https://cdn1.shipserv.com/images/layout_v2/file_icons/xls.png) no-repeat; }
+.content_wide_body_right .side_section_header{background:#f0f0f0; border-bottom:1px solid #E3E3E3; -moz-border-radius-topleft:6px; -webkit-border-top-left-radius:6px; -moz-border-radius-topright:6px; -webkit-border-top-right-radius:6px; width:100%; margin:20px 0; padding:8px 0; }
+.content_wide_body_right .side_section_header h4{font-weight:700; font-size:13px; color:#000; text-indent:10px; }
+
+#searchResults .searchResultdetail .top .affiliations ul li.1{background:url(https://cdn1.shipserv.com/images/layout_v2/impa_cal.png) 0 6px no-repeat; }
+#searchResults .searchResultdetail .top .affiliations ul li.2{background:url(https://cdn1.shipserv.com/images/layout_v2/issa_cal.png) 0 6px no-repeat; }
+
+.demo {
+    width:220px;
+    max-height: 655px;
+    background:#fff;
+    padding:0;
+    overflow: auto;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+ul.jqueryfiletree{font-family:verdana,sans-serif; margin:0; padding:0; }
+ul.jqueryfiletree li a{list-style:none; font-size:11px; font-weight:700; white-space:wrap; line-height:24px; background:url(https://cdn1.shipserv.com/images/layout_v2/black_down_arrow.jpg) 180px 10px no-repeat; color:#666; border-bottom:1px solid #ccc; margin:0; padding:0 10px; }
+ul.jqueryfiletree a{text-decoration:none; display:block; border:none; padding:0 2px; }
+ul.jqueryfiletree li li a{font-weight:400; background:none; padding-left:20px; border:none; color:#0F6FFF; }
+ul.jqueryfiletree li li li a{padding-left:30px; }
+ul.jqueryfiletree li li li li a{padding-left:40px; }
+ul.jqueryfiletree li li li li li a{padding-left:50px; }
+ul.jqueryfiletree a:hover{background:#bdf; }
+.jqueryfiletree li.expanded_file a{color:#fff; background:#0F6FFF; }
+#mask{position:absolute; left:0; top:0; z-index:9999 !important; background-color:#000000; display:none; opacity:0.8; filter:alpha(opacity=80) !important; }
+#modal_form{width:537px; background:#fff url(https://cdn1.shipserv.com/images/layout_v2/side_shadow.jpg) 531px repeat-y; padding-top:10px; padding-bottom:20px; position:relative; }
+.login_error{-moz-border-radius:10px; -webkit-border-radius:10px; background:red; color:#fff; text-align:center; line-height:24px; margin:10px 20px 0 10px; padding:20px; }
+.modal_left{float:right; width:541px; }
+.modal_right{float:left; width:166px; margin-left:30px; }
+.file_uploader_box input{background:#fff; border:1px solid #ccc; }
+#modal_form .modal_right h1{color:#707070; font-size:16px; text-align:left; margin:20px 0 10px 4px; padding:0; }
+#modal_form .modal_right ul{margin-top:20px; margin-right:10px; }
+#modal_form .modal_right li{line-height:20px; font-weight:400; color:#0568ff; text-align:left; font-size:11px; position:relative; margin:0; padding:0 8px 14px 24px; }
+#modal_form .modal_right input{width:20px; margin:0; padding:0; }
+#modal_form .modal_right li a{text-decoration:underline; color:#0365c1; }
+#modal_form .form_inner{width:491px; margin:0 25px; }
+#modal_form .form_inner_header{width:100%; background:url(https://cdn1.shipserv.com/images/layout_v2/form_inner_header.gif) no-repeat; height:76px; }
+#modal_form .form_inner_header h3{padding:30px 0 0 34px; }
+#modal_form p{font-weight:700; color:#00478a; font-size:16px; text-align:left; margin:0; padding:15px 35px 10px; }
+#modal_form p.error_msg{font-weight:700; color:#fff; background:red; font-size:13px; text-align:left; margin:0; padding:15px 35px 10px; }
+#modal_form h3{font-weight:700; color:#00478a; font-size:16px; text-align:left; margin:0; padding:15px 35px 10px 0; }
+#modal_form p.subtext{font-weight:700; color:#00478a; font-size:13px; text-align:left; width:500px; margin:0; padding:26px 35px 6px 26px; }
+#modal_form .modal_right input[type=checkbox]{position:absolute; top:4px; left:0; margin:0; padding:0; }
+#modal_form .form_inner_body{width:489px; margin-bottom:20px; margin-left:-30px; padding:0; }
+#modal_form .form_inner_footer{width:100%; background:url(https://cdn1.shipserv.com/images/layout_v2/form_inner_footer.gif) no-repeat; height:43px; padding:10px 30px; }
+#modal_form .form_element{width:100%; background:url(https://cdn1.shipserv.com/images/layout_v2/form_element.gif) no-repeat; height:92px; margin:10px 25px; }
+.form_buttons{width:100%; margin-top:20px; }
+.form_buttons input{width:auto; background:none; float:right; padding:0 20px 0 0; }
+input.sign_in_and_continue{border:none; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/sign_in_and_continue_sprite.png) no-repeat; width:192px; height:43px; }
+input.sign_in_and_continue:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/sign_in_and_continue_sprite.png) 0 -43px no-repeat; cursor:pointer; }
+input.send_password{border:none; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_password_sprite.png) no-repeat; width:192px; height:43px; cursor:pointer; padding:0; }
+input.send_password:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_password_sprite.png) 0 -43px no-repeat; cursor:pointer; }
+input.registerSubmit{border:none; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/register_me_send_sprite.png) no-repeat; width:192px; height:43px; }
+input.registerSubmit:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/register_me_send_sprite.png) 0 -43px no-repeat; cursor:pointer; }
+input.registerSubmit_2{border:none; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/register_me_sprite.png) no-repeat; width:192px; height:43px; }
+input.registerSubmit_2:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/register_me_sprite.png) 0 -43px no-repeat; cursor:pointer; }
+#success_box a.new_search{border:none; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/new_search_sprite.png) no-repeat; top:110px; right:20px; position:absolute; width:175px; height:44px; }
+#success_box a.new_search:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/new_search_sprite.png) 0 -43px no-repeat; }
+#modal_form input{font-weight:700; width:460px; font-size:14px; border:3px solid #ccc; margin:0 30px; padding:6px; }
+#modal_form input.half{font-weight:700; width:227px; font-size:14px; border:3px solid #ccc; margin:0 20px 0 0; padding:6px; }
+#modal_form select{font-weight:700; width:212px; font-size:14px; border:3px solid #ccc; margin:0; padding:6px; }
+#modal_form input[type=checkbox]{width:20px; border:none; background:none; }
+#modal_form textarea{font-weight:700; width:460px; font-size:15px; border:3px solid #ccc; height:160px; margin:0 30px; padding:8px; }
+#modal_form input.send_button{width:153px; height:43px; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_sprite.png) no-repeat; text-indent:-5000px; border:none; cursor:pointer; }
+#modal_form input.send_button:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_sprite.png) 0 -43px no-repeat; cursor:pointer; }
+#modal_form input.attach_files{width:89px; height:21px; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/attach_sprite.png) no-repeat; border:none; margin-top:0; -moz-outline-style:none; }
+#modal_form input.attach_files:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/attach_sprite.png) 0 -21px no-repeat; cursor:pointer; outline:none; }
+#modal_form .fakecheck{position:absolute; top:0; left:0; width:30px; height:30px; background:url(https://cdn1.shipserv.com/images/layout_v2/form/checkboxes.png) left -30px no-repeat; text-indent:-5000px; }
+#modal_form table{margin:0 30px; }
+.form_error{background:#DF2929; width:480px; position:relative; margin:10px 30px 20px; padding:10px 0; }
+#modal_form .form_error p.label{font-weight:700; color:#fff; font-size:16px; text-align:left; margin:0; padding:5px 10px; }
+.error_msg_arrow{width:20px; height:11px; background:url(https://cdn1.shipserv.com/images/layout_v2/error_msg_arrow.gif) no-repeat; position:absolute; bottom:-11px; left:30px; }
+#modal_form .form_error p{line-height:20px; color:#fff; font-size:12px; font-weight:400; padding:5px 10px; }
+.form_error_2{border:1px solid red; background:#DF2929; width:480px; margin:0 30px; padding:10px 0; }
+.form_error_2 p{line-height:20px; color:red; font-size:12px; font-weight:400; padding:5px 10px; }
+#modal_form .form_info{border:1px solid #7fc0e5; background:#d7e3ee; width:480px; margin:0 30px; padding:10px 0; }
+#modal_form .form_info h2{line-height:20px; color:#00478a; font-size:16px; font-weight:700; padding:10px 10px 5px; }
+#modal_form .form_info p{line-height:20px; color:#00478a; font-size:13px; font-weight:400; padding:5px 10px; }
+.pagination_container{width:625px; position:absolute; top:12px; right:430px; text-align:right; margin:auto; }
+#search_pagination{font-size:80%; float:right; text-align:right; width:auto; }
+#search_pagination a{text-decoration:none; border:solid 1px #AAE; color:#15B; background:#fff; }
+#search_pagination a {display:block; float:left; margin-right:5px; margin-bottom:5px; padding:.3em .5em; }
+#search_pagination .current.prev, #search_pagination .current.next{color:#999; background:#fff; border-color:#999; }
+p.footer_links{font-size:11px; width:600px; text-align:center; margin:20px auto auto; }
+div.error{width:591px; margin:30px auto auto; }
+div.error .error-message{padding:25px; margin:auto; width:600px; border:1px solid #DDD; border-radius:8px; background-color:#fff; }
+div.error .error-message .error-icon{float:left; width:65px; }
+div.error .error-message .error-text{float:left; width:400px; font:bold 16px Arial; }
+.sidewidget{width:205px; margin:0 0 20px; }
+.sidewidget_header{width:205px; height:17px; background:url(https://cdn1.shipserv.com/images/layout_v2/sidewidget_header.gif) no-repeat; }
+.sidewidget_body{width:205px; background:url(https://cdn1.shipserv.com/images/layout_v2/sidewidget_body.gif) repeat-y; }
+.sidewidget_body p{font-size:12px; margin-left:14px; }
+.sidewidget_body input[type=checkbox]{margin:0 6px 0 0; padding:0; }
+#success_box{width:534px; position:relative; margin:30px auto; }
+#success_box_header{width:534px; height:150px; background:url(https://cdn1.shipserv.com/images/layout_v2/message_header.png) no-repeat; }
+#success_box_header h1{color:#fff; text-align:center; padding-top:66px; }
+#success_box_footer{width:534px; height:17px; background:url(https://cdn1.shipserv.com/images/layout_v2/message_footer.png) no-repeat; }
+#success_box a.back_to_results{border:none; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/back_to_results_sprite.png) no-repeat; top:110px; left:20px; position:absolute; width:175px; height:44px; }
+#success_box a.back_to_results:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/back_to_results_sprite.png) 0 -43px no-repeat; }
+p.indicator{font-size:16px; font-weight:700; position:absolute; top:26px; left:20px; color:#003E85; }
+a.back{position:absolute; top:18px; right:-60px; width:158px; height:20px; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/back_sprite.png) no-repeat; }
+a.back:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/back_sprite.png) 0 -20px no-repeat; }
+a.view_more_countries{position:absolute; bottom:30px; left:0; width:158px; height:22px; text-indent:-9000px; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/view_more_countries_sprite.png) no-repeat; }
+a.view_more_countries:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/view_more_countries_sprite.png) 0 -22px no-repeat; }
+a.view_more_suppliers{position:absolute; bottom:30px; left:0; width:158px; height:22px; text-indent:-9000px; background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/view_more_suppliers_sprite.png) no-repeat; }
+a.view_more_suppliers:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/view_more_suppliers_sprite.png) 0 -22px no-repeat; }
+a.browse_all_categories:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/browse_all_categories_sprite.png) 0 -22px no-repeat; }
+.window{position:absolute; font-weight:400; font-size:12px; line-height:20px; background:#01478C; color:#fff; -moz-border-radius:6px; -webkit-border-radius:6px; width:300px; height:200px; z-index:10000; padding:16px; }
+#traderankTooltip{position:absolute; width:666px; height:450px; z-index:10000; display:none; }
+.tooltip-panel{float:left; }
+#scrollLeftArrow{width:58px; height:58px; background:url('/images/layout_v2/tr_popup/arrow_left_sprite.png') 0 0 no-repeat; cursor:pointer; }
+#scrollLeftArrow:hover{background:url('/images/layout_v2/tr_popup/arrow_left_sprite.png') 0 -58px no-repeat; }
+#scrollRightArrow{width:58px; height:58px; background:url('/images/layout_v2/tr_popup/arrow_right_sprite.png') 0 0 no-repeat; cursor:pointer; }
+#scrollRightArrow:hover{background:url('/images/layout_v2/tr_popup/arrow_right_sprite.png') 0 -58px no-repeat; }
+#closeTooltipButton{width:65px; height:25px; background:url('/images/layout_v2/tr_popup/button_close_sprite.png') 0 0 no-repeat; cursor:pointer; float:right; }
+#closeTooltipButton:hover{background:url('/images/layout_v2/tr_popup/button_close_sprite.png') 0 -25px no-repeat; }
+#tradeRankTab{width:110px; height:36px; background:url('/images/layout_v2/tr_popup/button_traderank_a_sprite.gif') 0 0 no-repeat; cursor:pointer; float:left}
+#tradeRankTab:hover{background:url('/images/layout_v2/tr_popup/button_traderank_a_sprite.gif') 0 -36px no-repeat; }
+#tradeRankTab.on{background:url('/images/layout_v2/tr_popup/button_traderank_b_active.gif') 0 0 no-repeat; }
+#tradePerfTab{width:159px; height:36px; background:url('/images/layout_v2/tr_popup/button_tradingperformance_a_sprite.gif') 0 0 no-repeat; cursor:pointer; float:left}
+#tradePerfTab:hover{background:url('/images/layout_v2/tr_popup/button_tradingperformance_a_sprite.gif') 0 -36px no-repeat; }
+#tradePerfTab.on{background:url('/images/layout_v2/tr_popup/button_tradingperformance_b_active.gif') 0 0 no-repeat; }
+#revTab{width:90px; height:36px; background:url('/images/layout_v2/tr_popup/button_reviews_a_sprite.gif') 0 0 no-repeat; cursor:pointer; float:left}
+#revTab:hover{background:url('/images/layout_v2/tr_popup/button_reviews_a_sprite.gif') 0 -36px no-repeat; }
+
+#verSysTab{width:157px; height:36px; background:url('/images/layout_v2/tr_popup/button_verificationsys_a_sprite.gif') 0 0 no-repeat; cursor:pointer; float:left}
+#verSysTab:hover{background:url('/images/layout_v2/tr_popup/button_verificationsys_a_sprite.gif') 0 -36px no-repeat; }
+#verSysTab.on{background:url('/images/layout_v2/tr_popup/button_verificationsys_b_active.gif') 0 0 no-repeat; }
+#tradeRankTooltip{background:url('/images/layout_v2/tr_popup/01_traderank/stars_all_grey.png') 0 0 no-repeat; width:133px; height:25px; margin-left:15px; position:relative; }
+#tradeRankTooltip #bottomImage{background:url('/images/layout_v2/tr_popup/01_traderank/stars_all_blue.png') 0 0 no-repeat; width:133px; height:25px; left:0; position:absolute; top:0; }
+#tradeRankTooltip #topImage{background:url('/images/layout_v2/tr_popup/01_traderank/stars_transparent_cutout.png') 0 0 no-repeat; width:133px; height:25px; left:0; position:absolute; top:0; }
+#traderankTooltip #trPerfTitle{font:bold 12px Arial,sans-serif; color:#336699; padding:3px 0; }
+#traderankTooltip #reviewsTitle{font:bold 12px Arial,sans-serif; color:#294468; padding:3px 0; }
+#traderankTooltip #verSysTitle{font:bold 12px Arial,sans-serif; color:#169ccc; padding:3px 0; }
+.tooltip-panel-body{background:#FFF; padding:21px; font:normal 11px Arial; display:none; }
+.window2{width:300px; position:absolute; z-index:10000; }
+.window2 img{width:300px; }
+
+#einvoice_body {
+    width: 540px;
+    height: 330px;
+    background: #fff;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    behavior: url(/css/PIE.htc);
+}
+
+#search_box.zone_search_box a.search-button:hover #searchButtonIcon{background:url(/images/layout_v2/zones/search_icon_hover.png) no-repeat; width:20px; height:20px; position:relative; top:7px; left:11px; }
+#search_box.zone_search_box a.search-button:hover{background:url(/images/layout_v2/zones/searchzone_sprite_button.png) 0 -35px no-repeat; }
+#search_box.zone_search_box a.zone-exit-button:hover{background:url(/images/layout_v2/zones/backtodirectory_sprite_button.png) 0 -35px no-repeat; }
+#moreOptions{width:355px; height:393px; position:absolute; top:0; left:0; display:none; background:url(https://cdn1.shipserv.com/images/layout_v2/extra_options_bg.gif) no-repeat; color:#FFF; padding:20px 20px 0 43px; }
+#moreOptions #moreOptionsTitle{font:bold 17px Arial,helvetica; float:left; padding:0 0 10px; }
+#moreOptions .more-options-input-wrapper{background:url(https://cdn1.shipserv.com/images/layout_v2/form/extra_options_search_field.gif) no-repeat; width:325px; position:absolute; padding:6px 8px 7px; }
+#moreOptions input.more-options-what{border:0 none; font-size:17px; width:325px; }
+#moreOptionsSearchLabel{clear:both; color:#b0ddff; font:bold 13px Arial,helvetica; padding-bottom:5px; }
+.options_more_expand{float:right; padding-right:10px; }
+.sidebar_body .options_more_expand a{text-decoration:none; color:#016FD7; font:bold 13px Arial,helvetica; }
+#moreOptionsClose{float:right; color:#b0ddff; font:bold 13px Arial,helvetica; }
+#competitors{background:url(https://cdn1.shipserv.com/images/layout_v2/profile/competitor-block-background.gif) 0 0 no-repeat; height:165px; margin:20px 0; padding:5px 10px 5px 5px; }
+#competitors h2{color:#00478a; font-weight:700; font-size:15px; margin:3px 3px 3px 15px; }
+#competitors ul li.competitor{float:left; margin:5px 0 0 15px; }
+#competitors ul li .block{position:relative; background:url(https://cdn1.shipserv.com/images/layout_v2/profile/competitor-background.gif) 0 0 no-repeat; width:193px; height:91px; cursor:pointer; padding:10px 15px 20px; }
+#competitors ul li .block:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/profile/competitor-background.gif) 0 -121px no-repeat; }
+#competitors ul li .avatar{position:absolute; top:10px; left:10px; width:62px; height:62px; overflow:hidden; }
+#competitors ul li .avatar img{width:60px; border:1px solid #d9d9d9; }
+#competitors ul li .avatar img.no-logo{width:50px; border:none; }
+#competitors .tradeRank{position:absolute; bottom:0; left:15px; width:68px; height:38px; }
+#competitors .tradenet_large{width:68px; height:38px; margin-top:0; position:relative; background:url(https://cdn1.shipserv.com/images/layout_v2/profile/traderank-bg.gif) no-repeat; }
+#competitors .tradenet_large_bottom{position:absolute; height:38px; top:0; left:0; background:url(https://cdn1.shipserv.com/images/layout_v2/profile/traderank-back.png) no-repeat; }
+#competitors .tradenet_large_top{width:68px; height:38px; position:absolute; top:0; left:0; background:url(https://cdn1.shipserv.com/images/layout_v2/profile/traderank-front.png) no-repeat; }
+#competitors h3{font-size:11px; font-weight:700; margin-top:0; padding-left:63px; }
+#competitors h4{margin-top:4px; color:#3ebf60; font-size:11px; padding-left:63px; }
+#competitors .affiliations{position:absolute; bottom:15px; left:90px; }
+#competitors .affiliations ul{margin:0; padding:0; }
+#competitors .affiliations ul li{width:25px; height:25px; float:left; }
+#competitors h4.listingLevel{color:#ff2a00; font-size:10px; padding-left:5px; }
+#basic-listing-cta{background-image:url(https://cdn1.shipserv.com/images/layout_v2/stats/cta-bg.gif); background-repeat:no-repeat; position:relative; width:735px; height:118px; }
+#basic-listing-cta h3{color:#ff3a00; font-weight:700; font-size:14px; margin-bottom:3px; }
+#basic-listing-cta p{color:#6e6e6e; font-size:10px; margin-top:1px; }
+.basic-listing-cta-buttons{float:right; height:40px; margin-top:13px; }
+.basic-listing-cta-buttons a{display:block; float:left; background:url(https://cdn1.shipserv.com/images/layout_v2/basic-cta-button.gif) 0 0 no-repeat; height:16px; width:105px; color:#FFF; font-weight:700; font-size:10px; padding-top:6px; padding-left:24px; margin-left:15px; }
+#basic-listing-cta-lhs{position:absolute; top:10px; left:20px; }
+#basic-listing-cta-rhs{position:absolute; top:10px; left:510px; }
+#basic-listing-cta-owner{color:#F33718; font-size:16px; font-weight:700; position:absolute; width:200px; }
+#basic-listing-cta-data{font-size:16px; font-weight:700; position:absolute; width:150px; }
+#basic-listing-cta-free{position:absolute; top:39px; width:200px; font-size:11px; color:#6e6e6e; }
+#basic-listing-cta-free-img{position:absolute; left:-2px; top:73px; }
+#basic-listing-cta-premium{position:absolute; left:250px; top:39px; width:200px; font-size:11px; color:#6e6e6e; }
+#basic-listing-cta-premium-img{position:absolute; left:248px; top:73px; }
+#basic-listing-cta-bar{position:absolute; top:30px; left:-12px; }
+#basic-listing-cta-bar-text{position:absolute; font-size:11px; line-height:1.2; color:#0080F9; width:177px; top:30px; left:40px; }
+#basic-listing-cta-pie{position:absolute; top:69px; left:-12px; }
+#basic-listing-cta-pie-text{position:absolute; font-size:11px; line-height:1.2; color:#0080F9; width:177px; top:70px; left:40px; }
+.window3{position:absolute; font-weight:400; font-size:12px; line-height:20px; background:#F0F0F0; color:#4B8AC0; -moz-border-radius:6px; -webkit-border-radius:6px; width:500px; height:356px; z-index:10000; padding:16px; }
+#mask3{position:absolute; left:0; top:0; z-index:9000; background-color:#787878; display:none; }
+.window3-graph-container{background:#fff; position:relative; margin-top:6px; }
+.supplier-footer-small{color:#999; font-size:12px; }
+#results-stats-modal-close{position:absolute; top:-15px; left:-15px; z-index:10000; }
+#tradedata-capsule{background-image:url(https://cdn1.shipserv.com/images/layout_v2/stats/tradedata-capsule.gif); background-repeat:no-repeat; width:203px; height:26px; position:absolute; top:20px; left:230px; }
+#tradedata-capsule-text{position:absolute; left:90px; top:4px; width:83px; text-align:center; }
+#results-stats-modal-title{background-color:#09F; color:#FFF; padding-left:6px; font-weight:700; }
+#results-stats-modal-month-feature{position:absolute; left:350px; top:50px; }
+#results-stats-modal-big{font-size:18px; font-weight:700; }
+#results-stats-modal-level-feature{position:absolute; left:300px; top:20px; }
+#profile-menu{float:left; width:170px; margin-right:30px; padding:16px 0 0 30px; }
+#profile-menu ul li{vertical-align:middle; height:38px; margin-bottom:10px; border-bottom:1px dotted #ccc; position:relative; }
+#profile-menu ul li a{font-family:arial,helvetica,sans-serif!important; text-decoration:none; }
+#profile-menu ul li span{margin-left:8px; position:relative; top:-8px; font-weight:700; font-size:13px; color:#777; }
+#profile-menu ul li .countOverlay{background:url(/images/icons/orange-overlay.png) no-repeat; height:21px; width:21px; position:absolute; top:-6px; left:-8px; }
+#profile-menu ul li .countOverlay span{display:block; color:#FFF; padding-top:12px; font-size:11px; font-weight:700; margin:0; text-align:center; }
+#profile-menu ul li.profile-menu-item-selected img#arrow{position:relative; top:-7px; margin:0 0 0 5px; }
+#profile-container{margin-left:auto; margin-right:auto; width:980px; }
+.profile-body-right{float:left; padding-right:34px; width:478px; overflow:hidden; }
+.profile-body-right h2{font-weight:700; font-size:20px; padding-top:20px; padding-bottom:14px; margin-bottom:20px; border-bottom:1px solid #ebebeb; }
+.profile-body-right label, .profile-body-right p.label-header{color:#0157a8; font-size:12.5px; display:block; margin-bottom:4px; }
+label.radio{font-weight:700; line-height:16px; color:#333; padding-bottom:18px; border-bottom:1px solid #ddd; margin:18px 0 4px!important; }
+label.noborder{border:none; padding-bottom:4px; }
+.profile-body-right p.label-header{margin-left:5px!important; margin-bottom:8px!important; line-height:14px; }
+.profile-body-right dt{padding-bottom:10px; padding-left:5px; }
+.profile-body-right dd{width:100%; margin:0; padding:0; }
+.profile-body-right .input-speech-bubble{background:url(/images/layout_v2/profile/input-speech-bubble.png) no-repeat; width:397px; height:28px; position:relative; left:30px; margin:0 0 8px; padding:16px 0 0 10px; }
+.profile-body-right .input-speech-bubble input{display:block; border:none; font-weight:700; font-size:13px; width:380px; height:21px; border-color:transparent; margin:0; padding:0; }
+.profile-body-right .input-wrapper input{display:block; border:none; font-weight:700; font-size:13px; width:456px; height:22px; border-color:transparent; margin:0; padding:0 6px!important; }
+.profile-body-right input.disabled{background-color:#FFF; color:#ccc; }
+.profile-body-group select{background:url(/images/layout_v2/profile/select-bg.png) no-repeat; width:396px; height:35px; padding:7px 8px; }
+.profile-body-group a.cancel-company-search{float:right; font-size:10px; margin-right:15px; }
+.profile-body-group p{color:#0157a8; font-size:12px; line-height:16px; display:block; margin-bottom:20px; }
+#add-company-block .input-wrapper-sm input{display:block; border:none; font-weight:700; font-size:13px; height:21px; width:439px; border-color:transparent; margin:0; padding:0; }
+#add-company-block .input-wrapper-sm{background:url(/images/layout_v2/profile/input-bg-451.png) no-repeat; width:445px; height:28px; padding:7px 6px; }
+#add-people-block .profile-body-group input{background:url(/images/layout_v2/profile/add-person-input.png) no-repeat; width:288px; height:35px; border:none; font-weight:700; font-size:13px; border-color:transparent; margin:0; padding:0 10px; }
+.profile-submit-button{background:url(/images/layout_v2/profile/save-changes.png) 0 0 no-repeat!important; width:220px!important; height:44px!important; border:none!important; cursor:pointer; margin:0; padding:0!important; }
+.profile-submit-button:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/profile/save-changes.png) 0 -44px no-repeat!important; }
+.profile-update-pass-button{background:url(/images/layout_v2/profile/update-password.png) 0 0 no-repeat!important; width:220px!important; height:44px!important; border:none!important; cursor:pointer; margin:0; padding:0!important; }
+.profile-update-pass-button:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/profile/update-password.png) 0 -44px no-repeat!important; }
+.profile-body-company-list-item{background-color:grey; margin-bottom:10px; }
+#profile-heading-graphic{float:right; }
+#profile-subheading{margin-left:10px; padding-left:10px; color:#76C5EE; font-weight:400; border-left:1px solid #76C5EE; }
+#profile-emlconf-no input{background:url(https://cdn1.shipserv.com/images/layout_v2/profile/resend_email_now_spritebutton.gif) 0 0 no-repeat; width:224px; height:28px; border:none; cursor:pointer; }
+#profile-emlconf-no input:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/profile/resend_email_now_spritebutton.gif) 0 -28px no-repeat; cursor:pointer; }
+.pending-block{}
+.rejected-block{}
+.share.profile {
+	margin-bottom: 20px;
+}
+.pending-block h3{color:#fc630f; }
+.rejected-block h4{color:#999!important; }
+.dotted-line{background:url(https://cdn1.shipserv.com/images/layout_v2/endorsement/dots_line.gif) repeat-x; height:1px; margin-top:10px; margin-bottom:10px; }
+.review-request-action,.review-action,.brand-action,.category-action{float:right; padding-left:8px; font:normal 11px Arial; }
+.table-head{width:100%; background:url(https://cdn1.shipserv.com/images/layout_v2/table_header_middle.gif) repeat-x top left; height:50px; }
+.table-head .table-head-left{float:left; width:8px; height:50px; background:url(https://cdn1.shipserv.com/images/layout_v2/table_header_left.png) no-repeat top left; }
+.table-head .table-head-columns{float:left; height:50px; }
+.table-head-columns .table-head-stripe{float:left; width:9px; height:50px; background:url(https://cdn1.shipserv.com/images/layout_v2/table_header_dots.gif) repeat-y top left; }
+.table-head-columns .table-head-column{float:left; height:40px; font:normal 11px Arial,helvetica; color:#fff; position:relative; width:60px; padding:5px 0; }
+.table-head-column .column-text{bottom:5px; left:0; position:absolute; }
+.column-text p{padding:0 5px 0 0; }
+.table-head .table-head-right{float:right; width:8px; height:50px; background:url(https://cdn1.shipserv.com/images/layout_v2/table_header_right.png) no-repeat top left; }
+.nbox-top{height:10px; background:url(https://cdn1.shipserv.com/images/layout_v2/nbox/TopLine.png) repeat-x top left; }
+.nbox-top-left{width:10px; height:10px; background:url(https://cdn1.shipserv.com/images/layout_v2/nbox/TopLeftCorner.gif) no-repeat top left; }
+.nbox-top-right{width:10px; height:10px; background:url(https://cdn1.shipserv.com/images/layout_v2/nbox/TopRightCorner.gif) no-repeat top left; }
+.nbox-left{width:10px; background:url(https://cdn1.shipserv.com/images/layout_v2/nbox/LeftLine.png) repeat-y top left; }
+.nbox-content{background-color:#f5f5f5; }
+.nbox-right{width:10px; background:url(https://cdn1.shipserv.com/images/layout_v2/nbox/RightLine.png) repeat-y top left; }
+.nbox-bottom{height:10px; background:url(https://cdn1.shipserv.com/images/layout_v2/nbox/BottomLine.png) repeat-x top left; }
+.nbox-bottom-left{width:10px; height:10px; background:url(https://cdn1.shipserv.com/images/layout_v2/nbox/BottomLeftCorner.gif) no-repeat top left; }
+.nbox-bottom-right{width:10px; height:10px; background:url(https://cdn1.shipserv.com/images/layout_v2/nbox/BottomRightCorner.gif) no-repeat top left; }
+
+.company-name-search button:hover{background:url(/images/layout_v2/profile/cancel-sprite.gif) no-repeat scroll 0 -30px transparent; }
+.ma-buttons a{font-size:10px; }
+a:hover,.zone_block a:hover,.zone_block h3 a:hover,#searchResults .premium h3 a:hover,#searchResults .searchResult h3 a:hover,.zone-exit-box:hover .zone-exit-link{text-decoration:underline; }
+.content_wide_nav ul li a:hover,.content_wide_nav_top ul li a:hover {color:#fff; text-decoration:none; }
+.content_wide_body_right ul.basic li a{color:#016fd7; }
+/* .content_wide_nav ul li.on {background:url(https://cdn1.shipserv.com/images/layout_v2/nav/supplier_detail_nav_on.jpg); } */
+.content_wide_nav ul li.on {
+	background: white;
+	height: 36px;
+	
+	border-top: 1px solid #0074b1;
+	border-left: 1px solid #0074b1;
+	border-right: 1px solid #0074b1;
+	border-radius: 5px 5px 0 0;
+}
+
+.content_wide_nav ul li.on a {
+	color: #0074b1;
+	font-weight: bold;
+}
+
+.content_wide_nav ul li a {
+	line-height: 36px;
+}
+
+.content_wide_nav ul li a {color:#73aeea; text-decoration:none; }
+/* .content_wide_nav ul li.on a {color:#fff; } */
+.content_wide_nav a.enquiry_send:hover,.content_wide_nav_top a.enquiry_send:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_enquiry_down_sprite.png) 0 -43px no-repeat; }
+.content_wide_footer #search_next_previous,.content_wide_footer_cat #search_next_previous{border-right:1px solid #ccc; width:auto; float:left; }
+.content_wide_footer a.enquiry_send_bottom:hover,.content_wide_footer_cat a.enquiry_send_bottom:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_enquiry_up_sprite.png) 0 -43px no-repeat; }
+.content_wide_footer #search_next_previous a,.content_wide_footer #search_pagination a,#search_pagination span,.content_wide_footer_cat #search_next_previous a,.content_wide_footer_cat #search_pagination a {display:block; float:left; margin:0; }
+.content_wide_body_left p.links:hover,#searchResults .searchResult p.link:hover,span.shipserv_icon:hover,#searchResults .searchResult .tradenettop:hover,h1.supplier_cell:hover,.tradenet_large_top:hover,.content_wide_body_left .tradenettop:hover,.content_wide_body_left p.links a:hover,.ss-ver-system:hover{cursor:help; }
+.content_wide_body_left ul.basic,.content_wide_body_right ul.basic{margin:0 0 0 5px; padding:0; }
+#search_pagination a:hover {color:#000; }
+.rejected-block h3 {color:#999; }
+
+.smartSupplierButton{
+    float:left; 
+    width:82px; 
+    height:20px; 
+    background:url(/images/layout_v2/profile/smartsupplier_bg.gif) no-repeat; 
+    color:#71A3DA; 
+    font:normal 11px Arial,sans-serif; 
+    margin-right:10px; 
+    padding:9px 0 0 28px; 
+    cursor:help; 
+}
+.smartSupplierButton.pointer{
+    border-style: none;
+    border-width: 0px;
+	cursor: pointer;
+}
+
+.eInvoiceButton {
+    float:left; 
+    width:64px; 
+    height:20px; 
+    background:url(/images/layout_v2/profile/einvoice_btn_bg.png) no-repeat; 
+    color:#71A3DA; 
+    font:normal 11px Arial,sans-serif; 
+    margin-right:10px; 
+    padding:9px 0 0 28px; 
+    cursor:help; 
+}
+
+.brandVerificationButton {
+    float:left; 
+    width:82px; 
+    height:20px; 
+    background:url(/images/layout_v2/profile/supplier_profile_badge.jpg) no-repeat; 
+    color:#71A3DA; 
+    font:normal 11px Arial,sans-serif; 
+    margin-right:10px; 
+    padding:9px 0 0 28px; 
+    cursor:help; 
+}
+
+
+.searchFeedback>div{margin:20px; }
+
+#contact_content table {
+width:100%;
+margin:10px 0 0;
+}
+
+#contact_content .section_header {
+border-bottom:1px solid #E3E3E3;
+width:100%;
+margin:10px 0;
+padding:8px 0;
+}
+
+#contact_content table td {
+font-size:11px;
+color:#666;
+vertical-align:top;
+padding:5px 0;
+}
+
+#contact_content table td.column1 {
+font-size:13px;
+width:80px;
+text-align:right;
+padding-right:20px;
+}
+
+#contact_content table td.column3 {
+text-align:right;
+}
+
+#contact_content table tr.middle td {
+vertical-align:middle;
+}
+
+#contact_content table tr td h2 {
+color:#000;
+font-size:17px;
+font-weight:700;
+margin:-5px 0 -10px;
+padding:0;
+}
+
+#contact_content table tr td h1 {
+color:#68aed6;
+font-size:20px;
+font-weight:700;
+margin:4px 0 10px;
+padding:0;
+}
+
+#contact_content table tr td p {
+font-size:12px;
+color:#5e96b7;
+line-height:18px;
+}
+
+#contact_content table tr td .tradenet_large {
+width:115px;
+height:38px;
+position:relative;
+background:url(https://cdn1.shipserv.com/images/layout_v2/traderank_bk_large.png) no-repeat;
+}
+
+#contact_content table tr td .tradenet_large_bottom {
+position:absolute;
+height:38px;
+top:0;
+left:0;
+background:url(https://cdn1.shipserv.com/images/layout_v2/traderank_back_large.png) no-repeat;
+}
+
+#contact_content table tr td .tradenet_large_top {
+width:115px;
+height:38px;
+position:absolute;
+top:0;
+left:0;
+background:url(https://cdn1.shipserv.com/images/layout_v2/traderank_front_large.png) no-repeat;
+}
+
+#contact_content table tr td h2.tnid,#add-people-block .profile-body-group label,#add-company-block {
+margin-bottom:10px;
+}
+
+/*Catalogue product items styles*/
+
+.product_items {
+width:460px;
+float:right;
+position:relative;
+margin:0 10px;
+padding:10px 0;
+}
+
+.product_items_end {
+width:400px;
+float:right;
+position:relative;
+margin:0 10px;
+padding:10px 0;
+}
+
+.product_items .image {
+width:40px;
+height:40px;
+float:left;
+}
+
+.product_items .image img {
+width:40px;
+height:40px;
+}
+
+.product_items .text {
+width:390px;
+margin-left:20px;
+float:left;
+padding-bottom:10px;
+border-bottom:1px solid #ccc;
+}
+
+.product_items .text h2 {
+color:#000;
+font-size:12px;
+font-weight:700;
+margin:4px 0 6px;
+}
+
+.product_items .text p {
+color:#333333;
+font-size:10px;
+margin:0;
+padding:0;
+}
+
+.product_items .text p b {
+color:#787878;
+font-size:11px;
+}
+
+.product_items .price {
+float:right;
+background:#666;
+-moz-border-radius:6px;
+-webkit-border-radius:6px;
+padding:6px 10px;
+}
+
+.product_items .price p {
+font-size:13px;
+line-height:18px;
+color:#fff;
+margin:0;
+padding:0;
+}
+
+a.ellipsis{color:#fff;padding:10px 10px 18px;}
+.content_wide_footer #search_next_previous a,.content_wide_footer #search_pagination a{text-decoration:none;border-left:1px solid #ccc;border-top:1px solid #ccc;border-right:1px solid #fff;border-bottom:none;color:#15B;background:#f0f0f0;margin:0;padding:19px 8px;}
+.content_wide_footer #search_page p{text-decoration:none;border-left:1px solid #ccc;border-top:1px solid #ccc;border-right:1px solid #fff;border-bottom:none;color:#000;background:#f0f0f0;display:block;float:left;margin:0;padding:19px 8px;}
+.content_wide_footer #search_pagination .current{color:#000;border-left:1px solid #ccc;border-right:1px solid #fff;border-bottom:none;border-top:none;font-size:13px;background:#fff;margin:0;padding:19px 8px;}
+.content_wide_footer_cat{width:460px;background:#f0f0f0;border:1px solid #d6d6d6;margin-left:-10px;}
+.content_wide_footer_cat #search_next_previous a,.content_wide_footer_cat #search_pagination a{text-decoration:none;border-left:1px solid #ccc;border-top:1px solid #ccc;border-right:1px solid #fff;border-bottom:none;color:#15B;background:#f0f0f0;margin:0;padding:19px 10px;}
+.content_wide_footer_cat #search_pagination .current{color:#000;border-left:1px solid #ccc;border-right:1px solid #fff;border-bottom:none;border-top:none;font-size:13px;background:#fff;margin:0;padding:19px 10px;}
+.content_wide_footer #search_page,.content_wide_footer #search_next_previous,.content_wide_footer #search_pagination,.content_wide_footer_cat #search_page,.content_wide_footer_cat #search_next_previous,.content_wide_footer_cat #search_pagination{font-size:70%;float:left;text-align:left;width:auto;margin-top:-1px;}
+.content_wide_footer #search_next_previous,.content_wide_footer_cat #search_next_previous{border-right:1px solid #ccc;width:auto;float:left;}
+.content_wide_footer #search_next_previous a.prev,.content_wide_footer_cat #search_next_previous a.prev{background:url(https://cdn1.shipserv.com/images/layout_v2/left_page_arrow.jpg) 10px 21px no-repeat;padding-left:20px;border-left:none;}
+.content_wide_footer #search_next_previous a.next,.content_wide_footer_cat #search_next_previous a.next{background:url(https://cdn1.shipserv.com/images/layout_v2/right_page_arrow.jpg) 44px 21px no-repeat;padding-right:20px;}
+.content_wide_footer #search_next_previous p.prev,.content_wide_footer_cat #search_next_previous p.prev{border-left:none;color:#666;line-height:52px;padding:0 20px;}
+.content_wide_footer #search_next_previous p.next,.content_wide_footer_cat #search_next_previous p.next{color:#666;line-height:52px;padding:0 20px;}
+.content_wide_footer a.enquiry_send_bottom,.content_wide_footer_cat a.enquiry_send_bottom{position:absolute;top:4px;right:16px;background:url(/images/layout_v2/buttons/send_enquiry_up_sprite.png) no-repeat;width:194px;height:41px;}
+.content_wide_footer a.enquiry_send_bottom:hover,.content_wide_footer_cat a.enquiry_send_bottom:hover{background:url(/images/layout_v2/buttons/send_enquiry_up_sprite.png) 0 -43px no-repeat;}
+.content_wide_footer #search_next_previous a,.content_wide_footer #search_pagination a,#search_pagination span,.content_wide_footer_cat #search_next_previous a,.content_wide_footer_cat #search_pagination a,.content_wide_footer_cat #search_pagination span{display:block;float:left;margin:0;}
+.content_wide_footer #search_pagination a.on,.content_wide_footer_cat #search_pagination a.on{background:#26B;color:#fff;}
+.content_wide_footer #search_pagination .current.prev,#search_pagination .current.next,.content_wide_footer_cat #search_pagination .current.prev,#search_pagination .current.next{color:#999;border-color:#999;}
+.content_wide_footer_cat #search_page p,.content_wide_footer_cat #search_pagination .ellipsis{text-decoration:none;border-left:1px solid #ccc;border-top:1px solid #ccc;border-right:1px solid #fff;border-bottom:none;color:#000;background:#f0f0f0;display:block;float:left;margin:0;padding:19px 10px;}
+
+div.button.dealhead {
+	display: block;
+	width: 389px;
+	position: relative;
+	text-align: left;
+	font-size: 13px;
+	-khtml-border-radius: 6px 6px 0 0;
+	-o-border-radius: 6px 6px 0 0;
+	-webkit-border-radius: 6px 6px 0 0;
+	-moz-border-radius: 6px 6px 0 0;
+	border-radius: 6px 6px 0 0;
+	behavior: url(/css/PIE.htc);
+}
+
+div.marketingbox {
+	width: 403px;
+	height: 244px;
+	padding: 12px;
+	border: 2px solid #fe5d3f;
+	cursor: pointer;
+}
+
+div.marketingbox img {
+	float: left;
+}
+
+div.marketingbox .product {
+	float: right;
+	width: 188px;
+	padding-top: 17px;
+}
+
+div.marketingbox .product h2 {
+	font-size: 21px;
+	font-weight: bold;
+	margin-bottom: 18px;
+}
+
+div.marketingbox ul {
+	list-style-image:url(/img/supplier/dt/bullet.png);
+}
+
+div.marketingbox ul li {
+	font-size: 12px;
+	font-weight: normal;
+	line-height: 1.5;
+	margin-left: 15px;
+}
+
+div.marketingbox h1 {
+	font-size: 18px;
+	font-weight: bold;
+	color: #087ec5;
+	padding-top: 10px;
+	padding-bottom: 5px;
+}
+
+div.marketingbox ul.small li {
+	font-size: 11px;
+}
+
+div.marketingbox ul li strong {
+	font-weight: bold;
+}
+
+div.trnId {
+	position: relative;
+	color: #71A3DA;
+	font-size: 11px;
+	float: left;
+	height: 9px;
+	margin-right: 10px;
+	padding: 9px;
+	border: 1px solid #ccc;
+	background: #ffffff;
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #ececec));
+	background-image: -webkit-linear-gradient(#ffffff, #ececec);
+	background-image: -moz-linear-gradient(#ffffff, #ececec);
+	background-image: -o-linear-gradient(#ffffff, #ececec);
+	background-image: linear-gradient(#ffffff, #ececec);
+	-pie-background: linear-gradient(top, #ffffff 0%, #ececec 100%);
+	behavior: url(/css/PIE.htc);
+	font-weight: bold;
+}
+
+div.trnId span {
+	color: #2e3235;
+}
+
+div.zz.button.red.contactBtn {
+	display:block !important;
+	float: none !important;
+}
+
+div.tnidLink {
+	display: block;
+	float: none;
+	margin: 10px 0 0 0;
+	width: 178px;
+	color: #005aad !important;
+	cursor: pointer;
+}
+
+/* TNID box */
+.tnidBox {
+	position: relative;
+	background: #f5f7fa;
+	padding: 8px 14px;
+}
+
+.tnidBox .tnidTitle {
+	font-size: 18px;
+	color: #00386e;
+	font-weight: bold;
+	float: left;
+	padding-top: 18px;
+}
+
+.tnidBox .tnidHolder {
+	border: 1px solid #d6dce4;
+	background: #ffffff;
+	width: 179px;
+	padding: 12px 0;
+	text-align: center;
+	font-size: 26px;
+	font-weight: bold;
+	color: #008b00;
+	margin-left: 200px;
+}
+
+.tnidBox hr {
+	border: 0;
+	border-top: 1px dotted #000000;
+	margin: 10px 0;
+}
+
+.tnidBox  .copyText
+{
+	font-size: 13px;
+	color: #2e3235;
+}
+
+.tnidBox  .copyText strong {
+	font-weight: bold;
+}
+
+.tnidBox .copyBtn {
+	float: right !important;
+	cursor: pointer;
+}
+
+.tnidBox .copyBtn a {
+	display: block;
+}
+/* End of TNID box */
+
+/* Start Contact Detail Box */
+
+.contactDetailBox {
+	padding: 6px;
+}
+
+.contactDetailBox h2.contactDetTitle {
+	font-size: 18px;
+	font-weight: bold;
+	color: #2e3235;
+}
+
+.contactDetailBox h3.contDetSub {
+	color: #008711;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+.contactDetailBox .supContBox {
+	position: relative;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-ms-border-radius: 6px;
+	-o-border-radius: 6px;
+	border-radius: 6px;
+	behavior: url(/css/PIE.htc);
+	border: 1px solid #d5dce4;
+	padding: 15px;
+	font-size: 12px;
+	font-weight: normal;
+	color: #2e3235;
+	margin-top: 15px;
+	line-height: 1.5;
+}
+
+.contactDetailBox .supContBox a {
+	text-decoration: none;
+	color: #005aad;
+}
+
+/* End Contect Detail Box */
+
+/* Start Contact Email Box */
+
+.contactEmailBox {
+	margin: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
+    behavior: url(/css/PIE.htc);
+    border: 1px solid #d5dce4;
+    padding: 15px;
+    font-size: 12px;
+    font-weight: normal;
+    color: #2e3235;
+    line-height: 1.5;
+}
+
+/* End Contact Email Box */
+
+div#contact_content .content_wide_body_right p.address {
+	margin-bottom: 0;
+}
+
+div#contact_content .content_wide_body_left .box {
+	position: relative;
+	border: 1px solid #d6dce4;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-ms-border-radius: 6px;
+	-o-border-radius: 6px;
+	border-radius: 6px;
+	behavior: url(/css/PIE.htc);
+	padding: 14px 28px 14px 110px;
+	margin-top: 20px;
+}
+
+div#contact_content .content_wide_body_left .box.enqu {
+	background: url(/img/supplier/contact/envelope.png) no-repeat 15px center transparent;
+	margin-top: 40px;
+}
+
+div#contact_content .content_wide_body_left .box.ocontact {
+	background: url(/img/supplier/contact/phone.png) no-repeat 22px center transparent;
+}
+
+div#contact_content .content_wide_body_left .box .innerBox {
+	position: relative;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	-ms-border-radius: 6px;
+	-o-border-radius: 6px;
+	border-radius: 6px;
+	behavior: url(/css/PIE.htc);
+	width: 286px;
+	height: 66px;
+	line-height: 66px;
+	vertical-align: middle;
+	text-align: center;
+}
+
+div#contact_content .content_wide_body_left .box.enqu .innerBox {
+	border: 2px solid #fd5a3e;
+}
+
+div#contact_content .content_wide_body_left .box.ocontact .innerBox {
+	border: 2px solid #75c546;
+}
+
+div#contact_content .content_wide_body_left .box .innerBox a {
+	text-decoration: none;
+	font-size: 18px;
+	color: #005aad;
+	font-weight: bold;
+}
+
+div#contact_content .content_wide_body_left .contact_toggle_spacer {
+	font-size: 1px;
+	height: 8px;
+}
+
+div#contact_content .content_wide_body_left .contact_toggle_wrapper {
+	display: inline-block;
+	cursor: pointer;
+	width: 410px;
+	background: #e9edf1;
+    height: 40px;
+    line-height: 38px;
+	margin: 6px 0;
+	font-size: 18px;
+}
+
+div#contact_content .content_wide_body_left .contact_toggle_wrapper div {
+	width: 40px;
+	height: 40px;
+	background: white;
+	float: left;
+	text-align: center;
+}
+
+div#contact_content .content_wide_body_left .contact_toggle_wrapper img {
+	border: 0;
+    width: 22px;
+    height: 22px;
+    margin-top: 9px;
+}
+
+div#contact_content .content_wide_body_left .contact_toggle_wrapper .contact_toggle_email {
+	color: white;
+	background: #F35329;
+}
+
+div#contact_content .content_wide_body_left .contact_toggle_wrapper .contact_toggle_phone {
+	color: white;
+	background: #128a14;
+}
+
+div#contact_content .content_wide_body_left .contact_toggle_wrapper .contact_toggle_tnid {
+	color: white;
+	background: #187fc2;
+}
+
+div#contact_content .content_wide_body_left .contact_toggle_wrapper p {
+	margin: 0;
+	padding: 0 12px;
+	float: left;
+	height: 38px;
+	border-top: 1px solid #d9d9d9;
+	border-bottom: 1px solid #d9d9d9;
+	width: 305px;
+	font-size: 18px;
+	color: #404040;
+}
+
+div#contact_content .content_wide_body_left .contact_toggle_wrapper span {
+	width: 40px;
+	float: right;
+	height: 38px;
+	text-align: center;
+	border-top: 1px solid #d9d9d9;
+	border-bottom: 1px solid #d9d9d9;
+	border-right: 1px solid #d9d9d9;
+}
+
+div#contact_content .content_wide_body_left .website_btn, div#contact_content .content_wide_body_left .rfq_btn  {
+    width: 410px;
+    text-align: center;
+    display: inline-block;
+    padding: 12px 0px;
+    margin: 6px 0;
+}
+
+div#contact_content .content_wide_body_left .website_btn {
+	background: #8090a9;
+	border: 1px solid #8090a9;
+	color: white;
+	border-radius: 6px;
+	margin: 18px 0;
+}
+
+div#contact_content .content_wide_body_left .rfq_btn {
+	background: white;
+	border: 1px solid #1363ae;
+	color: #1363ae;
+	border-radius: 6px;
+}
+
+div#contact_content .content_wide_body_left .contact_toggle_email_content,  div#contact_content .content_wide_body_left .contact_toggle_phone_content, div#contact_content .content_wide_body_left .contact_toggle_tnid_content{
+	display: none;
+	border: 1px solid #d9d9d9;
+	margin: -3px 0 6px 0;
+    padding: 0;
+	width: 408px;
+	font-size: 14px;
+	line-height: 150%;
+}
+
+body h1.styled {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  font-size: 18px;
+  color: #ffffff;
+  padding: 10px 15px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #13b5ea), color-stop(100%, #087fc5));
+  background-image: -webkit-linear-gradient(#13b5ea 0%, #087fc5 100%);
+  background-image: -moz-linear-gradient(#13b5ea 0%, #087fc5 100%);
+  background-image: -o-linear-gradient(#13b5ea 0%, #087fc5 100%);
+  background-image: -ms-linear-gradient(#13b5ea 0%, #087fc5 100%);
+  background-image: linear-gradient(#13b5ea 0%, #087fc5 100%);
+  -pie-background: linear-gradient(#13b5ea 0%, #087fc5 100%);
+  behavior: url(/css/PIE.htc);
+}
+
+#modal, #modalContact, #modalBig {
+  display: none;
+  z-index: 99999;
+  width: 400px;
+}
+#modal .modalControls, #modalContact .modalControls, #modalBig .modalControls {
+  height: 55px;
+}
+#modal .modalControls .close, #modalContact .modalControls .close, #modalBig .modalControls .close {
+  position: relative;
+  float: right;
+  font-size: 14px;
+  font-weight: bold;
+  color: #13b5ea;
+  background: #fcfdfe;
+  padding: 10px 20px;
+  cursor: pointer;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  behavior: url(/css/PIE.htc);
+}
+#modal .modalBody, #modalContact .modalBody, #modalBig .modalBody {
+  position: relative;
+  padding: 5px;
+  background: #ffffff;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  border-radius: 6px;
+  behavior: url(/css/PIE.htc);
+}
+#modal .modalBody .modalContent, #modalContact .modalBody .modalContent, #modalBig .modalBody .modalContent {
+  padding: 5px 10px 10px 10px;
+  color: #525c64;
+  font-size: 12px;
+  line-height: 1.4;
+}
+#modal .modalBody .modalContent p, #modalContact .modalBody .modalContent p, #modalBig .modalBody .modalContent p {
+  font-size: 12px;
+  color: #2e3235;
+  margin-bottom: 10px;
+}
+#modal .modalBody .modalContent .red, #modalContact .modalBody .modalContent .red, #modalBig .modalBody .modalContent .red {
+  color: #e81e24;
+}
+
+a.backBtn {
+	position: relative;
+    font-weight: bold;
+    color: #ffffff;
+    text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.28);
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    -pie-poll: true;
+    behavior: url(/css/PIE.htc);
+    font-size: 11px;
+  	padding: 3px 10px;
+  	background: #ffffff;
+	border-color: #d6dce4;
+	background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #f5f7fa));
+	background-image: -webkit-linear-gradient(#ffffff 0%, #f5f7fa 100%);
+	background-image: -moz-linear-gradient(#ffffff 0%, #f5f7fa 100%);
+	background-image: -o-linear-gradient(#ffffff 0%, #f5f7fa 100%);
+	background-image: -ms-linear-gradient(#ffffff 0%, #f5f7fa 100%);
+	background-image: linear-gradient(#ffffff 0%, #f5f7fa 100%);
+	-pie-background: linear-gradient(top, #ffffff 0%, #f5f7fa 100%);
+	color: #005aad;
+	text-shadow: none;
+	text-decoration: none;
+}
+.content_wide_nav ul li#contact_toggle {
+	width: 125px;
+}
+/* .content_wide_nav ul li#contact_toggle.on {
+	background: url(/images/layout_v2/nav/supplier_detail_nav_on_contact.jpg);
+} */
+
+#search_box{width:960px;height:90px;position:relative;background:#fff;-moz-border-radius-bottomleft:6px;-webkit-border-bottom-left-radius:6px;-moz-border-radius-bottomright:6px;-webkit-border-bottom-right-radius:6px;margin:auto;}
+#search_box p.total_suppliers{font-size:12px;color:#E81E25;position:absolute;top:8px;left:765px;}
+#search_box p.search_for{font-size:12px;color:#E81E25;position:absolute;top:11px;left:24px;}
+#search_box p.located_in{font-size:12px;color:#E81E25;position:absolute;top:11px;left:516px;}
+#search_box .input-wrapper{position:absolute;background:url(/images/forms/search-box.png) no-repeat;width:323px;padding:7px 8px 8px;}
+#search_box .search-what-wrapper{
+    top:27px;
+    left:20px;
+    width: 470px;
+    background:url(/images/forms/search-box-long.png) no-repeat;
+}
+#search_box .search-country-wrapper{
+    top:27px;
+    left:512px;
+    width: 218px;
+    background:url(/images/forms/search-box-short.png) no-repeat;
+}
+#search_box a.search-button{border:none;background:url(https://cdn1.shipserv.com/images/forms/search-button.gif) no-repeat;top:25px;left:755px;position:absolute;cursor:pointer;width:186px;height:39px;}
+#search_box a.search-button:hover{background:url(https://cdn1.shipserv.com/images/forms/search-button.gif) 0 -39px no-repeat;cursor:pointer;}
+
+ul.auto-complete-list,ul.auto-complete-list-wide{list-style-type:none;position:absolute;z-index:100;max-height:254px;height:auto!important;overflow-x:hidden;overflow-y:auto;border:3px solid #ccc;-moz-border-radius:6px;-webkit-border-radius:6px;background:#F0F0F0;margin:10px 0 0;padding:0;}
+ul.auto-complete-list li,ul.auto-complete-list-wide li{list-style-type:none;background:#F0F0F0;border-bottom:1px dotted #ccc;cursor:pointer;font-size:13px;width:313px;margin:0 2px;padding:5px 0 4px 6px;}
+ul.auto-complete-list-wide li{width:375px;font-size:11px;}
+ul.auto-complete-list li em,ul.auto-complete-list-wide li em{font-weight:700;font-style:normal;}
+ul.auto-complete-list li.auto-complete-list-rollover,ul.auto-complete-list-wide li.auto-complete-list-rollover{background:#016FD7;color:#FFF;}
+
+#search_box p {font-size:12px;color:#666;position:absolute;top:20px;left:34px;}
+#search_box input.search-what, #search_box input.search-country {
+    border:none;
+    font-size:17px;
+    width:317px;
+    border-color:transparent;
+    margin-top: -1px;
+}
+
+#search_box input.search-what {
+    width: 449px;
+}
+
+#search_box input.search-country {
+    width: 191px;
+}
+
+.table-head-columns .table-head-column {
+	float: left;
+	height: 40px;
+	font: normal 11px Arial,helvetica;
+	color: #fff;
+	position: relative;
+	width: 60px;
+	padding: 5px 0;
+}
+
+.table-head-columns .table-head-column p {
+	color: #ffffff;
+}
+
+div.table-head {
+	margin-bottom: 10px;
+}
+
+table.nbox {
+	margin-bottom: 10px;
+	margin-left: 10px;
+}
+
+.expertSupplierButton {
+	float: left;
+	width: 85px;
+	height: 20px;
+	background: url(/images/layout_v2/profile/expertsupplier_bg.gif) no-repeat;
+	color: #71A3DA;
+	font: normal 11px Arial,sans-serif;
+	margin-right: 10px;
+	padding: 9px 0 0 28px;
+	cursor: help;
+}
+
+span.restrictedToolTip {
+    color: gray;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#restrictedToolTip {
+    display: none;
+}

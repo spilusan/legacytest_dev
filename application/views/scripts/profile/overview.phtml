@@ -1,0 +1,365 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js');
+
+$this->headLink()->appendStylesheet('/css/transition.css');						 
+$this->CDNLink()->appendStylesheet('/css/uniform.default.new.css')
+				->appendStylesheet('/css/profile.css')
+				->appendStylesheet('/css/profile-myinfo.css')."\n";
+$errMsgs         = $this->detailsForm->getMessages();
+$chngPassErrMsgs = $this->passwordError;
+
+if($chngPassErrMsgs && lg_count($chngPassErrMsgs) > 0){
+	$showPwd = 1;
+} else {
+	$showPwd = 0;
+}
+
+$this
+	->getHelper('Requirejs')
+	->addModule('backbone/user/my-info/views/mainView')
+	->addDefinition('profile/showPwd', $showPwd);
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'My Info',
+						   'url'  => '/profile/overview'));
+?>
+<!--[if IE ]>
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->CDNLink()->css('/css/profile-myinfo-ie.css'); ?>" />
+<![endif]-->
+
+<div id="main_content_area">
+	
+	<div class="clear"></div>
+	<div class="content_wide">
+		
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], 'overview'),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu(
+						$this->companyDetail['name'],
+						$this->companyDetail['type'],
+						$this->companyDetail['id'],
+						'',
+						$this->pendingUsers, $isAdmin
+					)
+				)
+			);
+			?>
+			
+			<div class="profile-body-right">
+				<div class="zz header">
+					<a href="#" class="button dblue medium chgPwd">Change Password</a>
+					<h2>My Info</h2>
+				</div>
+				<div class="profileContent">
+					<?php
+					if ($this->saveSuccess)
+					{
+						?>
+						<h3 class="success-message">Your profile was successfully updated</h3>
+						<?php
+					}
+					
+					if ($this->passwordSaveSuccess)
+					{
+						?>
+						<h3 class="success-message">Your password was successfully updated</h3>
+						<?php
+					}
+					
+					echo $this->partial('profile/email-confirmation.phtml', array('showEmailConfirmedSuccess' => $this->showEmailConfirmedSuccess,
+																				  'showEmailConfirmedError'   => $this->showEmailConfirmedError,
+																				  'emailConfirmedErrorMsg'    => $this->emailConfirmedErrorMsg));
+					?>
+
+					<form action="/profile/overview" class="profile-form new" method="post" enctype="application/x-www-form-urlencoded">
+						<div class="box">
+
+							<?php
+							echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['name'],
+																				 'title'         => 'First name:',
+																				 'required'      => true,
+																				 'name'          => 'name',
+																				 'value'         => $this->detailsForm->name->getValue()));
+							
+							echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['surname'],
+																				 'title'         => 'Last name:',
+																				 'required'      => true,
+																				 'name'          => 'surname',
+																				 'value'         => $this->detailsForm->surname->getValue()));
+
+							echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['email'],
+																				'title'         => 'Email:',
+																				'required'      => true,
+																				'name'          => 'email',
+																				'value'         => $this->detailsForm->email->getValue(),
+																				'disabled'      => true));
+							?>
+							
+							<label class="required" for="companyType">Company type: <sup>*</sup></label>
+							<select id="companyType" name="companyType">
+								<?php
+								foreach ($this->detailsForm->companyType->getMultiOptions() as $id => $companyType)
+								{
+									?>
+									<option value="<?php echo $id; ?>" <?php echo ($id == $this->detailsForm->companyType->getValue()) ? 'selected="selected"' : ''; ?>><?php echo $companyType; ?></option>
+									<?php
+								}
+								?>
+							</select>
+							<div class="clear"></div>
+							
+							
+							<?php 
+							if($this->detailsForm->companyType->getValue() == 9){
+								$hide = false;
+							}
+							else {
+								$hide = true;
+							}
+
+							echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['otherCompanyType'],
+									'title'         => 'Other Company type:',
+									'required'      => true,
+									'name'          => 'otherCompanyType',
+									'value'         => $this->detailsForm->otherCompanyType->getValue(),
+									'hide'			=> $hide
+								));
+							?>
+							
+							<label class="jobFunction required" for="jobFunction">Your Job Type: <sup>*</sup></label>
+							<select id="jobFunction" name="jobFunction">
+								<?php
+								foreach ($this->detailsForm->jobFunction->getMultiOptions() as $id => $jobFunction)
+								{
+									?>
+									<option value="<?php echo $id; ?>" <?php echo ($id == $this->detailsForm->jobFunction->getValue()) ? 'selected="selected"' : ''; ?>><?php echo $jobFunction; ?></option>
+									<?php
+								}
+								?>
+							</select>
+							<div class="clear"></div>
+							
+							<?php 
+							if($this->detailsForm->jobFunction->getValue() == 16){
+								$hide = false;
+							}
+							else {
+								$hide = true;
+							}
+
+							echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['otherJobFunction'],
+									'title'         => 'Other Job type:',
+									'required'      => true,
+									'name'          => 'otherJobFunction',
+									'value'         => $this->detailsForm->otherJobFunction->getValue(),
+									'hide'			=> $hide
+								));
+							?>
+
+							<label class="isDecisionMaker" for="isDecisionMaker"><input type="image" src="/img/icons/small/help_light.png" alt="Info" name="decInfo"> Are you a decision maker?</label>
+							<input type="radio" name="isDecisionMaker" id="decYes" value="1" <?= (($this->user->isDecisionMaker=='1')?'checked="checked"':'')?> /> <span class="dec">Yes</span><br />
+							<input type="radio" name="isDecisionMaker" id="decNo" value="0" <?= (($this->user->isDecisionMaker=='0')?'checked="checked"':'') ?>/> <span class="dec no">No</span><br />
+							<div class="clear"></div>							
+					
+							<?php 
+	                        echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['alias'],
+	                        		'title'         => 'Alias:',
+	                        		'required'      => false,
+	                        		'name'          => 'alias',
+	                        		'value'         => $this->detailsForm->alias->getValue()));
+	                        
+	                        echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['company'],
+	                        		'title'         => 'Company:',
+	                        		'required'      => true,
+	                        		'name'          => 'company',
+	                        		'value'         => $this->detailsForm->company->getValue()));
+							echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['cAddress1'],
+									'title'         => 'Address 1:',
+									'required'      => true,
+									'name'          => 'cAddress1',
+									'value'         => $this->detailsForm->cAddress1->getValue()));
+
+							echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['cAddress2'],
+									'title'         => 'Address 2:',
+									'required'      => false,
+									'name'          => 'cAddress2',
+									'value'         => $this->detailsForm->cAddress2->getValue()));
+
+							echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['cAddress3'],
+									'title'         => 'Address 3:',
+									'required'      => false,
+									'name'          => 'cAddress3',
+									'value'         => $this->detailsForm->cAddress3->getValue()));
+
+							echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['cZipcode'],
+									'title'         => 'Zip/Postcode:',
+									'required'      => true,
+									'name'          => 'cZipcode',
+									'value'         => $this->detailsForm->cZipcode->getValue()));
+
+							// country - dropdown
+							?>
+							<label class="cCountryCode required" for="cCountryCode">Country: <sup>*</sup></label>
+							<select id="cCountryCode" name="cCountryCode">
+								<option value="">Please Select</option>
+								<?php
+								foreach ($this->countries as $row)
+								{
+									?>
+									<option value="<?php echo $row['CNT_COUNTRY_CODE']; ?>" <?php echo ( $row['CNT_COUNTRY_CODE'] == $this->detailsForm->cCountryCode->getValue())  ? 'selected="selected"' : ''; ?>><?php echo $row['CNT_NAME']; ?></option>
+									<?php
+								}
+								?>
+							</select>
+							<div class="clear"></div>							
+							<?php
+							if( $errMsgs['cCountryCode'] !== null && lg_count($errMsgs['cCountryCode']) > 0)
+							{
+								foreach( $errMsgs['cCountryCode'] as $error )
+								{
+									echo '<div class="error">' . $error . '</div>';
+								}
+							}
+
+							echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['cPhone'],
+									'title'         => 'Telephone:',
+									'required'      => false,
+									'name'          => 'cPhone',
+									'value'         => $this->detailsForm->cPhone->getValue()));
+
+							echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['cWebsite'],
+									'title'         => 'Website:',
+									'required'      => false,
+									'name'          => 'cWebsite',
+									'value'         => $this->detailsForm->cWebsite->getValue()));
+
+	                        ?>
+	                        
+							<label class="cSpending required" for="cSpending"><input type="image" src="/img/icons/small/help_light.png" alt="Info" name="spInfo"> Your Spend in USD: </label>
+							<select id=cSpending name="cSpending">
+								<option value="">Please Select</option>
+								<?php
+								foreach ($this->annualBudget as $row)
+								{
+									?>
+									<option value="<?php echo $row['id']; ?>" <?php echo ( $row['id'] == $this->detailsForm->cSpending->getValue())  ? 'selected="selected"' : ''; ?>><?php echo $row['name']; ?></option>
+									<?php
+								}
+								?>
+							</select>
+							<div class="clear"></div>
+							
+										                        
+	                     </div>
+	                     <div class="vesselInfo">
+		                     <h3>Vessels</h3>
+		                     <div class="box">
+		                     	<?php
+		                     		echo $this->partial('profile/form-item.phtml', array('errorMessages' => $errMsgs['cNoOfVessel'],
+										'title'         => 'Number of Vessels:',
+										'required'      => false,
+										'name'          => 'cNoOfVessel',
+										'value'         => $this->detailsForm->cNoOfVessel->getValue()
+									));
+									
+
+									//print_r($this->vesselTypes);
+		                     	?>
+		                     	<div class="types">
+									<div class="title">
+										Type of Vessels:
+									</div>
+									<div class="checks">
+										<?php
+										foreach ($this->vesselTypes as $vType)
+										{
+											?>
+											<span class="check-wrapper">
+												<input type="checkbox" value="<?=$vType['id'];?>" name="vesselType[]" id="<?=$vType['name'];?>" <?= (in_array($vType['id'], (array)$this->user->company['vesselTypes']))?'checked="checked"':''?>>
+												<label for="vesselType[]"><?=$vType['name'];?></label>
+											</span>
+											<?
+										}
+										?>
+									</div>
+									<div class="clear"></div>
+								</div>
+		                     </div>
+		                </div>
+	                     <div class="zz medium green button save-button" id><input type="submit" value="Save changes" id="submit" name="submit"></div>
+					</form>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+    	<h1 class="styled">Change Password</h1>
+    	<div class="modalContent">
+    		<form action="/profile/overview/changepassword/1" class="profile-form new" method="post" enctype="application/x-www-form-urlencoded" autocomplete="off">
+				<?php
+				echo $this->partial('profile/form-item.phtml', array('errorMessages' => $chngPassErrMsgs['oldPassword'] ?? null,
+																	 'title'         => 'Old Password',
+																	 'required'      => true,
+																	 'name'          => 'oldPassword',
+																	 'value'         => '',
+																	 'type'          => 'password',
+																	 'disabled'      => false));
+				echo $this->partial('profile/form-item.phtml', array('errorMessages' => $chngPassErrMsgs['password'] ?? null,
+																	 'title'         => 'New Password',
+																	 'required'      => true,
+																	 'name'          => 'password',
+																	 'value'         => '',
+																	 'type'          => 'password',
+																	 'disabled'      => false));
+				
+				echo $this->partial('profile/form-item.phtml', array('errorMessages' => $chngPassErrMsgs['confirmPassword'] ?? null,
+																	 'title'         => 'Confirm New Password',
+																	 'required'      => true,
+																	 'name'          => 'confirmPassword',
+																	 'value'         => '',
+																	 'type'          => 'password',
+																	 'disabled'      => false));
+				?>
+				<div class="zz medium green button save-button"><input type="submit" value="Update Password" id="password-submit" name="password-submit"></div>
+                <div class="clear" style="height: 1px;"></div>
+			</form>
+    	</div>
+    </div>
+</div>
+<div class="modal decisionInfo">
+	<div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+   <div class="modalBody">
+    	<h1 class="styled">Decision Maker</h1>
+    	<div class="modalContent">
+    		<p>
+    			Do you have purchasing authority for your company?<br /><br />
+    			Or do you have significant influence on the purchasing and procurement process?
+    		</p>
+    	</div>
+    </div>
+</div>
+
+<div class="modal spendInfo">
+	<div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+    	<h1 class="styled">Your Spend in USD (US$)</h1>
+    	<div class="modalContent">
+    		<p>
+    			Your company’s spend in dollars for which you have authority for or significant influence over.
+    		</p>
+    	</div>
+    </div>
+</div>

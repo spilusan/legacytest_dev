@@ -1,0 +1,36 @@
+<?php
+
+$this->headLink()
+    ->appendStylesheet('/css/jquery.calendar.min.css')
+    ->appendStylesheet('https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic')
+    ->appendStylesheet('https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic')
+    ->appendStylesheet('/css/shipmate/supplier-insight-report.css', 'all');
+
+$this->getHelper('Requirejs')
+    ->addModule('backbone/shipmate/supplier-insight-report/views/MainView')
+    ->addDefinition('supplier/profile', json_encode($this->selectedSupplier));
+
+?>
+
+<div class="header-container">
+    <h1>Supplier Insight Report<a href="#" id="jpegdownload" class="btn green">Download as image</a></h1>
+</div>
+
+<div id="waiting" style="display: none;">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>
+
+<div id="body">
+    <!-- TOD Remove hardcoded with, fix properly in CSS -->
+    <div id="content">
+        <div id="renderContainer" class="container">
+            <div id="report_content">
+                <div id="filter"></div>
+                <?php include APPLICATION_PATH.'/views/scripts/alert/outdatedAlert.phtml'; ?>
+                <div id="report"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="clear"></div>

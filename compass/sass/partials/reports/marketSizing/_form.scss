@@ -1,0 +1,99 @@
+div.itemselector input.filter {
+	width: 345px;
+}
+
+div#body {
+	#content {
+		#innerContent {
+			.createReport {
+				top: 15px;
+			}
+
+			.filters {
+				position: relative;
+				background:#f5f7fa;
+				border: 1px solid #d6dce4;
+				padding: 7px 12px;
+				padding-top: 10px;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+				margin-bottom: 20px;
+				width: 830px;
+
+				.left {
+					float: left;
+					margin-right: 15px;
+
+					&.last {
+						margin-right: 5px;
+					}
+
+					&.buttons {
+						margin-right: 0;
+						margin-left: 10px;
+						padding-left: 10px;
+						border-left: 1px dotted #333333;
+						height: 195px;
+					}
+				}
+
+				textarea {
+					width: 155px;
+					height: 80px;
+				}
+
+				#uniform-vesselType {
+					position: relative;
+					top: 7px;
+					width: 220px;
+
+					span {
+						width: 195px;
+					}
+
+					select {
+						width: 230px;
+					}
+				}
+
+				input[type="text"] {
+					&#location {
+						width: 215px;
+						background: transparent;
+						overflow: hidden;
+						text-overflow: ellipsis;
+
+						&:focus {
+							@include box-shadow(#13b5ea 0 0 0);
+						}
+					}
+
+					&#vesselGMV, &#vesselOrdVal {
+						width: 155px;
+					}
+
+					&.date {
+						width: 65px;
+						margin-right: 5px;
+					}
+				}
+
+				input[type="submit"] {
+					position: relative;
+					top: 82px;
+				}
+
+				label {
+					p {
+						font-weight: bold;
+						padding-bottom: 8px;
+					}
+				}
+
+				span {
+					font-size: 12px;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,421 @@
+<?php
+
+$first = true;
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/bulk-reviews.js');
+
+$this->headLink()->appendStylesheet('/css/transition.css');
+$this->CDNLink()->appendStylesheet('/css/endorsements.css')
+			    ->appendStylesheet('/css/profile.css');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Companies',
+						   'url'  => '/profile/companies'),
+					 array('name' => $this->companyDetail['name'],
+						   'url'  => "/profile/company-people/type/{$this->companyDetail['type']}/id/{$this->companyDetail['id']}"));
+
+?>
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		<div class="content_new-wide_body">
+			<?php
+				echo $this->partial('profile/title-menu.phtml',
+					array(
+						'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+						'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], 'company-reviews', $this->pendingUsers, $isAdmin)
+					)
+				);
+			?>
+			<div class="profile-body-right">
+                 <div class="zz header">
+					<h2>Reviews</h2>
+				</div>
+				<div class="profileContent">
+                    <div>
+                        <a href="/profile/company-reviews/type/<?php echo $this->companyDetail['type']; ?>/id/<?php echo $this->companyDetail['id']?>/order/top" class="reviews-order-button <?php echo ($this->order == "top")?"reviews-order-button-on":"";?>">Top Suppliers</a>
+                        <a href="/profile/company-reviews/type/<?php echo $this->companyDetail['type']; ?>/id/<?php echo $this->companyDetail['id']?>/order/recent" class="reviews-order-button <?php echo ($this->order == "recent")?"reviews-order-button-on":"";?>">Most Recent</a>
+                        <a href="/profile/company-reviews/type/<?php echo $this->companyDetail['type']; ?>/id/<?php echo $this->companyDetail['id']?>" class="reviews-order-button <?php echo (isset($this->order))?"":"reviews-order-button-on";?>">All</a>
+                        <div class="clear"></div>
+                    </div>
+
+
+                    <?php
+
+                        foreach ($this->endorsements as $endorsement)
+                        {
+                            ?>
+                            <div id="endorsee-<?php echo $endorsement["PE_ENDORSEE_ID"]; ?>" class="profile-endorsement">
+                                <table class="nbox">
+                                    <tr>
+                                        <td class="nbox-top-left"></td>
+                                        <td class="nbox-top"></td>
+                                        <td class="nbox-top-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="nbox-left"></td>
+                                        <td class="nbox-content">
+                                            <h3>
+                                                <a href="/supplier/profile/s/<?php echo $endorsement["PE_ENDORSEE_ID"]?>" ><?php echo $endorsement['SPB_NAME']?></a>
+                                            </h3>
+                                            <div class="ago-text">
+                                            <?php
+                                            $addressParts = array();
+                                            if ($endorsement["SPB_CITY"] != "City" and !empty($endorsement["SPB_CITY"]))
+                                            {
+                                                $addressParts[] = $endorsement["SPB_CITY"];
+                                            }
+                                            if ($endorsement["SPB_COUNTRY"] != "Country" and !empty($endorsement["SPB_COUNTRY"]))
+                                            {
+                                                $addressParts[] = Shipserv_Review::fetchCountryNameByCode($endorsement["SPB_COUNTRY"]);
+
+                                            }
+                                            echo implode(", ", $addressParts);
+                                            ?>
+                                            </div>
+                                            <div class="trading-frequency">
+                                                <b>Trading frequency: </b>
+                                                <?php
+                                                    if ($endorsement["PE_DAYS_TRADED"] >= 182)
+                                                    {
+                                                        echo "Very frequently";
+                                                    }
+                                                    elseif ($endorsement["PE_WEEKS_TRADED"] >= 26)
+                                                    {
+                                                        echo "Frequently";
+                                                    }
+                                                    elseif ($endorsement["PE_MONTHS_TRADED"] >= 6)
+                                                    {
+                                                        echo "Regularly";
+                                                    }
+                                                    elseif( $endorsement["PE_ORDERS_NUM"] >= 2)
+                                                    {
+                                                        echo "Occasionally";
+                                                    }
+                                                    elseif ($endorsement["PE_ORDERS_NUM"] == 1)
+                                                    {
+                                                        echo "Rarely";
+                                                    }
+                                                    else
+                                                    {
+                                                        echo "No recent activity";
+                                                    }
+                                                ?>
+                                                <b>Last trade:</b> <?php echo $this->string()->ago($endorsement["PE_LAST_ORDER_DATE"]);?>
+                                            </div>
+
+                                            <?php
+
+                                            if (isset($this->reviews[$endorsement["PE_ENDORSEE_ID"]]))
+                                            {
+                                                foreach ($this->reviews[$endorsement["PE_ENDORSEE_ID"]] as $review)
+                                                {
+                                                ?>
+                                            <div class="review-by-buyer" id="review-<?php echo $review->id?>">
+                                            <div class="dotted-line"></div>
+                                                <div>
+                                                    <div style="float:left;width:226px">
+                                                        <div style="float:left; width:31px">
+                                                            <?php
+                                                            switch ($review->overallImpression)
+                                                            {
+                                                                case -1:
+                                                                    ?>
+                                                                    <img src="/images/layout_v2/endorsement/negative_tick.png" alt="Negative"  width="31" height="26" /><br/>
+                                                                    <?php
+                                                                break;
+
+                                                                case 0:
+                                                                    ?>
+                                                                    <img src="/images/layout_v2/endorsement/neutral_tick.png" alt="Neutral"  width="31" height="26" /><br/>
+                                                                    <?php
+                                                                break;
+
+                                                                case 1:
+                                                                    ?>
+                                                                    <img src="/images/layout_v2/endorsement/positive_tick.png" alt="Positive"  width="31" height="26" /><br/>
+                                                                    <?php
+                                                                break;
+
+                                                                case 'null':
+                                                                default:
+
+                                                                break;
+                                                            }
+                                                            ?>
+                                                        </div>
+                                                        <div style="float:left;width:175px;padding:0px 10px">
+                                                            <h4><?php
+                                                                if ($review->getAuthor()->firstName.$review->getAuthor()->lastName!="")
+                                                                {
+                                                                    echo $review->getAuthor()->firstName." ".$review->getAuthor()->lastName;
+                                                                }
+                                                                elseif ($review->getAuthor()->alias!="")
+                                                                {
+                                                                    echo $review->getAuthor()->alias;
+                                                                }
+                                                                else
+                                                                {
+                                                                    echo $review->getAuthor()->email;
+                                                                }
+
+                                                            ?></h4>
+                                                            <div class="ago-text"><?php echo ($review->getAuthor()->getJobFunctionName());?></div>
+                                                        </div>
+                                                        <div class="clear"></div>
+                                                        <?php
+                                                        $reviewCategories = $review->getCategories();
+                                                        $reviewCategoriesNames = array();
+                                                        if (lg_count($reviewCategories)>0)
+                                                        {
+                                                        ?>
+                                                        <div style="padding-top:5px;"><span style="color:#00498e; font-weight: normal;">Purchased:</span>
+                                                        <?php
+                                                            foreach ($reviewCategories as $reviewCategory) $reviewCategoriesNames[] = $reviewCategory["PEC_CATEGORY_TEXT"];
+                                                            echo implode(", ", $reviewCategoriesNames);
+                                                        ?>
+                                                        </div>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                    <div style="float:left;width:82px;">
+                                                        <?php
+                                                        if ($review->ratingItemsAsDescribed > 0)
+                                                        {
+                                                            ?>
+                                                            <div class="rating-label">Delivered items as described</div>
+                                                            <div class="rating-stars">
+                                                            <?php
+                                                            echo $this->partial('endorsement/star-rating.phtml', array('stars' => round($review->ratingItemsAsDescribed, 0)));
+                                                            ?>
+                                                            </div>
+                                                            <?
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                    <div style="float:left;width:82px;">
+                                                        <?php
+                                                        if ($review->ratingDeliveredOnTime > 0)
+                                                        {
+                                                            ?>
+                                                            <div class="rating-label">On-time <br/>delivery</div>
+                                                            <div class="rating-stars">
+                                                            <?php
+                                                            echo $this->partial('endorsement/star-rating.phtml', array('stars' => round($review->ratingDeliveredOnTime, 0)));
+                                                            ?>
+                                                            </div>
+                                                            <?
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                    <div style="float:left;width:66px;">
+                                                        <?php
+                                                        if ($review->ratingCustomerService > 0)
+                                                        {
+                                                            ?>
+                                                            <div class="rating-label">Customer<br/>service</div>
+                                                            <div class="rating-stars">
+                                                            <?php
+                                                            echo $this->partial('endorsement/star-rating.phtml', array('stars' => round($review->ratingCustomerService, 0)));
+                                                            ?>
+                                                            </div>
+                                                            <?php
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <div class="review-text" id="review-text-<?php echo $review->id; ?>">
+                                                    <span class="ago-text"><?php echo $this->string()->ago($review->createdDate);?></span> <?php echo nl2br($review->comment)?>
+                                                </div>
+                                                <?php
+                                                if ($review->reply)
+                                                {
+                                                ?>
+                                                    <div class="reply" style="padding:10px 0;"><b>Response:</b> <?php echo nl2br($review->reply); ?></div>
+                                                <?php
+                                                }
+                                                ?>
+                                                <div class="clear"></div>
+                                                <div class="review-actions">
+                                                    <div class="review-action">
+                                                        <a href="#" title="Delete" class="review-action-delete" id="delete-<?php echo $review->id?>">
+                                                            <img src="/images/icons/remove_icon.png" alt="Delete Review" />
+                                                            <span>Delete</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="review-action">
+                                                        <a href="/reviews/edit-review/r/<?php echo $review->id?>" title="Edit" class="review-action-edit" id="edit-<?php echo $review->id?>">
+                                                            <img src="/images/icons/edit_icon.png" alt="Edit Review" />
+                                                            <span>Edit</span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                            </div>
+                                                <?
+                                                }
+                                            }
+
+                                            if ($first)
+                                            {
+                                                $first = false;
+                                            ?>
+
+                                            <div id="addReviewForm">
+                                                <div class="dotted-line"></div>
+                                                <h3 style="color:#00498E;font-size:13px;">Submit your review</h3>
+                                                <div>
+                                                    <div style="float:left;width:275px">
+                                                        <div id="labelColumn">
+                                                            <div class="rating-label" id="didLabel">Delivered items as described?</div>
+                                                            <div class="rating-label" id="otdLabel">On time delivery?</div>
+                                                            <div class="rating-label" id="csLabel">Customer service?</div>
+                                                            <input type="hidden" name="did" value="0"/>
+                                                            <input type="hidden" name="otd" value="0"/>
+                                                            <input type="hidden" name="cs" value="0"/>
+                                                        </div>
+                                                        <div id="ratingColumn">
+                                                            <div class="rating-stars" id="did">
+                                                                <img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="did_1"/><img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="did_2"/><img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="did_3"/><img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="did_4"/><img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="did_5"/>
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                            <div class="rating-stars" id="otd">
+                                                                <img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="otd_1"/><img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="otd_2"/><img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="otd_3"/><img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="otd_4"/><img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="otd_5"/>
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                            <div class="rating-stars" id="cs">
+                                                                <img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="cs_1"/><img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="cs_2"/><img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="cs_3"/><img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="cs_4"/><img src="/images/layout_v2/star-p.gif" width="13" height="13" border="0" class="star" id="cs_5"/>
+                                                                <div class="clear"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="overallImpression">
+                                                        <input type="hidden" name="overallImpression" value=""/>
+                                                        <input type="hidden" name="endorseeId" value=""/>
+                                                        <input type="hidden" name="endorserId" value="<?php echo $endorsement["PE_ENDORSER_ID"]?>"/>
+                                                        <div style="height:20px;clear:both;">
+                                                        Overall opinion:
+                                                        </div>
+                                                        <img src="/images/layout_v2/endorsement/bulkreviews/positive_normal.gif" id="positive" class="radiobutton"/>
+                                                        <img src="/images/layout_v2/endorsement/bulkreviews/neutral_normal.gif" id="neutral" class="radiobutton"/>
+                                                        <img src="/images/layout_v2/endorsement/bulkreviews/negative_normal.gif" id="negative" class="radiobutton"/>
+                                                        <div class="clear"></div>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <div>
+                                                    <div style="float:left;padding-top: 19px">
+                                                        <h4>Category supplied:</h4>
+                                                    </div>
+                                                    <div style="float:right; width:340px;">
+                                                        <table class="wbox">
+                                                        <tr>
+                                                            <td class="wbox-top-left"></td>
+                                                            <td class="wbox-top"></td>
+                                                            <td class="wbox-top-right"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="wbox-left"></td>
+                                                            <td class="wbox-content">
+                                                                <input type="hidden" name="category1Id" value=""/>
+                                                                <input name="category1" type="text" style="border:0 none;font-size:15px;width:320px;">
+                                                            </td>
+                                                            <td class="wbox-right"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="wbox-bottom-left"></td>
+                                                            <td class="wbox-bottom"></td>
+                                                            <td class="wbox-bottom-right"></td>
+                                                        </tr>
+                                                        </table>
+                                                    </div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                                <h4>Detailed feedback:</h4>
+                                                <table class="wbox">
+                                                <tr>
+                                                    <td class="wbox-top-left"></td>
+                                                    <td class="wbox-top"></td>
+                                                    <td class="wbox-top-right"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="wbox-left"></td>
+                                                    <td class="wbox-content">
+                                                        <textarea name="reviewComment" style="width:440px;height:100px"></textarea>
+                                                    </td>
+                                                    <td class="wbox-right"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="wbox-bottom-left"></td>
+                                                    <td class="wbox-bottom"></td>
+                                                    <td class="wbox-bottom-right"></td>
+                                                </tr>
+                                                </table>
+
+                                                <div class="dotted-line"></div>
+                                                <div>
+                                                    <div class="review-action" style="float:left">
+                                                        <a href="javascript:resetAddReviewForm()">Clear all</a>
+
+                                                    </div>
+                                                    <div class="review-action" style="float:left">
+                                                        <a href="javascript:hideAddReviewForm()">Close</a>
+                                                    </div>
+
+                                                    <div id="submitReview"></div>
+                                                    <div class="clear"></div>
+                                                </div>
+                                            </div>
+                                            <?
+                                            }
+                                            ?>
+                                            <div id="add-form-<?php echo $endorsement["PE_ENDORSEE_ID"];?>"></div>
+
+                                            <div class="review-actions" id="supplier-actions-<?php echo $endorsement["PE_ENDORSEE_ID"]?>">
+                                                <div class="dotted-line"></div>
+                                                <div class="review-action" style="float:left;padding:0px 8px 0px 0px;">
+                                                    <a href="javascript:void(0);" title="Submit your review" class="review-action-add" id="add-<?php echo $endorsement["PE_ENDORSEE_ID"];?>">
+                                                        <img src="/images/layout_v2/endorsement/icon_submit_review.gif" alt="Submit your review" />
+                                                        <span>Review this supplier</span>
+                                                    </a>
+                                                </div>
+                                                <div class="clear"></div>
+                                            </div>
+                                        </td>
+                                        <td class="nbox-right"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="nbox-bottom-left"></td>
+                                        <td class="nbox-bottom"></td>
+                                        <td class="nbox-bottom-right"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <?php
+                        }
+                        ?>
+                    <div>
+                    <?php
+                        echo $this->partial('profile/pagination.phtml', array(
+                            'currentPage' => $this->currentPage,
+                            'recordCount' => (lg_count($this->endorsements)>0)?$this->endorsements[0]["TOTALCOUNT"]:0,
+                            'pageSize'	=> 20,
+                            'url'	=> "/profile/company-reviews/type/". $this->companyDetail['type'] ."/id/". $this->companyDetail['id'].((isset($this->order))?"/order/".$this->order:"")
+                        ));
+                    ?>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

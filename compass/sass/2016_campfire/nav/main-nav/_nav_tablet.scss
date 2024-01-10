@@ -1,0 +1,190 @@
+/*
+Document   : partials/guidelines/_nav_tablet.scss
+Created on : May 12, 2016, 14:24:15 AM
+Author     : .:Gly:.
+Description: tablet styles for navigation
+*/
+/* Tablets */
+
+
+@media only screen and (max-width : 1390px) and (min-width : 1280px) {
+	header {
+		.navigations { 
+			nav#corporateNav {
+				ul {
+					li {
+						&:last-child {
+							a {
+								overflow: hidden;
+								text-overflow: ellipsis;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+    #pagesNav {
+        .menu-0 {
+            >.menu-item {
+                >.menu-label {
+                    margin: 0 10px !important;
+                }
+            }
+        }
+    }
+  
+}
+
+@media only screen and (max-width : 1279px) and (min-width : 1045px) {
+	header {
+		.navigations {
+			&.loggedIn {
+				nav#corporateNav {
+					.top {
+						top: 0px;
+					}
+
+					top: 59px;
+					float: right;
+					display: block;
+					background: #012b54;
+					z-index: 900; /*carefull changing this: there's a direct dependency in navigation.js (thanks Gily)*/
+					position: fixed;
+					top: 59px;
+					right: -375px;
+					height: calc(100% - 60px);
+					overflow-y: auto;
+
+					ul {
+						li {
+							display: block;
+							float: none;
+							border-right: none;
+							max-width: 100%;
+							padding: 0;
+
+							a {
+								display: block;
+								padding: 20px;
+								margin: 0 10px;
+								border-bottom: 1px solid $highlight-grey;
+								font-size: 14px;
+							}
+
+							&.selected {
+							    background: transparent;
+							    position: relative;
+							    top: -1px;
+							    border-top: 0;
+							    padding-top: 0;
+							    border-bottom: 0;
+							}
+
+							&:first-child {
+								a {
+									padding-top: 27px;
+								}
+							}
+							
+							&:last-child {
+								a {
+									color: $cyan-blue;
+									border-bottom: 0;
+								}
+							}
+						}
+					}
+				}
+
+				.company {
+					right: 42px;
+				    top: 16px;
+				    padding: 0px 10px;
+				    overflow: hidden;
+				    text-overflow: ellipsis;
+				}
+			}
+		}
+
+		i {
+			&.fa-bars {
+				&.loggedIn {
+					display: block;
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (max-width : 1279px) and (min-width : 1045px) {
+	header {
+		.navigations {
+			&.loggedIn {
+				#corporateNav {
+					width: 375px;
+
+					ul {
+						li {
+							&.selected {
+						    	i {
+									&.fa-angle-right {
+										display: block;
+										position: absolute;
+										font: normal normal normal 22px/1 FontAwesome;
+										color: $white;
+										font-weight: 400;
+										top: 50%;
+										margin-top: -13px;
+										left: 12px;
+									}
+								}
+						    }
+
+						    &:first-child {
+						    	&.selected {
+						    		i {
+										&.fa-angle-right {
+											display: block;
+											position: absolute;
+											font: normal normal normal 22px/1 FontAwesome;
+											color: $white;
+											font-weight: 400;
+											top: 50%;
+											margin-top: -9px;
+											left: 12px;
+										}
+									}
+						    	}
+						    }
+						}
+					}
+
+					&.open {
+						animation-name: slideInTab;
+    					animation-duration: 0.5s;
+    					right: 0px;
+					}
+
+					&.closed {
+						animation-name: slideOutTab;
+    					animation-duration: 0.5s;
+    					right: -375px;
+					}
+				}
+			}
+		}
+	}
+}
+
+@keyframes slideInTab {
+    from {right: -375px;}
+    to {right: 0px;}
+}
+
+@keyframes slideOutTab {
+    from {right: 0px;}
+    to {right: -375px;}
+}
+

@@ -1,0 +1,198 @@
+@import "compass/css3";
+@import "compass/utilities/general/min";
+@import "partials/def/autocomplete";
+@import "partials/def/autocomplete-new";
+
+@import "partials/def/datepicker";
+@import "partials/default/context_help";
+@import "partials/def/left_nav";
+@import "partials/def/gmv-autocomplete";
+
+#body{
+    width: 1335px !important;
+
+    #content {
+        width: 1100px;
+        left: 0 !important;
+        .button {
+            white-space: nowrap;
+        }
+    }
+}
+
+#body #sidebar ul#nav li.selected {
+    padding: 8px 15px;
+
+    &.secondary {
+        padding: 0;
+    }
+}
+
+form.new {
+    padding: 20px;
+    .dateInput{
+        float: left;
+
+        &.to {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        input.generate {
+            display: block;
+            position: relative;
+            top: 3px;
+            padding-bottom: 5px;
+            padding-top: 4px;
+        }
+    }
+}
+
+.actions {
+    width: 1102px;
+    background: #ffffff;
+    padding: 10px 0 2px;
+    display: none;
+
+    &.stuck {
+        position: fixed;
+        top: 60px;
+        left: 24px;
+        margin-left: 226px;
+        z-index: 9999;
+    }
+}
+
+table.gmv.report {
+    font-size: 12px;
+    width: 100%;
+    color: #000;
+    border-collapse: collapse;
+
+    tr {
+        td {
+            word-break:break-all;
+            &.icons {
+                width: 40px;
+            }
+        }
+    }
+    
+    .accordion-head {
+        border: 0;
+        cursor: pointer;
+        
+        tr.title {
+            line-height: 16px;
+            font-size: 12px;
+            
+            td {
+                border: 1px solid #e9edf1;
+                padding-left: 22px;
+                background: transparent url('/img/icons/small/blue_arrows_sprite.png') 4px -9px no-repeat;
+            }
+        }
+        
+        &.ui-state-active {
+        	
+            tr.title {
+            	background-color:#59c5eb;
+                td {
+                    background: transparent url('/img/icons/small/blue_arrows_sprite.png') 4px 7px no-repeat;
+                }
+            }
+            
+        }
+        
+        tr.spacer {
+            line-height: 4px;
+            font-size: 1px;
+            height: 5px;
+            background-color: #FFF;
+            
+            td {
+                border: 0;
+            }
+        }
+    }
+    
+    .accordion-body {
+        
+        td {
+            color: #888;
+            
+            border-bottom: 1px solid #e9edf1;
+            text-align: left;
+            padding: 1px 2px;
+        	line-height:16px;
+        	word-break:normal;
+            &.right {
+                text-align: right;
+            }
+        }
+        
+        tr.thead{
+            
+            td {
+            	color: #000;
+                line-height: 20px;
+                vertical-align: middle;
+                word-break:normal; 
+            }
+        }
+        
+        tr {
+            line-height: 14px;
+            vertical-align: middle;
+            
+            &.footer-txn {
+            	background-color:#d6dce4;
+            	td {
+            		color:#000;
+            	}
+            }
+        }
+        
+    }
+}
+
+a.view.csv, a.expandAll, a.collapseAll, a.collapseSel, a.expandSel {
+    font-size: 11px;
+}
+
+textarea.csv {
+    font-size: 11px;
+    width: 800px;
+    height: 420px;
+    border: 1px solid #ccc;
+}
+
+p.info, p.error {
+    margin-left: 20px;
+    margin-bottom: 40px;
+}
+
+p.error {
+    color: red ;
+}
+
+.parent {
+    margin-left: 30px;
+    width: 1060px!important;
+}
+
+.child {
+    margin-left: 60px;
+    width: 1030px!important;
+    margin-top: 5px;
+}
+
+.noItems {
+    font-size: 14px;
+    font-weight: bold;
+    text-align: center;
+    color: red;
+    margin-bottom: 15px;
+    display: none;
+}
+

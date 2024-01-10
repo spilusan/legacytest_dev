@@ -1,0 +1,120 @@
+<?php  
+
+$start = _htmlspecialchars($_GET['searchStart']);
+// Collects the last ID of the Element on the page which I have set as row Iterations
+
+//print_r($this);
+if ($start <= $this->result['documentsFound']) { 
+	// Checks to see if the loop is finished by checking the modulus of the returned Id is 0 (i.e. Divisable by 10)
+	$i=$start;
+	foreach ($this->result['documents'] as $document)
+	{
+		?>
+		
+		<?$number = ++$i;?> 
+	
+	<div id="<?echo $number;?>" class="searchResult <?php if ($document['premiumListing']) echo 'premium'; ?>" <?php if ($document['spotlight']) echo 'style="background:url("/images/layout_v2/spotlight_header.gif") no-repeat;"'; ?>>
+		<?php if ($document['premiumListing']){?><?php if ($document['logoUrl']) echo ' <img src="'.$document['logoUrl'].'"  />';?><?}?> 
+		<h3><a href="<?php echo $this->supplierProfileUrl($document, 'SEARCH'); ?>">
+		<?php 
+			 //Dirty Name Clipper - Do something better later set at 40 
+			 $name=$document['name'];
+			 $limit = 30;
+
+			 if (strlen($name) > $limit) 
+				 {
+				 $name = substr($name, 0, strrpos(substr($name, 0, $limit), ' ')) . '...';
+				 echo $name;
+				 }else{
+				 echo $name;
+				 }
+		 ?></a>, <?php echo $document['city']; ?>, <?php echo $document['countryName'];?> 
+		</h3>
+		
+		<?php if ($document['premiumListing'] || $document['spotlight']){?> 
+		
+		<?php 
+			 //Dirty Description Clipper - Do something better later set at 150
+			 if($document['transactionMatch']){$summary3='<b>Recently Supplied:</b>'.strtolower($document['transactionMatch']);};
+			 if($document['descriptionMatch']){$summary2='<b>Description:</b>'.strtolower($document['descriptionMatch']);};
+			 if($document['categoryMatch']){$summary1='<b>Category:</b>'.strtolower($document['categoryMatch']);};  
+			 
+			 $summary = $summary1.' '.$summary2.' '.$summary3;
+			
+			 $limit = 180;
+
+			 if (strlen($summary) > $limit) 
+			 {
+				  $summary = substr($summary, 0, strrpos(substr($summary, 0, $limit), ' ')) . '...';
+				  echo '<p class="desc">'.$summary.'</p>';
+			 }else{
+				  echo '<p class="desc">'.$summary.'</p>';
+			 }?>
+		
+		
+			
+			<div class="trade-rank">
+				<i class="fa fa-users" aria-hidden="true"></i>
+				TradeRank
+				div class="rank rank-<?=$document['tradeRank'] ?>"></div>
+			</div>
+			</div>
+			
+			<p class="links"> 
+			<?php if ($document['smartSupplier']) echo '&#183; <a href="">Smart Supplier</a> '; ?> <?php if ($document['expertSupplier']) echo '&#183; <a href="">Smart Supplier</a> '; ?> <?php if ($document['onlineCatalogue']) echo '&#183; <a href="">Online Catalogue</a>'; ?>
+			</p>
+		
+		<?}else{?>
+			
+			<?php 
+				 //Dirty Description Clipper - Do something better later set at 150
+				 if($document['transactionMatch']){$summary1='<b>Recently Supplied:</b>'.strtolower($document['transactionMatch']);};
+				 if($document['descriptionMatch']){$summary2='<b>Description:</b>'.strtolower($document['descriptionMatch']);};
+				 if($document['categoryMatch']){$summary3='<b>Category:</b>'.strtolower($document['categoryMatch']);};  
+
+				 $summary = $summary1.' '.$summary2.' '.$summary3;
+
+				 $limit = 80;
+
+				 if (strlen($summary) > $limit) 
+				 {
+					  $summary = substr($summary, 0, strrpos(substr($summary, 0, $limit), ' ')) . '...';
+					  echo '<p class="desc">'.$summary.'</p>';
+				 }else{
+					  echo '<p class="desc">'.$summary.'</p>';
+				 }?>
+		
+		<?}?> 
+		
+		<a href="#" class="fakecheck <?php echo (array_key_exists($document['tnid'], $this->supplierBasket)) ? 'fakechecked' : ''; ?>" id="<?php echo $document['tnid'];?>">Select</a>
+		<input type="checkbox" name="<?php echo $document['tnid'];?>" id="<?php echo $document['tnid'];?>" style="display:none;" />
+		<?php if ($document['premiumListing'] || $document['spotlight']){?><a class="expand" id="<?echo $document['tnid'];?>" href="#">More</a><?}?>
+		
+	<?php if ($document['spotlight']){?><div class="footer" id="<?php echo $document['tnid']; ?>_footer" rel="<?php echo $document['tnid']; ?>"></div><?}?>	
+	<div class="clear"></div>	
+	</div>
+	
+	<div id="<?echo $document['tnid'];?>_detail" class="searchResultdetail" style="display:none;">
+		
+		<div class="top">	
+		</div>
+		
+		<div class="bottom">   
+		</div>
+		
+	</div>
+			
+<?php
+
+}
+}
+elseif ($start != null)
+{ 	
+	// Stops loop firing again is the scroller goes up and down like a HHHHHammer on low result return pages
+
+	 echo '<div class="searchResult"><h1 style="text-align:center;">End</div>'; 
+	 //Show the Total Searches and End of Results   
+	
+}
+
+?>

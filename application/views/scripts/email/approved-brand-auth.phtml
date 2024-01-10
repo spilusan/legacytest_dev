@@ -1,0 +1,25 @@
+<?
+	$companyInfo = $this->auths[0]->getCompanyInfo();
+	$brandInfo = $this->auths[0]->getBrandInfo ();
+	$names = array ();
+	foreach ($this->auths as $brandAuth)
+	{
+		$names[] = $brandAuth->getAuthLevelDisplayName();
+	}
+?>
+
+Dear Supplier<br />
+ <br />
+We are pleased to inform you that <?php echo $brandInfo["NAME"]?> validated your listing request as <?php echo implode(", ", $names); ?><br />
+ <br />
+Brand  verification has a major impact on your ranking in search results on ShipServ Pages. Basically, when someone searches for <?php echo $brandInfo["NAME"]?> or its products on Pages, your company will be listed before all suppliers that are not authorised, therefore driving more RFQs to you.<br />
+ <br />
+<!-- 
+For more information on brand verification on ShipServ, please click here (link FAQ brand verification)<br />
+ <br />
+ -->
+If you ever need any assistance, please contact us at support@shipserv.com<br />
+ <br />
+ <br />
+Best regards,<br />
+ShipServ Team<br />

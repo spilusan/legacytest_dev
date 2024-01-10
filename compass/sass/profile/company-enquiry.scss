@@ -1,0 +1,288 @@
+/*
+Document   : company-enquiry
+Created on : Jun 14, 2012, 11:15:34 AM
+Author     : gly
+Description: Profile Company enquiry styles
+*/
+
+@import "compass/css3";
+
+.enquiries {
+    font-size:14px;
+	line-height:18px;
+    
+    a {
+        cursor:pointer;
+    }
+    
+    .ignored { 
+        background-color:#ff7f04; 
+        color:#fff; 
+    }
+    
+    .declined { 
+        background-color:#525c64; 
+        color: #fff; 
+    }
+    
+    .replied { 
+        background-color:#008b00; 
+        color: #fff; 
+    }
+    
+    .read { 
+        background-color:#13b5ea; 
+        color: #fff; 
+    }
+    
+    .ignored-text { 
+        color:#ff7f04; 
+        font-weight:bold;  
+    }
+    
+    .declined-text { 
+        color:#525c64; 
+        font-weight:bold; 
+    }
+    
+    .read-text { 
+        color:#13b5ea; 
+        font-weight:bold; 
+    }
+    
+    .replied-text { 
+        color:#008b00; 
+        font-weight:bold; 
+    }
+    
+    .pagination {
+        margin:20px;
+        text-align:center;
+    }
+}
+
+.enquiry {
+	background-color: #e9edf1;
+	border:1px solid #bec4cb;
+	font-size:12px;
+	line-height:16px;
+    margin-bottom:20px;
+    @include border-radius(5px);
+    behavior: url(/css/PIE.htc);
+    
+    .header-block {
+        background-color:#e9edf1;
+        padding:10px;
+        display:block;
+        clear:both;
+        
+        .caption, .b {
+            font-weight:bold;
+        }
+        
+        .clearfix {
+            clear: both;
+        }
+    }
+    
+    .body {
+        min-height:100px;
+        background-color:#fff;
+        padding:10px;
+    }
+    
+    .subject {
+        font-weight:bold;
+    }
+    
+    .enquiry-status {
+        float:right;
+        clear:right;
+        width:100px;
+        line-height:18px;
+        text-align:center;
+    }
+}
+
+.caption {
+	float:left;
+	width:120px;
+	font-weight:bold;
+}
+
+.info {
+	float:left;
+	width:330px;
+	clear:right;
+	display:block;
+}
+
+.enquiryText {
+	max-height:80px;
+	overflow:hidden;
+}
+
+.enquiry-statistic {
+	border:1px solid #bec4cb;
+	background-color: #E9EDF1;
+	padding:10px;
+    margin-top:20px;
+	margin-bottom:10px;
+    
+    table {
+        margin-top:20px;
+        background-color: white;
+        
+        td {
+            border-width: 1px;
+            padding: 5px;
+            margin-right:-1px;
+            margin-top:-1px;
+            border-style:solid;
+            border-color: #939ba1;
+            border-spacing: 0px;
+        }
+    }
+    
+    .enquiry-status{
+		float:left;
+		margin-right:5px;
+		width:100px;
+		line-height:18px;
+		text-align:center;
+	}
+}
+
+.enquiry-subject {
+	float:left; 
+	width:210px;
+}
+	
+.profile-pagination {
+	float:right;
+    
+    .big-page-button {
+        width: 68px;
+        height:17px;
+        float:left;
+        text-align: center;
+        font:11px Arial;
+        padding-top:3px;
+        cursor:pointer;
+        margin:0px 3px 0px 0px;
+        color:black;
+        background:url("/images/layout_v2/endorsement/bulkreviews/pagination_previous_next.gif") no-repeat 0 0 transparent;
+    }
+    
+    .small-page-button {
+        width: 20px;
+        height:17px;
+        float:left;
+        text-align: center;
+        font:11px Arial;
+        padding-top:3px;
+        cursor:pointer;
+        margin:0px 3px 0px 0px;
+        color:black;
+        background:url("/images/layout_v2/endorsement/bulkreviews/pagination_normal.gif") no-repeat 0 0 transparent;
+    }
+    
+    .small-page-button-selected {
+        background:url("/images/layout_v2/endorsement/bulkreviews/pagination_selected.gif") no-repeat 0 0 transparent;
+        color:white;
+    }
+    
+    a.small-page-button, a.big-page-button {
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}
+
+.intro {
+	background-color: #caedf9;
+	padding:10px;
+    
+    b {
+        color: #087ec5;	
+    }
+}
+
+div.control {
+	font-weight:bold;
+	width:360px;
+	color:#fff;
+	margin: 10px 0;
+	height: 20px;
+}
+
+.ie {
+    div.control {
+        width:450px;
+        position:relative;
+        margin-top:-125px;
+        margin-left:30px;
+    }
+    
+    div.intro {
+        margin-top:100px;
+    }
+}
+
+.ie8, .ie9 {
+    div.control {
+        width:450px;
+        position:absolute;
+        margin-top:-120px;
+        margin-left:30px;
+    }
+    
+    div.intro {
+        margin-top:0px;
+    }
+    
+}
+
+.important {
+    background-color: #fec008;
+	color:#2e3235;
+	font-size:12px;
+	line-height:16px;
+    
+    a {
+        font-weight:bold;
+        color:#016fd7;
+    }
+}
+	
+.suggestion {
+	padding:10px;
+	background-color: #E9EDF1;
+	border:1px solid #bec4cb;
+	font-size:11px;
+	line-height:13px;
+	margin-bottom:20px;	
+}
+
+.warning {
+	background-color: #8d0307;
+	color:#fff;
+	font-size:12px;
+	line-height:16px;
+	padding:10px;
+	border:1px solid #bec4cb;
+	line-height:15px;
+	margin-bottom:10px;
+}
+
+.impact {
+	margin-top:10px;
+	list-style-type: square;
+	list-style-position: outside;
+	margin-left: 20px;	
+    
+    li {
+        padding-left:10px;
+        margin-bottom:5px;
+    }
+}

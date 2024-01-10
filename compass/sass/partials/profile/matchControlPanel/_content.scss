@@ -1,0 +1,238 @@
+div#waiting {
+	display: block;
+}
+
+#modal {
+	.modalBody {
+		ul {
+			&.filtered {
+				li {
+					&.filteredOut {
+						display: none;
+					}
+				}
+			}
+		}
+	}
+}
+
+#main_content_area {
+	.content_new-wide_body {
+		.profile-body-right {
+			.savedMsg {
+				margin-top: 10px;
+			}
+
+			form {
+				label {
+					&.link {
+						color: #005aad;
+						font-size: 14px;
+						cursor: pointer;
+						display: inline;
+						top: 0;
+					}
+				}
+				.box {
+					@include border-radius(6px);
+					behavior: url(/css/PIE.htc);
+					padding: 10px 15px;
+					margin-top: 5px;
+					margin-bottom: 15px;
+
+					&.blue {
+						border: 1px solid #90dcf7;
+						background: #caedf9;
+					}
+
+					&.grey {
+						border: 1px solid #d6dce4;
+						background:#e9edf1;
+					}
+
+					&.white {
+						border: 1px solid #d6dce4;
+						height: 48px;
+						/*height temporary till hide contact hidden*/
+					}
+
+					label {
+						&[for="automate"], &[for="scope"], &[for="useMatchBlacklist"] {
+							font-size: 14px;
+						}
+
+						&[for="onlyCheap"], &[for="useMaxSuppliers"], &[for="hideContact"] {
+							font-size: 12px;
+							position: relative;
+							top: 5px;
+						}
+
+						&[for="useMaxSuppliers"] {
+							float: left;
+							margin-right: 10px;
+						}
+						
+						&[for="scope"] {
+							height: 25px;
+						}								
+					}
+
+					input[name="numSuppliers"] {
+						width: 20px;
+					}
+
+					input[name="supplierWhitelist"], input[name="supplierBlacklist"]  {
+					  background:#e9edf1;	
+					}
+					
+					div.checker {
+						&#uniform-onlyCheap {
+							position: relative;
+							top: 2px;
+						}
+					}
+
+					img {
+						&.corner {
+							float: left;
+							margin-left: 9px;
+						}
+					}
+
+					.specSuppliers {
+						margin-bottom: 10px;
+					}
+					
+					input[type="radio"] {
+						position: relative;
+						cursor: pointer;
+						margin-left: -29px;
+						height: 16px;
+						width: 16px;
+						padding   : 0;
+						opacity   : 0;
+					}
+
+						
+					ul {
+						&.matchSupplierDisplay, &.forwardSupplierDisplay {
+							@include border-radius(6px);
+							display: table;
+							margin: 6px 0px 6px 30px;
+							font-size: 11px;
+							border: 1px solid #d6dce4;
+							padding: 6px;
+							}
+							li {
+								float: left;
+							}
+						}
+					.umatch {
+
+						background-color: #e9edf1;
+						clear: both;
+						/* padding: 15px; */
+						position: relative;
+						margin: 10px 0 10px 0;
+						&.level {
+							.top {
+								background: transparent url(/images/profile/match_switch/bg.png) repeat-y 10px 0;
+								.switch {
+								
+									background: transparent url(/img/profile/match/sliderbgdotted.png) no-repeat -2px 0;;
+									}
+							}
+							.middle {
+								background: transparent url(/images/profile/match_switch/bg.png) repeat-y 10px 0;
+								.switch {
+									background: transparent url(/img/profile/match/sliderbgdotted.png) no-repeat center center;
+								}
+							}
+							.bottom {
+								.switch {
+									background: transparent url(/img/profile/match/sliderbgdotted.png) no-repeat center bottom;
+									}
+								}
+								
+							.slider {
+									background: url(/images/profile/match_switch/slider.png);
+									width: 20px;
+									height: 20px;
+									display: none;
+									position: absolute;
+									left: 5px;
+									top: -2px;
+							}
+
+							.row {
+								float: left;
+								width: 100%;
+								padding-bottom: 10px;
+								
+								&.middle {
+									display: none;
+								}
+
+								.label {
+									margin-left: 5px;
+									float: left;
+									font-size: 14px;
+								}
+							.switch {
+										&.position {
+										
+										width: 30px;
+										height: 14px;
+										float: left;
+										}
+								}
+							}
+						}
+					}			
+				}
+			}					
+		}
+	}
+}
+
+#modal {
+	.modalBody {
+		input {
+			&.filter {
+				width: 345px;
+			}
+		}
+
+		div {
+			&.itemselector {
+				&.inner {
+					> .divider {
+						height: 320px;
+					}
+
+					> .right, > .left {
+						> ul {
+							height: 300px;
+							display: block !important;
+						}
+					}
+
+					.buttonContainer {
+						margin-top: 0;
+					}
+				}
+			}
+		}
+	}
+}
+
+.autocomplete-suggestions {
+	display: block !important;
+}
+
+.spinnerFwd {
+	position: absolute;
+	left: 196px;
+	top: 100px;
+	z-index: 99999;
+}

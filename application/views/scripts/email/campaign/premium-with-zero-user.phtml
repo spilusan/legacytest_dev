@@ -1,0 +1,147 @@
+<?php 
+	$supplierName = trim($this->supplierName);
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Pages RFQs</title>
+		<style type="text/css">
+		
+			#outlook a { padding:0; } /* Force Outlook to provide a "view in browser" button. */
+			body { width:100% !important; } /* Force Hotmail to display emails at full width */
+			body { -webkit-text-size-adjust:none; } /* Prevent Webkit platforms from changing default text sizes. */		
+		
+			/* Reset Styles */
+			body { margin:0; padding:0; }
+			#container { margin:0; padding:0; width:700px !important; }
+			/*-*/
+		
+			body, #container { color: #2e3235; font-size: 12px; font-family: Arial, sans-serif; font-weight: normal; }
+			p, h1, h2, div, td { font-family: Arial, sans-serif; font-weight: normal; padding: 0; margin: 0; }
+			table { margin: 0; border: 0; padding: 0; }
+			td{ padding:10px; }
+			a { text-decoration: none; }
+		
+			h1.dear { font-size: 17px; font-weight: bold; color: #13b5ea; }
+			h2 { font-size: 16px; font-weight: bold; color: #2e3235; }
+			p.intro { font-size: 15px; margin-bottom: 20px; line-height: 1.1em; line-height:1.5; }
+			ul.points, ul.points li { /*list-style-position: inside;*/ margin: 0; text-align: left; }
+			ul.points { margin-left:20px; margin-top: 20px; margin-bottom: 20px; }
+			ul.points li { margin-bottom: 5px; padding: 0px; font-weight:bold; font-size:15px; }
+			p.footer {  }
+			p.footer ul.small-points li { font-size:12px; color: #939ba1; }
+			div.dotted { border-bottom: 1px dotted #333333; height: 1px; width: 358px; margin: 20px auto; }
+		</style>
+
+		<!--[if gte mso 9]>
+		<style type="text/css">
+			ul.points { margin-left: 5px; }
+			ul.points li { padding: 0; margin-left: 14px; }
+		</style>
+		<![endif]-->
+
+	</head>
+
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+		<table id="container" border="0" cellpadding="0" cellspacing="0" width="700">
+			
+			<tr valign="middle">
+				<td>
+					<h1 class="dear">Dear Customer,</h1>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<?php if( $this->emailType == 'enquiry' ){?>
+						<!-- COPY FOR SEGMENT 2 -  PAGES ENQUIRIES EMAILS, BUT NO USERS OR ADMINS -->							
+						<p class="intro">
+							
+							<b>You haven't seen the new online report showing that <?= $supplierName ?> 
+							has received <?= $this->statistic['sent'] ?> Pages RFQs in the last 12 months, or that
+							your Profile Complete Score is <?= $this->statistic['pcs']?>%.</b><br />
+							
+							<br />
+							You haven't seen it because no one in your company is registered as a Pages user.  <span style="color: #e81e24;">As a result, you're not making the most of the subscription you paid to have a Premium profile.</span><br />
+							 <br />
+							But you can add yourself as a Pages User in seconds.  By clicking this link:<br />
+							* You immediately become a Pages User<br />
+							* You will click through to see your Supplier Insight Report showing your company's performance<br />
+							* From here you can see your Profile Complete Score, and edit your profile to improve it. <span style="color: #e81e24;">A higher Profile Complete Score means more Pages RFQs.</span><br /> 
+						</p>
+						<center>
+							<table border="0" cellpadding="0" cellspacing="0" width="700">
+								<tr style="height: 35px; vertical-align: middle;" valign="middle">
+									<td valign="middle" style="background-color: #008b00; font-size: 16px; font-weight: bold; color: #fff; vertical-align: middle; text-align:center;"><a href="<?=$this->url;?>" style="color:#fff; text-decoration: none; vertical-align: middle; text-align:center;">CLICK HERE TO VIEW PERFORMANCE AND MY PROFILE COMPLETE SCORE NOW</a></td>
+								</tr>
+							</table>
+						</center>
+					<?php }?>
+					
+					
+					
+					<p class="intro">
+						<br />
+						If you'd like to contact your account manager<?= ( ($this->supplier->getAccountManager('email')!="") ? ", email them now at: " . $this->supplier->getAccountManager('email') . " or ":"" )?> reply to this email.<br />
+						<br />
+						If you'd like to give me some feedback about your Pages RFQs (or anything), please just reply to this email.<br />
+						<br />
+						Kind regards,<br/>
+						<br/>
+						<?php
+						echo "Freddy Ingemann<br />";
+						echo "Senior VP, Supplier Account Management<br />";
+						?>
+						ShipServ<br />
+						<br />
+						<br />
+						P.S This link is only for you, please do not forward it. <b>If you'd also like someone else to be 
+						signed up as a Pages User</b> then please just reply to this email giving us details of who and their email address.<br />
+						<br />
+						<br />
+						<br />
+					</p>
+					
+					<p class="footer">
+						
+							<b>Why is ShipServ sending me this email?</b><br />
+							Our records show that a ShipServ sales or account manager had contact with you when you/your company agreed to be a Premium lister.  As we have not got any other contact we're writing to you to see if you, or someone else, would like to be a Pages User.  
+							You will be able to see all the tools to maximise your Pages subscription.<br />
+							<br />
+							
+							<b>The links in this email</b><br />
+							If you can't see the button above, or for some reason it does not work, then you can copy the following link into your browser address field:<br />
+							<span style="display:block; width:700px; overflow:hidden; word-wrap:break-word;"><?= $this->url?></span>
+							<br />
+							<br />These links take you to the new Supplier Insight Report for <b><?= $supplierName ?></b> on ShipServ Pages.  As you need to be a Pages User to access it, when you click the link/button above we will automatically create you as a ShipServ Pages user (with administrator status).  We will then send you two emails: one to confirm your username and password (so you can access the new report when you wish) and a second confirming that your user account has been linked to your company.<br /> 
+ 							<br />
+							This link is only for you, please do not forward it. <b>If you'd also like someone else to be 
+							signed up as a Pages User</b> then please just reply to this email giving us details of who and their email address.<br />
+							<br />
+							<b>4 New tools for Suppliers</b><br />
+							<a href="<?= $this->url?>">Click here to see all the tools</a>. Clicking the link (in the main email, above) will sign you up for Pages so you can use the tools whenever you wish.<br />
+							<br />
+							
+							<b>Feedback, questions and help</b><br />
+							Please see our <a href="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/help/sellerfaq">supplier FAQs</a> or reply to this email.<br />
+							
+							<br />
+						
+						<? 
+							if( $_SERVER['APPLICATION_ENV'] != "production" )
+							{
+								$emailType[] = $this->email;
+								$emailType[] = $this->emailType . " email";
+								$emailType[] = ($this->supplier->isPremium())?"Premium Lister":"Basic Lister";
+								$emailType[] = "Open-rate " . $this->statistic['openRate'] . "%";
+								$emailType[] = ($this->user!==false) ? "Pages User/Admin":"NOT a Pages User/Admin"
+								
+								?><div style="color: #bec4cb;"><br /><br /><br /><b>Debug</b><br /><?= implode(" - ", $emailType) ?> <br />(this debug message only available on DEV and UAT)</div><?php 
+							}
+						?>
+					</p>
+				</td>
+			</tr>
+			</table>
+	</body>
+</html>

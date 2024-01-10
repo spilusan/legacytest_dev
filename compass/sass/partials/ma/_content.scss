@@ -1,0 +1,177 @@
+/*
+Document   : partials/ma/_content.scss
+Created on : Oct 5, 2012, 9:34:15 AM
+Author     : gly
+Description: styles for content on ma page
+*/
+#announcement-message, #mask {
+	display: none !important;
+}
+
+#modal {
+	width: 887px;
+	margin-left: -443px;
+
+	#modalContent {
+		ol {
+			list-style-type: decimal;
+			padding-left: 15px;
+
+			ol {
+				list-style-type: lower-alpha;
+
+				ul {
+					list-style: disc;
+					padding-left: 15px;
+				}
+			}
+		}
+	}
+}
+
+#body {
+	height: 643px;
+	/* background: url(/img/ma/bg.png) -111px 0 no-repeat transparent; */
+    background: url(/img/ma/bg-2015.png) -97px 0 no-repeat transparent; 
+	overflow:visible;
+	margin: 0 auto;
+	#content {
+		padding-left: 400px;
+
+		.title {
+			position: relative;
+			padding-top: 40px;
+			height: 40px;
+
+			h1 {
+				position: absolute;
+				top: 40px;
+				left: 0;
+				font-size: 37px;
+				color: #ffe14f;
+				font-weight: bold;
+				font-family: Helvetica, Arial, sans-serif;
+				z-index: 2;
+
+				&.shadow {
+					z-index: 1;
+					top: 42px;
+					left: 2px;
+					color: red;
+				}
+			}
+		}
+
+		p {
+			padding-bottom: 30px;
+			font-size: 32px;
+			font-family: Helvetica, Arial, sans-serif;
+			color: #2e3235;
+			font-weight: 100;
+			line-height: 1.2;
+
+			&.subline {
+				margin-top: 60px;
+			}
+
+			span {
+				font-weight: 600;
+			}
+		}
+
+		.box_wrapper {
+			margin-bottom: 15px;
+			.box {
+				position: relative;
+				left: 0px;
+				width: 495px;
+				padding: 15px 10px;
+				border: 1px solid #d6dce4;
+				@include x-multiple-colored-gradient(#ffffff, #f5f7fa);
+				-pie-background: linear-gradient(#ffffff, #f5f7fa);
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+
+				.step {
+					position: relative;
+					float: left;
+					width: 33px;
+					height: 33px;
+					padding: 0px;
+					font-size: 32px;
+					text-align: center;
+					font-weight: bold;
+					color: #ffffff;
+					font-family: Helvetica, Arial, sans-serif;
+					margin:0;
+					background-color: red;
+					@include single-text-shadow(#d54732, -1px, -1px, 2px);
+					@include border-radius(33px);
+					@include x-multiple-colored-gradient(#ff5e40, #e81f24);
+					pie-background: linear-gradient(#ff5e40, #e81f24);
+					behavior: url(/css/PIE.htc);
+
+					span {
+						display: block;
+						position: relative;
+						top: 1px;
+					}
+				}
+
+				p {
+					font-size: 14px;
+					font-weight: bold;
+					color: #2e3235;
+					line-height: 1.2;
+					padding-left: 45px;
+					padding-bottom: 10px;
+
+					&.thin {
+						font-weight: normal;
+						font-size: 12px;
+						padding-top: 10px;
+						padding-bottom: 10px;
+
+						&.lg {
+							a {
+								font-weight: bold;
+							}
+						}
+					}
+
+					&.login {
+						padding-bottom: 0;
+					}
+				}
+
+				.pdf {
+					height: 67px;
+					background: url(/img/icons/large/files/pdf.png) 45px 0 no-repeat transparent;
+					padding-bottom: 10px;
+				}
+
+				.goodRead {
+					width: 28px;
+					height: 41px;
+					padding-left: 210px;
+					background: url(/img/icons/medium/applications/good_reader.png) no-repeat 210px top 
+					transparent;
+					display: block;
+					margin-top: -21px;
+				}
+
+				.button {
+					left: 45px;
+
+					.dlgr {
+						float: left;
+					}
+
+					&.help {
+						left: 13px;
+					}
+				}
+			}
+		}
+	}
+}

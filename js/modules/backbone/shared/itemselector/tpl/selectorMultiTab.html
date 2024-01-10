@@ -1,0 +1,62 @@
+<div class="itemselector inner new form clearfix {{itemtype}} multi">
+    <div class="left">
+         {{#ifCond itemtype "ports"}}
+            <select id="contFilter" class="contSel" name="contFilter">
+                <option value="GL">Global</option>
+                <option value="NA">North America</option>
+                <option value="SA">South America</option>
+                <option value="AN">Antarctica</option>
+                <option value="AF">Africa</option>
+                <option value="EU">Europe</option>
+                <option value="AS">Asia</option>
+                <option value="OC">Oceania (Australasia)</option>
+            </select>
+        {{/ifCond}}
+        <h3>Select {{itemtype}}:</h3>
+            <img src="/img/icons/medium/spyglass.png" /> <input type="text" name="filter" class="filterField left" />
+        <ul class="list left">
+            
+        </ul>
+        <img src="/images/layout_v2/file_icons/spinner_big.gif" alt="Loading" class="spinner"/>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="right">
+        {{#ifCond itemtype "brands"}}
+            <select id="quickBrand" class="quickSel" name="quickBrand">
+                <option value="">Quick select...</option>
+                <option value="1">All brands</option>
+                <option value="2">My brands</option>
+            </select>
+        {{/ifCond}}
+         {{#ifCond itemtype "ports"}}
+            <select id="quickLoc" class="quickSel" name="quickLoc">
+                <option value="">Quick select...</option>
+                <option value="1">My country</option>
+                <option value="2">My ports</option>
+            </select>
+        {{/ifCond}}
+        {{#ifCond itemtype "categories"}}
+            <select id="quickCats" class="quickSel" name="quickCats">
+                <option value="">Quick select...</option>
+                <option value="1">All categories</option>
+                <option value="2">My categories</option>
+            </select>
+        {{/ifCond}}
+        <h3>Your selected {{itemtype}}:</h3>
+        <div class="clear"></div>
+        {{#if showRightFilter}}
+            <img src="/img/icons/medium/spyglass.png" /> <input type="text" name="filter" class="filterField right" />
+        {{/if}}
+        <ul class="list right{{#ifCond itemtype "ports"}} ports{{/ifCond}}">
+            
+        </ul>
+        <img src="/images/layout_v2/file_icons/spinner_big.gif" alt="Loading" class="spinner"/>
+        <input type="button" class="remove all button white small" value="Remove all">
+    </div>
+    
+    <div class="buttonContainer">
+        <input type="button" class="apply button green medium" value="Apply change" />
+    </div>
+</div>

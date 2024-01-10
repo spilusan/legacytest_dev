@@ -1,0 +1,89 @@
+<td class="left">{{id}}</td>
+<td class="left">{{name}}</td>
+<td class="center" title="{{country.name}}">{{country.code}}</td>
+<td>
+	{{#if activePromotion.rate.target}}
+		{{formatNumRoundOne activePromotion.rate.target}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+<td>
+	{{#if activePromotion.rate.standard}}
+		{{formatNumRoundOne activePromotion.rate.standard}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+<td class="left">
+	{{formatIsoDate dateAddedToSegment}}
+</td>
+<td class="center small">
+	{{#if autoMatch.enabledFully}}
+		<img src="/img/prime-supplier/greentick.png" alt="check" />
+	{{/if}}
+</td>
+<td>
+	{{#if keywordSetCount}}
+		{{keywordSetCount}}
+	{{else}}
+		0
+	{{/if}}
+</td>
+
+<td class="center">{{activePromotion.stats.buyerCount}}</td>
+<td class="center">
+	{{#if activePromotion.stats.unlockedCoverage}}
+		{{formatNumRoundOne activePromotion.stats.unlockedCoverage}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+<td class="center">
+	{{#if activePromotion.stats.lockedCoverage}}
+		{{formatNumRoundOne activePromotion.stats.lockedCoverage}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+
+<td class="{{#ifCond transactions.overall.gmvTrendRatePositive 1}}up{{/ifCond}}{{#ifCond transactions.overall.gmvTrendRatePositive -1}}down{{/ifCond}}>">
+	{{#ifCond transactions.overall.gmvTrendRatePositive 1}}
+		<img src="/img/prime-supplier/up.png" border="0" alt="up" title="GMV trend positive" />
+	{{/ifCond}}
+	{{#ifCond transactions.overall.gmvTrendRatePositive -1}}
+		<img src="/img/prime-supplier/down.png" border="0" alt="down" title="GMV trend negative"/>
+	{{/ifCond}}
+	{{formatNumRoundOne transactions.overall.gmvTrendRate}}
+</td>
+<td>
+	{{#if transactions.overall.quoteRate}}
+		{{formatNumRoundOne transactions.overall.quoteRate}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+<td>{{transactions.overall.eventCount}}</td>
+<td>
+	{{#if transactions.overall.winRate}}
+		{{formatNumRoundOne transactions.overall.winRate}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+<td>
+	{{#if transactions.overall.cheapestRate}}
+		{{formatNumRoundOne transactions.overall.cheapestRate}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+<td>
+	<a href="#" class="actionButton moveDown" title="Demote"><img src="/img/prime-supplier/roundarrowdown.png"></a> 
+	<a href="/reports/gmv?tnid={{id}}" class="actionButton money" title="GMV Report" target="_blank"><img src="/img/prime-supplier/dollar.png"></a> 
+	<a href="/reports/supplier-conversion?tnid={{id}}" class="actionButton check" title="Conversions" target="_blank"><img src="/img/prime-supplier/tick.png"></a> 
+	<a href="/supplier/profile/s/{{id}}" class="actionButton view" title="View" target="_blank"><img src="/img/prime-supplier/eye.png"></a> 
+	<a href="/admin" class="actionButton edit" title="Edit profile" target="_blank"><img src="/img/prime-supplier/edit.png"></a>
+	<a href="/reports/supplier-stats?tnid={{id}}" class="actionButton graph" title="Supplier stats" target="_blank"><img src="/img/prime-supplier/graph.png"></a> 
+	<a href="#" class="actionButton text" title="Automatch settings"><img src="/img/prime-supplier/a.png"></a> 
+</td>

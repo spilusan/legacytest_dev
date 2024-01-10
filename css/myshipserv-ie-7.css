@@ -1,0 +1,255 @@
+#modal_form .form_inner_body {
+	margin-left: -16px;
+}
+
+#modal_form p {
+	padding: 15px 35px 10px 16px;
+}
+
+#form_info {
+	margin: 0 30px 0 16px;
+}
+
+#searchResults .footer {
+	position: absolute;
+	bottom: 0px;
+	height: 10px;
+	width: 100%;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/spotlight_footer.jpg') no-repeat;
+}
+
+#searchResults .premium h3 {
+	position: relative;
+	z-index: 10;
+}
+
+
+#searchResults .searchResult p.desc {
+	margin-left: 0px;
+	margin-top: 0px;
+	font-size: 11px;
+	padding: 0 0 20px 0;
+	line-height: 16px;
+	color: #666;
+}
+
+#searchResults .premium p.desc {
+	margin-left: 60px;
+	margin-top: 0px;
+	font-size: 11px;
+	padding: 14px 0 20px 0;
+	line-height: 16px;
+	color: #666;
+	margin-bottom: 10px;
+}
+
+#search_box input.search-what {
+}
+
+.sidebar_body li.sub_header {
+	margin-bottom: -15px;
+}
+
+.sidebar_body li.border {
+	border: none;
+}
+
+#searchResults .searchResultdetail .contact_now_detail_button {
+	position: relative;
+	float: right;
+	margin: 0 10px 0 0;
+}
+
+#searchResults .footer_expanded {
+	width: 493px;
+	height: 16px;
+	background: url('https://cdn1.shipserv.com/images/layout_v2/premium_expand_footer.jpg') no-repeat;
+	margin-left: -5px;
+}
+
+
+#modal_form table.ie_fix {
+	margin: 0 0 0 14px;
+}
+
+#modal_form p.subtext input {
+	margin: 0 0 0 -10px;
+	padding: 0;
+}
+
+#searchResults .basebar {
+	width: 490px;
+	position: relative;
+	height: 25px;
+	bottom: 0px;
+}
+
+#searchResults .premium .basebar {
+	width: 490px;
+	position: absolute;
+	height: 25px;
+	bottom: 0px;
+}
+
+#searchResults .premium p.links {
+	font-size: 11px;
+	position: absolute;
+	left: 166px;
+	top: -8px;
+	z-index: 1000;
+}
+
+#searchResults .premium .tradenet {
+	width: 122px;
+	height: 25px;
+	background: #ccc;
+	position: absolute;
+	left: -60px;
+}
+
+#searchResults .tradenet {
+	width: 122px;
+	height: 25px;
+	background: #ccc;
+	position: absolute;
+	bottom: 30px;
+}
+
+.form_error {
+	margin: 10px 30px 20px 14px;
+}
+
+#modal_form .form_info {
+	margin: 0 30px 0 14px;
+}
+
+.sidebar_body ul ul li {
+	color: #016FD7;
+	padding-top: 3px;
+	padding-left: 36px;
+	position: relative;
+	font-size: 11px;
+}
+
+#searchResults .searchResult {
+	padding-bottom: 10px;
+	margin-bottom: 0;
+}
+
+#searchResults .premium {
+	padding-bottom: 6px;
+	position: relative;
+	z-index: 10;
+	margin-bottom: 10px;
+}
+
+#searchResults .premium span.shipserv_icon {
+    margin-left: 68px;
+    position: relative;
+}
+
+span.shipserv_icon {
+	background-position: 0 6px;
+}
+
+#contact_content table tr td h2 {
+	margin-bottom: 0px !important;
+}
+
+#moreOptions {
+	z-index: 1010;
+}
+
+.zone_invite {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.profile-body-right input {
+	padding-top: 10px;
+	height: 26px;
+}
+
+.profile-body-right .checkbox, .profile-body-right input[type="checkbox"] {
+	height:auto;
+	padding:0px;
+}
+
+#add-people-block .profile-body-group input {
+	padding-top: 10px !important;
+}
+
+#rfq fieldset#vessel-data input[type=text] {
+	width: 310px;
+}
+
+#upper_header .userinfo .usermessage form#shipMate input[type="text"]{ 
+	position: relative;
+	top: 3px;
+}
+
+#lower_header div.pagewidth .userinfo {
+    width: 130px;
+}
+
+#lower_header div.pagewidth .userinfo.logged_in {
+    width: 360px;
+}
+
+#lower_header div.pagewidth .userinfo .company_name {
+    width: 320px;
+}
+
+#lower_header div.pagewidth .userinfo.logged_in .usermessage {
+    width: 320px;
+}
+
+.profile-body-right .checkbox, .profile-body-right input[type="checkbox"], .profile-body-right input[type="radio"]{
+	height:auto;
+	padding:0px;
+	position: relative;
+	top: 3px;
+	margin-right: 3px;
+	height: auto;
+}
+
+.profile-body-right input[type="radio"] {
+	top: 0;
+}
+
+.profile-body-right .icons-holder {
+	overflow: hidden;
+	height: 26px;
+	margin-top: -10px;
+}
+
+.profile-body-right .pending-block .icons-holder {
+    height: 15px;
+}
+
+.profile-body-right .remove-user {
+	position: relative;
+	top: 3px;
+}
+
+.company-icons .cancel-request span {
+    position: relative;
+    top: 3px;
+}
+
+.profile-body-right .pc {
+    position: relative;
+    top: 0;
+}
+
+.v.approved-block {
+    height: 170px;
+}
+
+.approved-block .logo-holder {
+    margin-bottom: 10px;
+}
+
+#tabbed_navigation ul.tabs li.trade.tab .new-tab {
+	margin-left: 33px;
+}

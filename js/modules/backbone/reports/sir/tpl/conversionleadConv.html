@@ -1,0 +1,203 @@
+			<div class="graph rfqLead">
+				<a href="rfq" class="cHelp light"></a>
+				<div class="clear"></div>
+				<p>RFQs/ <br />Leads</p>
+				{{#if hasSpinner}}
+				<div class="value">
+					<div class="spinnerIcon"></div>
+				</div>
+				{{else}}
+				<div class="value">{{formatNumRound conversion.rfq-count}}</div>
+				{{/if}}
+				<!-- continue --> 
+			</div>
+			<div class="quote rate">
+				<div class="marketVal">
+					<p>Quote<br />rate</p>
+					<p class="small">Market {{#if hasSpinner}}<span class="spinnerIcon smallIcon" style="position: relative; left: -1px; top: 2px;"></span>{{else}}{{formatNumRound conversion.market-qot-rate}}{{/if}}%</p>
+				</div>
+				<div class="marketLine"></div>
+				<div class="convertedBox">
+					{{#if hasSpinner}}
+					<div class="value">
+						<div class="spinnerIcon"></div>
+					</div>
+					{{else}}	
+					<div class="value">
+						<div class="arrowRight"></div>
+						<div class="number">{{#if hasSpinner}}<span class="spinnerIcon smallIcon"></span>{{else}}{{formatNumRound conversion.qot-rate}}{{/if}}%</div>						
+					</div>
+					{{/if}}
+				</div>
+				<div class="lostBox">
+					{{#if hasSpinner}}
+					<div class="value">
+						<div class="spinnerIcon"></div>
+					</div>
+					{{else}}
+					<div class="value">
+						{{formatNumRound conversion.qotLostRate}}%
+					</div>
+					{{/if}}
+				</div>
+				<div class="lostArrow">
+					<div class="dottedLine">
+						<div class="arrowDown"></div>
+					</div>
+				</div>
+				<a href="improve-quote-rate" class="button yellow small improve qot tHelp" style="display: none;">
+					<img src="/img/icons/small/attention-black.png" alt="Improve" border="0" />Improve <br /> quote rate
+				</a>
+			</div>
+			<div class="graph qot">
+				<a href="quotes" class="cHelp light"></a>
+				<div class="clear"></div>
+				<p>Quotes</p>
+				{{#if hasSpinner}}
+				<div class="value">
+					<div class="spinnerIcon"></div>
+				</div>
+				{{else}}
+				<div class="value">{{formatNumRound conversion.qot-count}}</div>
+				<p class="pending">
+					{{conversion.pendingRate}}%<br />
+					Pending<br />
+					<a href="pendingQuot" class="cHelp light"></a>
+				</p>
+				{{/if}}
+			</div>
+			<div class="win rate">
+				<div class="marketVal">
+					<p>Win<br />rate</p>
+					<p class="small">Market {{#if hasSpinner}}<span class="spinnerIcon smallIcon" style="position: relative; left: -1px; top: 2px;"></span>{{else}}{{formatNumRound conversion.market-po-rate}}{{/if}}%</p>
+				</div>
+				<div class="marketLine"></div>
+				<div class="convertedBox">
+				{{#if hasSpinner}}
+				<div class="value">
+					<div class="spinnerIcon"></div>
+				</div>
+				{{else}}
+					<div class="value">
+						<div class="arrowRight"></div>
+						<div class="number">{{formatNumRound conversion.win-rate}}%</div>
+					</div>
+				{{/if}}
+				</div>
+				<div class="lostBox">
+					{{#if hasSpinner}}
+					<div class="value">
+						<div class="spinnerIcon"></div>
+					</div>
+					{{else}}
+					<div class="value">
+						<div class="number">
+							{{formatNumRound conversion.winLostRate}}%
+						</div>
+					</div>
+					{{/if}}
+				</div>
+				<div class="lostArrow">
+					<div class="dottedLine">
+						<div class="arrowDown"></div>
+					</div>
+				</div>
+				<a href="improve-win-rate" class="button yellow small improve win tHelp" style="display: none;">
+					<img src="/img/icons/small/attention-black.png" alt="Improve" border="0" />Improve <br /> win rate
+				</a>
+			</div>
+			<div class="graph po">
+				<a href="po" class="cHelp light"></a>
+				<div class="clear"></div>
+				<p>POs</p>
+				<p class="complabel">Competitive</p>
+				{{#if hasSpinner}}
+				<div class="value">
+					<div class="spinnerIcon"></div>
+				</div>
+				{{else}}
+				<div class="value">{{formatNumRound conversion.po-count}}</div>
+				{{/if}}
+			</div>
+			<div class="greenArrow"></div>
+			<div class="totalBox">
+				<div class="dpoTable">
+					<div class="clear"></div>
+					<div class="head">
+						<h2>Direct transactions</h2>
+						<p>are either of the following:</p>
+						<ul>
+							<li>direct to PO (no preceeding RFQ or quote)</li>
+							<li>where RFQ was sent to you only (1 supplier, you)</li>
+						</ul>
+						<table>
+							<tr class="header">
+								<td>Direct to PO</td>
+								<td>&nbsp;</td>
+								<td>Sent only to you</td>
+							</tr>
+							<tr>
+								<td>N/A</td>
+								<td>RFQs</td>
+								<td>{{formatNumRound conversion.rfq-sent-only-to-you}}</td>
+							</tr>
+							<tr>
+								<td>N/A</td>
+								<td>Quotes</td>
+								<td>{{formatNumRound conversion.qot-sent-only-to-you}}</td>
+							</tr>
+							<tr>
+								<td>{{formatNumRound conversion.po-count-direct-no-rfq}}</td>
+								<td>POs</td>
+								<td>{{formatNumRound conversion.po-count-sent-only-to-you}}</td>
+							</tr>
+						</table>
+						<p class="left">For more information on definitions on why we count this way - click here</p>
+					</div>
+				</div>
+				<div class="totalDirect">
+					<a href="poDirect" class="cHelp light"></a>
+					<div class="clear"></div>
+					<div class="values" style="position: relative; top: -14px; width: 108px;">
+						<div class="poVal">Direct PO Value:</div>
+						<div class="dpoVal valueBox" style="width: 110px;">{{#if hasSpinner}}<span class="spinnerIcon smallIcon"></span>{{else}}$ {{formatNumRound conversion.direct-po-value}}{{/if}}</div>
+						<div class="poCount">Direct PO No.:</div>
+						<div class="dpoCnt valueBox" style="width: 110px;">{{#if hasSpinner}}<span class="spinnerIcon smallIcon"></span>{{else}}{{formatNumRound conversion.direct-po-count}}{{/if}}</div>
+						<div class="clear"></div> 
+					</div>
+				</div>
+				<div class="label">Direct</div>
+				<div class="clear"></div>
+				<div class="plus"></div>
+				<div class="totalComp">
+					<a href="poComp" class="cHelp light"></a>
+					<div class="clear"></div>
+					<div class="titles">
+						<span class="poValue">Competitive PO value</span>
+					</div>
+					<div class="values">
+						<div class="dpoVal valueBox" style="width: 103px;">{{#if hasSpinner}}<span class="spinnerIcon smallIcon"></span>{{else}}$ {{formatNumRound conversion.po-value}}{{/if}}</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="label comp">Competitive</div>
+				<div class="clear"></div>
+				<div class="equals"></div>
+				<div class="total">
+					<a href="tpo" class="cHelp light"></a>
+					<div class="clear"></div>
+					<div class="titles">
+						<span class="poValue">Total PO Value</span>
+					</div>
+					<div class="values">
+						<div class="dpoVal valueBox" style="width: 137px;">{{#if hasSpinner}}<span class="spinnerIcon" style="position: relative; top: 2px;"></span>{{else}}$ {{formatNumRound conversion.totalPoVal}}{{/if}}</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="label total">Total</div>
+				<div class="clear"></div>
+			</div>
+			<p class="customerNo">From {{#if hasSpinner}}<span class="spinnerIcon smallIcon" style="position: relative; top: 2px;"></span>{{else}}{{formatNumRound conversion.buyer-count}} customers (<a href="#" id="poDetails">view details</a>){{/if}}</p>
+			<p class="customerNo po">From {{#if hasSpinner}}<span class="spinnerIcon smallIcon" style="position: relative; top: 2px;"></span>{{else}}{{formatNumRound conversion.po-buyer-count}} customers{{/if}}</p>
+			<p class="customerNo qot">To {{#if hasSpinner}}<span class="spinnerIcon smallIcon" style="position: relative; top: 2px;"></span>{{else}}{{formatNumRound conversion.qot-buyer-count}} customers{{/if}}</p>
+			<p class="customerNo rfq">From {{#if hasSpinner}}<span class="spinnerIcon smallIcon" style="position: relative; top: 2px;"></span>{{else}}{{formatNumRound conversion.rfq-buyer-count}} customers{{/if}}</p>

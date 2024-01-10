@@ -1,0 +1,142 @@
+/*
+Document   : partials/guidelines/_footer.scss
+Created on : May 12, 2016, 14:24:15 AM
+Author     : .:Gly:.
+Description: default styles for footer
+*/
+@import "partials/mixins/mixins";
+.mainFooter {
+	padding: 0 15px;
+	padding-bottom: 50px;
+	background: $dk-navy;
+
+	p, h6 {
+		color: $white;
+	}
+
+	.wrapper {
+		width: 100%;
+		margin: 0 auto;
+		max-width: 1600px;
+	}
+
+	.footerTopRow {
+		padding: 25px 25px 0; 
+
+		.footerLogo {
+			float: left;
+		}
+
+		.socialMedia {
+			float: right;
+
+			ul li {
+				display: inline-block;
+				margin-left: 10px;
+
+				a {
+				color: #087EC5;
+
+					.fa {
+						font-size: 40px;
+					}		
+				}
+			}
+		}
+
+	}
+
+	.footerMiddleRow {
+		padding: 50px 20px 25px;
+		@include display-flex-ie;
+		@include flex-wrap(wrap);
+		border-top: 1px solid $link-blue;
+
+		.column {
+			@include flex(1 25%);
+			width: 25%;
+
+			&:nth-of-type(3) {
+				@include flex(1 50%);
+				width: 50%;
+			}
+
+			h6 {
+				font-size: 18px;
+				margin-bottom: 15px;
+			}
+
+			ul {
+				list-style: none;
+
+				li {
+					line-height: 1.2;
+					font-size: 16px;
+					margin-bottom: 14px;
+				}	
+
+				a {
+					color: $white;
+					font-weight: 300;
+				}
+			}
+		}
+	}
+
+	.footerBottomRow {
+		padding: 20px 0;
+		margin-bottom: 20px;
+		text-align: center;
+		border-top: 1px solid $link-blue;
+		border-bottom: 1px solid $link-blue;
+
+		p {
+			margin-bottom: 0;
+			font-size: 15px;
+			font-weight: 300;
+		}
+	}
+}
+
+@media only screen and (max-width: 640px) {
+	.mainFooter {
+		padding-bottom: 0;
+
+		.footerTopRow {
+			.footerLogo {
+				display: none;
+			}
+
+			.socialMedia {
+				float: none;
+				text-align: center;
+			}
+		}
+
+		.footerMiddleRow {
+			flex-direction: row;
+			padding: 50px 20px;
+
+			.column {
+				&:first-child, &:nth-child(2) {
+					display: none;
+				}
+			}
+		}
+
+		.footerBottomRow {
+			border-bottom: 0;
+			p {
+				text-align: center;
+			}
+		}
+	}
+}
+
+html[data-useragent*='iPad'],
+html[data-useragent*='iPhone'],
+html[data-useragent*='iPod'] {
+	.scrollWrapper {
+		overflow-x: scroll;
+	}
+}

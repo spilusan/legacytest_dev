@@ -1,0 +1,22 @@
+<td>{{#if SpbEnabled}}<img src="/img/icons/small/check.png" alt="y" border="0" />{{else}}&nbsp;{{/if}}</td>
+<td>{{buyerId}}</td>
+<td class="left">{{name}}</td>
+<td>{{formatIsoDateTarget targetedDate}}</td>
+<td>{{Location}}</td>
+<td>{{formatNumRoundTarget vessel.vesselCount}}</td>
+<td>
+      {{#each vessels}}
+            {{this}}
+      {{/each}}
+</td>
+<td>{{targetedBy}}</td>
+<td>{{formatNumRoundTarget rfqsReceived}}</td>
+<td>{{formatNumRoundTarget quoteRate}}{{#if quoteRate}}%{{else}}{{/if}}</td>
+<td>{{formatNumRoundTarget OrderValue}}</td>
+<td style="position: relative;" class="excludeAction">
+	{{#if isLocked}}
+	    <input type="button" name="exclude" class="button medium exclude inactive" value="Exclude" disabled="disabled" /><img src="/img/profile/targetCustomers/smallock.png" alt="locked" border="0" class="locked"/><div class="lockTooltip"><p>Buyer locked<br />at {{rate.rateTarget}}%{{#if lockedUntil}} until{{/if}}<br />{{formatIsoDateTargetLocked lockedUntil}}</p></div>
+	{{else}}
+	    <input type="button" name="exclude" class="button medium exclude" value="Exclude" /><input type="button" style="cursor: default; background: transparent; border: 0; width: 1px; padding: 0;" name="doExclude" />
+	{{/if}}
+</td>

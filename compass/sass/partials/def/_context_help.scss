@@ -1,0 +1,27 @@
+/*
+Document   : partials/def/_context_help.scss
+Created on : Aug 24, 2012, 4:00:43 PM
+Author     : gly
+Description: default styles for contextual help
+*/
+
+.cHelp {
+	display: -moz-inline-stack;
+	display: inline-block;
+	zoom: 1;
+	*display: inline;
+	width: 15px;
+	height: 15px;
+	_width: 15px;
+	_height: 15px;
+	background: url(/img/icons/small/help.png) no-repeat 5px 0 transparent; 
+	padding-left: 5px;
+
+	&.dark {
+		background: url(/img/icons/small/help_dark.png) no-repeat 5px 0 transparent;
+	}
+
+	&.light {
+		background: url(/img/icons/small/help_light.png) no-repeat 5px 0 transparent;
+	}
+}

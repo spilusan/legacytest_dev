@@ -1,0 +1,23 @@
+Dear <?php echo $this->inquiry->senderName?>,
+<br />
+<br />
+<?php echo $this->supplier->name; ?> has recently declined the enquiry you sent them. 
+They provided <br />the following feedback on why they did that: 
+<br />
+<br />
+========================================================
+<br />
+<br />
+<?php echo nl2br($this->response); ?>
+<br />
+<br />
+========================================================
+<br />
+<br />
+We hope this information is useful for you.
+<br />
+<br />
+<br />
+Best regards,
+<br />
+ShipServ Customer Services

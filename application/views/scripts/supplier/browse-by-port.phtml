@@ -1,0 +1,66 @@
+<?php
+
+$this->headMeta()->appendName('robots', 'noindex, follow');
+
+$this->googledfp()->addTargeting('keywords','ALL');
+$this->googledfp()->addTargeting('country','ALL');
+$this->googledfp()->addTargeting('port','ALL');
+$this->googledfp()->addTargeting('supplier','ALL');
+
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+				   ->appendFile('/js/jquery.metadata.js')
+				   ->appendFile('/js/jquery.footer.js');
+				   
+$this->googledfp()->add('TargetedOrGeneralAdSlot1');
+$this->googledfp()->add('TargetedOrGeneralAdSlot2');
+$this->googledfp()->add('TargetedOrGeneralAdSlot3');
+
+$this->googledfp()->render();
+
+$uri = $this->uri();
+
+echo $this->partial('searchbar.phtml', array('searchWhat'    => $this->searchValues['searchWhat'],
+											 'searchText'    => $this->searchText,
+											 'searchWhere'   => $this->searchValues['searchWhere'],
+											 'supplierCount' => $this->supplierCount));
+
+$this->CDNLink()->appendStylesheet('/css/search.css');
+?>
+
+<div id="main_content_area" style="margin-top:20px;"> 
+
+	<div class="content_wide" style="position:relative;">
+	
+		<div class="content_wide_header" >
+			<h1>Ports in <?php echo $this->country; ?></h1>
+			<div class="clear"></div>
+		</div>
+		
+		<div class="content_wide_body">
+			<br />
+			<?php
+			foreach ($this->ports as $port)
+			{
+				?>
+				<div class="browse_list">
+					<?php // echo $this->searchUrl()->searchText($port['PRT_NAME'])->searchWhere($port['PRT_PORT_CODE'])->sourceKey('BROWSE_PORT') ?>
+					<a href="/port/<?php echo $this->string()->sanitiseForURI($port['PRT_NAME']); ?>/<?php echo $port['PRT_PORT_CODE']; ?>"
+					   title="Marine suppliers serving <?php echo $port['PRT_NAME']; ?>, <?php echo $this->country; ?>"><span>Marine suppliers serving </span><?php echo $port['PRT_NAME']; ?>, <?php echo $this->country; ?></a>
+					<div class="clear"></div>
+				</div>
+				<?php
+			}
+			?>
+			
+		</div>   
+		<div class="content_wide_footer_shadow"></div>
+	</div>
+
+	<div class="zone">
+		<?php echo $this->partial('general-google-ads.phtml'); ?>
+	</div>
+
+	<div class="clear"></div>   
+
+</div> 
+<script type="text/javascript" src="/js/jquery.searchvariables.js" charset="utf-8"></script>

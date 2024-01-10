@@ -1,0 +1,33 @@
+<?php
+$this->headLink()->appendStylesheet('/css/shipmate.css')->appendStylesheet('/css/shipmate/impa-settings.css');
+$checkedFlag = ($this->impaAnonymize) ? ' checked' : '';
+
+// -------- BREADCRUMBS ---------------
+$breadcrumbs = array();
+$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+$breadcrumbs[] = array('name' => 'Impa settings', 'url'  => '');
+echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<div id="body" class="liquid">
+	<div id="content">
+		<div class="innerContent">
+		<section class="bgcolor cyan-blue">
+				<form name="impa" method="post" action="">
+					<h2>IMPA reports</h2>
+					<fieldset>
+						<input type="checkbox" id="impaAnonymize" name="impaAnonymize" value="on"<?php echo $checkedFlag; ?>>
+						<label for="impaAnonymize" class="checkbox-label">
+							anonymise all IMPA data
+						</label>
+						<input type="submit" name="apply" value="Apply" class="btn blue">
+						<p>Applying changes will be valid for this login session only</p>	
+					</fieldset>
+				</form>
+			</section>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+

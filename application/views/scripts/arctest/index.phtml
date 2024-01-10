@@ -1,0 +1,23 @@
+<?php
+
+$this->headLink()->appendStylesheet('/css/myshipserv-home.css');
+
+?>
+
+<div>
+	<?php var_dump($this->serviceURL); ?>
+</div>
+
+<div>
+	<pre>SELECT * WHERE { ?x &lt;http://rdf.myshipserv.com/schema/zone&gt; &lt;http://rdf.myshipserv.com/brands.rdf#gmdss&gt; }</pre>
+	<div>
+		<?php var_dump($this->gmdss); ?>
+	</div>
+</div>
+
+<div>
+	<pre>SELECT * WHERE { ?x &lt;http://rdf.myshipserv.com/schema/zone&gt; &lt;http://rdf.myshipserv.com/brands.rdf#lifeboats&gt; }</pre>
+	<div>
+		<?php var_dump($this->lifeboats); ?>
+	</div>
+</div>

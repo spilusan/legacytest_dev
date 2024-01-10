@@ -1,0 +1,118 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/profile-privacy.js');
+
+$this->headLink()->appendStylesheet('/css/transition.css');
+$this->headLink()->appendStylesheet('/css/uniform.default.css')
+    			->appendStylesheet('/css/profile.css');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Settings',
+						   'url'  => '/profile/company-settings'));
+
+
+
+// redirect user if company changes by the input box on the top
+if( $this->user->isAdminOf($this->params['id']) == false && $this->user->canPerform('PSG_TURN_TN_INTEGRATION') == false )
+{
+	?><script>location.href='/profile/company-profile/type/<?php echo $this->activeCompany->type?>/id/<?php echo $this->activeCompany->id?>';</script><?php
+}
+?>
+
+
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		
+		<div class="content_new-wide_body">
+			<?php
+			//echo $this->partial('profile/title-menu.phtml',
+			//	$this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'],$this->companyDetail['id'], 'company-settings', $this->pendingUsers));
+			
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'],$this->companyDetail['id'], 'company-settings-pages', $this->pendingUsers)
+				)
+			);
+							
+			?>
+			<div class="profile-body-right">
+				<div class="zz header">
+					<h2>Pages Settings</h2>
+				</div>
+				<div class="profileContent">
+					<form id="c-settings-form" class="profile-form" method="<?php echo $this->settingsForm['form']->getMethod() ?>" action="<?php echo $this->settingsForm['form']->getAction() ?>" >
+						
+						<?php
+						$fVars = array();
+						$fVars['isJoinReqable']['name'] = Myshipserv_Form_CompanySettings::FIELD_IS_JOIN_REQABLE;
+						$fVars['isJoinReqable']['isChecked'] = $this->settingsForm['form']->getElement($fVars['isJoinReqable']['name'])->getValue() ? 'checked="checked"' : '';
+						
+						if ($this->companyDetail['type']=='v')
+						{
+							$fVars['isAutoRevSolicit']['name'] = Myshipserv_Form_CompanySettings::FIELD_AUTO_REV_SOLICIT;
+							$fVars['isAutoRevSolicit']['isChecked'] = $this->settingsForm['form']->getElement($fVars['isAutoRevSolicit']['name'])->getValue() ? 'checked="checked"' : '';
+						
+						}
+
+						// If form was submitted and no error messages
+						if ($this->settingsForm['submitted'] && !$this->settingsForm['form']->getMessages())
+						{
+							?>
+							<h3 class="success-message">Your settings were successfully saved</h3>
+							<?php
+						}
+						?>
+						<input type="hidden" name="<?php echo Myshipserv_Form_CompanySettings::FIELD_FORM_ID ?>" />
+						<label for="sf-isJoinReqable">
+							<input id="sf-isJoinReqable" type="checkbox" name="<?php echo $fVars['isJoinReqable']['name'] ?>" class="checkbox" value="1" <?php echo $fVars['isJoinReqable']['isChecked'] ?> />
+							Allow Pages users to request company membership
+						</label>
+						<?php
+						if ($this->companyDetail['type']=='v')
+						{
+							?>
+							<label for="sf-isAutoRevSolicit">
+								<input id="sf-isAutoRevSolicit" type="checkbox" name="<?php echo $fVars['isAutoRevSolicit']['name'] ?>" class="checkbox" value="1" <?php echo $fVars['isAutoRevSolicit']['isChecked'] ?> />
+								Allow ShipServ to send review requests to buyers you have traded with
+							</label>
+							<?php
+						}
+						else
+						{
+							?>
+							<input id="sf-isAutoRevSolicit" type="hidden" name="<?php echo $fVars['isAutoRevSolicit']['name'] ?>" class="checkbox" value="1" checked="true" />
+							<?php
+						}
+						?>
+						<?php if( $this->user->isShipservUser() === true ){?>
+						<label for="pages-rfq-tn-integration">
+							<?php if( $this->user->canPerform('PSG_TURN_TN_INTEGRATION') == true ){?>
+							<input id="pages-rfq-tn-integration" type="checkbox" name="tnIntegration" class="checkbox" value="1" <?php echo ($this->isIntegrated) ?"checked='checked'":""; ?> />
+							<?php }else{?>
+							<input id="pages-rfq-tn-integration" type="hidden" name="tnIntegration" class="checkbox" value="1" <?php echo ($this->isIntegrated) ?"checked='checked'":""; ?> />
+							<input id="pages-rfq-tn-integration" type="checkbox" title="To disable or enable the integration you will need to contact David Hardy (dhardy@shipserv.com)" name="tnIntegrationx" disabled="disabled" class="checkbox" value="1" <?php echo ($this->isIntegrated) ?"checked='checked'":""; ?> />
+							<?php }?>
+							Enable Pages RFQ with TradeNet integration
+						</label>
+						<?php }?>
+						
+						<div style="margin-top: 15px;">
+							<div class="zz medium green button save-button" id><input type="submit" value="Save changes" id="submit" name="submit"></div>
+                            <div class="clear" style="height: 1px;"></div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

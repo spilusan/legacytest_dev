@@ -1,0 +1,175 @@
+<h2 class="print-only">Quoting</h2>
+
+<div class="container charts">
+	<div class="row">
+		<div class="gr-4 gr-12@tablet chart-min-height">
+			<h3>RFQ and quote transactions
+				<i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="tip-rqf-quote"></i>
+			</h3>
+
+			<div class="hide" id="tip-rqf-quote">
+				Number of RFQs sent to this supplier and the number of responses. RFQs are considered ignored if the supplier has not responded
+				within 30 days of the sent date. RFQs issued within the last 30 days from the current date that have not been responded
+				to are considered pending.
+			</div>
+			<div id="chart1">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+
+		<div class="push-1 push-0@tablet gr-7 gr-12@tablet chart-min-height">
+			<h4>Trend</h4>
+			<div id="chart2">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="gr-12">
+			<h3>Response rate
+				<i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="tip-response-rate"></i>
+			</h3>
+
+			<div class="hide" id="tip-response-rate">
+				The percentage of RFQs sent to the supplier that received a response of either a quote or a decline to quote. RFQs are considered
+				ignored if the supplier has not responded within 30 days of the sent date. RFQs issued within the last 30 days from the
+				current date that have not been responded to are considered pending. The response rate of the supplier is benchmarked
+				against the response rate of all of your RFQs and also all RFQs issued by all buyers on ShipServ.
+			</div>
+		</div>
+
+		<div class="gr-4 gr-12@tablet chart-min-height">
+			<h4>Actual and benchmarks</h4>
+			<div id="chart3">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+
+		<div class="push-1 push-0@tablet gr-7 gr-12@tablet chart-min-height">
+			<h4>Trend</h4>
+			<div id="chart4">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="gr-12">
+			<h3>Average response time
+				<i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="tip-average-response"></i>
+			</h3>
+
+			<div class="hide" id="tip-average-response">
+				The average amount of time between the RFQ send and the quote receipt or decline to quote. The average response time of the
+				supplier is benchmarked against the average response time of all of your suppliers and also all suppliers for all buyers
+				on ShipServ.
+			</div>
+		</div>
+
+		<div class="gr-4 gr-12@tablet chart-min-height">
+			<h4>Actual and benchmarks</h4>
+			<div id="chart5">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+
+		<div class="push-1 push-0@tablet gr-7 gr-12@tablet chart-min-height">
+			<h4>Trend</h4>
+			<div id="chart6">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="gr-12">
+			<h3>Quote completeness
+				<i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="tip-quote-completeness"></i>
+			</h3>
+
+			<div class="hide" id="tip-quote-completeness">
+				The percentage of quotes submitted by the supplier where the supplier has quoted for every item requested. This is benchmarked
+				against the quotes issued by all your suppliers and against all quotes issued by all suppliers on the ShipServ platform.
+			</div>
+		</div>
+
+		<div class="gr-4 gr-12@tablet chart-min-height">
+			<h4>Actual and benchmarks</h4>
+			<div id="chart7">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+
+		<div class="push-1 push-0@tablet gr-7 gr-12@tablet chart-min-height">
+			<h4>Trend</h4>
+			<div id="chart8">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="gr-12">
+			<h3>Quote variance
+				<i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="tip-quote-variance"></i>
+			</h3>
+
+			<div class="hide" id="tip-quote-variance">
+				This is the percentage of quotes issued where the supplier quoted for exactly what you asked for. If the quote precisely
+				matches the RFQ there is said to be zero variance. For example, a quote with a variance is one where a quote line item
+				description is different to the corresponding RFQ line item description, or where the unit of measure offered was not
+				what was requested or the quantity offered is different to the quantity requested. This is benchmarked against the quotes
+				issued by all your suppliers and against all quotes issued by all suppliers on the ShipServ platform.
+			</div>
+		</div>
+
+		<div class="gr-4 gr-12@tablet chart-min-height">
+			<h4>Actual and benchmarks</h4>
+			<div id="chart9">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+
+		<div class="push-1 push-0@tablet gr-7 gr-12@tablet chart-min-height">
+			<h4>Trend</h4>
+			<div id="chart10">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="gr-12">
+			<h3>Decline reasons
+				<i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="tip-decline-reason"></i>
+			</h3>
+
+			<div class="hide" id="tip-decline-reason">
+				When a supplier declines to quote we request a reason for declining. This shows the reasons the chosen supplier has given
+				when declining to quote. This also shows the decline reasons from all your suppliers and the ShipServ average.
+			</div>
+		</div>
+
+		<div class="gr-4 gr-12@tablet">
+			<h4 class="text-center">This supplier with you</h4>
+			<div class="chart-min-height" id="chart11">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+
+		<div class="gr-4 gr-12@tablet">
+			<h4 class="text-center">All suppliers with you</h4>
+			<div class="chart-min-height" id="chart12">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+
+		<div class="gr-4 gr-12@tablet">
+			<h4 class="text-center">ShipServ average</h4>
+			<div class="chart-min-height" id="chart13">
+				<div class="waiting-spinner">Loading...</div>
+			</div>
+		</div>
+	</div>
+</div>

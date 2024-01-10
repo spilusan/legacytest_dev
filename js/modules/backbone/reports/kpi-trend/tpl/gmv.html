@@ -1,0 +1,21 @@
+<h2>Order Value (USD)</h2>
+<div class="chart" id="gmv_chart"></div>
+<table>
+<thead>
+	<tr>
+		<th class="colTitle">Date</th>
+		<th>Value Quoted USD</th>
+		<th>Value Ordered USD</th>
+		<th>Percentage quoted value converted</th>
+	</tr>
+</thead>
+{{#each data}}
+<tr>
+	<td>{{this.date}}</td>
+	<td>{{formatCurrencyNa this.sir2ORD}}</td>
+	<td>{{formatCurrencyNa this.sir2GMV}}</td>
+	<td>{{formatCurrencyNa this.sir2Conversion}}%</td>
+</tr>
+{{/each}}
+</table>
+<hr>

@@ -1,0 +1,497 @@
+<?php
+$this->getHelper('Requirejs')->addModule('backbone/lib/jquery-ui-1.10.3/draggable');
+?>
+
+<link rel="stylesheet" type="text/css" href="/css/supplcon_ie.css">
+
+<style type="text/css">
+    div.breaker {
+        clear: both;
+    }
+
+    input[type=button] {
+        padding-left: 3px;
+        padding-right: 3px;
+        margin-left: 5px;
+    }
+
+    input[type=button].btn_wide {
+        width: 35px;
+    }
+
+    input[type=button].delete_rfq {
+        background-color:#FF3030;
+        color: #FFFFFF;
+    }
+
+    img.term_mute {
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    span.hint {
+        cursor: help;
+        border-bottom: 1px dashed #DF7401;
+    }
+
+    ul {
+        padding-left: 15px;
+    }
+
+    h2 {
+        font-size: 14pt;
+        font-weight: bold;
+        color: #000000;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        font-size: 12pt;
+        font-weight: bold;
+        color: #000000;
+        margin-bottom: 20px;
+    }
+
+    /* draggable Quick Links block */
+    div#navigator {
+        background: #FFFFFF;
+        width: 175px;
+        position: fixed;
+
+        border: dotted 1px #444444;
+        text-align: left;
+
+        zoom: 1;
+        filter: alpha(opacity=70);
+        opacity: 0.7;
+
+        cursor: move;
+    }
+    div#navigator h3 {
+        font-weight: bold;
+        font-size: 11pt;
+        margin-left: 10px;
+        margin-top: 5px;
+        margin-bottom: 0px;
+    }
+    div#navigator ul {
+        margin-top: 15px;
+        margin-left: 10px;
+        list-style-type: square;
+    }
+    div#navigator ul li {
+        margin-bottom: 5px;
+        font-size: 8pt;
+    }
+
+    div#line_items_container {
+        margin-bottom: 20px;
+    }
+
+    div#feedItemsColumn {
+        float: left;
+        text-align: left;
+        padding-right: 10px;
+    }
+
+    div.supplier {
+        border-bottom: solid 2px #444444;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+    }
+
+    div.original_supplier {
+        background-color: #FFA096;
+    }
+
+    div.supplier h3 {
+        font-size: 9pt;
+        font-weight: bold;
+        color: #444444;
+        margin-bottom: 5px;
+    }
+
+    div.supplier_name {
+        font-size: 12pt;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    span.at_risk {
+        color: #ff2400;
+        font-weight: bold;
+    }
+
+    div.supplier_info_left {
+        width: 300px;
+        float: left;
+        padding-right: 10px;
+    }
+
+    div.supplier_info_right {
+        width: 300px;
+        float: right;
+        padding-left: 10px;
+    }
+
+    div.supplier_properties {
+        padding: 3px;
+        font-size: 9pt;
+        border: dotted 1px #444444;
+        background-color: #76C5EE;
+        margin-bottom: 10px;
+    }
+
+    div.supplier_stats {
+        padding: 3px;
+        font-size: 9pt;
+        border: dotted 1px #444444;
+        background-color: #FFFFFF;
+        margin-bottom: 10px;
+        height: 110px;
+    }
+    div.supplier_stats img.loader {
+        margin-top: 45px;
+        margin-left: 35px;
+    }
+
+    td.label {
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    td.figure {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        font-weight: bold;
+    }
+
+    div.matched_info {
+        padding-top: 5px;
+        padding-right: 10px;
+        border: 1px dotted #444444;
+    }
+    div.matched_info ul li {
+        font-size: 9pt;
+        margin-bottom: 5px;
+    }
+
+    /* sidebar form containers on the right hand side */
+    div#feedControlsColumn {
+        float: right;
+        width: 350px;
+        text-align: left;
+        padding-left: 10px;
+    }
+    div#feedControlsColumn h2 {
+        font-size: 12pt;
+        font-weight: bold;
+        color: #444444;
+        margin-bottom: 10px;
+        margin-top: 15px;
+    }
+    div#feedControlsColumn h3 {
+        font-size: 10pt;
+        font-weight: bold;
+        color: #555555;
+        margin-bottom: 15px;
+        margin-top: 10px;
+    }
+
+    div#originalSuppliersList {
+        background-color: #FFFFFF;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+    div#originalSuppliersList div.buyer_selected {
+        float:left;
+        width: 49%;
+    }
+    div#originalSuppliersList div.forwarded {
+        float:left;
+        width: 49%;
+    }
+    div#originalSuppliersList ul {
+        list-style-type: square;
+    }
+    div#originalSuppliersList ul li {
+        font-size: 10pt;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+    div#originalSuppliersList ul li.found {
+        font-weight: bold;
+        background-color: #76C5EE;
+    }
+    div#originalSuppliersList ul li.from_match {
+    }
+
+    div#chosenSuppliersList {
+        background-color: #FFFFFF;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+    div#chosenSuppliersList ul {
+        list-style-type: square;
+    }
+    div#chosenSuppliersList ul li {
+        font-size: 10pt;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    div#amendList {
+        background-color: #FFFFFF;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+    div#amendList div.list_not_at_risk {
+        float:left;
+        width: 49%;
+    }
+    div#amendList div.list_at_risk {
+        float:left;
+        width: 49%;
+    }
+    div#amendList ul {
+        list-style-type: square;
+    }
+    div#amendList ul li {
+        font-size: 10pt;
+        padding-top: 3px;
+        padding-bottom: 3px;
+    }
+
+    div#searchControls {
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+    div#searchControls ul li {
+        font-size: 10pt;
+        margin-bottom: 10px;
+    }
+    div#searchControls ul li.active_feed{
+        font-weight: bold;
+    }
+
+    div#searchTerms {
+        background-color: #FFFFCC;
+        padding: 5px;
+    }
+
+    /* Search term list container */
+    div.terms_list_container {
+        font-size: 10pt;
+        padding-bottom: 10px;
+        margin-bottom: 5px;
+    }
+    div.terms_list_container ul {
+        list-style-type: square;
+    }
+    div.terms_list_container ul li {
+        font-weight: normal;
+        margin-bottom: 3px;
+        margin-top: 0px;
+    }
+    div.terms_list_container input[type=text].score {
+        width: 35px;
+        margin-left: 5px;
+    }
+
+    div.sub_form {
+        border-bottom: dotted 1px #444444;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-top: 5px;
+    }
+    div.sub_form input[type=button] {
+        padding-left: 3px;
+        padding-right: 3px;
+        margin-left: 5px;
+    }
+
+    div.sub_form input[type=text].score {
+        width: 30px;
+        margin-left: 5px;
+    }
+    div.sub_form select.new_term {
+        width: 200px;
+    }
+    div.sub_form input[type=text].new_term {
+        width: 200px;
+    }
+    div.sub_form label {
+        font-size: 10pt;
+        font-weight: bold;
+        color: #666666;
+        margin-right: 5px;
+    }
+    div.sub_form input.extra_supplier_id {
+        width: 150px;
+    }
+    div.sub_form input.extra_supplier_score {
+        width: 70px;
+    }
+    div.sub_form input.extra_supplier_comment {
+        width: 250px;
+    }
+
+    div.term_list_controls {
+        border-bottom: dotted 1px #444444;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    div#timers {
+        text-align: left;
+        font-size: 9pt;
+    }
+    div#timers h3 {
+        font-size: 12pt;
+        margin-bottom: 10px;
+        margin-top: 10px;
+    }
+
+    div.dev_options {
+        font-size: 8pt;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding-left: 10px;
+    }
+</style>
+
+<div id="content-view">
+    <div id="navigator">
+        <h3>Quick links</h3>
+
+        <ul>
+            <li><a href="#rfq_details">RFQ details</a></li>
+            <li><a href="#line_items">Line items list</a></li>
+        </ul>
+
+        <ul>
+            <?php
+            foreach ($this->results as $feedType => $feedData) {
+                $feedLabel = $this->feedTypes[$feedType];
+                ?>
+                <li>
+                    <a href="#feed_<?php echo $feedType; ?>"><?php echo $feedLabel; ?></a>
+                    (<?php echo lg_count($this->results[$feedType]); ?>)
+                </li>
+            <?php
+            }
+            ?>
+        </ul>
+
+        <ul>
+            <li><a href="#search_controls">Page controls</a></li>
+            <li><a href="#search_terms">Search terms</a></li>
+            <?php if ($this->timers) { ?>
+                <li><a href="#timers">Time report</a></li>
+            <?php } ?>
+        </ul>
+
+        <ul>
+            <li><a href="javascript:history.back();">Take one step back</a></li>
+            <li>Match responded in <?php echo round($this->matchEngineResponseTime, 2); ?> sec</li>
+        </ul>
+    </div>
+
+
+    <div id="inner-view">
+        <a name="rfq_details"></a>
+        <?php echo $this->render('match/tag-rfq-properties.phtml'); ?>
+
+        <a name="line_items"></a>
+        <?php echo $this->render('match/tag-rfq-line-items.phtml'); ?>
+
+        <h2><?php echo $this->resultsMessage; ?></h2>
+        <?php
+        if (!is_null($this->maxMatchSupplierCount)) {
+            if ($this->maxMatchSupplierCount < $this->matchSupplierCount) {
+                $matchSupplierWarning = 'color: #ff0000;';
+            }
+            ?>
+            <h2 style="<?php echo $matchSupplierWarning; ?>">Max number of match suppliers: <?php echo $this->maxMatchSupplierCount; ?>, already sent to <?php echo $this->matchSupplierCount; ?> match suppliers</h2>
+            <?php
+        }
+        ?>
+
+        <div>
+            <div id="feedItemsColumn">
+                <?php echo $this->render('match/tag-matched-suppliers.phtml'); ?>
+            </div>
+
+            <div id="feedControlsColumn">
+                <div id="searchControls">
+                    <a name="search_controls"></a>
+                    <h2>Searches saved for this RFQ (<?php echo lg_count($this->searches); ?>)</h2>
+                    <?php echo $this->render('match/tag-search-controls.phtml'); ?>
+                </div>
+
+                <div id="originalSuppliersList">
+                    <a name="original_suppliers"></a>
+                    <h2>Buyer Selected Suppliers (<?php echo lg_count($this->rfqSuppliers); ?>)</h2>
+                    <?php echo $this->render('match/tag-original-suppliers.phtml'); ?>
+                </div>
+
+                <div id="chosenSuppliersList">
+                    <a name="chosen_suppliers"></a>
+                    <h2>Send RFQ to more suppliers:</h2>
+                    <?php echo $this->render('match/tag-chosen-suppliers.phtml'); ?>
+                </div>
+
+                <?php
+                // commented as we don't need to edit stored searches so far
+                /* if ($this->searchId) { ?>
+                    <a name="amend_list"></a>
+                    <div id="amendList">
+                        <h2>Amend suppliers at risk list:</h2>
+                        <?php echo $this->render('match/tag-amend-suppliers.phtml'); ?>
+                    </div>
+                <?php } */
+                ?>
+
+                <?php
+                $resultFeedTypes = array_keys($this->results);
+                if ((lg_count($resultFeedTypes) === 1) and ($resultFeedTypes[0] === Shipserv_Match_Component_Result::FEED_TYPE_AUTO_KEYWORDS)) {
+                    // no search terms for rigid keywords sets
+                } else {?>
+                <div id="searchTerms">
+                    <a name="search_terms"></a>
+                    <h2>Search Terms:</h2>
+                    <?php echo $this->render('match/tag-search-terms.phtml'); ?>
+                </div>
+                <?php } ?>
+
+            </div>
+
+            <div class="breaker"></div>
+        </div>
+
+        <?php
+        if ($this->timers) {
+            ?>
+            <a name="timers"></a>
+            <div id="timers">
+                <?php
+                foreach ($this->timers as $feedType => $timer) {
+                    ?>
+                    <h3>Time report for <?php echo $this->feedTypes[$feedType]; ?></h3>
+
+                    <?php $timer->printResults(); ?>
+                <?php
+                }
+                ?>
+            </div>
+        <?php
+        }
+        ?>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        $('#navigator').draggable();
+    });
+</script>

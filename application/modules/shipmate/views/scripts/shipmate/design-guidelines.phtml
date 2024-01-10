@@ -1,0 +1,66 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/shipmate.css')
+					 ->appendStylesheet('/css/design-guidelines.css')
+					 ->appendStylesheet('/css/monokai-sublime.css');
+					
+	$this->requirejs()	->addModule('backbone/shipmate/design-guidelines/views/mainView');
+		
+	$user = Shipserv_User::isLoggedIn();
+?>
+<div id="breadcrumbs">
+	<span class="title">You are here: </span>
+	<ul>
+		<li>
+			<a href="/">Home</a>
+		</li>
+		<li class="current">
+			<span></span>
+			Design Guidelines
+		</li>
+	</ul>
+</div>
+
+<div id="body">
+	<div id="sidebar">
+		<div class="topBar"></div>
+		<ul id="nav">
+			<li class="selected"><a href="colours">Colours</a></li>
+			<li><a href="typo">Typography</a></li>
+			<li><a href="buttons">Buttons</a></li>
+			<li><a href="tables">Tables</a></li>
+			<li><a href="forms">Forms</a></li>
+		</ul>
+	</div>
+	<div id="content">
+		<h1>Design Guidelines</h1>
+		<div class="innerContent">
+			<div class="display"></div>
+			<div class="tabs">
+				<h2>Code snipets</h2>
+				<div>
+					<a href="html" class="active">HTML</a>
+					<a href="scss">SCSS</a>
+				</div>
+			</div>
+			<pre class="html">
+				<code class="html">
+
+				</code>
+			</pre>
+			<pre class="scss" style="display: none;">
+				<code class="scss">
+
+				</code>
+			</pre>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody"></div>
+</div>
+<div id="waiting">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>

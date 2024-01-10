@@ -1,0 +1,204 @@
+/*
+Document   : help
+Created on : Jun 14, 2012, 3:41:39 PM
+Author     : gly
+Description: Help styles
+*/
+
+@import "compass/css3";
+@import "partials/def/left_nav";
+
+#body{
+    width: 970px;
+    #content {
+        .inner_content {
+            padding: 15px;
+
+            h2 {
+                font-size: 18px;
+                color: #4f4f4f;
+                margin-bottom: 30px;
+                font-weight: bold;
+            }
+
+            h3 { 
+                font-size: 20px; 
+                color: #13b6ea; 
+                margin: 20px 0 20px;
+                
+                span.dark { 
+                    color: #00478a; 
+                }
+            }
+            
+            h4 { 
+                font-size: 15px; 
+                color: #4f4f4f; 
+                margin: 12px 0 12px; 
+                font-weight: bold; 
+            }
+            
+            ul.pagenav {
+                color: #005aad;
+                font-size: 12px;
+                list-style: none;
+                line-height: 24px;
+                margin-bottom: 25px;
+            }
+
+            ul.points { 
+                list-style: disc; 
+                list-style-position: inside; 
+                margin-bottom: 10px; 
+            }
+            
+            p, ul.points li, dl.simple { 
+                margin-bottom: 10px; 
+                font-size: 12px; 
+                color: #2e3235; 
+                line-height: 1.3em; 
+                margin-right: 20px; 
+            }
+            
+            img { 
+                display: block; 
+                margin: 20px auto 20px;
+                
+                &.inline { 
+                    display: inline; 
+                    margin: 5px 0 5px; 
+                }
+
+                &.infoGraph {
+                    width: 705px;
+                }
+            }
+            
+            strong { 
+                font-weight: bold; 
+            }
+        }
+
+        form#contact, form#contact div.field { 
+            width: 548px; 
+
+            p {
+                &.type {
+                    margin-bottom: 0;
+                }
+            }
+
+            label {
+                top: -3px;
+                margin-right: 15px;
+
+                &[for="name"] {
+                    margin-left: 63px;
+                }
+
+                &[for="email"] {
+                    margin-left: 62px;
+                }
+
+                &[for="message"] {
+                    top: -152px;
+                    margin-left: 43px;
+                }
+            }
+            
+            input[type="text"], input[type="email"], textarea {
+                width: 400px;
+            }
+
+            textarea {
+                height: 145px;
+            }
+
+
+            input[type="submit"] {
+                margin-left: 116px;
+            }
+
+            .error {
+                margin-left: 123px;
+                margin-bottom: 10px;
+            }
+
+            margin: 20px;
+        }
+
+        table#trouble {
+            width: 710px;
+            border: 1px solid #d6dce4;
+            border-bottom:0;
+            
+            th {
+                width: 50%;
+                background-color: #e9edf1;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 16px;
+                font-weight: bold;
+                line-height: 16px;
+                padding: 15px 10px;
+                border-bottom: 1px solid #d6dce4;
+                
+                &.problem {
+                    color: #e81e24;
+                    border-right: 1px solid #d6dce4;
+                }
+                
+                &.solution {
+                    color: #008b00;
+                }
+            }
+            
+            td {
+                padding: 15px 10px 15px 35px;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 12px;
+                line-height: 1.5;
+                color: #2e3235;
+                border-bottom: 1px solid #d6dce4;
+                overflow: visible;
+                
+                &.problem {
+                    font-weight: bold;
+                    border-right: 1px solid #d6dce4;
+                    background: url("../../images/help/attention_icon.png") 9px 15px no-repeat #f5f7fa;
+                }
+                
+                &.solution {
+                    padding: 15px 10px 15px 0px;
+                    font-weight: normal;
+                    background-color: #f5f7fa;
+                    
+                    p{
+                        background: url("../../images/help/arrow-right_icon.png") 14px 1px no-repeat transparent;
+                        padding-left: 35px;
+                        line-height: 1.2;
+                    }
+                }
+                
+                a {
+                    text-decoration: none;
+                    color: #005aad;
+                    
+                    &:hover, &:active {
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+}
+
+#contact {
+    .type {
+        color: #000;
+        padding-left: 5px;
+        
+        span {
+            padding-left: 18px;
+        }
+    }
+}

@@ -1,0 +1,191 @@
+<?php
+$this->headLink()
+->appendStylesheet('/css/reset.css')
+->appendStylesheet('/css/default.css')
+->appendStylesheet('/css/uniform.webreporter.css')
+->appendStylesheet('/css/webreporter/reports/webreporter/webreporter.css');
+
+$isShipMate = $this->data['isShipMate'];
+
+if (strpos($this->data['user']['usrname'], '@')) {
+    $isPagesUser = 1;
+}
+else {
+    $isPagesUser = 0;
+}
+
+$this->getHelper('Requirejs')->addModule('backbone/reports/webreporter/views/mainView')
+->addDefinition('reports/data', json_encode($this->data));
+?>
+<div class="divider"></div>
+<!--End Header-->
+
+<div id="waiting" style="display:block">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>
+
+<!--Breadcrumbs-->
+<div id="breadcrumbs">
+    <span class="title">You are here: </span>
+    <ul>
+        <li>
+            <a href="/">Home</a>
+        </li>
+        <li>
+            <span></span>
+            <a href="/reports/match-new">Reports</a>
+        </li>
+        <li class="current">
+            <span></span>
+            WebReporter
+        </li>
+    </ul>
+</div>
+<!--End Breadcrumbs-->
+<!--Start Content-->
+<div id="body" class="liquid">
+    <div id="content">
+        <h1 class="styled header"><a href="#" class="button small white return">Return to main page</a><span>Standard Reports</span></h1>
+        <div class="innerContent">
+            <div id="infoBox" class="infoBox info">
+                <h2>Welcome to ShipServ WebReporter</h2>
+                <p><?=$this->data['text_welcome']?></p>
+            </div>
+            <form method="post" action="" class="new filtersForm">
+                <input type="hidden" id="_session_id" name="_session_id" value="ST-12-vvgCKkSfWEe7clc3ct9T-cas" />
+            </form>
+            <div class="reportData">
+                <div class="toStick">
+                    <div class="recordInfo"></div>
+                    <!--<a class="fitReport" href="reportData">Expand table to fit data</a>-->
+                    <div class="pagination"></div>
+                    <div class="clear"></div>
+                    <table class="data head">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                    </table>
+                </div>
+                <table class="data body">
+                    <tbody>
+                    </tbody>
+                </table>
+                <table class="data foot">
+                    <thead>
+                        <tr></tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="subReportData">
+                <div class="toStick">
+                    <div class="recordInfo"></div>
+                    <div class="pagination"></div>
+                    <!--<a class="fitReport" href="subReportData">Expand table to fit data</a>-->
+                    <div class="clear"></div>
+                    <table class="data head">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                    </table>
+                </div>
+                <table class="data body">
+                    <tbody>
+                    </tbody>
+                </table>
+                <table class="data foot">
+                    <thead>
+                        <tr></tr>
+                    </thead>
+                </table>
+            </div>
+            <div id="spbChart"></div>
+            <div class="spbReportData rptData">
+                <div class="spbBtns">
+                    <a href="summary" class="selected">Summary</a>
+                    <a href="sumPendQot">Summary (with Pending QOT)</a>
+                    <a href="rfqKpi">RFQ KPI</a>
+                    <a href="qotKpi">QOT KPI</a>
+                    <a href="qotKpiPendQot">QOT KPI (with Pending QOT)</a>
+                    <a href="ordKpi">ORD KPI</a>
+                    <a href="full">Full Report</a>
+                </div>
+                <div class="toStick">
+                    <div class="recordInfo"></div>
+                    <div class="pagination"></div>
+                    <!--<a class="fitReport" href="spbReportData">Expand table to fit data</a>-->
+                    <div class="clear"></div>
+                    <table class="data head">
+                        <thead>
+                            <tr></tr>
+                        </thead>
+                    </table>
+                </div>
+                <table class="data body">
+                    <tbody>
+                    </tbody>
+                </table>
+                <table class="data foot">
+                    <thead>
+                        <tr></tr>
+                    </thead>
+                </table>
+            </div>
+            <div class="pagination"></div>
+            <div class="spbReportData">
+                <table class="data legend">
+                    <thead>
+                        <tr>
+                            <th><strong>Legends:</strong></th>
+                            <th><strong>RFQ KPI</strong></th>
+                            <th><strong>QOT KPI</strong></th>
+                            <th><strong>ORD KPI</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td style="padding: 10px; vertical-align: top;">
+                                <ul>
+                                    <li><strong>∗</strong> RFQ (Source transaction) - counts only original RFQ (ignoring resends and replacements) that come in within the From-To date of the report</li>
+                                    <li><strong>∗</strong> Decline RFQ/Quote (RFQ responses) - counts only the first and original Dec RFQ/Quote falling within the From Date up to the Response End Date based on RFQs that come in within the From Date up to the To Date. Only the first response that comes in is counted.</li>
+                                </ul>
+                                <br /><br />
+                                <ul>
+                                    <li><strong>⊗ Scenario 1</strong>: Multiple quotes may be sent to the same RFQ - only counted as one Quote, the first quote is counted as KPI response for the RFQ.</li>
+                                    <li><strong>⊗ Scenario 2</strong>: RFQ may be declined at first but was later quoted - the Decline RFQ will be counted in the KPI response of the RFQ.</li>
+                                    <li><strong>⊗ Scenario 3</strong>: Responses to resend/replaced RFQ falling within the From Date up to the To Date but whose original RFQ is outside the said date range are not counted for the reporting period, but are counted against the original RFQ.</li>
+                                </ul>
+                            </td>
+                            <td style="padding: 10px; vertical-align: top;">
+                                <ul>
+                                    <li><strong>∗</strong> Quote (Source transaction) - counts only the first and the original Quote (ignoring resends and replacements) that come in within the From-To date of the report for an RFQ (including its resends/replacements) is counted.</li>
+                                    <li><strong>∗</strong> PO (Quote response) - counts only the first and original PO falling within the From Date up to the Response End Date based on Quotes that come in within the From Date up to the To Date</li>
+                                </ul>
+                            </td>
+                            <td style="padding: 10px; vertical-align: top;">
+                                <ul>
+                                    <li><strong>∗</strong> PO (source transaction) - counts only original PO (ignoring resends and replacements) that come in within the From-To date of the report</li>
+                                    <li><strong>∗</strong> Accepted PO/Declined PO/Confirmed PO (PO responses) - counts only the acceptance/decline/confirmation falling within the From Date up to the Response End Date based on POs that come in within the From Date up to the To Date. Only the first response that comes in is counted.</li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="clear"></div>
+            <div class="infoBox yellow attention bottom">
+                <span stlye="display: inline-block; vertical-align: middle; height: 36px"><img src="<?=$baseUrl?>/img/webreporter/information.png" alt="attention" border="0" style="margin: 0; padding:0; margin-right: 5px;"></span>
+                <span style="vertical-align: middle; line-height: 1.5; display: inline-block; width: 840px;"><?php echo $this->data['text_footer']; ?></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody"></div>
+</div>
+
+
+

@@ -1,0 +1,32 @@
+<div class="step1">
+	<div class="box">
+		<label for="firstName">First Name: <sup>*</sup></label>
+		<input type="text" name="firstName" />
+		<br />
+		<label for="lastName">Last Name: <sup>*</sup></label>
+		<input type="text" name="lastName" />
+		<br />
+		<label for="emil">Email: <sup>*</sup></label>
+		<input type="text" name="emil" class="eml" />
+		<br />
+		<label for="pwd">Password: <sup>*</sup></label>
+		<input type="password" name="pwd" class="pwd first"/>
+		<br />
+		<label for="passwordConf">Confirm Password: <sup>*</sup></label>
+		<input type="password" name="passwordConf" class="pwd" />
+		<br />
+		<label for="companyType">Company type: <sup>*</sup></label>
+		<select name="companyType" id="companyType">
+			<option value="">Please Select</option>
+			{{#each models}}
+				<option value="{{this.attributes.id}}">{{this.attributes.name}}</option>
+			{{/each}}
+		</select>
+		<br />
+		<label for="companyOtherType">Other Company Type:</label>
+		<input type="text" name="companyOtherType" />
+		<br />
+	</div>
+	<input type="submit" value="Next step" class="button medium green next" />
+<div>
+

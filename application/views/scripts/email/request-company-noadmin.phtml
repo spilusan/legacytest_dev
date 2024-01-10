@@ -1,0 +1,21 @@
+A ShipServ Pages user has requested to join a company which has no administrator<br />
+to process the request.<br /><br />
+
+User: <?php echo $this->data['requester']['email'] ?><br />
+Company: <?php echo $this->data['company']['type'] ?>, <?php echo $this->data['company']['id'] ?>, <?php echo $this->data['company']['name'] ?><br /><br />
+
+Please validate whether this user is indeed a member of the company indicated<br />
+and if so, approve the request and make this user company administrator by<br />
+clicking this link:<br /><br />
+
+<a href="<?php echo $this->data['links']['superApproveAdmin'] ?>"><?php echo $this->data['links']['superApproveAdmin'] ?></a><br /><br />
+
+If not, decline the request by clicking this link:<br /><br />
+
+<a href="<?php echo $this->data['links']['superDecline'] ?>"><?php echo $this->data['links']['superDecline'] ?></a><br /><br />
+
+You can also approve the request without promoting the user to company
+administrator:<br /><br />
+
+<a href="<?php echo $this->data['links']['superApprove'] ?>"><?php echo $this->data['links']['superApprove'] ?></a><br /><br />
+

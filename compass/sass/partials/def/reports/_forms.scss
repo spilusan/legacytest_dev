@@ -1,0 +1,317 @@
+/*
+Document   : partials/def/reports/_forms.scss
+Created on : Aug 21, 2014, 2:54:43 PM
+Author     : Attila O.
+Description: Transaction Monitor 
+*/
+
+form {
+	/* width: 915px; */
+	margin: 0 0 20px 0;
+	.searchFilters {
+		width: 970px;
+	}
+	.error {
+		padding-bottom: 10px;
+	}
+
+	&.new {
+
+		.singleRow {
+			min-height: 32px;
+			position: relative;
+
+		}
+
+		input[type="text"] {
+			margin-bottom: 6px;
+		}
+
+		.selector {
+			margin-bottom: 6px;
+			margin-top: -4px;
+		}
+
+		.help {
+			position: relative;
+			top: 2px;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.filters {
+			position: relative;
+			display: block;
+			float: left;
+			width: 615px;
+			height: 362px;
+			background-color: #d6dce4;
+			margin-right: 3px;
+			padding: 17px 10px 13px 10px;
+			@include border-radius(6px 0 0 6px);
+			behavior: url(/css/PIE.htc);
+
+			&.sub {
+				height: 185px;
+			}
+
+			&.analysis {
+				height: 210px;
+
+				&.sub {
+					height: 267px;
+				}
+			}
+
+			&.adv {
+				height: 270px;
+
+				&.sub {
+					height: 331px;
+				}
+			}
+
+			label {
+				display: block;
+				float: left;
+				font-size: 11px;
+				color: #525c64;
+				font-weight: bold;
+			}
+
+			.delayInfo {
+				font-size:11px;
+				margin-top: 10px;
+			}
+
+			fieldset {
+				&.reportInfo {
+					float: left;
+					width: 310px;
+					border-right: 1px dotted #6b6e72;
+
+					label {
+						width: 100px;
+					}
+
+					.selector {
+						width: 175px;
+
+						span {
+							width: 150px;
+						}
+
+						select {
+							width: 183px;
+						}
+					}
+
+					#spbAnalysis1 {
+						input[name="rptAsOfDate"] {
+							height:15px;
+							width:136px;
+						}
+
+						label {
+							width: 150px;
+						}
+
+						.advancedOpts {
+							input[type="text"] {
+								width:136px;
+							}
+						}
+					}
+					.buyerreference {
+						width: 162px;
+					}
+				}
+
+				&.reportDates {
+					padding-left: 15px;
+
+					label {
+						width: 100px;
+					}
+
+					select, input[type="text"], textarea {
+						width: 162px;
+					}
+
+					input[name="fromDate"], input[name="toDate"] {
+						height:15px;
+						width:136px;
+					}
+
+					textarea {
+						height: 60px;
+					}
+
+					.selector {
+						width: 175px;
+
+						span {
+							width: 150px;
+						}
+					}
+
+					#spbAnalysis2{
+						label {
+							width: 140px;
+						}
+
+						.advancedOpts {
+							input[type="text"] {
+								width:50px;
+								margin-top:1px;
+							}
+						}
+
+						.pdfDown {
+							a {
+								font-size: 11px;
+								vertical-align: 40%;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.actions {
+			position: relative;
+			display: block;
+			float: right;
+			width: 310px;
+			height: 324px;
+			background-color: #d6dce4;
+			padding: 48px 10px 20px 10px;
+			@include border-radius(0 6px 6px 0);
+			behavior: url(/css/PIE.htc);
+
+			&.sub {
+				height: 185px;
+			}
+
+			&.analysis {
+				height: 210px;
+
+				&.sub {
+					height: 267px;
+				}
+			}
+
+			&.adv {
+				height: 270px;
+
+				&.sub {
+					height: 331px;
+				}
+			}
+
+			hr {
+				border:0;
+				border-top: 1px dotted #686c6f;
+			}
+
+			input.button.large {
+				width: 97%;
+
+			}
+
+			input[name="runReport"] {
+				margin: 0px 0px 10px 8px;
+				font-size: 16px;
+			}
+
+			button[name="csvExport"] {
+				padding-left: 49px;
+				padding-right: 49px;
+				margin-bottom: 10px;
+			}
+
+			select {
+				width: 186px;
+				margin-top: 2px;
+			}
+
+			.selector {
+				width: 175px;
+
+				span {
+					width: 150px;
+				}
+			}
+
+			label {
+				display: block;
+				width: 115px;
+				margin-left: 8px;
+				float: left;
+				font-size: 11px;
+				color: #525c64;
+				font-weight: bold;
+			}
+			input[type="text"] {
+				width: 162px;
+			}
+
+			.selector {
+						width: 175px;
+
+						span {
+							width: 150px;
+						}
+
+						select {
+							width: 183px;
+						}
+					}
+		}
+
+		.radiobox {
+			display: inline-block;
+			float: left;
+			height: 32px;
+			label {
+				width: auto !important;
+				padding-right: 12px;
+			}
+			
+		}
+
+		.buyerreference {
+			width: 183px;
+
+		}
+		.delayInfo {
+			clear: both;
+			padding: 12px 0px 12px 0px;
+		}
+		.textBlock {
+			display: block;
+			position: absolute;
+			z-index: 999;
+			top: 0px;
+			right: -17px;
+			margin: 0px;
+			padding: 0px;
+			height: 32px;
+			line-height: 32px;
+			width: 25px;
+			background-color: #d6dce4;
+			color: #525c64;
+			font-size: 11px;
+			font-weight: normal;
+			}
+
+	}
+}
+#body {
+	min-height: 427px;
+}
+#footer {
+	display: none;
+}

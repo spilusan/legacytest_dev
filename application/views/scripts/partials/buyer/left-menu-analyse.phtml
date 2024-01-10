@@ -1,0 +1,22 @@
+<?
+    $menuObj = Shipserv_Profile_Menuoptions::getInstance();
+    $options =  $menuObj->getAnalyseTabOptions();
+    
+    if (!$menuObj->isLoggedIn()) {
+        Myshipserv_CAS_CasRest::getInstance()->redirectToLogin();
+    } 
+
+    //if (!$menuObj->hasTradenetUser()) throw new Exception("Tradenet User's not supplied", 1);
+?>
+
+<ul id="nav">
+    <?php foreach ($options as $option): ?>
+         <li<? if ($option['selected']): ?> class="selected"<? endif ?>>
+             <? if ($option['selected']): ?>
+                <?= $option['title'] ?>
+             <? else: ?>
+                <a href="<?= $option['href'] ?>"><?= $option['title'] ?></a>
+             <? endif ?>
+         </li>
+    <?php endforeach ?>
+</ul>

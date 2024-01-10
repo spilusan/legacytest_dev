@@ -1,0 +1,138 @@
+#body {
+	#content {
+		table {
+			&.rfqList {
+				tbody {
+					tr.detailSections {
+						td {
+							&.sections {
+								.section {
+									&.sendTo, &.recommended {
+										.details {
+											padding-left: 0;
+											padding-right: 0;
+									
+											table {
+												width: 613px;
+												border-collapse: collapse;
+												table-layout: fixed;
+												border-top: 1px solid #d6dce4;
+												border-left: 1px solid #d6dce4;
+												margin: 1px 5px 10px 5px;
+
+												tr {
+													th, td {
+														border: 0;
+														border-right: 1px solid #d6dce4;
+														border-bottom: 1px solid #d6dce4;
+													}
+												}
+
+												thead {
+													tr {
+														th {
+															background: transparent;
+															color: #2e3235;
+															white-space: normal;
+															padding: 5px 2px;
+															font-size: 10px;
+															cursor: default;
+
+															span {
+																font-weight: normal;
+															}
+
+															&.sup {
+																width: 112px;
+															}
+
+															&.mr {
+																width: 48px;
+															}
+														}
+													}
+												}
+
+												tbody {
+													tr {
+														td {
+															white-space: normal;
+
+															&.mr {
+																text-align: right;
+																span {
+																	padding: 3px 5px;
+																	border: 2px solid #caedf9;
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+
+									&.sendTo {
+										table {
+											thead {
+												tr {
+													th {
+														&.typ {
+															width: 62px;
+														}
+
+														&.stat {
+															width: 50px;
+														}
+
+														&.qd {
+															width: 62px;
+														}
+
+														&.tpo {
+															width: 87px;
+														}
+
+														&.tpu {
+															width: 87px;
+														}
+													}
+												}
+											}
+
+											tbody {
+												tr {
+													td {
+														&.tpo, &.tpu, &.liq {
+															text-align: right;
+														}
+													}
+												}
+											}
+										}
+									}
+
+									&.recommended {
+										thead {
+											tr {
+												th {
+													&.tr {
+														width: 82px;
+													}
+
+													&.md {
+														width: 260px;
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

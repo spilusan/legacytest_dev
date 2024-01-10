@@ -1,0 +1,148 @@
+
+#body {
+
+	width: 1335px !important;
+
+    #sidebar {
+    	ul {
+    		&#nav {
+    			li {
+    				&.selected {
+    					padding: 0px;
+    				}
+    			}
+    		}
+    	}
+    }
+
+	#content {
+        width: 1100px;
+        left: 0 !important;
+
+	        .warning {
+	        	padding: 20px 15px 20px 65px;
+				color: #FF0000;
+				font-weight: bold;
+				position: relative;
+				margin: 6px 0px;
+	  			border: 1px solid #FF0000; 
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+				background: transparent url(/img/icons/large/attention.png) no-repeat left 6px top 6px; 
+				overflow: auto;
+	        }
+
+			input {
+					top: -7px;
+			}
+			#filters {
+				margin: 6px 0px;
+				form {
+						&.new {
+							padding: 6px;
+							border: 1px solid #d9d9d9;
+							@include border-radius(3px);
+							behavior: url(/css/PIE.htc);
+							position: relative; 
+							.align {
+								display: block;
+								position: absolute;
+								right: 16px;
+								top: 50%;
+								margin-top: -17px;
+								z-index: 999;
+							}
+							.error {
+								background-position: right 4px top 4px;
+								}
+							label {
+								top: 0px;
+								top: -7px;
+								&.large {
+									display: inline-block;
+									width: 90px;
+								}
+							}
+							div {
+								&.checker {
+									top: -5px;
+								}
+							}
+						}
+					fieldset {
+						position: relative;
+							#pullDown {
+								display: none;
+								position: absolute;
+								z-index: 999;
+								background-color: white;
+								  width: 600px;
+								  left: 95px;
+								  height: 200px;
+								  overflow: auto;
+								  border: 1px solid #d9d9d9;
+								  top: -2px;
+								ul {
+
+									padding-left: 20px;
+									li {
+										margin-left: -10px;
+										font-size: 11px;
+										/* width: 100%; */
+										height: 18px;
+										padding: 2px;
+										color: #666;
+										white-space: nowrap;
+										overflow: hidden;
+										text-overflow: ellipsis;
+										text-indent: 5px;
+										cursor: pointer;
+										&.selected {
+											background-color: #666;
+											color: white;
+										}
+										span {
+											float: left;
+											height: 18px;
+											line-height: 18px;
+											&.toggleDown, &.toggleUp, &.noToggle {
+												display: inline-block;
+												
+											}
+											&.toggleDown {
+												background: transparent url(/img/icons/small/minus-sign.png) no-repeat top left 2px;
+												width: 20px;
+											}
+											&.toggleUp {
+												background: transparent url(/img/icons/small/plus-sign.png) no-repeat top left 2px;
+												width: 20px;
+											}
+											&.noToggle {
+												width: 2px;
+											}
+										}
+									}
+									li:hover {
+										background-color: #d9d9d9;
+									}
+
+								}
+							}
+							select {
+								width: 486px;
+							}
+							.selector {
+								width: 486px;
+								span {
+									width: 460px;
+								}
+							}
+					}
+
+				}
+
+			}
+
+	
+	}
+}

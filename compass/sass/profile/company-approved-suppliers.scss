@@ -1,0 +1,23 @@
+/*
+Document   : company-ascssproved-suppliers..scss
+Created on : 2015-04-01
+Author     : Attila O
+Description: combining partials for Approved Suppliers
+*/
+
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/min";
+
+@import "partials/def/left_nav";
+@import "partials/def/context_help";
+@import "partials/def/modal_new";
+@import "partials/def/datepicker";
+
+@import "partials/profile/approvedSuppliers/content";
+@import "partials/profile/approvedSuppliers/filters";
+@import "partials/profile/approvedSuppliers/modal";
+@import "partials/itemselector/selectorNew";
+
+ @import "partials/profile/matchControlPanel/content"; 
+

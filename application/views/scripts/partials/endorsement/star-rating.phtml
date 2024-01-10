@@ -1,0 +1,13 @@
+<div class="star-rating">
+	<?php
+		for ($i = 1; $i <= $this->stars; $i++ )
+		{
+			echo "<div class='active-star png'></div>";
+		}
+		for ($i = ($this->stars+1); $i <= 5; $i++ )
+		{
+			echo "<div class='passive-star png'></div>";
+		}
+	?>
+	<div class="clear"></div>
+</div>

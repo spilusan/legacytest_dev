@@ -1,0 +1,63 @@
+<?
+	$this->CDNLink()->appendStylesheet('/css/popup.css')
+					->appendStylesheet('/css/style.css');
+					
+	$this->requirejs()->addModule('modal');
+
+	$this->headScript()->appendScript("
+		require(['modal'], function($) {
+			$('#eg').bind('click', function() {
+				$('<div class=testpopup1><p>Testing...</p></div>').bind('close', function(){ console.log('close'); }).ssmodal({'title' : 'Hello World!'});
+				return false;
+			});
+			
+		});
+		
+	");
+?>
+
+<style type="text/css">
+.testpopup1 { width: 900px; height: 600px; }
+</style>
+
+<div class="content_wide new clearfix zz">
+	
+	<?=$this->partial('/style/subnav.phtml', $this)?>
+	
+	<div class="content_right">
+
+	
+	<div class="zz header"><h2>Style Guidelines - Popup</h2></div>
+	
+		<p>A module for displaying content in a modal, in-page 'popup'. <a id="eg" href="#">Example</a>.</p>
+		
+		<p>Including the module from PHP (in the view):</p>
+		<pre class="code">					
+			$this->requirejs()->addModule('modal');
+		</pre>
+		
+		<p>Create a modal dialogue with a HTML string:</p>
+		
+		<pre class="code"> 
+			$('&lt;p&gt;Testing...&lt;/p&gt;').ssmodal({ 'title' : 'Hello World!' });
+		</pre>
+		
+		<p>Or create with a DOM element:</p>
+		<pre class="code">
+			$('#myPopup').ssmodal({title: 'My Popup'});
+		</pre>
+		
+		<p>Bind to close event:</p>
+		<pre class="code">
+			$('#myPopup').bind('close', function () { 
+							 //Do things on close here
+							 
+							 //To cancel closing, return false;
+						 })
+						 .ssmodal({title: 'My Popup'})
+						 
+		</pre>
+		
+		<p>&nbsp;</p>
+	</div>
+</div>

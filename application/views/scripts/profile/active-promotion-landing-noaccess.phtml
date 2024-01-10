@@ -1,0 +1,26 @@
+<?php
+    $this->headLink()->appendStylesheet('/css/uniform.default.new.css');
+    $this->headLink()->appendStylesheet('/css/profile/promoLanding.css');
+
+    $breadcrumbs = array(array('name' => 'Home',
+                               'url'  => '/search'),
+                         array('name' => 'Profile',
+                               'url'  => '/profile'),
+                         array('name' => 'Set Active Promotion Status',
+                               'url'  => '/profile/active-promo-landing'));
+
+?>
+<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+<div id="body">
+    <h1 class="styled"><i class="fa fa-user" aria-hidden="true"></i> Permission required</h1>
+    <div id="content">
+            <div class="messageBox">
+            	<p>
+	            	This account does not have permission to perform this action.<br />
+					This setting is controlled by your administrator.
+				</p>
+              	<br />
+              	<a class="button medium green"href="/search">Go to Homepage</a>
+            </div>
+    </div>
+</div>

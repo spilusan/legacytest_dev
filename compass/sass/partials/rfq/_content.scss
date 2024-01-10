@@ -1,0 +1,116 @@
+/*
+Document   : partials/rfq/_content.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: styles for rfq content
+*/
+
+#body {
+	width: 960px;
+	h1 {
+		span {
+			float: right;
+			font-size: 12px;
+			font-weight: bold;
+			padding-top: 3px;
+		}
+	}
+
+	#content {
+		.info {
+			font-size: 12px;
+			line-height: 1.2;
+			padding-bottom: 5px;
+			padding-top: 5px;
+
+			span {
+				float: right;
+				font-size: 14px;
+				font-weight: bold;
+				color: #008b00;
+				top: 5px;
+			}
+
+			img {
+				vertical-align: middle;
+				padding-right: 17px;
+				border-right: 1px dotted grey;
+				float: left;
+
+				&.long {
+					margin-bottom: 0;
+					padding-bottom: 70px;
+				}
+			}
+
+			p {
+				position: relative;
+				top: -5px;
+				padding: 0px 0 5px 45px;
+			}
+		}
+
+		.spacer {
+			height: 20px;
+		}
+	}
+}
+
+#modalContact {
+	width: 460px;
+	.modalContent {
+
+		&.contactModal {
+			width: 430px;
+			overflow: hidden; 
+			overflow-y: auto;
+
+			h2 {
+				font-size: 18px;
+				font-weight: bold;
+			}
+
+			p.location {
+				font-size: 13px;
+				font-weight: bold;
+				color: #008711;
+				padding-bottom: 10px;
+			}
+
+			.box {
+				position: relative;
+				padding: 10px;
+				border: 1px solid #d6dce4;
+				@include border-radius(6px);
+				margin-bottom: 10px;
+				behvior: url(/css/PIE.htc);
+
+
+				&.noMargin {
+					margin-bottom: 0;
+				}
+
+				h2 {
+					font-size: 16px;
+				}
+
+				p.margin {
+					margin-bottom: 5px;
+				}
+			}
+		}
+	}
+}
+
+#modal {
+	.modalContent {
+		form.chooseSupplier {
+			select {
+				width: 360px;
+			}
+			#cancelButton.red {
+				color: #ffffff;
+			}
+		}
+	}
+}

@@ -1,0 +1,105 @@
+			<form id="userForm">
+			<input type="hidden" name="PSU_ID" value="{{PSU_ID}}" />
+			<input type="hidden" name="USR_USER_CODE" value="{{PSU_ID}}" />
+			<div class="detail">
+
+				{{#ifCond this.CAN_LOGIN_AS 'Y'}}
+				<h2>Login As</h2>
+				<div class="data-value">
+					<label for="superpassword">Super password: </label><input type="password" id="super-password" name="superpassword" value="" /><br/>
+					<input type="submit" name="loginas" id="loginas" value="Login as" />
+				</div>
+				{{/ifCond}}
+				
+				<h2>Personal detail</h2>
+				<!-- <h3>User</h3> -->
+
+
+				<div class="group">
+
+					<div class="group-row">
+						<div class="caption">Email is Verified</div>
+						<div class="data-value">
+							<select name="PSU_EMAIL_CONFIRMED">
+								<option value="Y" {{#ifCond this.PSU_EMAIL_CONFIRMED 'Y'}}selected="selected"{{/ifCond}}>Y (confirmed)</option>
+								<option value="P" {{#ifCond this.PSU_EMAIL_CONFIRMED 'P'}}selected="selected"{{/ifCond}}>P (invited and pending)</option>
+								<option value="N" {{#ifCond this.PSU_EMAIL_CONFIRMED 'N'}}selected="selected"{{/ifCond}}>N (signed up and pending)</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="group-row">
+						<div class="caption">Status</div>
+						<div class="data-value">
+							<select name="USR_STS">
+								<option value="ACT" {{#ifCond this.USR_STS 'ACT'}}selected="selected"{{/ifCond}}>Active</option>
+								<option value="INA" {{#ifCond this.USR_STS 'INA'}}selected="selected"{{/ifCond}}>Inactive</option>
+							</select>
+						</div>
+					</div>
+
+
+					<div class="group-row">
+						<div class="caption">First name</div>
+						<div class="data-value"><input type="text" name="PSU_FIRSTNAME" value="{{PSU_FIRSTNAME}}" /></div>
+					</div>
+
+					<div class="group-row">
+						<div class="caption">Last name</div>
+						<div class="data-value"><input type="text" name="PSU_LASTNAME" value="{{PSU_LASTNAME}}" /></div>
+					</div>
+
+
+					<div class="group-row">
+						<div class="caption">Email</div>
+						<div class="data-value"><input type="text" name="PSU_EMAIL" value="{{PSU_EMAIL}}" /></div>
+					</div>
+
+					<h2>Company detail</h2>
+					<div class="group-row">
+						<div class="caption">Name</div>
+						<div class="data-value"><input type="text" name="PSU_COMPANY" value="{{PSU_COMPANY}}" /></div>
+					</div>
+
+					<div class="group-row">
+						<div class="caption">Address</div>
+						<div class="data-value"><input type="text" name="PSU_COMPANY_ADDRESS" value="{{PSU_COMPANY_ADDRESS}}" /></div>
+					</div>
+
+					<div class="group-row">
+						<div class="caption">Zip/Post code</div>
+						<div class="data-value"><input type="text" name="PSU_COMPANY_ZIP_CODE" value="{{PSU_COMPANY_ZIP_CODE}}" /></div>
+					</div>
+
+					<div class="group-row">
+						<div class="caption">Phone</div>
+						<div class="data-value"><input type="text" name="PSU_COMPANY_PHONE" value="{{PSU_COMPANY_PHONE}}" /></div>
+					</div>
+
+					<div class="group-row">
+						<div class="caption">Website</div>
+						<div class="data-value"><input type="text" name="PSU_COMPANY_WEBSITE" value="{{PSU_COMPANY_WEBSITE}}" /></div>
+					</div>
+
+					<div class="group-row">
+						<div class="caption"># of Vessel</div>
+						<div class="data-value"><input type="text" name="PSU_COMPANY_NO_VESSEL" value="{{PSU_COMPANY_NO_VESSEL}}" /></div>
+					</div>
+
+					<div class="inline-control">
+						<input type="button" value="Save" id="saveDataBtn">
+						<input type="reset" value="Reset">
+					</div>
+
+
+					</form>
+
+					<h2>Related companies</h2>
+					<div class="company-membership"></div>
+
+					<h2>Recent activities</h2>
+					<div class="activity"></div>
+
+					<!-- <a href="/profile/user-activity?userId={{PSU_ID}}" target="_blank">Click here</a> -->
+				</div>
+			</div>

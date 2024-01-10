@@ -1,0 +1,72 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/reports/priceTracker.css')
+					 ->appendStylesheet('/css/uniform.default.new.css');
+
+	$this->getHelper('Requirejs')->addModule('backbone/reports/priceTracker/views/mainView');
+	$user = Shipserv_User::isLoggedIn();
+	$shipservUser = $user->isShipservUser();
+?>
+
+<div id="breadcrumbs">
+	<span class="title">You are here: </span>
+	<ul>
+		<li>
+			<a href="/">Home</a>
+		</li>
+		<li>
+			<span></span>
+			<a href="/buy/rfq">Analyse</a>
+		</li>
+		<li class="current">
+			<span></span>
+			Price Tracker
+		</li>
+	</ul>
+</div>
+
+<script>
+    var defaultFromDate = '<?php echo $this->defaultFromDate->format('d/m/y'); ?>';
+    var defaultDayRange = <?php echo $this->defaultDayRange; ?>;
+</script>
+
+<div id="body" class="liquid">
+	<div id="content">
+		<h1 class="styled header">IMPA Spend Tracker <sup>BETA</sup></h1>
+		<div id="innerContent">
+			<form class="filters new"></form>
+			<p id="tableCaption">&nbsp;</p>
+			<table>
+				<thead>
+					<tr>
+						<th>IMPA code</th>
+						<th>Description</th>
+						<th class="text-center">Unit</th>
+						<th class="text-center">Number of times purchased</th>
+						<th class="text-center">Total units purchased</th>
+						<th class="text-center">Average price per unit, USD</th>
+						<th class="text-center">Total spend</th>
+						<th class="text-center">Average market unit price<br>(USD)</th>
+						<th class="text-center"><span class="colorDefault">Savings</span> / <span class="colorDefaultred">Overspend</span></th>
+					</tr>
+				</thead>
+				<tbody class="dataBox">
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</div>
+<div class="clear"></div>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody"></div>
+</div>
+<div id="waiting">
+	<div class="waitingMessage">
+		<div>
+			Loading. <br />
+			This report can take<br/> 
+			1 - 3 minutes to run...</div>
+		</div>
+	<div class="waitingMask"></div>
+</div>

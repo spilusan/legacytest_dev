@@ -1,0 +1,66 @@
+<table cellpadding="0" cellspacing="0" border="0">
+	<thead>
+		<tr>
+			<th class="sup">Supplier</th>
+			<th class="mr">Match rank</th>
+			<th class="typ">Type</th>
+			<th class="stat">Status</th>
+			<th class="qd">Quote date</th>
+			<th class="tpo">
+				Total price <br/>
+				<span>(original currency)</span>
+			</th>
+			<th class="tpu">
+				Total price <br/>
+				<span>(USD currency)</span>
+			</th>
+			<th>% line items quoted</th>
+		</tr>
+	</thead>
+	<tbody id="sent">
+		{{#each this}}
+			<tr>
+				<td>
+					<a href="{{this.attributes.url}}" target="_blank">{{this.attributes.name}}</a><br />
+					{{this.attributes.city}}
+				</td>
+				<td class="center">
+					<span>
+						{{#if this.attributes.rank}}
+							{{this.attributes.rank}}
+						{{else}}
+							-
+						{{/if}}
+					</span>
+				</td>
+				<td>
+					{{#if this.attributes.from_match}}
+						Matched
+					{{else}}
+						Not Matched
+					{{/if}}
+				</td>
+				<td>
+					{{this.attributes.stat}}
+				</td>
+				<td>
+					{{this.attributes.quote_date}}<br />
+					{{#if this.attributes.quote_url}}
+						<a href="{{this.attributes.quote_url}}" target="_blank">View quote</a>
+					{{/if}}
+				</td>
+				<td class="right">
+					{{formatCurrency this.attributes.quote_price}}
+				</td>
+				<td class="right">
+					{{formatCurrency this.attributes.quote_price_usd}}
+				</td>
+				<td class="right">
+					{{#if this.attributes.quote_share}}
+						{{this.attributes.quote_share}} %
+					{{/if}}
+				</td>
+			</tr>
+		{{/each}}
+	</tbody>
+</table>

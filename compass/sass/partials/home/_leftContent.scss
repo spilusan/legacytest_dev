@@ -1,0 +1,248 @@
+/*
+Document   : home/_leftContent.scss
+Created on : Dec 17, 2013, 3:00:43 PM
+Author     : gly
+Description: styles for left content
+*/
+
+#body {
+	.leftContent {
+		width: 640px;
+		float: left;
+
+		.infoBox {
+			padding: 20px;
+			position: relative;
+			@include border-radius(6px);
+			border: 1px solid #d6dce4;
+			background:#ffffff;
+			behavior: url(/css/PIE.htc);
+			margin-bottom: 10px;
+
+			.supplierCount {
+				position: absolute;
+				width: 110px;
+				height: 110px;
+				right: 0;
+				top: 0;
+				background:url(/img/home/supplierCount.png) no-repeat left top transparent;
+			}
+
+			.vesselCount {
+				position: absolute;
+				width: 110px;
+				height: 110px;
+				right: 0;
+				top: 0;
+				background:url(/img/home/vesselCount.png) no-repeat left top transparent;
+			}
+
+			h1 {
+				color: #087ec5;
+				font-weight: normal;
+				font-size: 30px;
+				margin-bottom: 18px;
+			}
+
+			h2 {
+				color: #2e3235;
+				font-size: 15px;
+				margin-bottom: 18px;
+			}
+
+			.leftBox {
+				width: 350px;
+				float: left;
+
+				ul {
+					list-style: none;
+					padding: 0;
+					margin: 0;
+					margin-bottom: 25px;
+
+					li {
+						font-size: 15px;
+						font-weight: bold;
+
+						&:before {
+							content: "\2714";
+							color: #1b9810;
+							font-size: 28px;
+							height: 25px;
+							margin: 0;
+							vertical-align: middle;
+							width: 38px; 
+							font-style: normal;
+							padding-right: 5px;
+						}
+					}
+
+					&.supplier {
+						li {
+							&:before {
+								color: #087ec5;
+							}
+						}
+					}
+				}
+
+				.left {
+					float: left;
+
+					.button {
+						padding-left: 30px;
+						padding-right: 30px;
+						position: relative;
+						top: 9px;
+						font-size: 18px;
+					}
+				}
+
+				.right {
+					float: left;
+					margin-left: 13px;
+
+					a {
+						font-weight: bold;
+						color: #005aad;
+						font-size: 12px;
+						position: relative;
+						top: 9px;
+
+						&:after {
+							content: "";
+							@include inline-block;
+							width: 11px;
+							height: 11px;
+							overflow: hidden;
+							background: url(/img/icons/small/blue_arrows_sprite.png) no-repeat left -11px transparent;
+						}
+					}
+				}
+			}
+
+			.rightBox {
+				width: 235px;
+				float:  right;
+
+				img {
+					margin-top: 20px;
+				}
+			}
+
+			.testimonial {
+				margin-top: 30px;
+				margin-bottom: 20px;
+
+				p {
+					font-size: 13px;
+					font-style: italic;
+					color: #525c64;
+					line-height: 1.5;
+
+					&.small {
+						font-size: 11px;
+						margin-top: 3px;
+					}
+					
+					a {
+						font-style: normal;
+						font-weight: bold;
+					}
+
+					span {
+						@include inline-block;
+						width: 20px;
+						height: 18px;
+						overflow: hidden;
+						position: relative;
+
+						&.before {
+							margin-right: 5px;
+							top: -6px;
+							background:url(/img/icons/medium/quotesLblue.png) no-repeat left top transparent;
+						}
+
+						&.after {
+							margin-left: 5px;
+							top: 0;
+							background:url(/img/icons/medium/quotesLblue.png) no-repeat left -18px transparent;
+						}
+					}
+				}
+			}
+
+			&.buyer {
+				h1 {
+					color: #008b00;
+				}
+
+				.right {
+					padding-bottom: 16px;
+				}
+
+				.testimonial {
+					p {
+						span {
+							&.before {
+								background:url(/img/icons/medium/quotesGreen.png) no-repeat left top transparent;
+							}
+
+							&.after {
+								background:url(/img/icons/medium/quotesGreen.png) no-repeat left -18px transparent;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.whiteBox {
+			&.left, &.right {
+				width: 305px;
+			}
+
+			&.left {
+				float: left;
+			}
+
+			&.right {
+				float: right;
+			}
+
+			.posts {
+				padding: 0 10px 10px 10px;
+
+				a.article {
+					border-bottom: 1px dotted #7f7f7f;
+					display: block;
+					padding: 10px 0;
+
+					span {
+						display: block;
+						line-height: 1.2;
+
+						&.title {
+							font-size: 15px;
+							margin-bottom: 5px;
+						}
+
+						&.text {
+							font-size: 12px;
+							color: #2e3235;
+							max-height: 70px;
+							overflow: hidden;
+						}
+					}
+				}
+
+				a.button {
+					margin-top: 10px;
+					display: block;
+					width: 40px;
+					text-align: center;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,74 @@
+			<div class="detail">
+				
+				<h2>{{bybName}}</h2>
+				<h3>Buyer Branch</h3>
+				<div class="group">
+				
+					<div class="group-row">
+						<div class="caption">Branch ID</div>
+						<div class="data-value">{{bybBranchCode}}</div>
+					</div>
+
+					<div class="group-row">
+						<div class="caption">Organisation ID</div>
+						<div class="data-value search-link" dataType="buyer-org" dataId="{{bybByoOrgCode}}">{{bybByoOrgCode}}</div>
+					</div>
+					
+					<div class="group-row">
+						<div class="caption">Name</div>
+						<div class="data-value">{{bybName}}</div>
+					</div>
+
+					<div class="group-row">
+						<div class="caption">Status</div>
+						<div class="data-value">{{#ifCond bybSts 'INA'}}Inactive{{/ifCond}}{{#ifCond bybSts 'ACT'}}Active{{/ifCond}}</div>
+					</div>
+					
+					<div class="group-row">
+						<div class="caption">No of registered ships</div>
+						<div class="data-value">{{bybNoOfRegisteredShips}}</a></div>
+					</div>
+					
+					<div class="group-row">
+						<div class="caption">No of trading ships</div>
+						<div class="data-value">{{bybNoOfTradingShips}}</a></div>
+					</div>				
+
+					<div class="group-row">
+						<div class="caption">Region</div>
+						<div class="data-value">{{bybTopRegion}}</a></div>
+					</div>		
+					
+					<div class="group-row">
+						<div class="caption">Integration type</div>
+						<div class="data-value">{{bybIntegrationType}}</a></div>
+					</div>		
+					
+					<div class="group-row">
+						<div class="caption">Email address</div>
+						<div class="data-value">{{bybEmailAddress}}</a></div>
+					</div>		
+				
+					<div class="group-row">
+						<div class="caption">Contract type</div>
+						<div class="data-value">{{bybContractType}}</a></div>
+					</div>		
+			
+					<div class="group-row">
+						<div class="caption">Created by</div>
+						<div class="data-value">{{bybCreatedBy}}</a></div>
+					</div>	
+					
+					<h2>Connected users</h2>
+					<div class="company-membership"></div>
+					
+					<!-- 
+					<h2>Useful links</h2>
+					<div class="group-row">
+						<a href="/reports/?tnid={{tnid}} ">SIR xxx</a>
+						<br /><a href="/reports/gmv/?tnid={{tnid}} ">GMV Report xxx</a>
+						<br /><a href="/reports/supplier-conversion/?tnid={{tnid}} ">Conversion xxx</a>
+					 -->
+
+				</div>
+			</div>

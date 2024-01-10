@@ -1,0 +1,30 @@
+<div id="topToolBar" style="height:40px;">
+		<div id="closeTooltipButton"></div>
+		<div class="clear"></div>
+</div>
+<div id="membership_body">
+    <div class="zz header">
+        <h2>Level of Integration</h2>
+    </div>
+    <div class="cont">
+        <p>Shows the level of integration between the supplier's order system and TradeNet. All a supplier needs to trade on TradeNet is an email address and access to the Internet. Some suppliers, however, have taken further steps to more fully optimize their business for online trading by installing one of our supplier trading solutions: <a href="/info/im-a-supplier/smartsupplier/" target="_blank">SmartSupplier</a> or the more advanced <a href="/info/im-a-supplier/expertsupplier/" target="_blank">ExpertSupplier</a>.</p>
+    </div>
+</div>
+<script type="text/javascript">
+	<!--	
+	$(document).ready(function(){
+		$('#closeTooltipButton').click(function (e) {
+			e.preventDefault();
+			$('#mask').hide();
+			$('#membership_tooltip').hide();
+			$('#membership_tooltip').html('');
+		});
+        $('#mask').click(function (e) {
+			e.preventDefault();
+			$('#membership_tooltip').hide();
+			$('#membership_tooltip').html('');
+		});
+
+	});
+	//-->
+</script>

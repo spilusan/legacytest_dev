@@ -1,0 +1,31 @@
+<!--
+    Testing match engine stored searches introduced in S7924
+
+    Run as phpunit -c storedSearch.xml
+    Rfq IDs to test against can be specified under <php> section as "rfqId1", "rfqId2" ... "rfqIdN"
+
+    @author     Yuriy Akopov
+    @date       2013-08-20
+-->
+<phpunit bootstrap="bootstrap.php">
+    <testsuites>
+        <testsuite name="Stored Search">
+            <file>library/Match/storedSearch/storedSearchTest.php</file>
+        </testsuite>
+    </testsuites>
+    <php>
+        <!--
+            Environment to use, as required by Bootstrap-cli.php
+            Supported values:  development|testing|test2|ukdev|production
+        -->
+        <var name="phpUnitEnv" value="development" />
+        <!--
+            If "true", DB records created in the process of testing will be removed. If not, they'll remain in the DB
+            for the tester to have a look
+        -->
+        <var name="dbCleanUp" value="true" />
+
+        <!-- RFQs to test -->
+        <var name="rfqId1" value="20000458" />
+    </php>
+</phpunit>

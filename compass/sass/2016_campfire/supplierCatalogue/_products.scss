@@ -1,0 +1,14 @@
+#product-results {
+  .product_items {
+    div {
+      &.image {
+        i {
+          &.fa-picture-o {
+            font-size: 36px;
+            color: $mid-grey;
+          }
+        }
+      }
+    }
+  }
+}

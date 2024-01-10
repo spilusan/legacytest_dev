@@ -1,0 +1,193 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/reports/marketSizing.css')
+					 ->appendStylesheet('/css/uniform.rfq.css');
+
+	$this->getHelper('Requirejs')->addModule('backbone/reports/marketSizing/views/mainView');
+
+	$user = Shipserv_User::isLoggedIn();
+	$shipservUser = $user->isShipservUser();
+
+    //	$this->getHelper('Requirejs')->addDefinition('buyer/rfq-outbox/tnid', $this->activeCompany->company->tnid);
+?>
+<div id="breadcrumbs">
+	<span class="title">You are here: </span>
+	<ul>
+		<li>
+			<a href="/">Home</a>
+		</li>
+		<li>
+			<span></span>
+			<a href="/buy/rfq">Analyse</a>
+		</li>
+		<li class="current">
+			<span></span>
+			Market Sizing Tool
+		</li>
+	</ul>
+</div>
+
+<div id="body">
+	<div id="content">
+		<h1 class="styled">Market Sizing Tool</h1>
+
+		<div id="innerContent">
+            <form class="filters new" action="/reports/market-sizing/create-session-request" METHOD="POST">
+				<div class="left">
+					<label for="incKeywords">
+						<p>Include keywords:</p>
+						<textarea id="incKeywords" name="incKeywords"></textarea>
+					</label>
+
+                    <span width="200">&nbsp;</span>
+                    <!--
+					<label for="vesselGMV">
+						<p>Vessel GMV:</p>
+						<input type="text" name="vesselGMV" id="vesselGMV" />
+					</label>
+					-->
+				</div>
+				<div class="left">
+					<label for="excKeywords">
+						<p>Exclude keywords:</p>
+						<textarea id="excKeywords" name="excKeywords"></textarea>
+					</label>
+
+					<label for="recipientEmail">
+						<p>Report will be sent to:</p>
+                        <a href="mailto:<?= $user->getEmail(); ?>"><?= $user->getEmail(); ?></a>
+					</label>
+				</div>
+				<div class="left last">
+					<label for="location">
+						<p>Suppliers located in:</p>
+						<input type="text" id="location" name="location" value="Globally" readonly="readonly"/>
+						<input type="button" name="editLoc" class="button white small editLocations" value="Edit locations"/>
+					</label>
+					<label>
+						<p>Date range:</p>
+					</label>
+					<span>From: </span>
+					<input type="text" id="fromDate" name="fromDate" class="date" />
+					<span>to: </span>
+					<input type="text" id="toDate" name="toDate" class="date" />
+					<div class="clear"></div>
+					<label for="vesselType" style="position: relative; top: 6px;"><p>Vessel type:</p></label>
+					<select name="vesselType" id="vesselType">
+					</select>
+				</div>
+				<div class="left buttons">
+					<!-- <input type="submit" name="show" id="show" class="button green medium" value="Post" /> -->
+                    <input type="submit" name="createRequest" id="createRequest" class="button green medium" value="Post" />
+				</div>
+				<div class="clear"></div>
+                <!--
+				<div>
+					<label for="imo" style="position: relative; top: 6px;"><p>Vessel IMO:</p></label>
+					<textarea id="vesselImo" name="imo" style="width: 808px; height: 15px;"></textarea>
+				</div>
+				-->
+			</form>
+
+            <h1 class="styled">Active sessions</h1>
+            <br/>
+            <form class="filters">
+                <?php
+                if (empty($this->activeSessions)) {
+                    ?>
+                    <p>None</p>
+                    <?php
+                } else {
+                    foreach ($this->activeSessions as $session) {
+                        ?>
+                        <p>
+                            <strong>Request ID <?= $session['ID']; ?></strong>
+                        </p>
+                        <p style="padding-left: 20px;">
+                            <strong>Placed by:</strong> <?= $session['EMAIL']; ?>
+                            <br/>
+                            <strong>Placed at:</strong> <?= $session['PLACED']; ?>
+                            <br/>
+                            <strong>Started at:</strong> <?= $session['STARTED']; ?>
+                            <br/>
+                            <strong>Keywords:</strong> <?= substr($session['KEYWORDS'], 0, 100); ?>
+                        </p>
+                        </p>
+                        <?php
+                    }
+                }
+                ?>
+            </form>
+
+            <h1 class="styled">Pending requests</h1>
+            <br/>
+            <form class="filters">
+                <?php
+                if (empty($this->pendingRequests)) {
+                    ?>
+                    <p>None</p>
+                    <?php
+                } else {
+                    foreach ($this->pendingRequests as $request) {
+                        ?>
+                        <p>
+                            <strong>Request ID <?= $request['ID']; ?></strong>
+                        </p>
+                        <p style="padding-left: 20px;">
+                            <strong>Placed by:</strong> <?= $request['EMAIL']; ?>
+                            <br/>
+                            <strong>Placed at:</strong> <?= $request['PLACED']; ?>
+                            <br/>
+                            <strong>Keywords:</strong> <?= substr($request['KEYWORDS'], 0, 100); ?>
+                        </p>
+                        <?php
+                    }
+                }
+                ?>
+            </form>
+        </div>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+        <h1 class="styled multi">
+            <a href="#" class="selectorTab locationTab">
+                Locations <br />
+                <span>Globally</span>
+            </a>
+            <div class="clear"></div>
+        </h1>
+        <div class="selectorHolder">
+            <div class="tabcontent locations" data-tabname="locations" style="display: none;">
+                <div class="locations selectlist itemselector inner new form">
+                    <div class="available list left">
+                        <h3>Select locations:</h3>
+                        <div class="textfilter">
+                            <img src="/img/icons/medium/spyglass.png">
+                            <input type="text" class="available locations text filter" data-selectlist="locations-available-selectlist"></input>
+                        </div>
+                        <ul class="available locations selectlist" id="locations-available-selectlist">
+
+                        </ul>
+                    </div>
+                    <div class="selected list right">
+                        <h3>Selected locations:</h3>
+                        <div class="textfilter">
+                            <img src="/img/icons/medium/spyglass.png">
+                            <input type="text" class="selected locations text filter" data-selectlist="locations-selected-selectlist"></input>
+                        </div>
+                        <ul class="selected locations selectlist" id="locations-selected-selectlist" data-what="locations">
+                            <span class="default">Globally</span>
+                        </ul>
+                    </div>
+                    <div class="clear"></div>
+                    <div class="buttonContainer">
+                        <input type="button" class="apply button green medium" value="Apply changes">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

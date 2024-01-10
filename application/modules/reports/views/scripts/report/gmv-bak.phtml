@@ -1,0 +1,305 @@
+<?php
+    $this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+	$this->headLink()->appendStylesheet('/css/billing/gmv.css');
+    
+    $this->requirejs()->addModule('billing/gmv');
+?>
+<script type="text/javascript">
+var totalPerGroup = new Array();
+</script>
+<style>
+.group {	
+
+}
+.parent{
+    margin-left:30px;
+    width: 920px!important;
+}
+.child{
+    margin-left:60px;
+    width: 890px!important;
+}
+
+
+</style>
+<div id="waiting" style="display: block;">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>
+
+<div id="breadcrumbs">
+	<span class="title">You are here: </span>
+	<ul>
+		<li>
+			<a href="/">Home</a>
+		</li>
+		<li>
+			<span></span>
+			<a href="/reports/billing">Billing</a>
+		</li>
+		<li class="current">
+			<span></span>
+			GMV Report
+		</li>
+	</ul>
+</div>
+
+<div id="body">
+	<div class="head">
+		<ul>
+			<li>
+				<a href="/reports/billing">VBP - Monthly Billing Report</a>
+			</li>
+            <li class="on">
+                <a href="/reports/gmv">GMV Report</a>
+            </li>
+            <li>
+                <a href="/reports/invalid-txn-picker">Invalid transaction</a>
+            </li>
+            
+		</ul>
+	</div><?/*end tabs*/?>
+
+    <form action="/reports/gmv" method="get" class="new report options">
+        <label>
+            Start: <input type="text" name="datefrom" value="<?=$this->dateFrom?>" class="datepicker">
+        </label>
+        
+        <label>
+            End: <input type="text" name="dateto" value="<?=$this->dateTo?>" class="datepicker">
+        </label>
+        
+		<input type="submit" value="Generate Report" class="button medium lblue generate" name="submit">
+	</form>
+
+	<?if (lg_count($this->gmvDetail) == 0 && isset($this->report) && $this->params['datefrom'] != "" ):?>
+    
+    <p class="info">No results found for period for supplier <?=$this->tnid?>.</p>
+    
+    <?elseif(isset($this->error)):?>
+    
+    <p class="error"><?=$this->error?></p>
+    
+    <?elseif(isset($this->gmvDetail)):?>
+    
+    <?
+        $thead = "<tr class='thead'>
+	                <td></td>
+	                <td></td>
+	                <td>Buyer Ref.</td>
+    				<td title='Supplier Reference'>Supplier Ref.</td>
+	                <td title='submitted date'>Date</td>
+	                <td>Currency</td>
+    				<td class='right' title='Total cost in original currency'>Total cost</td>
+	                <td class='right' title='Exchange rate'>Exg. rate</td>
+	                <td class='right'>Total cost <br />(USD)</td>
+	                <td class='right' title='Adjusted Cost'>Adj. cost <div class='inline contextual help' data-title='Adjusted Cost' data-message='<strong>Adjusted cost</strong> is the value that contributes to the overall GMV: For original PO, it is just the total PO value in USD; for POC, it is the difference of the PO to the POC value.'></div></td>
+	            </tr>";
+        ?>
+    <div class="actions">
+        <? if( $this->supplier->name != "" ){ ?>
+            <div style="float:right; margin-left:20px; margin-right:20px; font-size:20px; font-weight:bold;">
+                <?= $this->supplier->name ?>
+                <div style="font-size:12px; font-weight:bold;">
+                    <table width="100%">
+                        <tr><td>Total Adjusted GMV:</td><td style="text-align: right;">USD <span title="Total cost"><?= number_format($this->summary['adjustedWithGMV'], 2) ?></span></td></tr>
+                    </table>
+                </div>
+            </div>
+        <? }?>
+
+	    <a href="#" class="view csv">[ View full report as CSV ]</a> 
+	    <a href="#" class="expandAll">[ Expand all ]</a> 
+	    <a href="#" class="collapseAll">[ Collapse all ]</a>
+	    <a href="#" class="expandSel">[ Expand selected ]</a> 
+	    <a href="#" class="collapseSel">[ Collapse selected ]</a>
+	</div>
+    <textarea class="csv" style="display:none;"><?=$this->csv?></textarea>
+
+    <?
+    $prevBuyer = '';
+    $totalRow = lg_count($this->gmvDetail);
+
+    $currentRow = 1;
+
+    for( $i=0; $i<lg_count($this->gmvDetail); $i++)
+    {
+        if( $this->gmvDetail[$i]['ord-ref-no'] == $this->gmvDetail[$i+1]['ord-ref-no'] && $this->gmvDetail[$i]['doc-type'] == "POC" && $this->gmvDetail[$i+1]['doc-type'] == "PO" )
+        {
+            $tmp = $this->gmvDetail[$i];
+            $this->gmvDetail[$i] = $this->gmvDetail[$i+1];
+            $this->gmvDetail[$i+1] = $tmp;
+        }
+    }
+    $gmvDetail = $this->gmvDetail;
+
+
+    foreach($this->h['parent'] as $parentId => $childrenData )
+    {
+        // processing parent company
+        $companyName = $this->h['company'][$parentId];
+        $rows =  $childrenData[$parentId]['DATA'];
+
+        foreach((array)$rows as $row)
+        {
+            $totalCostPerBuyerAsArray[$row["buyer-tnid"]] += $row["total-cost-usd"];
+            $totalAdjustedCostPerBuyerAsArray[$row["buyer-tnid"]] += $row["adjusted-cost"];
+            $totalAdjustedCostPerGroup[$parentId] += $row["adjusted-cost"];
+            
+        }
+
+        createTable($parentId, $parentId, $companyName, $totalAdjustedCostPerBuyerAsArray, $thead, $rows);
+
+        // processing children
+        foreach( $childrenData as $companyId => $data )
+        {
+            // making sure that we only process NON parent, as for the
+            //  parent, it's already been done before
+            if( $companyId!= $parentId )
+            {
+                $companyName = $this->h['company'][$companyId];
+                $rows = $data['DATA'];
+
+                foreach((array)$rows as $row)
+                {
+                    $totalCostPerBuyerAsArray[$row["buyer-tnid"]] += $row["total-cost-usd"];
+                    $totalAdjustedCostPerBuyerAsArray[$row["buyer-tnid"]] += $row["adjusted-cost"];
+                    $totalAdjustedCostPerGroup[$parentId] += $row["adjusted-cost"];
+                    
+                }
+
+               createTable($parentId, $companyId, $companyName, $totalAdjustedCostPerBuyerAsArray, $thead, $rows);
+            }
+        }
+    }
+
+    $this->gmvDetail = $gmvDetail;
+?>
+<?endif?>
+    
+</div><?/*end body*/?>
+<?
+
+function createTable($parentId, $companyId, $companyName, $totalAdjustedCostPerBuyerAsArray, $thead, $rows)
+{
+	$user = Shipserv_User::isLoggedIn();
+
+	if( $parentId == $companyId )
+	{
+		?>
+			<table class="gmv report group">
+			    <tbody class="accordion-head firstLevel" groupId="<?= $parentId?>">
+				    <tr class="spacer"><td colspan="9"> </td></tr>
+				    <tr class="title">
+				        <td colspan="9"><input type="checkbox" class="groupExpand" /> Group: <?=$companyName?> (<?=$parentId?>)</td>
+				        <td style="background: none; text-align:right; width: 150px;"><span class="groupId" groupId="<?= $parentId?>" id="totalForGroup_<?= $parentId?>"></span></td>
+				    <tr class="spacer"><td colspan="9"></td></tr>
+				</tbody>
+			</table>					
+		<?
+	}
+?>
+
+
+<table class="gmv report <?=($parentId==$companyId?"parent":"child")?>" groupId="<?= $parentId?>">
+    <tbody class="accordion-head <?=($parentId==$companyId?"secondLevel":"thirdLevel")?>" groupId="<?= $parentId?>">
+    <tr class="spacer"><td colspan="9"> </td></tr>
+    <tr class="title">
+        <td colspan="9"><input type="checkbox" class="groupExpand" /> <?=$companyName?> (<?=$companyId?>)</td>
+        <td style="background: none; text-align:right; width: 150px;"><?= number_format(sprintf($totalAdjustedCostPerBuyerAsArray[$companyId]), 2)?></td>
+    <tr class="spacer"><td colspan="9"></td></tr>
+    </tbody>
+    <tbody class="accordion-body">
+    <?
+    if( lg_count($rows)>0 )
+    {
+        echo $thead;
+    }
+
+    //foreach((array)$rows as $row)
+    for($i=0; $i<lg_count($rows); $i++)
+    {
+        if( $rows[$i]['ord-ref-no'] == $rows[$i+1]['ord-ref-no'] && $rows[$i]['doc-type'] == "POC" && $rows[$i+1]['doc-type'] == "PO" )
+        {
+            $tmp = $rows[$i];
+            $rows[$i] = $rows[$i+1];
+            $rows[$i+1] = $tmp;
+        }
+    }
+
+    // row for each company
+    $totalTransaction = 0;
+    foreach((array)$rows as $row)
+    {
+    	if( $row['internal-ref-no'] != "" )
+    	{
+    		$order = Shipserv_Order::getInstanceById($row['internal-ref-no']);
+    		$urlToPrintable = $order->getUrl();
+    		
+    		if( $row['doc-type'] == 'POC' )
+    		{
+    			$poc = Shipserv_PurchaseOrderConfirmation::getInstanceById($row['internal-ref-no']);
+    			$urlToPrintable = $poc->getUrl();
+    		}
+    		
+    		$urlToInvalidTxnPicker = '/reports/invalid-txn-picker?documentInternalRefNo='. $row['internal-ref-no'].'&a=Search&h=c0c7c76d30bd3dcaefc96f40275bdc0a';
+    	}
+    	 
+        ?>
+        <tr>
+            <td>
+            	<a href="<?= $urlToPrintable ?>" target="_blank"><img src="/img/essm/print.png" height="15" align="middle"></a>
+            	<?php if ( $user->canPerform('PSG_ACCESS_INV_TXN_TOOLS') !== false ){ ?>
+            	<a href="<?= $urlToInvalidTxnPicker ?>" target="_blank"><img title="Mark transaction as Invalid" src="/img/icons/small/icon.png" height="15" align="middle"></a>
+            	<?php }?>
+            </td>
+        	<td><?=$row['doc-type']?></td>
+            <td><?=iconv("UTF-8","ISO-8859-1",$row['ord-ref-no'])?></td>
+            <td><?=$row["poc-ref-no"]?></td>
+            <td><?=$row["submitted-date"]?></td>
+            <td><? echo sprintf($row["currency"]); $currs[$row["currency"]]=1;?></td>
+            <td class="right"><? echo number_format(sprintf($row["total-cost"]), 2); $totalCostPerBuyer += $row["total-cost"]; ?></td>            
+            <td class="right"><?=number_format(sprintf($row["currency-rate"]), 3)?></td>
+            <td class="right"><? echo number_format(sprintf($row["total-cost-usd"]), 2); $totalCostPerBuyerUsd += $row["total-cost-usd"];?></td>
+            <td class="right"><? echo number_format(sprintf($row["adjusted-cost"]), 2); $totalAdjustedCostPerBuyer += $row["adjusted-cost"];?></td>
+        </tr>
+        <?
+        $totalTransaction++;
+    }
+    // row for each company
+
+    // footer to show total transaction per company
+    if( $totalTransaction > 0 )
+    {
+        ?>
+        <tr class="footer-txn">
+            <td colspan="5" align="left">Total transaction: <?=$totalTransaction?></td>
+            <td><?= @implode(",", array_keys($currs))?></td>
+            <td class="right" colspan="2"></td>
+            <td class="right"><?=number_format(sprintf($totalCostPerBuyerUsd), 2)?></td>
+            <td class="right"><?=number_format(sprintf($totalAdjustedCostPerBuyer), 2)?></td>
+        </tr>
+    <?
+    }
+    ?>
+    </tbody>
+</table>
+<script type="text/javascript">
+/*
+ * totalPerGroup['<?= $parentId?>'] += 1;//(<?= (($totalAdjustedCostPerGroup[$parentId]!==null)?$totalAdjustedCostPerGroup[$parentId]:0);?>);
+ */
+</script>
+
+<?
+}
+?>
+<?php 
+	foreach((array)$totalAdjustedCostPerGroup as $tnid => $total)
+	{
+		$totalAdjustedCostPerGroup[$tnid] = number_format(sprintf($totalAdjustedCostPerGroup[$tnid]), 2);
+	}
+?>
+<script type="text/javascript">
+	var totalPerGroup = JSON.parse('<?= json_encode($totalAdjustedCostPerGroup);?>');
+</script>
+

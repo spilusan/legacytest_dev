@@ -1,0 +1,154 @@
+<h2>How to win more orders</h2>
+<table cellpadding="0" cellspacing="0" class="calcTable">
+	<thead>
+		<tr class="orphan">
+			<th>&nbsp</th>
+			<th># of RFQs</th>
+			<th>Quote rate</th>
+			<th>Win rate</th>
+			<th>POs/orders</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr class="grayBg">
+			<td>
+				<div class="getArrow arrow1 height1">
+					<span class="disp1">Current<br>performance<br>on marketplace</span>
+				</div><div class="triangle triangle1"></div>
+			</td>
+			<td id="rfqValueSrc" class="textRight">{{#if hasSpinner}}<span class="spinnerIcon"></span>{{else}}{{formatNumber attributes.rfq-count}}{{/if}}</td>
+			<td id="quoteValueSrc" class="textRight">{{#if hasSpinner}}<span class="spinnerIcon"></span>{{else}}{{formatNumRound attributes.qot-rate}}{{/if}}%</td>
+			<td id="winValueSrc" class="textRight">{{#if hasSpinner}}<span class="spinnerIcon"></span>{{else}}{{formatNumRound attributes.win-rate}}{{/if}}%</td>
+			<td id="posValueSrc" class="b-grayRight textRight">{{#if hasSpinner}}<span class="spinnerIcon"></span>{{else}}{{formatNumber attributes.po-count}}{{/if}}</td>
+		</tr>
+
+		<tr class="separator">
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>	
+
+		<tr class="grayBg">
+			<td>
+				<div class="getArrow arrow2 height2"><span class="disp2">Improve your<br>performance</span></div><div class="triangleLarge triangle2"></div>
+			</td>
+			<td>
+				<a href="get-more-rfqs" class="btnFix premium tHelp" target="_blank">Get more<br>RFQs</a><span class="bfont">+</span>
+				<span class="footerText"><b>by</b><br>Match<br>Pages exposure<br>Premium Profile<br>ShipServ Onboard</span>
+				<a href="#" class="tHelp">more information</a>
+				</td>
+			<td>
+				<a href="improve-quote-rate" class="btnFix premium tHelp" target="_blank">Improve<br>quote rate</a><span class="bfont">+</span>
+				<span class="footerText"><b>by</b><br>Supplier Insight Report<br>SmartSupplier</span>
+				<a href="#" class="tHelp">more information</a>
+			</td>
+			<td>
+				<a href="improve-win-rate" class="btnFix premium tHelp" target="_blank">Improve<br>win rate</a><span class="bfont">=</span>
+				<span class="footerText"><b>by</b><br>Supplier Insight Report<br>SmartSupplier</span>
+				<a href="#" class="tHelp">more information</a>
+			</td>
+			<td>
+				<a href="#" class="greenBg premium" target="_blank">RESULT:<br><br>Win more<br>orders and<br>grow sales</a>
+			</td>
+		</tr>
+
+		<tr class="separator">
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>	
+
+		<tr class="grayBg">
+			<td>
+				<div class="getArrow arrow3 height1"><span class="disp4">Increase by</span></div><div class="triangle triangle1"></div>
+			</td>
+			<td>
+				{{#if hasSpinner}}
+				&nbsp;
+				{{else}}
+				<div class="spinner">
+					<span class="spin-up"><div></div></span>
+					<span class="spin-down"><div></div></span>
+					<input name="rfqValue" class="numOnly" type="text" value="+5" maxlength="8">
+				</div>
+				<div class="spinner-caption2">%</div>
+				{{/if}}
+			</td>
+			<td>
+				{{#if hasSpinner}}
+				&nbsp;
+				{{else}}
+				<div class="spinner">
+					<span class="spin-up"><div></div></span>
+					<span class="spin-down"><div></div></span>
+					<input name="quoteValue" class="numOnly" type="text" value="+5" maxlength="4">
+				</div>
+				<div class="spinner-caption">percentage points</div>
+				{{/if}}
+			</td>
+			<td>
+				{{#if hasSpinner}}
+				&nbsp;
+				{{else}}
+				<div class="spinner">
+					<span class="spin-up"><div></div></span>
+					<span class="spin-down"><div></div></span>
+					<input name="winValue" class="numOnly" type="text" value="+5" maxlength="4">
+				</div>
+				<div class="spinner-caption">percentage points</div>
+				{{/if}}
+			</td>
+			<td class="b-grayRight"></td>
+		</tr>
+
+		<tr class="separator">
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>		
+		<tr class="grayBg">
+			<td>
+				<div class="getArrow arrow4 height1"><span class="disp3">RESULT</span></div><div class="triangle triangle2"></div>
+			</td>
+				
+			<td id="rfqValue" class="textRight"></td>
+			<td id="quoteValue" class="textRight"></td>
+			<td id="winValue" class="textRight"></td>
+			<td class="increaseSummary alignRight" id="poValue">
+
+			</td>
+		</tr>	
+
+		<tr class="orphan">
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+			<td>&nbsp;</td>
+		</tr>
+
+	</tbody>
+</table>	
+<div class="tableSpace">&nbsp;</div>
+<table cellpadding="0" cellspacing="0" class="calcResultTable">
+	<tr>
+		<td rowspan="3" class="empty"></td>
+		<td class="dkblue">Your average PO value:</td>
+		<!--todo  add formatNumber, currently rises an error if the model is not loaded, no data  -->
+		<td class="dkblue totals"><div id="totalAvgPoValue">{{#if hasSpinner}}<span class="spinnerIcon"></span>{{else}}$ {{#if attributes.po-value}}{{formattedDivision  attributes.po-value attributes.po-count }}{{/if}}{{/if}}</div></td>
+	</tr>
+	<tr>
+		<td class="dkblue borderTopBottom">Additional POs:</td>
+		<td class="dkblue borderTopBottom totals"><div id="increaseBy">{{#if hasSpinner}}<span class="spinnerIcon"></span>{{else}}0{{/if}}</div></td>
+	</tr>
+	<tr>
+		<td class="dkblue bold">Increased potential sales from ShipServ marketplace:</td>
+		<td class="dkblue totals"><div id="totalIncreasedValue">{{#if hasSpinner}}<span class="spinnerIcon"></span>{{else}}$ 0{{/if}}</div></td>
+	</tr>
+	</table>

@@ -1,0 +1,134 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+
+<div id="breadcrumbs">
+	<?php
+		$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+		$breadcrumbs[] = array('name' => 'Match', 'url'  => '/match/inbox');
+		$breadcrumbs[] = array('name' => 'Reports', 'url'  => '/match/adoption-kpi');
+		$breadcrumbs[] = array('name' => 'Adoption rate', 'url'  => '');
+		echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); 
+	?>
+</div>
+
+<div id="body">
+	<div class="head">
+		<?php echo $this->partial('match/tab.phtml', array('selected' => 'internal')); ?>
+	</div>
+	<div id="content">
+		<h2 class="styled grey blue">
+			<a href="/match/adoption-kpi" class="button tab white medium active">Adoption Rate</a>
+			<a href="/match/adoption-kpi" class="button tab white medium">Adoption Rate v2</a>
+			<a href="/match/conversion-kpi" class="button tab white medium ">Conversion</a>
+		</h2>
+		<form method="POST" class="new">
+		    <table style="margin: auto;  width:100%;">
+		        <tr>
+		            <td width="130">
+		                <label class="date">From:</label>
+		                <input type="text" name="fromDate" id="fromDate" value="<?php echo ($_POST['fromDate'] != "")?$_POST['fromDate']:'01/04/2012'; ?>" class="datepicker" />
+		            </td>
+		            <td width="130">
+		                <label class="date">To:</label>
+		                <input type="text" name="toDate" id="toDate" class="datepicker" value="<?php echo ($_POST['toDate'] != "")?$_POST['toDate']:date('d/m/Y'); ?>"/>
+		            </td>
+		            <td width="30" class="buttonCell">
+		            	<input type="submit" value="Go"  class="button dblue medium"/>
+		            </td>
+		            		            		                
+		            
+		            <td width="" style="">&nbsp;</td>
+		
+		        </tr>
+		        <tr>
+		            <td colspan="5">
+		                <table id="resultsTab">
+		                    <thead>
+		                        <tr>
+		                            <!-- 1. -->
+		                            <th>TNID</th>
+		                            <!-- 2. -->
+		                            <th class="left">Name</th>
+		                            <!-- 3. -->
+		                            <th>Country</th>
+		                            <!-- 4. -->
+		                            <th>Total RFQs <br />in period</th>
+		                            <!-- 5. -->
+		                            <th>Avg RFQs/mo</th>
+		                            <!-- 6. -->
+		                            <th>RFQs to Match</th>
+		                            <!-- 7. -->
+		                            <th>Adoption Rate</th>
+		                            <!-- 8. -->
+		                            <th>RFQs from Match</th>
+		                            <!-- 9. -->
+		                            <th>Suppliers<br />/RFQ</th>
+		                            <!-- 10. -->
+		                            <th>Quotes received</th>
+		                            <!-- 11. -->
+		                            <th>Quote rate</th>
+		                            <!-- 12. -->
+		                            <th>Match POs</th>
+		                            <!-- 13. -->
+		                            <th title="Win rate">Switch Rate</th>
+		                            <!-- 14. -->
+		                            <th class="last">Potential Savings</th>
+		
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php foreach ($this->results as $key => $result) : ?>
+		                            <tr <?php if ($key % 2 == 0): ?>class="altColor"<?php endif; ?>>
+		                                <!-- 1. -->
+		                                <td><?php echo $result['BUYER_TNID']; ?>        </td>
+		                                <!-- 2. -->
+		                                <td class="left"><?php echo $result['BUYER_NAME']; ?>        </td>
+		                                <!-- 3. -->
+		                                <td><?php echo $result['BYB_COUNTRY_CODE']; ?>  </td>
+		                                <!-- 4. -->
+		                                <td><?php echo $result['TOTAL_RFQS']; ?>        </td>
+		                                <!-- 5. -->
+		                                <td><?php echo round($result['TOTAL_RFQS'] / ((int) abs((strtotime($this->startDate) - strtotime($this->endDate)) / (60 * 60 * 24 * 30))), 1); ?></td>
+		                                <!-- 6. -->
+		                                <td><?php echo $result['RFQS_SUBMITTED_TO_MATCH']; ?>        </td>
+		                                <!-- 7. -->
+		                                <td><?php echo $result['ADOPTION_RATE']; ?> %     </td>
+		                                <!-- 8. -->
+		                                <td><?php echo $result['RFQS_GENERATED']; ?>    </td>
+		                                <!-- 9. -->
+		                                <td><?php echo $result['SUPPLIERS_PER_RFQ']; ?> </td>
+		                                <!-- 10. -->
+		                                <td><?php echo $result['QUOTES_ISSUED']; ?> </td>
+		                                <!-- 11. -->
+		                                <td><?php echo $result['QUOTE_RATE']; ?> %</td>
+		                                <!-- 12. -->
+		                                <td><?php echo $result['MATCH_POS']; ?> </td>
+		                                <!-- 13. -->
+		                                <td><?php echo $result['WIN_RATE']; ?>  %</td>
+		                                <!-- 14. -->
+		                                <td class="last">$ <?php echo (is_null($result['POTENTIAL_SAVINGS'])) ? 0 : $result['POTENTIAL_SAVINGS']; ?> </td>
+		
+		
+		                            </tr>
+		                        <?php endforeach; ?>
+		                    </tbody>
+		
+		                </table>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>

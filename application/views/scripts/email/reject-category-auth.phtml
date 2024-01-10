@@ -1,0 +1,8 @@
+<?
+	$companyInfo = $this->requests[0]->getCompanyInfo();
+	$categoryInfo = $this->requests[0]->getCategoryInfo ();
+?>
+<h2>Your request to have '<?php echo $companyInfo["SPB_NAME"]?>' listed under the '<?php echo $categoryInfo["NAME"]?>' category has been rejected.</h2>
+<p>
+	If you feel that your request has been unfairly rejected, please contact the ShipServ Support (<a href="mailto:support@shipserv.com">support@shipserv.com</a>).
+</p>

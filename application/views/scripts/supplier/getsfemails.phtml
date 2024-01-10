@@ -1,0 +1,18 @@
+<table>
+	<tr>
+		<td>Email</td>
+		<td>TNID</td>
+	</tr>
+	<?php 
+	foreach($this->emails as $email) {
+		if( $email['email'] !== null ){ 
+	?>
+	<tr>
+		<td><?php echo $email['email']; ?></td>
+		<td><?php echo $email['tnid']; ?></td>
+	</tr>	
+	<?php 
+		}
+	} 
+	?>
+</table>

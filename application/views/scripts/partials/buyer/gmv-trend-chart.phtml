@@ -1,0 +1,243 @@
+<div style="padding:10px; background-color: #59c5eb; color: white; font-weight:bold; ">Total GMV Traded per Month on ShipServ</div>
+<?
+    if($this->data != null){
+        ?>
+        <div id="chart_for_gmv" style="height:500px;"></div>
+        <div style="font-size:12px; margin-left:170px;">
+            <table>
+                <tr><td>GMV traded for trailing 12 months:</td><td>&nbsp;&nbsp;&nbsp;</td><td><span id="t12"></span></td></tr>
+                <tr><td>GMV traded for 12 months prior to trailing 12 months:</td><td>&nbsp;&nbsp;&nbsp;</td><td><span id="t24"></span></td></tr>
+            </table>
+        </div>
+        <?
+    }else{
+        ?>
+            No data found
+        <?
+    }
+?>
+
+<? if( $this->showVesselChart === true ){ ?>
+<div style="padding:10px; background-color: #b3c55c; color: white; font-weight:bold; margin-top:40px;">Average Order Value per Vessel per Month / Number of Trading Vessels per Month</div>
+<?
+    if($this->vesselData != null){
+        ?>
+        <div id="chart_for_vessel" style="height:500px;"></div>
+        <div style="font-size:12px; margin-left:170px;">
+            <table>
+                <tr><td>GMV Traded per Vessel for trailing 12 months:</td><td>&nbsp;&nbsp;&nbsp;</td><td><span id="v12">USD $ <?= number_format((int)$this->totalVesselData['trailing']['avgGmvPerUnit']) ?></span></td></tr>
+                <tr><td>GMV Traded per Vessel for 12 months prior to trailing 12 months:</td><td>&nbsp;&nbsp;&nbsp;</td><td><span id="v24">USD $ <?= number_format((int)$this->totalVesselData['priorToTrailing']['avgGmvPerUnit']) ?></span></td></tr>
+            </table>
+        </div>
+        <?
+    }else{
+        ?>
+            No data found
+        <?
+    }
+?>
+<? }?>
+
+<div class="clear"></div>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+Number.prototype.formatMoney = function(c, d, t){
+	var n = this,
+		c = isNaN(c = Math.abs(c)) ? 2 : c,
+		d = d == undefined ? "." : d,
+		t = t == undefined ? "," : t,
+		s = n < 0 ? "-" : "",
+		i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "",
+		j = (j = i.length) > 3 ? j % 3 : 0;
+	   return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+ };
+
+
+var stats = <?php echo json_encode( (array)$this->data )?>;
+var newStats = [];
+for(var i=0; i<stats.length; i++){
+    newStats[i] = [];
+    newStats[i][0] = stats[i][0];
+    newStats[i][1] = stats[i][1];
+    newStats[i][2] = 'Overall Order Value in ' + stats[i][3] + ':' + "\n" + "USD $ " + stats[i][1].formatMoney(0, '.', ',');
+    newStats[i][3] = stats[i][2];
+    newStats[i][4] = 'Overall Order Value in ' + stats[i][4] + ':' + "\n" + "USD $ " + stats[i][2].formatMoney(0, '.', ',');
+}
+stats = newStats;
+
+
+var statVessel = <?php echo json_encode( (array)$this->vesselData )?>;
+var newStats = [];
+
+for(var i=0; i<statVessel.length; i++){
+    newStats[i] = [];
+    newStats[i][0] = statVessel[i][0];
+    newStats[i][1] = statVessel[i][1];
+    newStats[i][2] = 'Average Vessel Order Value in ' + statVessel[i][5] + ':' + "\n" + "USD $ " + statVessel[i][1].formatMoney(0, '.', ',');
+
+    newStats[i][3] = statVessel[i][2];
+    newStats[i][4] = 'Average Vessel Order Value in ' + statVessel[i][6] + ':' + "\n" + "USD $ " + statVessel[i][2].formatMoney(0, '.', ',');
+
+    newStats[i][5] = statVessel[i][3];
+    newStats[i][8] = 'Total Trading Unit in ' + statVessel[i][5] + ':' + "\n" + statVessel[i][4];
+
+    newStats[i][7] = statVessel[i][4];
+    newStats[i][6] = 'Total Trading Unit in ' + statVessel[i][6] + ':' + "\n" + statVessel[i][3];
+
+}
+statVessel = newStats;
+
+var t12 = 0;
+var t24 = 0;
+var v12 = 0;
+var v24 = 0;
+var v12i = 0;
+var v24i = 0;
+
+
+$(stats).each(function(n, row){
+	t12 += row[1];
+	t24 += row[3];
+});
+
+$(statVessel).each(function(n, row){
+	v12 += row[1];
+	v12i++;
+	v24 += row[3];
+	v24i++;
+
+});
+
+$("#t12").html("USD $ " + t12.formatMoney(0, '.', ','));
+$("#t24").html("USD $ " + t24.formatMoney(0, '.', ','));
+
+/* 
+$("#v12").html("USD $ " + (v12/v12i).formatMoney(0, '.', ','));
+$("#v24").html("USD $ " + (v24/v12i).formatMoney(0, '.', ','));
+*/
+
+
+var data = [[
+	'Month',
+	'Trailing 12 months (<?= $this->periodForTrends[0]['PERIOD_1Y']?>)',
+	'Tooltip',
+    '12 months prior to trailing 12 months (<?= $this->periodForTrends[0]['PERIOD_2Y']?>)',
+    'Tooltip'
+]];
+data = data.concat(stats);
+
+var dataForVessel = [[
+	'Month',
+	'Average GMV traded per Vessel for Trailing 12 months (<?= $this->periodForTrends[0]['PERIOD_1Y']?>)',
+    'Tooltip',
+	'Average GMV traded per Vessel for 12 months prior to trailing 12 months (<?= $this->periodForTrends[0]['PERIOD_2Y']?>)',
+    'Tooltip',
+    'Trading Vessel per month for 12 months prior to trailing 12 months (<?= $this->periodForTrends[0]['PERIOD_2Y']?>)',
+    'Tooltip',
+	'Trading Vessel per month for Trailing 12 months (<?= $this->periodForTrends[0]['PERIOD_1Y']?>)',
+    'Tooltip'
+]];
+dataForVessel = dataForVessel.concat(statVessel);
+
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback( function(){
+	// ************************************************************************ //
+	var d = google.visualization.arrayToDataTable(data);
+
+    // telling the data table that column 3 is the tooltip
+    d.setColumnProperties(2, {type: 'string', role: 'tooltip', 'p': {'html': true} });
+    d.setColumnProperties(4, {type: 'string', role: 'tooltip', 'p': {'html': true} });
+
+
+
+	var defaultOptions = {
+		seriesType: "bars",
+		series:[
+			{type: 'line', lineWidth: '3', color: '#59c5eb'}
+			, {type: 'line', lineDashStyle: [4,4], color: '#90dcf7'}
+		],
+		fontSize: 12,
+		enableInteractivity: true,
+		hAxis: {
+			format: 'currency'
+			, gridlines: {color: '#333', count: 4}
+			, allowContainerBoundaryTextCufoff: true
+		}
+		, pointsVisible: true
+        , tooltip: {isHtml: true, html: true}
+	}
+
+	var options = defaultOptions;
+
+	options.vAxes= [
+		{
+			title: "GMV Traded per Month (USD)",
+			format: 'decimal',
+			minValue: 0,
+			gridlines: {
+				color: '#90dcf7'
+			}
+		}
+	];
+
+	options.series = [
+		{type: 'line', lineWidth: '3', color: '#59c5eb', targetAxisIndex:0}
+		, {type: 'line', lineDashStyle: [4,4], color: '#90dcf7', targetAxisIndex:0}
+
+	];
+
+
+
+	if( data.length>1 ){
+        var chart = new google.visualization.ComboChart(document.getElementById('chart_for_gmv'));
+        chart.draw(d, options);
+    }
+	// ************************************************************************ //
+
+	var dForVessel = google.visualization.arrayToDataTable(dataForVessel);
+    dForVessel.setColumnProperties(2, {type: 'string', role: 'tooltip', 'p': {'html': true} });
+    dForVessel.setColumnProperties(4, {type: 'string', role: 'tooltip', 'p': {'html': true} });
+    dForVessel.setColumnProperties(6, {type: 'string', role: 'tooltip', 'p': {'html': true} });
+    dForVessel.setColumnProperties(8, {type: 'string', role: 'tooltip', 'p': {'html': true} });
+
+	options.vAxes= [
+		{
+			title: "Average GMV Traded per Vessel per Month (USD)",
+			format: 'decimal',
+			minValue: 0,
+			gridlines: {
+				color: '#90dcf7'
+			}
+		}
+		, {
+			title: 'Trading Vessels per Month',
+			format: 'decimal',
+			minValue: 0,
+			gridlines: {
+				color: '#90dcf7'
+			}
+		}
+	];
+	options.legend= {
+		  position: 'top'
+		, maxLines: 3
+		, label: {
+			color: '#90dcf7'
+		}
+
+	};
+
+	options.series = [
+		{type: 'line', lineWidth: '3', color: '#829621'}
+		, {type: 'line', lineDashStyle: [4,4], color: '#ff7f04'}
+		, {type: "bars", targetAxisIndex:1, color: '#fff0c5'}
+		, {type: "bars", targetAxisIndex:1, color: '#b3c55c'}
+	]
+	if( dataForVessel.length>1 ){
+        var chartForVessel = new google.visualization.ComboChart(document.getElementById('chart_for_vessel'));
+        chartForVessel.draw(dForVessel, options);
+    }
+	// ************************************************************************ //
+
+});
+</script>

@@ -1,0 +1,21 @@
+/*
+Document   : rfq-inbox.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: combining partials for rfq-inbox styles
+*/
+@import "font-awesome";
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+@import "partials/def/context_help";
+@import "partials/def/tabbed_head";
+@import "partials/def/modal_new";
+@import "partials/def/left_nav";
+@import "partials/tooltip/tooltip";
+
+@import "partials/trade/rfq-inbox/content";
+@import "partials/trade/rfq-inbox/rfq_list";
+@import "partials/trade/rfq-inbox/rfq_display";
+@import "partials/trade/rfq-inbox/rfq_printable";
+@import "partials/trade/rfq-inbox/rfq_line-items";

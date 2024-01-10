@@ -1,0 +1,304 @@
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+div.landingImgBox {
+	background: #ffffff;
+	@include border-radius(6px);
+	padding: 10px;
+	margin-bottom: 20px;
+	position: relative;
+	behavior: url(/css/PIE.htc);
+
+	.titleBox {
+		position: absolute;
+		top: 153px;
+		left: 10px;
+		background: #000000;
+		width: 470px;
+		height: 70px;
+		@include opacity(0.7);
+	}
+
+	.titleText {
+		position: absolute;
+		top: 163px;
+		left: 42px;
+		z-index: 10;
+
+		h1 {
+			font-size: 26px;
+			font-weight: normal;
+			color: #ffffff;
+		}
+	}
+}
+
+div.infoTextBox {
+	@include border-radius(6px);
+	position: relative;
+	behavior: url(/css/PIE.htc);
+	background: #ffffff;
+	padding: 20px;
+	margin-bottom: 20px;
+
+	&.padSmall {
+		padding: 5px 5px 20px 5px;
+	}
+
+	h1 {
+		font-size: 16px;
+		font-weight: bold;
+		color: #074988;
+		margin-bottom: 15px;
+		line-height: 1.2;
+	}
+
+	p {
+		font-size: 12px;
+		font-weight: normal;
+		color: #2e3235;
+		margin-bottom: 15px;
+		line-height: 1.2;
+	}
+
+	a {
+		color: #005aad;
+		text-decoration: none;
+	}
+
+	ul {
+		list-style: disc;
+		padding-left: 30px;
+		margin-bottom: 15px;
+
+		li {
+			font-size: 12px;
+			font-weight: normal;
+			color: #2e3235;
+			line-height: 1.2;
+		}
+	}
+
+	.button.dblue.medium {
+		float: none;
+		width: 150px;
+		padding: 0 !important;
+
+		a {
+			display: block;
+			padding-left: 20px;
+			padding-right: 20px;
+		}
+	}
+
+	h3 {
+		margin: 0 !important;
+		margin-bottom: 10px !important;
+	}
+
+	.greyBox {
+		@include border-radius(6px);
+		position: relative;
+		background: #808890;
+		@include background-image(linear-gradient(#b5bbc4 0%, #7c858c 100%));
+		-pie-background: linear-gradient(top, #b5bbc4 0%, #7c858c 100%);
+		padding: 5px;
+		float: left;
+		margin-right: 4px;
+		margin-bottom: 10px;
+		behavior: url(/css/PIE.htc);
+
+		&.last {
+			margin-right: 0;
+		}
+
+		span.cat {
+			display: block;
+			text-decoration: none;
+			color: #ffffff;
+			font-size: 13px;
+			font-weight: bold;
+
+			img {
+				padding-top: 5px;
+				margin-right: 5px;
+				margin-bottom: 2px;
+			}
+
+			span {
+				position: relative;
+				top: -5px;
+			}
+		}
+
+		a {
+			color: #ffffff;
+			font-size: 13px;
+			font-weight: bold;
+		}
+	}
+
+	.catList {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		overflow: hidden;
+		height: 158px;
+
+		li {
+			float: left;
+			width: 335px;
+			margin: 0 15px;
+			padding: 8px 0;
+			border-bottom: 1px dotted #b2b2b2;
+			a {
+				font-size: 12px;
+				color: #2e3235 !important;
+				text-decoration: none;
+				width: 335px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				display: block;
+
+				strong {
+					font-weight: bold;
+				}
+			}
+		}
+	}
+
+	.showMoreCats {
+		padding-right: 13px !important;
+		margin-left: 13px;
+		margin-top: 10px;
+
+		input {
+			background:url(/img/icons/small/white-arrow-up.png) no-repeat left center transparent;
+			padding-left: 18px;
+
+			&.collapsed {
+				background:url(/img/icons/small/white-arrow-down.png) no-repeat left center transparent;
+			}
+		}
+	}
+
+	.whiteBox {
+		width: 229px;
+		@include inline-block;
+		vertical-align: middle;
+		height: 65px;
+		line-height: 61px;
+		@include border-radius(6px);
+		border: 1px solid #d6dce4;
+		position: relative;
+		background: #ffffff;
+		@include background-image(linear-gradient(#ffffff 0%, #f5f7fa 100%));
+		-pie-background: linear-gradient(top, #ffffff 0%, #f5f7fa 100%);
+		padding: 4px;
+		float: left;
+		margin-right: 4px;
+		margin-bottom: 4px;
+		behavior: url(/css/PIE.htc);
+
+		&.last {
+			margin-right: 0;
+		}
+
+		a {
+			font-size: 13px;
+			font-weight: bold;
+		}
+
+		.logoBox {
+			border: 1px solid #e9edf1;
+			@include border-radius(6px);
+			width: 62px;
+			height: 62px;
+			@include inline-block;
+			vertical-align: middle;
+			text-align: center;
+			background:#ffffff;
+
+			&.big {
+				line-height: 87px;
+			}
+		}
+
+		img.arrow {
+			position: relative;
+			top: 3px;
+		}
+	}
+}
+
+
+.sendRfq {
+	float: right !important;
+	&.top {
+		top: 3px;
+	}
+}
+
+.content_wide_body {
+	position: relative;
+	background: #ffffff;
+	behavior: url(/css/PIE.htc);
+	margin: 0;
+	margin-bottom: 20px;
+	@include border-radius(6px);
+
+	.topSup {
+		position: relative;
+		margin: 5px !important;
+		top: 5px;
+		height: 45px;
+		padding-top: 5px;
+
+		span {
+			position: relative;
+			top: 3px;
+		}
+	}
+
+	#searchResults {
+		width: 710px;
+
+		.searchResult {
+			&.premium {
+				background: url(/img/landing/premium_header_landing.png) no-repeat;
+			}
+		}
+	}
+
+	.buttonHolder {
+		border-top: 1px dotted #000000;
+		padding: 10px 0 15px;
+	}
+}
+
+.content_wide_footer {
+	border: 0;
+	position: relative;
+	background: #ffffff;
+	behavior: url(/css/PIE.htc);
+	margin: 0;
+	margin-bottom: 20px;
+	@include border-radius(6px);
+}
+
+#searchResults .footer {
+	background:url(/img/landing/spotlight_footer_landing.png) no-repeat left top transparent;
+}
+
+a.enquiry_send {
+	background: url(/images/layout_v2/buttons/send_enquiry_down_sprite.png) no-repeat;
+	width: 194px;
+	height: 41px;
+	display: block;
+	float: right;
+
+	&.bottom {
+		background: url(/images/layout_v2/buttons/send_enquiry_up_sprite.png) no-repeat;
+	}
+}

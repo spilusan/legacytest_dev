@@ -1,0 +1,825 @@
+#body {
+	#content {
+		.innerContent {
+			h2 {
+				&.period {
+					margin-top: 10px;
+					.jump {
+						margin-left: 520px;
+					}
+
+					&.comp {
+						margin-top: 20px;
+
+						.jump {
+							margin-left: 475px;
+						}
+					}
+				}
+			}
+
+			.line {
+				height: 50px;
+				width: 4px;
+				background: url(/img/reports/sir/line.png) center center repeat-y transparent;
+				float: left;
+
+				&.long {
+					height: 577px;
+					background: url(/img/reports/sir/line.png) center center repeat-y transparent;
+				}
+
+				&.medium {
+					background: url(/img/reports/sir/line.png) center center repeat-y transparent;
+					height: 168px;
+				}
+
+				&.short {
+					height: 27px;
+					background: url(/img/reports/sir/line.png) center center repeat-y transparent;
+				}
+			}
+
+			.brandSpace {
+				width: 110px;
+				height: 20px;
+				float: left;
+			}
+
+			.leadSpace {
+				width: 195px;
+				height: 20px;
+				float: left;
+			}
+			.conversion {
+				.maintitles {
+					  margin-top: 20px;
+					  position: relative;
+					  top: 1px;
+
+					.title {
+						font-size: 18px;
+						font-weight: normal;
+						color: #43a573;
+						float: left;
+						text-align: center;
+						padding-top: 10px;
+
+						&.brandAw {
+							width: 110px;
+						}
+
+						&.lead {
+							width: 195px;
+						}
+						&.conv {
+							width: 615px;
+							color: #046393;
+						}
+					}
+				}
+
+				.funnel {
+					position: relative;
+					background: url(/img/reports/sir/funnel-bg.png) left top no-repeat transparent;
+					height: 476px;
+					overflow: hidden;
+
+					p {
+						&.customerNo {
+							position: relative;
+							left: 115px;
+							top: -16px;
+							height: 0;
+							font-size: 11px;
+							height: 14px;;
+
+							&.po {
+								left: 333px;
+  								top: -104px;
+  								display: block;
+								width: 120px;
+							}
+							
+							&.qot {
+								left: 166px;
+  								top: -92px;
+  								display: block;
+								width: 120px;
+							}
+
+							&.rfq {
+								left: 1px;
+  								top: -78px;
+  								display: block;
+								width: 120px;
+							}
+						}
+					}
+
+					.button {
+						&.yellow {
+							display: block;
+							width: 62px;
+							text-align: center;
+					        color: #000000;
+							@include single-text-shadow(1px, 1px, 1px, 0, #ffffff);
+							margin: 0 auto;
+
+							img {
+								position: relative;
+								top: 2px;
+							}
+
+							&.improve {
+								width: 59px;
+								display: block;
+								padding-left: 24px;
+								padding-bottom: 7px;
+								position: absolute;
+								left: 409px;
+								bottom: 14px;
+
+							  	img {
+							  		margin-left: -15px;
+									position: relative;
+									top: 9px;
+									left: -7px;
+							  	}
+
+							  	&.win {
+							  		left: 577px;
+							  	}
+							}
+					    }
+
+					}
+
+					.graphs {
+						float: left;
+
+						.graph {
+							width: 90px;
+
+							.cHelp {
+								float: right;
+								z-index: 100;
+							}
+
+							p {
+								color: #ffffff;
+								font-size: 13px;
+								font-weight: bold;
+								text-align: center;
+								line-height: 1.2;
+								padding-bottom: 7px;
+							}
+
+							.value {
+								position: relative;
+								background: #ffffff;
+								color: #424242;
+								font-size: 13px;
+								font-weight: bold;
+								@include border-radius(6px);
+								padding: 12px 0;
+								text-align: center;
+								width: 84px;
+								margin: 0 auto 10px;
+
+								&.red {
+									color: #e82a30;
+								}
+							}
+						}
+
+						&.awareness {
+							margin-top: 16px;
+							margin-left: 11px;
+							margin-right: 9px;
+							height: 444px;
+
+							.graph {
+								background: #43a573;
+								height: 144px;
+								margin-bottom: 6px;
+							}
+						}
+
+						&.leadGen {
+							margin-right: 5px;
+							margin-left: 5px;
+							margin-top: 46px;
+							height: 384px;
+
+							.graph {
+								background: #43a573;
+								float: left;
+
+								&.profile {
+									height: 384px;
+
+									p {
+										padding-bottom: 127px;
+									}
+								}
+
+								&.contact {
+									margin-top: 20px;
+									margin-left: 5px;
+									height: 344px;
+
+									p {
+										padding-bottom: 107px;
+									}
+								}
+							}
+						}
+
+						&.leadConv {
+							margin-top: 78px;
+							margin-left: 5px;
+							height: 324px;
+							width: 610px;
+
+							.graph {
+								background: #0678b7;
+								float: left;
+
+								&.rfqLead {
+									height: 324px;
+
+									p {
+										padding-bottom: 94px;
+									}
+
+									.value {
+										font-size: 20px;
+										padding: 9px 0;
+									}
+								}
+
+								&.qot {
+									margin-top: 15px;
+									height: 294px;
+
+									p {
+										padding-bottom: 94px;
+
+										&.pending {
+											padding-top: 35px;
+											text-align: center;
+											font-weight: normal;
+											font-size: 11px;
+
+											a.cHelp {
+												float: none;
+											}
+										}
+									}
+
+									.value {
+										font-size: 20px;
+										padding: 9px 0;
+									}
+								}
+
+								&.po {
+									margin-top: 27px;
+									height: 270px;
+
+									p {
+										padding-bottom: 60px;
+
+										&.complabel {
+											padding-bottom: 5px;
+											font-weight: normal;
+										}
+									}
+
+									.value {
+										font-size: 20px;
+										padding: 9px 0;
+									}
+								}
+							}
+
+							.totalBox {
+								width: 155px;
+								height: 314px;
+								float: left;
+								margin-top: 0px;
+								position: relative;
+
+								.dpoTable {
+									position: absolute;
+									width: 300px;
+									height: 245px;
+									left: -300px;
+									border: 1px solid black;
+									z-index: 8999;
+									background: #ffffff;
+									padding: 5px;
+									display: none;
+
+									.head {
+										text-align: center;
+									}
+
+									.cHelp {
+										float: right;
+									}
+
+									.left {
+										text-align: left;
+										margin-left: 10px;
+									}
+
+									ul {
+										text-align: left;
+										margin-left: 20px;
+										list-style-type: disc;
+
+										li {
+											font-size: 12px;
+											padding-bottom: 5px;
+										}
+									}
+
+									table {
+										margin: 0 auto;
+										margin-bottom: 10px;
+										margin-top: 14px;
+										table-layout: fixed;
+										border-collapse: collapse;
+										border-top: 1px solid black;
+										border-right: 1px solid black;
+
+										tr {
+											td {
+												font-size: 12px;
+												border-bottom: 1px solid black;
+												border-left: 1px solid black;
+												padding: 5px;
+												text-align: right;
+											}
+
+											&.header {
+												td {
+													font-size: 16px;
+													text-align: center;
+												}
+											}
+										}
+									}
+								}
+
+
+								.totalDirect {
+									.titles, .values {
+										top: -14px;
+										position: relative;
+									}
+
+									.titles {
+										div {
+											span.poCount {
+												margin-left: 56px;
+											}
+										}
+									}
+								}
+
+								.totalDirect, .totalComp {
+									margin-left: 13px;
+								}
+
+								.totalComp, .total {
+									.titles {
+										margin-top: -5px;
+										margin-bottom: 5px;
+									}
+								}
+
+								.totalDirect, .totalComp, .total {
+									height: 66px;
+									background: #ffffff;
+									border: 1px solid #042d55;
+									float: left;
+									width: 131px;
+
+									.cHelp {
+										float: right;
+									}
+
+									.values {
+										.poVal, .poCount {
+											font-size: 10px;
+											font-weight: bold;
+											color: #424242;
+											padding-bottom: 1px;
+											padding-top: 2px;
+										}
+										.valueBox {
+											font-size: 12px;
+											font-weight: bold;
+											border: 1px solid #a8a8a8;
+											@include border-radius(6px);
+											padding: 5px;
+											background: #ffffff;
+										}
+									}
+								}
+
+								.totalDirect {
+									width: 126px;
+									height: 79px;
+									padding-top: 2px;
+									padding-left: 5px;
+
+									.titles {
+										.poValue {
+											font-size: 10px;
+											font-weight: bold;
+											color: #424242;
+										}
+									}
+								}
+
+								.totalComp, .total {
+									background: #042d55;
+									padding: 0 0 5px 5px;
+									width: 126px;
+
+									.titles {
+										span {
+											color: #ffffff;
+											font-size: 11px;
+										}
+									}
+
+									.values {
+										.valueBox {
+											border: 0;
+											padding: 9px;
+										}
+									}
+								}
+
+								.totalComp {
+									background: #0678b7;
+									border: 1px solid #0678b7;
+								}
+
+								.total {
+									width: 151px;
+									margin-left: -12px;
+
+									.titles {
+										span {
+											color: #ffffff;
+											font-size: 16px;
+										}
+									}
+
+									.values {
+										.valueBox {
+											border: 0;
+											padding: 5px;
+											background-color: #f9d50e;
+											font-size: 20px;
+										}
+									}
+								}
+
+								.label {
+									background: #828f9f;
+									width: 81px;
+									height: 12px;
+									float: left;
+									margin-left: 117px;
+									margin-top: -63px;
+									font-size: 11px;
+									@include rotate(90deg);
+									color: #ffffff;
+									text-align: center;
+									padding: 4px 0;
+
+									&.comp {
+										width: 73px;
+  										margin-top: -58px;
+										margin-left: 121px;
+										background: #0678b7;
+									}
+
+									&.total {
+										    width: 71px;
+										  margin-left: 122px;
+										  margin-top: -58px;
+										  background: #042d55;
+									}
+								}
+
+								.plus {
+									margin: 11px 0px;
+									height: 25px;
+									background: url(/img/reports/sir/black-plus.png) center center no-repeat transparent;
+								}
+
+								.equals {
+									margin-top: -2px;
+									height: 20px;
+									background: url(/img/reports/sir/equals-black.png) center center no-repeat transparent;
+								}
+							}
+						}
+					}
+
+					.rate {
+						width: 76px;
+						height: 360px;
+						margin-top: 42px;
+						float: left;
+						overflow: visible;
+
+						p {
+							font-size: 13px;
+							font-weight: bold;
+							line-height: 1.2;
+							color: #424242;
+							text-align: center;
+							padding: 11px 0;
+
+							&.small {
+								font-size: 9px;
+								padding: 0;
+								font-weight: normal;
+							}
+						}
+
+						.marketVal {
+							margin: 0 auto;
+							background: #ffffff;
+							width: 61px;
+							height: 69px;
+							border-bottom: 3px solid #57a140;
+						}
+
+						&.quote {
+							
+						}
+
+						&.win {
+
+						}
+
+						.marketLine {
+							margin: 0 auto;
+							width: 2px;
+							height: 29px;
+							background: #57a140;
+							@include opacity(0.6);
+						}
+
+						.convertedBox {
+							overflow: visible;
+							height: 30px;
+							background: #57a140;
+
+							.value {
+								position: relative;
+								top: 5px;
+								margin-left: 5px;
+
+								.number {
+									font-size: 13px;
+									font-weight: bold;
+									color: #ffffff;
+									padding-top: 2px;
+								}
+
+								.arrowRight {
+									width: 17px;
+									height: 17px;
+									float: right;
+									background: url(/img/reports/sir/arrow_right_white.png) left top no-repeat transparent;
+								}
+							}
+
+							&.low {
+								height: 1px;
+
+								.value {
+									position: relative;
+									top: -23px;
+
+									.number {
+										color: #57a140;
+									}
+
+									.arrowRight {
+										background: url(/img/reports/sir/arrow-right-green.png) left top no-repeat transparent;
+									}
+								}
+							}
+						}
+
+						.lostBox {
+							overflow: visible;
+							margin-top: 1px;
+							background: #e81e24;;
+							/*@include border-radius(0 20px 0 0);*/
+							width: 69px;
+							position: relative;
+
+							.value {
+								font-size: 13px;
+								font-weight: bold;
+								color: #ffffff;
+								position: relative;
+								top: 5px;
+								position: absolute;
+								margin-left: 5px;
+
+								&.low {
+									bottom: -16px;
+									top: auto;
+									color: #e81e24;
+								}
+							}
+						}
+
+						.lostArrow {
+							width: 30px;
+							height: 100%;
+							margin-left: 39px;
+							background: url(/img/reports/sir/lost-bg.png) left top repeat-x transparent;
+							overflow: visible;
+
+							.dottedLine {
+								position: relative;
+								width: 17px;
+								height: 100%;
+								margin: 0 auto;
+								background: url(/img/reports/sir/red-dotted-line.png) center 27px repeat-y transparent;
+								overflow: visible;
+
+								.arrowDown {
+									width: 17px;
+									height: 17px;
+									background: url(/img/reports/sir/arrow_down_white.png) left top no-repeat transparent;
+								}
+							}
+						}
+
+					}
+
+					.line {
+						height: 476px;
+						width: 4px;
+						background: url(/img/reports/sir/line.png) center center repeat-y transparent;
+						float: left;
+					}
+
+					.greenArrow {
+						position: relative;
+						top: 150px;
+						width: 17px;
+						height: 17px;
+						float: left;
+						left: 7px;
+						background: url(/img/reports/sir/arrow-right-green.png)left top no-repeat transparent;
+					}
+				}
+
+				.redDownArrows {
+					position: relative;
+					height: 17px;
+					margin-bottom: 10px;
+					margin-top: -2px;
+					overlfow: visible;
+					.redArrowDown {
+						position: absolute;
+						top: 0;
+						left: 454px;
+						width: 17px;
+						height: 17px;
+						background: url(/img/reports/sir/arrow_down_red.png) left top no-repeat transparent;
+
+						&.win {
+							left: 620px;
+						}
+					}
+				}
+
+				.redboxes {
+					position: relative;
+					height: 168px;
+
+					.redbox {
+						border: 3px solid #e81e24;
+						position: absolute;
+						left: 315px;
+						width: 206px;
+						height: 153px;
+
+						&.space {
+							border: 0;
+						}
+
+						.lines {
+							width: 10px;
+							height: 107px;
+							margin-left: 10px;
+							margin-top: 16px;
+							margin-right: 2px;
+							background: url(/img/reports/sir/rfqsLines.png) left top no-repeat transparent;
+							float: left;
+						}
+
+						.info {
+							p {
+								font-size: 15px;
+								margin-top: 6px;
+  								padding-bottom: 0px;
+							}
+
+							.worth {
+								font-size: 16px;
+								height: 20px;
+
+								.red {
+									display: inline;
+									color: #e81e24;
+									font-weight: bold;
+								}
+
+								&.lost {
+									width: 136px;
+								}
+							}
+
+							.greybox {
+								background: #e9edf1;
+								padding: 6px;
+								width: 167px;
+								margin-left: 23px;
+
+								p {
+									font-size: 11px;
+									padding-bottom: 2px;
+									margin: 0;
+									padding: 0;
+
+									span {
+										color: #e81e24;
+										font-weight: bold;
+									}
+								}
+
+								a {
+									font-size: 12px;
+									float: right;
+									margin-top: 10px;
+								}
+
+								&.unactioned {
+									margin-bottom: 3px;
+									margin-top: 9px;
+								}
+							}
+						}
+
+						&.win {
+							left: 529px;
+  							height: 81px;
+  							padding: 5px;
+
+  							.info {
+  								p {
+  									padding: 0;
+  									margin: 0;
+  								}
+
+  								.greybox {
+  									margin-left: 0;
+  									margin-top: 10px;
+  									width: 193px;
+  								}
+  							}
+						}
+					}
+
+					.connectLine {
+						width: 1px;
+ 						background: #e81e24;
+						height: 88px;
+						position: absolute;
+						left: 606px;
+						top: 95px;
+					}
+				}
+			}
+		}
+	}
+}

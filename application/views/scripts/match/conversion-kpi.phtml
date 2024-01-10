@@ -1,0 +1,154 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()
+	//->addModule('match/match')
+	->addModule('match/report')
+	->addDefinition('/match/reportType', '"match-conversion-report"')
+	;
+
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style type="text/css">
+#header, .divider, #footer {
+	width: 2156px !important;
+}
+.narrow{
+	width: 40px!important;
+}
+</style>
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Match reports', 'url'  => '/match/adoption-kpi');
+	$breadcrumbs[] = array('name' => 'Conversion', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.colVis.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.CSV.css" media="screen" rel="stylesheet" type="text/css">
+
+<div id="body" class="conversion">
+	<div id="content">
+		<h1 class="styled">Conversion rate</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<form method="POST" class="new">
+		    <table style="margin: auto;  width:100%;">
+		        <tr>
+		            <td width="130">
+		                <label class="date">From:</label>
+		                <input type="text" name="fromDate" id="fromDate" value="<?php echo ($_POST['fromDate'] != "")?$_POST['fromDate']:$this->startDate; ?>" class="datepicker" />
+		            </td>
+		            <td width="130">
+		                <label class="date">To:</label>
+		                <input type="text" name="toDate" id="toDate" class="datepicker" value="<?php echo ($_POST['toDate'] != "")?$_POST['toDate']:$this->endDate; ?>"/>
+		            </td>
+		            <td width="30" class="buttonCell">
+		                <input type="submit" value="Go" class="button dblue medium"/>
+		            </td>
+		            <td width="" style=" ">
+		            	<div class="clear"></div>
+		            	<div style="font-size:14px; font-weight:bold; margin-left:600px;">
+	                    	<?php
+	                    		foreach( $this->results as $key => $result )
+	                    		{
+	                    			$total['PO_AMOUNT'] += $result['PO_AMOUNT'];
+	                    			$total['ACTUAL_RVNU'] += $result['ACTUAL_RVNU'];
+
+	                    			$total['REV_GAIN_LOST'] += $result['ACTUAL_RVNU'] - ($result['BID_OF_MIN_SPB_BY_BYB'] * $result['CHEAPEST_QOT_BY_BUYER']/100);
+
+
+	                    		}
+	                    	?>
+	                    	<table width="300">
+	                    		<tr>
+	                    			<td>Total PO Amount</td>
+	                    			<td>$ <?= number_format($total['PO_AMOUNT'],2)?></td>
+	                    		</tr>
+	                    		<tr>
+	                    			<td>Total Revenue Gain/Lost</td>
+	                    			<td>$ <?= number_format($total['REV_GAIN_LOST'],2)?></td>
+	                    		</tr>
+	                    		<tr>
+	                    			<td>Total Revenue/Credits</td>
+	                    			<td>$ <?= number_format($total['ACTUAL_RVNU'],2)?></td>
+	                    		</tr>
+
+	                    	</table>
+
+		            	</div>
+		            </td>
+
+		        </tr>
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		                <table id="resultsTab">
+		                    <thead>
+		                        <tr>
+		                        	<th class="left" style="width:20px">No</th>
+                        		    <th class="left" style="width:140px!important;">Date</th>
+                        			<th class="left">Buyer <br />TNID</th>
+									<th class="left" style="width:100px;">Buyer Name</th>
+									<th class="left">Winning <br />Supplier <br />TNID</th>
+									<th class="left" style="width:100px;">Winning Supplier Name</th>
+									<th class="narrow">Number Buyer Selected Suppliers</th>
+									<th class="narrow">Number Match Selected Suppliers</th>
+									<th class="narrow">Average <br />Bid Buyer Selected Suppliers (%)</th>
+									<th class="narrow">Average <br />Bid Match Selected Suppliers (%)</th>
+									<th class="narrow">Bid of Cheapest Buyer Selected Supplier which quoted for 100% items (%)</th>
+									<th class="narrow">Bid of Winning Match Supplier (%)</th>
+									<th class="currencyHead narrow">Cheapest Buyer <br />Selected Supplier <br />Quote <br />Amount ($)</th>
+									<th class="narrow">Marginal Change in Monetisation Rate	($)</th>
+									<th class="currencyHead narrow">PO <br />Amount <br />($)</th>
+									<th class="narrow">Revenue if Buyer Selected Cheapest Buyer Selected Supplier ($)</th>
+									<th class="currencyHead">Actual <br />Revenue	<br />($)</th>
+									<th class="last currencyHead">Revenue <br />Gain/Loss	<br />($)</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php foreach ($this->results as $key => $result) : ?>
+		                            <tr <?php if ($key % 2 == 0): ?>class="altColor"<?php endif; ?>>
+		                            	<td class="left"><?php echo ++$no;?></td>
+		                                <td class="left">
+		                                	<a target="_blank" href="/match/order-detail?ordId=<?= $result['ORD_INTERNAL_REF_NO'] ?>"><?= $result['ORD_SUBMITTED_DATE']?></a>
+		                                	<br /><?= ($result['IS_ORPHANED_PO']==1)?" ***":""?>
+		                                </td>
+										<td class="left"><?php echo $result['BYB_BRANCH_CODE']; ?></td>
+                            		    <td class="left"><?php echo $result['BYB_NAME']; ?>        </td>
+		                                <td class="left"><?php echo $result['SPB_BRANCH_CODE']; ?>  </td>
+		                                <td class="left"><?php echo $result['SPB_NAME']; ?>        </td>
+		                                <td title="<?php echo $result['SELECTED_SPB_BY_BYB']; ?>"><?php echo $result['COUNT_SPB_BY_BYB']; ?>        </td>
+		                                <td title="<?php echo $result['SELECTED_SPB_BY_MATCH']; ?>"><?php echo $result['COUNT_SPB_BY_MATCH']; ?>        </td>
+		                                <td class="percentage"><?php echo $result['AVG_SPB_BID_BY_BUYER']; ?>     </td>
+		                                <td class="percentage"><?php echo $result['AVG_SPB_BID_BY_MATCH']; ?>   </td>
+		                                <td class="percentage"><?php echo $result['BID_OF_MIN_SPB_BY_BYB']; ?>  </td>
+		                                <td class="percentage" title="<?php echo $result['WINNER_TNID']; ?>"><?php echo $result['BID_WINNER']; ?></td>
+		                                <td class="currency"><?php echo $result['CHEAPEST_QOT_BY_BUYER'] ; ?></td>
+		                                <td class="percentage"><?php echo $result['CHANGE_IN_BID']; ?> </td>
+		                                <td class="currency" title="Awarded to <?php echo $result['WINNER_TNID']; ?>"><?php echo $result['PO_AMOUNT']; ?></td>
+		                                <td class="currency" ><?php //echo $result['RVNU_FOR_CHEAPEST']; ?><?php echo ($result['BID_OF_MIN_SPB_BY_BYB'] * $result['CHEAPEST_QOT_BY_BUYER']/100); ?></td>
+		                                <td class="currency"><?php echo $result['ACTUAL_RVNU']; ?></td>
+		                                <td class="currency last"><?php echo $result['ACTUAL_RVNU'] - ($result['BID_OF_MIN_SPB_BY_BYB'] * $result['CHEAPEST_QOT_BY_BUYER']/100); ?></td>
+		                            </tr>
+		                        <?php endforeach; ?>
+		                    </tbody>
+		                </table>
+		                <table id="header-fixed"></table>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>

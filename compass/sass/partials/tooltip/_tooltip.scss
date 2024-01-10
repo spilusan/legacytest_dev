@@ -1,0 +1,96 @@
+  .sh-tooltip {
+    display: none;
+    padding: 5px 10px;
+    color: #141414;
+    background-color: white;
+    position: absolute;
+    border-radius: 5px;
+    /*
+    font: bold 10px "Helvetica Neue", Sans-Serif;
+    */
+    font-size: 12px;
+    line-height: 130%;
+    box-shadow: 0 0 7px #CCC;
+    border: 1px solid #999;
+    max-width: 240px;
+    min-width: 80px;
+    min-height: 35px;
+    z-index: 99999;
+  }
+  .arrow {
+    width: 70px;
+    height: 16px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -35px;
+    bottom: -16px;
+  }
+  .arrow.top {
+    top: -16px;
+    bottom: auto;
+  }
+  .arrow.left {
+    left: 20%;
+  }
+   .arrow:after {
+      background: white;
+      border: 1px solid #999;
+    }
+  .arrow:after {
+    content: "";
+    position: absolute;
+    left: 20px;
+    top: -20px;
+    width: 25px;
+    height: 25px;
+    box-shadow: 6px 5px 9px -9px #CCC;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .arrow.top:after {
+    bottom: -20px;
+    top: auto;
+  }
+  /* Todo make proper left arrow type */
+
+  .h-arrow {
+    width: 15px;
+    height: 30px;
+    overflow: hidden;
+    position: absolute;
+    left: 50%;
+    margin-left: -35px;
+    bottom: -16px;
+  }
+  .h-arrow.top {
+    top: -16px;
+    bottom: auto;
+  }
+  .h-arrow.left {
+    left: 20px;
+    top: 50%;
+    margin-top: -15px;
+  }
+   .h-arrow:after {
+      background: white;
+      border: 1px solid #999;
+    }
+  .h-arrow:after {
+    content: "";
+    position: absolute;
+    left: 6px;
+    top: 0px;
+    width: 25px;
+    height: 25px;
+    box-shadow: 6px 5px 9px -9px #CCC;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+  .h-arrow.top:after {
+    bottom: -20px;
+    top: auto;
+  }
+  

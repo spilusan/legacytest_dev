@@ -1,0 +1,62 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/user.css');	
+?>
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+<section class="grey registration-header clearfix">
+	<div class="wrapper">
+		<div class="left">
+			<h2>Sign in</h2>
+		</div>
+	</div>	
+</section>
+
+<section class="white">
+	<div class="wrapper">
+		<div class="sign-in-wrapper clearfix">
+		
+			<form class="sign-in" method="post">
+				<h4>Existing User?</h4>
+				<label for="username">Email / Username:</label>
+				<input type="text" name="username" id="username" value="<?= _htmlspecialchars($this->userName); ?>">
+				<label for="password">Password:</label>
+				<input type="password" name="password" id="password">
+
+				<?php if ($this->isLockedOut) { ?>				
+					<p class="error">
+						Your account has been temporarily locked for 30 minutes, following too many failed login attempts. 
+						Please follow the forgot password procedure after this period.
+					</p>
+				<?php } elseif ($this->displayLoginError) { ?>
+					<p class="error"><?= $this->displayLoginError ?></p>
+				<?php } ?>
+
+				<div class="checkbox-container">
+					<input type="checkbox" id="rememberMe" name="rememberMe" checked>
+					<label for="rememberMe" class="checkbox-label">
+						Keep me logged in
+					</label>
+				</div>
+				<?php if ($this->displayCaptcha) { ?>
+    				<?php if ($this->displayCaptchaError) { ?>
+    					<p class="error" style="margin-bottom:1px"><?= $this->displayCaptchaError ?></p>
+    				<?php } ?>	
+	        		<div class="g-recaptcha" style="transform:scale(0.85);-webkit-transform:scale(0.85);transform-origin:0 0;-webkit-transform-origin:0 0;" data-sitekey="<?= Myshipserv_Controller_Action_Helper_GoogleReCaptcha::SITE_KEY; ?>"></div>
+		        <?php } ?>				
+				<p><a href="/auth/cas/passwordManager?pmTask=forgotPassword">Have you lost your password?</a></p>
+				<p>Problems with sign in?</p>
+				<p class="email">Email us at: <a href="mailto:support@shipserv.com">support@shipserv.com</a></p>
+				<input class="btn green" type="submit" value="Sign in">
+			</form>	
+			
+			<div class="new-user">
+				<h4>New User?</h4>
+				<p class="with-padding">First time using ShipServ?</p>
+				<p><strong>Join us today!</strong></p>
+				<p class="free"><span><strong>It's FREE</strong></span> and it will take less than 2 minutes</p>
+				<a href="/user/register-login/register" class="btn transparent transparent-blue">Register</a>
+			</div>
+			
+		</div>
+	</div>
+</section>     
+

@@ -1,0 +1,36 @@
+  <!-- Modal content -->
+  <div class="modal-content">
+    <div class="modal-header-wrapper">
+      <div class="modal-header">
+        Select Buyer Trading Accounts
+      </div>
+    </div>    
+    <form class="modal-checkboxes">
+    	<div id="buyer-selector-modal" class="modal-checkboxes-wrapper"></div>
+      <footer class="modal-footer">
+        <div class="modal-footer-inner fixed-height">
+
+
+          <div class="left buyer-checkbox-wrapper">
+              <div>
+                  <input type="checkbox" id="select-all-accounts" name="select-all-accounts">
+                  <label for="select-all-accounts" class="checkbox-label">
+                    Select all
+                  </label>
+              </div>
+
+              <div class="toggle-show-inactive">
+                  <input type="checkbox" id="inactive-accounts" name="inactive-accounts">
+                  <label for="inactive-accounts" class="checkbox-label">
+                    Show inactive accounts
+                  </label>
+              </div>
+          </div>
+          <div class="right buyer-checkbox-wrapper">
+            <input id="buyer-selector-submit" class="btn link-blue" type="submit" value="OK">
+            <input class="btn transparent transparent-blue buyer-cancel-btn" type="submit" value="Cancel">
+          </div>
+        </div>          
+      </footer>
+    </form>
+  </div>

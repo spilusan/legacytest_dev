@@ -1,0 +1,25 @@
+<h2>Transaction Volume</h2>
+<div class="chart" id="volume_chart"></div>
+
+<table>
+<thead>
+	<tr>
+		<th class="colTitle">Date</th>
+		<th>Number of RFQ's</th>
+		<th>Number of Quotes</th>
+		<th>Number of PO's</th>
+		<th>Number of POC's</th>
+	</tr>
+</thead>
+{{#each data}}
+<tr>
+	<td>{{this.date}}</td>
+	<td>{{this.rfqCount}}</td>
+	<td>{{this.qotCount}}</td>
+	<td>{{this.poCount}}</td>
+	<td>{{this.pocCount}}</td>
+</tr>
+{{/each}}
+</table>
+<hr>
+

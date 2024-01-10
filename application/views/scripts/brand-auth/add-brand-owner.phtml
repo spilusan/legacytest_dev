@@ -1,0 +1,71 @@
+<?
+	$this->CDNLink()->appendStylesheet('/css/forms.css')
+					->appendStylesheet('/css/brandowner/new.css');
+
+	$this->requirejs()->addDefaultModule('brandowner/new');
+?>
+
+<div class="spacer"></div>
+
+<div id="main_content_area">
+	<div class="zone">
+		&nbsp;
+	</div>
+	
+	<div class="content_wide">
+
+		<form class="main" action="" method="POST">
+			<?if ($this->success):?>
+				<h2 class="success">Thanks. Your request for brand ownership has been received.</h2>
+			<?endif?>
+			<fieldset>
+				<fieldset id="brands">
+					<div class="field brand clearfix">
+						<label class="required" for="brandname">Name of the requested brand</label>
+						<input type="text" maxlength="200" class="textfield required brandname" id="brandname1" name="brandname1" value="<?=isset($this->brand) ? $this->brand['NAME'] : ''?>" />
+						<input type="hidden" class="hidden id" id="brandid1" name="brandid1" data-name="<?=isset($this->brand) ? $this->brand['NAME'] : ''?>" value="<?=isset($this->brand) ? $this->brand['ID'] : ''?>"/>
+					</div>
+				</fieldset>
+		
+				<div class="field clearfix">
+					<label for="otherbrands">&nbsp;</label>
+					<input type="button" class="button small white" id="selectmorebrands" value="+ Add another brand"/>
+				</div>
+		
+				<hr />
+		
+				<div class="field clearfix">
+					<label class="required" for="contact">Contact person</label>
+					<input type="text" class="textfield required" id="contact" name="contact" maxlength="150" />
+				</div>
+		
+				<div class="field clearfix">
+					<label class="required" for="company">Company name</label>
+					<input type="text" class="textfield required" id="company" name="company" maxlength="150" />
+				</div>
+		
+				<div class="field clearfix">
+					<label class="required" for="email">Email</label>
+					<input type="text" class="textfield required email" id="email" name="email" maxlength="150" />
+				</div>
+		
+				<div class="field clearfix">
+					<label for="telephone">Telephone</label>
+					<input type="text" class="textfield" id="telephone" name="telephone" maxlength="50" />
+				</div>
+		
+				<hr />
+		
+				<div class="field clearfix">
+					<label>&nbsp;</label>
+					<input type="checkbox" name="acceptTerms" id="acceptTerms" class="checkbox required labelRight" />
+					<label class="required right checkbox clearfix acceptconfirm" for="acceptTerms">I confirm that I am the owner of the brand(s) mentioned above</label>
+				</div>
+				<div class="field clear">
+					<label>&nbsp;</label>
+					<input type="submit" class="submit button" value="Submit request" id="submit" name="submit" />
+				</div>
+			</fieldset>
+		</form>
+	</div><!--End content-wide-->
+</div>

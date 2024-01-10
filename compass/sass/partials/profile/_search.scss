@@ -1,0 +1,72 @@
+/*
+Document   : _search
+Created on : Jun 14, 2012, 10:22:52 AM
+Author     : gly
+Description: Profile Company search styles
+*/
+
+.company-name-search {
+	position:relative;
+	
+	.spinner{
+		position: absolute;
+		right:0px;
+		top:42px;
+		width:20px;
+		height:30px;
+		background:url(/images/layout_v2/file_icons/spinner.gif) no-repeat scroll 0 0 transparent;
+		display:none;
+	}
+    ul {
+        list-style-type:none;
+        margin:0;
+        padding:0;
+        
+        li {
+            display:inline;
+            float:left;
+            margin-right:6px;
+        }
+    }
+    
+    button {
+        background:url(/images/layout_v2/profile/cancel-sprite.gif) no-repeat scroll 0 0 transparent;
+        border:medium none;
+        cursor:pointer;
+        height:30px;
+        width:75px;
+        float:right;
+        margin:15px 0 0;
+        padding:0;
+        
+        &:hover {
+            background:url(/images/layout_v2/profile/cancel-sprite.gif) no-repeat scroll 0 -30px transparent;
+        }
+    }
+    
+    .cns-tabs {
+        margin-bottom:5px;
+    }
+    
+    a, a:hover {
+        color:#ccc;
+        font-size:11px;
+        display:block;
+        width:126px;
+        height:28px;
+        text-align:center;
+        text-decoration:none;
+        font-weight:700;
+        line-height:2;
+    }
+    
+    .on {
+        background:url(https://cdn1.shipserv.com/images/layout_v2/profile/cns-selected.png) no-repeat top left;
+    }
+    
+    .off {
+        a {
+            color:#17191b;
+        }
+    }
+}

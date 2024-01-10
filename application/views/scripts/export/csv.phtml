@@ -1,0 +1,20 @@
+<?php
+/*
+* Printing out data as CSV
+*/
+$header = true;
+foreach ($this->data as $row) {
+	if ($header === true) {
+		$header = false;
+		foreach ($row as $key => $value) {
+			$escaped = str_replace('"', '""', $key);
+			echo "\"$escaped\",";
+		}
+		echo "\n";
+	}
+	foreach ($row as $key => $value) {
+		$escaped = str_replace('"', '""', $value);
+		echo "\"$escaped\",";
+	}
+	echo "\n";
+}

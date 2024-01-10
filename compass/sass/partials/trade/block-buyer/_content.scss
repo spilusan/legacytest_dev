@@ -1,0 +1,93 @@
+/*
+Document   : trade/block-buyer/_content.scss
+Created on : Feb 7, 2012, 1:00:43 PM
+Author     : gly
+Description: styles for block buyer content
+*/
+
+#body {
+	#sidebar {
+		ul#nav {
+			li.selected {
+				a {
+					padding: 0;
+				}
+			}
+		}
+	}
+
+	#content {
+		padding: 5px;
+		width: 100%;
+		float: left;
+		h1.styled {
+			margin-bottom: 10px;
+		}
+		.innerContent {
+		table {
+			table-layout:fixed;
+			thead {
+				tr {
+					th {
+						font-size: 12px;
+						font-weight: bold;
+						color: #005aad;
+						text-align: left;
+						border-left: 1px solid #d6dce4;
+						border-top: 1px solid #d6dce4;
+						border-right: 0;
+						border-bottom: 1px  solid #d6dce4;
+						background: #f5f7fa;
+						padding: 12px 8px;
+
+						&.blocked {
+							width: 194px;
+						}
+
+						&.name {
+							width: 124px;
+						}
+
+						&.email {
+							width: 174px;
+						}
+
+						&.rfqSum {
+							width: 204px;
+						}
+
+						&.blockDate {
+							width: 190px;
+						}
+
+						&.action {
+							border-right: 1px solid #d6dce4;
+							color: #2e3235;
+						}
+					}
+				}
+			}
+
+			tbody {
+				tr {
+					td {
+						font-size: 12px;
+						font-weight: normal;
+						color: #2e3235;
+						text-align: left;
+						padding: 4px 8px;
+						border-bottom: 1px dotted #b2b2b2;
+						word-wrap: break-word;
+
+						h1 {
+							font-size: 16px;
+							font-weight: bold;
+							margin-bottom: 10px;
+						}
+					}
+				}
+			}
+		}
+	}
+	}
+}

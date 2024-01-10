@@ -1,0 +1,87 @@
+<?php
+/**
+ * A partial view for tag.phtml displaying the RFQ original suppliers
+ *
+ * @author  Yuriy Akopov
+ * @date    2013-09-27
+ */
+
+/**
+ * Helper function to output a list item with RFQ supplier info
+ *
+ * @param   array       $results
+ * @param   array       $supplierInfo
+ */
+function displayOriginalSupplier(array $results, array $supplierInfo) {
+    $matchedResult = null;
+    if (array_key_exists('result_index', $supplierInfo)) {
+        $matchedResult = $results[$supplierInfo['result_index']];
+    }
+    ?>
+    <li class="<?php if ($matchedResult) { ?>found<?php } ?>" supplierId="<?php echo $supplierInfo['tnid']; ?>">
+        <?php if ($matchedResult) {
+            echo $matchedResult['position'];
+            ?>
+            <a href="#supplier_<?php echo $matchedResult['tnid']; ?>" title="Ranked <?php echo $matchedResult['position']; ?> with score <?php echo $matchedResult['score'];?>">
+                &#8678;
+            </a>
+        <?php } ?>
+
+        <a href="<?php echo $supplierInfo['url']; ?>" name="orig_supplier_<?php echo $supplierInfo['tnid']; ?>" target="_blank"><?php echo $supplierInfo['name']; ?></a>
+        <span class="hint" title="<?php echo $supplierInfo['country_name']; ?>"><?php echo $supplierInfo['country_code']; ?> (<?php echo $supplierInfo['continent']; ?>)</span>
+    </li>
+    <?php
+}
+
+if (empty($this->rfqSuppliers)) {
+    ?>
+    <ul>
+        <li>No original suppliers</li>
+    </ul>
+    <?php
+} else {
+    $feedTypes = array_keys($this->results);
+    if (in_array(Shipserv_Match_Component_Result::FEED_TYPE_MATCHES, $feedTypes)) {
+        $mainFeedType = Shipserv_Match_Component_Result::FEED_TYPE_MATCHES;
+    } else {
+        $mainFeedType = $feedTypes[0];
+    }
+
+    /*
+    if (array_key_exists(Shipserv_Match_Component_Result::FEED_TYPE_AUTO, $this->results)) {
+        $mainFeedType = Shipserv_Match_Component_Result::FEED_TYPE_AUTO;
+    } else {
+        $mainFeedType = Shipserv_Match_Component_Result::FEED_TYPE_MATCHES;
+    }
+    */
+
+    ?>
+    <div class="buyer_selected">
+        <h3>Buyer selected:</h3>
+        <ul>
+        <?php
+        foreach ($this->rfqSuppliers as $supplierInfo) {
+            if (!$supplierInfo['forwarded']) {
+                displayOriginalSupplier($this->results[$mainFeedType], $supplierInfo);
+            }
+        }
+        ?>
+        </ul>
+    </div>
+
+    <div class="forwarded">
+        <h3>Match:</h3>
+        <ul>
+            <?php
+            foreach ($this->rfqSuppliers as $supplierInfo) {
+                if ($supplierInfo['forwarded']) {
+                    displayOriginalSupplier($this->results[$mainFeedType], $supplierInfo);
+                }
+            }
+            ?>
+        </ul>
+    </div>
+
+    <div class="breaker"></div>
+    <?php
+}

@@ -1,0 +1,25 @@
+<?
+ /**
+  * Textarea element for forms-complex.css form style
+  * @param String name - parameter name
+  * @param String label - label to display for field. Empty label suppresses <label> element altogether
+  * @param String value - default value
+  * @param Boolean readonly - default false
+  */
+	
+  //Defaults
+  if (!isset($this->value)) $this->value = '';
+  if (!isset($this->readonly)) $this->readonly = false;
+  if (!isset($this->required)) $this->required = false;
+
+  $divClass = 'field textarea' . ($this->hasErrors ? ' invalid' : '') . (isset($this->div['class']) ? ' '.$this->div['class'] : '') . ($this->required ? ' required' : '');
+  $taClass = 'textarea' . ($this->hasErrors ? ' invalid' : '') . ' clearfix' . ($this->required ? ' required' : '') . ($this->readonly ? ' readonly' : '' );
+  $labelClass = ($this->hasErrors ? 'invalid' : '') . ($this->required ? ' required' : '') . ($this->readonly ? ' disabled' : '' );
+?>
+
+<div class="<?=$divClass?>">
+	<?if (!empty($this->label)):?>
+		<label class="<?=$labelClass?>"><?=$this->label?><?if($this->required){?><span class="asterisk">*</span><?}?></label>
+	<?endif?>
+	<textarea class="<?=$taClass?>" name="<?=$this->name?>" <?($this->readonly) ? 'readonly="readonly"' : '' ?> <?=isset($this->maxchar) ? 'maxchar="'.strval($this->maxchar).'"' : ''?>><?=$this->value?></textarea>
+</div>

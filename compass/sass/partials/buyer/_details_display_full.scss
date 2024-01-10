@@ -1,0 +1,42 @@
+#body {
+	.detailContainer {
+		position: relative;
+		background:#ffffff;
+		@include border-radius(6px);
+		behavior: url(/css/PIE.htc);
+		padding: 5px;
+
+		.detailSections {
+			h1 {
+				margin-bottom: 10px;
+			}
+
+			.buttons {
+				input[name="docs"] {
+					float: right;
+					text-align: center;
+					top: 2px;
+					padding: 4px 5px;
+				}
+
+				padding: 10px;
+			}
+			.section {
+				padding: 10px;
+				h2 {
+					input.toggle {
+						position: relative;
+						float: right;
+						margin-top: 7px;
+						cursor: pointer;
+					}
+				}
+
+				.details {
+					padding: 1px 10px 5px 10px;
+					white-space: normal;
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,42 @@
+<form class="box new">
+     <div class="filters">
+         <label for="branches" style="margin-right:10px;">Branches:</label>
+         <select id="branches" name="branches">
+			{{#each branch.models}}
+				<option value="{{this.attributes.id}}" {{#if this.attributes.selected}}selected{{/if}}>{{this.attributes.name}}</option>
+			{{/each}}
+         </select>
+         
+         
+         <label for="vessel">Vessel:</label>
+         <select id="vessel" name="vessel">
+             <option selected="selected" value="">All vessels</option>
+			{{#each vessel.models}}
+                {{#if this.attributes.NAME}}
+    				<option value="{{this.attributes.NAME}}" {{selectedIfEqual this.vesselName this.attributes.NAME}}>{{this.attributes.NAME}} -- {{this.attributes.RFQ_TOTAL}} rfq(s)</option>
+                {{/if}}
+			{{/each}}
+         </select>         
+         
+         <div class="purchaserSel" style="display: none;">
+         	<label for="purchaser">Purchaser:</label>
+	         <select id="purchaser" name="purchaser">
+	             
+	         </select>
+         </div>
+         
+     </div>
+     <div class="period" style="padding-top:0px;">
+         <label for="from">Data from:</label>
+         <input type="text" class="date" name="from" value="{{#if fromDate}}{{fromDate}}{{else}}mm/dd/yyyy{{/if}}" />
+         <label for="to">to:</label>
+         <input type="text" class="date" name="to"  value="{{#if toDate}}{{toDate}}{{else}}mm/dd/yyyy{{/if}}" />
+
+         <input type="submit" value="Show" class="button medium green" name="show" />
+         
+         <input type="button" value="Export" class="button medium green" name="export" />
+         
+         
+     </div>
+     <div class="clear"></div>
+ </form>

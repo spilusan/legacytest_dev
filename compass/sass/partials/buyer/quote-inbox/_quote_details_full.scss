@@ -1,0 +1,390 @@
+#body {
+	.detailContainer {
+		width: 940px;
+		.quoteDetails {
+			padding: 15px;
+
+			.buttons {
+				padding: 5px 0 20px;
+
+				input[name="back"]{
+					cursor: pointer;
+				}
+
+				input[name="docs"]{
+					float: right;
+					display: none;
+				}
+			}
+			.sections {
+				.section {
+					h2 {
+						margin-bottom: 10px;
+
+						&.boxhead {
+							@include border-radius(0);
+							margin-bottom: 0;
+							border-left: 0;
+							border-right: 0;
+							border-top: 0;
+						}
+
+						.button {
+							float: right;
+							top: 6px;
+							width: 95px;
+							cursor: pointer;
+						}
+					}
+
+					.details {
+						position: relative;
+						@include border-radius(6px);
+						border: 1px solid #d6dce4;
+						behavior: url(/css/PIE.htc);
+						margin-bottom: 20px;
+					}
+
+					&.quote {
+						.details {
+							padding: 20px 80px 45px;
+
+							h3 {
+								font-size: 24px;
+								font-weight: normal;
+								color: #008b00;
+								margin-bottom: 20px;
+							}
+
+							.box {
+								border: 1px solid #d6dce4;
+								margin-bottom: 5px;
+
+								&.noBord {
+									border: 0;
+
+									h2.styled {
+										border-top: 1px solid #d6dce4;
+										border-left: 1px solid #d6dce4;
+										border-right: 1px solid #d6dce4;
+									}
+								}
+
+								&.right, &.left {
+									width: 370px;
+								}
+
+								&.right, .right {
+									float: right;
+								}
+
+								&.lineItems {
+									border-bottom: 0;
+								}
+
+								.data {
+									padding: 5px 10px;
+
+									.right, .left {
+										width: 370px;
+									}
+
+									&.sub {
+										padding: 0;
+
+										.right, .left {
+											width: 360px;
+											padding: 5px 5px 5px 5px;
+											border: 1px solid #d6dce4;
+										}
+
+										.left {
+											border-right: 1px solid #d6dce4;
+										}
+
+										.subHead {
+											background:#e9edf1;
+											padding: 10px;
+											font-size: 12px;
+											font-weight: bold;
+											border: 1px solid #bec4cb;
+											width: 350px;
+											margin-top: 1px;
+
+											&.rightFloat {
+												float: right;
+												margin-top: 0;
+											}
+										}
+									}
+
+									
+
+									p {
+										margin:0;
+										line-height: 1.5;
+										font-size: 12px;
+										padding-bottom: 0;
+
+										&.name {
+											color: #087ec5;
+											font-size: 16px;
+										}
+
+										a {
+											display: block;
+										}
+									}
+
+									table.dataTable {
+										border-collapse: collapse;
+										table-layout: fixed;
+										width: 100%;
+										margin: 0;
+
+										tr {
+											td {
+												padding: 0;
+												border: 0;
+												background: transparent;
+												vertical-align: top;
+												line-height: 1.5;
+												white-space: normal;
+												font-size: 12px;
+
+												&.label {
+													width: 140px;
+													font-weight: bold;
+												}
+
+												&.green {
+													font-weight: bold;
+													color: #008b00;
+												}
+											}
+										}
+									}
+
+									&.attachments {
+										a {
+											display: block;
+										}
+									}
+
+									&.billing, &.delivery {
+										min-height: 63px;
+									}
+								}
+
+								table.itemList {
+									border:0;
+									table-layout: fixed;
+									border-collapse: collapse;
+									width: 100%;
+									margin: 0;
+
+									tr {
+										th, td {
+											background:transparent;
+											border-bottom: 1px solid #d6dce4;
+											border-left: 1px solid #d6dce4;
+											color: #2e3235;
+											border-right: 0;
+											cursor: default;
+											font-size: 10px;
+											vertical-align: middle;
+
+											&.first {
+												border-left: 0;
+											}
+										}
+									}
+
+									thead {
+										tr {
+											th {
+												padding: 7px 5px;
+												font-weight: bold;
+												background: #e9edf1;
+
+												span {
+													font-weight: normal;
+												}
+
+												&.first {
+													width: 16px;
+													text-align: center;
+												}
+
+												&.ptype {
+													width: 84px;
+												}
+
+												&.pno {
+													width: 86px;
+												}
+
+												&.qty {
+													width: 35px;
+													text-align: center;
+												}
+
+												&.unt {
+													width: 65px;
+												}
+
+												&.desc {
+													width: 145px;
+												}
+
+												&.untP {
+													width: 60px;
+												}
+
+												&.dsc {
+													width: 35px;
+												}
+
+												&.ttlP {
+													width: 60px;
+												}
+											}
+										}
+									}
+
+									tbody {
+										tr {
+											&.dec {
+												background:#ffcbc9;
+											}
+
+											&.chg {
+												background: #e5f8d8;
+											}
+
+											td {
+												padding: 5px 5px;
+												white-space: normal;
+												height: auto;
+
+												&.first, &.qty {
+													text-align: center;
+												}
+
+												&.num {
+													text-align: right;
+												}
+
+												&.chg {
+													font-weight: bold;
+													background:#83cc4e;
+												}
+
+												&.dec {
+													color: #e81e24;
+													font-weight: bold;
+													font-style: italic;
+												}
+
+												&.chStat {
+													color: #008b00;
+													font-weight: bold;
+													font-style: italic;
+												}
+											}
+										}
+									}
+								}
+
+								table.equipSec {
+									border:0;
+									table-layout: fixed;
+									border-collapse: collapse;
+									margin:0;
+									width: 100%;
+									border-bottom: 1px solid #d6dce4;
+
+									tr {
+										td {
+											background: transparent;
+											border:0;
+											padding: 7px 5px;
+											color: #2e3235;
+											font-weight: bold;
+											white-space: normal;
+											font-size: 10px;
+											background:#e9edf1;
+
+											span {
+												font-weight: normal;
+												color: #2e3235;
+											}
+
+											&.currency {
+												width: 239px;
+												border-left: 1px solid #d6dce4;
+											}
+
+											&.equ {
+												width: 208px;
+												border-right: 1px solid #d6dce4;
+											}
+										}
+									}
+								}
+							}
+
+							.sum {
+								table.summary {
+									margin-left: 497px;
+
+									tbody{
+										tr {
+										}
+										td {
+											padding: 5px;
+											text-align: right;
+											border-right: 1px solid #d6dce4;
+											border-bottom: 1px solid #d6dce4;
+											border-top: 1px solid #d6dce4;
+
+											p {
+												font-size: 10px;
+												margin-bottom: 5px;
+											}
+
+											&.desc {
+												border-left: 1px solid #d6dce4;
+												width: 106px;
+
+												p {
+													font-weight: bold;
+												}
+											}
+
+											&.amount {
+												width: 60px;
+											}
+
+											&.total {
+												border-top: 0;
+												font-weight: bold;
+
+												p {
+													margin-bottom: 0;
+												}
+
+												padding: 10px 5px;
+											}
+										}
+									}
+									border: 0;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

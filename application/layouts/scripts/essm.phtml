@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<?php
+	//$this->headScript()->appendFile('/js/essm/tm.js');
+
+    function activeIf($controllerNameTest, $actionNameTest) {
+        $request = Zend_Controller_Front::getInstance()->getRequest();
+        if ($request->getControllerName() == $controllerNameTest && $request->getActionName() == $actionNameTest){
+            return ' active ';
+        }
+        return '';
+    }
+?>
+<html>
+    <head>
+        <?= $this->headTitle(); ?>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/css/essm/default.css" rel="stylesheet" media="screen">
+
+   		<?php $this->requirejs()->render(); ?>
+        <?= $this->headScript(); ?>
+        <?= $this->headStyle(); ?>
+        <?= $this->headLink(); ?>
+    </head>
+    <body class="fluid">
+        <?php echo $this->partial('layout/tag-manager.phtml', array('config' => $this->config)); ?>
+        
+        <table border=0 id="tableNameCatcherHeader_jsp" class="head" cellspacing="0" cellpadding="3" >
+          <tr>
+            <td  rowspan="2" align="left">
+				<img border="0" src="/img/essm/eSSM.jpg" width="110" height="31">
+        	</td>
+
+            <td align="center">
+              <b><?= $this->userTradenet->branchname; ?></b>
+            </td>
+
+        	<td align="right">
+    			<a href="<?= $this->cas->getRootDomain(); ?>/auth/cas/logout" class="head">Logout</a> |
+    		    <a href="/useradmin/web/modifyPassword.do?customerId=<?= $this->userTradenet->username; ?>" target="_blank" class="head">Change Password</a> |
+    			<a href="#" class="customerservice head">Customer Services</a> |
+        	  	<a href="#" class="help head"> Help</a>
+        	</td>
+
+          </tr>
+
+          <tr>
+            <td align="center"> TradeNet: <?= $this->userTradenet->isAdmin ? '0' : $this->userTradenet->branchcode; ?> </td>
+            <td align="right"> User: <b><?= $this->userTradenet->isAdmin ? ($this->userTradenet->username.' (admin)' ) : ($this->userTradenet->firstname ." ". $this->userTradenet->lastname); ?></b> </td>
+          </tr>
+
+        </table>
+        <!-- Mainmenu table -->
+        <?php if(!$this->userTradenet->isAdmin): ?>
+            <table class="nav" cellspacing="0" cellpadding="3">
+                <tr>
+                	<?php if($this->userTradenet->isMtmlBuyer === false || $this->userTradenet === false){?>
+                    <td class="navOn"><a href="/BuyerInboxServlet" class="nav2On">Purchasing</a></td>
+                    <?php }else{?>
+                    <td class="navOn"><a href="/txnmon" class="nav2On">Purchasing</a></td>
+                    <?php }?>
+                    <td class="nav"><a href="/BuySelectVesselSer?forVesselIndex=Y" class="nav">Vessels</a></td>
+                    <td class="nav"><a href="/ShipServ/Jsp/SelectVendorsbuyer_inbox.jsp" class="nav">Suppliers</a></td>
+                    <?php /*<td class="nav"><a href="/CatSetupSer" class="nav">Catalogues</a></td>*/ ?>
+                    <td class="nav"><a href="/ShipServ/Jsp/BuyerReportPg.jsp" class="nav">Reports</a></td>
+                    <td class="nav"><a href="/DeliveryUnitSer" class="nav">Deliveries</a></td>
+                    <td class="nav"><a href="/ShipServ/Jsp/BuyerFlashPg.jsp" class="nav">System News</a></td>
+                </tr>
+            </table>
+        <?php endif; ?>
+
+        <!-- submenu -->
+		<?php if( get_class($this->userTradenet) !== "Shipserv_User" && $this->userTradenet !== false && $this->userTradenet->canAccessTransactionMonitor() === true ) { ?>
+        <table class="nav2" cellspacing="0" cellpadding="5">
+        	<tr>
+        		<td class="nav2">
+                    <?php if($this->userTradenet->isAdmin === false): ?>
+	                    <?php if($this->userTradenet->isMtmlBuyer === false): ?>
+	                		<a href="/BuyerInboxServlet" class="nav2">Requisitions</a> |
+							<?php if($this->config['shipserv']['essm']['showLinkToRfqInEssm'] == 1){?><a href="/SentRFQ" class="nav2"> RFQs</a> |<?php } ?>
+	                		<a href="/SentPOServlet" class="nav2"> POs</a> |
+	                		<a href="/BuyInbxIncQuotesSer" class="nav2"> Quotes</a> |
+	                    <?php endif; ?>
+                		<a href="/txnmon" class="nav2On"> TransactionMonitor</a>
+	                    <?php if(!$this->userTradenet->isMtmlBuyer): ?>|
+	                		<a href="/BuyCreateDocSearchSer?Flag=Inbx" class="nav2"> Search</a>
+	                    <?php endif; ?>
+
+                    <?php else: ?>
+                        <?php
+                        /*
+                        <a href="/ShipServ/JSP/NewTxnMonitorHolder.jsp" class="nav2On"> TransactionMonitor</a> |
+                        <a href="/shipservadmin/tradenetprofile/home.jpf" class="nav2"> Admin Buyer Gateway</a> |
+                        <a href="/AdminHome" class="nav2"> Admin Gateway Home</a>
+                        */
+                        ?>
+                    <?php endif ?>
+        		</td>
+        	</tr>
+        </table>
+        <?php } else { ?>
+        <table class="nav2" cellspacing="0" cellpadding="5">
+        	<tr>
+        		<td class="nav2">
+                	<a href="/txnmon" class="nav2On"> TransactionMonitor</a>
+        		</td>
+        	</tr>
+        </table>
+        <?php } ?>
+        <?/*End ESSM header*/?>
+
+        <div class="container-fluid">
+            <div class="row-fluid">
+                <div class="span12">
+                    <?php echo $this->layout()->content ?>
+                </div>
+            </div>
+        </div>
+
+        <?/*ESSM footer*/?>
+        <table cellpadding="3" cellspacing="0" class="foot">
+            <tr>
+                <td class="foot">
+                    <?php if($this->userTradenet->isMtmlBuyer === false || $this->userTradenet === false){ ?>
+                    <a href="/BuyerInboxServlet" class="foot"><b>Purchasing</b></a> |
+                    <?php }else{ ?>
+                    <a href="/txnmon" class="foot"><b>Purchasing</b></a> |
+                    <?php } ?>
+                    <a href="/BuySelectVesselSer?forVesselIndex=Y" class="foot"> Vessels</a> |
+                    <a href="/ShipServ/Jsp/SelectVendorsbuyer_inbox.jsp" class="foot"> Suppliers</a> |
+                    <a href="/CatSetupSer" class="foot"> Catalogues</a> |
+                    <a href="/ShipServ/Jsp/BuyerReportPg.jsp" class="foot"> Reports</a> |
+                    <a href="/DeliveryUnitSer" class="foot"> Deliveries</a> |
+                    <a href="/ShipServ/Jsp/BuyerFlashPg.jsp" class="foot"> System News</a>
+                </td>
+          </tr>
+        </table>
+
+        <!-- Footer table -->
+
+        <div aria-labelledby="sessionTimeOut" role="dialog" tabindex="-1" class="ui-dialog ui-widget ui-widget-content ui-corner-all " style="display: none; z-index: 1002; outline: 0px none; height: auto; width: 460px; top: 213px; left: 449px;">
+        	<div style="-moz-user-select: none;" unselectable="on" class="ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix">
+        		<span style="-moz-user-select: none;" unselectable="on" id="sessionTimeOut" class="ui-dialog-title">System Session Expiration Warning</span>
+        		<a style="-moz-user-select: none;" unselectable="on" role="button" class="ui-dialog-titlebar-close ui-corner-all" href="#">
+        			<span style="-moz-user-select: none; "unselectable="on" class="ui-icon ui-icon-closethick"> close </span>
+        		</a>
+        	</div>
+
+        	<div class="ui-dialog-content ui-widget-content" id="sessionTimeoutWarning" style="height: auto; min-height: 0px; width: auto;">Your session will expire in <span id="sessionTimeoutCountdown"></span > &nbsp;seconds. <br> <br> Click on <b> OK </b> to continue browsing.</div>
+
+        	<div class="ui-dialog-buttonpane ui-widget-content ui-helper-clearfix">
+        		<button role="button" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only ui-state-focus" type="button">
+        			<span class = "ui-button-text"> OK </span>
+        		</button>
+        	</div>
+        </div>
+
+        <table cellpadding="3" cellspacing="0" class="foot">
+          <tr>
+            <td>&nbsp;</td>
+            <td align="right">
+        		<a href="<?= $this->cas->getRootDomain(); ?>/auth/cas/logout" class="foot">Logout</a> |
+        		<a href="/useradmin/web/modifyPassword.do?customerId=<?= $this->userTradenet->username ?>" target="_blank" class="foot">Change Password</a> |
+    			<a href="#" class="customerservices foot">Customer Services</a> |
+    			<a href="#" class="help foot"> Help</a>
+        	</td>
+
+          </tr>
+
+          <tr>
+            <td colspan="2" align="center">
+        		Copyright &copy; 2000-2013 ShipServ Ltd.&nbsp;All rights reserved
+        	</td>
+          </tr>
+
+        </table>
+
+        <?/*End ESSM footer*/?>
+
+    </body>
+</html>

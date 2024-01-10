@@ -1,0 +1,193 @@
+<?php
+$baseUrl = $this->baseUrl();
+$urlReport   =  '/webreporter/report/index/';
+?>
+<div id="breadcrumbs">
+    <span class="title">You are here: </span>
+    <ul>
+        <li class="current">
+            Custom Reports
+        </li>
+    </ul>
+</div>
+<div id="body" class="liquid">
+    <h1>
+        <span id="rptTitle">Custom Reports</span>
+        <span class="pull-right">
+            <button id="closeMainRpt" name="closeMainRpt" class="button small white hidden">Return to main page</button>
+        </span>
+    </h1>
+    <div id="content">
+        <div id="infoBox" class="infoBox info">
+            <p><?php echo $this->data['text_custom']; ?></p>
+        </div>
+        <div id="noCustomInfo" class="infoBox attention hidden">
+            <h2 style="text-align:center;">You have no custom reports.</h2>
+        </div>
+        <form id="reportForm" method="post" action="<?php echo $urlReport; ?>" class="hidden">
+            <div id="actions" class="actions">
+                <input id="runReport" name="runReport" type="submit" value="Run Report" class="button large green"/>
+                <div style="height:10px;">&nbsp;</div>
+                <select id="rows" name="rows">
+                    <option value="25" selected="selected">Show 25 Records/Page</option>
+                    <option value="50">Show 50 Records/Page</option>
+                    <option value="75">Show 75 Records/Page</option>
+                    <option value="100">Show 100 Records/Page</option>
+                </select>
+                <select id="numberFormat" name="numberFormat">
+                    <option value="EN" selected="selected" title="English numbering format of 9,999.99">Use EN Number Format</option>
+                    <option value="EU" title="European numbering format of 9.999,99">Use EU Number Format</option>
+                </select>
+                <hr>
+                <button id="csvExport" name="csvExport" class="button small dblue">Export to CSV</button>
+            </div>
+            <div id="filters" class="filters" style="height:175px;">
+                <fieldset class="reportInfo">
+                    <div id="rptMainFilters">
+                        <label for="companyName" class="forSelect">Buyer Company: </label>
+                        <?php if (count($this->data['buyers']) === 1) : ?>
+                        <select id="companyName" name="companyName" disabled>
+                        <?php else : ?>
+                        <select id="companyName" name="companyName">
+                        <?php endif; ?>
+                            <?php if (count($this->data['buyers']) > 0) : ?>
+                            <option value="<?php echo $this->data['buyers'][0]['bybtnid']; ?>" selected="selected"><?php echo $this->data['buyers'][0]['bybname']; ?></option>
+                            <?php for ($i = 1; $i < count($this->data['buyers']); $i++) : ?>
+                            <option value="<?php echo $this->data['buyers'][$i]['bybtnid']; ?>"><?php echo $this->data['buyers'][$i]['bybname']; ?></option>
+                            <?php endfor; endif; ?>
+                        </select>
+                        <label for="reportType"  class="forSelect">Report Type: </label>
+                        <select id="reportType" name="reportType">
+                            <?php if (count($this->data['customs']) > 0) : ?>
+                            <option value="<?php echo $this->data['customs'][0]['rptcode'] . ':' . strtoupper($this->data['customs'][0]['rptsort']); ?>" selected="selected"><?php echo $this->data['customs'][0]['rptname']; ?></option>
+                            <?php for ($i = 1; $i < count($this->data['customs']); $i++) : ?>
+                            <option value="<?php echo $this->data['customs'][$i]['rptcode'] . ':' . strtoupper($this->data['customs'][$i]['rptsort']); ?>"><?php echo $this->data['customs'][$i]['rptname']; ?></option>
+                            <?php endfor; endif; ?>
+                        </select>
+                        <label for="currency"  class="forSelect">Currency: </label>
+                        <select id="currency" name="currency">
+                            <?php for ($i = 0; $i < count($this->data['top_rates']); $i++) : ?>
+                            <?php if ($this->data['top_rates'][$i]['currcode'] === 'USD') : ?>
+                            <option value="<?php echo $this->data['top_rates'][$i]['currcode']; ?>" selected="selected"><?php echo $this->data['top_rates'][$i]['currcode'] . ' - ' . $this->data['top_rates'][$i]['currname']; ?></option>
+                            <?php else : ?>
+                            <option value="<?php echo $this->data['top_rates'][$i]['currcode']; ?>"><?php echo $this->data['top_rates'][$i]['currcode'] . ' - ' . $this->data['top_rates'][$i]['currname']; ?></option>
+                            <?php endif; endfor; ?>
+                            <option value="NA"> </option>
+                            <?php for ($i = 0; $i < count($this->data['rest_rates']); $i++) : ?>
+                            <option value="<?php echo $this->data['rest_rates'][$i]['currcode']; ?>"><?php echo $this->data['rest_rates'][$i]['currcode'] . ' - ' . $this->data['rest_rates'][$i]['currname']; ?></option>
+                            <?php endfor; ?>
+                        </select>
+                    </div>
+                    <div id="rptSubFilters" class="hidden">
+                        <div id="rsfContacts">
+                            <label for="contact" class="forSelect">Buyer Contact: </label>
+                            <select id="contact" name="contact">
+                                <option value="NA" selected="selected">All Contacts</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div id="rsfSuppliers">
+                            <label for="supplier" class="forSelect">Supplier: </label>
+                            <select id="supplier" name="supplier">
+                                <option value="0" selected="selected">All suppliers</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div id="rsfVessels">
+                            <label for="vessel" class="forSelect">Vessel: </label>
+                            <select id="vessel" name="vessel">
+                                <option value="0" selected="selected">All Vessels</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="spbAnalysis1" class="spbAnalysis1 hidden">
+                        <div style="height:15px;"></div>
+                        <hr style="margin-right:16px;">
+                        <label for="rptAsOfDate" class="forField">Report As Of Date: </label>
+                        <input id="rptAsOfDate" name="rptAsOfDate" class="rptAsOfDate" type="text" value="" disabled="disabled" style="height:15px;width:100px;"/><br>
+                        <label for="rfqCutoff" class="forField">Pending RFQ Cutoff Days: </label>
+                        <input id="rfqCutoff" name="rfqCutoff" class="rfqCutoff" type="text" value="0" disabled="disabled" style="width:136px;"/><br>
+                        <label for="ordCutoff" class="forField">Pending PO Cutoff Days: </label>
+                        <input id="ordCutoff" name="ordCutoff" class="ordCutoff" type="text" value="0" disabled="disabled" style="width:136px;"/>
+                    </div>
+                </fieldset>
+                <fieldset id="reportDates" class="reportDates">
+                    <label for="dateRange"  class="forSelect">Date Range: </label>
+                    <select id="dateRange" name="dateRange" class="beforeInput">
+                        <option value="CSTMDTS">Custom Dates</option>
+                        <option value="PRV01MO" selected="selected">Previous Month</option>
+                        <option value="PRV03MO">Previous 3 Months</option>
+                        <option value="PRV06MO">Previous 6 Months</option>
+                        <option value="PRV12MO">Previous 12 Months</option>
+                        <option value="PRVYEAR">Previous Year</option>
+                    </select>
+                    <label for="fromDate" class="forField">From date: </label>
+                    <input id="fromDate" name="fromDate" type="text" value="" disabled="disabled" style="height:15px;width:100px;margin-bottom:11px;"/>
+                    <label for="toDate" class="forField">To date: </label>
+                    <input id="toDate" name="toDate" type="text" value="" disabled="disabled" style="height:15px;width:100px;margin-bottom:13px;"/>
+                    <div id="spbAnalysis2" class="spbAnalysis2 hidden">
+                        <div style="height:3px;"></div>
+                        <hr style="margin-right:4px;">
+                        <label for="qotCutoff" class="forField">PO Decision Cutoff Days: </label>
+                        <input id="qotCutoff" name="qotCutoff" class="qotCutoff" type="text" value="0" disabled="disabled" style="width:58px;margin-top:1px;"/>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="clear"></div>
+        </form>
+        <span id="rptRevert" class="label rpt-revert hidden">The report parameters have changed.&nbsp;&nbsp;Click the "Run Report" button to generate a new report.&nbsp;&nbsp;Or click to&nbsp;&nbsp;<button id="rptRevertBtn" name="rptRevertBtn" class="button white">Undo Parameter Changes</button></span>
+        <div id="rptContainer" class="hidden">
+            <div class="liquid">
+                <span class="pull-left label row-showing" style="padding-top:4px;margin-top:4px;">Showing <span id="ttlsShowing">0 - 0 out of</span> <span id="ttlsValue">0</span> records</span>
+                <div id="pagingTop" style="padding:0;margin:0;"></div>
+            </div>
+            <div id="spbAnalysisCtrl" class="liquid hidden"></div>
+            <br>
+            <table id="tblReport" cellpadding="0" cellspacing="0" border="0" width="100%" class="report" style="padding-bottom:0;margin-bottom:0;">
+                <thead>
+                    <tr id="tblHdrs"></tr>
+                    <tr id="tblTtls" class="tblTtls"></tr>
+                </thead>
+                <tbody id="tblRows"></tbody>
+            </table>
+            <div class="liquid" style="padding-top:4px;margin-top:4px;">
+                <div id="pagingBottom" style="padding-top:0;margin-top:0;"></div>
+            </div>
+            <br>
+            <table id="spbAnalysisLegends" cellpadding="0" cellspacing="0" border="0" width="100%" class="report hidden" style="padding-bottom:0;margin-bottom:0;"></table>
+            <br><br><br>
+        </div>
+        <br>
+        <div class="infoBox yellow attention bottom">
+            <img src="<?php echo $baseUrl . '/img/information.png'; ?>" alt="attention" border="0">
+            <p style="margin-left:50px;margin-top:-35px;height:40px;"><?php echo $this->data['text_footer']; ?></p>
+        </div>
+    </div>
+</div>
+<div id="footer">Copyright &copy; 2000-<span id="copyrightYear"></span> ShipServ Ltd. All rights reserved</div>
+
+<script type="text/javascript">
+    var base     = <?php echo json_encode(array('url' => $this->baseUrl())); ?>;
+    var user     = <?php echo json_encode($this->data['user']); ?>;
+    var buyer    = <?php echo json_encode($this->data['buyer']); ?>;
+    var buyers   = <?php echo json_encode($this->data['buyers']); ?>;
+    var isIndex  = 0;
+    var isCustom = <?php echo count($this->data['customs']); ?>
+</script>
+
+<!-- Library Scripts -->
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/lib/jquery.uniform.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/lib/jquery.tools.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/lib/jquery.tools.overlay.modified.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/lib/jquery-ui-1.8.23.custom.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/lib/jquery.blockui.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/lib/accounting.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/lib/bootstrap.min.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/lib/bootstrap-paginator.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/lib/bootbox.min.js'; ?>"></script>
+
+<!-- WebReporter Scripts -->
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/webreporter_function.js?version=' . rand(100, 999); ?>"></script>
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/webreporter_event.js?version=' . rand(100, 999); ?>"></script>
+<script type="text/javascript" src="<?php echo $baseUrl . '/js/webreporter_setup.js?version=' . rand(100, 999); ?>"></script>
+

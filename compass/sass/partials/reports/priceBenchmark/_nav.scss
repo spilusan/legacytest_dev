@@ -1,0 +1,48 @@
+/*
+Document   : def/tab_nav.scss
+Created on : Sep 6, 2012, 1:00:43 PM
+Author     : gly
+Description: default styles for inpage tabbed navigation
+*/
+
+ul.tabs {
+	display: block;
+	height: 33px;
+	padding-left: 20px;
+
+	li {
+		display: block;
+		padding-right: 4px;
+		float: left;
+
+		a {
+			position: relative;
+			display: block;
+			font-size: 13px;
+			font-weight: bold;
+			color: #ffffff;
+			padding: 10px 16px;
+			@include x-multiple-colored-gradient(#b5bbc4, #7d858d);
+			-pie-background: linear-gradient(#b5bbc4 0%, #7d858d 100%);
+			@include border-radius(6px 6px 0 0);
+			behavior: url(/css/PIE.htc);
+		}
+
+		&.current, &.selected {
+			a {
+				background: #ffffff;
+				border: 1px solid #dadada;
+				border-bottom: 0;
+				color: #2e3235;
+				padding: 9px 15px 10px 15px;
+			}
+		}
+
+		&.selected {
+				border-bottom: 1px solid white;
+				position: relative;
+				top: 1px;
+				z-index: 500;
+		}
+	}
+}

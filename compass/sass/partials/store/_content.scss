@@ -1,0 +1,132 @@
+.nav ul.secondary li.store {
+	background: #fff;
+	background-color: #fff;
+	-pie-background: #fff;
+
+	a {
+		color: #525c64;
+		text-shadow: none;
+	}
+}
+
+#modal, #modalBig {
+	.modalBody {
+		h1 {
+			margin-bottom: 10px;
+		}
+
+		.modalContent {
+			ul {
+				list-style-type: disc;
+				padding-left: 15px;
+
+				li {
+					font-size: 12px;
+					color: #13b6ea;
+					margin-bottom: 10px;
+					line-height: 1.2;
+
+					span {
+						font-size: 12px;
+						color: #2e3235;
+					}
+				}
+			}
+		}
+	}
+}
+
+#body {
+	#content {
+		margin-right: 140px;
+		h1 {
+			margin-bottom: 5px;
+			padding: 6px 15px;
+
+			span {
+				display: block;
+				position: relative;
+				top: 5px;
+				float: left;
+			}
+
+			.button {
+				float: right;
+			}
+		}
+
+		.section {
+			padding: 15px;
+			
+			p {
+				font-size: 14px;
+				color: #2e3235;
+
+				&.sub {
+					font-size: 12px;
+				}
+
+				a {
+					font-size: 12px;
+				}
+
+				&.small {
+					font-size: 11px;
+					font-style: italic;
+
+					a {
+						font-size: 11px;
+						font-style: italic;
+					}
+				}
+			}
+
+			h2 {
+				font-size: 16px;
+				font-weight: bold;
+				color: #2e3235;
+				margin-bottom: 15px;
+			}
+
+			.contactBox {
+				position: relative;
+				float: none;
+				border: 2px solid #83cc42;
+				width: 100%;
+				padding: 3px 0 2px 0;
+				margin-bottom: 25px;
+				@include border-radius(6px);
+				@include background-image(linear-gradient(#fffffe 0%, #e6f8d9 100%));
+				-pie-background: linear-gradient(top, #fffffe 0%, #e6f8d9 100%);
+				behavior: url(/css/PIE.htc);
+
+				.contact {
+					display: block;
+					float: left;
+					width: 387px;
+					height: 16px;
+					padding-left: 69px;
+					margin-left: 10px;
+					font-size: 16px;
+					font-weight: bold;
+					padding: 22px 0 22px 69px;
+					border-right: 1px dotted black;
+					background: url(/img/store/contact.png) left top no-repeat transparent;
+				}
+
+				.details {
+					display: block;
+					float: right;
+					padding-right: 50px;
+					padding-top: 11px;
+					font-size: 13px;
+
+					a {
+						color: #005aad;
+						text-decoration: none;
+					}
+				}
+			}
+		}
+	}
+}

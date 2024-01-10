@@ -1,0 +1,202 @@
+/*
+Document   : partials/guidelines/_buttons.scss
+Created on : Jun 13, 2016, 10:05:43 AM
+Author     : gly
+Description: Buttons
+*/
+ 
+.btn {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 600;
+	font-size: 18px;
+	padding: 12px 20px;
+	cursor: pointer;
+	@include border-radius(4px);
+	display: inline-block;
+
+	&.btn-block {
+		display: block;
+		width: 100%;
+	}
+
+	&.small {
+		font-size: 12px;
+		padding: 2px 10px;
+	}
+
+	&.small-wide {
+		font-size: 12px;
+		padding: 2px 25px;
+	}
+
+	&.medium {
+		font-size: 16px;
+		padding: 10px 20px;
+	}
+	
+	&.btn-inline-block {
+		display: inline-block;
+	}
+
+	&.large {
+		font-size: 18px;
+		padding: 15px 40px;
+	}
+
+	&.txcenter {
+		text-align: center;
+	}
+
+	&.max-width {
+		max-width: 320px;
+		margin: 0 auto;
+	}
+
+
+
+	&.link-blue {
+		color: $white !important;
+		background: $link-blue;
+		border: 2px solid $link-blue;
+	}
+
+	&.white {
+		color: $link-blue !important;
+		background: $white;
+		border: 2px solid $link-blue;
+		
+		&.blackText {
+			color: $text-grey !important;
+			border: 2px solid $white;
+		}
+	}
+
+	&.btn-centered {
+		margin: 0 auto;
+		display: block;
+		max-width: 300px;
+		text-align: center;
+	}
+
+	&.white-black {
+		color: $black !important;
+		background: $white;
+		border: 2px solid $black;
+	}
+
+	&.red {
+		background: $red;
+		color: $white !important;
+		border: 2px solid $red;
+	}
+
+	&.blue {
+		background: $mid-blue;
+		color: $white !important;
+		border: 2px solid $mid-blue;
+	}
+	&.cyan {
+		background: $cyan-blue;
+		color: $white !important;
+		border: 2px solid $cyan-blue;
+	}
+
+	&.green {
+		background: $green;
+		color: $white !important;
+		border: 2px solid $green;
+	}
+	&.mid-grey {
+		background: $mid-grey;
+		color: $black !important;
+		border: 2px solid $mid-grey;
+	}
+	&.mid-grey-outline {
+		background: $mid-grey;
+		color: $black !important;
+		border: 1px solid $black !important;;
+	}
+	&.transparent {
+		background: transparent;
+		color: $white !important;
+		border: 2px solid $white;
+
+		&.transparent-blue {
+			text-align: center;
+			color: $link-blue !important;
+			border: 2px solid $link-blue;
+			margin: 0 auto;
+		}
+
+		&.transparent-red {
+			color: $red !important;
+			border: 2px solid $red;
+		}
+	}
+	&.disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	&.blue-outline {
+		background: $white;
+		color: $mid-blue !important;
+		border: 2px solid $mid-blue;
+
+		&.selected {
+			background: $mid-blue;
+			color: $white !important;
+			border: 2px solid $mid-blue;
+		}
+	}
+
+	&.btn-centered {
+		text-align: center;
+		max-width: 300px;
+		margin: 0 auto;
+		display: block;
+	}
+
+	&.wp-blue {
+		background: none;
+		color: $link-blue;
+		padding: 0;	
+
+		.fa {
+			&:before {
+				margin-left: 5px;
+			}
+		}
+
+		@media only screen and (max-width : 640px) {
+			color: $white !important;
+			background: $link-blue;
+			padding: 15px 20px !important;
+
+			i {
+				display: none;
+			}
+		}
+	}
+
+	&.borderless {
+		border: 0px !important;
+	}
+
+	&.export {
+		padding-left: 40px;
+		position: relative;
+		&::before {
+			font: normal normal normal 24px/1 FontAwesome;
+			position: absolute;
+			left: 11px;
+			top: 8px;
+			content: $fa-var-file-excel-o;
+		}
+	}
+}
+
+input {
+	/* For older IOS phones (4, 5) */
+	-webkit-appearance: none;
+}

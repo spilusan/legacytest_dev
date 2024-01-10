@@ -1,0 +1,24 @@
+			<table class="dataTable">
+				<thead>
+					<tr>
+						<th>Activity</th>
+					</tr>
+				</thead>
+				<tbody>
+				{{#each logins}}
+					<tr>
+						<td>Login on {{this.date}}</td>
+					</tr>
+				{{/each}}
+				{{#each searches}}
+					<tr>
+						<td>Searched for {{this.SEARCH_QUERY}} on {{this.LAST_DATE_AS_DATE}}</td>
+					</tr>
+				{{/each}}
+				{{#each SIR}}
+					<tr>
+						<td>Viewed SIR of <a href="{{this.url}}">{{this.name}}</a> on {{this.date}}</td>
+					</tr>
+				{{/each}}
+				</tbody>
+			</table>

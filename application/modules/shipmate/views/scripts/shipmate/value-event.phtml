@@ -1,0 +1,495 @@
+<?php
+$this->headLink()->appendStylesheet('/css/shipmate.css')->appendStylesheet('/css/uniform.rfq.css');
+
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+?>
+
+<style>
+	td {
+		font-size:12px;
+	}
+
+	td b {
+		font-size:16px;
+		line-height:20px;
+	}
+</style>
+
+<?php
+// -------- BREADCRUMBS ---------------
+$breadcrumbs[] = array(
+	'name' => 'ShipServ Pages',
+	'url'  => '/search'
+);
+$breadcrumbs[] = array(
+	'name' => 'Shipmate',
+	'url'  => '/shipmate'
+);
+$breadcrumbs[] = array(
+	'name' => 'Salesforce',
+	'url'  => '/shipmate/value-event'
+);
+$breadcrumbs[] = array(
+	'name' => 'Value event upload',
+	'url'  => ''
+);
+
+echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+
+function printMonthSelectOptions($selected) {
+	?><option value="">month</option><?php
+
+	for ($i = 1; $i <= 12; $i++) {
+		$monthNo = $i;
+		if (strlen($i) === 1) {
+			$monthNo = '0' . $monthNo;
+		}
+
+		$dateObj = DateTime::createFromFormat('!m', $monthNo);
+		$monthName = $dateObj->format('F');
+
+		?>
+		<option <?= (($selected == $monthNo) ? 'selected="selected"' : '') ?> value="<?= $monthNo?>">
+			<?= $monthName;?>
+		</option>
+		<?php
+	}
+}
+
+function printYearSelectOptions($selected, $minYear = 2013) {
+	?><option value="">year</option><?php
+
+	for ($yearNo = date('Y'); $yearNo >= $minYear; $yearNo--) {
+		?>
+		<option <?= (($selected == $yearNo) ? 'selected="selected"' : '') ?> value="<?= $yearNo?>">
+			<?= $yearNo;?>
+		</option>
+		<?php
+	}
+}
+?>
+
+<div id="body" style="width:1655px;">
+	<div id="content" style="width: 1400px;">
+		<h1 class="styled">Upload value events</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<div class="innerContent">
+			<div class="">
+				<?php
+				if ($this->jobId != null) {
+					?>
+					<div style="font-weight:bold; font-size:14px; line-height:18px; margin-bottom:10px; color:#13b5ea;">
+						Your value events update has been submitted as SalesForce job ID <?= $this->jobId; ?>
+						<br/><br/>
+						Please allow it some time to propagate.
+					</div>
+					<?php
+				}
+
+				if (!empty($this->deletedErrors)) {
+					?>
+					<div style="font-weight:bold; font-size:14px; line-height:18px; margin-bottom:10px; color:#e4210d;">
+						Errors occurred while deleting existing Value Events:
+						<br/><br/>
+					</div>
+					<p>
+					<?php
+					foreach ($this->deletedErrors as $eventId => $errors) {
+						foreach ($errors as $error) {
+							?>
+							<b><?= $eventId; ?></b>: <?= htmlentities($error['code']); ?>, <?= htmlentities($error['message']); ?>
+							<br />
+							<?php
+						}
+					}
+					?>
+					</p>
+					<?php
+				}
+				?>
+
+				<form method="get" class="new" id="report-form">
+				    <table width="95%">
+				        <tr>
+				            <td>
+			                    <table width="500px;">
+			                        <tr>
+			                            <td>Salesforce Account ID</td>
+			                            <td><input type="text" value="<?= $this->params['sf_account_id']?>" name="sf_account_id" /></td>
+			                        </tr>
+			                        <tr>
+			                            <td>Period start</td>
+			                            <td>
+											<select name="start_month"><?php printMonthSelectOptions($this->params['start_month']); ?></select>
+											<select name="start_year"><?php printYearSelectOptions($this->params['start_year']); ?></select>
+			                            </td>
+			                        </tr>
+			                        <tr>
+			                            <td>Period end</td>
+			                            <td>
+											<select name="end_month"><?php printMonthSelectOptions($this->params['end_month']); ?></select>
+											<select name="end_year"><?php printYearSelectOptions($this->params['end_year']); ?></select>
+			                            </td>
+			                        </tr>
+						            <tr>
+							            <td>Data format</td>
+							            <td>
+								            <input type="radio" name="data_format" value="legacy" <?= ($this->legacyFormat) ? 'checked="checked"' : ""; ?>> Legacy<br/>
+								            <input type="radio" name="data_format" value="active_promotion"<?= (!$this->legacyFormat) ? 'checked="checked"' : ""; ?>> Active Promotion
+							            </td>
+						            </tr>
+			                        <tr>
+			                            <td colspan="2"><input class="medium dblue button" type="submit" value="Step 1/3: Get account detail &raquo;" id="getAccountDetail"/></td>
+			                        </tr>
+			                    </table>
+				            </td>
+					        <td>
+				            <?php
+				            if ($this->app !== null) {
+					            ?>
+						            <b>Account detail</b><br/>
+						            <table>
+							            <tr>
+								            <td width="200"><strong>Name</strong></td>
+								            <td><?= htmlentities($this->supplier->name); ?></td>
+							            </tr>
+							            <tr>
+								            <td><strong>Parent</strong></td>
+								            <td>
+									            <?= htmlentities($this->app->salesForceAccount['parentName']); ?>
+									            (<?= $this->app->salesForceAccount['parentId']; ?>)
+								            </td>
+							            </tr>
+							            <tr>
+								            <td><strong>Account manager</strong></td>
+								            <td><?= $this->supplier->accountManagerName; ?></td>
+							            </tr>
+							            <tr>
+								            <td><strong>Contract ID</strong></td>
+								            <td><?= $this->app->salesForceAccount['contractId']; ?></td>
+							            </tr>
+							            <tr>
+								            <td><strong>Contracted accounts</strong></td>
+								            <td>
+									            <?php
+									            if ($this->app->salesForceAccount['contractId'] !== null) {
+										            $contractedUnderAccounts = $this->app->getAccountContractedUnderContractId($this->app->salesForceAccount['contractId']);
+										            if (lg_count($contractedUnderAccounts) > 0) {
+											            foreach ((array)$contractedUnderAccounts as $row) {
+												            ?>
+												            <?= ($row->TNID__c != "" ? $row->TNID__c : "No TNID on SF"); ?> -
+												            <?= htmlentities($row->Name); ?> (<?= $row->Id; ?>)
+												            <br/>
+												            <?php
+											            }
+										            } else {
+											            ?>N/A<?php
+										            }
+									            }
+									            ?>
+								            </td>
+							            </tr>
+						            </table>
+
+						            <?php
+						            if ($this->rateSet) {
+							            ?>
+							            <br/>
+							            <br/>
+							            <br/>
+							            <b>Rate Sets</b>
+							            <table class="resultsTab" width="95%">
+								            <thead>
+								            <tr>
+									            <th></th>
+									            <th>Id</th>
+									            <th>Active?</th>
+
+									            <th>Standard Rate</th>
+									            <th>Target Rate</th>
+									            <th>Lock period</th>
+
+									            <th>Fee per off <br/>Shipserv lead <br/>Unactioned RFQ</th>
+									            <th>Fee per mile <br/>targeted <br/>impressions</th>
+									            <th>Membership <br/>fee</th>
+									            <th>Valid from</th>
+									            <th>Valid to</th>
+								            </tr>
+								            </thead>
+								            <tbody>
+								            <?php
+								            foreach ((array)$this->rateSet as $row) {
+									            $rateSets[] = $row->Id;
+									            ?>
+									            <tr>
+										            <td><?= ++$rowNum; ?></td>
+										            <td><?= $row->Id; ?></td>
+										            <td><?= $row->Active_Rates__c; ?></td>
+
+										            <td><?= $row->PO_percentage_fee__c; ?></td>
+										            <td><?= $row->Target_PO_Fee__c; ?></td>
+										            <td><?= $row->Target_PO_Fee_Lock_Period_Days__c; ?></td>
+
+										            <td><?= $row->Fee_per_Off_ShipServ_Lead_UCV__c; ?></td>
+										            <td><?= $row->Fee_per_mile_targeted_impressions__c; ?></td>
+										            <td><?= $row->Integrated_maintenance_fee__c; ?></td>
+										            <td><?= $row->Valid_from__c; ?></td>
+										            <td><?= $row->Valid_to__c; ?></td>
+									            </tr>
+									            <?php
+								            }
+								            ?>
+								            </tbody>
+							            </table>
+							            <?php
+						            }
+						            ?>
+						            <br/>
+						            <br/>
+						            <br/>
+						            <br/>
+						        </td>
+					            <?php
+					        }
+					        ?>
+				        </tr>
+					    <?php
+					    if ($this->app !== null ) {
+					    	?>
+							<tr>
+					            <td>
+					                <b>Current value event (in Salesforce)</b>
+									<table class="resultsTab" width="95%">
+										<thead>
+											<tr>
+												<th></th>
+												<th>Start Date</th>
+												<th>End Date</th>
+												<th>GMV</th>
+												<?php
+												if ($this->legacyFormat) {
+													?>
+													<th>Unactioned <br />RFQ</th>
+													<th>Unique <br />Contact View</th>
+													<th>P1 Search <br />Impression</th>
+													<?php
+												} else {
+													?>
+													<th>Rate<br />Type</th>
+													<th>Rate<br />Value</th>
+													<?php
+												}
+												?>
+												<th>Rate Id</th>
+												<th>Account Id</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+												$valueEventIds = array();
+												foreach ((array)$this->valueEvent as $row) {
+													$valueEventIds[] = $row->Id;
+													?>
+													<tr style="height:45px; border-bottom:1px solid grey;">
+														<td><span title="<?= $row->Id; ?>"><?= ++$numRows;?></span></td>
+														<td><?= $row->Period_start__c; ?></td>
+														<td><?= $row->Period_end__c; ?></td>
+														<td><?= $row->Gross_Merchandise_Value__c; ?></td>
+														<?php
+														if ($this->legacyFormat) {
+															?>
+															<td><?= $row->Unactioned_RFQs__c; ?></td>
+															<td><?= $row->Unique_contact_views__c; ?></td>
+															<td><?= $row->Targeted_impressions__c; ?></td>
+															<?php
+														} else {
+															?>
+															<td><?= $row->Rate_Set_Type__c; ?></td>
+															<td><?= $row->Rate_value__c; ?></td>
+															<?php
+														}
+														?>
+														<td><?= $row->Rate__c; ?></td>
+														<td><?= $row->TransactionAccount__c; ?></td>
+													</tr>
+													<?
+												}
+											?>
+										</tbody>
+									</table>
+								</td>
+
+					            <td>
+					                <b>New value events</b>
+									<table class="resultsTab" width="95%">
+										<thead>
+											<tr>
+												<th></th>
+												<th>Start Date</th>
+												<th>End Date</th>
+												<th>GMV</th>
+												<?php
+												if ($this->legacyFormat) {
+													?>
+													<th>Unactioned <br />RFQ</th>
+													<th>Unique <br />Contact View</th>
+													<th>P1 Search <br />Impression</th>
+													<?php
+												} else {
+													?>
+													<th>Rate<br/>Type</th>
+													<th>Rate<br/>Value</th>
+													<?php
+												}
+												?>
+												<th>Rate ID</th>
+												<th>Account ID</th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php
+											foreach ($this->valueEventsToBeUploaded as $row) {
+												?>
+												<tr class="csv" style="height:45px; border-bottom:1px solid grey;">
+													<td><?= ++$numRows2;?></td>
+													<?php
+													// not very elegant branching here, should've converted to same keys in controller
+													if ($this->legacyFormat) {
+														?>
+														<td class="csv-row"><?= $row['startDateYMD']; ?></td>
+														<td class="csv-row"><?= $row['endDateYMD']; ?></td>
+														<td class="csv-row"><?= $row['gmv']; ?></td>
+														<td class="csv-row"><?= $row['unactioned']; ?></td>
+														<td class="csv-row"><?= $row['uniqueContactView']; ?></td>
+														<td class="csv-row"><?= $row['searchImpression']; ?></td>
+														<?php
+													} else {
+														?>
+														<td class="csv-row"><?= $row['Period_start__c']; ?></td>
+														<td class="csv-row"><?= $row['Period_end__c']; ?></td>
+														<td class="csv-row"><?= $row['Gross_Merchandise_Value__c']; ?></td>
+														<td class="csv-row"><?= $row['Rate_Set_Type__c']; ?></td>
+														<td class="csv-row"><?= $row['Rate_value__c']; ?></td>
+														<?php
+													}
+													?>
+
+													<td class="csv-row">
+														<select>
+															<?php
+															foreach ((array) $rateSets as $rateId) {
+																if ($this->legacyFormat) {
+																	$rateSetKey = 'rateSetId';
+																} else {
+																	// @todo: sometimes no rate is returned from the DB - should we support that in the UI?
+																	$rateSetKey = 'Rate__c';
+																}
+
+																?>
+																<option value="<?= $rateId; ?>" <?= ($rateId == $row[$rateSetKey]) ? "selected='selected'" : ""; ?>>
+																	<?= $rateId; ?>
+																</option>
+																<?
+															}
+															?>
+														</select>
+													</td>
+
+													<?php
+													if ($this->legacyFormat) {
+														?>
+														<td class="csv-row"><?= $row['transactingAccount']; ?></td>
+														<?php
+													} else {
+														?>
+														<td class="csv-row"><?= $row['TransactionAccount__c']; ?></td>
+														<?php
+													}
+													?>
+												</tr>
+												<?php
+											}
+											?>
+										</tbody>
+									</table>
+								</td>
+				            </tr>
+						    <?php
+					    }
+					    ?>
+				    </table>
+					<?php if ($this->app !== null) {
+						?>
+						<input class="medium dblue button" type="button" value="Step 2/3: Generate CSV &raquo;" id="up" onclick="generateCsvForUpload();"/><br /><br />
+						<?php
+					}
+					?>
+
+				</form>
+
+			    <?php
+			    if ($this->app !== null) {
+				    ?>
+				    <br/><br/><br/>
+					<form action="/shipmate/value-event" class="new" method="post">
+						<input type="hidden" name="upload" value="1" />
+
+						<input type="hidden" name="sf_account_id" value="<?= $this->params['sf_account_id']; ?>" />
+						<input type="hidden" name="data_format" value="<?= $this->params['data_format']; ?>" />
+
+						<input type="hidden" name="start_month" value="<?= $this->params['start_month']; ?>" />
+						<input type="hidden" name="start_year" value="<?= $this->params['start_year']; ?>" />
+						<input type="hidden" name="end_month" value="<?= $this->params['end_month']; ?>" />
+						<input type="hidden" name="end_year" value="<?= $this->params['end_year']; ?>" />
+
+						<p><b>Events to deleted:</b> <?= implode(", ", $valueEventIds); ?></p>
+						<?php
+						foreach ($valueEventIds as $valueEventId) {
+							?>
+							<input type="hidden" name="valueEventId[]" value="<?= $valueEventId; ?>" />
+							<?php
+						}
+						?>
+
+						<p><b>CSV to be uploaded:</b></p>
+						<textarea name="csvContent" id="csvToUpload" style="width: 98%; border:1px solid grey; padding:10px; height:300px;"></textarea>
+						<br /><br />
+						<input class="medium dblue button" type="submit" value="Step 3/3: Upload to Salesforce &raquo;"
+						       onClick="return confirm('By clicking OK, you will be removing all Value Events listed in the section entitled ‘Current value event (in Salesforce)’ of this page');"
+						/>
+					</form>
+					<?php
+			    }
+			    ?>
+			
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+	function generateCsvForUpload(){
+		var csv = ['<?= implode(',', (array) $this->uploadCsvHeaders); ?>'];
+
+		$(".csv").each(function(){
+			var rowInfo = [];
+			$(this).find('td.csv-row').each(function(){
+				if( $(this).find('select').length > 0 )
+					rowInfo.push($(this).find('select').val());
+				else
+					rowInfo.push($(this).html());
+			});
+			csv.push(rowInfo.join(","));
+		});
+		$("#csvToUpload").val(csv.join("\n"));
+	}
+
+	$(document).ready(function(){
+		generateCsvForUpload();
+	});
+</script>

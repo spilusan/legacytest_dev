@@ -1,0 +1,358 @@
+<?php     	
+$this->requirejs()->addModule('help')
+				  ->addModule('modal');
+$this->headLink()->appendStylesheet('/css/supplier/profile-completeness.css');
+				  
+$profileChecker = new Myshipserv_SupplierListing( $this->tnid, $this->userCompanyHelper );
+$score = $profileChecker->getCompletenessAsPercentage();
+if( $score <= 49 )
+{
+	$barColor = 'red';
+	$fontColor = 'white';
+	$boxBorderColor = 'red';
+	$buttonColor = 'red';
+}
+else if( $score > 49 && $score < 70  )
+{
+	$barColor = 'grey';
+	$fontColor = 'white';
+	$boxBorderColor = '#F4D987';
+	$buttonColor = 'grey';
+}
+else
+{
+	$barColor = 'green';
+	$fontColor = 'white';
+	$boxBorderColor = 'green';
+	$buttonColor = 'green';
+}
+
+
+if ($this->mode == 'full') {
+?>
+<div id="pc-info" class="hidden">
+	<?php if ($this->supplier->isPremium() === false){?>
+		<b>The more complete your Basic Listing the more likely it is that you'll get more profile views, contact views and RFQs through Pages.</b><br />
+		<br />
+		The maximum Profile Complete Score for a Basic Listing is 50% because they only contain a very basic amount of data on the  company.  
+		Many data fields are disabled for basic listers.<br />
+		<br />
+		Only having a basic listing has 3 impacts:<br />
+		<br />
+		
+		<ul class="impact">
+			<li>You might not be returned in the search results for relevant searches</li>
+			<li>All your competitors with Premium Profiles will appear above you in the search results</li>
+			<li>When buyers do find you in the search results, with only a basic listing they won't see your company in the best light.  For example, they won't be able to read a company summary, they won't see your catalogue or fact sheets and they won't see your company logo.</li>
+		</ul> 
+		<br />
+		<a href="/info/pages-for-suppliers/win-new-business-with-a-premium-listing/" target="_blank" style="font-weight:bold;">Click here to see more on a Premium Profile.</a>
+		<br />
+		<br />
+		Even if you don't want to upgrade, achieving nearer 50% with your basic listing will still help drive better performance.<br /> 
+	<?php } else { ?>	
+		The more complete your Premium Profile the more likely it is that you'll get more profile views, contact views and RFQs through Pages.<br />
+		<br />
+		Less than 100% score means you are not getting maximum benefit because:<br />
+	 	<br />
+	 	<ul class="impact">
+			<li>We use the information in your listing to deliver search results, so you might not be returned in the search results for all relevant searches</li>
+			<li>When potential buyers do find you in the search results, they won't see your company in the best light if your Profile is incomplete.</li>
+		</ul>
+	<?php }?>
+</div>
+<div class="pc">
+	<div class="profile-completeness clearfix">
+		<div class="profile-completeness-inner gradient">
+			<div class="profile-completeness-form">
+				<?php if ($score < 49) { ?>
+				<img id="pcs-alert" src='/images/profile-completeness/icon_alert_big.jpg' height="30" width="35" style="float:right; margin-top:-5px; margin-right:15px;" />
+				<?php } ?>
+				<h1 style="float:left;">Profile Complete Score</h1>
+				<div class="contextual-pcs inline contextual help" data-title="Profile complete score" data-message-div="pc-info" style="float:left;"></div>
+				<div class="clear"></div>
+				<div class="in">
+					<div class="indicator">
+						<div class="indicator-container">
+							<div class="indicator-bar bar-<?php echo $barColor?>" style="width:<?php echo $score/100 * 350; ?>px;"></div>
+						</div>
+						<div class="clear"></div>
+						<div class="scale">
+							<div class="bars">
+								<div class="bar" style="margin-right:33px; height:7px; margin-left:1px; margin-top:-2px;"></div>
+								<div class="bar"></div>
+								<div class="bar"></div>
+								<div class="bar"></div>
+								<div class="bar"></div>
+								<div class="bar" style="margin-left:0px; height:7px; margin-top:-2px;"></div>
+								<div class="bar"></div>
+								<div class="bar"></div>
+								<div class="bar"></div>
+								<div class="bar"></div>
+								<div class="bar" style="margin-right:0px; height:7px; margin-top:-2px;" ></div>
+							</div>
+							<div class="clear"></div>
+							<div class="numbers">
+								<div class="number number0">0%</div>
+								<div class="number number50">50%</div>
+								<div class="number number100">100%</div>
+							</div>
+						</div>
+					</div>
+					<div class="pc-indicator <?php echo $barColor?>">
+						<? echo $score . "%&nbsp;" ;?>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="buttonSet" style="margin-top:20px;">
+					<? if ($this->user->canEditListing($this->supplier->tnid)) {?>
+					<div class="zz small lblue button" id="editListingBtn" onclick="location.href='<? echo $this->supplier->getEditUrl() ?>';"><button>Edit Profile</button></div>
+					<?php } else { ?>
+					<div class="zz small lblue button" id="editListingBtn" onclick="alert('ShipServ employees cannot edit profile of a company');"><button>Edit Profile</button></div>
+					<?php } ?>
+					<div class="zz small <?= $buttonColor?> button hidden completionTipsBtn"><button>Completion tips</button></div>
+					<div class="clear"></div>
+				</div>
+				<div class="clear"></div>
+				
+				<?php if (isset($_GET['debug']) && $_GET['debug'] == 1) { ?>
+				<div class="debug">
+					<b>Debug information</b><br />
+					<?= $profileChecker->getDebug()?>
+				</div>
+				<?php } ?>
+				<div class="clear"></div>
+				
+				<div class="todo">
+					<br />
+					<div style="font-size:14px;">
+					<?php if( round($score) == 100 ){?>
+						<b>Well done, your profile is 100% completed</b>
+					<?php }else{?>
+						<?php if( $this->user->isShipservUser() == false ){?>
+						<b>To get a higher score, you will need to do the following:</b><br /><br />
+						<?php }else{?>
+						<b>To get a higher score, you will need to do the following:<br /></b><br />
+						<?php }?>
+					<?php }?>
+					</div>
+					<ul class="todo-list">
+					<?php 
+					$data = (array)$profileChecker->getToDoForPartial();
+					Shipserv_Supplier::aasort($data,"score");
+					foreach((array) $data as $row )
+					{
+						$i++;
+						if( $_SERVER['APPLICATION_ENV'] == "development")
+						{
+							echo "<li ".(($i < 3)?"style='font-weight:bold'":"").">" . $row['todo'] . " (" . $row['score'] . ")</li>";
+						}
+						else 
+						{
+							echo "<li ".(($i < 3)?"style='font-weight:bold'":"").">" . $row['todo'] . "</li>";
+						}
+					}
+					
+					?>
+					</ul>
+					<div class="todo-pagination"></div>
+					<div style="display:<?= ( isset( $_GET['debug'] ) && $_GET['debug'] == 1 )?'block':'none';?>">
+						<br />
+						<div><b>Profile information successfully completed: </b></div>
+						<br />
+						<div class="clear"></div>
+						<ul class="completed-list">
+						<?php 
+						$data = (array)$profileChecker->getCompletedTaskForPartial();
+						Shipserv_Supplier::aasort($data,"score");
+						foreach((array) $data as $row )
+						{
+							echo "<li>" . $row['info'] . " (" . $row['score'] . ")</li>";
+						}
+						?>
+						</ul>
+					</div>
+					<br />
+				    <?php if ($this->supplier->isPremium() === false ){?>
+				    <div style="font-weight:bold; margin-bottom:20px;">
+				    	Basic listings only score a maximum of 50% because features are disabled by ShipServ.<br />
+				    	<br />
+				    	For example, basic listers:
+				    	<ul class="impact">
+							<li>CANNOT show company logo and business description</li>
+							<li>CANNOT upload any attachments such as product lists or brochures</li>
+							<li>ARE ONLY allowed to list in 3 categories and for ONLY 3 brands they supply</li>
+						</ul>
+				    	<br />
+				    	You will not be returned in search results and so <span class="underlined">miss out on new business</span> if you're not a Premium Profile. <a href="/info/pages-for-suppliers/win-new-business-with-a-premium-listing/" target="_blank">Click here</a> for more information.
+				    </div>
+				    <br /><br />
+				    <?php }?>
+					<div class="footer">
+					    Whilst we've worked hard to tailor them, some of the Completion Tips might not be relevant for your particular business. 
+					    The tips in bold will bring you the most benefit. If Premium listers have questions on how to maximise the benefit of their 
+					    listing please contact your account manager - you can find their name on <a href="/reports?tnid=<?= $profileChecker->supplier->tnid?>">Analyse</a> tab.
+				    </div>
+				    <br />
+				    <br />		
+				    <div class="clear"></div>
+				</div>					
+			</div>
+		</div>
+	</div>
+</div>
+<?php } else { ?>
+<div class="clear"></div>
+<div id="pc-info-<?= $this->supplier->tnid?>" class="hidden ">
+	<?php if ($this->supplier->isPremium() === false){?>
+		<b>The more complete your Basic Listing the more likely it is that you'll get more profile views, contact views and RFQs through Pages.</b><br />
+		<br />
+		The maximum Profile Complete Score for a Basic Listing is 50% because they only contain a very basic amount of data on the  company.  
+		Many data fields are disabled for basic listers.<br />
+		<br />
+		Only having a basic listing has 3 impacts:<br />
+		<br />
+		
+		<ul class="impact">
+			<li>You might not be returned in the search results for relevant searches</li>
+			<li>All your competitors with Premium Profiles will appear above you in the search results</li>
+			<li>When buyers do find you in the search results, with only a basic listing they won't see your company in the best light.  For example, they won't be able to read a company summary, they won't see your catalogue or fact sheets and they won't see your company logo.</li>
+		</ul> 
+		<br />
+		<a href="/info/pages-for-suppliers/win-new-business-with-a-premium-listing/" target="_blank" style="font-weight:bold;">Click here to see more on a Premium Profile.</a>
+		<br />
+		<br />
+		Even if you don't want to upgrade, achieving nearer 50% with your basic listing will still help drive better performance.<br /> 
+	<?php }else{ ?>	
+		The more complete your Premium Profile the more likely it is that you'll get more profile views, contact views and RFQs through Pages.<br />
+		<br />
+		Less than 100% score means you are not getting maximum benefit because:<br />
+	 	<br />
+	 	<ul class="impact">
+			<li>We use the information in your listing to deliver search results, so you might not be returned in the search results for all relevant searches</li>
+			<li>When potential buyers do find you in the search results, they won't see your company in the best light if your Profile is incomplete.</li>
+		</ul>
+	<?php }?>
+</div>
+<div class="pc">
+	<div class="profile-completeness" style="margin-top:5px;">
+		<div class="multiple">
+			<div class="profile-completeness-form">
+				<div class="in">
+					<?php if( $score < 49 ){ ?>
+					<img class="pcs-alert" src='/images/profile-completeness/icon_alert_big.jpg' height="30" width="35" style="float:right; margin-top:0px; margin-right:15px;" />
+					<?php }?>
+					<div class="indicator">
+						<div class="indicator-container">
+							<div class="indicator-bar bar-<?php echo $barColor?>" style="width:<?php echo $score/100 * 350; ?>px;"></div>
+						</div>
+						<div class="clear"></div>
+						<div class="scale">
+							<div class="bars">
+								<div class="bar" style="margin-right:33px; height:7px; margin-left:1px; margin-top:-2px;"></div>
+								<div class="bar"></div>
+								<div class="bar"></div>
+								<div class="bar"></div>
+								<div class="bar"></div>
+								<div class="bar" style="margin-left:0px; height:7px; margin-top:-2px;"></div>
+								<div class="bar"></div>
+								<div class="bar"></div>
+								<div class="bar"></div>
+								<div class="bar"></div>
+								<div class="bar" style="margin-right:0px; height:7px; margin-top:-2px;" ></div>
+							</div>
+							<div class="clear"></div>
+							<div class="numbers">
+								<div class="number number0">0%</div>
+								<div class="number number50">50%</div>
+								<div class="number number100">100%</div>
+							</div>
+						</div>
+					</div>
+					<div class="pc-indicator <?php echo $barColor?>">
+						<? echo $score . "%&nbsp;" ;?>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<?php if (isset($_GET['debug']) && $_GET['debug'] == 1){ ?>
+				<div class="debug">
+					<b>Debug information</b><br />
+					<?= $profileChecker->getDebug()?>
+				</div>
+				<?php } ?>
+				<div class="todo">
+					<br />
+					<div style="font-size:14px;">
+					<?php if( round($score) == 100 ){?>
+						<b>Well done, your profile is 100% completed</b>
+					<?php }else{?>
+						<?php if( $this->user->isShipservUser() == false ){?>
+						<b>To get a higher score, you will need to do the following:</b><br /><br />
+						<?php }else{?>
+						<b>To get a higher score, you will need to do the following:<br /></b><br />
+						<?php }?>
+					<?php }?>
+					</div>
+					<ul class="todo-list">
+					<?php 
+					$data = (array)$profileChecker->getToDoForPartial();
+					Shipserv_Supplier::aasort($data,"score");
+					foreach((array) $data as $row )
+					{
+						$i++;
+						if( $_SERVER['APPLICATION_ENV'] == "development") {
+							echo "<li ".(($i < 3)?"style='font-weight:bold'":"").">" . $row['todo'] . " (" . $row['score'] . ")</li>";
+						} else {
+							echo "<li ".(($i < 3)?"style='font-weight:bold'":"").">" . $row['todo'] . "</li>";
+						}
+					}
+					
+					?>
+					</ul>
+					<div class="todo-pagination"></div>
+					<div class="<?= (isset($_GET['debug']) && $_GET['debug'] == 1)? '' : 'hidden'; ?>">
+						<br />
+						<div><b>Profile information successfully completed: </b></div>
+						<br />
+						<div class="clear"></div>
+						<ul class="completed-list">
+						<?php 
+						$data = (array)$profileChecker->getCompletedTaskForPartial();
+						Shipserv_Supplier::aasort($data,"score");
+						foreach((array) $data as $row ) {
+							echo "<li>" . $row['info'] . " (" . $row['score'] . ")</li>";
+						}
+						?>
+						</ul>
+					</div>
+					<br />
+				    <?php if ($this->supplier->isPremium() === false) {?>
+				    <div style="font-weight:bold; margin-bottom:20px;">
+				    	Basic listings only score a maximum of 50% because features are disabled by ShipServ.<br />
+				    	<br />
+				    	For example, basic listers:
+				    	<ul class="impact">
+							<li>CANNOT show company logo and business description</li>
+							<li>CANNOT upload any attachments such as product lists or brochures</li>
+							<li>ARE ONLY allowed to list in 3 categories and for ONLY 3 brands they supply</li>
+						</ul>
+				    	<br />
+				    	You will not be returned in search results and so <span class="underlined">miss out on new business</span> if you're not a Premium Profile. <a href="/info/pages-for-suppliers/win-new-business-with-a-premium-listing/" target="_blank">Click here</a> for more information.
+				    </div>
+				    <br /><br />
+				    <?php }?>
+					<div class="footer">
+					    Whilst we've worked hard to tailor them, some of the Completion Tips might not be relevant for your particular business. 
+					    The tips in bold will bring you the most benefit. If Premium listers have questions on how to maximise the benefit of their 
+					    listing please contact your account manager - you can find their name on <a href="/reports?tnid=<?= $profileChecker->supplier->tnid?>">Analyse</a> tab.
+				    </div>
+				    <br />
+				    <br />		
+				    
+				</div>								
+					
+			</div>
+		</div>
+	</div>
+</div>
+						<?php }?>

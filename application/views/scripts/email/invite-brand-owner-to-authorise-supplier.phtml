@@ -1,0 +1,352 @@
+<?
+	$companyInfo = $this->brandAuthRequest->getCompanyInfo();
+	$brandInfo = $this->brandAuthRequest->getBrandInfo ();
+	$statistic = $this->data["statistic"];
+	$suppliers = $this->data["statistic"]["suppliers"];
+
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Verify your listing</title>
+		<style type="text/css">
+		
+		#outlook a { padding:0; } /* Force Outlook to provide a "view in browser" button. */
+		body { width:100% !important; } /* Force Hotmail to display emails at full width */
+		body { -webkit-text-size-adjust:none; } /* Prevent Webkit platforms from changing default text sizes. */
+		
+		a { color: #0076c8; }
+		
+		/* Reset Styles */
+		body { margin:0; padding:0; text-align:left; }
+		img { border:none; font-size:14px; font-weight:bold; height:auto; line-height:100%; outline:none; text-decoration:none; text-transform:capitalize; }
+		#container { margin:0; padding:0; width:636px !important; }
+		/*-*/
+		
+		body, #container { background-color: #f2f2f2; }
+		p, h1, h2, div, td { font-family: Arial, sans-serif; font-weight: normal; padding: 0; margin: 0; text-align:left;}
+		table { margin: 0; border: 0; padding: 0; }
+		
+		a { text-decoration: none; }
+		
+		h1.dear { font-size: 17px; font-weight: bold; text-align:left;}
+		p.intro { font-size: 15px; text-align:left; }
+		
+		div.dotted { border-bottom: 1px dotted #333333; height: 1px; width: 358px; margin: 30px 20px; }
+		
+		#intro-with-message{
+			font-size:10px;
+		}
+		</style>
+	</head>
+
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="#f2f2f2">
+		<center>
+			<table id="container" border="0" cellpadding="0" cellspacing="0" width="636" bgcolor="#f2f2f2">
+				
+				<tr height="30">
+					<td width="308">&nbsp;</td>
+					<td width="20">&nbsp;</td>
+					<td width="308">&nbsp;</td>
+				</tr>
+				
+				<tr valign="middle" height="18" style="text-align:left">
+					<td colspan="3">
+						<h1 class="dear" style="text-align:left">Dear <?php echo $brandInfo["NAME"]?>,</h1>
+					</td>
+				</tr>
+				
+				<tr height="15" style="height:15px">
+					<td colspan="3">&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td colspan="3">
+						<p class="intro">
+							<?php if( $this->message != "" ){?>
+								<?php echo $this->message?>
+								<br />
+								<br />
+							<?php }?>	
+							<a style="color: #0076c8;" href="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL() .  $_SERVER['HTTP_HOST'] . '/supplier/profile/s/' . preg_replace('/(\W){1,}/', '-', $companyInfo["SPB_NAME"]) . '-' . $companyInfo["SPB_BRANCH_CODE"]?>"><?php echo $companyInfo["SPB_NAME"] ?></a> 
+							is requesting you to authorise their authorisation level as <?php echo $this->brandAuthRequest->getAuthLevelDisplayName()?>.
+							Authorised suppliers rank higher then non-authorised supplier and therefore receive more business.
+						</p>
+					</td>
+				</tr>
+				
+				<tr height="15" style="height:15px">
+					<td colspan="3">&nbsp;</td>
+				</tr>
+				
+				<!-- BUTTONS -->
+				<tr height="30">
+					<td bgimage="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/buttons/big_green_bg.jpg" style="background:url(<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/buttons/big_green_bg.jpg) 0 0 no-repeat; width: 308px; height: 60px;">
+						<!--[if gte mso 9]>
+							<a style="color: #0076c8;" href="<?php echo $this->data["linkToApprove"]?>"><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/buttons/confirm_supplier.jpg" alt="Yes, they are authorised suppliers of our brand" /></a>
+						<![endif]-->
+						<!--[if !gte mso 9]><!-->
+							<a href="<?php echo $this->data["linkToApprove"]?>" style="display:block; color: #0076c8;"><p style="text-align:center; padding-left: 25px; padding-right: 25px; color: #FFFFFF; font-size: 16px; font-weight: bold;">Yes, they are authorised suppliers of our brand</p></a>
+						<!--<![endif]-->
+					</td>
+					<td>&nbsp;</td>
+					<td style="background:url(<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/buttons/big_grey_bg.jpg) 0 0 no-repeat; width: 308px; height: 60px;">
+						<!--[if gte mso 9]>
+							<a style="color: #0076c8;" href="<?php echo $this->data["linkToReject"]?>"><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/buttons/unconfirm_supplier.jpg" alt="No, they aren't authorised suppliers of our brand" /></a>
+						<![endif]-->
+						<!--[if !gte mso 9]><!-->
+							<a href="<?php echo $this->data["linkToReject"]?>" style="display:block; color: #0076c8;"><p style="text-align:center; padding-left: 25px; padding-right: 25px; color: #FFFFFF; font-size: 16px; font-weight: bold;">No, they aren't authorised suppliers of our brand</p></a>
+						<!--<![endif]-->
+					</td>
+				</tr>
+				
+				<tr height="15" style="height:15px">
+					<td colspan="3">&nbsp;</td>
+				</tr>
+				
+				<tr height="7" style="height: 7px; font-size: 1px; line-height: 1px">
+					<td>
+						<img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/308_col_top.jpg" />
+					</td>
+					<td>&nbsp;</td>
+					<td>
+						<img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/308_col_top.jpg" />
+					</td>
+				</tr>
+				
+				<tr style="height: 100%;">
+						<td style="height: 100%; margin: 0; padding: 0;">
+						<!-- LEFT COLUMN -->
+						<table style="background-color: #FFFFFF; border-left: 1px solid #dadada; border-right: 1px solid #dadada; height: 100%; margin: 0; width: 306px;" valign="top" width="306" cellpadding="0" cellspacing="0">
+							
+							<tr style="height: 290px">
+								<td>
+
+									<!--[if gte mso 9]>
+										<table width="304" border="0" cellpadding="0" cellspacing="0">
+									<![endif]-->
+									<!--[if !gte mso 9]><!-->
+										<table width="306" border="0" cellpadding="0" cellspacing="0">
+									<!--<![endif]-->
+										
+										<tr height="5" style="height: 5px line-height: 5px; font-size: 1px">
+											<td width="18">&nbsp;</td>
+											<td width="268">&nbsp;</td>
+											<td width="18">&nbsp;</td>
+										</tr>
+
+										<tr>
+											<td>&nbsp;</td>
+											<td style="color:#000000; font-size: 12px">How your brand is represented on ShipServ</td>
+											<td>&nbsp;</td>
+										</tr>
+
+										<tr height="10" style="height: 10px; line-height: 10px; font-size: 1px"><td colspan="3">&nbsp;</td></tr>
+										<?php if( isset( $statistic["authLevel"]["LST"] ) && $statistic["authLevel"]["LST"] > 0 ){	?>
+										<tr>
+											<td>&nbsp;</td>
+											<td style="background:url(<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/listed_suppliers.jpg) 0 0 no-repeat; width: 268px; height: 42px;" valign="middle">
+												<!--[if gte mso 9]>
+														<v:image xmlns:v="urn:schemas-microsoft-com:vml" id="" style='behavior: url(#default#VML); display:inline-block; position:absolute; height:42px; width:268px; top:0; left:0; border:0; z-index:1;' src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/listed_suppliers.jpg"/>
+														<v:shape xmlns:v="urn:schemas-microsoft-com:vml" id="theText" style='behavior: url(#default#VML); display:inline-block; position:absolute; height:42px; width:228px; vertical-align:middle; top:0; left:40px; border:0; z-index:2;'>
+												<![endif]-->
+												<p style="text-align:left; padding-left: 47px; padding-right: 20px; font-size: 12px"><span style="color:#0076c8;"><?php echo $statistic["authLevel"]["LST"] . "</span> " . ( ( $statistic["authLevel"]["LST"]>1 )?"companies":"company" ) ?> claim to supply your brand</p>
+												<!--[if gte mso 9]>
+													</v:shape>
+										      	<![endif]-->
+											</td>
+											<td>&nbsp;</td>
+										</tr>
+										<tr height="15" style="height: 15px; line-height: 15px; font-size: 1px"><td colspan="3">&nbsp;</td></tr>
+										<?php  } ?>
+										
+										<?php if( isset( $statistic["authLevel"]["AGT"] ) && $statistic["authLevel"]["AGT"] > 0 ){	?>
+										<tr>
+											<td>&nbsp;</td>
+											<td style="background:url(<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/authorised_agents.jpg) 0 0 no-repeat; width: 268px; height: 42px;" valign="middle">
+												<!--[if gte mso 9]>
+														<v:image xmlns:v="urn:schemas-microsoft-com:vml" id="" style='behavior: url(#default#VML); display:inline-block; position:absolute; height:42px; width:268px; top:0; left:0; border:0; z-index:1;' src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/authorised_agents.jpg"/>
+														<v:shape xmlns:v="urn:schemas-microsoft-com:vml" id="theText" style='behavior: url(#default#VML); display:inline-block; position:absolute; height:42px; width:228px; vertical-align:middle; top:0; left:40px; border:0; z-index:2;'>
+												<![endif]-->
+												<p style="padding-left: 47px; padding-right: 20px; font-size: 12px; text-align:left;"><span style="text-align:left; color:#0076c8;"><?php echo $statistic["authLevel"]["AGT"] . "</span> " . ( ( $statistic["authLevel"]["AGT"]>1 )?"companies claim":"company claims" ) ?> to be Authorised Agent</p>
+												<!--[if gte mso 9]>
+													</v:shape>
+										      	<![endif]-->
+											</td>
+											<td>&nbsp;</td>
+										</tr>
+
+										<tr height="15" style="height: 15px; line-height: 15px; font-size: 1px"><td colspan="3">&nbsp;</td></tr>
+										<?php  } ?>
+										<?php if( isset( $statistic["authLevel"]["REP"] ) && $statistic["authLevel"]["REP"] > 0 ){	?>
+										<tr>
+											<td>&nbsp;</td>
+											<td style="background:url(<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/authorised_installer.jpg) 0 0 no-repeat; width: 268px; height: 42px;" valign="middle">
+												<!--[if gte mso 9]>
+														<v:image xmlns:v="urn:schemas-microsoft-com:vml" id="" style='behavior: url(#default#VML); display:inline-block; position:absolute; height:42px; width:268px; top:0; left:0; border:0; z-index:1;' src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/authorised_installer.jpg"/>
+														<v:shape xmlns:v="urn:schemas-microsoft-com:vml" id="theText" style='behavior: url(#default#VML); display:inline-block; position:absolute; height:42px; width:228px; vertical-align:middle; top:0; left:40px; border:0; z-index:2;'>
+												<![endif]-->
+												<p style="text-align:left; padding-left: 47px; padding-right: 20px; font-size: 12px"><span style="text-align:left; color:#0076c8;"><?php echo $statistic["authLevel"]["REP"] . "</span> " . ( ( $statistic["authLevel"]["REP"]>1 )?"companies claim":"company claims" ) ?> to be an Authorised Installer/Repairer</p>
+												<!--[if gte mso 9]>
+													</v:shape>
+										      	<![endif]-->
+											</td>
+											<td>&nbsp;</td>
+										</tr>
+
+										<tr height="15" style="height: 15px; line-height: 15px; font-size: 1px"><td colspan="3">&nbsp;</td></tr>
+										<?php  } ?>
+										
+										<?php if( isset( $statistic["totalBrandSearch"] ) && $statistic["totalBrandSearch"] > 0 ){	?>
+										<tr>
+											<td>&nbsp;</td>
+											<td style="background:url(<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/brand_searches.jpg) 0 0 no-repeat; width: 268px; height: 42px;" valign="middle">
+												<!--[if gte mso 9]>
+														<v:image xmlns:v="urn:schemas-microsoft-com:vml" id="" style='behavior: url(#default#VML); display:inline-block; position:absolute; height:42px; width:268px; top:0; left:0; border:0; z-index:1;' src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/brand_searches.jpg"/>
+														<v:shape xmlns:v="urn:schemas-microsoft-com:vml" id="theText" style='behavior: url(#default#VML); display:inline-block; position:absolute; height:42px; width:228px; vertical-align:middle; top:0; left:40px; border:0; z-index:2;'>
+												<![endif]-->
+												<p style="padding-left: 47px; padding-right: 20px; font-size: 12px"><span style="color:#0076c8;"><?php echo $statistic["totalBrandSearch"] . "</span> " . ( ( $statistic["totalBrandSearch"] > 1 )?"searches":"search" ) ?> for your brand in the past 3 months</p>
+												<!--[if gte mso 9]>
+													</v:shape>
+										      	<![endif]-->
+											</td>
+											<td>&nbsp;</td>
+										</tr>
+
+										<tr height="10" style="height: 10px; line-height: 10px; font-size: 1px"><td colspan="3">&nbsp;</td></tr>
+										<?php  } ?>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</td>
+					<!-- END LEFT COLUMN -->
+					<td>&nbsp;</td>
+					
+					<!-- RIGHT COLUMN -->
+					<td style="height: 100%; margin: 0; padding: 0;">
+						<table style="background-color: #FFFFFF; border-left: 1px solid #dadada; border-right: 1px solid #dadada; height: 100%; min-height: 290px" width="306" height="100%" valign="top" cellpadding="0" cellspacing="0">
+							
+							<tr style="height: 290px;">
+								<td>
+									<!--[if gte mso 9]>
+										<table width="304" border="0" cellpadding="0" cellspacing="0">
+									<![endif]-->
+									<!--[if !gte mso 9]><!-->
+										<table width="306" border="0" cellpadding="0" cellspacing="0">
+									<!--<![endif]-->
+											<tr height="5" style="height: 5px line-height: 5px; font-size: 1px">
+												<td width="18">&nbsp;</td>
+												<td width="268">&nbsp;</td>
+												<td width="18">&nbsp;</td>
+											</tr>
+											<?php if( lg_count( $suppliers ) == 0 ){?>
+											<tr>
+												<td>&nbsp;</td>
+												<td style="color:#000000; font-size: 12px; text-align:left;">Make sure all your distributors are listed on ShipServ Pages</td>
+												<td>&nbsp;</td>
+											</tr>
+											<?php }else{?>
+											<tr>
+												<td>&nbsp;</td>
+												<td style="color:#000000; font-size: 12px; text-align:left;">Other suppliers listing themselves as authorised</td>
+												<td>&nbsp;</td>
+											</tr>
+
+											<tr height="10" style="height: 10px; line-height: 10px; font-size: 1px"><td colspan="3">&nbsp;</td></tr>
+											<?php foreach( $suppliers as $supplier ){?>
+											
+											<tr style="font-size: 12px">
+												<td>&nbsp;</td>
+												<td valign="top">
+													<span style="text-align:left; color:#0000FF;"><a style="color: #0076c8; text-align:left;" href="<?php echo $supplier->url ?>"><?php echo $supplier->name?></a></span>
+													
+													<?php 
+														if( lg_count( $supplier->authLevels ) > 0 )
+														{
+															echo '<ul style="color:#0000FF; text-align: left;">';
+															foreach( $supplier->authLevels as $auth)
+															{
+																echo '<li style="text-align:left;"><span style="color:#000000;">' . $auth["name"] . '</span></li>';
+															}
+															echo '</ul>';
+														}
+													?>
+													
+												</td>
+												<td>&nbsp;</td>
+											</tr>	
+											<?php }?>
+											<?php }?>
+									</table>
+								</td>
+							</tr>
+						</table>
+						
+
+					</td>
+				</tr>
+				
+				<tr height="7" style="height: 7px; font-size: 1px; line-height: 1px">
+					<td>
+						<img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/308_col_bottom.jpg" />
+					</td>
+					<td>&nbsp;</td>
+					<td>
+						<img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/308_col_bottom.jpg" />
+					</td>
+				</tr>
+				
+				
+				<tr height="15" style="height: 15px; line-height: 15px; font-size: 1px"><td colspan="3">&nbsp;</td></tr>
+				
+				<tr>
+					<td colspan="3"><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/claimedbrands/top.jpg" /></td>
+				</tr>
+				
+				<tr>
+					<td colspan="3" style="border-left: 1px solid #dadada; border-right: 1px solid #dadada; background-color: #fff;">
+						<table cellpadding="0" cellspacing="0" style="table-layout: fixed; width: 634px; text-align:center;">
+							<tr>
+								 <td style="text-align:center; width:50%;">
+									<a href="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/search/results/index/zone/jpsauer" style="text-decoration:none;">
+										<img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/claimedbrands/jpsauer.jpg?123" />
+										<br>
+										<img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/claimedbrands/bz.jpg" />
+									</a>
+								</td>
+								<td style="text-align:center; width:50%;">
+									<a href="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/search/results/index/zone/wencon" style="text-decoration:none;">
+										<img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/claimedbrands/wencon.jpg?123" />
+										<br>
+										<img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/claimedbrands/bz.jpg" />
+									</a>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				
+				<tr>
+					<td colspan="3"><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data["hostname"]; ?>/images/email/claimedbrands/bottom.jpg" /></td>
+				</tr>
+				
+				<!-- FOOTER -->
+				<tr height="30">
+					<td colspan="3">&nbsp;</td>
+				</tr>
+				<tr>
+					<td colspan="3" style="color: #333333; font-size: 12px; text-align:center" align="center">
+						ShipServ &copy; 2014
+						| <a href="https://www.shipserv.com/info/terms-of-use">Pages - Terms of Use</a> 
+						| <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/privacy-policy/">Privacy Policy</a>
+					</td>
+				</tr>
+				<tr height="50">
+					<td colspan="3">&nbsp;</td>
+				</tr>
+			</table>
+		</center>
+	</body>
+</html>

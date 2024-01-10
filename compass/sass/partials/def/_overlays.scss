@@ -1,0 +1,151 @@
+/*
+Document   : partials/def/_overlays.scss
+Created on : Aug 24, 2012, 4:00:43 PM
+Author     : gly
+Description: temporary fixing styles for modals
+*/
+
+div#einvoice_body, div#map_body, div#maxsuppliers_body, div#membership_body {
+    width: 540px;
+    min-height: 140px;
+    background: #fff;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    behavior: url(/css/PIE.htc);
+    padding: 5px;
+
+    &.verified {
+        height: 114px;
+    }
+    
+    .cont {
+        padding: 5px 15px 20px 15px;
+        
+        img {
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 12px;
+            color: #2e3235;
+            line-height: 1.2;
+            margin-bottom: 10px;
+            
+            strong {
+                font-weight: bold;
+            }
+        }
+    }
+    
+    .header {
+        margin:0 0 20px 0;
+    }
+}
+
+div#map_body { 
+    width: 456px;
+    height: 597px;
+}
+
+div#einvoice_body div.zz.header,
+div#maxsuppliers_body div.zz.header,
+div#new-features_body div.zz.header,
+div#inv_brand_body div.zz.header, div#map_body div.zz.header, div#membership_body div.zz.header { 
+    color: #fff; 
+    width: auto; 
+    height: 40px;
+    margin-bottom: 20px; 
+    border-radius: 6px; 
+    background: #13b5ea; 
+    background: -moz-linear-gradient(top, #13b5ea 0%, #087fc5 100%); 
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#13b5ea), color-stop(100%,#087fc5)); 
+    background: -webkit-linear-gradient(top, #13b5ea 0%,#087fc5 100%); 
+    background: -o-linear-gradient(top, #13b5ea 0%,#087fc5 100%); 
+    background: -ms-linear-gradient(top, #13b5ea 0%,#087fc5 100%); 
+    background: linear-gradient(top, #13b5ea 0%,#087fc5 100%); -pie-background: linear-gradient(top, #13b5ea 0%,#087fc5 100%); 
+    filter: none; 
+    behavior: url(/css/PIE.htc);
+    
+    h2 { 
+        font-size: 18px; 
+        color: #fff; 
+        font-weight: bold; 
+        line-height: 40px; 
+        vertical-align: middle; 
+        margin: 0; 
+        margin-left: 15px;
+        float:left; 
+        height: 40px; 
+    }
+}
+
+#new-features_body {
+    width: 800px;
+    background: #fff;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    behavior: url(/css/PIE.htc);
+    padding: 5px;
+}
+
+#inv_brand_body {
+    width: 635px;
+    background: #fff;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    border-radius: 6px;
+    behavior: url(/css/PIE.htc);
+    padding: 5px;
+    padding-bottom: 10px;
+}
+
+#closeTooltipButton, #closeMapButton {
+    width: 65px;
+    height: 25px;
+    background: url("/images/layout_v2/tr_popup/button_close_sprite.png") 0 0 no-repeat;
+    cursor: pointer;
+    float: right;
+}
+
+div#membership_body {
+    height: 170px;
+}
+
+#mask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9999 !important;
+    background-color: 
+    #000000;
+    display: none;
+    opacity: 0.8;
+    filter: alpha(opacity=80) !important;
+}
+
+.new-feature {
+    font-size:14px;
+    
+    .section-x{
+        line-height:18px;
+        font-size:14px;
+        height:120px;
+        border-bottom:1px dotted #2e3235;
+        margin-bottom:10px;
+        
+        .title {
+            color:#008b00;
+            font-weight:bold;
+            font-size:20px;
+            line-height:25px;
+        }
+        
+        img {
+            float:right;
+            margin-left:10px;
+        }
+    }
+}

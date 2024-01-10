@@ -1,0 +1,60 @@
+#progressBarHolder {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			.fadeBg {
+				display: none;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background: #000000;
+				@include opacity(0.3);
+				z-index: 1000;
+			}
+			#progressBar {
+				display: block;
+				position: fixed;
+				bottom: 10px;
+				width: 600px;
+				height: 25px;
+				left: 50%;
+				margin-left: -300px;
+				z-index: 1001;
+				background-color: #0678b7;
+				border: 1px solid white;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+				box-shadow: 3px 3px 2px #0678b7;
+				span {
+					position: absolute;
+					z-index: 1002;
+					left: 5px;
+					top: 5px;
+					width: 5px;
+					height: 15px;
+					background-color: #57a140;
+					@include x-multiple-colored-gradient(#57a140 0%, #4E9438 30%, #4E9438 70%, #57a140 100%);
+  					-pie-background: linear-gradient(top, #57a140 0%, #4E9438 30%, #4E9438 70%, #57a140 100%);
+
+					@include border-radius(3px);
+					behavior: url(/css/PIE.htc);
+					box-shadow: 2px 3px 1px #006600;
+				}
+				
+				#progressLabel {
+					position: absolute;
+					display: block;
+					z-index: 1003;
+					width: 60px;
+					top: 8px;
+					left: 50%;
+					margin-left: -30px;
+					color: white;
+					text-align: center;
+					font-size: 11px;
+				}
+			}
+	}
+

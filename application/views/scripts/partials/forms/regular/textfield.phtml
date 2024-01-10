@@ -1,0 +1,27 @@
+<?
+ /**
+  * Textfield element for forms.css form style
+  * @param String name - parameter name
+  * @param String label - label to display for field. Empty label suppresses <label> element altogether
+  * @param String value - default value
+  * @param Boolean readonly - default false
+  */
+	
+  //Defaults
+  if (!isset($this->value)) $this->value = '';
+  if (!isset($this->readonly)) $this->readonly = false;
+  if (!isset($this->required)) $this->required = false;
+  if (!isset($this->isPassword)) $this->isPassword = false;
+  if (!isset($this->noLabel)) $this->noLabel = !isset($this->label);
+
+  $divClass = 'field textfield' . ($this->hasErrors ? ' invalid' : '') . (isset($this->div['class']) ? ' '.$this->div['class'] : '') . ($this->required ? ' required' : '');
+  $inputClass = 'textfield' . ($this->hasErrors ? ' invalid' : '') . ' clearfix' . ($this->required ? ' required' : '') . (empty($this->label) ? ' nolabel' : '') . (isset($this->input['class']) ? ' '.$this->input['class'] : '') . ($this->readonly ? ' readonly' : '' );
+  $labelClass = ($this->hasErrors ? 'invalid' : '') . ($this->required ? ' required' : '') . ($this->readonly ? ' disabled' : '') ;
+?>
+
+<div class="<?=$divClass?>">
+	<?if (!$this->noLabel):?>
+		<label class="<?=$labelClass?>" for="<?=$this->name?>"><?=$this->label?><?if($this->required){?><span class="asterisk">*</span><?}?></label>
+	<?endif?>
+	<input <?=(isset($this->input['id'])) ? 'id="'.$this->input['id'].'"' : ''?> type="<?=$this->isPassword ? 'password' : 'text'?>" class="<?=$inputClass?>" name="<?=$this->name?>" value="<?=$this->value?>" <?($this->readonly) ? 'readonly="readonly"' : '' ?> <?=isset($this->maxlength) ? 'maxlength="'.strval($this->maxlength).'"' : ''?> <?if(isset($this->input['attr'])):?> <?foreach($this->input['attr'] as $attr => $val):?>  <?=$attr.'="'.$val.'"'?> <?endforeach?> <?endif?> />
+</div>

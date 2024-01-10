@@ -1,0 +1,18 @@
+<h2>Win Rate</h2>
+<div class="chart" id="win_chart"></div>
+
+<table>
+<thead>
+	<tr>
+		<th class="colTitle">Date</th>
+		<th>Win Rate</th>
+	</tr>
+</thead>
+{{#each data}}
+<tr>
+	<td>{{this.date}}</td>
+	<td>{{this.winRate}}%</td>
+</tr>
+{{/each}}
+</table>
+<hr>

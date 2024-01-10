@@ -1,0 +1,47 @@
+<?php
+$this->headScript()->appendFile('/js/json2.js');
+				   
+$this->CDNLink()->appendStylesheet('/css/enquiries.css');
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Search Results',
+						   'url'  => $this->backToSearch()->getUrl()),
+                     array('name' => 'New RFQ',
+						   'url'  => '/enquiry'));
+?>
+<div class="zz content_wide new clearfix no-marg success">
+    <?php 
+	    if ($this->noBackButton !== true) {
+	    	echo $this->partial('/profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); 
+	    }
+    ?>
+
+    <div class="success-box">
+        <div class="positive"></div>
+        <h2><?php echo $this->header; ?></h2>
+        <p><?php echo $this->message; ?></p>
+        <?php if ($this->noBackButton !== true): ?>
+        	<a href="<?php echo $this->backToSearch()->getUrl(); ?>" class="back-to-results"></a>
+    	<?php endif ?>
+    </div>
+</div>
+
+
+<!-- Google Code for RFQ Sent 2 Conversion Page -->
+<script type="text/javascript">
+/* <![CDATA[ */
+var google_conversion_id = 1006831396;
+var google_conversion_language = "en";
+var google_conversion_format = "3";
+var google_conversion_color = "ffffff";
+var google_conversion_label = "WmZyCLy-vAQQpI6M4AM";
+var google_conversion_value = 0;
+/* ]]> */
+</script>
+<script type="text/javascript" src="http://www.googleadservices.com/pagead/conversion.js">
+</script>
+<noscript>
+<div style="display:inline;">
+<img height="1" width="1" style="border-style:none;" alt="" src="http://www.googleadservices.com/pagead/conversion/1006831396/?value=0&amp;label=WmZyCLy-vAQQpI6M4AM&amp;guid=ON&amp;script=0"/>
+</div>
+</noscript>

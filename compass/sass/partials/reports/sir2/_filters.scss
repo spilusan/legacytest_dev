@@ -1,0 +1,163 @@
+#modal {
+	.modalBody {
+		.selectorHolder {
+			.itemselector {
+				&.prod {
+					form {
+						position: relative;
+						padding: 10px;
+						border: 1px solid #d6dce4;
+						@include border-radius(6px);
+						behavior: url(/css/PIE.htc);
+
+						ul {
+							li {
+								width: 33%;
+								float: left;
+								min-height: 55px;
+
+								label {
+									display: block;
+									color: #0d8fc9;
+									font-weight: bold;
+									font-size: 15px;
+									margin-bottom: 5px;
+
+									.checker {
+										top: -1px;
+									}
+								}
+
+								p {
+									color: #9d9d9d;
+									font-size: 12px;
+									margin-left: 32px;
+									line-height: 1.2;
+								}
+							}
+						}
+					}
+
+					.buttonContainer {
+						margin-top: 0;
+					}
+				}
+			}
+		}
+	}
+}
+#body {
+	#content {
+		.innerContent {
+			.box {
+				&.filters {
+					padding: 15px 15px 15px 15px;
+
+					.cHelp {
+						margin-left: -5px;
+						position: relative;
+						top: 10px;
+					}
+
+					.dropDown{
+						position: relative;
+						float: left;
+
+						.error {
+							margin-top: 10px;
+						}
+
+						.periodSel {
+							width: 232px;
+							height: 17px;
+							padding: 10px 10px 10px 15px;
+							overflow: hidden;
+							background: url(/img/reports/sir/periodSel.png) no-repeat left top transparent;
+							cursor: pointer;
+							font-size: 16px;
+							font-weight: normal;
+							color: #525c64;
+							margin-right: 5px;
+
+							&.inactive {
+								background: url(/img/reports/sir/periodSel.png) no-repeat left -37px transparent;
+								cursor: not-allowed;
+								color: #dfe6ec;
+							}
+						}
+
+						.details {
+							display: none;
+							padding: 10px;
+							width: 237px;
+							background: #e9edf1;
+							font-size: 12px;
+
+							&.show {
+								display: block;
+							}
+
+							.dateField {
+								float: left;
+								margin-right: 5px;
+
+								&.to {
+									margin-right: 0;
+								}
+
+								label {
+									display: block;
+									font-size: 12px;
+									top: 0;
+									margin-bottom: 5px;
+								}
+							}
+
+							input[type="text"]{
+								font-size: 15px;
+								width: 95px;
+								padding: 8px;
+								margin-bottom: 5px;
+							}
+
+							input[type="button"] {
+								margin-top: 5px;
+							}
+						}
+					}
+
+					.checker {
+						width: 22px;
+						height: 22px;
+						float: left;
+						overflow: hidden;
+						background: url(/img/reports/sir/checker.png) no-repeat left top transparent;
+						margin-right: 5px;
+						position: relative;
+						top: 7px;
+						cursor: pointer;
+
+						&.checked {
+							background: url(/img/reports/sir/checker.png) no-repeat left -22px transparent;
+						}
+					}
+
+					.label {
+						font-size: 13px;
+						float: left;
+						margin-right: 5px;
+						position: relative;
+						top: 11px;
+						color: #2e3235;
+					}
+
+					.button.apply {
+						position: relative;
+						float: right;
+						padding: 6px;
+					}
+				}
+			}
+		}
+	}
+}

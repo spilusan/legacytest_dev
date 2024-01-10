@@ -1,0 +1,81 @@
+/*
+Document   : _subnav
+Created on : Jun 13, 2012, 4:47:57 PM
+Author     : gly
+Description: Sub navigation styles
+*/
+
+div.subnav { 
+	width: 210px; 
+	background: url(/images/ui/subnav_top.png) no-repeat 0 0; 
+	padding-top: 10px; 
+	float: left;
+    
+    >ul { 
+        width: 190px; 
+        font-size: 13px; 
+        color: #2e3235; 
+        
+        a { 
+            color: #2e3235; 
+            display: block; 
+        }
+        
+        >li { 
+            position: relative;
+            background: url(/img/icons/bullets/light_blue_arrow.png) 172px center no-repeat #d6dce4; 
+            padding: 8px 25px 8px 14px; 
+            margin-bottom: 4px; 
+            line-height: 14px;
+            @include border-radius(6px);
+            behavior: url(/css/PIE.htc);
+            
+            &.selected { 
+                font-weight: bold; 
+                background-color: transparent; 
+                border: 1px solid #d6dce4;
+            }
+            
+            &.expanded {
+                background: url(/img/icons/bullets/light_blue_arrow_down.png) 169px center no-repeat transparent;
+            }
+            
+            &.secondary {
+                
+                background: none;
+                padding: 1px 25px 1px 14px;
+                
+                >ul {
+                    padding-top: 0;
+                    li {
+                        font-size: 11px;
+                        margin: 11px 0 11px 0;
+                        
+                        &.selected {
+                            font-weight: bold;
+                        }
+                    }
+                }
+            }
+            
+            .countOverlay {
+                display: inline;
+                position: relative;
+                top: 2px;
+                background-color: #FF7F04;
+                color: white;
+                width: 26px;
+                height: 18px;
+                padding: 1px 6px;
+                margin-left: 4px;
+                @include border-radius(6px);
+                
+                span {
+                    font-size: 12px;
+                    font-weight: bold;
+                    padding: 0;
+                }
+            }
+        }
+    }
+}

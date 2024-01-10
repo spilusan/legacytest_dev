@@ -1,0 +1,71 @@
+@import "compass/css3";
+
+#body {
+    .banner-right {
+        float: right;
+    }
+    #content {
+        h1 {
+            &.but {
+                padding: 5px 15px;
+
+                span {
+                    position: relative;
+                    top: 5px;
+                }
+                .button {
+                    float: right;
+                }
+            }
+        }
+
+        &.slim {
+            width: 515px;
+            margin-right: 15px;
+        }
+
+        ol.buy, ul.buy {
+            padding-left: 20px;
+            li {
+                font-size: 12px;
+                color: #2e3235;
+                line-height: 1.3;
+            }
+        }
+
+        ol.buy {
+            list-style-type: decimal;
+            font-weight: bold;
+            p {
+                font-weight: bold;
+                margin-bottom: 10px;
+                font-size: 12px;
+                padding: 0;
+            }
+        }
+
+        ul.buy {
+            font-weight: normal;
+        }
+    }
+}
+
+#tabbed_navigation {
+    ul.tabs {
+        &.right {
+            li.tab {
+                &.help {
+                    background: #fff;
+                    -pie-background: #fff;
+                    
+                    a {
+                        span.title {
+                            color: #525C64;
+                            @include single-text-shadow(none);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

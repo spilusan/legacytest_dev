@@ -1,0 +1,27 @@
+<ul class="jqueryfiletree" style="display:none;">
+	<?php                                        
+	//print_r($this);
+	foreach ($this->searchResults['folders'] as $document)
+	{
+		   
+		if ($document['matchesFound'] > 0 )
+		{
+			?>
+			<li class="directory collapsed">
+				<a href="/supplier/list-search/format/html/tnid/<?php echo $document['id'];?>" id="<?echo $this->tnid;?>" name="<?echo $this->catId;?>" class="sidebodge" rel="/<?php echo $document['id']; ?>/"><div style="display: block; width: 170px; overflow: hidden; text-overflow: ellipsis;"><?php echo $document['name'];?> (<?php echo $document['matchesFound'];?>)</div></a>
+			</li> 
+			<?php
+		}?>
+		<?//else{?>
+			<!--li class="directory collapsed">
+				<a href="/supplier/list-search/format/html/tnid/<?php echo $document['id'];?>" class="sidebodge" rel="/<?php echo $document['id']; ?>/"><?php echo $document['name'];?></a>
+			</li-->   
+	<?//}
+	  }
+	?>
+</ul>
+
+    
+    
+    
+    

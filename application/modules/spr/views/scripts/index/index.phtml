@@ -1,0 +1,63 @@
+<?php
+    $showMap = (int)Myshipserv_Config::getIni()->google->services->maps->display;
+    
+    Myshipserv_Spr_Anonymize::anonimizeData($this->buyerBrances, array('name' => 'Buyer {X}'));
+	
+	$this->compressedScript()->appendFile('/js/lib/selectmenu/jquery.ui.widget.js')
+							 ->appendFile('/js/lib/selectmenu/jquery.ui.selectmenu.js')
+							 ->appendFile('/js/lib/selectmenu/jquery.ui.position.js')
+							 ->appendFile('/js/lib/selectmenu/jquery.ui.core.js')
+							 ->appendFile('/js/lib/datatables.js')
+							 ->appendFile('/js/lib/highcharts/highcharts.js');
+	if ((int)Myshipserv_Config::getIni()->google->services->maps->display === 1) {
+        $this->compressedScript()->appendFile('https://maps.googleapis.com/maps/api/js?key=' . $this->googleMapsApiKey . '&sensor=false');
+	}
+
+    $this->compressedScript()->appendFile('/js/lib/moment.js')
+                             ->appendFile('/js/lib/daterangepicker-new.js');
+
+	$this->headLink()->appendStylesheet('https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic', 'all')
+					 ->appendStylesheet('https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic', 'all')
+					 ->appendStylesheet('/css/jquery.ui.smoothness.css', 'all')
+					 ->appendStylesheet('/css/spr.css', 'all')
+					 ->appendStylesheet('/css/grid.css', 'all')
+					 ->appendStylesheet('/css/datatables.css', 'all')
+					 ->appendStylesheet('/css/selectmenu/jquery.ui.selectmenu.css', 'all')
+                     ->appendStylesheet('/css/daterangepicker-new.css');
+
+	$this->getHelper('Requirejs')
+	   ->addModule('backbone/spr/views/mainView')	
+	   ->addDefinition('buyer/branches', json_encode($this->buyerBrances))
+	   ->addDefinition('spr/anonim', (int)Myshipserv_Spr_Anonymize::getStatus())
+	   ->addDefinition('spr/hideFilter', 0)
+       ->addDefinition('spr/shipmate', (int)$this->shipmate)
+	   ->addDefinition('spr/showMap', $showMap)
+	   ->addDefinition('spr/showCustomRange', (int)$this->showCustomRange);
+?>
+
+<!-- <nav class="spr-breadcrumbs">
+	<ul class="clearfix">
+		<li><a href="/search">Home</a></li>
+		<li><a href="/reports">Analyze</a></li>
+		<li><a href="/reports/supplier-performance" class="active">Supplier Performance Report</a></li>
+	</ul>
+</nav> -->
+
+<div class="header-container">
+	<h1>Supplier Performance Report</h1>
+</div>
+
+<div id="waiting" style="display: none;">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>
+
+<div id="body">
+	<!-- TOD Remove hardcoded with, fix properly in CSS -->
+	<div id="content">
+		<div id="renderContainer" class="container">
+			
+		</div>
+	</div>
+</div>
+<div class="clear"></div>

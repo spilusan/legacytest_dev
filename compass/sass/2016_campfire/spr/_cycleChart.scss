@@ -1,0 +1,119 @@
+.cycle {
+    background: #fff;
+    h4 {
+        background: #E9EDF1;
+        border-top: 2px solid #8597AC;
+        padding: 10px;
+    }
+    .grid,
+    .grid-mobile {
+        border-spacing: 0;
+        border: none;
+        margin-top: 50px;
+        width: 100%;
+        font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, Helvetica, sans-serif;
+        font-size: 12px;
+    }
+    .grid-mobile {
+        margin: 15px 0;
+    }
+    .grid-mobile td {
+        border: none;
+        padding: 5px 0;
+        position: relative;
+        vertical-align: middle;
+        background: none;
+        width: 100%;
+        white-space: nowrap;
+    }
+    .grid td {
+        border: none;
+        border-left: 1px solid #9BA7BA;
+        padding: 5px 0;
+        position: relative;
+        vertical-align: middle;
+        background: none;
+    }
+    .grid,
+    .grid-mobile {
+        td:first-child {
+            border-left: none;
+            width: 130px;
+            padding-left: 0;
+            padding-right: 10px;
+        }
+    }
+    .grid td:last-child {
+        width: 80px;
+        border-right: none;
+    }
+    .top label {
+        position: absolute;
+        top: -25px;
+        left: -75px;
+        width: 150px;
+        text-align: center;
+        font-weight: bold;
+    }
+    .bar {
+        background: #f2f2f2;
+        .bar-fill {
+            border-color: #f2f2f2;
+        }
+        min-height: 30px;
+        line-height: 30px;
+        padding: 5px 35px 5px 10px;
+        position: relative;
+        overflow: hidden;
+    }
+    .bar-1 {
+        background: #B1E2F6;
+        .bar-fill {
+            border-color: #B1E2F6;
+        }
+    }
+    .bar-2 {
+        background: #CEDDEC;
+        .bar-fill {
+            border-color: #CEDDEC;
+        }
+    }
+    .bar-3 {
+        background: #8FCFF4;
+        .bar-fill {
+            border-color: #8FCFF4;
+        }
+    }
+    .bar.point {
+        text-align: right;
+        padding-right: 30px;
+    }
+    .bar.point:after {
+        content: ' ';
+        border-top: 12px solid #fff;
+        border-right: 12px solid #fff;
+        border-bottom: 12px solid transparent;
+        border-left: 12px solid transparent;
+        position: absolute;
+        top: -2px;
+        right: -2px;
+    }
+    .bar.point:before {
+        content: ' ';
+        border-bottom: 12px solid #fff;
+        border-right: 12px solid #fff;
+        border-top: 12px solid transparent;
+        border-left: 12px solid transparent;
+        position: absolute;
+        bottom: -2px;
+        right: -2px;
+        z-index: 1;
+    }
+    .bar-label {
+        z-index: 10;
+        position: relative;
+    }
+    .gap-row {
+        height: 30px;
+    }
+}

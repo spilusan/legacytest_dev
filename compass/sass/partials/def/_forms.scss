@@ -1,0 +1,140 @@
+/*
+Document   : partials/def/_forms.scss
+Created on : Aug 24, 2012, 4:00:43 PM
+Author     : gly
+Description: default styles for forms
+*/
+
+form.new, div.new.form {
+	display: block;
+
+	fieldset {
+		display: block;
+	}
+
+	label {
+		position: relative;
+		font-size: 11px;
+		color: #2e3235;
+		font-weight: normal;
+		top: 4px;
+
+		sup {
+			color: #13b5ea;
+		}
+
+		&.forField {
+			line-height: 25px;
+		}
+
+		&.forSelect {
+			line-height: 20px;
+		}
+
+		&.mandat {
+			color: #008b00;
+			font-size: 14px;
+			top: 5px;
+		}
+	}
+
+	.selector {
+		position: relative;
+		margin-bottom: 12px;
+		margin-top: -4px;
+
+		&.last {
+			margin-bottom: 0;
+		}
+
+		&.invalid {
+			border: 2px solid red;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+		}
+	}
+
+	input[type="text"], input[type="password"], input[type="email"], input[type="date"], textarea {
+		position: relative;
+		background-color: #ffffff;
+		border: 1px solid #abb0b6;
+		font-size: 12px;
+  		color: #2e3235;
+  		height: 15px;
+		line-height: 14px;
+		padding: 6px 10px 4px;
+		margin-bottom: 12px;
+		@include border-radius(6px);
+		@include box-shadow (#f5f7fa 3px 3px 0 0 inset, #f5f7fa -3px -3px 0 0 inset);
+		behavior: url(/css/PIE.htc);
+
+		&:focus {
+			@include box-shadow(#13b5ea 0 0 4px);
+		}
+
+		&.last {
+			margin-bottom: 0;
+		}
+
+		&.large {
+			line-height: 24px;
+			height: 24px;
+			padding-left: 8px;
+			padding-right: 8px;
+			font-size: 17px;
+		}
+
+		&.mandat {
+			border: 2px solid #83cc4e;
+		}
+
+		&.invalid {
+			border-color: #e81e24;
+		}
+	}
+
+	.error {
+		font-size: 12px;
+		color: #e81e24;
+		padding-left: 28px;
+		padding-top: 5px;
+		background: url(/img/icons/small/attention.png) no-repeat left center transparent;
+		height: 12px;
+		margin: 0px 0px 3px 2px;
+
+		&:before {
+			content: "";
+			border-right: 1px dotted grey;
+			margin-right: 10px;
+			padding: 3px 0;
+		}
+	}
+}
+
+ul.messages {
+	&.success {
+		border: 1px solid #83cc4e;
+		@include border-radius(6px);
+		background-color: #e5f8d8;
+		color: #008b00;
+		line-height: 40px;
+		margin-right: 20px;
+
+		li {
+			padding-left: 70px;
+			background: url(/images/icons/32/tick.png) no-repeat 15px center;			
+		}
+	}
+
+	&.empty {
+		display: none;
+	}
+}
+
+::-ms-clear {
+	display: none;
+}
+
+::-ms-reveal {
+	display: none;
+}

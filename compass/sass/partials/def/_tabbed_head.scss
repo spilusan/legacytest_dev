@@ -1,0 +1,65 @@
+/*
+Document   : partials/def/_tabbed_head.scss
+Created on : Aug 24, 2012, 4:00:43 PM
+Author     : gly
+Description: default styles for headings with tabbed navigation
+*/
+
+div.head {
+	position: relative;
+	color: #ffffff;
+	padding: 15px 15px 10px 15px;
+	@include border-radius(6px);
+	background-color: #13b5ea;
+	@include x-multiple-colored-gradient(#13b5ea 0%, #087ec5 100%);
+	-pie-background: linear-gradient(top, #13b5ea 0%, #087ec5 100%);
+	behavior:url(/css/PIE.htc);
+
+	ul {
+		position: relative;
+		bottom: -10px;
+		list-style: none;
+		display: block;
+		height: 37px;
+		overflow: hidden;
+
+		li {
+			display: block;
+			position: relative;
+			float: left;
+			font-size: 13px;
+			font-weight: bold;
+			margin-right: 4px;
+			@include border-radius(8px 8px 0 0);
+			@include single-text-shadow(-1px, -1px, 1px, rgba(0, 0, 0, 0.28));
+			@include x-multiple-colored-gradient(#95c7e6 0%, #087dc4 2%, #005097 100%);
+			-pie-background: linear-gradient(top, #95c7e6 0%, #087dc4 2%, #005097 100%);
+			border-left: 1px solid #025da8;
+			border-right: 1px solid #025da8;
+			border-top: 1px solid #3294cf;
+			behavior: url(/css/PIE.htc);
+			cursor: pointer;
+
+			a {
+				color: #ffffff;
+				display: block;
+				padding: 12px 15px;
+			}
+
+			&.on {
+				@include single-text-shadow(none);
+				@include border-radius(6px 6px 0 0);
+				background: #ffffff;
+				-pie-background: linear-gradient(top, #ffffff 0%, #ffffff 100%);
+				border-left: 1px solid #ffffff;
+				border-right: 1px solid #ffffff;
+				border-top: 1px solid #ffffff;
+
+				a {
+					cursor: default;
+					color: #2e3235;
+				}
+			}
+		}
+	}
+}

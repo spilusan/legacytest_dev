@@ -1,0 +1,96 @@
+<?php
+$correctedPageTitle = 'ShipServ | ' . $this->wpTitle;
+
+$this->headTitle($correctedPageTitle, 'SET');
+$this->headMeta()->appendName("description", "ShipServ is the leading marine eProcurement platform for ship operators and suppliers bringing improved efficiency and analytics to marine purchasing. ShipServ Pages is a global search engine. Search tens of thousands of marine suppliers by brand, product, category or keyword.");
+$this->headMeta()->appendName('keywords', 'Marine, Maritime, Shipping, Suppliers, Supply, Companies, Directory, Listings, Search, ShipServ, Parts, Equipment, Spares, Services');
+
+$this->compressedScript();
+
+if ((int)Myshipserv_Config::getIni()->google->services->maps->display === 1) {
+    $this->headScript()
+        ->appendFile('https://maps.googleapis.com/maps/api/js?key='.$this->googleMapsApiKey.'&sensor=false')
+        ->appendFile('/js/lib/gMapInfobox.js');
+}
+
+$this->getHelper('Requirejs')
+    ->addModule('backbone/home/views/mainView');
+
+$this->CDNLink()
+	->appendStylesheet('/css/home.css')
+	->appendStylesheet('/css/wp-styles.css');
+?>
+<h1 class="slogan">The Procurement Platform for the Marine Industry</h1>
+<section class="formContainer">
+	<form class="inline" id="anonSearch" enctype="application/x-www-form-urlencoded" action="/search/results" method="get" _lpchecked="1">
+	    <fieldset>
+             <label>
+                <div>Search for:</div>
+                <input type="hidden" name="newSearch" id="newSearch" value="1">
+                <input type="hidden" name="searchType" id="searchType" value="product">
+                <input type="hidden" name="ssrc" id="ssrc" value="32">
+                <input type="text" name="searchWhat" id="searchWhat" size="30" class="search-what text blur" autocomplete="off" value="Company, category, brand, product, part no, IMPA/ISSA, etc.">
+            </label>
+        </fieldset>
+		<fieldset>
+             <label>
+                <div>Located in:</div>
+                <input type="text" name="searchText" id="searchText" class="blur" value="Country or port name" autocomplete="off">
+                <input type="hidden" name="searchWhere" id="searchWhere" class="searchWhere" value="">
+                <button type="submit" id="searchButton" class="btn red"><i class="fa fa-search" aria-hidden="true"></i>&nbsp;&nbsp;Search</button>
+            </label>
+	    </fieldset>
+
+        <fieldset>
+            <label>
+                <div class="impa-label">Browse the IMPA Catalogue:</div>
+                <div class="buttons">
+                    <img class="impa-small-logo" alt="IMPA" src="/images/home/impa-small-logo.png">
+                    <?php if ($_SERVER['APPLICATION_ENV'] === 'production') : ?>
+                        <a class="btn blue" href="http://bit.ly/2P3EmZl">IMPA Marine Stores Guide <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                    <?php else: ?>
+                        <a class="btn blue" href="/impa-catalogue/">IMPA Marine Stores Guide <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                    <?php endif ?>
+                </div>
+            </label>
+        </fieldset>
+	</form>
+</section>
+<?php echo $this->wpContent; ?>
+<section class="grey">
+	<div class="wrapper">
+		<h2 class="font-medium">TOP SEARCHES</h2>
+		<div class="topSearch">
+			<div class="categories">
+				<h4>Top Categories</h4>
+				<ul>
+					<?php foreach ($this->categories as $category): ?>
+						<li>
+							<a href="/category/<?php echo $this->string()->sanitiseForURI(($category['BROWSE_PAGE_NAME'])? $category['BROWSE_PAGE_NAME'] : $category['DISPLAYNAME']); ?>/<?php echo $category['ID'];?>"
+								title="Marine suppliers of <?php echo htmlentities($category['DISPLAYNAME']); ?>"
+							><?php echo htmlentities($category['DISPLAYNAME']);?></a>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+				<p><a href="/supplier/category" title="View more marine supplier categories">More categories</a></p>
+			</div>
+
+            <div class="brands">
+                <h4>Top Brands</h4>
+                <ul>
+					<?php foreach ($this->brands as $brand): ?>
+						<li>
+							<a href="<?php echo $brand['BRAND_URL']; ?>">
+								<?php echo htmlentities($brand['DISPLAYNAME']); ?>
+							</a>
+						</li>
+					<?php endforeach; ?>
+				</ul>
+                <p><a href="/supplier/brand" title="View more marine brands">More brands</a></p>
+            </div>
+
+		</div>
+        <p class="countries"><b>TOP COUNTRIES</b> <a href="/supplier/country" title="View Countries">View Countries &gt;</a></p>
+	</div>
+
+</section>

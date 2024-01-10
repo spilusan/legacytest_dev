@@ -1,0 +1,63 @@
+			<div class="detail">
+				<h2>{{name}}</h2>
+				<h3>Supplier Branch{{#ifCond accountIsDeleted 'Y'}} (Deleted){{/ifCond}}</h3>
+				
+				<div class="group">
+				
+					<div class="group-row">
+						<div class="caption">Tradenet ID</div>
+						<div class="data-value"><a href="/supplier/tnid?id={{tnid}}" target="_blank">{{tnid}}</a></div>
+					</div>
+
+					<div class="group-row">
+						<div class="caption">Name</div>
+						<div class="data-value"><a href="/supplier/tnid?id={{tnid}}" target="_blank">{{name}}</a></div>
+					</div>
+
+					<div class="group-row">
+						<div class="caption">Account manager</div>
+						<div class="data-value">{{accountManagerName}}</a></div>
+					</div>
+					
+					<div class="group-row">
+						<div class="caption">Monetisation %</div>
+						<div class="data-value">{{monetisationPercent}}</a></div>
+					</div>				
+
+					<div class="group-row">
+						<div class="caption">Excluded from Match?</div>
+						<div class="data-value">{{matchexclude}}</a></div>
+					</div>		
+					
+					<div class="group-row">
+						<div class="caption">Tradenet?</div>
+						<div class="data-value">{{tradeNetStatus}}</a></div>
+					</div>		
+					
+					<div class="group-row">
+						<div class="caption">Listed in Pages?</div>
+						<div class="data-value">{{directoryStatus}}</a></div>
+					</div>		
+				
+					<div class="group-row">
+						<div class="caption">Profile complete score</div>
+						<div class="data-value">{{profileCompletionScore}}%</a></div>
+					</div>		
+			
+					<div class="group-row">
+						<div class="caption">Joined?</div>
+						<div class="data-value">{{joinedDate}}</a></div>
+					</div>	
+					
+					<h2>Connected users</h2>
+					<div class="company-membership"></div>
+					
+					<!-- 
+					<h2>Useful links</h2>
+					<div class="group-row">
+						<a href="/reports/?tnid={{tnid}}">SIR</a>
+						<br /><a href="/reports/gmv/?tnid={{tnid}}">GMV Report</a>
+						<br /><a href="/reports/supplier-conversion/?tnid={{tnid}}">Conversion</a>
+					</div>
+					 -->
+			</div>

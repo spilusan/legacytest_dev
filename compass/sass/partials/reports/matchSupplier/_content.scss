@@ -1,0 +1,70 @@
+#body {
+	#titleText {
+		.backBtn {
+			position: absolute;
+			right: 6px;
+			top: 5px;
+			padding: 7px 6px 6px 34px;
+			background: #e9ecf1 url('/images/matchSupplierReport/back-arrow.png') no-repeat top 5px left 3px;
+			font-weight: normal;
+			color: #093e70;
+			@include border-radius(3px);
+			behavior: url(/css/PIE.htc);
+			font-size: 12px;
+			cursor: pointer;
+		}		
+	}
+
+	#content {
+		#innerContent {
+			width: auto;
+			.banner {
+				display: block;
+				width: 1330px;
+				height: 150px;
+				margin: 6px;
+				background: transparent url('/images/matchSupplierReport/banner-bg.png') no-repeat top right;
+				img {
+					margin: 12px;
+				}
+				ul {
+					margin: 0px 0px 0px 12px;
+					color: #0f0f0f;
+					li {
+						background: transparent url('/images/matchSupplierReport/blue-bullet.png') no-repeat top 5px left 0px;
+						text-indent: 12px;
+						font-size: 14px;
+						padding: 3px;
+					}
+				}
+			}
+			.error {
+				display: block;
+				width: 95%;
+				margin: 12px;
+				border: 1px solid red;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+				padding: 12px;
+				text-align: center;
+				color: red;
+			}
+		}
+		.sHelp {
+			display: inline-block;
+			vertical-align: text-bottom;
+			width: 18px;
+			height: 18px;
+			margin-right: 6px;
+			background: transparent url('/images/matchSupplierReport/info-trans-icon.png') no-repeat top 0px left 0px;
+		}
+	}
+}
+.modalContent {
+	img {
+		&.warning {
+			vertical-align: middle;
+			opacity: 0.8;
+		}
+	}
+}

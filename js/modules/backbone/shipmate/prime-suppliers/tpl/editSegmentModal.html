@@ -1,0 +1,16 @@
+<form class="new">
+	<label for="catSel">Category:</label>
+	<input type="text" name="cat" readonly="readonly" value="{{attributes.category.name}}" />
+	<div class="selectlist"></div>
+	<div class="plus"></div>
+	<label for="countrySel">Country:</label>
+	<input type="text" name="country" readonly="readonly" value="{{attributes.country.name}}" />
+	<div class="plus"></div>
+	<label for="startDate">Start date:</label>
+	<input type="text" name="startDate" value="{{attributes.date.start}}" />
+	<div class="plus"></div>
+	<label for="notes">Notes:</label>
+	<input type="text" name="notes" />
+	<input type="button" name="edit" value="OK" class="button medium green" value="{{attributes.notes}}" />
+	<div class="clear"></div>
+</form>

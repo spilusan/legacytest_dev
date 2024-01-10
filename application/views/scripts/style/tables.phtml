@@ -1,0 +1,108 @@
+<?
+	$this->CDNLink()->appendStylesheet('/css/style.css');
+?>
+
+<?=$this->partial('/partials/sstables.phtml');?>
+
+
+<script type="text/javascript">
+
+require(['tables'], function($) {
+	//Bind custom event
+	
+	var table = $.sstable({
+		cols: [
+			{ key: 'id', title: 'id', hidden: true, sortable: true, defaultSort: 'asc' },
+			{ key: 'status', title: 'Status', cellTemplate: '#statusCellTemplate' },
+			{ key: 'name', title: 'Name', cellTemplate: '#nameTemplate' },
+			{ key: 'enabled', title: 'Enable row?', cellTemplate: 'sstableCellCheckbox', colHeadTemplate: ''} 
+		],
+		data: [	{ id: 1, name: 'foo', enabled: true, status: '34' },
+			 	{ id: 2, name: 'bar', enabled: false, status: false }
+		],
+		numPages: 1,
+		currPage: 1,
+		currSortCol: 'id',
+		currSortDir: 'asc'
+	});
+	
+	table.find('checkbox.enabled').bind('change', function () {
+		console.log('checkbox changed!', this, $(this).getCellData(), $(this).getRowData().id);
+	});
+	
+	table.find('a.name').click(function(e){
+		$(this).switchTemplate('#editTextTemplate');
+		$(this).closest('td').keyPress();
+	});
+	
+	/*
+	table.find('.unpause').bind('click', function(){
+		this.getRowIndex();
+		//Send ajax request
+		//On complete
+		this.hide();
+		this.siblings('pause').show();
+		
+		this.updateRow(data);
+	});
+	
+	table.bind('sort', function(e) {
+		//ajax request
+		e.key
+		e.direction
+		
+		//Update table
+		table.updateData({
+			data: myData,
+			//Optional
+			numPages: 1,
+			currPage: 1,
+			currSortCol: 'status',
+			currSortDir: 'desc'
+		});
+	});
+	*/
+	
+	
+	$('#testContainer').append(table);
+});
+
+</script>
+
+
+<div class="content_wide new clearfix zz">
+	
+	<?=$this->partial('/style/subnav.phtml', $this)?>
+	
+	<div class="content_right">
+
+
+		<div class="zz header"><h2>Style Guidelines - Tables</h2></div>
+		
+		<p>
+			NB: This is an unfishished module!
+		</p>
+		
+		<div id="testContainer" style="margin-top: 20px; margin-bottom: 20px;">
+			
+		</div>
+		
+	</div>
+</div>
+
+<?/*Checkbox template for cell*/?>
+<script id="statusCellTemplate" type="text/x-jsrender">
+	{{if value == false}}
+		<a href="javascript:;" class="unpause"><img src="/images/icons/medium/grey/pause.png" /> paused</a>
+	{{else}}
+		<a href="javascript:;" class="pause"><img src="/images/icons/medium/green/bullet.png" /> running {{:value}} days</a>
+	{{/if}}
+</script>
+
+<script id="editTextTemplate" type="text/x-jsrender">
+	<input type="text" value="{{:value}}" />
+</script>
+
+<script id="nameTemplate" type="text/x-jsrender">
+	<a href="javascript:;" class="name">{{:value}}</a>
+</script>

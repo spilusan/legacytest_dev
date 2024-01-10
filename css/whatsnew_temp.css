@@ -1,0 +1,22 @@
+#tabbed_navigation ul.tabs li.tab.left {
+  background: #13b5ea !important;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #13b5ea), color-stop(100%, #0a7fbb)) !important;
+  background-image: -webkit-linear-gradient(#13b5ea, #0a7fbb) !important;
+  background-image: -moz-linear-gradient(#13b5ea, #0a7fbb) !important;
+  background-image: -o-linear-gradient(#13b5ea, #0a7fbb) !important;
+  background-image: -ms-linear-gradient(#13b5ea, #0a7fbb) !important;
+  background-image: linear-gradient(#13b5ea, #0a7fbb) !important;
+  -pie-background: linear-gradient(top, #13b5ea 0%, #13b5ea 25%, #0a7fbb 100%) !important;
+}
+
+#tabbed_navigation ul.tabs li.tab span.title {
+  color: #fff !important;
+  text-shadow: -1px -1px 1px #857f7f !important;
+  -moz-text-shadow: -1px -1px 1px #857f7f !important;
+  -webkit-text-shadow: -1px -1px 1px #857f7f !important;
+  behavior: url(/css/PIE.htc);
+}
+
+ul.tabs li.tab.help div.icon {
+    background: url(/images/icons/nav/white/help.png) center no-repeat !important;
+}

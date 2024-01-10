@@ -1,0 +1,90 @@
+<?php
+
+$this->headScript()->appendFile('/js/jquery.auto-complete.js')
+    ->appendFile('/js/jquery.modalwindows.js') 
+    ->appendFile('/js/jquery.metadata.js');
+
+$this->getHelper('Googledfp')
+    ->add('HomeBannerAd', 'HomeBannerAd', 810, 98)
+    ->add('ZoneAdSlot', 'ZoneAdSlot', 810, 98)
+    ->render();
+?>
+
+<div id="search_box">
+	<p class="total_suppliers"><?php echo $this->supplierCount; ?> marine suppliers</p> 
+	<p class="search_for"><b>Search for</b></p>
+	<p class="located_in"><b>Located in</b></p>
+	<form id="anonSearch" enctype="application/x-www-form-urlencoded" action="/search/results" method="get">
+		<fieldset>
+			<input type="text" name="searchWhat" id="searchWhat" value="" class="search-what" />
+			<input type="text" name="searchText" id="searchText" value="" class="search-country"/>
+			<input type="hidden" name="searchWhere" id="searchWhere" value="" />
+			<a href="#" title="" id="searchButton" class="search-button"></a> 
+		</fieldset>
+		
+	</form>
+</div>
+
+<div class="clear"></div>
+
+<div class="middle_sections">
+	<div class="ad" id="HomeBannerAd"></div>
+	<div class="zone" id="ZoneAdSlot">
+	</div>
+</div>
+
+<div class="clear"></div>  
+
+<div class="bottom_sections">
+	<div class="left_box">
+		<ul>
+			<li class="header">Top Categories</li>
+			<?php
+			foreach ($this->categories as $cat)
+			{
+				?>
+				<li><a href="/search/results/index/searchWhat/<?php echo urlencode(str_replace('/', ' ', $cat['NAME'])); ?>"
+					title="Marine suppliers of <?php echo $cat['DISPLAYNAME']; ?>"><?php echo $cat['DISPLAYNAME']; ?></a></li>
+				<?php
+			}
+			?>
+			
+			<li class="footer"><a href="/supplier/category" title="View more marine supplier categories">More categories</a></li>
+	  </ul>
+	</div>
+	
+	<div class="middle_box">
+		<ul>
+			<li class="header">Top Brands</li>
+			<?php
+			foreach ($this->brands as $brand)
+			{
+				?>
+				<li><a href="/search/results/index/searchWhat/<?php echo urlencode(str_replace('/', ' ', $brand['DISPLAYNAME'])); ?>"><?php echo $brand['DISPLAYNAME'];?></a></li>
+				<?php
+			}
+			?>
+			
+			<li class="footer"><a href="/supplier/brand" title="View more suppliers of marine brands">More brands</a></li>
+		</ul>
+	</div>
+	
+	<div class="right_box">
+		<ul>
+			<li class="header">Top Countries</li>
+			<?php
+			foreach ($this->countries as $cnt)
+			{
+				?>
+				<li><a href="/search/results/index/searchText/<?php echo urlencode(str_replace('/', ' ', $cnt['PCO_DISPLAY_TITLE'])); ?>/searchWhere/<?php echo $cnt['PCO_CNT_CODE'];?>"><?php echo $cnt['PCO_DISPLAY_TITLE'];?></a></li>
+				<?php
+			}
+			?> 
+			<li class="footer"><a href="/supplier/country" title="View more marine suppliers">More countries</a></li>
+		  </ul>
+	</div>
+</div>
+
+<div class="clear"></div>
+
+<script type="text/javascript" src="/js/jquery.searchvariables.js" charset="utf-8"></script>

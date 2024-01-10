@@ -1,0 +1,1323 @@
+<?php
+function getDebugInfo( $data, $tnid )
+{
+	foreach ((array) $data as $row) {
+		if ($row['tnid'] == $tnid) {
+			foreach( $row as $section => $line) {
+				$content .= nl2br( str_replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;", $line) );
+				$content .= "<hr />";
+			}
+			return $content;
+		}
+	}
+}
+
+function getDebugInfo2( $data )
+{
+	foreach ((array) $data as $section => $line) {
+		if ($section == "searchType" || $section == "searchQuery" || $section == "sorting") {
+			$content .= "<b>".$section . "</b><br />" . nl2br( str_replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;", $line));
+			$content .= "<br /><br />";
+		}
+	}
+	return $content;
+}
+
+
+$hasRestrictedCountryItem = false;
+
+if (isset($this->searchValues['searchStart']) && $this->searchValues['searchStart'] > 0) {
+	$this->headMeta()->appendName('robots', 'noindex, follow');
+}
+
+if ($this->metaDescription) {
+	$this->headMeta()->appendName('description', $this->metaDescription);
+}
+
+if ($this->metaKeywords) {
+	$this->headMeta()->appendName('keywords', $this->metaKeywords);
+}
+
+if ($this->gam['country'] != 'ALL') {
+	$this->googledfp()->addTargeting('country', $this->gam['country']);
+	$this->googledfp()->addTargeting('country', 'ALL');
+} else {
+	$this->googledfp()->addTargeting('country', 'ALL');
+}
+
+if ($this->gam['port'] != 'ALL') {
+	$this->googledfp()->addTargeting('port', $this->gam['port']);
+	$this->googledfp()->addTargeting('port', 'ALL');
+} else {
+	$this->googledfp()->addTargeting('port', 'ALL');
+}
+
+$stringHelper  = $this->string();
+$resultsHelper = $this->results();
+
+$uriHelper     = $this->uri();
+$zoneAdvertCorrected = false;
+
+//shortcut to current zone
+$zone = null;
+
+$this->CDNLink()->appendStylesheet('/css/search.css')
+                ->appendStylesheet('/css/shipserv-tooltip.css');
+
+if ($this->currentZoneIdent) {
+	$this->CDNLink()->appendStylesheet('/css/zones.css');
+
+    $zone = $this->zones[$this->currentZoneIdent];
+	if (isset($zone['content']['style']))
+	{
+		$this->headStyle()->appendStyle($zone['content']['style']);
+	}
+}
+
+$gamPhrases = $stringHelper->createKeywordPhrases($this->searchValues['searchWhat']);
+
+foreach ($gamPhrases as $phrase) {
+	$this->googledfp()->addTargeting('keywords', $phrase);
+}
+$this->googledfp()->addTargeting('keywords', 'ALL');
+
+$this->headScript()->appendFile('/js/jquery.cookie.min.js')
+				   ->appendFile('/js/jquery.jsoncookie.js');
+
+$this->headScript()->appendFile('/js/json2.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.modalwindows.js')
+						 ->appendFile('/js/jquery.urlparse.js')
+						 //->appendFile('/js/jquery.microprofile.min.js') // disabled for now
+						 ->appendFile('/js/jquery.more-options.min.js')
+						 ->appendFile('/js/jcarousellite_1.0.1.min.js')
+                         ->appendFile('/js/modules/backbone/lib/jquery.shipserv-tooltip.js')
+						 ->appendFile('/js/jcarousellite_1.0.1.min.js');
+
+if ((int)Myshipserv_Config::getIni()->google->services->maps->display === 1) {
+    $this->inlineScript()->appendFile('https://maps.google.com/maps?file=api&v=2&key=' . $this->googleMapsApiKey);
+}
+
+// including javascript file using requireJS
+$this->getHelper('Requirejs')->addModule('search/searchFeedback')
+							 ->addModule('search/zone');
+
+//Passing required parameters to Javascript for plaing the cookie
+$cookiePars = array(
+		'name'   				=> $this->basketCookie['name'],
+		'domain' 				=> $this->basketCookie['domain'],
+		'path'   				=> $this->basketCookie['path'],
+		'maxSelectedSuppliers'  => $this->maxSelectedSuppliers
+	);
+$this->getHelper('Requirejs')->addModule('search/sendRfq')->addDefinition('shipserv/basketCookie', json_encode($cookiePars));
+
+$currentPage = (($this->searchValues['searchStart'] + $this->resultsPerPage) / $this->resultsPerPage) ? (($this->searchValues['searchStart'] + $this->resultsPerPage) / $this->resultsPerPage) : 1;
+
+$spotlightAds = array();
+$allRestricted = true;
+foreach ((array)$this->result['documents'] as $document) {
+	if ($document['spotlight']) {
+		$spotlightAds[] = $document['tnid'];
+	}
+
+	if ($document['isRestricted'] !== true) {
+        $allRestricted = false;
+    }
+}
+
+?>
+<script type="text/javascript" charset="utf-8">
+<!--
+var current_page = <?php echo $currentPage ?>;
+
+$(document).ready(function() {
+
+<?php
+if (is_array($this->microprofiles[$currentPage])) {
+	foreach ($this->microprofiles[$currentPage] as $key => $value) {
+		?>
+		$("#<?php echo $key;?>_detail").show();
+		$("a").each(function(){
+			if($(this).attr('id')=='<?php echo $key;?>'){$(this).removeClass('expand').addClass('expand_on');}
+		});
+		$(".searchResult .footer").each(function(){
+			if($(this).attr('rel')=='<?echo $key;?>'){$(this).removeClass('footer').addClass('footer_expanded');}
+		});
+		$("#<?php echo $key;?>_detail").html('<img style="position:absolute;top:-82px;right:22px;" src="<?php echo $this->CDNLink()->image('/images/bluecircle.gif'); ?>">');
+		$.get('/supplier/microprofile/format/html/s/<?php echo $key;?>/p/' + current_page,
+					function(data){
+					  $("#<?php echo $key;?>_detail").html(data);
+					});
+		<?php
+	}
+}
+?>
+	var path = "/search/results<?php if (isset($this->currentZoneIdent)) echo "/index/zone/".$this->currentZoneIdent ?>";
+	var what = "<?php echo ($this->searchValues['searchWhat']) ? urlencode(htmlspecialchars_decode($this->searchValues['searchWhat'])) : ''; ?>";
+	var text = "<?php echo ($this->searchValues['searchText']) ? urlencode(htmlspecialchars_decode($this->searchValues['searchText'])) : ''; ?>";
+	var where = "<?php echo ($this->searchValues['searchWhere']) ? urlencode(htmlspecialchars_decode($this->searchValues['searchWhere'])) : ''; ?>";
+	var searchtype = "<?php echo ($this->searchValues['searchType']) ? urlencode(htmlspecialchars_decode($this->searchValues['searchType'])) : ''; ?>";
+	var start_page = "<? echo ($this->searchValues['searchStart']) ? $this->searchValues['searchStart'] : ''; ?>";
+	var filter ="<?if($this->appliedFilters['categoryId']){foreach($this->appliedFilters['categoryId'] as $key => $value){?>&filters[categoryId][]=<?php echo $key; ?><?}}?><?if($this->appliedFilters['membershipId']){foreach($this->appliedFilters['membershipId'] as $key => $value){?>&filters[membershipId][]=<?php echo $key; ?><?}}?><?if($this->appliedFilters['onsiteInspected']){foreach($this->appliedFilters['onsiteInspected'] as $key => $value){?>&filters[onsiteInspected][]=<?php echo $key; ?><?}}?>";
+	   if (start_page == "")
+        {
+           var start_page = "0";
+       } else {
+           var start_page = (start_page / <?php echo $this->resultsPerPage; ?>);
+       }
+
+	function page_load(new_page_index, pagination_container) {
+		$('#search_pagination').html('<img style="margin:16px 6px;" src="<?php echo $this->CDNLink()->image('/images/blueloader.gif'); ?>">');
+		window.location;
+	}
+
+	function countProperties( obj )
+	{
+		var keys = [];
+        for (k in obj) {
+            if (Object.prototype.hasOwnProperty.call(obj, k)) {
+                keys.push(k);
+            }
+        }
+        return keys.length;
+	}
+
+	$("body").delegate('.searchResult input:checkbox','click', function() {
+		var o = $.JSONCookie('<?php echo $this->basketCookie['name']; ?>');
+		var maxSelectedSupplier = <?php echo $this->maxSelectedSuppliers; ?>;
+		
+		if (this.checked) {
+			if (!o.suppliers) {
+				o.suppliers = [];
+			}
+
+			var tnid = this.id;
+			var count = countProperties(o.suppliers);
+
+			if( count > maxSelectedSupplier-1 ){
+				/*alert("Sorry, you can only select up to " + maxSelectedSupplier + " Suppliers.\n\nIf you send the same RFQ to more than \n" + maxSelectedSupplier + " suppliers, in 1 or more batches, the \nsystem will permanently disable your email address.");*/
+
+				maxSuppliersPopUp(maxSelectedSupplier);
+
+				return false;
+			}
+
+			o.suppliers.push(tnid);
+		} else {
+			var tnid = this.id;
+			for(var i=0;i<o.suppliers.length;i++){
+				if( tnid == o.suppliers[i] ){
+					o.suppliers.splice(i,1);
+				}
+			}
+		}
+
+		$.JSONCookie('<?php echo $this->basketCookie['name']; ?>', o, { domain: '<?php echo $this->basketCookie['domain']; ?>',
+																		path: '<?php echo $this->basketCookie['path']; ?>' });
+	});
+
+	// new addition: Check all selected suppliers
+	var b = $.JSONCookie('<?php echo $this->basketCookie['name']; ?>');
+	if( typeof b.suppliers != 'undefined' )
+	{
+		for(var i=0;i<b.suppliers.length;i++){
+			$(".searchResult input:checkbox[id='"+b.suppliers[i]+"']").attr('checked','checked');
+		}
+	}
+	$("body").delegate('.contact_now_detail_button', 'click', function() {
+		var tnid = this.id.substring(14);
+		var o = $.JSONCookie('<?php echo $this->basketCookie['name']; ?>');
+
+		if (o != null && o.suppliers)
+		{
+			var suppliers = o.suppliers, i = 0;
+			for (s in suppliers) {
+				i++;
+			}
+
+			if (i == 1 && suppliers[tnid] != '') {
+				return true;
+			}
+
+			return confirm('You currently have other suppliers selected. Click OK to clear this list and send an individual RFQ to this supplier, or Cancel to continue browsing');
+		}
+
+		return true;
+	});
+});
+
+$(window).load(function () {
+    $('.avatar img').each(function () {
+        $(this).load();
+        var w = $(this).width();
+        var h = $(this).height();
+
+        if (w >= h) {
+			$(this).addClass('landscape');
+		}
+		else
+		{
+			$(this).addClass('portrait');
+		}
+	});
+});
+//-->
+</script>
+
+<?php
+
+$relatedSearches = null;
+if ($this->relatedSearches || $this->showCompanyMatches || $this->searchValues['searchType'] == 'company'):?>
+	<?
+	$relatedSearchOutput = array();
+
+	foreach ($this->relatedSearches as $name => $url) {
+		$relatedSearchOutput[] = '<a href="' .$url .'">' . $name .'</a>';
+	}
+
+	if ($this->showCompanyMatches) {
+		$url = $this->searchUrl()
+			->zone($this->currentZoneIdent)
+			->searchWhat(html_entity_decode($this->searchValues['searchWhat']))
+			->searchWhere($this->searchValues['searchWhere'])
+			->searchText($this->searchText)
+			->searchType('company')
+			->sourceKey("RELATED_FROM_SEARCH");
+
+		$url = $this->searchUrl()->encodeForwardSlash($url);
+
+		$relatedSearchOutput[] = '<a href="' .$url .'">Suppliers called ' . $this->searchValues['searchWhat'] .'</a>';
+	} else if ($this->searchValues['searchType'] == 'company') {
+		$url = $this->searchUrl()
+			->zone($this->currentZoneIdent)
+			->searchWhat(html_entity_decode($this->searchValues['searchWhat']))
+			->searchWhere($this->searchValues['searchWhere'])
+			->searchText($this->searchText)
+			->sourceKey("RELATED_FROM_SEARCH");
+
+		$url = $this->searchUrl()->encodeForwardSlash($url);
+		$relatedSearchOutput[] = '<a href="' .$url .'">Suppliers of ' . $this->searchValues['searchWhat'] .'</a>';
+	}
+	$relatedSearches = 'Related searches: ' . implode(",&nbsp;&nbsp;&nbsp;&nbsp;", $relatedSearchOutput);
+	
+
+	?>
+<?endif?>
+<?php 
+
+//render search bar
+echo $this->partial('searchbar.phtml', array('searchWhat'    => $this->searchValues['searchWhat'],
+											 'searchText'    => $this->searchText,
+											 'searchWhere'   => $this->searchValues['searchWhere'],
+											 'supplierCount' => $this->supplierCount,
+											 'currentZoneIdent'	 => $this->currentZoneIdent,
+											 'zone'		 => $zone,
+											 'displayZoneReturnLink' => true,
+											 'relatedSearches' => $relatedSearches
+											 )
+);
+
+?>
+<div id="main_content_area">
+<?php
+
+// SPC-616 Move zone left placement block to the top
+if ($this->currentZoneIdent) {
+	$localZone = $this->zones[$this->currentZoneIdent];
+	$localContent = $localZone['content'];
+	foreach ((array)isset($localContent['infoBlocks']['block']['@attributes'])?array ($localContent['infoBlocks']['block']):$localContent['infoBlocks']['block'] as $block) {
+		if ($block['@attributes']['placement']=="left") {
+			echo $this->partial(
+				'zone/block-wide.phtml',
+				array(
+					'block' => $block
+				)
+			);
+		}
+	}
+}
+// SPC-616 end
+
+if (lg_count($this->breadcrumbs) === 1) {
+		$this->breadcrumbs[] = array('name' => 'Search result', 'url' => '');
+	}
+	echo $this->partial('search/breadcrumbs.phtml', array('breadcrumbs' => $this->breadcrumbs));
+	?>
+
+    <?php if (preg_match('/https?:\/\/.*\.shipserv.com\/(impa-catalogue|impaweb)/i', $this->referrer)): ?>
+        <div class="back-to-impa">
+            <a href="<?echo $this->referrer; ?>">Back to IMPA Marine Stores guide &gt;</a>
+        </div>
+    <?php endif ?>
+
+
+	<?php
+		if (isset($_GET['debug']) && $_GET['debug'] == 1) {
+			?>
+			<div class="searchResultDebug-outerBox ">
+				<div style="font-size:14px; margin-bottom:20px;">Debug info</div>
+				<?= getDebugInfo2($this->result['debugDetails']);?>
+			</div>
+			<?php
+		}
+	?>
+	<div class="zone">
+		<?php
+
+
+
+		if (in_array($this->config['shipserv']['supplier']['dt']['tnid'], (array) $spotlightAds) !== false) {
+			$overridenAdSlot = Shipserv_Supplier::getGoogleTargetedSearchBySpotlightedSupplierTnid( $this->config['shipserv']['supplier']['dt']['tnid'] );
+		} else {
+			$overridenAdSlot = Shipserv_Supplier::getGoogleTargetedSearchBySpotlightedSupplierTnid( $spotlightAds[0] );
+		}
+		// supress ads in the ISSA zone
+		if (!($this->currentZoneIdent and (isset($zone['content']['ads']['disable']) and $zone['content']['ads']['disable']=="true"))) {
+			// show general adunits (default)
+			if (!($this->currentZoneIdent and isset($zone['content']['ads']['slot'])) && $overridenAdSlot == null) {
+				echo $this->partial('general-google-ads.phtml');
+			}
+			// if we have something in the database to override this by the spotlight then show this instead
+			else if ($overridenAdSlot !== null && lg_count($overridenAdSlot) > 0) {
+				echo $this->partial('general-google-ads.phtml', array('adUnits' => $overridenAdSlot));
+			} else {
+				// conditional for zone
+				?>
+				<div class="google_zone_ad">
+					<h4>ADVERTISEMENTS</h4>
+					<?php
+                        $adSlots = (lg_count($overridenAdSlot) > 0) ? $overridenAdSlot : (array)$this->googledfp()->fillSlotWithCondition($zone, $this->viewSearchValues);
+                        $rotatingZones = array_map(
+                                function ($value) {
+                                    return strtolower(trim($value));
+                                },
+                                explode(',', Myshipserv_Config::getIni()->shipserv->content->zones->rotating)
+                        );
+
+                        if (in_array(strtolower($this->currentZoneIdent), $rotatingZones, false)) {
+                            $zoneAdvertCorrected = true;
+                            $adSession = Myshipserv_Helper_Session::getNamespaceSafely('GA_session');
+                            $slotCount = lg_count($adSlots);
+                            $currentAdRotation = (int)$adSession->rotation;
+                            $nextRotation = ($currentAdRotation < $slotCount - 1) ? $currentAdRotation + 1 : 0;
+                            $adSession->rotation = $nextRotation;
+                            $rotateSlotStart = $currentAdRotation;
+                            $maxRotateItems = 5;
+                            $rotationIndex = 0;
+
+                            if ($rotateSlotStart >= $slotCount) {
+                                $rotateSlotStart = $slotCount - 1;
+                            }
+
+                            while ($rotationIndex < $maxRotateItems) {
+                                $isLastSlot = ($rotationIndex === $maxRotateItems - 1);
+
+                                if ($isLastSlot) {
+                                    echo '<div id="fifthSlot">' . PHP_EOL;
+                                }
+
+                                echo $this->googledfp()->fillSlot($adSlots[$rotateSlotStart]);
+
+                                if ($isLastSlot) {
+                                    echo '</div>' . PHP_EOL;
+                                }
+
+                                $rotateSlotStart++;
+                                $rotationIndex++;
+                                if ($rotateSlotStart >= $slotCount) {
+                                    $rotateSlotStart = 0;
+                                }
+                            }
+                    } else {
+						foreach($adSlots as $s) {
+							echo $this->googledfp()->fillSlot($s);
+						}
+                    }
+					?>
+					<br />
+				</div>
+				<?php
+			}
+		}
+		if ($this->currentZoneIdent) {
+
+			$content = $zone['content'];
+			?>
+			<div class="zone_body">
+				<?php
+				foreach ((array)isset($content['infoBlocks']['block']['@attributes'])?array ($content['infoBlocks']['block']):$content['infoBlocks']['block'] as $block) {
+					if (!isset($block['@attributes']['placement'])) {
+						echo $this->partial('zone/block.phtml', array( 'block' => $block));
+					}
+				}
+				?>
+			</div>
+			<?php
+		} else {
+			// When not in a zone
+			if (array_key_exists('rhs', $this->seoBlock)) {
+				?>
+				<div class="seo_rhs">
+					<div class="sidebar_header">
+						<h3><?php echo $this->seoBlock['rhs']['title']; ?></h3>
+					</div>
+
+					<div class="sidebar_body">
+						<p class="seo-text"><?php echo nl2br($this->seoBlock['rhs']['text']); ?></p>
+					</div>
+				</div>
+				<?php
+			}
+		}
+		?>
+
+	</div>
+
+	<div id="resultStatsModal" class="window3" style="display: none;">
+		<?php
+			// No stats in this release
+			//echo $this->stats()->resultPage($this->statsResults);
+		?>
+	</div>
+
+	<div class="content_wide">
+		<?php
+        //Moved from further down page
+        $results = $this->result['documents'];
+
+        //print_r($this->zones);
+		//zone invites
+		echo $this->partial(
+			'zone/zoneinvites.phtml', array(
+				'searchValues' => $this->searchValues,
+				'searchText' => $this->searchText,
+				'currentZoneIdent' => $this->currentZoneIdent,
+				'zones'	=> $this->zones,
+				'showZoneSponsorshipBanner' => $this->zoneSponsorshipIsEnabled,
+				'zoneSponsorshipBanner' => $this->zoneSponsorshipBanner,
+				'refinedQuery' => $this->refinedQuery,
+				'searchId' => $this->logSearchId,
+				'addActiveZoneBanner' => $this->addActiveZoneBanner
+			)
+		);
+
+		$content  = $zone['content'];
+		$rootName = Zend_Controller_Front::getInstance()->getRouter()->getCurrentRouteName();
+		$navClass = 'content_wide_nav_top';
+		if (($content['title'] || $this->serpsTitle) && !$this->currentZoneIdent) {
+			$navClass = 'content_wide_nav';
+			$title    = ($content['title']) ? $content['title'] : $stringHelper->shortenToLastWord($this->serpsTitle, 80);
+
+			?>
+			<div class="content_wide_header">
+				<h1 class="search_results"><?php echo htmlentities($title); ?></h1>
+				<div class="clear"></div>
+			</div>
+			<?php
+		}
+
+		?>
+		<div class="<?php echo $navClass; ?>">
+            <h6><?php echo number_format($this->result['documentsFound'], 0, '.', ','); ?> result<?php echo ($this->result['documentsFound'] > 1 || $this->result['documentsFound'] == 0) ? 's' : ''; ?></h6>
+			<?php
+			if ($this->hasResults) {
+				// No results page stats in this release
+				if (false) {
+					?>
+					<a id="resultStats" href="#">
+						<div id="tradedata-capsule">
+							<div id="tradedata-capsule-text">
+								$ <?php echo Myshipserv_View_Helper_Stats::formatNumberAsStr($this->statsResults->getMonthResult()->getTotal()); ?>
+							</div>
+						</div>
+					</a>
+					<?php
+				}
+				?>
+				<?php if ($allRestricted === true): ?>
+					<span class="enquiry_send_white disabled restrictedToolTip" data-tooltipelement="restrictedToolTip">
+						Send a RFQ to selected suppliers
+					</span>
+                <?php else: ?>
+                    <a href="#" class="enquiry_send_white" title="Send a RFQ to the suppliers you've selected">
+						Send a RFQ to selected suppliers
+					</a>
+                <?php endif ?>
+
+				<?php
+			}
+			?>
+		</div>
+
+		<div class="content_wide_body">
+
+			<div class="sidebar">
+				<form method="get" enctype="application/x-www-form-urlencoded" action="<?php echo $this->searchUrl()->zone($this->currentZoneIdent); ?>" name="sideSearch">
+					<input type="hidden" name="searchWhat" value="<?php echo $this->searchValues['searchWhat']; ?>" />
+					<input type="hidden" name="searchText" value="<?php echo $this->searchText; ?>" />
+					<input type="hidden" name="searchWhere" value="<?php echo $this->searchValues['searchWhere']; ?>" />
+					<input type="hidden" name="searchType" value="<?php echo $this->searchValues['searchType']; ?>" />
+					<input type="hidden" name="refinedBrandId" id="refinedBrandId" value="<?php echo $this->refinedBrandId; ?>" />
+					<input type="hidden" name="<?php echo Myshipserv_Controller_Action_Helper_SearchSource::PARAM_NAME ?>" value="<?php echo Zend_Controller_Action_HelperBroker::getStaticHelper('SearchSource')->getObscuredKey('REFINED_FROM_SEARCH'); ?>" />
+
+					<div class="sidebar_header">
+						<h3>Refine Search</h3>
+						<div class="sidebar_apply_button">
+							<?php
+							if ($this->hasResults  and ($this->result['categories'] or $this->result['brands'] or $this->result['memberships'] or $this->result['onsiteInspected'])) {
+								?>
+								<input class="png" type="submit" value="" />
+								<?php
+							}
+							?>
+						</div>
+					</div>
+
+					<div class="sidebar_body">
+						<?php
+						if ($this->hasResults  and ($this->result['categories'] or $this->result['brands'] or $this->result['memberships'] or $this->result['onsiteInspected'])) {
+							if ($this->result['categories']) {
+							?>
+								<div id="categories_extended"></div>
+							<?php
+							}
+							?>
+								<ul style="margin-top:0;">
+							<?php
+								$inspectionList = array();
+								if ($this->result['onsiteInspected']) {
+									foreach ($this->result['onsiteInspected'] as $onsiteInspected) {
+										if ((int)$onsiteInspected['id'] === 1) {
+											array_push($inspectionList, array(
+													'id' => $onsiteInspected['id'],
+													'documentsFound' => $onsiteInspected['documentsFound']
+											));
+										}
+									}
+								}
+								
+								if (lg_count($inspectionList) > 0) {
+									?>
+										<ul class="onsiteInspectedBox">
+											<li class="sub_header">Verified:</li>
+											<li class="border" id="onsiteInspectedBox">&nbsp;</li>
+											<?php
+				
+											foreach ($inspectionList as $onsiteInspected) {
+												?>
+												  <li><input name="filters[onsiteInspected][]" value="<?php echo $onsiteInspected['id']; ?>" id="onsiteInspected_<?php echo $onsiteInspected['id']; ?>" type="checkbox" <?php if ($this->appliedFilters['onsiteInspected'][$onsiteInspected['id']]) echo 'checked="checked"'; ?> /> <label for="onsiteInspected_<?php echo $onsiteInspected['id']; ?>">On-Site Inspected (<?php echo $onsiteInspected['documentsFound']; ?>)</label></li>
+												<?php
+												}
+											?>
+											<li>&nbsp;</li>
+										</ul>
+										<?php
+								}
+								
+								if ($this->result['facets']) {
+									?>
+									<ul>
+										<li class="sub_header">Authorisations:</li>
+										<li class="border" id="brandAuthsOptionsBox">&nbsp;</li>
+										<?php
+										foreach ($this->result['facets'] as $facet) {
+										?>
+											    <li><input name="filters[<?php echo $facet['name']; ?>][]" value="<?php echo $facet['id']; ?>" id="brandauth_<?php echo $facet['name']; ?>" type="checkbox" <?php if ($this->appliedFilters[$facet['name']][$facet['id']]) echo 'checked="checked"'; ?> /> <label for="brandauth_<?php echo $facet['name']; ?>"><?php echo Shipserv_BrandAuthorisation::$facetAuthNames[$facet['name']]; ?> (<?php echo $facet['documentsFound']; ?>)</label></li>
+										<?php
+										}
+										?>
+										<li>&nbsp;</li>
+									</ul>
+									<?php
+								}
+								if ($this->result['categories']) {
+									?>
+									<ul>
+										<li class="sub_header"><?php if ($this->result['categoriesCount']>lg_count($this->result['categories'])) echo '<span class="options_more_expand"><a id="categoriesMore" href="javascript:void(0);">More</a></span>';?>Categories:</li>
+										<li class="border" id="categoriesOptionsBox">&nbsp;</li>
+										<?php
+										foreach ($this->result['categories'] as $category)
+										{
+											?>
+											    <li><input name="filters[categoryId][]" value="<?php echo $category['id']; ?>" id="category_<?php echo $category['id']; ?>" type="checkbox" <?php if ($this->appliedFilters['categoryId'][$category['id']]) echo 'checked="checked"'; ?> /> <label for="category_<?php echo $category['id']; ?>"><?php echo $category['name']; ?> (<?php echo $category['documentsFound']; ?>)</label></li>
+											<?php
+											}
+										?>
+										<li>&nbsp;</li>
+									</ul>
+									<?php
+								}
+
+								if ($this->result['brands']) {
+									?>
+									<ul>
+										<li class="sub_header"><?php if ($this->result['brandsCount']>lg_count($this->result['brands'])) echo '<span class="options_more_expand"><a id="brandsMore" href="javascript:void(0);">More</a></span>'?>Brands:</li>
+										<li class="border" id="brandsOptionsBox">&nbsp;</li>
+										<?php
+										foreach ($this->result['brands'] as $brand)
+										{
+											?>
+											<li><input name="filters[brandId][]" value="<?php echo $brand['id']; ?>" id="brand_<?php echo $brand['id']; ?>" type="checkbox" <?php if ($this->appliedFilters['brandId'][$brand['id']]) echo 'checked="checked"'; ?> /> <label for="brand_<?php echo $brand['id']; ?>"><?php echo $brand['name']; ?> (<?php echo $brand['documentsFound']; ?>)</label></li>
+											<?php
+											}
+										?>
+										<li>&nbsp;</li>
+									</ul>
+									<?php
+								}
+
+								if ($this->result['memberships']) {
+									?>
+									<ul style="border-bottom:none;">
+										<li class="sub_header"><?php if ($this->result['membershipsCount']>lg_count($this->result['memberships'])) echo '<span class="options_more_expand"><a id="membershipsMore" href="javascript:void(0);">More</a></span>';?>Memberships:</li>
+										<li class="border" id="membershipsOptionsBox">&nbsp;</li>
+										<?php
+										foreach ($this->result['memberships'] as $certification)
+										{
+											?>
+											<li><input name="filters[membershipId][]" value="<?php echo $certification['id']; ?>" id="membership_<?php echo $certification['id']; ?>" type="checkbox" <?php if ($this->appliedFilters['membershipId'][$certification['id']]) echo 'checked="checked"'; ?> /> <label for="membership_<?php echo $certification['id']; ?>"><?php echo $certification['name']; ?> (<?php echo $certification['documentsFound']; ?>)</label></li>
+											<?php
+											}
+										?>
+										<li>&nbsp;</li>
+									</ul>
+									<?php
+								}
+
+								if (lg_count($this->result['certifications']) > 0) {
+									?>
+									<ul style="border-bottom:none;">
+										<li class="sub_header"><?php if ($this->result['certificationsCount']>lg_count($this->result['certifications'])) echo '<span class="options_more_expand"><a id="certificationsMore" href="javascript:void(0);">More</a></span>';?>Certifications:</li>
+										<li class="border" id="certificationsOptionsBox">&nbsp;</li>
+										<?php
+										foreach ($this->result['certifications'] as $certification)
+										{
+											?>
+											<li><input name="filters[certificationId][]" value="<?php echo $certification['id']; ?>" id="certification_<?php echo $certification['id']; ?>" type="checkbox" <?php if ($this->appliedFilters['certificationId'][$certification['id']]) echo 'checked="checked"'; ?> /> <label for="certification_<?php echo $certification['id']; ?>"><?php echo $certification['name']; ?> (<?php echo $certification['documentsFound']; ?>)</label></li>
+											<?php
+											}
+										?>
+										<li>&nbsp;</li>
+									</ul>
+									<?php
+								}
+
+
+							?>
+							</ul>
+							<?php
+						} else {
+							?>
+							<p>No results to refine</p>
+							<?php
+						}
+						?>
+					</div>
+
+					<?php
+					if ($this->hasResults and ($this->result['categories'] or $this->result['brands'] or $this->result['memberships']))
+					{
+						?>
+						<div class="sidebar_footer">
+						   <div class="sidebar_apply_button"><input class="png" type="submit" value=""/></div>
+						</div>
+						<?php
+					}
+					?>
+				</form>
+
+				<?php
+				// Uncommented for SPC-613, recomment if the banner requested to be back on left, and detelte/uncomment next 
+				// if ($this->currentZoneIdent) {
+				// 	foreach ((array)isset($content['infoBlocks']['block']['@attributes'])?array ($content['infoBlocks']['block']):$content['infoBlocks']['block'] as $block) {
+				// 		if ($block['@attributes']['placement']=="left") {
+				// 			echo $this->partial('zone/block.phtml', array(
+				// 										'block'			=> $block
+				// 			));
+				// 		}
+				// 	}
+				// } else {
+				// 	if ($this->result["refinedQuery"]["type"]=="brand") {
+				// 		if (lg_count(Shipserv_BrandAuthorisation::getBrandOwners(intval($this->result["refinedQuery"]["id"])))==0) {
+				// 			echo '<a href="/brand-auth/add-brand-owner/brand/'.$this->result["refinedQuery"]["id"].'"><img src="/images/layout_v2/brands/web_banner_small3.jpg" /></a>';
+				// 		}
+				// 	}
+				// }
+					if (!$this->currentZoneIdent) {
+						if ($this->result["refinedQuery"]["type"]=="brand") {
+							if (lg_count(Shipserv_BrandAuthorisation::getBrandOwners(intval($this->result["refinedQuery"]["id"])))==0) {
+								echo '<a href="/brand-auth/add-brand-owner/brand/'.$this->result["refinedQuery"]["id"].'"><img src="/images/layout_v2/brands/web_banner_small3.jpg" /></a>';
+							}
+						}
+					}
+
+					if ($this->refinedQuery['id'] != "" && $this->refinedQuery['countryCode'] == "") {
+						$outputForStatistic = $this->partial('search/statistics.phtml', array('refinedQuery' => $this->refinedQuery));
+						echo $outputForStatistic;
+					}
+
+					if ($this->showRelatedCategory === true) {
+						?>
+						<div class="sidebar_body relatedCat">
+							<h2 class="styled grey blue"><b><?= ucwords($this->result['refinedQuery']['query'])?></b> <br/>Related Categories</h2>
+							<p class="seo-text">
+								<?
+								if (lg_count($this->seoRelatedCategories) > 0) {
+									?><strong>Related categories:</strong><?php
+								}
+								foreach($this->seoRelatedCategories as $row) {
+									?><a href="<?= '/category/' . strtolower(preg_replace('/(\W){1,}/', '-', $row['NAME'])) . '/' . $row['PSR_RELATED_CATEGORY_ID'] ?>"><span>Marine</span> <?= $row['NAME'] ?></a><?
+								}
+								?>
+							</p>
+						</div>
+						<?php
+					}
+
+					// only showing this if outputforststisic is empty
+					if ($this->seoBlock['title'] && $outputForStatistic == "") {
+						?>
+						<div class="sidebar_header">
+							<h3><?php echo $this->seoBlock['title']; ?></h3>
+						</div>
+
+						<div class="sidebar_body">
+							<p class="seo-text"><?php echo nl2br($this->seoBlock['text']); ?></p>
+						</div>
+						<?php
+					}
+
+				?>
+			</div>
+
+			<div id="searchResults">
+				<?php				    
+					if (lg_count( $spotlightAds ) == 0) {
+					    $categoryId = null;
+					    if (isset($_GET['filters']) && isset($_GET['filters']['categoryId'])) {
+					    	if (is_array($_GET['filters']['categoryId'])) {
+					    		$categoryId = array();
+					    		foreach ($_GET['filters']['categoryId'] as $key => $value) {
+					    			$categoryId[$key] = _htmlspecialchars($value);
+					    		}
+					    	} else {
+					    		$categoryId = _htmlspecialchars($_GET['filters']['categoryId']);
+					    	}
+					    }
+
+					    // DEV-3296 requests to remove
+						// echo $this->partial('adcenter/adunits.phtml', array('ads' => $this->adUnits, 'categoryId' => $categoryId, 'searchRecId' => $this->searchRecId, 'refinedQuery' => $this->refinedQuery));
+					}
+				?>
+
+				<?php
+				if ($this->result['widenedSearch'] == "1" && $this->hasResults) {
+					//$searchParts = explode(",",$this->searchValues['searchText']);
+					$searchParts = explode(",",$this->searchOriginalText);
+
+					if (lg_count($searchParts) === 2) {
+						$searchText = trim($searchParts[0]);
+						$widenedText =trim($searchParts[1]);
+					} else {
+						$searchText = $this->searchValues['searchText'];
+						$widenedText = 'the whole country';
+					}
+					?>
+					<div class="serps_warning">
+						<?php
+						if (is_array($this->appliedFilters) && lg_count($this->appliedFilters) > 0) {
+							?>
+							<h3>Sorry, we could not find any results for &quot;<?php echo $this->searchValues['searchWhat'];?>&quot; in <?php echo $searchText;?> with your selected refine search options, so we have widened the search to <?php echo $widenedText ?>.</h3>
+							<?php
+						} else {
+							?>
+							<h3>Sorry, we could not find any results for &quot;<?php echo $this->searchValues['searchWhat'];?>&quot; in <?php echo $searchText;?> so we have widened the search to <?php echo $widenedText ?>.</h3>
+							<?php
+						}
+						?>
+					</div>
+					<?php
+				}
+
+				if ($this->result['unknownLocation'] && $this->hasResults) {
+					?>
+					<div class="serps_warning">
+						<h3>Sorry, we did not recognize the location '<?php echo $this->unknownLocation; ?>'. Here are the results for a worldwide search:</h3>
+					</div>
+					<?php
+				}
+
+				if (!$this->hasResults) {
+					?>
+					<div class="serps_warning">
+						<?php
+						if (is_array($this->appliedFilters) && lg_count($this->appliedFilters) > 0) {
+							?>
+							<h2>Sorry, we could not find any results for &quot;<?php echo $this->searchValues['searchWhat'];?><?if($this->searchValues['searchText']){?>&quot; in <?php echo $this->searchValues['searchText'];?><?}?> with your selected refine search options.</h2>
+							<?php
+						} else {
+							?>
+							<h2>Sorry, we could not find any results for &quot;<?php echo $this->searchValues['searchWhat'];?><?if($this->searchValues['searchText']){?>&quot; in <?php echo $this->searchValues['searchText'];?><?}?>.</h2>
+							<?php
+						}
+						?>
+						<p>Here are some tips on how to refine your search:</p>
+						<ul>
+							<li>Make sure all the words are spelled correctly</li>
+							<li>Try using fewer keywords</li>
+							<li>Try using more general keywords</li>
+							<li>Avoid use of punctuation</li>
+							<li>Try searching in nearby countries</li>
+							<?php
+							if (is_array($this->appliedFilters) && lg_count($this->appliedFilters) > 0) {
+								?>
+								<li>Try removing one or more of the selected refine search options</li>
+								<?php
+							}
+							?>
+						</ul>
+					</div>
+					<?php
+				}
+
+				$endorseeIds = array ();
+
+				foreach ((array)$this->result['documents'] as $document) {
+					$endorseeIds[] = $document['tnid'];
+				}
+
+				$reviewsCounts = Shipserv_Review::getReviewsCounts($endorseeIds);
+
+				$spotlightAds = array();
+
+				$displayedSpotlightCount = 0;
+
+                foreach ((array)$results as $document) {
+                    $supplier = Shipserv_Supplier::fetch($document['tnid']);
+
+					$number = ++$i;
+
+					if ($hasRestrictedCountryItem === false && $document['isRestricted'] === true) {
+                        $hasRestrictedCountryItem = true;
+                    }
+                    $premiumBgStyle = '';
+
+                    if ($document['spotlight']) {
+						$spotlightAds[] = $document['tnid'];
+                        $displayedSpotlightCount++;
+                        //$premiumBgStyle = ($displayedSpotlightCount === 1 && (int)$document['spotlight'] !== 3) ? 'spotlight1' : 'spotlight2';
+                        $premiumBgStyle = ((int)$document['spotlight'] === 1) ? 'spotlight1' : 'spotlight2';
+					}
+
+
+					?>
+					<div id="<?php echo $number;?>" class="searchResult<?php if ($document['premiumListing'] || $document['spotlight']) echo ' premium'; ?><?php if ($document['onsiteInspected']  === true) echo ' onsiteInspected'; ?><?php echo ' ' .$premiumBgStyle; ?>">
+
+						<?php
+						if ($document['premiumListing'] || $document['spotlight']) {
+							$imgUrl = ($document['logoUrl']) ? $document['logoUrl'] : $this->CDNLink()->image('/images/layout_v2/default_image.gif');
+							$alt    = ($document['logoUrl']) ? $document['name'] : '';
+							$imgUrl = str_replace('http://www.shipserv.com', 'https://cdn1.shipserv.com', $imgUrl);
+							$imgUrl = str_replace('https://www.shipserv.com', 'https://cdn1.shipserv.com', $imgUrl);
+                            $restrictedClass = ($document['isRestricted'] === true) ? ' restricted-offset' : '';
+						?>
+							<div class="avatar<?php echo $restrictedClass ?>"><img src="<?php echo $imgUrl; ?>"  <?php if ($document['spotlight']) echo 'style="border:1px solid #ddd;"'; ?> alt="<?php // echo $alt; ?>" /></div>
+							<?php
+						}
+						?>
+						<?
+							$addressToDisplay = $stringHelper->formatAddress($document['city'],$document['state'],$document['countryName']);
+							$urlToSupplierProfilePage = $this->supplierProfileUrl($document, 'SEARCH', array('q'       => $this->searchValues['searchWhat'],
+																									 'type'    => $this->refinedQuery['type'],
+																									 'id'      => $this->refinedQuery['id'],
+																									 'port'    => $this->refinedQuery['portCode'],
+																									 'country' => $this->refinedQuery['countryCode'],
+																									 'publicTnid' => $supplier->publicTnid
+																									 ));
+						?>
+						<h3 class="<?php echo $premiumBgStyle; ?>">
+							<a href="<?php echo $urlToSupplierProfilePage ?>"><?php echo $stringHelper->shortenToLastWord($document['name'], 35 + (( strlen($addressToDisplay)>30 )?0: floor((30-strlen($addressToDisplay))/3))); ?></a>
+							<?php echo $stringHelper->shortenToLastWord($addressToDisplay, 30 + (( strlen($document['name'])>34 )?0: (35-strlen($document['name'])))  ); ?>
+                        </h3>
+
+                        <?php if ($document['isRestricted'] === true): ?>
+                            <span class="searchBlocedListingWarning">[Blocked listing due to restricted area]</span>
+                        <?php endif ?>
+
+                        <?php if ($document['isRestricted'] === true): ?>
+                            <i class="fa fa-square-o fakeSendEnquiryCheckbox" aria-hidden="true" data-tooltipelement="restrictedToolTip"></i>
+                        <?php else: ?>
+                            <input type="checkbox" class="sendEnquiryCheckbox" name="<?php echo $document['tnid'];?>" <?php echo (array_key_exists($document['tnid'], $this->supplierBasket)) ? 'checked' : ''; ?> id="<?php echo $document['tnid'];?>" />
+                            <input type="hidden" name="tnid-name-<?php echo $document['tnid']; ?>" id="tnid-name-<?php echo $document['tnid']; ?>" value="<?php echo trim($document['name']); ?>" />
+                        <?php endif ?>
+						<div class="searchContentLeft<?php if ($document['onsiteInspected']  === true): ?> onsiteIspected<?php endif ?>">
+
+							<?php
+							$marginBottom = ($document['premiumListing'] || $document['spotlight']) ? '-10px' : '0px';
+							$summary = $stringHelper->shortenToLastWord(trim($document['description']), 166);
+							if (strlen($summary) > 0) {
+								?>
+								<p class="desc"><?php echo $summary; ?></p>
+								<?php
+							}
+	
+							$matches = $resultsHelper->matchReasons($document, $this->searchValues['searchWhat']);
+							if (lg_count($matches) > 0) {
+								?>
+								<p class="desc"><?php echo implode('<br />', $matches); ?></p>
+								<?php
+							} else {
+								?>
+								<!--[if lte IE 7]>
+								<p class="desc" style="margin-top:-20px;">&nbsp;</p>
+								<![endif]-->
+								<?php
+							}
+							?>
+						</div>
+						<?php if ($document['onsiteInspected']  === true): ?>
+							<img class="onsiteIspected" src="/images/profile/verification_logos.gif" alt="On-Site Inspected">
+						<?php endif ?>
+
+						<div class="clear"></div>
+						<div class="clear"></div>
+
+						<div class="basebar links <?php if ($document['spotlight']) echo 'spotlight'; if ($document['premiumListing'] || $document['spotlight']) echo ' prem'?>" <?php if ($document['spotlight']) echo 'style="margin-top: 20px;"'; ?>>
+							<div class="trade-rank" id="resultsTR-<?php echo $document['tnid'];?>">
+								TradeRank
+								<div class="rank rank-<?=$document['tradeRank'] ?>"></div>
+							</div>
+                            <?php
+                
+                            if ($document['smartSupplier']) {
+                                echo '<span class="shipserv_icon_nolink"><a target="_blank" href="/info/pages-for-suppliers/increase-quote-rate-win-rate/optimise-order-management-with-smartsupplier/">SmartSupplier</a></span>';
+                            }
+
+                            if ($document['expertSupplier']) {
+                                echo '<span class="shipserv_icon">ExpertSupplier</span>';
+                            }
+
+                            if ($document['onlineCatalogue']) {
+                            	$url = Shipserv_Supplier::createUrl($document['name'], $document['tnid'] ) . '#catalogue';
+                                echo '<a href="' . $url . '" class="catalogue_icon">Catalog</a>';
+                            }
+                            
+                            if (isset($reviewsCounts[$document['tnid']])) {
+                            	$url = Shipserv_Supplier::createUrl($document['name'], $document['tnid'], 'review' );
+                            	echo '<a href="'  . $url . '" class="results_reviews_icon">Reviews ('.$reviewsCounts[$document['tnid']].')</a>';
+                            	//echo '<a href="/reviews/supplier/s/'.$uriHelper->sanitise($document['name']).'-'.$document['tnid'].'" class="results_reviews_icon">Reviews ('.$reviewsCounts[$document['tnid']].')</a>';
+                            }
+
+                            if ($supplier->hasEInvoicing()) {
+                                echo '<span class="einvoice_icon">e-invoicing</span>';
+                            }
+                            ?>
+                        </div>
+                        <?php
+							if ($document['premiumListing'] || $document['spotlight']) {
+								if (isset( $_GET['debug'] ) && $_GET['debug'] == 1) {
+									?>
+									<div class="searchResultDebug control zz small white button" style="float:right;display:block;"><button onclick="$('#<?php echo $document['tnid']; ?>_debug').toggle(); return false;">Debug</button></div>
+									<?php
+								} else {
+									?>
+									<a class="expand" id="<?php echo $document['tnid'];?>" href="<?php echo $urlToSupplierProfilePage ?>"></a>
+									<?php
+								}
+							} else {
+								if (isset( $_GET['debug'] ) && $_GET['debug'] == 1) {
+									?>
+									<div class="searchResultDebug control zz small white button" style="float:right;display:block;"><button onclick="$('#<?php echo $document['tnid']; ?>_debug').toggle(); return false;">Debug</button></div>
+
+									<?php
+								}
+							}
+						?>
+
+						<div class="clear"></div>
+
+					</div>
+
+					<div class="clear"></div>
+					<div id="<?php echo $document['tnid']; ?>_detail" class="searchResultdetail" style="display:none;"></div>
+
+					<?php
+					if (isset($_GET['debug']) && $_GET['debug'] == 1) {
+						?>
+						<div id="<?php echo $document['tnid']; ?>_debug" class="searchResultDebug hidden">
+							<div class="content"><?= getDebugInfo( $this->result['debug'], $document['tnid'])?></div>
+						</div>
+						<?php
+					}
+				}
+
+				echo $this->partial('search/feedback-form.phtml', array('pages' => $pages));
+
+				echo $this->partial('zone/general-zone-exit.phtml', array('result'=> $this->result, 'isZone' => !empty($zone)));
+
+				if (lg_count($spotlightAds) > 0) {
+					foreach ($spotlightAds as $tnid) {
+						$this->googledfp()->addTargeting('supplier', $tnid);
+					}
+					$this->googledfp()->addTargeting('supplier', 'ALL');
+				} else {
+					$this->googledfp()->addTargeting('supplier', 'ALL');
+				}
+				
+				if (lg_count($overridenAdSlot) === 0) {
+					$this->googledfp()->add('TargetedOrGeneralAdSlot1');
+					$this->googledfp()->add('TargetedOrGeneralAdSlot2');
+					$this->googledfp()->add('TargetedOrGeneralAdSlot3');
+					$this->googledfp()->add('TargetedOrGeneralAdSlot4');
+					$this->googledfp()->add('TargetedOrGeneralAdSlot5');
+				} else {
+					foreach ((array) $overridenAdSlot as $slot) {
+						$this->googledfp()->add($slot['PAS_ADUNIT_ID']);
+					}
+				}
+
+				if (($this->currentZoneIdent and isset($zone['content']['ads']['slot']))) {
+					foreach((array)$this->googledfp()->fillSlotWithCondition($zone, $this->viewSearchValues) as $s) {
+						$this->googledfp()->add($s);
+					}
+				}
+
+				$this->googledfp()->render();
+
+				?>
+			</div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="content_wide_footer">
+
+			<?if ($this->hasResults):?>
+			<?
+				$pages = $this->paginator()->create(
+					$this->result['documentsFound'],
+					$this->searchValues['searchStart'], array('searchWhat'  => $this->searchValues['searchWhat'],
+                                                                                    'searchText'  => $this->searchValues['searchText'],
+                                                                                    'searchWhere' => $this->searchValues['searchWhere'],
+                                                                                    'searchType'  => $this->searchValues['searchType'],
+                                                                                    'filters'     => $this->appliedFilters,
+                                                                                    'zone'        => $this->currentZoneIdent,
+                                                                                    'refinedBrandId' => $this->refinedBrandId,
+																					'logSearchId' => $this->logSearchId),
+                                                                            array( 'resultsPerPage' => $this->resultsPerPage,'logSearchId' => $this->logSearchId));
+
+				echo $this->partial('pagination.phtml', array('pages' => $pages, 'searchRecId' => $this->logSearchId));
+    			?>
+
+                <?php if ($allRestricted === true): ?>
+                    <span class="enquiry_send_white bottom disabled restrictedToolTip" title="Send a RFQ to the suppliers you've selected" data-tooltipelement="restrictedToolTip">
+						Send a RFQ to selected suppliers
+					</span>
+                <?php else: ?>
+                    <a href="#" class="enquiry_send_white bottom" title="Send a RFQ to the suppliers you've selected">
+						Send a RFQ to selected suppliers
+					</a>
+                <?php endif ?>
+
+                <div class="clear"></div>
+
+			<?endif?>
+
+			<?php echo $this->partial('search/related-country-footer.phtml', array('params' => $this->params, 'db' => $this->db, 'refinedQuery' => $this->refinedQuery)); ?>
+
+		</div>
+
+		<div class="content_wide_footer_shadow"></div>
+
+	</div>
+
+	<div class="content_wide_side_shadow"></div>
+
+	<div class="clear"></div>
+    <?php if ($hasRestrictedCountryItem === true): ?>
+        <div id="restrictedToolTip">
+            You are not able to send RFQs via ShipServ Pages to this supplier. This is because the supplier serves a restricted port or country
+        </div>
+    <?php endif ?>
+
+	<?php
+	if ($this->hasResults)
+	{
+		?>
+		<div id="moreOptions" class="more_options_block" style="display:none;">
+			<div id="moreOptionsTitle">Browse more categories</div>
+			<a id="moreOptionsClose" href="javascript:void(0);">close</a>
+			<p id="moreOptionsSearchLabel">Type for a category:</p>
+			<form id="options_search" enctype="application/x-www-form-urlencoded" onSubmit="return false;" method="get">
+				<input type="hidden" name="optionType" id="moreOptionsFilterType" value="" />
+				<fieldset>
+					<div class="more-options-input-wrapper">
+					<input type="text" name="moreOptionsWhat" id="moreOptionsWhat" size="30" value="" class="more-options-what" />
+					</div>
+				</fieldset>
+			</form>
+		</div>
+		<?php
+	}
+	?>
+	<script type="text/javascript">
+		optionsCacheId = <?php echo $this->optionsCacheId; ?>;
+	</script>
+	<script type="text/javascript" src="/js/jquery.auto-complete.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('input[name=searchWhat]').autoComplete({
+				backwardsCompatible: true,
+				ajax: '/search/autocomplete/what/format/json/',
+				useCache: false,
+				minChars: 3,
+				preventEnterSubmit: true,
+				tabToNext: 'input[name=searchText]',
+				leftAdjustment: -8,
+				width: 325,
+				onSelect: function(data, $li){
+					$('#searchWhat').val(data.code);
+					$('#searchType').val(data.type);
+					if( data.url ){
+						location.href = data.url;
+					}
+				}
+			});
+
+			$('input[name=searchText]').autoComplete({
+				backwardsCompatible: true,
+				ajax: '/search/autocomplete/portsAndCountries/format/json/',
+				useCache: false,
+				minChars: 3,
+				preventEnterSubmit: true,
+				width: 325,
+				leftAdjustment: -8,
+				onSelect: function(data, $li){
+					$('#searchWhere').val(data.code);
+					$('input[name=searchText]').val(data.value);
+				}
+			});
+
+			$('#searchWhat').keypress(function(e) {
+				if (e.which == '13') {
+					$('#anonSearch').submit();
+				}
+			});
+
+			$('#searchText').keypress(function(e) {
+				if (e.which == '13') {
+					$('#anonSearch').submit();
+				}
+			});
+
+            $('#searchText').focus(function(e) {
+                $('#searchWhere').val('');
+            });
+
+			$('#anonSearch').live('submit', function(e) {
+				e.preventDefault();
+				var self = this;
+				if (!$('#search_box') || !$('#search_box').hasClass('zone_search_box')) {
+					$('a.search-button').html('<img src="/images/buttons/search-button-animated-whitebg.gif" alt="" />');
+				}
+				if ($('#search_box') && $('#search_box').hasClass('zone_search_box')) {
+					$('a.search-button').html('<div id="animitedSearchButtonIcon"></div>');
+				}
+
+				window.setTimeout(function() {
+					self.submit();
+				}, 100);
+			});
+
+			$('#searchButton').live('click', function(e) {
+				e.preventDefault();
+
+
+				if( typeof window.searchIsOngoing == 'undefined' )
+				{
+					$(this).attr('disabled', 'disabled');
+					window.searchIsOngoing = true;
+					$('#anonSearch').submit();
+				}
+		    });
+
+			$('#zoneExitButton').live('click', function(e) {
+				var searchForm = $('#anonSearch');
+				$('#ssrc').val(zoneExitSSRC);
+				searchForm.append('<input type="hidden" name="full" value="true">');
+				searchForm.attr("action","/search/results");
+				searchForm.submit();
+			});
+			
+			$('#searchBoxZoneTitle').live('click', function(e) {
+				$('#searchWhat').val('');
+				$('#searchWhere').val('');
+				$('#searchText').val('');
+				$('#anonSearch').submit();
+		    });
+
+            <?php if ($hasRestrictedCountryItem === true): ?>
+                $('.fakeSendEnquiryCheckbox').shTooltip({
+                    displayType : 'top',
+                    onClick : true
+                });
+            <?php endif ?>
+
+		});
+	</script>
+	<script type="text/javascript">
+		<!--
+		$(".docMatch").live('click', function() {
+			$.get('/supplier/trigger-page-impression/format/html/s/'+$(this).attr('id'));
+		});
+		//-->
+	</script>
+
+    <?php if ($zoneAdvertCorrected === true): ?>
+        <script type="text/javascript">
+            $(document).ready(
+                function(){
+                    var $fifthSlot = $("#fifthSlot");
+                    var $contentBody = $(".content_wide_body");
+                    if ($fifthSlot.length > 0 && $contentBody.length > 0 ){
+                        $contentBody.css('min-height', '1550px');
+                        $fifthSlot
+                            .css("position", 'absolute')
+                            .css("top",  ($contentBody.position().top + $contentBody.height() - 300) + 'px')
+                            .css("margin-left", "10px");
+                    }
+                }
+            );
+	</script>
+	
+    <?php endif ?>
+
+	<?php if ($allRestricted === true): ?>
+		<script type="text/javascript">
+        $('.restrictedToolTip').shTooltip({
+            displayType : 'top',
+            onClick : true
+		});
+		</script>
+		<div id="restrictedToolTip">
+			You are not able to send RFQs via ShipServ Pages to this supplier. This is because the supplier serves a restricted port or country
+		</div>
+	<?php endif ?>
+		
+	<?php
+
+	echo $this->headStyle();
+	/*
+	// commented this out as requested by Nick
+	if($this->categoryId == 49 || $this->categoryId == 9){?>
+		<script type="text/javascript">
+		    setTimeout(function(){
+		        var a=document.createElement("script");
+		        var b=document.getElementsByTagName("script")[0];
+		        a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0017/6893.js?"+Math.floor(new Date().getTime()/3600000);
+		        a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}
+		    , 1);
+		</script>
+	<?}?>
+	*/
+	?>
+</div>

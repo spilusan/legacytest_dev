@@ -1,0 +1,31 @@
+<div id="topToolBar" style="height:40px;">
+		<div id="closeTooltipButton"></div>
+		<div class="clear"></div>
+</div>
+<div id="maxsuppliers_body">
+    <div class="zz header">
+        <h2>Too many suppliers selected</h2>
+    </div>
+    <div class="cont">
+       <p>Sorry, you can only select up to <?= _htmlspecialchars($_GET['maxValue']); ?> Suppliers.</p>
+       <p>If you send the same RFQ to more than <?= _htmlspecialchars($_GET['maxValue']); ?> suppliers, in 1 or more batches, the system will permanently disable your email address.</p>
+    </div>
+</div>
+<script type="text/javascript">
+	<!--	
+	$(document).ready(function(){
+		$('#closeTooltipButton').click(function (e) {
+			e.preventDefault();
+			$('#mask').hide();
+			$('#maxsuppliers_tooltip').hide();
+			$('#maxsuppliers_tooltip').html('');
+		});
+        $('#mask').click(function (e) {
+			e.preventDefault();
+			$('#maxsuppliers_tooltip').hide();
+			$('#maxsuppliers_tooltip').html('');
+		});
+
+	});
+	//-->
+</script>

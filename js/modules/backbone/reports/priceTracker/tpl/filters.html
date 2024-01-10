@@ -1,0 +1,42 @@
+<div class="buttonBox">
+	<div class="align">
+		<input type="submit" value="Show" class="button medium dblue show disabled" />
+	</div>
+</div>
+<fieldset class="impaItemContent">
+	<div class="fsLeft">
+		<label  class="large" for="keywords">Filter by product:</label>
+		<input type="text" name="keywordselect" value="" placeholder="IMPA code or product description" /><div class="keywordsAutocomplete"></div>
+	</div>
+
+	<div class="fsRight">
+		<label class="small">Date range:</label>
+		<select name="dateRange">
+					<option value="" {{#ifCond defaultDayRange 0}}selected{{/ifCond}} disabled>Please select...</option>
+					<option value="7" {{#ifCond defaultDayRange 7}}selected{{/ifCond}}>Last week</option>
+					<option value="30" {{#ifCond defaultDayRange 30}}selected{{/ifCond}}>Last month</option>
+					<option value="90" {{#ifCond defaultDayRange 90}}selected{{/ifCond}}>Last quarter</option>
+                    <option value="365" {{#ifCond defaultDayRange 365}}selected{{/ifCond}}>Last year</option>
+					<option value="730" {{#ifCond defaultDayRange 730}}selected{{/ifCond}}>Last 2 years</option>
+		</select>
+	</div>
+	<div class="clear"></div>
+	<div class="fsRight">
+		<label class="small">Number of products:</label>
+		<select name="productCount">
+					<option value="" selected disabled>Please select...</option>
+					<option value="50">50</option>
+					<option value="100">100</option>
+					<option value="200">200</option>
+					<option value="overspend">Overspend</option>
+					<option value="savings">Savings</option>
+					<option value="all">All</option>
+		</select>
+	</div>
+	<div class="clear"></div>
+
+	<ul class="impaItemDisplay cloud"></ul>
+	<div class="clear"></div>
+	
+</fieldset>
+

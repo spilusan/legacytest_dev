@@ -1,0 +1,189 @@
+<?php
+
+$this->googledfp()->addTargeting('keywords','ALL');
+$this->googledfp()->addTargeting('country','ALL');
+$this->googledfp()->addTargeting('port','ALL');
+$this->googledfp()->addTargeting('supplier','ALL');
+
+$this->headScript()->appendFile('/js/jquery.auto-complete.js')
+				   ->appendFile('/js/jquery.metadata.js')
+				   ->appendFile('/js/jquery.footer.js');
+			   
+$this->googledfp()->add('TargetedOrGeneralAdSlot1');
+$this->googledfp()->add('TargetedOrGeneralAdSlot2');
+$this->googledfp()->add('TargetedOrGeneralAdSlot3');
+
+$this->googledfp()->render();
+
+$uri = $this->uri();
+$this->headTitle('Shipping & Marine Supply Categories, Select to View ShipServ Suppliers', 'SET');
+
+echo $this->partial('searchbar.phtml', array('searchWhat'    => $this->searchValues['searchWhat'],
+											 'searchText'    => $this->searchText,
+											 'searchWhere'   => $this->searchValues['searchWhere'],
+											 'supplierCount' => $this->supplierCount));
+											 
+$this->CDNLink()->appendStylesheet('/css/search.css');
+
+?>
+
+<div id="main_content_area" style="margin-top: 20px;"> 
+	
+	<div class="content_wide" style="position: relative;">
+	
+		<div class="content_wide_header" >
+			<h1 style="margin-left:-10px;"><?php echo $this->mainTitle; ?></h1>
+				
+			<div class="clear"></div>
+		</div>
+	
+		<div class="content_wide_body">
+		
+			<?php
+			$categoryAdapter = new Shipserv_Oracle_Categories;
+			// this a wee bit hacky, but we can do something better when we have time:
+			switch ($this->display)
+			{
+				case 'topCategories':
+					
+					if ($this->display != 'allCategories')
+					{
+						?>
+						<p class="browse_list" style="height:35px;border-top:none;"><a href="/supplier/category/view/all" title="All marine supplier categories" class="browse_all_categories">View all marine suppliers by category</a></p>
+						<?php
+					}
+					
+					foreach ($this->categories as $category)
+					{
+						$catName = ($category['BROWSE_PAGE_NAME']) ? $category['BROWSE_PAGE_NAME'] : $category['DISPLAYNAME'];
+						$checkShip = substr($catName, 0, 4);
+						$checkMarine = substr($catName, 0, 6);
+						if($checkMarine === 'Marine') {
+							$catName = substr($catName, 7, strlen($catName));
+						}
+						?>
+						<div class="browse_list">
+							<?php // echo $this->searchUrl()->searchWhat($category['NAME'])->categoryId($category['ID'])->sourceKey('BROWSE_CATEGORY'); ?>
+							<a href="/category/<?php echo $this->string()->sanitiseForURI(($category['BROWSE_PAGE_NAME']) ? $category['BROWSE_PAGE_NAME'] : $category['DISPLAYNAME']); ?>/<?php echo $category['ID']; ?>"
+							   title="<?php 
+							   		if( $checkShip !== 'Ship'){?>Marine <?}
+							   			echo $catName; 
+							   		?>">
+								<?php 
+									if($checkShip!== "Ship"){?><span>Marine </span><?}
+									echo $catName; 
+								?>
+							</a>
+							<div class="end_link">
+								<a title="Browse marine suppliers of <?php echo ($category['BROWSE_PAGE_NAME']) ? $category['BROWSE_PAGE_NAME'] : $category['DISPLAYNAME']; ?> by country" href="/supplier/category/browse-by-country/<?php echo ($category['BROWSE_PAGE_NAME']) ? $uri->sanitise($category['BROWSE_PAGE_NAME']) : $uri->sanitise($category['DISPLAYNAME']); ?>/id/<?php echo $category['ID']; ?>">Browse by country</a>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<?php
+					}
+				break;
+				
+				case 'allCategories':
+					
+					?><br /><?php
+					
+					foreach ($this->categories as $category)
+					{
+						$catName = ($category['BROWSE_PAGE_NAME']) ? $category['BROWSE_PAGE_NAME'] : $category['DISPLAYNAME'];
+						$checkShip = substr($catName, 0, 4);
+						$checkMarine = substr($catName, 0, 6);
+						if($checkMarine === 'Marine') {
+							$catName = substr($catName, 7, strlen($catName));
+						}
+						?>
+						<div class="browse_list" style="<?php
+							if ($category['PARENT_ID'] != null)
+							{
+								$padding = ($category['DEPTH'] - 1) * 20;
+								?>padding-left: <?php echo $padding; ?>px;<?php
+							}
+							?>">
+							<?php // echo $this->searchUrl()->searchWhat($category['NAME'])->categoryId($category['ID'])->sourceKey('BROWSE_CATEGORY'); ?>
+							<a href="/category/<?php echo $this->string()->sanitiseForURI(($category['BROWSE_PAGE_NAME']) ? $category['BROWSE_PAGE_NAME'] : $category['DISPLAYNAME']); ?>/<?php echo $category['ID']; ?>"
+							   title="<?php 
+							   		if( $checkShip !== 'Ship') {?>Marine <?}
+							   			echo $catName; 
+							   		?>">
+
+							   <?php 
+									if($checkShip !== "Ship") {?><span>Marine </span><?}
+									echo $catName; 
+								?>
+							</a>
+							
+							<div class="end_link">
+								<a title="Browse marine suppliers of <?php echo ($category['BROWSE_PAGE_NAME']) ? $category['BROWSE_PAGE_NAME'] : $category['DISPLAYNAME']; ?> by country" href="/supplier/category/browse-by-country/<?php echo ($category['BROWSE_PAGE_NAME']) ? $uri->sanitise($category['BROWSE_PAGE_NAME']) : $uri->sanitise($category['DISPLAYNAME']); ?>/id/<?php echo $category['ID']; ?>">Browse by country</a>
+							</div>
+							<div class="clear"></div>
+						</div>
+						<?php
+					}
+				break;
+				
+				case 'countries':
+					?><br /><?php
+					foreach ($this->continents as $continent)
+					{
+						?>
+						<h3 class="continent"><?php echo $continent['name']; ?></h3>
+						<?php
+						
+						foreach ($continent['countries'] as $cntCode => $country)
+						{
+							?>
+							<?php // echo $this->searchUrl()->searchWhat($this->category['NAME'])->searchText($country['name'])->searchWhere($cntCode)->categoryId($this->category['ID'])->sourceKey('BROWSE_CATEGORY') ?>
+							<div class="browse_list">
+								<a href="/category/<?php echo $this->string()->sanitiseForURI(($this->category['BROWSE_PAGE_NAME']) ? $this->category['BROWSE_PAGE_NAME'] : $this->category['DISPLAYNAME']); ?>/<?php echo $this->string()->sanitiseForURI($country['name']); ?>/<?php echo $cntCode; ?>/<?php echo $this->category['ID']; ?>/"
+								   title="Marine suppliers of <?php echo ($this->category['BROWSE_PAGE_NAME']) ? $this->category['BROWSE_PAGE_NAME'] : $this->category['NAME']; ?> in <?php echo $country['name']; ?>"><span>Marine suppliers of <?php echo ($this->category['BROWSE_PAGE_NAME']) ? $this->category['BROWSE_PAGE_NAME'] : $this->category['NAME']; ?> in </span><?php echo $country['name']; ?></a>
+								<?php if( $categoryAdapter->showDisplayByPortPage($this->category['ID']) === true ){?>
+								<div class="end_link">
+									<a title="Browse marine suppliers of <?php echo ($category['BROWSE_PAGE_NAME']) ? $category['BROWSE_PAGE_NAME'] : $category['DISPLAYNAME']; ?> by port" href="/supplier/category/browse-by-port/1/<?php echo ($category['BROWSE_PAGE_NAME']) ? $uri->sanitise($category['BROWSE_PAGE_NAME']) : $uri->sanitise($category['DISPLAYNAME']); ?>cntcode/<?php echo $cntCode; ?>/id/<?= $this->category['ID']?>">Browse by port</a>
+								</div>
+								<?php }?>
+								<div class="clear"></div>
+							</div>
+							<?php
+						}
+					}
+				break;
+
+				case 'ports':
+					?><br /><?php
+					foreach ($this->categories as $portCode => $port)
+					{
+						$c =  Shipserv_Category::getInstanceByCountryPort(
+							$this->category['ID'],
+							($this->category['BROWSE_PAGE_NAME']) ? $this->category['BROWSE_PAGE_NAME'] : $this->category['NAME'],
+							$port['CNT_NAME'],
+							$port['PRT_NAME'],
+							$port['CNT_CODE'],
+							$port['PRT_PORT_CODE']
+						);
+						?>
+						<div class="browse_list">
+							<a href="<?= $c->getUrl("browse-by-port"); ?>"
+							   title="Marine suppliers of <?php echo ($this->category['BROWSE_PAGE_NAME']) ? $this->category['BROWSE_PAGE_NAME'] : $this->category['NAME']; ?> in <?php echo $port['CNT_NAME']; ?>, <?php echo $port['PRT_NAME']; ?>"><span>Marine suppliers of <?php echo ($this->category['BROWSE_PAGE_NAME']) ? $this->category['BROWSE_PAGE_NAME'] : $this->category['NAME']; ?> in </span><?php echo $port['PRT_NAME']; ?></a>
+							<div class="clear"></div>
+						</div>
+						<?php
+					}
+					break;				
+			}
+			?>
+		</div>   
+		<div class="content_wide_footer_shadow"></div>
+	</div>
+	
+	<div class="zone">
+		<?php echo $this->partial('general-google-ads.phtml'); ?>
+	</div>
+	
+	<div class="clear"></div>
+</div>
+
+<script type="text/javascript" src="<?php echo $this->CDNLink()->javascript('/js/jquery.searchvariables.js'); ?>" charset="utf-8"></script>

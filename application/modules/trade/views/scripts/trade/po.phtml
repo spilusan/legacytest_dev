@@ -1,0 +1,361 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/trade/po.css');
+	$quote = $this->quote;
+	$rfq = $this->rfq;
+
+    // this module is no longer required as it was replaced by an inline script
+    // $this->getHelper('Requirejs')->addModule('backbone/src/trade/po/app');
+ 
+	$tod['EXW'] = 'Ex Works';
+	$tod['FCA'] = 'Free Carrier';
+	$tod['FAS'] = 'Free Alongside Ship';
+	$tod['FOB'] = 'Free On Board';
+	$tod['CFR'] = 'Cost and Freight';
+	$tod['CIF'] = 'Cost, Insurance, Freight';
+	$tod['CPT'] = 'Carriage Paid To';
+	$tod['CIP'] = 'Carriage and Insurance Paid To';
+	$tod['DAF'] = 'Delivered at Frontier';
+	$tod['DES'] = 'Delivered Ex Ship';
+	$tod['DEQ'] = 'Delivered Ex Quay';
+	$tod['DDU'] = 'Delivered Duty Unpaid';
+	$tod['DDP'] = 'Delivered Duty Paid';
+	
+?>
+<div id="breadcrumbs">
+	<span class="title">You are here: </span>
+	<ul>
+		<li>
+			<a href="/">Home</a>
+		</li>
+		<li>
+			<span></span>
+			<a href="/trade/rfq">Trade</a>
+		</li>
+		<li class="current">
+			<span></span>
+			Purchase Order
+		</li>
+	</ul>
+</div>
+<div id="body">
+	<div class="head">
+		<h1 class="styled">Purchase Order</h1>
+	</div>
+	<?php //S19037 Temporarliy suspend this function ?>
+	<?php if ($this->suspended === true): ?>
+		<div id="content">
+			This feature is temporarily suspended.
+		</div>
+	<?php else: ?>
+	<div id="content">
+		<div class="box">
+			<div class="right">
+				<p>
+					<strong>Quoted delivery:</strong><br />
+					<?= ($quote->qotExpiryDate!=null) ? $quote->qotExpiryDate->format() : 'N/A'?>
+				</p>
+				<p>
+					<strong>For requested delivery order by:</strong><br />
+					<?= ($rfq->rfqDateTime!=null) ? $rfq->rfqDateTime : 'N/A'?>
+				</p>
+				<p class="noPadding">
+					<strong>Prices good until:</strong><br />
+					<?= ($quote->qotExpiryDate!=null) ? $quote->qotExpiryDate->format() : 'N/A'?>
+				</p>
+			</div>
+			<div class="left">
+				<p>
+					<strong>Supplier:</strong><br />
+					<a href="<?= $quote->getSupplier()->getUrl()?>" target="_blank"><?= $quote->getSupplier()->name?></a>
+				</p>
+				<p>
+					<strong>Quote Reference:</strong><br />
+					<?= htmlentities($quote->qotRefNo)?>
+				</p>
+				<p class="noPadding">
+					<strong>Quote date:</strong><br />
+					<?= ($quote->qotSubmittedDate!=null) ? $quote->qotSubmittedDate->format() : 'N/A'?>
+				</p>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<h2 class="styled grey blue">Supplier comments</h2>
+		<div class="box">
+			<p class="noPadding">
+				<? if( trim($quote->qotComments) != "" ){?>
+					<strong>Comments:</strong><br />
+					<?= nl2br(htmlentities($quote->qotComments))?><br />
+					<br />
+				<?php }else{ echo "N/A"; } ?>							
+			</p>
+		</div>
+		<h2 class="styled grey blue">Line items</h2>
+		<table border="0" cellpadding="0" cellspacing="0">
+			<thead>
+				<tr>
+					<th class="line">#</th>
+					<th class="qty">Qty</th>
+					<th class="unt">Unit</th>
+					<th class="id">IdType / IdCode</th>
+					<th class="desc">Description</th>
+					<th class="untP">Unit price</th>
+					<th class="dsc">%</th>
+					<th class="total last">Total price</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+			
+			<?php 
+				$rows = $rfq->getLineItem();
+				foreach( $rows as $row )
+				{
+					$rfqLineItems[$row['RFL_LINE_ITEM_NO']] = $row;
+				}
+				
+				foreach( $quote->getLineItem() as $line )
+				{ 
+					$no++;
+					$spec = array();
+					
+					if( ( /* $line['QLI_CONFG_NAME'] 			!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_NAME'] != "" && */ $line['QLI_CONFG_NAME'] != $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_NAME'] ) ||
+						( /* $line['QLI_CONFG_DESC'] 			!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DESC'] != "" && */$line['QLI_CONFG_DESC'] 		!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DESC'] ) || 
+						( /* $line['QLI_CONFG_DEPT_TYPE'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DEPT_TYPE'] != "" && */$line['QLI_CONFG_DEPT_TYPE'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DEPT_TYPE'] ) || 
+						( /* $line['QLI_CONFG_MANUFACTURER'] 	!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MANUFACTURER'] != "" &&*/ $line['QLI_CONFG_MANUFACTURER'] != $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MANUFACTURER'] )|| 
+						( /* $line['QLI_CONFG_MODEL_NO'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MODEL_NO'] != "" && */$line['QLI_CONFG_MODEL_NO'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MODEL_NO'] ) || 
+						( /* $line['QLI_CONFG_SERIAL_NO'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_SERIAL_NO'] != "" && */$line['QLI_CONFG_SERIAL_NO'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_SERIAL_NO'] ) || 
+						( /* $line['QLI_CONFG_DRAWING_NO'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DRAWING_NO'] != "" && */$line['QLI_CONFG_DRAWING_NO'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DRAWING_NO'] ) || 
+						( /* $line['QLI_CONFG_RATING'] 			!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_RATING'] != "" && */$line['QLI_CONFG_RATING'] 		!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_RATING'] )
+					)
+					{
+						$rfqSpec = array();
+						//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_NAME'] != "" )
+							$rfqSpec[] = 'For: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_NAME'];
+						//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_DESC'] != "" )
+							$rfqSpec[] = 'Desc: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_DESC'];
+						//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_DEPT_TYPE'] != "" )
+							$rfqSpec[] = 'type: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_DEPT_TYPE'];
+						//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_MANUFACTURER'] != "" )
+							$rfqSpec[] = 'man: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_MANUFACTURER'];
+						//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_MODEL_NO'] != "" )
+							$rfqSpec[] = 'M/n: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_MODEL_NO'];
+						//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_SERIAL_NO'] != "" )
+							$rfqSpec[] = 'S/n: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_SERIAL_NO'];
+						//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_DRAWING_NO'] != "" )
+							$rfqSpec[] = 'Drwg: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_DRAWING_NO'];											
+						//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_RATING'] != "" )
+							$rfqSpec[] = 'Rating: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_RATING'];
+							
+							
+						$spec[] = "<span>" ;
+					}
+					
+					if( $line['QLI_CONFG_NAME'] != "" )
+						$spec[] = 'For: ' . $line['QLI_CONFG_NAME'];
+					if( $line['QLI_CONFG_DESC'] != "" )
+						$spec[] = 'Desc: ' . $line['QLI_CONFG_DESC'];
+					if( $line['QLI_CONFG_DEPT_TYPE'] != "" )
+						$spec[] = 'type: ' . $line['QLI_CONFG_DEPT_TYPE'];
+					if( $line['QLI_CONFG_MANUFACTURER'] != "" )
+						$spec[] = 'man: ' . $line['QLI_CONFG_MANUFACTURER'];
+					if( $line['QLI_CONFG_MODEL_NO'] != "" )
+						$spec[] = 'M/n: ' . $line['QLI_CONFG_MODEL_NO'];
+					if( $line['QLI_CONFG_SERIAL_NO'] != "" )
+						$spec[] = 'S/n: ' . $line['QLI_CONFG_SERIAL_NO'];
+					if( $line['QLI_CONFG_DRAWING_NO'] != "" )
+						$spec[] = 'Drwg: ' . $line['QLI_CONFG_DRAWING_NO'];											
+					if( $line['QLI_CONFG_RATING'] != "" )
+						$spec[] = 'Rating: ' . $line['QLI_CONFG_RATING'];
+						
+						
+					if( ( /* $line['QLI_CONFG_NAME'] 			!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_NAME'] != "" && */ $line['QLI_CONFG_NAME'] != $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_NAME'] ) ||
+						( /* $line['QLI_CONFG_DESC'] 			!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DESC'] != "" && */$line['QLI_CONFG_DESC'] 		!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DESC'] ) || 
+						( /* $line['QLI_CONFG_DEPT_TYPE'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DEPT_TYPE'] != "" && */$line['QLI_CONFG_DEPT_TYPE'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DEPT_TYPE'] ) || 
+						( /* $line['QLI_CONFG_MANUFACTURER'] 	!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MANUFACTURER'] != "" &&*/ $line['QLI_CONFG_MANUFACTURER'] != $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MANUFACTURER'] )|| 
+						( /* $line['QLI_CONFG_MODEL_NO'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MODEL_NO'] != "" && */$line['QLI_CONFG_MODEL_NO'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MODEL_NO'] ) || 
+						( /* $line['QLI_CONFG_SERIAL_NO'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_SERIAL_NO'] != "" && */$line['QLI_CONFG_SERIAL_NO'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_SERIAL_NO'] ) || 
+						( /* $line['QLI_CONFG_DRAWING_NO'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DRAWING_NO'] != "" && */$line['QLI_CONFG_DRAWING_NO'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DRAWING_NO'] ) || 
+						( /* $line['QLI_CONFG_RATING'] 			!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_RATING'] != "" && */$line['QLI_CONFG_RATING'] 		!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_RATING'] )
+					)
+					{
+						$spec[] = "</span>";
+					}
+						
+				?>			
+				<tr>
+					<td class="num"><?= $line['QLI_LINE_ITEM_NUMBER'];?></td>
+					<td class="num">
+						<?= $line['QLI_QUANTITY']?>
+					</td>
+					<td><?= $line['QLI_UNIT']?></td>
+					<td><?= $line['QLI_ID_TYPE'] . " / " . $line['QLI_ID_CODE']?></td>
+					<td>
+						<?= htmlentities($line['QLI_DESC'])?> 
+						<?= lg_count($spec) > 0 ? '<br />' . implode(" ", $spec) . '<br />':''?>
+						<?= ($line['QLI_COMMENTS']!="") ? "<br /><div style=\"background:#83cc4e; font-style:italic; font-weight:bold;\">Supplier comments: " . htmlentities($line['QLI_COMMENTS'])."</div>":""; ?>
+					</td>
+					<td class="num"><?= number_format($line['QLI_UNIT_COST'],2)?></td>
+					<td class="num">
+						<? 
+							if( !empty($line['QLI_DISCOUNT_PERCENTAGE']) ) echo $line['QLI_DISCOUNT_PERCENTAGE'];
+							else if( !empty($line['QLI_DISCOUNTED_UNIT_COST']) )
+							{
+								$priceDiff = $line['QLI_DISCOUNTED_UNIT_COST']-$line['QLI_UNIT_COST'];
+								$discount = $priceDiff/$line['QLI_UNIT_COST'] * 100;
+								if( $discount != 0 )
+								echo ($discount<0)?"less " . number_format(abs($discount), 2) . "%": "more " . number_format(abs($discount), 2) . "%";
+							}
+						?>
+						&nbsp;					
+					</td>
+					<td class="num last"><?= ($lineItemChanges[$line['QLI_LINE_ITEM_NUMBER']-1]['RQLC_LINE_ITEM_STATUS']!="DEC")?number_format($line['QLI_TOTAL_LINE_ITEM_COST'],2):""?>&nbsp;</td>
+				</tr>
+				<?php }?>
+				<tr class="summary">
+					<td colspan="7" class="num">Line Item Total:</td>
+					<td class="sum num last"><?= number_format($quote->qotSubtotal,2)?></td>
+				</tr>
+				<tr class="summary">
+					<td colspan="7" class="num">Discount (<?= $quote->qotDiscountPercentage?>%):</td>
+					<td class="sum num last"><?= number_format($quote->qotDiscountPercentage * $quote->qotSubtotal/100,2)?></td>
+				</tr>
+				<tr class="summary">
+					<td colspan="7" class="num">Discounted Total:</td>
+					<td class="sum num last"><?= number_format($quote->qotSubtotal - ( $quote->qotDiscountPercentage * $quote->qotSubtotal/100 ),2 )?></td>
+				</tr>
+				<tr class="summary">
+					<td colspan="7" class="num">Freight:</td>
+					<td class="sum num last"><?= number_format($quote->qotShippingCost,2 )?></td>
+				</tr>
+				<?if( $quote->qotAdditionalCostAmount1 != "" ){?>
+				<tr class="summary">
+					<td colspan="7" class="num"><?= ($quote->qotAdditionalCostDesc1=="")?"Other":$quote->qotAdditionalCostDesc1 ?>:</td>
+					<td class="sum num last"><?= number_format($quote->qotAdditionalCostAmount1,2 )?></td>
+				</tr>
+				<?}?>
+				
+				<?if( $quote->qotAdditionalCostAmount2 != "" ){?>
+				<tr class="summary">
+					<td colspan="7" class="num"><?= ($quote->qotAdditionalCostDesc2=="")?"Other":$quote->qotAdditionalCostDesc2 ?>:</td>
+					<td class="sum num last"><?= number_format($quote->qotAdditionalCostAmount2,2 )?></td>
+				</tr>
+				<?}?>
+				
+				<tr class="summary">
+					<td colspan="7" class="num"><strong>Total price (<?= $quote->qotCurrency?>):</strong></td>
+					<td class="total num last"><?= number_format($quote->qotTotalCost,2)?></td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- 
+		<h2 class="styled grey blue">Attachments</h2>
+		<div class="box">
+			<p class="noPadding">
+				<a href="#">filename.pdf - not working yet</a>
+			</p>
+		</div>
+		 -->
+		<h2 class="styled grey blue">Other information</h2>
+		<div class="box">
+			<? if( trim($quote->qotCurrencyInstructions) != "" ){?>
+				<p>
+					<strong>Currency Instructions:</strong><br />
+					<?= nl2br(htmlentities($quote->qotCurrencyInstructions))?><br />
+				</p>
+			<?php  } ?>
+			
+			<? if( trim($quote->qotTermsOfDelivery) != "" ){?>
+				<p>
+					<strong>Delivery terms:</strong><br />
+					<?= $quote->qotTermsOfDelivery ?> - <?= $tod[$quote->qotTermsOfDelivery]?><br />
+				</p>
+			<?php  } ?>
+			<? if( trim($quote->qotTermsOfPayment) != "" ){?>
+				<p>
+					<strong>Payment Terms:</strong><br />
+					<?= nl2br(htmlentities($quote->qotTermsOfPayment))?><br />
+				</p>
+			<?php  } ?>
+			<? if( trim($quote->qotGeneralTermsConditions) != "" ){?>
+				<p>
+					<strong>General Terms & Conditions:</strong><br />
+					<?= nl2br(htmlentities($quote->qotGeneralTermsConditions))?><br />
+				</p>
+			<?php  } ?>
+			<? if( trim($quote->qotPackagingInstructions) != "" ){?>
+				<p>
+					<strong>Packing instructions:</strong><br />
+					<?= nl2br(htmlentities($quote->qotPackagingInstructions))?><br />
+				</p>
+			<?php  } ?>
+			<? if( trim($quote->qotSuggestedShipper) != "" ){?>
+				<p>
+					<strong>Freight forwarder:</strong><br />
+					<?= nl2br($quote->qotSuggestedShipper)?><br />
+				</p>
+			<?php  } ?>
+			
+			<? if( trim($quote->qotTransportationMode) != "" ){?>
+				<p>
+					<strong>Transportation Mode:</strong><br />
+					<?= nl2br($quote->qotTransportationMode)?><br />
+				</p>
+			<?php  } ?>		
+		</div>
+
+        <div>
+            <div class="buttons">
+                <a class="button green medium send">Send PO</a>
+                <a href="/search" class="button white medium cancel">Cancel</a>
+            </div>
+
+            <form id="sendPoForm" name="sendPoForm" method="GET" action="/trade/process-po">
+                <input type="hidden" name="qid" value="<?php echo _htmlspecialchars($quote->qotInternalRefNo); ?>" />
+                <input type="hidden" name="rid" value="<?php echo _htmlspecialchars($rfq->rfqInternalRefNo); ?>" />
+                <input type="hidden" name="h" value="<?php echo _htmlspecialchars($quote->getSecurityHashToPlacePurchaseOrder()); ?>" />
+
+                <?php
+                if ($this->tocConfirmed) {
+                    ?>
+                    <input type="hidden" id="tocConfirmed" name="tocConfirmed" value="1" />
+                <?php
+                } else {
+                    ?>
+                    <input type="checkbox" id="tocConfirmed" name="tocConfirmed" value="1" /> I have read and agree to the <a href="/info/legal-notes">terms and conditions</a>
+                    (<a class="controlHint" title="By clicking accept, you agree to ShipServ’s General Terms & Conditions and TradeNet membership rules, which is required to trade on ShipServ.">what is this?</a>)
+                <?php
+                }
+                ?>
+            </form>
+
+            <div class="clear"></div>
+        </div>
+	</div>
+	<?php endif ?>
+</div>
+
+<script>
+    $(function() {
+        $('a.button.send').bind('click', function(event) {
+            event.preventDefault();
+
+            var flagElement = $('#tocConfirmed');
+
+            if (flagElement.attr('type') == 'checkbox') {
+                if (!flagElement.is(':checked')) {
+                    alert("You must to agree to the terms and conditions to proceed.");
+                    return;
+                }
+            }
+
+            $('#sendPoForm').submit();
+        });
+    });
+</script>
+
+<?php //var_dump( $quote );?>
+<?php //var_dump( $lineItemChanges );?>
+<?php //var_dump( $quote->getLineItem() );?>
+<?php //var_dump( $rfq );?>
+<?php //var_dump( $rfq->getLineItem() );?>
+<?php //var_dump( $rfq->getBuyer() );?>

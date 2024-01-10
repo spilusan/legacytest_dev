@@ -1,0 +1,341 @@
+<?php
+/**
+ * A partial view for tag.phtml displaying the search terms sidebar form
+ *
+ * @author  Yuriy Akopov
+ * @date    2013-09-27
+ */
+?>
+
+<div class="term_list_controls">
+    <input type="button" class="search_terms_submit" value="Re-run with terms below">
+    <input type="button" class="search_terms_reset" value="Reset to default terms">
+    <div class="dev_options">
+        <input type="checkbox" class="save_rerun_search" value="1" id="saveSearchTop" checked="checked">
+        <label for="saveSearchTop">Save search after re-run (<span class="hint" title="This option is here for developers. Please ignore it if it's confusing.">don't change if unsure</span>)</label>
+    </div>
+    <input type="button" class="term_remove_all" all="all" value="Clear all search terms">
+</div>
+
+<div class="terms_list_container">
+    <h3>Brands<input type="button" class="term_remove_all" all="brand" value="Clear all brands"></h3>
+
+    <ul termType="brand">
+    </ul>
+
+    <div class="sub_form">
+        <select class="new_term">
+            <option value="">--</option>
+            <?php
+            foreach ($this->brandList as $brand) {
+                ?>
+                <option value="<?php echo $brand['ID']; ?>"><?php echo $brand['NAME']; ?></option>
+            <?php
+            }
+            ?>
+        </select>
+        <input type="text" class="score" value="500">
+        <input type="button" class="term_brand_add" value="Add brand">
+    </div>
+</div>
+
+<div class="terms_list_container">
+    <h3>Categories<input type="button" class="term_remove_all" all="category" value="Clear all categories"></h3>
+
+    <ul termType="category">
+    </ul>
+
+    <div class="sub_form">
+        <select class="new_term">
+            <option value="">--</option>
+            <?php
+            foreach ($this->categoryList as $cat) {
+                ?>
+                <optgroup label="<?php echo $cat['NAME']; ?>">
+                    <?php
+                    if (lg_count($cat['subcats']) > 0) {
+                        foreach ($cat['subcats'] as $subcat) {
+                            ?>
+                            <option value="<?php echo $subcat['ID']; ?>"><?php echo str_repeat('&nbsp;', ((int) $subcat['LEVEL'] - 1) * 3) . $subcat['NAME']; ?></option>
+                        <?php
+                        }
+                    }
+                    ?>
+                </optgroup>
+            <?php
+            }
+            ?>
+        </select>
+        <input type="text" class="score" value="500">
+        <input type="button" class="term_category_add" value="Add category">
+    </div>
+</div>
+
+<div class="terms_list_container">
+    <h3>Tags<input type="button" class="term_remove_all" all="tag" value="Clear all tags"></h3>
+
+    <ul termType="tag">
+    </ul>
+
+    <div class="sub_form">
+        <input type="text" class="new_term" value="">
+        <input type="text" class="score" value="500">
+        <input type="button" class="term_tag_add" value="Add tag">
+    </div>
+</div>
+
+<div class="terms_list_container">
+    <h3>Locations<input type="button" class="term_remove_all" all="location" value="Clear all locations"></h3>
+
+    <ul termType="location">
+    </ul>
+
+    <div class="sub_form">
+        <select class="new_term">
+            <option value="">--</option>
+            <?php
+            foreach ($this->locationList as $continent => $countries) {
+                ?>
+                <optgroup label="<?php echo $continent; ?>">
+                    <?php
+                    foreach ($countries as $countryId => $countryName) {
+                        ?>
+                        <option value="<?php echo $countryId; ?>"><?php echo $countryName; ?></option>
+                        <?php
+                    }
+                    ?>
+                </optgroup>
+                <?php
+            }
+            ?>
+        </select>
+        <input type="text" class="score" value="500">
+        <input type="button" class="term_location_add" value="Add location">
+    </div>
+</div>
+
+
+<div class="term_list_controls">
+    <input type="button" class="search_terms_submit" value="Re-run with terms above">
+    <input type="button" class="search_terms_reset" value="Reset to default terms">
+    <div class="dev_options">
+        <input type="checkbox" class="save_rerun_search" value="1" id="saveSearchTop" checked="checked">
+        <label for="saveSearchTop">Save search after re-run (<span class="hint" title="This option is here for developers. Please ignore it if it's confusing.">don't change if unsure</span>)</label>
+    </div>
+    <input type="button" class="term_remove_all" all="all" value="Clear all search terms">
+</div>
+
+<form id="customSearchTermsForm" action="/match/tag" method="POST">
+    <input type="hidden" name="txtRfqid" value="<?php echo $this->rfq->rfq_header->rfqInternalRefNo; ?>">
+    <input type="hidden" name="userAction" value="new_search">
+
+    <input type="hidden" name="searchSave" value="1">
+    <input type="hidden" name="searchCustom" value="">
+</form>
+
+<script>
+    var searchTerms = <?php echo json_encode($this->searchTerms); ?>;
+
+    /**
+     * Removes search term from the list
+     *
+     * @param event
+     */
+    function removeTerm(event) {
+        if (event.target != this) {
+            return; // skipping parent events
+        }
+
+        var button = $(event.target);
+        button.closest('li').remove();
+    }
+
+    /**
+     * Removes tag term and adds it to the global match list of stopwords
+     *
+     * @param event
+     */
+    function removeAndMuteTerm(event) {
+        if (event.target != this) {
+            return; // skipping parent events
+        }
+
+        var stopword = $(event.target).closest('li').find('input[type=hidden]').val();
+        stopword = decodeURIComponent(stopword);
+
+        if (!confirm('Remove and add "' + stopword + '" to the list of stop words?')) {
+            return;
+        }
+
+        $.ajax({
+            type:   'GET',
+            url:    '/match/add-stop-word',
+            data:   'stopword=' + encodeURIComponent(stopword)
+        }).done(function(response) {
+            if (response.status == 'OK') {
+                // alert("'" + stopword + "' added to the global list of stopwords");
+                var button = $(event.target);
+                button.closest('li').remove();
+            } else {
+                alert("An error has happened, '" + stopword + "' was not added to the list of stopwords");
+            }
+
+        }).fail(function() {
+            alert("Failed to add '" + stopword + "' tp the global list of stopwords");
+        });
+    }
+
+    /**
+     * Adds a new search term item into the given list
+     *
+     * @param   ul
+     * @param   tag
+     * @param   id
+     * @param   score
+     */
+    function newTermLi(ul, tag, id, score) {
+        var type = ul.attr('termType');
+
+        if (type == 'tag') {
+            var escapedTag = encodeURIComponent(tag);
+            ul.append(
+                $('<li>').append(
+                    tag,
+                    $('<input>').attr('type', 'hidden').attr('name', 'term_tags[]').attr('value', escapedTag).addClass('search_term'),
+                    $('<input>').attr('type', 'text').attr('class', 'score').attr('name', 'term_tag_scores[' + escapedTag + ']').attr('value', score).addClass('search_term'),
+                    $('<input>').attr('type', 'button').attr('class', 'term_remove btn_wide').attr('value', 'X').attr('title', 'Remove from this list').click(removeTerm),
+                    $('<img>').attr('src', '/images/icons/bin.png').attr('class', 'term_mute').attr('title', 'Remove and add to the global list of stop words').click(removeAndMuteTerm)
+                    // $('<input>').attr('type', 'button').attr('class', 'term_remove').attr('value', 'X!').attr('title', 'Remove and add to the global list of stop words').click(removeAndMuteTerm)
+                )
+            );
+        } else {
+            ul.append(
+                $('<li>').append(
+                    $('<span>').attr('class', 'hint').attr('title', 'ID ' + id).append(tag),
+                    $('<input>').attr('type', 'hidden').attr('name', 'term_' + type + '_ids[]').attr('value', id).addClass('search_term'),
+                    $('<input>').attr('type', 'text').attr('class', 'score').attr('name', 'term_' + type + '_scores[' + id + ']').attr('value', score).addClass('search_term'),
+                    $('<input>').attr('type', 'button').attr('class', 'term_remove').attr('value', 'X').click(removeTerm)
+                )
+            );
+        }
+    }
+
+    /**
+     * Adds new user-defined search term to the list (of categories, brands or tags depending on parameters)
+     *
+     * @param event
+     * @param term
+     */
+    function addTerm(event, term) {
+        var button = $(event.target);
+        var div = button.parent();
+
+        // handling is a bit different for tags and brands/categories as tags don't have a drop down control.
+        if (term == 'tag') {
+            var tag = div.find('input[type=text].new_term').val();
+            if (tag == '') {
+                // no tag name entered
+                alert("Please enter a tag to add");
+                return;
+            }
+
+            var termId      = null;
+            var termLabel   = tag;
+            var termScore   = div.find('input[type=text].score').val();
+
+        } else {
+            var termId = div.find('select.new_term').val();
+            if (termId == '') {
+                // none selected
+                alert("Please select a " + term + " to add");
+                return;
+            }
+
+            var termLabel = div.find('select option:selected').text().trim();
+            var termScore = div.find('input[type=text].score').val();
+        }
+
+        var ul = div.parent().find('ul[termType=' + term + ']');
+        newTermLi(ul, termLabel, termId, termScore);
+    }
+
+    /**
+     * Updates the search control form with current set of search terms
+     *
+     * @returns {*|jQuery|HTMLElement}
+     */
+    function copySearchTermsToForm() {
+        var form = $('#customSearchTermsForm');
+
+        $.each($('input.search_term'), function(index, elementTag) {
+            var element = $(elementTag);
+            form.append(
+                $('<input>').attr('type', 'hidden').attr('name', element.attr('name')).attr('value', element.attr('value'))
+            );
+        });
+
+        return form;
+    }
+
+    $(document).ready(function() {
+        // initialise search term lists from the static JSON printed in by PHP
+        $.each(searchTerms, function(termType, termData) {
+            // locating the UL container to list terms in
+            var ul = $('div.terms_list_container ul[termType=' + termType + ']');
+
+            $.each(termData, function(index, termInfo) {
+                newTermLi(ul, (termInfo.output_name ? termInfo.output_name : termInfo.tag), termInfo.id, termInfo.score);
+            });
+        });
+
+        // add new search terms
+        $('input[type=button].term_brand_add').click(function (event) {
+            addTerm(event, 'brand');
+        });
+        $('input[type=button].term_category_add').click(function (event) {
+            addTerm(event, 'category');
+        });
+        $('input[type=button].term_tag_add').click(function (event) {
+            addTerm(event, 'tag');
+        });
+        $('input[type=button].term_location_add').click(function (event) {
+            addTerm(event, 'location');
+        });
+
+        $('.search_terms_submit').click(function (event) {
+            var form = copySearchTermsToForm();
+            form.find('input[name=searchCustom]').attr('value', '1');
+
+            var searchSave = $('input[type=checkbox].save_rerun_search').prop('checked') ? '1' : '0';
+            form.find('input[name=searchSave]').attr('value', searchSave);
+
+            form.submit();
+        })
+
+        $('.search_terms_reset').click(function (event) {
+            var form = $('#customSearchTermsForm');
+            form.find('input[name=searchCustom]').attr('value', '0');
+
+            var searchSave = $('input[type=checkbox].save_rerun_search').prop('checked') ? '1' : '0';
+            form.find('input[name=searchSave]').attr('value', searchSave);
+
+            form.submit();
+        });
+
+        $('.save_rerun_search').click(function (event) {
+            var checkbox = $(event.target);
+            $('.save_rerun_search').prop('checked', checkbox.prop('checked'));
+        });
+
+        $('.term_remove_all').click(function(event) {
+            var button = $(event.target);
+            var removeAllTerm = button.attr('all');
+
+            if (removeAllTerm == 'all') {
+                $('div.terms_list_container ul li').remove();
+            } else {
+                $('ul[termType=' + removeAllTerm + '] li').remove();
+            }
+        });
+    });
+</script>

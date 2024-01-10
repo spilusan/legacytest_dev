@@ -1,0 +1,1285 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="1492"
+   height="777"
+   viewBox="0 0 1492 777"
+   version="1.1"
+   id="svg320"
+   sodipodi:docname="funnel.svg"
+   inkscape:version="0.92.1 r15371">
+  <metadata
+     id="metadata324">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Artboard</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="3840"
+     inkscape:window-height="2105"
+     id="namedview322"
+     showgrid="false"
+     inkscape:zoom="4.5429563"
+     inkscape:cx="479.72553"
+     inkscape:cy="588.3915"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="Artboard" />
+  <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
+  <title
+     id="title2">Artboard</title>
+  <desc
+     id="desc4">Created with Sketch.</desc>
+  <defs
+     id="defs19">
+    <path
+       d="m 279,247 h 926 V 613 H 279 Z"
+       id="path-1"
+       inkscape:connector-curvature="0" />
+    <rect
+       id="path-2"
+       x="988"
+       y="336"
+       width="200"
+       height="168"
+       rx="8" />
+    <rect
+       id="path-3"
+       x="1004"
+       y="407"
+       width="165.85001"
+       height="80" />
+    <rect
+       id="path-4"
+       x="647"
+       y="336"
+       width="220"
+       height="260"
+       rx="8" />
+    <rect
+       id="path-5"
+       x="664"
+       y="407"
+       width="185.85156"
+       height="116" />
+    <rect
+       id="path-6"
+       x="299"
+       y="336"
+       width="200"
+       height="168"
+       rx="8" />
+    <rect
+       id="path-7"
+       x="316"
+       y="407"
+       width="166.85001"
+       height="80" />
+    <rect
+       id="path-8"
+       x="279"
+       y="97"
+       width="623"
+       height="133" />
+    <rect
+       id="path-9"
+       x="616"
+       y="114"
+       width="270"
+       height="100"
+       rx="8" />
+    <rect
+       id="path-10"
+       x="279"
+       y="704"
+       width="437"
+       height="100" />
+    <rect
+       id="path-11"
+       x="449"
+       y="658"
+       width="267"
+       height="50" />
+    <rect
+       id="path-12"
+       x="769"
+       y="704"
+       width="437"
+       height="50" />
+    <rect
+       id="path-13"
+       x="939"
+       y="658"
+       width="267"
+       height="50" />
+  </defs>
+  <g
+     id="Page-1"
+     style="fill:none;fill-rule:evenodd;stroke:none;stroke-width:1"
+     transform="translate(-32.5,-27)">
+    <g
+       id="Artboard">
+      <polygon
+         id="Rectangle-24"
+         points="1347,603.53516 112,791.53516 112,27 1347,237.53516 "
+         style="opacity:0.24160449;fill:#3272b1" />
+      <g
+         id="Combined-Shape">
+        <use
+           xlink:href="#path-1"
+           id="use22"
+           style="fill:#ffffff;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <path
+           d="m 280,248 h 924 V 612 H 280 Z"
+           id="path24"
+           inkscape:connector-curvature="0"
+           style="stroke:#a6bed8;stroke-width:2" />
+      </g>
+      <g
+         id="Rectangle-23">
+        <use
+           xlink:href="#path-2"
+           id="use27"
+           style="fill:#ffffff;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <rect
+           x="990"
+           y="338"
+           width="196"
+           height="164"
+           rx="8"
+           id="rect29"
+           style="stroke:#087ec5;stroke-width:4" />
+      </g>
+      <g
+         id="Rectangle-23-Copy">
+        <use
+           xlink:href="#path-3"
+           id="use32"
+           style="fill:#e9edf1;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <rect
+           x="1004.5"
+           y="407.5"
+           width="164.85001"
+           height="79"
+           id="rect34"
+           style="stroke:#087ec5;stroke-width:1" />
+      </g>
+      <g
+         id="g41">
+        <use
+           xlink:href="#path-4"
+           id="use37"
+           style="fill:#ffffff;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <rect
+           x="649"
+           y="338"
+           width="216"
+           height="256"
+           rx="8"
+           id="rect39"
+           style="stroke:#087ec5;stroke-width:4" />
+      </g>
+      <g
+         id="g47">
+        <use
+           xlink:href="#path-5"
+           id="use43"
+           style="fill:#e9edf1;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <rect
+           x="664.5"
+           y="407.5"
+           width="184.85156"
+           height="115"
+           id="rect45"
+           style="stroke:#087ec5;stroke-width:1" />
+      </g>
+      <g
+         id="g53">
+        <use
+           xlink:href="#path-6"
+           id="use49"
+           style="fill:#ffffff;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <rect
+           x="301"
+           y="338"
+           width="196"
+           height="164"
+           rx="8"
+           id="rect51"
+           style="stroke:#087ec5;stroke-width:4" />
+      </g>
+      <g
+         id="g59">
+        <use
+           xlink:href="#path-7"
+           id="use55"
+           style="fill:#e9edf1;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <rect
+           x="316.5"
+           y="407.5"
+           width="165.85001"
+           height="79"
+           id="rect57"
+           style="stroke:#087ec5;stroke-width:1" />
+      </g>
+      <g
+         id="Rectangle-25">
+        <use
+           xlink:href="#path-8"
+           id="use61"
+           style="fill:#ffffff;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <rect
+           x="280"
+           y="98"
+           width="621"
+           height="131"
+           id="rect63"
+           style="stroke:#a6bed8;stroke-width:2" />
+      </g>
+      <g
+         id="g70">
+        <use
+           xlink:href="#path-9"
+           id="use66"
+           style="fill:#ffffff;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <rect
+           x="618"
+           y="116"
+           width="266"
+           height="96"
+           rx="8"
+           id="rect68"
+           style="stroke:#087ec5;stroke-width:4" />
+      </g>
+      <text
+         id="Direct"
+         font-size="20"
+         font-weight="bold"
+         style="font-weight:bold;font-size:20px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="299"
+           y="137"
+           id="tspan72">Direct</tspan>
+      </text>
+      <text
+         id="Competitive"
+         font-size="20"
+         font-weight="bold"
+         style="font-weight:bold;font-size:20px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="299"
+           y="286"
+           id="tspan75">Competitive</tspan>
+      </text>
+      <text
+         id="RFQs"
+         font-size="17"
+         font-weight="bold"
+         style="font-weight:bold;font-size:17px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="379.15918"
+           y="367"
+           id="tspan78">RFQs</tspan>
+      </text>
+      <text
+         id="1,134-sent"
+         font-size="17"
+         font-weight="500"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333"
+         x="89.903564"
+         y="0">
+        <tspan
+           x="398.75928"
+           y="391"
+           id="tspan81"
+           style="text-align:center;text-anchor:middle"><tspan
+   style="letter-spacing:0px"
+   id="tspan1258">000,000</tspan>
+
+
+ sent</tspan>
+      </text>
+      <text
+         id="RFQs-pending"
+         font-size="18"
+         font-weight="bold"
+         style="font-weight:bold;font-size:18px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="339.20117"
+           y="438"
+           id="tspan84">RFQs pending</tspan>
+      </text>
+      <text
+         id="8"
+         font-size="18"
+         font-weight="500"
+         style="font-weight:500;font-size:18px;font-family:OpenSans-Semibold, 'Open Sans';text-align:end;text-anchor:end;fill:#333333"
+         x="92.301788"
+         y="0">
+        <tspan
+           x="870.80261"
+           y="146"
+           id="tspan90"
+           style="text-align:end;text-anchor:end">0000</tspan>
+      </text>
+      <text
+         id="$64,415-(USD)"
+         font-size="17"
+         font-weight="500"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333"
+         x="124.87471"
+         y="0">
+        <tspan
+           x="1086.73"
+           y="467"
+           id="tspan93"
+           style="text-align:center;text-anchor:middle"><tspan
+   style="word-spacing:0px"
+   id="tspan1352">$00,000,000</tspan>
+
+
+ (USD)</tspan>
+      </text>
+      <text
+         id="$10,519-(USD)"
+         font-size="17"
+         font-weight="500"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333"
+         x="120.23389"
+         y="0">
+        <tspan
+           x="750.08911"
+           y="508"
+           id="tspan99"
+           style="text-align:center;text-anchor:middle"><tspan
+   style="text-align:center;letter-spacing:0px;text-anchor:middle"
+   id="tspan4083">$00,000,000</tspan>
+
+
+ (USD)</tspan>
+      </text>
+      <polyline
+         id="Path-2"
+         points="163 328.350006 163 162 600 162"
+         style="stroke:#000000;stroke-width:5" />
+      <g
+         id="fa-angle-down-copy"
+         transform="matrix(0,1,1,0,561,143)"
+         font-size="60"
+         font-weight="normal"
+         style="font-weight:normal;font-size:60px;font-family:FontAwesome;fill:#000000">
+        <text
+           id="fa-angle-down">
+          <tspan
+             x="0"
+             y="51"
+             id="tspan103"></tspan>
+        </text>
+      </g>
+      <g
+         id="fa-angle-down-copy-3"
+         transform="matrix(-1,0,0,1,580,602)"
+         font-size="60"
+         font-weight="normal"
+         style="font-weight:normal;font-size:60px;font-family:FontAwesome;fill:#000000">
+        <text
+           id="text109">
+          <tspan
+             x="0"
+             y="51"
+             id="tspan107"></tspan>
+        </text>
+      </g>
+      <g
+         id="fa-angle-down-copy-2"
+         transform="matrix(0,1,1,0,1244,398)"
+         font-size="60"
+         font-weight="normal"
+         style="font-weight:normal;font-size:60px;font-family:FontAwesome;fill:#000000">
+        <text
+           id="text114">
+          <tspan
+             x="0"
+             y="51"
+             id="tspan112"></tspan>
+        </text>
+      </g>
+      <text
+         id="Quotes"
+         font-size="17"
+         font-weight="bold"
+         style="font-weight:bold;font-size:17px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="724.87476"
+           y="367"
+           id="tspan117">Quotes</tspan>
+      </text>
+      <text
+         id="914-received"
+         font-size="17"
+         font-weight="500"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333"
+         x="107.21826"
+         y="0">
+        <tspan
+           x="757.31128"
+           y="391"
+           id="tspan120"
+           style="text-align:center;text-anchor:middle"
+           dx="0.0099999998 0 0 0 -0.0099999998"><tspan
+   style="word-spacing:0px"
+   id="tspan1316">0000</tspan>
+
+
+ received</tspan>
+      </text>
+      <text
+         id="Assumed-Quotes"
+         font-size="17"
+         font-weight="bold"
+         style="font-weight:bold;font-size:17px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="684.01831"
+           y="553"
+           id="tspan123">Assumed Quotes</tspan>
+      </text>
+      <text
+         id="0"
+         font-size="18"
+         font-weight="500"
+         style="font-weight:500;font-size:18px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333"
+         x="30.001465"
+         y="0">
+        <tspan
+           x="750.28857"
+           y="579"
+           id="tspan126"
+           style="text-align:center;text-anchor:middle">000000</tspan>
+      </text>
+      <text
+         id="Competitive-Orders"
+         font-size="17"
+         font-weight="bold"
+         line-spacing="22"
+         style="font-weight:bold;font-size:17px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="1026.0496"
+           y="366.82959"
+           id="tspan129">Competitive</tspan>
+        <tspan
+           x="1048.9597"
+           y="388.82959"
+           id="tspan131">Orders</tspan>
+      </text>
+      <text
+         id="Direct-Orders"
+         font-size="17"
+         font-weight="bold"
+         style="font-weight:bold;font-size:17px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="633"
+           y="146"
+           id="tspan134">Direct Orders</tspan>
+      </text>
+      <path
+         d="M 618.5,163 H 885"
+         id="Line-Copy"
+         inkscape:connector-curvature="0"
+         style="stroke:#087ec5;stroke-width:2;stroke-linecap:square" />
+      <text
+         id="$194"
+         font-size="18"
+         font-weight="500"
+         style="font-weight:500;font-size:18px;font-family:OpenSans-Semibold, 'Open Sans';text-align:end;text-anchor:end;fill:#333333"
+         x="183.41504"
+         y="0">
+        <tspan
+           x="870.90527"
+           y="193"
+           id="tspan138"
+           style="text-align:end;text-anchor:end">$00,000,000</tspan>
+      </text>
+      <text
+         id="Order-Value"
+         font-size="17"
+         font-weight="bold"
+         style="font-weight:bold;font-size:17px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="633"
+           y="193"
+           id="tspan141">Order Value</tspan>
+      </text>
+      <text
+         id="550-sent"
+         font-size="18"
+         font-weight="bold"
+         style="font-weight:bold;font-size:18px;font-family:OpenSans-Bold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333"
+         x="74.715042"
+         y="0">
+        <tspan
+           x="1086.8855"
+           y="438"
+           id="tspan144"
+           style="text-align:center;text-anchor:middle"><tspan
+   style="word-spacing:0px"
+   id="tspan1346">0000</tspan>
+
+
+ sent</tspan>
+        <tspan
+           x="1161.6101"
+           y="438"
+           font-weight="500"
+           id="tspan146"
+           style="font-weight:500;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle" />
+      </text>
+      <text
+         id="Quoted"
+         font-size="18"
+         font-weight="bold"
+         style="font-weight:bold;font-size:18px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="721.85596"
+           y="433"
+           id="tspan149">Quoted</tspan>
+      </text>
+      <text
+         id="(result-unknown)"
+         font-size="15"
+         font-weight="500"
+         line-spacing="20"
+         style="font-weight:500;font-size:15px;font-family:OpenSans-Semibold, 'Open Sans';fill:#333333">
+        <tspan
+           x="693.97925"
+           y="452"
+           id="tspan152">(result unknown)</tspan>
+      </text>
+      <path
+         d="M 300.89293,418.5 H 171"
+         id="Path-3"
+         inkscape:connector-curvature="0"
+         style="stroke:#000000;stroke-width:5" />
+      <path
+         d="M 1281.5,418 H 1187"
+         id="path156"
+         inkscape:connector-curvature="0"
+         style="stroke:#000000;stroke-width:5" />
+      <path
+         d="M 648.89293,416.5 H 496.5"
+         id="Path-3-Copy"
+         inkscape:connector-curvature="0"
+         style="stroke:#000000;stroke-width:5" />
+      <circle
+         id="Oval-3"
+         cx="147"
+         cy="415"
+         r="112"
+         style="fill:#cff0fb;stroke:#087ec5;stroke-width:5" />
+      <text
+         id="Selected-Buyer-Tradi"
+         font-size="19"
+         font-weight="bold"
+         line-spacing="25"
+         style="font-weight:bold;font-size:19px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="65.00293"
+           y="402"
+           id="tspan160" />
+        <tspan
+           x="65.00293"
+           y="402"
+           id="tspan4002" />
+        <tspan
+           x="65.00293"
+           y="402"
+           id="tspan4004" />
+        <tspan
+           x="65.00293"
+           y="402"
+           id="tspan4006" />
+        <tspan
+           x="65.00293"
+           y="402"
+           id="tspan4008" />
+        <tspan
+           x="65.00293"
+           y="402"
+           id="tspan4010" />
+      </text>
+      <text
+         font-size="19"
+         font-weight="bold"
+         line-spacing="25"
+         id="text3996"
+         x="123.44253"
+         y="13.074519"
+         style="font-weight:bold;font-size:19px;font-family:OpenSans-Bold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333" />
+      <circle
+         id="circle167"
+         cx="1410"
+         cy="416"
+         r="112"
+         style="fill:#cff0fb;stroke:#087ec5;stroke-width:5" />
+      <text
+         id="Total-Orders"
+         font-size="18"
+         font-weight="bold"
+         x="109.01417"
+         style="font-weight:bold;font-size:18px;font-family:OpenSans-Bold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333"
+         y="0">
+        <tspan
+           x="1410.1714"
+           y="436"
+           id="tspan169"
+           style="text-align:center;text-anchor:middle">Total Orders</tspan>
+      </text>
+      <path
+         d="m 586,345 v 69.50306"
+         id="Path-4"
+         inkscape:connector-curvature="0"
+         style="stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1, 6" />
+      <path
+         d="M 990.89,417 H 866"
+         id="path180"
+         inkscape:connector-curvature="0"
+         style="stroke:#000000;stroke-width:5" />
+      <path
+         d="m 930,345 v 69.50306"
+         id="path182"
+         inkscape:connector-curvature="0"
+         style="stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1, 6" />
+      <text
+         id="558-sent"
+         font-size="18"
+         font-weight="500"
+         x="68.796402"
+         style="font-weight:500;font-size:18px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333"
+         y="24">
+        <tspan
+           x="1409.6089"
+           y="485"
+           id="tspan184"
+           style="text-align:center;text-anchor:middle"><tspan
+   style="word-spacing:0px"
+   id="tspan587">0000</tspan>
+
+ sent</tspan>
+      </text>
+      <text
+         id="$64,609-(USD)"
+         font-size="18"
+         font-weight="500"
+         x="114.77637"
+         y="-27.523926"
+         style="font-weight:500;font-size:18px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333">
+        <tspan
+           x="1409.7935"
+           y="459.47607"
+           id="tspan187"
+           style="text-align:center;text-anchor:middle"><tspan
+   style="letter-spacing:0px"
+   id="tspan573">00,000,000</tspan>
+
+ (USD)</tspan>
+      </text>
+      <polyline
+         id="Path-5"
+         points="1236.87636 419 1237.31 163 901 163"
+         style="stroke:#000000;stroke-width:5" />
+      <path
+         d="M 560.5,415 V 639.50781"
+         id="Path-6"
+         inkscape:connector-curvature="0"
+         style="stroke:#000000;stroke-width:5" />
+      <path
+         d="M 903,415 V 683.51001"
+         id="path192"
+         inkscape:connector-curvature="0"
+         style="stroke:#000000;stroke-width:5" />
+      <path
+         d="m 759,115 v 95.25"
+         id="Line-Copy-2"
+         inkscape:connector-curvature="0"
+         style="stroke:#087ec5;stroke-width:2;stroke-linecap:square" />
+      <circle
+         id="Oval-3-Copy"
+         cx="586"
+         cy="309"
+         r="45"
+         style="fill:#cff0fb;stroke:#087ec5;stroke-width:4" />
+      <text
+         id="Quote-%"
+         font-size="16"
+         font-weight="bold"
+         style="font-weight:bold;font-size:16px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="552.86328"
+           y="302"
+           id="tspan196">Quote %</tspan>
+      </text>
+      <text
+         id="81%"
+         font-size="24"
+         font-weight="bold"
+         style="font-weight:bold;font-size:24px;font-family:OpenSans-Bold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333"
+         x="45.208984"
+         y="0">
+        <tspan
+           x="585.92969"
+           y="330"
+           id="tspan199"
+           style="text-align:center;text-anchor:middle"><tspan
+   style="word-spacing:0px"
+   id="tspan1298">00</tspan>
+
+
+%</tspan>
+      </text>
+      <circle
+         id="circle202"
+         cx="929"
+         cy="309"
+         r="45"
+         style="fill:#cff0fb;stroke:#087ec5;stroke-width:4" />
+      <text
+         id="Win-%"
+         font-size="16"
+         font-weight="bold"
+         style="font-weight:bold;font-size:16px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="906.20703"
+           y="302"
+           id="tspan204">Win %</tspan>
+      </text>
+      <text
+         id="60%"
+         font-size="24"
+         font-weight="bold"
+         style="font-weight:bold;font-size:24px;font-family:OpenSans-Bold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333"
+         x="45.208984"
+         y="0">
+        <tspan
+           x="928.92969"
+           y="330"
+           id="tspan207"
+           style="text-align:center;text-anchor:middle"
+           dx="0 0 0"><tspan
+   style="word-spacing:0px;letter-spacing:0px"
+   id="tspan1304">00</tspan>
+
+
+%</tspan>
+      </text>
+      <g
+         id="Rectangle-3">
+        <use
+           xlink:href="#path-10"
+           id="use210"
+           style="fill:#ffffff;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <rect
+           x="281"
+           y="706"
+           width="433"
+           height="96"
+           id="rect212"
+           style="stroke:#087ec5;stroke-width:4" />
+      </g>
+      <g
+         id="Rectangle-3-Copy">
+        <use
+           xlink:href="#path-11"
+           id="use215"
+           style="fill:#ffffff;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <rect
+           x="451"
+           y="660"
+           width="263"
+           height="46"
+           id="rect217"
+           style="stroke:#087ec5;stroke-width:4" />
+      </g>
+      <text
+         id="RFQs-ignored-Copy"
+         font-size="17"
+         font-weight="bold"
+         style="font-weight:bold;font-size:17px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="294"
+           y="736"
+           id="tspan220">RFQs ignored</tspan>
+      </text>
+      <path
+         d="M 283.5,754 H 714.69601"
+         id="Line-Copy-3"
+         inkscape:connector-curvature="0"
+         style="stroke:#087ec5;stroke-width:2;stroke-linecap:square" />
+      <path
+         d="M 519.5,661 V 803"
+         id="Line-Copy-4"
+         inkscape:connector-curvature="0"
+         style="stroke:#087ec5;stroke-width:2;stroke-linecap:square" />
+      <path
+         d="M 579.5,661 V 803"
+         id="path225"
+         inkscape:connector-curvature="0"
+         style="stroke:#087ec5;stroke-width:2;stroke-linecap:square" />
+      <text
+         id="RFQs-declined-Copy"
+         font-size="17"
+         font-weight="bold"
+         style="font-weight:bold;font-size:17px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="294"
+           y="783"
+           id="tspan227">RFQs declined</tspan>
+      </text>
+      <text
+         id="No.-Copy"
+         font-size="16"
+         font-weight="500"
+         style="font-weight:500;font-size:16px;font-family:OpenSans-Semibold, 'Open Sans';fill:#333333">
+        <tspan
+           x="472.07422"
+           y="689"
+           id="tspan230">No.</tspan>
+      </text>
+      <text
+         id="12"
+         font-size="17"
+         font-weight="500"
+         x="15.312012"
+         y="0"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333">
+        <tspan
+           x="482.54663"
+           y="738"
+           id="tspan233"
+           style="text-align:center;text-anchor:middle">00</tspan>
+      </text>
+      <text
+         id="1"
+         font-size="17"
+         font-weight="500"
+         x="6.7880859"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333"
+         y="0">
+        <tspan
+           x="550.1748"
+           y="738"
+           id="tspan281"
+           style="text-align:center;text-anchor:middle">00</tspan>
+      </text>
+      <text
+         id="$8,905"
+         font-size="17"
+         font-weight="500"
+         x="116.75098"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:end;text-anchor:end;fill:#333333"
+         y="0">
+        <tspan
+           x="698.94141"
+           y="738"
+           id="tspan239"
+           style="text-align:end;text-anchor:end">$00,000,000</tspan>
+      </text>
+      <text
+         id="206"
+         font-size="17"
+         font-weight="500"
+         x="25.758545"
+         y="0"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333">
+        <tspan
+           x="482.87036"
+           y="784"
+           id="tspan242"
+           style="text-align:center;text-anchor:middle">00</tspan>
+      </text>
+      <text
+         id="18"
+         font-size="17"
+         font-weight="500"
+         x="16.50415"
+         y="0"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333">
+        <tspan
+           x="548.72217"
+           y="784"
+           id="tspan246"
+           style="text-align:center;text-anchor:middle">00</tspan>
+      </text>
+      <text
+         id="$46,330"
+         font-size="17"
+         font-weight="500"
+         x="136.18311"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:end;text-anchor:end;fill:#333333"
+         y="0">
+        <tspan
+           x="698.80859"
+           y="784"
+           id="tspan248"
+           style="text-align:end;text-anchor:end">$00,000,000</tspan>
+      </text>
+      <text
+         id="%-copy"
+         font-size="16"
+         font-weight="500"
+         style="font-weight:500;font-size:16px;font-family:OpenSans-Semibold, 'Open Sans';fill:#333333">
+        <tspan
+           x="541.53125"
+           y="689"
+           id="tspan251">%</tspan>
+      </text>
+      <text
+         id="Est.-Value-(USD)-Copy"
+         font-size="15"
+         font-weight="500"
+         line-spacing="22"
+         style="font-weight:500;font-size:15px;font-family:OpenSans-Semibold, 'Open Sans';fill:#333333">
+        <tspan
+           x="588.77026"
+           y="688"
+           id="tspan254">Est. Value (USD)</tspan>
+      </text>
+      <path
+         d="m 451,706.5 v 93.43447"
+         id="Line"
+         inkscape:connector-curvature="0"
+         style="stroke:#087ec5;stroke-width:4;stroke-linecap:square" />
+      <g
+         id="g262"
+         transform="matrix(-1,0,0,1,922,647)"
+         font-size="60"
+         font-weight="normal"
+         style="font-weight:normal;font-size:60px;font-family:FontAwesome;fill:#000000">
+        <text
+           id="text260">
+          <tspan
+             x="0"
+             y="51"
+             id="tspan258"></tspan>
+        </text>
+      </g>
+      <g
+         id="g268">
+        <use
+           xlink:href="#path-12"
+           id="use264"
+           style="fill:#ffffff;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <rect
+           x="771"
+           y="706"
+           width="433"
+           height="46"
+           id="rect266"
+           style="stroke:#087ec5;stroke-width:4" />
+      </g>
+      <g
+         id="g274">
+        <use
+           xlink:href="#path-13"
+           id="use270"
+           style="fill:#ffffff;fill-rule:evenodd"
+           x="0"
+           y="0"
+           width="100%"
+           height="100%" />
+        <rect
+           x="941"
+           y="660"
+           width="263"
+           height="46"
+           id="rect272"
+           style="stroke:#087ec5;stroke-width:4" />
+      </g>
+      <text
+         id="Quoted/Lost"
+         font-size="17"
+         font-weight="bold"
+         style="font-weight:bold;font-size:17px;font-family:OpenSans-Bold, 'Open Sans';fill:#333333">
+        <tspan
+           x="785"
+           y="735"
+           id="tspan276">Quoted/Lost</tspan>
+      </text>
+      <text
+         id="text281"
+         font-size="16"
+         font-weight="500"
+         style="font-weight:500;font-size:16px;font-family:OpenSans-Semibold, 'Open Sans';fill:#333333">
+        <tspan
+           x="963.07422"
+           y="689"
+           id="tspan279">No.</tspan>
+      </text>
+      <text
+         id="text285"
+         font-size="17"
+         font-weight="500"
+         x="18.487549"
+         y="0"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333">
+        <tspan
+           x="975.72217"
+           y="735"
+           id="tspan283"
+           style="text-align:center;text-anchor:middle">00</tspan>
+      </text>
+      <text
+         id="text293"
+         font-size="17"
+         font-weight="500"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:end;text-anchor:end;fill:#333333"
+         x="171.98145"
+         y="0">
+        <tspan
+           x="1188.9707"
+           y="735"
+           id="tspan291"
+           style="text-align:end;text-anchor:end">$00,000,000</tspan>
+      </text>
+      <text
+         id="text297"
+         font-size="16"
+         font-weight="500"
+         style="font-weight:500;font-size:16px;font-family:OpenSans-Semibold, 'Open Sans';fill:#333333">
+        <tspan
+           x="1031.5312"
+           y="689"
+           id="tspan295">%</tspan>
+      </text>
+      <text
+         id="text301"
+         font-size="15"
+         font-weight="500"
+         line-spacing="22"
+         style="font-weight:500;font-size:15px;font-family:OpenSans-Semibold, 'Open Sans';fill:#333333">
+        <tspan
+           x="1078.7703"
+           y="688"
+           id="tspan299">Est. Value (USD)</tspan>
+      </text>
+      <path
+         d="m 941,704 v 44.43"
+         id="path303"
+         inkscape:connector-curvature="0"
+         style="stroke:#087ec5;stroke-width:4;stroke-linecap:square" />
+      <path
+         d="m 1010,661 v 92"
+         id="path305"
+         inkscape:connector-curvature="0"
+         style="stroke:#087ec5;stroke-width:2;stroke-linecap:square" />
+      <path
+         d="m 1070,661 v 92"
+         id="path307"
+         inkscape:connector-curvature="0"
+         style="stroke:#087ec5;stroke-width:2;stroke-linecap:square" />
+      <g
+         id="fa-info-circle"
+         transform="translate(367,117)"
+         font-size="26"
+         font-weight="normal"
+         style="font-weight:normal;font-size:26px;font-family:FontAwesome;fill:#9ba7ba">
+        <text
+           id="text311">
+          <tspan
+             x="0"
+             y="22"
+             id="tspan309"></tspan>
+        </text>
+        <text
+           id="text315">
+          <tspan
+             x="60"
+             y="171"
+             id="tspan313"></tspan>
+        </text>
+      </g>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:0.5;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none"
+         x="147.18091"
+         y="398.15915"
+         id="text4014"><tspan
+           sodipodi:role="line"
+           id="tspan4012"
+           x="147.18091"
+           y="398.15915"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19px;line-height:0.75;font-family:OpenSans-Bold, 'Open Sans';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:middle;white-space:normal;shape-padding:0;opacity:1;vector-effect:none;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1">Selected Buyer</tspan><tspan
+           sodipodi:role="line"
+           x="147.18091"
+           y="420.71484"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19px;line-height:0.75;font-family:OpenSans-Bold, 'Open Sans';-inkscape-font-specification:'OpenSans-Bold, Open Sans';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:middle;white-space:normal;shape-padding:0;opacity:1;vector-effect:none;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="tspan4057">Trading Accounts</tspan><tspan
+           sodipodi:role="line"
+           x="147.18091"
+           y="443.27054"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19px;line-height:0.75;font-family:OpenSans-Bold, 'Open Sans';-inkscape-font-specification:'OpenSans-Bold, Open Sans';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:middle;white-space:normal;shape-padding:0;opacity:1;vector-effect:none;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="tspan243"
+           dx="0 0 0">(<tspan
+   id="tspan282">0</tspan>)</tspan></text>
+      <text
+         id="text285-3"
+         font-size="17"
+         font-weight="500"
+         x="82.88279"
+         y="-1.4305115e-05"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333;fill-rule:evenodd;stroke:none;stroke-width:1">
+        <tspan
+           x="1040.1174"
+           y="735"
+           id="tspan280"
+           style="text-align:center;text-anchor:middle">00</tspan>
+      </text>
+      <text
+         id="$10,519-(USD)-7"
+         font-size="17"
+         font-weight="500"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333;fill-rule:evenodd;stroke:none;stroke-width:1"
+         x="124.03865"
+         y="-27.625792">
+        <tspan
+           x="753.89386"
+           y="480.37421"
+           id="tspan855"
+           style="text-align:center;text-anchor:middle"
+           dx="0 0 0 0 0 0"><tspan
+   style="word-spacing:0px"
+   id="tspan318">0000</tspan>
+
+ (<tspan
+   style="word-spacing:0px"
+   id="tspan315">00</tspan>
+
+%)</tspan>
+      </text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-weight:normal;font-size:40px;line-height:0.5;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1"
+         x="1409.9351"
+         y="345.73849"
+         id="text4014-9"><tspan
+           sodipodi:role="line"
+           x="1409.9351"
+           y="345.73849"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19px;line-height:0.75;font-family:OpenSans-Bold, 'Open Sans';-inkscape-font-specification:'OpenSans-Bold, Open Sans';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:middle;white-space:normal;shape-padding:0;opacity:1;vector-effect:none;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="tspan4057-2">Selected</tspan><tspan
+           sodipodi:role="line"
+           x="1409.9351"
+           y="368.29419"
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:19px;line-height:0.75;font-family:OpenSans-Bold, 'Open Sans';-inkscape-font-specification:'OpenSans-Bold, Open Sans';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:middle;white-space:normal;shape-padding:0;opacity:1;vector-effect:none;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="tspan697">Suppliers</tspan><tspan
+           sodipodi:role="line"
+           x="1409.9351"
+           y="390.84988"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:19px;line-height:0.75;font-family:OpenSans-Bold, 'Open Sans';-inkscape-font-specification:'OpenSans-Bold, Open Sans';font-variant-ligatures:normal;font-variant-position:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-alternates:normal;font-feature-settings:normal;text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:normal;word-spacing:normal;text-transform:none;writing-mode:lr-tb;direction:ltr;text-orientation:mixed;dominant-baseline:auto;baseline-shift:baseline;text-anchor:middle;white-space:normal;shape-padding:0;opacity:1;vector-effect:none;fill:#333333;fill-opacity:1;stroke:none;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
+           id="tspan243-7"
+           dx="0 0 0">(<tspan
+   style="letter-spacing:0px"
+   id="tspan699">0</tspan>)</tspan></text>
+      <text
+         id="1,134-sent-9"
+         font-size="17"
+         font-weight="500"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333;fill-rule:evenodd;stroke:none;stroke-width:1"
+         x="98.829048"
+         y="72.526756">
+        <tspan
+           x="407.68475"
+           y="463.52676"
+           id="tspan81-3"
+           style="text-align:center;text-anchor:middle" />
+      </text>
+      <text
+         id="1,134-sent-0"
+         font-size="17"
+         font-weight="500"
+         style="font-weight:500;font-size:17px;font-family:OpenSans-Semibold, 'Open Sans';text-align:center;text-anchor:middle;fill:#333333;fill-rule:evenodd;stroke:none;stroke-width:1"
+         x="90.565361"
+         y="77.980705">
+        <tspan
+           x="399.42108"
+           y="468.98071"
+           id="tspan81-6"
+           style="text-align:center;text-anchor:middle"><tspan
+   id="tspan742">0000</tspan>
+
+ (<tspan
+   id="tspan736">00</tspan>
+
+%)</tspan>
+      </text>
+    </g>
+  </g>
+</svg>

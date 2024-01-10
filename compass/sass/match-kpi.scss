@@ -1,0 +1,230 @@
+/*
+Document   : match-kpi.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: combining partials for rfq styles
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+@import "partials/def/datepicker";
+@import "partials/def/modal_new";
+@import "partials/def/left_nav";
+
+@import "partials/match/form";
+
+#body{
+    width: 2136px;
+
+	.handCursor {
+		cursor: pointer;
+	}
+
+    #content {
+        width: 1900px;
+        margin-right: 20px;
+        left: 0 !important;
+
+        h1.styled {
+        	margin-bottom: 10px;
+        }
+    }
+
+	&.adoption {
+	   	width: 1905px;
+
+    	#content {
+    		width: 1650px;
+    	}
+	}
+
+	&.adoptionBuyerBreakdown {
+    	width: 1236px;
+
+    	#content {
+    		width: 980px;
+    	}
+	}
+
+	&.adoptionRfqBreakdown, &.conversionOrderDetail {
+    	width: 1260px;
+
+    	#content {
+    		width: 980px;
+    	}
+
+	}
+
+
+    &.usage {
+    	width: 1305px;
+
+    	#content {
+    		width: 1050px;
+    	}
+    }
+
+
+    &.conversion {
+    	width: 1586px;
+
+    	#content {
+    		width: 1350px;
+    	}
+    }
+
+    &.conversionRfqDrilldown {
+    	width: 2505px;
+
+    	#content {
+    		width: 2250px;
+    	}
+    }
+
+    &.tradenet {
+    	width: 1775px;
+
+    	#content {
+    		width: 1520px;
+    	}
+    }
+
+    &.inbox {
+    	width: 1215px;
+
+    	#content {
+    		width: 960px;
+    	}
+    }
+
+    &.algo {
+    	width: 960px;
+
+    	#content {
+    		width: 724px;
+    	}
+    }
+
+    &.invalid {
+    	width: 1955px;
+
+    	#content {
+    		width: 1700px;
+    	}
+    }
+
+    &.buyerGmv {
+    	width: 2285px;
+
+    	#content {
+    		width: 2030px;
+
+    		.sectionEnd{
+				border-right:1px solid #A5ACB1!important;
+    		}
+    	}
+    }
+
+    &.buyerGmvDetailSPBInteractedWith {
+    	width: 1710px;
+
+    	#content {
+    		width: 1450px;
+
+    		.sectionEnd{
+				border-right:1px solid #A5ACB1!important;
+    		}
+    	}
+    }
+
+    &.buyerGmvDetail {
+    	width: 1215px;
+
+    	#content {
+    		width: 950px;
+
+    		.sectionEnd{
+				border-right:1px solid #A5ACB1!important;
+    		}
+    	}
+    }
+
+    &.manageGroup {
+    	width: 1600px;
+
+    	#content {
+    		width: 1350px;
+
+    		.sectionEnd{
+				border-right:1px solid #A5ACB1!important;
+    		}
+    	}
+
+    }
+
+
+    &.gmvBreakdown {
+    	width: 3105px;
+
+    	#content {
+    		width: 2850px;
+
+    		.sectionEnd{
+				border-right:1px solid #A5ACB1!important;
+    		}
+    	}
+    }
+
+    &.supplierStats {
+    	width: 2205px;
+
+    	#content {
+    		width: 1950px;
+
+    		.sectionEnd{
+				border-right:1px solid #A5ACB1!important;
+    		}
+    	}
+    }
+
+    .spacer {
+		height: 80px;
+		clear: both;
+	}
+}
+
+#body #sidebar ul#nav li.selected {
+    padding: 8px 15px;
+
+    &.secondary {
+        padding: 0;
+    }
+}
+
+div.dataTables_scrollBody {
+	table {
+		thead {
+		height: 0 !important;
+			tr {
+				height: 0 !important;
+				th {
+					font-size: 0;
+					height:0 !important;
+					opacity: 0;
+					overflow: hidden;
+				}
+			}
+		}
+		tbody {
+			tr {
+				td {
+					&:last-child {
+						border-right: 0 !important;
+						padding-right: 5px !important;
+					}
+				}
+			}
+		}
+	}
+}

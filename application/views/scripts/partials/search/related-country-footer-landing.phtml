@@ -1,0 +1,45 @@
+<?php
+if( $this->refinedQuery['type'] === "category" )
+{
+	$categoryId = $this->refinedQuery['id'];
+	$countryCode = $this->refinedQuery['countryCode'];
+}
+$sql = "
+	SELECT
+		PAGES_SEO_REL_FOOTER.PSF_CATEGORY_ID CATEGORY_ID
+		, PAGES_SEO_REL_FOOTER.PSF_REL_CNT_COUNTRY_CODE COUNTRY_CODE
+		, COUNTRY.CNT_NAME COUNTRY_NAME
+		, PRODUCT_CATEGORY.NAME CATEGORY_NAME
+	FROM
+		PAGES_SEO_REL_FOOTER
+		, COUNTRY
+		, PRODUCT_CATEGORY
+	WHERE
+		psf_category_id=:categoryId
+		" . ( ( $countryCode!="")?"AND psf_cnt_country_code ='".$countryCode."'" : "AND psf_cnt_country_code IS null" ) . "
+		AND CNT_COUNTRY_CODE = PSF_REL_CNT_COUNTRY_CODE
+		AND psf_category_id = ID
+	ORDER BY
+		PSF_ORDER ASC
+";
+$result = $this->db->fetchAll($sql, array('categoryId' => $categoryId));
+
+if( lg_count($result)>0)
+{
+	?>
+	<h3 class="zz grey no-marg">
+		Popular countr<?= ( lg_count($result) > 1 ) ? "ies":"y" ?> for Marine Suppliers of <?= ucfirst( ( ($result[0]['CATEGORY_NAME'] != "" ) ? $result[0]['CATEGORY_NAME']:$this->params['searchWhat'] ) )?>
+	</h3>
+	<ul class="catList">
+		<?php 
+		foreach($result as $row)
+		{
+			echo '<li><a href="http://'.  $_SERVER['HTTP_HOST'] .'/category/' . strtolower(preg_replace('/(\W){1,}/', '-', $row['CATEGORY_NAME'])) . '/' . strtolower(preg_replace('/(\W){1,}/', '-', $row['COUNTRY_NAME'])) . '/' . $row['COUNTRY_CODE'] . '/' . $row['CATEGORY_ID'] . '">Marine ' . $row['CATEGORY_NAME'] . " in <b>" . $row['COUNTRY_NAME'] . '</b></a></li>';
+			$count++;
+			if($count==10) break;
+		}
+		?>
+	</ul>
+	<?php 
+}
+?>

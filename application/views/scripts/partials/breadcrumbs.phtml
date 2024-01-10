@@ -1,0 +1,17 @@
+<?if($this->breadcrumb):?>
+
+<?else:?>
+	<?$request = Zend_Controller_Front::getInstance()->getRequest();
+	  $action = $request->getActionName();
+	  $controller = $request->getControllerName();
+	  $module = $request->getModuleName();
+	?>
+<?php 
+/*
+	<div class="breadcrumbs">
+		<?if():?><a href=""><?endif?>
+			<?=$request->get?>
+		<?if():?></a><?endif?>
+	</div>
+*/?>
+<?endif?>

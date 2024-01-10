@@ -1,0 +1,161 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/jquery.ui.js')
+						 ->appendFile('/js/jquery.tools.tooltip.min.js')
+						 ->appendFile('/js/jquery.selectmenu.js');
+$this->headLink()->appendStylesheet('/css/transition.css');
+$this->headLink()->appendStylesheet('/css/jquery.ui.smoothness.css')
+					->appendStylesheet('/css/brand-management.css')
+					->appendStylesheet('/css/jquery.selectmenu.css')
+					->appendStylesheet('/css/profile.css');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Companies',
+						   'url'  => '/profile/companies'),
+					 array('name' => $this->companyDetail['name'],
+						   'url'  => "/profile/company-people/type/{$this->companyDetail['type']}/id/{$this->companyDetail['id']}"));
+
+
+?>
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], 'company-brands', $this->pendingUsers, $isAdmin)
+				)
+			);				
+				
+			?>
+			<div class="profile-body-right" id="brandManagementInviteSupplier">
+                <div class="zz header">
+					<h2>Invite Supplier</h2>
+				</div>
+				<div class="profileContent">
+                    <form id="brandsSelectForm">
+                    <div>
+                        <div style="margin-bottom: 15px;">
+                        <select id="brand" name="brand" onChange="javascript:$('#brandsSelectForm').submit();" style="width:200px;">
+                            <?php
+                            foreach ($this->managedBrands as $brand)
+                            {
+                                echo '<option value="'.$brand["ID"].'" '.(($brand["ID"]==$this->selectedBrand)?'selected="true"':'').' >'.$brand["NAME"].'</option>';
+                            }
+                            ?>
+                        </select>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                    </form>
+
+
+
+                    <div class="profile-body-header"></div>
+                    <div class="profile-body-group">
+                        <div>
+                            <div id="inviteSupplierMessageIcon"></div>
+                            <div style="float:left;padding-left:10px;">
+                                <h3 class="blue">Couldn't find supplier in the list?<br/>Invite supplier via personalized email invitation</h3>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
+
+                        <div class="dotted-line"></div>
+                        <label for="invitationText">Your personalised invitation:</label>
+                        <table class="wbox">
+                            <tr>
+                                <td class="wbox-top-left"></td>
+                                <td class="wbox-top"></td>
+                                <td class="wbox-top-right"></td>
+                            </tr>
+                            <tr>
+                                <td class="wbox-left"></td>
+                                <td class="wbox-content">
+                                    <textarea id="invitationText" style="width:100%;height:50px"></textarea>
+                                </td>
+                                <td class="wbox-right"></td>
+                            </tr>
+                            <tr>
+                                <td class="wbox-bottom-left"></td>
+                                <td class="wbox-bottom"></td>
+                                <td class="wbox-bottom-right"></td>
+                            </tr>
+                        </table>
+                        <div style="padding:5px 0;">
+                            <label for="supplierName">Supplier's Name:</label><br/>
+                            <input type="text" id="supplierName" name="supplierName"/>
+                        </div>
+                        <div style="padding:5px 0;">
+                            <label for="supplierName">Supplier's Email:</label><br/>
+                            <input type="text" id="supplierEmail" name="supplierEmail"/>
+                        </div>
+                        <div class="dotted-line"></div>
+                        <div id="inviteSupplierButton"></div>
+
+                    </div>
+                    <div class="profile-body-footer"></div>
+
+                </div>
+                <div class="clear"></div>
+            </div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	<!--
+
+
+	$(document).ready(function(){
+		brandDropdown = $('select#brand').selectmenu({style:'dropdown',width:'200px'});
+
+
+		$('#inviteSupplierButton').mouseover(function(){
+			$(this).addClass("hover");
+		})
+		.mouseout(function(){
+			$(this).removeClass("hover");
+		})
+		.click(function(){
+			if ($("#supplierName").val()=="")
+			{
+				alert ("Please, provide supplier's name.");
+				return false;
+			}
+			if ($("#supplierEmail").val()=="")
+			{
+				alert ("Please, provide supplier's email.");
+				return false;
+			}
+			var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+			if (!emailPattern.test($("#supplierEmail").val())) {
+				alert("Please, provide correct email address.")
+				return false;
+			}
+
+			$.post('/profile/company-brands-invite-send/format/json/',
+					{
+						supplierName: $("#supplierName").val(),
+						supplierEmail:$("#supplierEmail").val(),
+						text:$("#invitationText").val(),
+						brandId:$("#brand").val(),
+						companyId:<?php echo $this->companyDetail['id'];?>
+					},
+					function(data) {
+						window.location.href ='/profile/company-brands/type/<?php echo $this->companyDetail['type'];?>/id/<?php echo $this->companyDetail['id'];?>'	
+					},
+					'json'
+				);
+		});
+	});
+	//-->
+</script>

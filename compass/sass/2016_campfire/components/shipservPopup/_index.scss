@@ -1,0 +1,60 @@
+.shipservPopupWindow {
+	font-family: Lato, sans-serif;
+	display: block;
+	.popupFader {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		z-index: 980;
+		background-color: black;
+		opacity: 0.5;
+		left: 0;
+		top: 0;
+	}
+	
+	.shipservPopupBox {
+		
+		position: fixed;
+		left: 50%;
+		top: 70px;
+		width: 750px;
+		height: 670px;
+		margin-left: -375px;
+		
+		background-color: white;
+		z-index: 999;
+		
+		.pupupHead {
+		    width: 730px;
+		    height: 60px;
+		    margin: 10px;
+		    line-height: 60px;
+		    text-indent: 20px;
+		    color: white;
+		    font-size: 24px;
+		    background-color: #087EC5;
+		}
+		
+		.shipservPopupContent {
+			margin: 10px 10px 0px 10px;
+			ol {
+				li {
+					font-family: Lato, sans-serif;
+				}
+			}
+		}
+		
+		.popupFooter {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 730px;
+			padding: 10px;
+			background-color: $lt-grey;
+			a {
+				float: right;
+			}
+		}
+	}
+
+}

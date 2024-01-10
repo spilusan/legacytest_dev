@@ -1,0 +1,21 @@
+<style>
+	p {
+		margin: 10px;
+		font-size: .9em;
+	
+	}
+	
+	
+</style>
+	
+<p>POs related to Match RFQS: <?php echo $this->pocount; ?></p>
+
+<p>RFQs to Match: <?php echo $this->rfqToMatch; ?></p>
+
+<p>RFQs from Match: <?php echo $this->rfqFromMatch; ?></p>
+
+<p>RFQs declined <?php echo $this->rfqDeclines; ?></p>
+
+<p>RFQs with at least one valid quote: <?php echo $this->rfqQuotedRFQs; ?></p>
+
+<p>Quotes to Buyers (ignores quotes with no values): <?php echo $this->quoteCount; ?></p>

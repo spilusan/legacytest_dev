@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Supplier Insight Report</title>
+		<style type="text/css">
+		
+			#outlook a { padding:0; } /* Force Outlook to provide a "view in browser" button. */
+			body { width:100% !important; } /* Force Hotmail to display emails at full width */
+			body { -webkit-text-size-adjust:none; } /* Prevent Webkit platforms from changing default text sizes. */		
+		
+			/* Reset Styles */
+			body { margin:0; padding:0; }
+			#container { margin:0; padding:0; width:636px !important; }
+			/*-*/
+		
+			body, #container { color: #2e3235; font-size: 12px; font-family: Arial, sans-serif; font-weight: normal; }
+			p, h1, h2, div, td { font-family: Arial, sans-serif; font-weight: normal; padding: 0; margin: 0; }
+			table { margin: 0; border: 0; padding: 0; }
+			td{ padding:10px; }
+			a { text-decoration: none; }
+		
+			h1.dear { font-size: 17px; font-weight: bold; color: #13b5ea; }
+			h2 { font-size: 16px; font-weight: bold; color: #2e3235; }
+			p.intro { font-size: 15px; margin-bottom: 20px; line-height: 1.1em; }
+			ul.points, ul.points li { /*list-style-position: inside;*/ margin: 0; text-align: left; }
+			ul.points { margin-left:20px; margin-top: 20px; margin-bottom: 20px; }
+			ul.points li { margin-bottom: 5px; padding: 0px; font-weight:bold; font-size:15px; }
+			p.footer { color: #939ba1; }
+			p.footer ul.small-points li { font-size:12px; color: #939ba1; }
+			div.dotted { border-bottom: 1px dotted #333333; height: 1px; width: 358px; margin: 20px auto; }
+		</style>
+
+		<!--[if gte mso 9]>
+		<style type="text/css">
+			ul.points { margin-left: 5px; }
+			ul.points li { padding: 0; margin-left: 14px; }
+		</style>
+		<![endif]-->
+
+	</head>
+
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+		<table id="container" border="0" cellpadding="0" cellspacing="0" width="636">
+						
+			<tr valign="middle">
+				<td>
+					<h1 class="dear">Dear Customer,</h1>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+						<?php if( $this->emailType != 'salesforce-not-trusted' ){?>
+						<p class="intro">
+							In the last 12 months, these are the statistics for <?= trim($this->supplierName) ?>'s Premium Profile:<br />
+						</p>
+						<ul class="points" style="margin: 0px; margin-left:10px;">
+							<?php if( $this->statistic->pagesEnquiry > 0 ){?><li><?= $this->statistic->pagesEnquiry ?> Enquir<?= ( ( $this->statistic->pagesEnquiry > 1 )?"ies":"y" )?></li><?php }?>
+							<?php if( $this->statistic->profileView > 0 ){?><li><?= $this->statistic->profileView ?> Profile View<?= ( ( $this->statistic->profileView > 1 )?"s":"" )?></li><?php }?>
+							<?php if( $this->statistic->contactView > 0 ){?><li><?= $this->statistic->contactView ?> Contact View<?= ( ( $this->statistic->contactView > 1 )?"s":"" )?></li><?php }?>
+						</ul>
+						<br />
+						<center>
+							<table border="0" cellpadding="0" cellspacing="0" width="636">
+								<tr style="height: 35px; vertical-align: middle;" valign="middle">
+									<td valign="middle" style="background-color: #e81e24; font-size: 18px; font-weight: bold; color: #fff; vertical-align: middle; text-align:center;"><a href="<?=$this->url;?>" style="color:#fff; text-decoration: none; vertical-align: middle; text-align:center;">VIEW YOUR SUPPLIER INSIGHT REPORT NOW - CLICK HERE</a></td>
+								</tr>
+							</table>
+						</center>
+						<?php } ?>
+						<p class="intro">
+							<br />
+							<?php if( $this->emailType == 'pages' ){?>
+								<!-- COPY FOR SEGMENT 1 -  PAGES -->
+								For more detail, including how you compare to competitors, click on the button above to see the brand new Supplier Insight Report for <?= trim($this->supplierName) ?>.
+								This link will work even if you don't have your Pages login details. <br />
+								<br />
+								As a valued Premium Lister, we're improving the quality of our account management this year.  The first step is providing this online report, and the important information it contains.<br />
+								<br /> 
+								From today, view this report whenever you wish on the new Analyse tab on Pages.<br />
+								<br />
+							<?php }else if( $this->emailType == 'enquiry' ){?>
+								<!-- COPY FOR SEGMENT 2 -  PAGES ENQUIRIES EMAILS, BUT NO USERS OR ADMINS -->
+								For more detail, including how you compare to competitors, click on the button above to see the brand new Supplier Insight Report for <?= trim($this->supplierName) ?>. 
+								Please note that to view Pages you need to be signed up as a User.  So clicking the above link will also automatically sign you up and you'll receive another two emails to confirm this.<br />
+								<br /> 
+								As a valued Premium Lister, we're improving the quality of our account management this year.  The first step is providing this online report, and the important information it contains.<br />
+								<br />
+								If you click the link, you can view your Supplier Insight Report whenever you wish on the new Analyse tab on ShipServ Pages, using the sign in details we'll send you.<br />
+								<br />
+							<?php }else if( $this->emailType == 'salesforce-not-trusted' ){?>
+								<!-- COPY FOR SEGMENT 3 -  SALESFORCE, GENERIC, WITHOUT  ADMIN -->
+								In the last year, <?= trim($this->supplierName) ?>'s Premium Profile on ShipServ Pages produced a number of Profile Views, contact detail views and also Enquiry Emails to your company.<br />
+								<br /> 
+								All this data is available on a brand new online Supplier Insight Report.<br />
+								<br /> 
+								Unfortunately, because you are not a registered ShipServ Pages user, I am unable to include any of your data in this email. I'd urge you to sign up to Pages so that you can see the report.  It's easy  - just reply to this email and we'll be in touch.<br />
+								<br /> 
+								Alternatively, I'd be happy to make arrangements for you to see your Supplier Insight Report if you don't wish to sign up to ShipServ Pages. Please reply to this email and I'll be in touch.<br />
+								<br />
+							<?php }else if( $this->emailType == 'salesforce-trusted' ){?>
+								<!-- COPY FOR SEGMENT 4 -  SALESFORCE, TRUSTED, NO USERS OR ADMINS -->
+								For more detail, including how you compare to competitors, click on the button above to see the brand new Supplier Insight Report for <?= trim($this->supplierName) ?>. 
+								Please note that to view Pages you need to be signed up as a User. So clicking the above link will also automatically sign you up and you'll receive another two emails to confirm this.<br />
+								<br />
+								As a valued Premium Lister, we're improving the quality of our account management this year.  The first step is providing this online report, and the important information it contains.<br />
+								<br /> 
+								If you click the link, you can view your Supplier Insight Report whenever you wish on the new Analyse tab on ShipServ Pages, using the sign in details we'll send you.<br />
+								<br />
+							<?php }?>
+							
+							I hope you find the report useful.<br />
+							<br />
+							Best regards,<br />
+							<br />
+							<?php
+							$accountManager = $this->supplier->getAccountManager(); 
+							if( $accountManager['name'] != "" )
+							{ 
+								echo $accountManager['name'] . "<br />";
+								echo "Account Manager<br />";	
+							}
+							else 
+							{
+								echo "Freddy Ingemann<br />";
+								echo "Senior VP<br />";
+							}
+							?>
+							ShipServ<br />
+							<br />
+							<br />
+							
+							<?php 
+							if( $accountManager['name'] != "" )
+							{ 
+								echo "p.s. As your account manager, if you have a question about your Premium Profile or how to improve your performance then I'd like to help. To get in contact, reply to this email, or at: " . $accountManager['email'];
+							}
+							?>
+						</p>
+						
+						<p class="footer">
+						
+							<?php if( $this->emailType == 'salesforce-not-trusted' ){?>
+								<u><b>How you access the online Supplier Insight Report for your company</b></u><br />
+								You need to be a registered Pages user and connected to your company Profile to view your Supplier Insight Report.  The ShipServ Customer Service team will deal with your request.  Please reply to this email or email:  support@shipserv.com.<br /> 
+							<br />
+							<?php }else{?>
+								<u><b>The link to your full Supplier Insight Report</b></u><br />
+								If you can't see the button above or for some reason it does not work then you can copy the following link into your browser address field:<br />
+								<?= $this->url ?><br />
+							<br />
+							<?php }?>
+							<?php if( $this->emailType == 'pages' ){?>
+							You've received this email because you are a registered ShipServ Pages User or Administrator. The link above takes you to the new Analyse tab on 
+							ShipServ Pages where the Supplier Insight Report for <?= trim($this->supplierName) ?> is, and you will be logged in under your user name.  
+							For your convenience, we've allowed this link to work without you needing to sign in or use your password this time.  
+							But for security we've made it a 'one time only' link.  So if you come to use this link again, or forward it, you'll 
+							need to sign in before you can see your Supplier Insight Report. For a reminder of your Pages password <a href="<?=$this->hostname;?>/user/forgotten-password">click here</a>.<br /> 
+							<br />
+							<?php }?>
+							<?php if( $this->emailType == 'enquiry' ){?>
+							You've received this email because we send this email address Enquiries from ShipServ Pages.  The link above takes you to the new Analyse tab on ShipServ Pages where the Supplier Insight Report for <?= trim($this->supplierName) ?> is located.  
+							As you need to be a Pages User to access the report, when you click the link/button above we will automatically create you as a ShipServ Pages user.  We will then send you two emails: one to confirm your username and password (so you can access the new report when you wish) 
+							and a second confirming that your user account has been linked to your company.<br /> 
+							<br />
+							<?php }?>
+							
+							<u><b>Comments and questions</b></u><br />
+							If you have any general comments about this email or about the Supplier Insight Report, we are monitoring the ShipServ email address this email was sent from, so just reply to this email.<br />
+							<br />
+							
+							<?php if( $this->emailType != 'salesforce-not-trusted' ){?>
+							<u><b>Definitions</b></u><br />
+							<b>Enquiries:</b> This is the number of new business enquiries your company was sent from ShipServ Pages.  All these Enquiry Emails are sent to one email address in your company; if you click the link to the full online report you will see which email this is (it's at the bottom right of the report).<br />
+							<b>Profile Views:</b> The number of times your ShipServ Pages profile was clicked on and viewed.<br />
+							<b>Contact Views:</b> Once in your profile, how many times a buyer clicked on your Contact tab to view your phone number and other contact details.<br />
+							<br />					
+							<?php }?>
+							
+							<?php if( $this->emailType == 'salesforce-not-trusted' ){?>
+							<u><b>What's in the full online report? Why should I sign up?</b></u><br />
+							The online Supplier Insight Report has these features:
+							<ul class="small-points" style="margin: 0px; margin-left:10px; color: #939ba1;">
+								<li>See the number of enquiries, company Profile Views and Contact Views - updated every day</li>
+								<li>Interactive so you can change time periods or zoom in on a section of the data to see more detail</li>
+								<li>Compare your performance to market benchmarks, which you can adjust</li>
+								<li>Easily change your company Listing to boost your performance</li>
+								<li>See the email address to which we send all your Pages enquiries.</li>
+							</ul>
+							<?php }?>
+						</p>
+				</td>
+			</tr>
+			</table>
+	</body>
+</html>

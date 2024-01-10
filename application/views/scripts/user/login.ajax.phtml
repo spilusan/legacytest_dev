@@ -1,0 +1,31 @@
+<div class="modal_left">
+	<form id="loginForm" method="post" action="/user/perform-login/format/json/">
+		<!--input type="hidden" id="loginRedirectUrl" name="loginRedirectUrl" value="/" /-->
+		<div class="form_inner">
+			
+			<div class="form_inner_body">   
+				<p>Your Username</p>
+				<input type="text" id="loginUsername" name="loginUsername" value="" />  
+				
+				<p>Your password</p>
+				<input type="password" id="loginPassword" name="loginPassword" value="" /> 
+				<p class="subtext">Have you lost you password?</p>
+				
+				<p class="subtext" style="margin-bottom:20px;">Remember Me: <input type="checkbox" id="loginRememberMe" name="loginRememberMe" /></p>  
+				
+			</div>
+            <div class="form_buttons">
+                <a href="#modal_register" name="modal" style="float:left;"><img src="/images/layout_v2/buttons/register_now_button.gif" alt="Find More" /></a> 
+                <input type="image" src="/images/layout_v2/buttons/login_now_button.gif" style="float:right;" id="loginSubmit" name="loginSubmit" value="Login" /> 
+                <div class="clear"></div> 
+            </div>
+		</div>
+	</form>
+</div>
+
+<div class="modal_right">
+	<div id="form_error" style="display:none;">
+	</div> 
+</div>
+
+<div class="clear"></div>

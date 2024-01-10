@@ -1,0 +1,168 @@
+#header {
+	&.fixed {
+		width: 2530px !important;
+	}
+}
+
+.divider {
+	&.fixed {
+		width: 2530px !important;
+	}
+}
+
+.nav {
+	.secondary {
+		#switchContainer {
+			form {
+				width: auto;
+
+				a {
+					cursor: default !important;
+				}
+
+			}
+		}
+	}
+}
+
+#body {
+	#content {
+		margin-bottom: 0;
+		padding-bottom: 0;
+		h1 .return {
+			float: right;
+			display: none;
+		}
+
+		.innerContent {
+			padding: 10px;
+
+			.reportData {
+				display: none;
+			}
+
+			.subReportData {
+				display: none;
+			}
+
+			.spbReportData {
+				display: none;
+				clear: both;
+			}
+
+			.pagination {
+				display: none;
+				ul {
+					li {
+						padding: 0 9px;
+						cursor: pointer;
+					}
+				}
+			}
+
+			.infoBox {
+				position: relative;
+				width: 875px;
+				margin: 0 auto;
+				padding: 20px 20px 20px 20px;
+				@include border-radius(6px);
+				border: 1px solid #d6dce4;
+				behavior: url(/webreporter/css/PIE.htc);
+				margin-bottom: 20px;
+				margin-top: 20px;
+
+				&.bottom {
+					margin-bottom: 0;
+				}
+
+				&.yellow {
+					border-color: #fec008;
+					@include x-multiple-colored-gradient(#fffffe 0%, #fff0c6 100%);
+					-pie-background: linear-gradient(#fffffe 0%, #fff0c6 100%);
+				}
+
+				&.info {
+					width: 791px;
+					padding-left: 104px;
+					background: url(/img/webreporter/info_icon_large.png) 20px 20px no-repeat transparent;
+				}
+
+				&.attention {
+					width: 895px;
+					line-height: 36px;
+					vertical-align: middle;
+					font-size: 13px;
+					padding: 10px;
+
+					img {
+						vertical-align: middle;
+					}
+
+					strong {
+						vertical-align: middle;
+					}
+				}
+
+				h2 {
+					color: #13b5ea;
+					font-size: 18px;
+					font-weight: bold;
+					margin:0 0 10px 0;
+				}
+
+				p {
+					font-size: 12px;
+					line-height: 1.5;
+					color: #2e3235;
+				}
+
+				.button {
+					float: right;
+					width: 127px;
+					height: 14px;
+					line-height: 1.2;
+					margin-top: 3px;
+				}
+			}
+		}
+	}
+}
+
+div#waiting{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 9990;
+
+	div.waitingMask {
+		position: fixed;
+		background: #000000;;
+		filter: alpha(opacity=80);
+		opacity: 0.8;
+		behavior: url(/webreporter/css/PIE.htc);
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		z-index: 9991;
+	}
+
+	div.waitingMessage {
+		width: 201px;
+		height: 108px;
+		margin: auto;
+		margin-top: 100px;
+		padding-left: 111px;
+		background: #ffffff url(/img/spinner_big.gif) no-repeat 66px center;
+		color: #595959;
+		font-size: 14px;
+		line-height: 108px;
+		border-radius: 7px;
+		behavior: url(/webreporter/css/PIE.htc);
+		z-index: 9999;
+		position: relative;
+	}
+}

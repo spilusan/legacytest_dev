@@ -1,0 +1,260 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+	$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+	$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+	$this->requirejs()->addModule('billing/invalid-txn');
+	function numberFormat($number, $currency = false)
+	{
+		if( $number == 222222222220 )
+		{
+			return "not transitioned";
+		}
+		else if( $number == 11111111110 )
+		{
+			return "no data";
+		}
+		else
+		{
+			return ( ($currency===true)?"$ ":"" ) . number_format($number, ($currency === true)?2:0);
+		}
+	}
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+	.billing-form{
+		font-size:12px;
+	}
+	#data{
+		margin-top:20px; margin-bottom:20px;
+	}
+	#data, #data tr, #data td {
+		border:1px solid #caedf9;
+		font-size:12px;
+	}
+	#data .table-head{
+		background-color:#caedf9;
+		font-weight:bold;
+		font-size:14px;
+	}
+	#data td{
+		vertical-align:center;
+		text-align:left;
+		padding:5px;
+	}
+
+	#data td img{
+		height:14px;
+		float: left;
+		display:none;
+	}
+	#data .right{
+		text-align:right;
+	}
+
+	#data .table-head td{
+		font-weight:bold;
+		font-size:16px;
+	}
+
+	#data .table-head td.date-info{
+		font-size:10px;
+	}
+
+	#data tbody td{
+		height: 16px;
+	}
+	#data .detail{
+		text-align:left;
+
+	}
+
+	#data .attributes{
+		font-size:10px;
+		margin-top:5px;
+		margin-bottom:5px;
+	}
+	#data .secondary-row td{
+		font-size:12px;
+	}
+	#data .exportable-column{
+		height:16px;
+		width:110px;
+	}
+	#data .ctr{
+		background-color:#f5f7fa;
+	}
+
+	#data .ca-rate{
+		background-color:#e9edf1;
+		font-weight:bold;
+	}
+
+	.content_wide .ppc-metric-container{
+		margin:10px;
+	}
+
+	.border-head{
+		border-right: 1px #fff solid !important;
+	}
+</style>
+
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Salesforce', 'url'  => '/shipmate/value-event');
+	$breadcrumbs[] = array('name' => 'Invalid transaction tools', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<style>
+    table#resultsTab .invalid {
+		text-decoration:line-through;
+	}
+</style>
+
+<div id="body" class="invalid">
+	<script type="text/javascript">
+	</script>
+	<style>
+		.red{
+			background-color: #ffcbc9;
+		}
+		.search-result{
+			background-color: #ebf0d0;
+		}
+	</style>
+	<div id="content">
+		<h1 class="styled">Invalid transactions</h1>
+		<form method="GET" class="new" id="formA">
+			<input type="text" id="searchText" name="documentInternalRefNo" value="<?= ($this->params['documentInternalRefNo']!="")?$this->params['documentInternalRefNo']:"Enter PO 'Internal ref no'..."?>" onfocus="if( this.value=='Enter PO \'Internal ref no\'...' ) this.value='';" />
+			<input type="submit" value="Search" id="searchButton" name="a" class="button medium lblue search" />
+			<input type="hidden" name="h" value="<?= md5(rand(0,100)) ?>">
+			<div style="font-size:12px; color: red; margin-top:10px;">
+			<? if(lg_count($this->searchResult)==0 && $this->params['a'] == "Search") echo "Document cannot be found. Please enter a valid ORD_INTERNAL_REF_NO (This is not ORDER REF NO)"?>
+			</div>
+
+		    <table style="margin: auto;  width:100%;">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		            	<div style="float: right;">
+							<iframe name="documentPreview" style="width:675px; height:1200px;"></iframe>
+		            	</div>
+	            		<div style="font-size:14px; margin-top:10px; margin-bottom:10px; line-height:16px;">
+							<table id="resultsTab" width="800">
+								<thead>
+									<tr>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th colspan="4" style="text-align:center;">Doc Preview</th>
+										<th colspan="2" style="text-align:center;">Value</th>
+										<th colspan="2" rowspan="2" style="text-align:center;">Action</th>
+
+									</tr>
+									<tr>
+										<th></th>
+										<th class="left">Buyer</th>
+										<th class="left">Supplier</th>
+										<th>RFQ</th>
+										<th>QOT</th>
+										<th>ORD</th>
+										<th>POC</th>
+										<th>(ORD)</th>
+										<th>(POC)</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?
+									function drawRow($txn, $searchResult = false)
+									{
+										static $numRows;
+										$quote = $txn->getQuote();
+										$order = $txn->getPurchaseOrder();
+										$orderConfirmation = $order->getPurchaseOrderConfirmation();
+										$rfq = $txn->getRfq();
+										$buyer = $txn->getBuyer();
+										$supplier = $txn->getSupplier();
+										?>
+										<tr class="<?= ($searchResult===true)?"search-result":"red"?>">
+											<td><?= ++$numRows;?></td>
+											<td class="left"><?= $buyer->bybBranchCode . " - " . $buyer->bybName?></td>
+											<td class="left"><?= $supplier->tnid . " - " . $supplier->name?></td>
+											<td><a target="documentPreview" href="<?php echo ($rfq!==null)?$rfq->getUrl():"";?>"><?php echo $rfq->rfqInternalRefNo?></a></td>
+											<td><a target="documentPreview" href="<?php echo ($quote!==null)?$quote->getUrl():"";?>"><?php echo $quote->qotInternalRefNo?></a></td>
+											<td><a target="documentPreview" href="<?php echo ($order!==null)?$order->getUrl():"";?>"><?php echo $order->ordInternalRefNo?></a></td>
+											<td><a target="documentPreview" href="<?php echo ($orderConfirmation!==null)?$orderConfirmation->getUrl():"";?>"><?php echo $orderConfirmation->pocOrdInternalRefNo?></a></td>
+											<td class="right <?= $txn->isInvalidOrd() ? "invalid":""?>"><?= $txn->ordCurrency . " " . $txn->ordTotalCost ?></td>
+											<td class="right <?= $txn->isInvalidPoc() ? "invalid":""?>"><?= $txn->pocCurrency . " " . $txn->pocTotalCost ?></td>
+											<td style="text-align:center;">
+												<? if( $searchResult === false && $txn->isInvalidOrd() ){?>
+													<input type="button" value="Set ORD as Valid" class="button small green setValid" docType="ORD" docId="<?= $order->ordInternalRefNo?>" pocExist="<?= ($orderConfirmation->pocOrdInternalRefNo!="")?"Y":"N"?>">
+													<? }else{?>
+													<input type="button" value="Set ORD as Invalid" class="button small red setInValid" docType="ORD" docId="<?= $order->ordInternalRefNo?>" pocExist="<?= ($orderConfirmation->pocOrdInternalRefNo!="")?"Y":"N"?>">
+													<? }?>
+											</td>
+											<td style="text-align:center;" class="last">
+												<textarea class="hidden" id="commentFor<?= $order->ordInternalRefNo?>"><?= $txn->itxComment?></textarea>
+												<? if( $searchResult === false && $txn->isInvalidPoc() ){?>
+												<input type="button" value="Set POC as Valid" class="button small green setValid" docType="POC" docId="<?= $order->ordInternalRefNo?>" pocExist="<?= ($orderConfirmation->pocOrdInternalRefNo!="")?"Y":"N"?>">
+												<? }else{?>
+												<input type="button" value="Set POC as Invalid" class="button small red setInValid" docType="POC" docId="<?= $order->ordInternalRefNo?>" pocExist="<?= ($orderConfirmation->pocOrdInternalRefNo!="")?"Y":"N"?>">
+												<? }?>
+											</td>
+										</tr>
+										<?
+									}
+									if( lg_count($this->invalidTxn) == 0 && lg_count($this->searchResult) == 0)
+									{
+										?>
+										<tr>
+											<td colspan="11" class="left">No invalid transaction found</td>
+										</tr>
+										<?
+									}
+									foreach((array)$this->searchResult as $txn)
+									{
+										drawRow($txn, true);
+									}
+
+									foreach((array)$this->invalidTxn as $txn)
+									{
+										drawRow($txn);
+									}
+
+									?>
+								</tbody>
+			            	</table>
+			            	</form>
+
+			            	<div id="modal">
+			            		<div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    							<div class="modalBody">
+    								<h1 class="styled">Set as valid</h1>
+				            		<form action="/reports/invalid-txn-picker" method="post" class="new">
+				            			<input type="hidden" id="docId" name="docId" />
+				            			<input type="hidden" id="docType" name="docType" />
+				            			<div>
+				            				<p>User: <?= $this->user->firstName . " " . $this->user->lastName . " (" . $this->user->email . ")" ?></p>
+					            			<p>Comments:</p>
+					            			<textarea name="comments" rows="20"></textarea><br />
+					            			<input value="Cancel" type="button" class="button red medium close" />
+					            			<input value="Set ORD as Invalid" name="a" type="submit" id="actionButtonOrd" class="invalidBtn button medium green" />
+					            			<input value="Set POC as Invalid" name="a" type="submit" id="actionButtonPoc" class="invalidBtn button medium green" />
+					            			<input value="Continue" name="a" type="submit" id="markingDocumentToValidButton" class="validBtn button medium green" />
+				            			</div>
+				            		</form>
+				            	</div>
+			            	</div>
+		    			</div>
+		    		</td>
+		    	</tr>
+		    </table>
+	</div>
+</div>
+<div class="clear"></div>

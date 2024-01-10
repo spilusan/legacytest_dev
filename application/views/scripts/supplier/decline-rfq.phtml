@@ -1,0 +1,88 @@
+<?php
+$this->headLink()->appendStylesheet('/css/shipmate.css')
+->appendStylesheet('/css/uniform.rfq.css');
+
+?>
+
+<style>
+    .sub-heading-3{
+        background-color: #caedf9;
+        padding:5px;
+        margin-bottom:20px;
+    }
+
+    .innerContent table{
+        width: 60%;
+        font-size:12px;
+        margin-bottom: 20px;
+    }
+    .innerContent table td{
+        padding-top: 5px;
+        padding-bottom: 8px;
+    }
+
+    .innerContent table .content{
+        font-weight:bold;
+    }
+
+    .innerContent form{
+        font-size:14px;
+    }
+
+    .innerContent form textarea{
+        border: 1px solid #bec4cb;
+        width: 400px;
+        height: 225px;
+    }
+</style>
+<div id="body" style="width:1150px;">
+	<div id="content" style="width: 1150px;">
+        <h1 class="styled">Decline RFQ</h1>
+		<div class="innerContent">
+			<div class="">
+                <div class="sub-heading-3">RFQ Reference Number: <?= $this->rfq->rfqRefNo?></div>
+<? //print_r($this->rfq->getSupplier()) ?>
+                <table>
+                    <tr>
+                        <td>Subject</td><td class="content"><?= $this->rfq->rfqSubject ?></td>
+                        <td>Delivery Date</td><td class="content"><?= $this->rfq->rfqDateTime ?></td>
+                    </tr>
+                    <tr>
+                        <td>RFQ Submitted Date</td>
+                        <td class="content"><?= $this->rfq->rfqCreatedDate ?></td>
+                        <td>Delivery Port</td>
+                        <td class="content"><?= $this->rfq->getPort()->name ?></td>
+                    </tr>
+                    <tr>
+                        <td>Buyer Company Name</td>
+                        <td class="content"><?= $this->rfq->getBuyerBranch()->bybName ?>
+                    </tr>
+                    <tr>
+                        <td>Vessel Name</td>
+                        <td class="content"><?= $this->rfq->rfqVesselName ?>
+                    </tr>
+                    <tr>
+                        <td>Supplier Company Name</td>
+                        <td class="content"><?= $this->rfq->getSupplier()->name ?>
+                    </tr>
+                </table>
+
+                <a href="<?= $this->rfq->getUrl() ?>" target="_blank">Click here to view RFQ</a>
+
+                <br />
+                <br />
+
+                <form>
+                    Please provide a reason for decline<br />
+                    <textarea></textarea>
+                    <div class="clear"></div>
+
+                    <input type="submit" name="action" value="Send Decline" />
+                </form>
+
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

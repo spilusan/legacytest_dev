@@ -1,0 +1,205 @@
+<?php 
+	$supplierName = trim($this->supplierName);
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Pages RFQs</title>
+		<style type="text/css">
+		
+			#outlook a { padding:0; } /* Force Outlook to provide a "view in browser" button. */
+			body { width:100% !important; } /* Force Hotmail to display emails at full width */
+			body { -webkit-text-size-adjust:none; } /* Prevent Webkit platforms from changing default text sizes. */		
+		
+			/* Reset Styles */
+			body { margin:0; padding:0; }
+			#container { margin:0; padding:0; width:700px !important; }
+			/*-*/
+		
+			body, #container { color: #2e3235; font-size: 12px; font-family: Arial, sans-serif; font-weight: normal; }
+			p, h1, h2, div, td { font-family: Arial, sans-serif; font-weight: normal; padding: 0; margin: 0; }
+			table { margin: 0; border: 0; padding: 0; }
+			td{ padding:10px; }
+			a { text-decoration: none; }
+		
+			h1.dear { font-size: 17px; font-weight: bold; color: #13b5ea; }
+			h2 { font-size: 16px; font-weight: bold; color: #2e3235; }
+			p.intro { font-size: 15px; margin-bottom: 20px; line-height: 1.1em; }
+			ul.points, ul.points li { /*list-style-position: inside;*/ margin: 0; text-align: left; }
+			ul.points { margin-left:20px; margin-top: 20px; margin-bottom: 20px; }
+			ul.points li { margin-bottom: 5px; padding: 0px; font-weight:bold; font-size:15px; }
+			p.footer { color: #939ba1; }
+			p.footer ul.small-points li { font-size:12px; color: #939ba1; }
+			div.dotted { border-bottom: 1px dotted #333333; height: 1px; width: 358px; margin: 20px auto; }
+		</style>
+
+		<!--[if gte mso 9]>
+		<style type="text/css">
+			ul.points { margin-left: 5px; }
+			ul.points li { padding: 0; margin-left: 14px; }
+		</style>
+		<![endif]-->
+
+	</head>
+
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+		<table id="container" border="0" cellpadding="0" cellspacing="0" width="700">
+			
+			<tr valign="middle">
+				<td>
+					<h1 class="dear">Dear Customer,</h1>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<?php if( $this->emailType == 'pages' ){?>
+						<!-- COPY FOR SEGMENT 1 -  PAGES -->
+						<p class="intro">
+							<? if( $this->statistic['openRate'] > 80 ){?>
+								You opened <?= $this->statistic['openRate']?>% of the Pages RFQ<?= ($this->statistic['sent']>1)?"s":""?> sent to <b><?= $supplierName ?></b> in the last 12 months.<br />
+								<br />
+							<? }else{?>
+								You might be missing out on new business because you only opened <?= $this->statistic['openRate']?>% of the Pages RFQ<?= ($this->statistic['sent']>1)?"s":""?> sent to <b><?= $supplierName ?></b> in the last 12 months.<br />
+								<br />
+								That means, of the <?= $this->statistic['sent']?> RFQ<?= ($this->statistic['sent']>1)?"s":""?> you received in the last 12 months, your company didn't see who the buyer was on <?= $this->statistic['notClicked']?> of them.
+								<br />
+							<? }?>
+						</p>
+						<center>
+							<table border="0" cellpadding="0" cellspacing="0" width="700">
+								<tr style="height: 35px; vertical-align: middle;" valign="middle">
+									<td valign="middle" style="background-color: #e81e24; font-size: 18px; font-weight: bold; color: #fff; vertical-align: middle; text-align:center;"><a href="<?=$this->url;?>" style="color:#fff; text-decoration: none; vertical-align: middle; text-align:center;">CLICK HERE TO VIEW ALL OF YOUR RFQ<?= ($this->statistic['sent']>1)?"s":""?> <?= ($this->statistic['openRate'] <= 80 ) ? "INCLUDING THOSE MISSED":""; ?></a></td>
+								</tr>
+							</table>
+						</center>
+					
+						<p class="intro">
+							<br />	
+							Anyone, like you, with a Pages login in can now see, reply to and block RFQs on Pages.<br />
+							<br />
+						</p>
+					<?php }else if( $this->emailType == 'enquiry' ){?>
+						<!-- COPY FOR SEGMENT 2 -  PAGES ENQUIRIES EMAILS, BUT NO USERS OR ADMINS -->							
+						<p class="intro">
+							<? if( $this->statistic['openRate'] > 80 ){?>
+								You opened <?= $this->statistic['openRate']?>% of the Pages RFQ<?= ($this->statistic['sent']>1)?"s":""?> sent to <b><?= $supplierName ?></b> in the last 12 months.<br />
+							<? }else{?>
+								You might be missing out new business because you only opened <?= $this->statistic['openRate']?>% of the Pages RFQ<?= ($this->statistic['sent']>1)?"s":""?> sent to <b><?= $supplierName ?></b> in the last 12 months.<br />
+								<br />
+								That means, of the <?= $this->statistic['sent']?> RFQ<?= ($this->statistic['sent']>1)?"s":""?> you received in the last 12 months, you missed out on viewing full details and buyer information on <?= $this->statistic['notClicked']?> of them.<br />
+							<? }?>
+						</p>
+						<center>
+							<table border="0" cellpadding="0" cellspacing="0" width="700">
+								<tr style="height: 35px; vertical-align: middle;" valign="middle">
+									<td valign="middle" style="background-color: #e81e24; font-size: 18px; font-weight: bold; color: #fff; vertical-align: middle; text-align:center;"><a href="<?=$this->url;?>" style="color:#fff; text-decoration: none; vertical-align: middle; text-align:center;">CLICK HERE TO VIEW ALL OF YOUR RFQ<?= ($this->statistic['sent']>1)?"s":""?> <?= ($this->statistic['openRate'] <= 80 ) ? "INCLUDING THOSE MISSED":""; ?></a></td>
+								</tr>
+							</table>
+						</center>
+						<p class="intro">
+							<br />
+							The other tool you'll want to use is the new BLOCK BUYER button.  This will block any more Pages RFQs from coming to you from that buyer.  You'll find this button on the bottom of the email notifications you get sent.<br /> 
+							<br />
+						</p>
+					<?php }?>
+					
+					
+					
+					<p class="intro">
+						Best regards and thank you for using ShipServ.<br />
+						<br />
+						<?php
+						echo "Freddy Ingemann<br />";
+						echo "Senior VP, Supplier Account Management<br />";
+						?>
+						ShipServ<br />
+						<br />
+						<br />
+						P.S If you'd like to give me some feedback about your Pages RFQs, please just reply to this email.<br />
+						<br />
+					</p>
+					
+					<p class="footer">
+						<?php if( $this->emailType == 'pages' ){?>
+							<b>Why is ShipServ sending me this email?</b><br />
+							You are a registered Pages User or Administrator for <b><?= $supplierName ?></b>.<br />
+							<br />
+							
+							<b>The links in this email</b><br />
+							If you can't see the button above or for some reason it does not work then you can copy the following link into your browser address field:<br />
+							<span style="display:block; width:700px; overflow:hidden; word-wrap:break-word;"><?= $this->url?></span>
+							<br />
+							The links in this email will work even if you don't have your Pages password to hand - but only the very first time you click it (this is for security reasons).  After this you will need to use sign in to Pages using your email and password.  It's easy to get a <a href="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname ?>/user/forgotten-password">password reminder</a>.<br />
+							<br />
+							
+							<b>What does 'opened'  mean when you mention Pages RFQs?</b><br />
+							Opened means the 'view details' button was clicked on the email or in the RFQ Inbox.  Without doing this you cannot view who the buyer sending the RFQ is.<br />
+							<br />
+							
+							<b>4 New tools for Suppliers</b><br />
+							You can view your overall performance on ShipServ and also see the detail of the RFQs you received in the last 12 months. To use the new tools, <a href="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/help/new-features">click here</a>.<br />
+							<br />
+							
+							<b>How can I arrange for more people to see these tools and all this information?</b><br />
+							They have to sign up to be a Pages User or Administrator. To read more about this, <a href="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/help/sellerfaq/register">click here</a>.<br />
+							<br />
+							
+							<b>Feedback, questions and help</b><br />
+							Please see our <a href="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/help/sellerfaq">supplier FAQs</a> or reply to this email.<br />
+							
+							
+							
+							
+													
+						<?php }else{?>
+							<b>Why is ShipServ sending me this email?</b><br />
+							For <b><?= $supplierName ?></b>, there is only ONE email address which gets sent all ShipServ Pages RFQs - and you are this person.  If you are not the right person to receive these, you can change where we send notifications <a href="<?= $this->supplier->getEditUrl() ?>">here</a>.<br />
+							<br />
+							
+							<b>The links in this email</b><br />
+							If you can't see the button above or for some reason it does not work then you can copy the following link into your browser address field:<br />
+							<span style="display:block; width:700px; overflow:hidden; word-wrap:break-word;"><?= $this->url?></span>
+							<br />
+							
+							<? // If user is registered ?>
+							<? if( $this->user !== false ){?>
+							The links in this email will work even if you don't have your Pages password to hand - but only the very first time you click it (this is for security reasons).  After this you will need to use sign in to Pages using your email and password.  It's easy to get a <a href="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname ?>/user/forgotten-password">password reminder</a>.<br />
+							<br />
+							<? }else{ ?>
+							These links take you to the new RFQ Inbox for <b><?= $supplierName ?></b> on ShipServ Pages. As you need to be a Pages User to access it, when you click the link/button above we will automatically create you as a ShipServ Pages user.  We will then send you two emails: one to confirm your username and password (so you can access the new report when you wish) and a second confirming that your user account has been linked to your company.<br /> 
+							<br />
+							<? }?>
+							
+							<b>What does 'opened'  mean when you mention Pages RFQs?</b><br />
+							We define this as meaning clicking on the 'view details' button on the email or in the RFQ Inbox. Without doing this you cannot view who the buyer sending the RFQ is.<br /> 
+							 <br />
+							<b>4 New tools for Suppliers</b><br />
+							<a href="<?= $this->url?>">Click here to view all the new tools</a>.
+							<? if( $this->user === false ){?>Clicking the link will sign you up for Pages so you can see the tools whenever you wish.<? }?><br />
+							<br />
+							
+							<b>Feedback, questions and help</b><br />
+							Please see our <a href="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/help/sellerfaq">supplier FAQs</a> or reply to this email.<br />
+							
+							<br />
+						<?php }?>
+						
+						<? 
+							if( $_SERVER['APPLICATION_ENV'] != "production" )
+							{
+								$emailType[] = $this->email;
+								$emailType[] = $this->emailType . " email";
+								$emailType[] = ($this->supplier->isPremium())?"Premium Lister":"Basic Lister";
+								$emailType[] = "Open-rate " . $this->statistic['openRate'] . "%";
+								$emailType[] = ($this->user!==false) ? "Pages User/Admin":"NOT a Pages User/Admin"
+								
+								?><div style="color: #bec4cb;"><br /><br /><br /><b>Debug</b><br /><?= implode(" - ", $emailType) ?> <br />(this debug message only available on DEV and UAT)</div><?php 
+							}
+						?>
+					</p>
+				</td>
+			</tr>
+			</table>
+	</body>
+</html>

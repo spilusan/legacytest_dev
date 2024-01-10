@@ -1,0 +1,63 @@
+<td class="left">{{id}}</td>
+<td class="left">{{name}}</td>
+<td class="center" title="{{country.name}}">{{country.code}}</span></td>
+<td>
+	{{#if activePromotion.rate.target}}
+		{{formatNumRoundOne activePromotion.rate.target}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+<td>
+	{{#if activePromotion.rate.standard}}
+		{{formatNumRoundOne activePromotion.rate.standard}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+<td class="left">
+	{{formatIsoDate dateAddedToSegment}}
+</td>
+<td class="center small">
+	{{#if autoMatch.enabledFully}}
+		<img src="/img/prime-supplier/greentick.png" alt="check" />
+	{{/if}}
+</td>
+<td>
+	{{#if keywordSetCount}}
+		{{keywordSetCount}}
+	{{else}}
+		0
+	{{/if}}
+</td>
+<td>{{transactions.match.eventCount}}</td>
+<td>{{formatNumRoundOne transactions.match.quoteRate}}</td>
+<td>
+	{{#if transactions.match.averageResponseTime}}
+		{{formatNumRoundOne transactions.match.averageResponseTime}}
+	{{else}}
+		None
+	{{/if}}
+</td>
+<td>{{transactions.match.openEventCount}}</td>
+<td>{{formatNumRoundOne transactions.match.quoteWinRate}}</td>
+<td>{{formatCurrency transactions.match.potentialSavings}}</td>
+<td>{{formatCurrency transactions.match.gmv}}</td>
+<td>{{transactions.match.quoteCount.competitive}}</td>
+
+<td>
+	{{#if transactions.match.cheapestRate}}
+		{{formatNumRoundOne transactions.match.cheapestRate}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+<td>
+	<a href="#" class="actionButton moveDown" title="Demote"><img src="/img/prime-supplier/roundarrowdown.png"></a> 
+	<a href="/reports/gmv?tnid={{id}}" class="actionButton money" title="GMV Report" target="_blank"><img src="/img/prime-supplier/dollar.png"></a> 
+	<a href="/reports/supplier-conversion?tnid={{id}}" class="actionButton check" title="Conversions" target="_blank"><img src="/img/prime-supplier/tick.png"></a> 
+	<a href="/supplier/profile/s/{{id}}" class="actionButton view" title="View" target="_blank"><img src="/img/prime-supplier/eye.png"></a> 
+	<a href="/admin" class="actionButton edit" title="Edit profile" target="_blank"><img src="/img/prime-supplier/edit.png"></a>
+	<a href="/reports/supplier-stats?tnid={{id}}" class="actionButton graph" title="Supplier stats" target="_blank"><img src="/img/prime-supplier/graph.png"></a> 
+	<a href="#" class="actionButton text" title="Automatch settings"><img src="/img/prime-supplier/a.png"></a>
+</td>

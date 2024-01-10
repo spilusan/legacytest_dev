@@ -1,0 +1,124 @@
+			<table cellpadding="0" cellspacing="0" class="poValue">
+				<thead>
+					<tr>
+						<th class="b-bottom">PO value by customer analysis<br><span class="reduceSize">(selected customers only)</span></th>
+						<th class="b-bottom padding-r">
+								{{#if hasSpinner}}
+									<div class="spinnerIcon"></div>&nbsp;
+								{{/if}}
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan="2">
+							<table cellpadding="0" cellspacing="0" class="poTable">
+								<thead>	
+									<tr>
+										<th class="poCol1">&nbsp;</th>
+										<th>{{dateFrom}} to {{dateTo}}</th>
+										<th>{{dateFromComp}} to {{dateToComp}}</th>
+									</tr>
+								</thead>
+							</table>
+							<div id="scrollWrapper">
+								{{#if hasSpinner}}
+									&nbsp;
+								{{else}}
+								<table cellpadding="0" cellspacing="0" id="poTableScrollTable">
+									<tr>
+										<td>
+										{{#if collection.attributes.buyers-ranked-by-gmv-period1.length}}
+											<table cellpadding="0" cellspacing="0" border="0" class="poTable">
+												<tbody>
+													<tr>
+														<td colspan="3"><strong>Total PO value{{#unless comparePeriod}}, most recent period{{/unless}}</strong></td>
+													</tr>
+
+													{{#each collection.attributes.buyers-ranked-by-gmv-period1}}
+													<tr>
+														<td class="poCol1"><span>{{this.buyer-name}}</span></td>	
+														<td>$ {{formatNumber this.po-value1}}k</td>
+														<td>$ {{formatNumber this.po-value2}}k</td>
+													</tr>
+													{{/each}}
+												</tbody>
+											</table>
+										{{/if}}
+
+
+										{{#if collection.attributes.buyers-ranked-by-increased-gmv-btw-periods.length}}
+											<table cellpadding="0" cellspacing="0" class="poTable">
+												<tbody>
+
+													<tr>
+														<td colspan="3"><strong>Largest increases between 2 periods</strong></td>
+													</tr>										
+
+													{{#each collection.attributes.buyers-ranked-by-increased-gmv-btw-periods}}
+													<tr>
+														<td class="poCol1"><span>{{this.buyer-name}}</span></td>	
+														<td>$ {{formatNumber this.po-value1}}k</td>
+														<td>$ {{formatNumber this.po-value2}}k</td>
+													</tr>
+													{{/each}}
+												</tbody>
+											</table>
+										{{/if}}
+
+										{{#if collection.attributes.buyers-ranked-by-gmv-period1-zero-period2.length}}
+											<table cellpadding="0" cellspacing="0" class="poTable">
+												<tbody>
+													<tr>
+														<td colspan="3"><strong>Buyers where no trade in first period</strong></td>
+													</tr>	
+													{{#each collection.attributes.buyers-ranked-by-gmv-period1-zero-period2}}
+													<tr>
+														<td class="poCol1"><span>{{this.buyer-name}}</span></td>	
+														<td>$ {{formatNumber this.po-value1}}k</td>
+														<td>$ {{formatNumber this.po-value2}}k</td>
+													</tr>
+													{{/each}}
+												</tbody>
+											</table>
+										{{/if}}
+
+									</td>
+								</tr>
+							</table>
+								{{/if}}
+
+							</div>
+							{{#if hasSpinner}}
+								&nbsp;
+							{{else}}
+							<table cellpadding="0" cellspacing="0" class="poTable">
+									<tr>
+										<td class="summaryC1"><strong>Total number of Customers</strong></td>
+										<!-- TODO there is no new and old total number of byyers in backend, clarigy this -->
+										<td><strong>{{formatNumber collection.attributes.total-buyer-count1}}</strong></td>
+										<td><strong>{{formatNumber collection.attributes.total-buyer-count2}}</strong></td>
+									</tr>
+
+									<tr>
+										<td><strong>Total PO value</strong></td>
+										<!-- TODO there is no new and old total number of byyers in backend, clarigy this -->
+										<td><strong>$ {{formatNumber collection.attributes.total-po-value1}}k</strong></td>
+										<td><strong>$ {{formatNumber collection.attributes.total-po-value2}}k</strong></td>
+										<!-- <td><strong>{{attributes.total-buyer-count}}</strong></td> -->
+									</tr>
+							</table>	
+							{{/if}}
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2" class="subTitle">
+							{{#if hasSpinner}}
+								&nbsp;
+							{{else}}
+								<a href="#" id="poDetails">View more details</a>
+							{{/if}}
+						</td>
+					</tr>
+				</tbody>
+			</table>

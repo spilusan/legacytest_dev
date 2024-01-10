@@ -1,0 +1,197 @@
+<?php
+$catid = $this->catId;
+$folderid = $this->folderId;
+$tnid = $this->tnid;
+$start = $this->itemStart;
+$query = $this->query;
+//var_dump($this->searchResults);
+
+
+// How many adjacent pages should be shown on each side?
+$adjacents = 1;
+
+/*
+   First get total number of rows in data table.
+   If you have a WHERE clause in your query, make sure you mirror it here.
+*/
+
+$total_pages = (isset($this->searchResults['itemsFound'])? $this->searchResults['itemsFound'] : 0);
+
+/* Setup vars for query. */
+$limit = 50; 								//how many items to show per page
+$page = $this->itemStart;
+if($page!="0")
+	$start = (($page/50) - 1) * $limit; 			//first item to display on this page
+else
+	$start = 0;								//if no page var is given, set start to 0
+
+
+/* Setup page vars for display. */
+if ($page == 0) $page = 1;					//if no page var is given, default to 1.
+$prev = ($page/50) - 1;							//previous page is page - 1
+$next = ($page/50) + 1;							//next page is page + 1
+$lastpage = ceil($total_pages/$limit)-1;		//lastpage is = total pages / items per page, rounded up.
+$lpm1 = $lastpage - 1;						//last page minus 1
+
+/*
+	Now we apply our rules and draw the pagination object.
+	We're actually saving the code to a variable in case we want to draw it more than once.
+*/
+
+$pagination = "";
+if($lastpage >= 1)
+{
+	$pagination .= '<div class="content_wide_footer_cat">';
+	//previous button
+	if (($page/50) >= 1)
+		$pagination.= '<div id="search_next_previous" style="border-right:none;"><a href="#" id="'.$catid.'" rel="'.(($page)-50).'" class="prev">PREV</a></div><div id="search_pagination">
+		';
+	else
+		$pagination.= '<div id="search_next_previous" style="border-right:none;"><p class="prev">PREV</p></div><div id="search_pagination">
+		';
+
+	//pages
+	if ($lastpage < 7 + ($adjacents * 2))	//not enough pages to bother breaking it up
+	{
+		for ($counter = 0; $counter <= $lastpage; $counter++)
+		{
+			if ($counter == ($page/50) || $counter==$this->itemStart)
+				$pagination.= '<span id="'.$catid.'" class="current" rel="'.($counter*50).'">'.($counter+1).'</span>';
+			else
+				$pagination.= '<a href="#" class="page" id="'.$catid.'" rel="'.($counter*50).'">'.($counter+1).'</a>';
+		}
+	}
+	elseif($lastpage > 5 + ($adjacents * 2))	//enough pages to hide some
+	{
+		//close to beginning; only hide later pages
+		if(($page/50) < 1 + ($adjacents * 2))
+		{
+			for ($counter = 0; $counter < 4 + ($adjacents * 2); $counter++)
+			{
+				if ($counter == ($page/50) || $counter==$this->itemStart)
+					$pagination.= '<span id="'.$catid.'" class="current" rel="'.($counter*50).'">'.($counter+1).'</span>';
+				else
+					$pagination.= '<a href="#" class="page" id="'.$catid.'" rel="'.($counter*50).'">'.($counter+1).'</a>';
+			}
+			$pagination.= '<span class="ellipsis">...</span>';
+			$pagination.= '<a href="#" class="page" id="'.$catid.'" rel="'.($lpm1*50).'">'.$lpm1.'</a>';
+			$pagination.= '<a href="#" class="page" id="'.$catid.'" rel="'.($lastpage*50).'">'.$lastpage.'</a>';
+		}
+		//in middle; hide some front and some back
+		elseif($lastpage - ($adjacents * 2) > ($page/50) && ($page/50) > ($adjacents * 2))
+		{
+			$pagination.= '<a href="#" class="page" id="'.$catid.'" rel="0">1</a>';
+			$pagination.= '<a href="#" class="page" id="'.$catid.'" rel="50">2</a>';
+			$pagination.= '<span class="ellipsis">...</span>';
+			for ($counter = ($page/50) - $adjacents; $counter <= ($page/50) + $adjacents; $counter++)
+			{
+				if ($counter == ($page/50) || $counter==$this->itemStart)
+					$pagination.= '<span id="'.$catid.'" class="current" rel="'.($counter*50).'">'.($counter+1).'</span>';
+				else
+					$pagination.= '<a href="#" class="page" id="'.$catid.'" rel="'.($counter*50).'">'.($counter+1).'</a>';
+			}
+			$pagination.= '<span class="ellipsis">...</span>';
+			$pagination.= '<a href="#" class="page" id="'.$catid.'" rel="'.($lpm1*50).'">'.$lpm1.'</a>';
+			$pagination.= '<a href="#" class="page" id="'.$catid.'" rel="'.($lastpage*50).'">'.$lastpage.'</a>';
+		}
+		//close to end; only hide early pages
+		else
+		{
+			$pagination.= '<a href="#" class="page" id="'.$catid.'" rel="0">1</a>';
+			$pagination.= '<a href="#" class="page" id="'.$catid.'" rel="50">2</a>';
+			$pagination.= '<span class="ellipsis">...</span>';
+			for ($counter = $lastpage - (2 + ($adjacents * 2)); $counter <= $lastpage; $counter++)
+			{
+				if ($counter == ($page/50))
+					$pagination.= '<span id="'.$catid.'" class="current" rel="'.($counter*50).'">'.($counter).'</span>';
+				else
+					$pagination.= '<a href="#" class="page" id="'.$catid.'" rel="'.($counter*50).'">'.($counter).'</a>';
+			}
+		}
+	}
+	//next button
+	if (($page/50) < $counter - 1)
+		$pagination.= ' </div><div id="search_next_previous"><a href="#" class="next" id="'.$catid.'" rel="'.(round($page+50,-1)).'">NEXT</a></div>';
+	else
+		$pagination.= ' </div><div id="search_next_previous"><p class="next">NEXT</p></div>';
+	$pagination.= '<div class="clear"></div> </div>';
+}
+
+$i = $start;
+
+if (isset($this->searchResults['items']) && is_array($this->searchResults['items'])) {
+    foreach ($this->searchResults['items'] as $document) {
+    	$number = ++$i;
+    	?>
+    
+    	<div class="product_items" id="<?php echo $number;?>" rel="<?php echo $query;?>">
+    		<?php
+    		if (!$document['thumbnailUrl'])
+    		{
+    			?>
+    			<div class="image"><img src="/images/iphoto.png" alt="" /></div>
+    			<?php
+    		}
+    		else
+    		{
+    			$imgUrl = $this->catalogueImageUrlPrefix . $tnid . '/' . $document['catalogueId'] . '/' . $document['thumbnailUrl'];
+    			?>
+    			<div class="image"><a class="rollover" href="<?php echo $imgUrl ?>" target="_blank"><img src="<?php echo $imgUrl ?>" alt="" /></a></div>
+    			<?php
+    		}
+    		?>
+    		<div id="<?echo $id;?>" class="text">
+    			<h2><?php echo $document['description'];?></h2>
+    			<p>
+    				Part No. -
+    				<?php
+    					echo $document['partNo']; ?> &#183;
+    				UOM -
+    				<?php
+    					echo $document['uom'];
+    					if($document['impaNo']){?>
+    						, IMPA No. - <?php echo $document['impaNo'];
+    				}?>
+    			</p>
+    			<?php if($document['extendedDesc']){?>
+    				<p>
+    
+    					<?=$document['extendedDesc'];?>
+    
+    				</p>
+    			<?php }
+    
+    			if($document['maDocument']){?>
+    			<p>
+    				<a target="_blank" href="https://legacy.shipserv.com/ShipServ/pages/attachments/<?=$tnid;?>-ma/<?=$document['maDocument'];?>"><?=$document['maDocument'];?></a>
+    			</p>
+    			<?}?>
+    		</div>
+    		<!--div class="price">
+    			<p>Price : <br/><?php echo $document['price']; ?></p>
+    		</div-->
+    		<div class="clear"></div>
+    	</div>
+<?php
+    }
+}
+?>
+
+<div class="clear"></div>
+
+<?php echo $pagination; ?>
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function() {
+	$('img.rollover').hover(function () {
+	        var x = $(this).attr('id');
+			$('#rollover_'+x).show();
+	      },
+	      function () {
+		    var x = $(this).attr('id');
+	        $('#rollover_'+x).hide();
+	      }
+	    );
+
+});
+</script>

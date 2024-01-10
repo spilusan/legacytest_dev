@@ -1,0 +1,22 @@
+<div>
+	<label for="<?php echo $this->name; ?>"><?php echo $this->label; ?></label>
+</div>
+
+<?php
+$output = $this->value;
+$output = $this->string()->sanitise( $output, ( $this->nl2br === true ) );
+
+switch ($this->type)
+{
+	case 'text':
+		?>
+		<div class="field-view <?php if ($this->class) echo ' '.$this->class; ?>"><?php echo $output;?></div>
+		<?php
+	break;
+	
+	case 'paragraph':
+		?>
+		<p class="field-view <?php if ($this->class) echo ' '.$this->class; ?>"><?php echo $output; ?></p>
+		<?php
+	break;
+}

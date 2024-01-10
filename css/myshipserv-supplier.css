@@ -1,0 +1,124 @@
+#header
+{
+	height: 90px;
+	background-image: url(/images/nav/top-bar.png);
+	background-repeat: repeat-x;
+	position: relative;
+}
+
+#header h1#logo
+{
+	display: block;
+	text-indent: -9000px;
+	font-size: 0px;
+	line-height: 0px;
+	background-image: url(/images/nav/myshipserv-top-logo.png);
+	background-repeat: no-repeat;
+	height: 90px;
+}
+
+#header ul#navigation
+{
+	position: absolute;
+	top: 0px;
+	right: 15px;
+}
+
+#header ul#navigation li
+{
+	float: left;
+	margin-left: 50px;
+}
+
+#header ul#navigation li a
+{
+	color: white;
+	font-weight: bold;
+	font-size: 0.813em;
+}
+
+#main_content_area
+{
+	background-image: url(/images/banner-bg.png);
+	background-repeat: repeat-x;
+	height: 116px;
+}
+
+#search-page-content
+{
+	background-color: #9cd34d;
+	padding: 80px 0px 20px 150px;
+}
+
+#anonSearch fieldset
+{
+	
+}
+
+#anonSearch label
+{
+	color: #046800;
+	font-size: 2.0em;
+	font-weight: bold;
+	margin: 0px 5px;
+	vertical-align: top;
+}
+
+#anonSearch input
+{
+	background-color: #d8eeb9;
+	width: 200px;
+	padding: 8px 5px;
+	font-size: 1.063em;
+	color: #798175;
+	font-weight: bold;
+	border: 1px solid #d8eeb9;
+}
+
+#anonSearch input:focus
+{
+	border: 1px solid #046800;
+}
+
+#anonSearch a
+{
+	margin-left: 5px;
+}
+
+#anonSearch a img
+{
+	vertical-align: middle;
+}
+
+#search-page-middle-banner
+{
+	background-image: url(/images/middle-banner-bg.png);
+	background-repeat: repeat-x;
+	height: 118px;
+}
+
+#footer
+{
+	background-image: url(/images/footer-bg.png);
+	background-repeat: repeat-x;
+	height: 167px;
+}
+
+#searchResults
+{
+	
+}
+
+#searchResults .searchResult
+{
+	width: 700px;
+	height: 150px;
+	border: 1px solid black;
+	margin: 10px 0px;
+	padding: 10px;
+}
+
+#searchResults .premium
+{
+	border: 4px solid black;
+}

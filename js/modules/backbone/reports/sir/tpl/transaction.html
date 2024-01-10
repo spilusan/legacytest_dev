@@ -1,0 +1,17 @@
+<div class="transHead" id="transactionSummary"></div>
+<!-- Result of transaction -->
+<h2 class="revenueTitle">Revenue breakdown</h2>
+<p>Shows only current period (not compare period)</p>
+
+        <div class="actions">
+    	    <a href="#" class="view csv">[ View full report as CSV ]</a> 
+    	    <a href="#" class="expandAll">[ Expand all ]</a> 
+    	    <a href="#" class="collapseAll">[ Collapse all ]</a>
+    	    <a href="#" class="expandSel">[ Expand selected ]</a> 
+    	    <a href="#" class="collapseSel">[ Collapse selected ]</a>
+            <div class="clear"></div>
+    	</div>
+
+<textarea id="csvData" class="csv" style="display:none;"><?=$this->csv?></textarea>
+<div class="noItems">No items found.</div>
+<div class="gmvData"></div>    

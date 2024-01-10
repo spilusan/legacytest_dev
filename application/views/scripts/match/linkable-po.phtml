@@ -1,0 +1,67 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+$this->requirejs()->addModule('match/match');
+
+?>
+<div id="breadcrumbs">
+<?php
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Linkable PO - Screener', 'url'  => '/match/direct-po');
+		
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); 
+?>
+</div>
+<style>
+	
+</style>
+<div id="body" style="width:1675px;">
+	<div id="content">
+		<form id="response">
+			<div style="margin-top:20px; float:right;">
+				<?php 
+					$width = round($this->totalProcessedPo/500 * 390);
+				?>
+				<div><?= $this->totalProcessedPo?> POs out of <?= 500?> are  validated</div>
+				<div style="border: #00386e 1px solid; ">
+					<div style="background-color: #087ec5; width:<?= $width?>px; height:30px;"></div>
+				</div>
+				<div class="clear"></div>
+				<br /><br />
+				Verified by <br /><input name="checkedBy" id="checkedBy" value="<?= (($this->params['name']!=null)?$this->params['name']:$this->user->firstName)?>">
+			</div>
+		
+			<div style="font-size:18px; font-weight:bold; margin-bottom:10px;">
+				Our algorithm thinks that this PO (<?= $this->order->ordInternalRefNo?>) is linked with RFQ (<?= $this->rfq->rfqInternalRefNo?>) below. Is this correct?<br /><br />
+				<input type="hidden" name="b" value="Store Feedback" />
+				<input type="hidden" name="answer" id="answer" value="" />
+				<input type="hidden" name="orderId" value="<?= $this->order->ordInternalRefNo?>" />
+				<input type="hidden" name="rfqId" value="<?= $this->rfq->rfqInternalRefNo?>" />
+				<input type="button" value="Yes" class="answers button dblue small"> 
+				<input type="button" value="No"  class="answers button dblue small">
+			</div>
+		</form>
+			
+		<div class="clear"></div>
+		
+		<div style="float:left; width:820px; margin-top:20px;">
+			<iframe src="<?php echo ($this->order!==null)?$this->order->getUrl():"";?>" name="orderViewer" style="width:820px; height:2200px; float:left; border:1px solid grey;"></iframe>
+		</div>	
+		<div style="float:left; width:820px; margin-top:20px;">
+			<iframe src="<?php echo ($this->rfq!==null)?$this->rfq->getUrl():"";?>" name="orderViewer" style="width:820px; height:2200px; float:left; border:1px solid grey;"></iframe>
+		</div>	
+		<div class="clear"></div>	
+	</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".answers").click(function(){
+		$("#answer").val($(this).val());
+		$("#status").show();
+		$.get('/match/linkable-po-data', $('#response').serialize(), function(response){
+			url = "/match/linkable-po?name=" + $("#checkedBy").val();;
+			location.href = url;			
+		});
+	});
+});
+</script>

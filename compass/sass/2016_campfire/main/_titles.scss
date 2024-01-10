@@ -1,0 +1,65 @@
+/*
+Document   : partials/guidelines/_titles.scss
+Created on : Jun 13, 2016, 10:05:43 AM
+Author     : gly
+Description: titles
+*/
+
+h1 {
+	&.pages {
+		display: block;
+		background: $mid-blue;
+		font-family: 'Open Sans', sans-serif;
+		font-weight: normal;
+		font-size: 20px;
+		color: $white;
+		padding: 16px;
+		margin-bottom: 15px;
+	
+		.btn {
+			float: right;
+			top: -7px;
+	    	position: relative;
+	
+	    	&.blue {
+	    		background: $dk-navy;
+	    		border-color: $dk-navy;
+	    	}
+	
+	    	&.white {
+	    		color: $white;
+	    		border-color: $white;
+	    		background: $mid-blue;
+	    	}
+		}
+	}
+}
+
+h2 {
+	&.pages {
+		font-family: 'Open Sans', sans-serif;
+		display: block;
+		font-size: 20px;
+		font-weight: 400px;
+		color: $link-blue;
+		margin-bottom: 20px;
+	}
+}
+
+.tabs {
+	margin-top: 25px;
+	background: $lt-grey;
+	padding: 15px;
+	width: 979px;
+
+	a {
+		color: $text-grey;
+		padding-bottom: 10px;
+		margin-right: 30px;
+		font-size: 16px;
+
+		&.active {
+			border-bottom: 3px solid $mid-blue;
+		}
+	}
+}

@@ -1,0 +1,57 @@
+<table cellpadding="0" cellspacing="0" border="0">
+	<thead>
+		<tr>
+			<th>PO ID</th>
+			<th>Buyer</th>
+			<th>Supplier</th>
+			<th class="fixedWidth">PO Sent Date</th>
+			<th>Potential Error</th>
+			<th>Status</th>
+			<th colspan="2">Flag transaction as</th>
+			<th>Ability to show the alert sent to the suppliers/buyers</th>
+			<th>Number of reminder sent</th>
+			<th>Indication when buyer reminder's been sent</th>
+			<th>Resend suppliers alert</th>
+			<th>Resend buyers alert</th>
+		</tr>
+	</thead>
+	<tbody>
+		{{#each data}}
+		<tr>
+			<td><a href="{{printableURL}}" target="_blank">{{etnOrdInternalRefNo}}</a></td>
+			<td>{{bybBranchCode}} -  {{bybName}}</td>
+			<td>{{spbBranchCode}} -  {{spbName}}</td>
+			<td>{{ordSubmittedDate}}</td>
+			<td>{{etnReason}}</td>
+			<td>{{etnResponse}}</td>
+			<td><a href="{{url-i}}" class="button small red">Invalid</a></td>
+			<td>
+				<a href="#" class="markAsCorrect button small lblue" data-id="{{etnOrdInternalRefNo}}">Correct</a>
+				<i class="fa fa-spinner fa-spin alertSpinner"></i>
+			</td>
+			<td>
+				<a href="#" class="showAlerts button small green" data-id="{{etnOrdInternalRefNo}}" data-alerts="{{#if etnBuyNotificationDate}}B{{/if}}{{#if etnGsdNotifiedDate}}G{{/if}}{{#if etnNotificationDate}}S{{/if}}{{#if etnSecNotificationDate}}2{{/if}}">View alerts</a>
+				<i class="fa fa-spinner fa-spin alertEmail"></i>
+			</td>
+
+			<td>{{reminderCount}}</td>
+			<td>{{etnBuyNotificationDate}}</td>
+			<td>
+				<i class="fa fa-envelope-o sendSuppAlert" data-id="{{etnOrdInternalRefNo}}"></i>
+				<i class="fa fa-spinner fa-spin alertSpinner"></i>
+				<p class="resentNow">Resent</p>
+			</td>
+			<td>
+				{{#if etnBuyNotificationDate}}
+					<i class="fa fa-envelope-o sendBuyerAlert" data-id="{{etnOrdInternalRefNo}}"></i>
+					<i class="fa fa-spinner fa-spin alertSpinner"></i>
+					<p class="resentNow">Resent</p>
+				{{/if}}
+			</td>
+		</tr>
+		{{/each}}
+	</tbody>
+</table>
+<br>
+
+

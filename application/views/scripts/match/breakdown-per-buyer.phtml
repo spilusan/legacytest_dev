@@ -1,0 +1,194 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style type="text/css">
+	#header, .divider, #footer {
+		width: 2156px !important;
+	}
+</style>
+<div id="breadcrumbs">
+<?php
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Match', 'url'  => '/match/inbox');
+	$breadcrumbs[] = array('name' => 'Reports', 'url'  => '/match/adoption-kpi');
+	$breadcrumbs[] = array('name' => 'Adoption rate', 'url'  => '/match/adoption-kpi');
+	$breadcrumbs[] = array('name' => 'Buyer drilldown for ' . $this->buyerName, 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); 
+	$totalMatchOrder = $totalBuyerOrder = 0;
+?>
+</div>
+<div id="body" class="adoptionBuyerBreakdown">
+	<div id="content">
+		<h1 class="styled">Adoption rate - per buyer</h1>
+		<form method="POST" class="new">
+			<div style="; font-size:20px; font-weight:bold;"><?= $this->buyerName?></div>
+			<div style="; font-size:12px; margin-top:10px;">
+				<table>
+					<tr>
+						<td style="width:100px;">Country code</td>
+						<td><?= $this->params['countryCode']?></td>
+					</tr>
+					<tr>
+						<td>Account region</td>
+						<td><?= $this->params['accountRegion']?></td>
+					</tr>
+					<tr>
+						<td>Contract type</td>
+						<td><?= $this->params['contractType']?></td>
+					</tr>
+				</table>
+			</div>
+		    <table style="margin: auto;  width:100%;">
+		        <tr>
+		            <td width="130">
+		                <label class="date">From:</label>
+		                <input type="text" name="fromDate" id="fromDate" value="<?php echo $this->params['startDate']?>" class="datepicker" />
+		            </td>
+		            <td width="130">
+		                <label class="date">To:</label>
+		                <input type="text" name="toDate" id="toDate" class="datepicker" value="<?php echo $this->params['endDate']?>"/>
+		            </td>
+		            <td width="30" class="buttonCell">
+		            	<input type="submit" value="Go"  class="button dblue medium"/>
+		            </td>
+		            <td width="" style="">&nbsp;</td>
+		        </tr>
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		                <table id="resultsTab" width="950">
+		                    <thead>
+		                        <tr>
+		                            <th class="narrow"></th>
+                        		    <th class="narrow">Id</th>
+                        			<th class="narrow left">Subject (Ref no)</th>
+                        			<th class="narrow left">Vessel name</th>
+                        		    <th class="narrow left">Sent <img alt="" src="/img/icons/small/sort-grey-desc.png"></th>
+                        		    <th class="narrow">Number of buyer selected suppliers</th>
+		                        	<th class="narrow">Number of match selected suppliers (i.e. number of RFQs from Match)</th>
+                        			<th class="narrow">Number of quotes from buyer selected suppliers</th>
+                        			<th class="narrow">Number of declined quotes from buyer selected suppliers</th>
+                        			<th class="narrow">Number of quotes from match selected suppliers</th>
+                        			<th class="narrow">Number of declined quotes from match selected suppliers</th>
+                        			<th class="narrow">PO status</th>
+                        			<th class="narrow">Potential savings (USD)</th>
+                        			<th class="narrow last">Realised savings (USD)</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                    
+		                        <?php foreach ((array)$this->report->getRfqSentToMatch() as $key => $result) : ?>
+		                        	<?php
+		                        		try 
+		                        		{
+		                        			$rfq = Shipserv_Rfq::getInstanceById($result['RFQ_INTERNAL_REF_NO'], null, true);
+		                        		}catch(Exception $e){}
+		                        	?>
+		                        	
+		                            <tr <?php if ($key % 2 == 0): ?>class="altColor"<?php endif; ?>>
+		                                <td><?= ($key + 1)?></td>
+		                            	<td><?php if( $rfq !== null ){?><a href="<?php echo $rfq->getUrl()?>" target="_blank"><?php echo $result['RFQ_INTERNAL_REF_NO']?></a><?php }else{?><?php echo $result['RFQ_INTERNAL_REF_NO']?><?php }?></td>
+		                            	<td class="left"><a target="_blank" href="/match/breakdown-per-rfq?buyerId=<?php echo _htmlspecialchars($_REQUEST['buyerId']); ?>&rfqId=<?php echo $result['RFQ_INTERNAL_REF_NO'] ?>"><?php echo $result['RFQ_SUBJECT'] . ($result['RFQ_REF_NO']!=""?" (" . $result['RFQ_REF_NO'] . ")":"");?></a></td>
+		                            	<td class="left"><?php echo $result['RFQ_VESSEL_NAME']?></td>
+			                        	<td class="left"><?php echo $result['RFQ_SUBMITTED_DATE']?></td>
+			                        	<td><?php echo $result['TOTAL_BUYER_SUPPLIER']?></td>
+			                        	<td><?php echo $result['TOTAL_MATCH_SUPPLIER']; $totalMatchSupplier+=$result['TOTAL_MATCH_SUPPLIER']; ?></td>
+	                        			<td><?php echo $result['TOTAL_QOT_BY_BYB']?></td>
+			                        	<td><?php echo $result['TOTAL_DECLINED_QOT_BY_BYB']?></td>
+			                        	<td><?php echo $result['TOTAL_QOT_BY_MATCH']?></td>
+			                        	<td><?php echo $result['TOTAL_DECLINED_QOT_BY_MATCH']?></td>
+	                        			<td><?php if( $result['ORD_STATUS'] == 'ord_by_match' ){ echo "Match"; ++$totalOrder; ++$totalMatchOrder; } else if($result['ORD_STATUS'] == 'ord_by_buyer'){ echo "Buyer"; ++$totalOrder; ++$totalBuyerOrder; } else if($result['ORD_STATUS'] == 'both') { echo "BOTH";  ++$totalOrder; ++$totalMatchOrder; ++$totalOrder; ++$totalBuyerOrder; } else { echo "-"; }?></td>
+	                        			<td class="currency"><?php echo $result['POTENTIAL_SAVINGS']; $totalPotentialSaving += $result['POTENTIAL_SAVINGS'];?></td>
+	                        			<td class="currency last"><?php echo $result['ACTUAL_SAVINGS']; $totalActualSaving += $result['ACTUAL_SAVINGS'];?></td>
+									</tr>
+		                        <?php endforeach; ?>
+		                            <tr style="font-weight:bold; background-color:#fec008; ">
+		                                <td colspan="11">Total</td>
+	                        			<td class=""><?php echo $totalMatchOrder . " match <br />" . $totalBuyerOrder . " buyer <br />=========<br /> " . $totalOrder . " orders";?></td>
+		                                <td class="currency"><?php echo  $totalPotentialSaving;?></td>
+		                                <td class="currency last"><?php echo $totalActualSaving;?></td>
+									</tr>
+		                    </tbody>
+		                </table>
+		                <table id="header-fixed"></table>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(".toggleDetail").click(function(){
+			$(this).parent().parent().find(".detail").toggle();
+		});
+		function isNumber(n) {
+			return !isNaN(parseFloat(n)) && isFinite(n);
+		}
+
+		function number_format (number, decimals, dec_point, thousands_sep) {
+			//return number;
+		    // http://kevin.vanzonneveld.net/techblog/article/javascript_equivalent_for_phps_number_format/
+		    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+		    var n = !isFinite(+number) ? 0 : +number,
+		        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+		        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+		        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+		        s = '',
+		        toFixedFix = function (n, prec)
+		        {
+		            var k = Math.pow(10, prec);
+		            return '' + Math.round(n * k) / k;
+		        };
+		    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+		    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+		    if (s[0].length > 3)
+		    {
+		        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+		    }
+		    if ((s[1] || '').length < prec)
+		    {
+		        s[1] = s[1] || '';
+		        s[1] += new Array(prec - s[1].length + 1).join('0');
+		    }
+		    return s.join(dec);
+		}
+					
+		$("#resultsTab tbody tr td").each(function(){
+			if( $.trim($(this).html()) == "" ) $(this).html("N/A");
+			if( $(this).hasClass('currency') ) {
+				html = '<div class="sign">$</div><div class="value">' + number_format($(this).html(), 2, '.', ',') + '</div><div class="clear"></div>';
+				html = '' + number_format($(this).html(), 2, '.', ',') + '';
+				$(this).html( html );
+			}
+			
+			if( $(this).hasClass('percentage') ) {
+				if( $(this).html() != "N/A" ){
+					html = '<div class="sign">%</div><div class="value">' + number_format($(this).html(), 0, '.', ',') + '</div><div class="clear"></div>';
+					html = '' + number_format($(this).html(), 2, '.', ',') + '';
+					$(this).html( html );
+				}
+			}
+		});
+
+		$("#resultsTab tbody tr").click(function(){
+			$("#resultsTab tbody tr").each(function(){
+				$(this).removeClass("green");
+			});
+			$(this).addClass("green");
+		});
+		
+
+	});
+</script>
+<div class="clear"></div>

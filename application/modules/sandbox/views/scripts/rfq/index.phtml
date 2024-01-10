@@ -1,0 +1,59 @@
+<style type="text/css">
+	.srfq-form label p {
+		margin-bottom: 5px;
+		font-size: 12px;
+	}
+	.srfq-form input {
+		display: block;
+		margin-bottom: 10px;
+		width: 300px;
+	}
+	.srfq-li-container label {
+		float: left;
+	}
+	.srfq-title {
+		font-size: 18px;
+		font-weight: bold;
+		margin-bottom: 14px;
+	}
+	.srfq-subtitle {
+		font-size: 14px;
+		font-weight: bold;
+		margin-bottom: 14px;
+	}
+	.srfq-desc input {
+		width: 300px;
+		margin-right: 15px;
+	}
+	.srfq-qty input {
+		width: 50px;
+	}
+	.srfq-submit {
+		margin-top: 10px;
+		width: 70px !important;
+	}
+</style>
+<form class="srfq-form" method="post" action="">
+	<p class="srfq-title">RFQ form</p>
+	<label>
+		<p>Subject:</p>
+		<input type="text" name="subject" />
+	</label>
+	<label>
+		<p>Comments:</p>
+		<input type="text" name="comments" />
+	</label>
+	<div class="srfq-li-container">
+		<p class="srfq-subtitle">Line items</p>
+		<label class="srfq-desc">
+			<p>Description:</p>
+			<input type="text" name="desc[0]" />
+		</label>
+		<label class="srfq-qty">
+			<p>Quantity:</p>
+			<input type="text" name="qty[0]" />
+		</label>
+		<div class="clear"></div>
+	</div>
+	<input class="srfq-submit" type="submit" />
+</form>

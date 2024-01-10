@@ -1,0 +1,133 @@
+.dataBox {
+	.recItemsFooter {
+		width: 940px;
+		height: 65px;
+		text-align:right;
+		clear: both;
+	}
+	.searchResult {
+		display: block;
+		float: left;
+		width: 100%;
+		margin: 6px 6px 6px 0px;
+		border: 1px solid #d6dce4;
+   		@include border-radius(6px);
+   		behavior: url(/css/PIE.htc);
+   		h3 {
+   				display: block;
+				float: left;
+				width: 100%;
+				background-color: #e9edf1;
+				padding: 10px 0px 10px 0px;
+				text-indent: 6px;
+				background-image: url('/images/layout_v2/premium_header.gif');
+				background-repeat: no-repeat;
+				background-position: top right;
+				color: #008b00;
+				font-size: 11px;
+					a {
+						margin-right: 6px;
+						font-size: 14px;
+						color: #005aad;
+					}
+   		}
+
+   		input[type="checkbox"] {
+   			display: block;
+   			float: right;
+   			margin-right: 10px;
+
+   		}
+
+   		.avatar {
+   			display: block;
+   			float: left;
+   			width: 5%;
+   			min-height: 75px;
+   			padding-top: 25px;
+   			text-align: center;
+	   			img {
+	   				max-width: 65px;
+	   				max-height: 65px;
+	   				width: 85%;
+	   			}
+   		}
+
+   		.searchContent {
+   			display: block;
+   			float: left;
+   			width: 95%;
+   			padding-top: 25px;
+   		}
+
+   		.searchContentTop {
+   			display: block;
+   			float: left;
+   			width: 100%;
+   			border-bottom: 1px solid #d6dce4;
+   				p {
+   					font-size: 13px;
+   					line-heigt: 14px;
+   				}
+
+   		}
+   		.searcContentBottom {
+			display: block;
+   			float: left;
+   			width: 100%;
+   			margin: 6px 0px;
+   				.contentButtonNoFrame {
+   						display: inline-block;
+						height: 30px;
+						line-height: 30px;
+						text-indent: 30px;
+						color: #087ec5;
+						font-size: 12px;
+						font-weight: bold;
+   				}
+
+   				.buttonFrame {
+						border: 1px solid #d6dce4;
+   						@include border-radius(6px);
+   						behavior: url(/css/PIE.htc);
+   				}
+
+   				.tradeRank {
+						display: inline-block;
+						text-indent: 0px;
+						width: 65px;
+					}
+
+				.expertSupplier {
+						width: 140px;
+						height: 30px;
+						background: transparent url('/images/layout_v2/shipserv_icon.png') no-repeat 10px 5px;
+				}
+
+				.catalogBtn {
+						width: 140px;
+						background: transparent url('/images/layout_v2/catalogue_icon.png') no-repeat 10px 5px;
+				}
+
+				.reviewBtn {
+						width: 140px;
+						background: transparent url('/images/layout_v2/reviews_icon.png') no-repeat 10px 5px;
+				}
+				.ratingImg {
+					background: transparent url('/images/layout_v2/pb-rating-bg.png') no-repeat 0px 0px;
+				}
+   		}
+	}
+	.send-rfq-button {
+		margin-top: 16px;
+		display: inline-block;
+		float: right;
+		background: url(/images/layout_v2/buttons/send_enquiry_sprite.png) no-repeat;
+		width: 153px;
+		height: 41px;
+	}
+	.send-rfq-button:hover {
+		background: url(/images/layout_v2/buttons/send_enquiry_sprite.png) no-repeat 0px -43px;
+	}
+
+}

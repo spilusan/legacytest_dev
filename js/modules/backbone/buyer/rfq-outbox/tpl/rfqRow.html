@@ -1,0 +1,38 @@
+<td class="int">
+	{{#if integrated}}
+		<img src="/img/buyer/rfq-outbox/integration-lblue.png" border="0" alt="Integration" />
+	{{/if}}
+</td>
+<td class="priority">
+	{{#if priority}}
+		<img src="/img/buyer/rfq-outbox/priority-red.png" border="0" alt="High Priority" />
+	{{/if}}
+</td>
+<td class="ref">
+	<a href="#" title="{{ref_no}}" class="showRfq">{{ref_no}}</a>
+</td>
+<td class="vessel" title="{{vessel}}">
+	{{vessel}}
+</td>
+<td class="subj" title="{{subject}}">
+	{{subject}}
+</td>
+<!--
+<td class="cat" title="{{category}}">
+	{{category}}
+</td>
+-->
+<td class="resp">
+	{{responses}}/{{forwards}}
+</td>
+<td class="sent" title="{{date_sent}}">
+	{{date_sent}}
+</td>
+<td class="stat {{stat}}">
+	{{stat}}
+</td>
+<td class="last" style="text-align: right;">
+	<!--<input type="button" name="show" />
+	<input type="button" name="related" />-->
+	<input type="button" name="expand" />
+</td>

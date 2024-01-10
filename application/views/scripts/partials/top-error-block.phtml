@@ -1,0 +1,20 @@
+<?php		
+if (is_array($this->errors))
+{
+	?>
+	<div class="top-errors">
+		<?php
+		foreach ($this->errors as $error)
+		{
+			if (!is_array($error))
+			{
+				?>
+				<p><?php echo $error; ?></p>
+				<?php
+			}
+		}
+		?>
+	</div>
+	<?php
+}
+?>

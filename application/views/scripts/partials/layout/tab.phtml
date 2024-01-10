@@ -1,0 +1,6 @@
+<li class="<?= ($this->isSelected? ' selected' : ''); ?> <?= ($this->idstr === 'shipmate'?  ' shipTab' : ''); ?>">
+	<?php if($this->isSelected) :?><i class="fa fa-angle-right"></i><?php endif; ?>
+	<a href="<?= ($this->url? $this->url : '#'); ?>">
+		<?= $this->title; ?>
+	</a>
+</li>

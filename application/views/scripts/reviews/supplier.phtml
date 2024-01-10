@@ -1,0 +1,710 @@
+<div id="reputationSummaryBox">
+	<?php if (lg_count($this->endorsements)>0) { ?>
+	<? if ($this->supplier->publicTnid !== null && (int)$this->supplier->publicTnid !== (int)$this->supplier->tnid) { ?>
+
+	<table class="nbox">
+		<tr>
+			<td class="nbox-top-left"></td>
+			<td class="nbox-top"></td>
+			<td class="nbox-top-right"></td>
+		</tr>
+		<tr>
+			<td class="nbox-left"></td>
+			<td class="nbox-content" align="center" style="font:bold 18px Arial;vertical-align: middle; text-align: center;height:100px;">
+				<?php 
+					$publicTnid = (int)$this->supplier->publicTnid;
+					if ($publicTnid > 0) {
+						$publicSupplier = Shipserv_Supplier::fetch( $publicTnid );
+						// if ( $publicSupplier->hasReview() ) { 
+						if (true) {
+								$url = 	'/reviews/supplier/s/'.$this->uri()->sanitise($publicSupplier->name).'-'.$publicSupplier->tnid;
+							?>
+								To view the customer list and reviews of this supplier please view the<br><a href="<?= $url ?>">head office listing</a>
+							<?php 
+						} else {
+						?>
+							This supplier is yet to trade on ShipServ TradeNet
+						<?php
+						}
+					}
+				?>
+			</td>
+			<td class="nbox-right"></td>
+		</tr>
+		<tr>
+			<td class="nbox-bottom-left"></td>
+			<td class="nbox-bottom"></td>
+			<td class="nbox-bottom-right"></td>
+		</tr>
+	</table>
+
+	<? } else { ?>
+		<div>
+			<div id="reviewsSummaryHeader">
+				<h2>Reviews</h2>
+				Only opinions from <a href="javascript:void(0)" id="revPopLink-<?php echo $this->supplier->tnid;?>" class="reviews-popup-link">verified TradeNet sources</a> are included
+			</div>
+			<?php
+
+			if (is_array($this->endorsements)>0)
+			{
+				if ($this->endorseeInfo["PCO_DISABLE_REV_SUBMISSION"]!='Y')
+				{
+					$endorserIds = array();
+					foreach ($this->endorsements as $endorsement)
+					{
+							$endorserIds[] = $endorsement["PE_ENDORSER_ID"];
+					}
+					if (lg_count(array_intersect($endorserIds, $this->userBuyers))>0)
+					{
+				?>
+				<a href="/reviews/add-review/s/<?php echo $this->supplier->tnid?>" id="addReviewBigButton"></a>
+				<?
+					}
+				}
+			}
+		?>
+		<div class="clear"></div>
+	</div>
+	<div class="dotted-line"></div>
+
+	<h3>Summary</h3>
+	<div id="summaryBox">
+		<div id="reviewsSummary">
+			<div id="positiveReviewsSummary" class="reviews-summary-box">
+				<div class="box-left"></div>
+				<div class="box-content"><div class="baloon png"></div></div>
+				<div class="box-content reviews-summary-text"><?php echo $this->reviews["countPositive"]?> positive review<?php if ($this->reviews["countPositive"]!=1) echo "s";?></div>
+				<div class="box-right"></div>
+				<div class="clear"></div>
+			</div>
+			<div id="neutralReviewsSummary" class="reviews-summary-box">
+				<div class="box-left"></div>
+				<div class="box-content"><div class="baloon png"></div></div>
+				<div class="box-content reviews-summary-text"><?php echo $this->reviews["countNeutral"]?> neutral review<?php if ($this->reviews["countNeutral"]!=1) echo "s";?></div>
+				<div class="box-right"></div>
+				<div class="clear"></div>
+			</div>
+			<div id="negativeReviewsSummary" class="reviews-summary-box">
+				<div class="box-left"></div>
+				<div class="box-content"><div class="baloon png"></div></div>
+				<div class="box-content reviews-summary-text"><?php echo $this->reviews["countNegative"]?> negative review<?php if ($this->reviews["countNegative"]!=1) echo "s";?></div>
+				<div class="box-right"></div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="ratingsSummary">
+			<div id="ratingDIDSummary" class="reviews-summary-box">
+				<div class="box-left"></div>
+				<div class="box-content ratings-summary-text">Delivered items as described:</div>
+				<div class="box-content divider"></div>
+				<div class="box-content rating-summary">
+					<?php
+					if ($this->reviews["countIAD"] > 0)
+					{
+						echo $this->partial('endorsement/star-rating.phtml', array(
+											'stars' => round($this->reviews["sumIAD"]/$this->reviews["countIAD"],0)
+						));
+
+					}
+					else
+					{
+						echo '<img src="'.$this->CDNLink()->image('/images/layout_v2/endorsement/norating_sign.png').'" class="png" border="0" alt="No rating yet"/>';
+					}
+					?>
+				</div>
+				<div class="box-right"></div>
+				<div class="clear"></div>
+			</div>
+			<div id="ratingOTDSummary" class="reviews-summary-box">
+				<div class="box-left"></div>
+				<div class="box-content ratings-summary-text">On-time delivery:</div>
+				<div class="box-content divider"></div>
+				<div class="box-content rating-summary">
+					<?php
+					if ($this->reviews["countDOT"] > 0)
+					{
+						echo $this->partial('endorsement/star-rating.phtml', array(
+											'stars' => round($this->reviews["sumDOT"]/$this->reviews["countDOT"],0)
+						));
+
+					}
+					else
+					{
+						echo '<img src="'.$this->CDNLink()->image('/images/layout_v2/endorsement/norating_sign.png').'" class="png" border="0" alt="No rating yet"/>';
+					}
+					?>
+				</div>
+				<div class="box-right"></div>
+				<div class="clear"></div>
+			</div>
+			<div id="ratingCSSummary" class="reviews-summary-box">
+				<div class="box-left"></div>
+				<div class="box-content ratings-summary-text">Customer service:</div>
+				<div class="box-content divider"></div>
+				<div class="box-content rating-summary">
+					<?php
+					if ($this->reviews["countCS"] > 0)
+					{
+						echo $this->partial('endorsement/star-rating.phtml', array(
+											'stars' => round($this->reviews["sumCS"]/$this->reviews["countCS"],0)
+						));
+
+					}
+					else
+					{
+						echo '<img src="'.$this->CDNLink()->image('/images/layout_v2/endorsement/norating_sign.png').'" class="png" border="0" alt="No rating yet"/>';
+					}
+					?>
+				</div>
+				<div class="box-right"></div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<a href="/enquiry/index/clearBasket/1/tnid/<?= $this->supplier->tnid?>" rel="nofollow" style="font-weight:bold;">&raquo; Email this supplier or send them an Enquiry or RFQ</a>
+<br /><br /><br />
+<div id="customersReviews">
+	<?php
+	echo $this->partial (
+		"table-header.phtml",
+		array( "columns" => array(
+				array(
+					"text"=>"Customers",
+					"width"=>"190px"
+				),
+				array(
+					"text"=>"Trading Frequency",
+					"width"=>"88px"
+				),
+				array(
+					"text"=>"Overall Opinion",
+					"width"=>"52px"
+				),
+				array(
+					"text"=>"Latest comments",
+					"width"=>"102px"
+				),
+			)
+		)
+	);
+	?>
+
+	<div id="customersReviewsList">
+		<?php
+
+		if ($this->supplierPrivacy === Shipserv_Oracle_EndorsementPrivacy::ANON_YES and !(in_array($this->supplier->tnid, $this->userSuppliers)))
+		{
+			$hiddenBySupplier = true;
+		?>
+		<table class="nbox">
+			<tr>
+				<td class="nbox-top-left"></td>
+				<td class="nbox-top"></td>
+				<td class="nbox-top-right"></td>
+			</tr>
+			<tr>
+				<td class="nbox-left"></td>
+				<td class="nbox-content" align="center" style="font:bold 15px Arial; color:#952900; vertical-align: middle; text-align: center;height:30px;">
+					This supplier has elected to keep their customer names anonymous
+				</td>
+				<td class="nbox-right"></td>
+			</tr>
+			<tr>
+				<td class="nbox-bottom-left"></td>
+				<td class="nbox-bottom"></td>
+				<td class="nbox-bottom-right"></td>
+			</tr>
+		</table>
+		<?php
+		}
+		else
+		{
+			$hiddenBySupplier = false;
+		}
+		
+		$endorsementList = array (
+			"hasReviews" => array (),
+			"noReviews"	=> array (
+				"anonimized"	=> array (5=>array(),4=>array(),3=>array(),2=>array(),1=>array(),0=>array()),
+				"notAnonimized"	=> array (5=>array(),4=>array(),3=>array(),2=>array(),1=>array(),0=>array())
+			)
+		);
+		foreach ($this->endorsements as $endorsement)
+		{
+			if ($endorsement["PERSENDCOUNT"]>0)
+			{
+				$endorsementList["hasReviews"][] = $endorsement;
+			}
+			else
+			{
+				if ($endorsement["PE_DAYS_TRADED"] >= 182)
+				{
+					$frequencyBand = 5;
+				}
+				elseif ($endorsement["PE_WEEKS_TRADED"] >= 26)
+				{
+					$frequencyBand = 4;
+				}
+				elseif ($endorsement["PE_MONTHS_TRADED"] >= 6)
+				{
+					$frequencyBand = 3;
+				}
+				elseif( $endorsement["PE_ORDERS_NUM"] >= 2)
+				{
+					$frequencyBand = 2;
+				}
+				elseif ($endorsement["PE_ORDERS_NUM"] == 1)
+				{
+					$frequencyBand = 1;
+				}
+				else
+				{
+					$frequencyBand = 0;
+				}
+
+				$endorsementList["noReviews"][($this->userEndorsementsPrivacy[$endorsement["PE_ENDORSER_ID"]]===true or in_array($endorsement["PE_ENDORSER_ID"], $this->userBuyers) or in_array($this->supplier->tnid, $this->userSuppliers))?"notAnonimized":"anonimized"][$frequencyBand][] = $endorsement;
+
+			}
+		}
+		$tmpArray = array ();
+		foreach ($endorsementList["noReviews"]["notAnonimized"] as $subArray)
+		{
+			$tmpArray = array_merge($tmpArray,$subArray);
+		}
+		$endorsementList["noReviews"]["notAnonimized"] = $tmpArray;
+
+		$tmpArray = array ();
+		foreach ($endorsementList["noReviews"]["anonimized"] as $subArray)
+		{
+			$tmpArray = array_merge($tmpArray,$subArray);
+		}
+		$endorsementList["noReviews"]["anonimized"] = $tmpArray;
+		$endorsementDisplayList = array_merge($endorsementList["hasReviews"],$endorsementList["noReviews"]["notAnonimized"],$endorsementList["noReviews"]["anonimized"]);
+		foreach ($endorsementDisplayList as $endorsement)
+		{
+			?>
+			<table class="nbox">
+			<tr>
+				<td class="nbox-top-left"></td>
+				<td class="nbox-top"></td>
+				<td class="nbox-top-right"></td>
+			</tr>
+			<tr>
+				<td class="nbox-left"></td>
+				<td class="nbox-content">
+					<div class="snapshot">
+						<div class="endorser-name">
+							<?php
+							if ($this->userEndorsementsPrivacy[$endorsement["PE_ENDORSER_ID"]]===true or in_array($endorsement["PE_ENDORSER_ID"], $this->userBuyers) or in_array($this->supplier->tnid, $this->userSuppliers) )
+							{
+
+								echo $endorsement["BYO_NAME"];
+
+								if ($endorsement["BYO_COUNTRY"] != "Country" and !empty($endorsement["BYO_COUNTRY"]))
+								{
+									?>
+									<div class="endorser-country"><?php echo Shipserv_Review::fetchCountryNameByCode($endorsement["BYO_COUNTRY"])?></div>
+									<?php
+								}
+
+
+							}
+							else
+							{
+								if ($endorsement["PCO_ANONYMISED_NAME"])
+								{
+									echo $endorsement["PCO_ANONYMISED_NAME"];
+
+								}
+								else
+								{
+									echo "A Buyer";
+								}
+
+								if ($endorsement["PCO_ANONYMISED_LOCATION"])
+								{
+									?>
+									<div class="endorser-country">
+									<?
+									if ($anonCountryName = Shipserv_Review::fetchCountryNameByCode($endorsement["PCO_ANONYMISED_LOCATION"]))
+									{
+										echo $anonCountryName;
+									}
+									else
+									{
+										echo $endorsement["PCO_ANONYMISED_LOCATION"];
+
+									}
+									?>
+									</div>
+									<?php
+								}
+								else
+								{
+									if ($endorsement["BYO_COUNTRY"] != "Country" and !empty($endorsement["BYO_COUNTRY"]))
+									{
+										?>
+										<div class="endorser-country"><?php echo Shipserv_Review::fetchCountryNameByCode($endorsement["BYO_COUNTRY"])?></div>
+										<?php
+									}
+								}
+							}
+							?>
+						</div>
+						<div class="frequency">
+							<?php
+							if ($endorsement["PE_DAYS_TRADED"] >= 182)
+							{
+								echo "Very frequently";
+							}
+							elseif ($endorsement["PE_WEEKS_TRADED"] >= 26)
+							{
+								echo "Frequently";
+							}
+							elseif ($endorsement["PE_MONTHS_TRADED"] >= 6)
+							{
+								echo "Regularly";
+							}
+							elseif( $endorsement["PE_ORDERS_NUM"] >= 2)
+							{
+								echo "Occasionally";
+							}
+							elseif ($endorsement["PE_ORDERS_NUM"] == 1)
+							{
+								echo "Rarely";
+							}
+							else
+							{
+								echo "No recent activity";
+							}
+							?>
+							<div class="ago-text">
+							<?php echo $this->string()->ago($endorsement["PE_LAST_ORDER_DATE"]);?>
+							</div>
+						</div>
+						<div class="opinion">
+							<?php
+							switch ($this->supplier()->overallRating($this->reviews["reviews"][$endorsement["PE_ENDORSER_ID"]]))
+							{
+								case 'positive':
+									?>
+									<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/positive_tick.png'); ?>" class="png" alt="Positive" width="31" height="26"/>
+									<h4 class="positive">Positive</h4>
+									<?php
+								break;
+
+								case 'neutral':
+									?>
+									<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/neutral_tick.png'); ?>" class="png" alt="Neutral" width="31" height="26"/>
+									<h4 class="neutral">Neutral</h4>
+									<?php
+								break;
+
+								case 'negative':
+									?>
+									<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/negative_tick.png'); ?>" class="png" alt="Negative" width="31" height="26"/>
+									<h4 class="negative">Negative</h4>
+									<?php
+								break;
+
+								case 'null':
+								default:
+
+								break;
+							}
+							?>
+						</div>
+
+						<div class="latest-comment">
+							<?php
+							if (!isset($this->reviews["reviews"][$endorsement["PE_ENDORSER_ID"]]))
+							{
+								?>
+								<div class="no-reviews">
+									<div class="no-reviews-text">
+										None yet...
+									</div>
+								</div>
+								<?php
+							}
+							else
+							{
+								?>
+								<div class="last-review">
+									<div class="last-review-top"></div>
+									<div class="last-review-text">
+										<span class="ago-text"><?php echo $this->string()->ago($this->reviews["reviews"][$endorsement["PE_ENDORSER_ID"]]["reviews"][0]->createdDate);?>:</span>
+										<?php 
+											if (strlen($this->reviews["reviews"][$endorsement["PE_ENDORSER_ID"]]["reviews"][0]->comment)<4)
+												echo 'No specific comment';
+											else
+												echo "'". nl2br($this->string()->shortenToLastWord($this->reviews["reviews"][$endorsement["PE_ENDORSER_ID"]]["reviews"][0]->comment, 200))."'";
+										?>
+									</div>
+									<div class="last-review-bottom"></div>
+								</div>
+								<?php
+								if ($this->reviews["reviews"][$endorsement["PE_ENDORSER_ID"]]["reviews"][0]->reply)
+								{
+									?>
+									<div class="last-review-response">
+										<div class="last-review-response-top"></div>
+										<div class="last-review-response-text">
+											<span class="ago-text">Response:</span>
+											'<?php echo nl2br($this->string()->shortenToLastWord($this->reviews["reviews"][$endorsement["PE_ENDORSER_ID"]]["reviews"][0]->reply, 200));?>'
+										</div>
+										<div class="last-review-response-bottom"></div>
+									</div>
+									<?php
+								}
+								?>
+								<?php
+							}
+							?>
+						</div>
+						<div class="clear"></div>
+						<?php
+						if (((in_array($endorsement["PE_ENDORSER_ID"], $this->userBuyers) or in_array($this->supplier->tnid, $this->userSuppliers)) and $this->endorseeInfo["PCO_DISABLE_REV_SUBMISSION"]!='Y') or isset($this->reviews["reviews"][$endorsement["PE_ENDORSER_ID"]]) or $this->userEndorsementsPrivacy[$endorsement["PE_ENDORSER_ID"]]===false)
+						{
+						?>
+							<div class="dotted-line"></div>
+
+							<div class="review-actions">
+							<?php
+							if (in_array($endorsement["PE_ENDORSER_ID"], $this->userBuyers) and $this->endorseeInfo["PCO_DISABLE_REV_SUBMISSION"]!='Y')
+							{
+							?>
+							<div class="review-action-left">
+								<a href="/reviews/add-review/s/<?php echo $this->supplier->tnid?>/e/<?echo $endorsement["PE_ENDORSER_ID"];?>" title="Submit your review" class="review-action-add">
+									<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/icon_submit_review.gif'); ?>" alt="Submit your review" />
+									<span>Submit your review</span>
+								</a>
+							</div>
+							<?php
+							}
+							if (in_array($this->supplier->tnid, $this->userSuppliers) and $this->endorseeInfo["PCO_DISABLE_REV_SUBMISSION"]!='Y')
+							{
+							?>
+							<div class="review-action-left">
+								<a href="javascript:void(0);" title="Request review" class="review-action-request" id="request-link-<?echo $endorsement["PE_ENDORSER_ID"];?>">
+									<img src="<?php echo $this->CDNLink()->image('/images/icons/icon_request_review.gif'); ?>" alt="Read reviews" />
+									<span>Ask their opinion</span>
+								</a>
+								<a href="javascript:void(0);" title="Cancel" class="review-action-request-close" id="request-link-close-<?echo $endorsement["PE_ENDORSER_ID"];?>" style="display: none;">
+									<img src="<?php echo $this->CDNLink()->image('/images/icons/icon_request_review.gif'); ?>" alt="Cancel" />
+									<span>Cancel</span>
+								</a>
+							</div>
+							<?php
+							}
+							if (!($this->userEndorsementsPrivacy[$endorsement["PE_ENDORSER_ID"]]===true or in_array($endorsement["PE_ENDORSER_ID"], $this->userBuyers) or in_array($this->supplier->tnid, $this->userSuppliers) ))
+							{
+								if ($hiddenBySupplier)
+								{
+									echo "<div style='color:#A9A9A9;float:left'>This supplier has elected to keep their customer names anonymous</div>";
+								}
+								else
+								{
+									echo "<div style='color:#A9A9A9;float:left'>This buyer has elected to keep their name anonymous</div>";
+								}
+							}
+							if (isset($this->reviews["reviews"][$endorsement["PE_ENDORSER_ID"]]))
+							{
+							?>
+							<div class="review-action">
+								<a href="/reviews/all/s/<?php echo $this->supplier->tnid?>/e/<?php echo $endorsement["PE_ENDORSER_ID"]?>" title="Read reviews" class="review-action-read">
+									<img src="/images/icons/icon_read_reviews.gif" alt="Read reviews" />
+									<span>Read <em><?php echo lg_count($this->reviews["reviews"][$endorsement["PE_ENDORSER_ID"]]["reviews"]);?></em> review<?php if (lg_count($this->reviews["reviews"][$endorsement["PE_ENDORSER_ID"]]["reviews"])>1) echo "s";?></span>
+								</a>
+							</div>
+							<?php
+							}
+							?>
+							<div class="clear"></div>
+							</div>
+						<?php
+						}
+						?>
+						<div class="request-review-block" id="request-review-<?php echo $endorsement["PE_ENDORSER_ID"]; ?>"  style="display: none">
+							<div class="dotted-line"></div>
+							<div class="request-label">
+								<div class="request-label-text">
+									Specify people (optional)
+								</div>
+								<div class="request-label-hint">
+									Enter an e-mail address for each recipient (separated by commas)
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div class="request-review-textbox">
+								<div class="request-review-textbox-top"></div>
+								<div class="request-review-textbox-middle"><input type="text" value="" id="request-emails-<?php echo $endorsement["PE_ENDORSER_ID"];?>" /></div>
+								<div class="request-review-textbox-bottom"></div>
+							</div>
+							<div class="request-label">
+								<div class="request-label-text">
+									Your message*
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div class="request-review-textbox">
+								<div class="request-review-textbox-top"></div>
+								<div class="request-review-textbox-middle"><textarea id="request-text-<?php echo $endorsement["PE_ENDORSER_ID"];?>">If you have a few seconds it would really help us if you would share with us your experience of trading with <?php echo trim($this->supplier->name);?>?</textarea></div>
+								<div class="request-review-textbox-bottom"></div>
+							</div>
+							<div class="dotted-line"></div>
+							<div class="request-buttons">
+								<a href="#request-review-<?php echo $endorsement["PE_ENDORSER_ID"]; ?>" class="send-request"><img src="/images/layout_v2/endorsement/send_button_normal.gif" alt="Send Request" /></a>
+							</div>
+						</div>
+					</div>
+				</td>
+				<td class="nbox-right"></td>
+			</tr>
+			<tr>
+				<td class="nbox-bottom-left"></td>
+				<td class="nbox-bottom"></td>
+				<td class="nbox-bottom-right"></td>
+			</tr>
+		</table>
+			<?php
+		}
+		?>
+	</div>
+	<?php
+	}
+	}
+	else
+	{
+	?>
+
+
+	<table class="nbox">
+		<tr>
+			<td class="nbox-top-left"></td>
+			<td class="nbox-top"></td>
+			<td class="nbox-top-right"></td>
+		</tr>
+		<tr>
+			<td class="nbox-left"></td>
+			<td class="nbox-content" align="center" style="font:bold 18px Arial;vertical-align: middle; text-align: center;height:100px;">
+
+				<?php
+				if ($this->supplier->tnid === $this->supplier->publicTnid || $this->supplier->publicTnid === null) {
+				?>
+				This supplier is yet to trade on ShipServ TradeNet
+				<?php
+				} else {
+					$publicTnid = (int)$this->supplier->publicTnid;
+					if ($publicTnid > 0) {
+						$publicSupplier = Shipserv_Supplier::fetch( $publicTnid );
+						 //if ( $publicSupplier->hasReview() ) { 
+						if (true) {
+								$url = 	'/reviews/supplier/s/'.$this->uri()->sanitise($publicSupplier->name).'-'.$publicSupplier->tnid;
+							?>
+								To view the customer list and reviews of this supplier please view the<br><a href="<?= $url ?>">head office listing</a>
+							<?php 
+						} else {
+						?>
+							This supplier is yet to trade on ShipServ TradeNet
+						<?php
+						}
+					}
+				}
+				?>
+			</td>
+			<td class="nbox-right"></td>
+		</tr>
+		<tr>
+			<td class="nbox-bottom-left"></td>
+			<td class="nbox-bottom"></td>
+			<td class="nbox-bottom-right"></td>
+		</tr>
+	</table>
+
+	<?php
+	}
+	?>
+</div>
+<script type="text/javascript">
+	<!--
+
+	$.fn.idle = function(time)
+  {
+      var o = $(this);
+      o.queue(function()
+      {
+         setTimeout(function()
+         {
+            o.dequeue();
+         }, time);
+      });
+      return this;              //****
+  }
+	textBoxLists = new Array();
+	$(document).ready(function(){
+
+		$('a[class="review-action-request"]').click(function(){
+			$(this).parent().parent().siblings('div[class="request-review-block"]').slideDown(200);
+			var recId = $(this).parent().parent().siblings('div[class="request-review-block"]').attr('id').replace('request-review-', '');
+			if (!$('#request-emails-'+recId).is(':hidden')){
+				textBoxLists[recId] = new $.TextboxList('#request-emails-'+recId, {unique:true,bitsOptions:{editable:{addOnBlur:true,addKeys: [13,188]}}});
+			}
+			$(this).hide();
+			$(this).siblings('a[class="review-action-request-close"]').show();
+			return false;
+		});
+		$('a[class="review-action-request-close"]').click(function(){
+			var recId = $(this).parent().parent().siblings('div[class="request-review-block"]').attr('id').replace('request-review-', '');
+			$(this).parent().parent().siblings('div[class="request-review-block"]').hide();
+			$(this).hide();
+			$(this).siblings('a[class="review-action-request"]').show();
+			resetRequestForm (recId);
+			return false;
+		});
+
+		$('a[class="send-request"]').click(function(){
+			var recId = $(this).parent().parent().attr('id').replace('request-review-', '');
+			if (textBoxLists[recId].validate())
+			{
+				$.post('/reviews/send-request/format/json/',
+					{
+						endorserId: recId,
+						endorseeId:<?php echo $this->supplier->tnid?>,
+						endorserEmails:$('#request-emails-'+recId).val(),
+						requestText: $('#request-text-'+recId).val()
+					},
+					function(data) {
+						$('#request-review-' + recId).hide();
+						if (data == "success")
+						{
+							resetRequestForm (recId);
+							$('#request-link-close-'+ recId).hide();
+							$('#request-link-'+ recId).show();
+							$('#request-review-' + recId).parent().append('<div class="request-result"><div class="result-image"><img src="/images/layout_v2/endorsement/request_sent_icon.gif" width="43" height="43" alt=""/></div><div class="result-text">Thank you, your request has been sent.</div><div class="clear"/></div>');
+							$('#request-review-' + recId).siblings('div[class="request-result"]').idle(3000).slideUp(200);
+						}
+
+					},
+					'json'
+				);
+			}
+			else
+			{
+				alert ("One or more emails you have entered are not valid.")
+			}
+			return false;
+		});
+
+		function resetRequestForm (recId){
+
+			textBoxLists[recId].clear();
+			$('#request-emails-'+recId).val("")
+			$('#request-text-'+recId).val("If you have a few seconds it would really help us if you would share with us your experience of trading with <?php echo trim($this->supplier->name);?>?");
+		}
+	});
+	//-->
+</script>

@@ -1,0 +1,27 @@
+<h1 class="styled">{{title}}</h1>
+<div class="itemselector inner new form clearfix">
+    <div class="left">
+        <h3>Select {{itemtype}}:</h3>
+            <img src="/img/icons/medium/spyglass.png" /> <input type="text" name="filter" class="filterField left" />
+        <ul class="list left">
+            
+        </ul>
+    </div>
+    
+    <div class="divider"></div>
+    
+    <div class="right">
+        <h3>Your selected {{itemtype}}:</h3>
+        {{#if showRightFilter}}
+            <img src="/img/icons/medium/spyglass.png" /> <input type="text" name="filter" class="filterField right" />
+        {{/if}}
+        <ul class="list right">
+            
+        </ul>
+        <input type="button" class="remove all button white small" value="Remove all">
+    </div>
+    
+    <div class="buttonContainer">
+        <input type="button" class="apply button green medium" value="Apply change" />
+    </div>
+</div>

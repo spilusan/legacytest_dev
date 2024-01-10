@@ -1,0 +1,58 @@
+<div class="itemBox">
+	<div class="boxContent">
+		<h4>
+			<input type="image" src="/img/icons/buttons/x.png" class="button white small removeSec" tabindex="-1"/> <input type="button" value="Add new section" class="button small link addSection" /> <span>Section (<input type="button" value="Add section details" class="button link small addSecDet" /><input type="button" value="Remove section details" class="button small link removeSecDet" />)</span>
+			<div class="clear"></div>
+		</h4>
+		<fieldset>
+			<div class="right">
+				<input type="text" name="section[{{ id }}][lidSerialNumber]" class="sSerial" tabindex="-1"/>
+				<label for="lidSerialNumber">Serial Number:</label>
+				<div class="clear"></div>
+				<input type="text" name="section[{{ id }}][lidType]" class="sType" tabindex="-1"/>
+				<label for="lidType">Type:</label>
+				<div class="clear"></div>
+				<input type="text" name="section[{{ id }}][lidDrawingNumber]" class="sDraw" tabindex="-1"/>
+				<label for="lidDrawingNumber">Drawing Number:</label>
+				<div class="clear"></div>
+				<input type="text" name="section[{{ id }}][lidRating]" class="sRate" tabindex="-1"/>
+				<label for="lidRating">Rating:</label>
+				<div class="clear"></div>
+			</div>
+			<div class="left">
+				<input type="text" name="section[{{ id }}][lidFor]" class="sFor" tabindex="-1"/>
+				<label for="lidFor">For:</label>
+				<div class="clear"></div>
+				<input type="text" name="section[{{ id }}][lidDescription]" class="sDesc" tabindex="-1"/>
+				<label for="lidDescription">Description:</label>
+				<div class="clear"></div>
+				<input type="text" name="section[{{ id }}][lidManufacturer]" class="sMan" tabindex="-1"/>
+				<label for="lidManufacturer">Manufacturer:</label>
+				<div class="clear"></div>
+				<input type="text" name="section[{{ id }}][lidModel]" class="sModel" tabindex="-1"/>
+				<label for="lidModel">Model:</label>
+				<div class="clear"></div>
+			</div>
+		</fieldset>
+		<div class="lineItemHead">
+			<input type="hidden" name="sid" value="{{ id }}" />
+			<div class="clear"></div>
+			<div class="cell ln">#</div>
+			<div class="cell qt">Qty</div>
+			<div class="cell un">Unit</div>
+			<div class="cell pt">Part No. Type</div>
+			<div class="cell pn">Part No.</div>
+			<div class="cell ds">Description</div>
+			<div class="cell cm">Comments</div>
+			<div class="cell del">&nbsp;</div>
+			<div class="clear"></div>
+		</div>
+
+		<div class="items">
+			
+		</div>
+		<div class="lineItemFoot">
+			<input type="button" value="Add new line" class="button small link addLine" />
+		</div>
+	</div>
+</div>

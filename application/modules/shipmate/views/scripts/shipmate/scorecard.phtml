@@ -1,0 +1,1226 @@
+<?php
+$this->headLink()->appendStylesheet('/css/shipmate.css')
+->appendStylesheet('/css/scorecard.css');
+
+$this->requirejs()->addModule('backbone/shipmate/scorecard/views/mainView')
+->addDefinition('user/md5sum', json_encode($this->md5sum))
+->addDefinition('user/userCode', $this->userCode)
+->addDefinition('user/scorecardDomain', json_encode($this->scorecardDomain))
+->addDefinition('user/scorecardAdvanced', json_encode($this->scorecardAdvanced));
+
+
+// -------- BREADCRUMBS ---------------
+$breadcrumbs = array();
+$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+$breadcrumbs[] = array('name' => 'ScoreCard', 'url'  => '');
+echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<div id="body" class="liquid">
+	<div id="content">
+		<!-- Styled can be removed as soone as we are moving to new layout -->
+		<h1<?php if ($this->newLayout === false): ?> class="styled"<?php endif ?>>ScoreCard Transaction Reports</h1>
+        <div class="scorecardWarning">
+            <p>Note: All reports, unless otherwise indicated, will not include active buyers involved in past transactions if they are inactive at the time of the report generation.</p>
+            <?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+        </div>
+		<div class="innerContent">
+
+			<section>
+				<form name="pages_stats" id="pages_stats" method="post">
+					<h2>Statistics for PAGES</h2>	
+					<fieldset>
+						<label for="">Summary for</label>
+						<div class="select">
+							<select name="AD17" id="AD17">
+								<option value="" Selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AD18" id="AD18">
+								<option value="" Selected>Mon</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AD19" id="AD19">
+								<option value="" Selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<input type="button" value="View" name="submit" class="fnOpenReportWin btn white" data-id="pages_stats">
+					</fieldset>
+				</form>
+
+				<form name="frmverified" id="frmverified" method="post">
+					<h2>Recently Verified Suppliers</h2>
+					<fieldset>
+						<label for="">From:</label>
+						<input type="hidden" name="outputDate" value="DayMonYear">
+						<div class="select">
+							<select name="AD20" id="AD20">
+								<option value="" Selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AD21" id="AD21">
+								<option value="" Selected>Mon</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AD22" id="AD22">
+								<option value="" Selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+
+						<label for="">To:</label>
+						<input type="hidden" name="outputDate" value="DayMonYear">
+
+						<div class="select">
+							<select name="AD23" id="AD23">
+								<option value="" Selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AD24" id="AD24">
+								<option value="" Selected>Mon</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AD25" id="AD25">
+								<option value="" Selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<input type="button" value="View" name="submit" class="fnOpenReportWin btn white" data-id="list_verif">
+					</fieldset>
+					<br>
+					<a href="<?php echo $this->telesalesDomain; ?>/scorecard/supplierstats/viewPagesStatsReport.do" target='_blank'>Telesales Data Search Tool</a>
+					<span class="text-red"><b> New!</b></span>
+				</form>
+			</section>
+			<!--******** REFACTORING Continue it from here ************ -->
+			<!-- END MORE NEW STUFF-->
+			<!-- Start of S3810 -->
+			<section>
+				<form name="etlstatsbysplrphp" id="etlstatsbysplrphp" method="post">
+					<h2>Statistics By Supplier</h2>
+					<fieldset>
+						<label for="">From Date:</label>
+
+						<div class="select">
+							<select name="fromday" id="fromday">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="frommonth" id="frommonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="fromyear" id="fromyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">To Date:</label>
+
+							<div class="select">
+								<select name="today" id="today">
+									<option value="" selected>Day</option>
+									<?php for ($i = 1 ; $i <= 31; $i++): ?>
+										<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+									<?php endfor ?>
+								</select>
+							</div>
+
+							<div class="select">
+								<select name="tomonth" id="tomonth">
+									<option value="" selected>Month</option>
+									<?php foreach ($this->montsh  as $key => $value): ?>
+										<option value="<?php echo $key ?>"><?php echo $value ?></option>
+									<?php endforeach ?>
+								</select>
+							</div>
+
+							<div class="select">
+								<select name="toyear" id="toyear">
+									<option value="" selected>Year</option>
+									<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+										<option value="<?php echo $i ?>"><?php echo $i ?></option>
+									<?php endfor ?>
+								</select>
+							</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Supplier Type:</label>
+						
+						<div class="select">
+							<select name="spbtype" id="spbtype">
+								<option value="ALL" selected>All</option>
+								<option value="START">Start</option>
+								<option value="CONTRACTED">Contracted</option>
+							</select>
+						</div>
+
+					</fieldset>
+					
+					<fieldset>
+						<label for="">Include BuyerConnect Buyers?</label>
+						<div class="select">
+					
+        						<select name="bcbyb" id="bcbyb">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+  						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Search by Supplier TNID:</label>
+						<input name="spbtnid" id="spbtnid" value="All" type="text" />
+						<input name="submit" type="button" value="View" class="runETLStatsBySplrPHP btn white" data-ind="1"/>
+					</fieldset>
+				
+					<ul>
+						<li>Clicking the "View" button with an "All" input will initially return all main parent suppliers in the system.</li>
+						<li>Clicking the "View" button with a specified TNID will show the transactions of the specified TNID and its sub-supplier(s).</li>
+					</ul>
+
+					<fieldset>
+						<label for="">Search by Supplier Name:</label>
+						<input name="spbname" id="spbname" value="All" type="text" />
+						<input name="submit" type="button" value="View" class="runETLStatsBySplrPHP btn white" data-ind="2"/>
+					</fieldset>
+					
+					<ul>
+						<li>Clicking the "View" button with an "All" input will initially return all main parent suppliers in the system.</li>
+						<li>Clicking the "View" button with a name input will always return the main parent supplier(s) of the name being searched.</lu>
+					</ul>
+
+				</form>
+			</section>
+			<section>
+				<form name="etlsplrgmv" id="etlsplrgmv" method="post">
+					<h2>Supplier Analysis GMV &nbsp;<span class="color red">CURRENTLY UNDER TESTING. PLEASE DO NOT USE.</span></h2>
+					<fieldset>
+						<label for="">Date Range:</label>
+						<div class="select">
+							<select name="dtrng" id="dtrng">
+								<option value="M" selected>Monthly</option>
+								<option value="Q">Quarterly</option>
+								<option value="Y">Yearly</option>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">From Date:</label>
+
+						<div class="select">
+							<select name="fromday" id="fromday">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="frommonth" id="frommonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="fromyear" id="fromyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+					</fieldset>
+
+					<fieldset>
+						<label for="">To Date:</label>
+
+						<div class="select">
+							<select name="today" id="today">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="tomonth" id="tomonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="toyear" id="toyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Report As-Of Date:</label>
+
+						<div class="select">
+							<select name="rptday" id="rptday">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="rptmonth" id="rptmonth" >
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="rptyear" id="rptyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Supplier Type:</label>
+
+						<div class="select">
+							<select name="spbtype" id="spbtype">
+								<option value="ALL" selected>All</option>
+								<option value="START">Start</option>
+								<option value="CONTRACTED">Contracted</option>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Search by Supplier TNID:</label>
+						<input name="spbtnid" id="spbtnid" value="" type="text">
+						<input name="submit" type="button" value="View" data-ind="1" class="runETLSplrGMV btn white">
+						<p><span class="color red">Please limit the date range within two (2) years.</p>
+
+					</fieldset>
+				</form>
+			</section>
+			<!-- End of S9359 -->
+			<!-- Start of S3811-S4630-S4659 -->
+			<section>
+				<form name="etlstatsbybyr" id="etlstatsbybyr" method="post">
+					<h2>Statistics By Buyer</h2>
+					<fieldset>
+						<label for="">From Date:</label>
+						<div class="select">
+							<select name="fromday" id="fromday">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="frommonth" id="frommonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="fromyear" id="fromyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">To Date:</label>
+
+						<div class="select">
+							<select name="today" id="today">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="tomonth" id="tomonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="toyear" id="toyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						<div>
+					</fieldset>
+
+					<fieldset>
+						<label>Include POM Buyers?</label>
+
+						<div class="select">
+							<select name="pombyb" id="ispombyb" >
+								<option value="1" selected>Yes</option>
+								<option value="0">No</option>
+							</select>
+						</div>
+					</fieldset>
+					
+					<fieldset>
+						<label for="">Include BuyerConnect Buyers?</label>
+						<div class="select">
+					
+        						<select name="bcbyb" id="bcbyb">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+  						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Contract Type:</label>
+						<div class="select">
+							<select name="bybctype" id="bybctype">
+								<option value="ALL" selected>All</option>
+								<option value="CCP">CCP</option>
+								<option value="CN3">Connect3</option>
+								<option value="EXC">ExCustomer</option>
+								<option value="FREEOUTBOUND">FreeOutbound</option>
+								<option value="POM">POM</option>
+								<option value="STANDARD">Standard</option>
+								<option value="STARTBUYER">StartBuyer</option>
+								<option value="TRIAL">Trial</option>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Search by Buyer TNID:</label>
+						<input name="bybtnid" id="bybtnid" value="All" type="text" />
+						<input name="submit" type="button" value="View" class="runETLStatsByByr btn white" data-ind="0"/>
+						<input name="submit" type="button" value="with Sub-Buyers" class="runETLStatsByByr btn white" data-ind="1"/>
+					</fieldset>
+
+					<ul>
+						<li>Clicking the "View" button with an "All" input will initially return all main parent buyers in the system.</li>
+						<li>Clicking the "View" button with a specified TNID will only show the transactions of the specified TNID.</li>
+						<li>Clicking the "with Sub-Buyers" button with a specified TNID will initially return the main parent buyer of the specified TNID.</li>
+					</ul>
+
+					<fieldset>
+						<label for="">Search by Buyer Name:</label>
+						<input name="bybname" id="bybname" value="All" type="text"/>
+						<input name="submit" type="button" value="View" class="runETLStatsByByr btn white" data-ind="2"/>
+					</fieldset>
+
+					<ul>
+						<li>Clicking the "View" button with an "All" input will initially return all main parent buyers in the system.</li>
+						<li>Clicking the "View" button with a name input will always return the main parent buyer(s) of the name being searched.</li>
+					</ul>
+
+				</form>
+			</section>
+			
+			<section id="div_etlbyrsplrlst">
+				<form name="etlbyrsplrlst" id="etlbyrsplrlst" method="post">
+					<h2>Buyer - Suppliers List</h2>
+					
+					<fieldset>
+						<label for="">From Date:</label>
+
+						<div class="select">
+							<select name="fromday" id="fromday">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="frommonth" id="frommonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="fromyear" id="fromyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">To Date:</label>
+
+						<div class="select">
+							<select name="today" id="today">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="tomonth" id="tomonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="toyear" id="toyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label>Minimum USD Value:</label>
+						<input name="minusdval" id="minusdval" value="0" type="text"/>
+					</fieldset>
+
+					<fieldset>
+						<label>Search by Buyer TNID:</label>
+						<input name="bybtnid" id="bybtnid" value="" type="text"/>
+						<input name="submit" type="button" value="View" class="runETLByrSplrLst btn white"/>
+					</fieldset>
+				</form>
+			</section>
+			<section>
+				<!-- Start of S4856 -->
+				<form name="etltxngvssl" id="etltxngvssl" method="post">
+					<h2>Transacting Vessels</h2>
+					<fieldset>
+						<label for="">From Date:</label>
+
+						<div class="select">
+							<select name="fromday" id="fromday">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="frommonth" id="frommonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="fromyear" id="fromyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label>To Date:</label>
+
+						<div class="select">
+							<select name="today" id="today">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="tomonth" id="tomonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="toyear" id="toyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label>Include POM Buyers?</label>
+
+						<div class="select">
+							<select name="pombyb" id="ispombyb">
+								<option value="1" selected>Yes</option>
+								<option value="0">No</option>
+							</select>
+						</div>
+					</fieldset>
+					
+					<fieldset>
+						<label for="">Include BuyerConnect Buyers?</label>
+						<div class="select">
+					
+        						<select name="bcbyb" id="bcbyb">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+  						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Include Test Accounts:</label>
+
+						<div class="select">
+							<select name="inctst" id="inctst">
+								<option value="Y">Yes</option>
+								<option value="N" selected>No</option>
+							</select>
+						</div>
+					</fieldset>
+					
+					<fieldset>
+						<label>Region Type:</label>
+
+						<div class="select">
+							<select name="rgntype" id="rgntype">
+								<option value="ALL" selected>All</option>
+								<option value="TOPEMEA"     >Top Region - EMEA</option>
+								<option value="TOPAPAC"     >Top Region - APAC</option>
+								<option value="TOPAMERICA"  >Top Region - AMERICA</option>
+								<option value="ACCTEMEA"    >Account Region - EMEA</option>
+								<option value="ACCTAPAC"    >Account Region - APAC</option>
+								<option value="ACCTAMERICA" >Account Region - AMERICA</option>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Contract Type:</label>
+
+						<div class="select">
+							<select name="bybctype" id="bybctype">
+								<option value="ALL" selected>All</option>
+								<option value="AXS">All Excl. Standard</option>
+								<option value="CCP">CCP</option>
+								<option value="CN3">Connect3</option>
+								<option value="EXC">ExCustomer</option>
+								<option value="FREEOUTBOUND">FreeOutbound</option>
+								<option value="POM">POM</option>
+								<option value="STANDARD">Standard</option>
+								<option value="STARTBUYER">StartBuyer</option>
+								<option value="TRIAL">Trial</option>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label>Search by Buyer TNID:</label>
+						<input name="bybtnid" id="bybtnid" value="All" type="text"/>
+						<input name="submit" type="button" value="View" class="runETLTxngVssl btn white" data-ind="1"/>
+					</fieldset>
+					
+					<ul>
+						<li>Clicking the "View" button with an "All" input will limit the report up to a month starting from the given "From Date".</li>
+						<li>Clicking the "View" button with a specified TNID will NOT have the one-month limit.</li>
+					</ul>
+
+					<fieldset>
+						<label>Search by Buyer Name:</label>
+						<input name="bybname" id="bybname" value="All" type="text"/>
+						<input name="submit" type="button" value="View" class="runETLTxngVssl btn white" data-ind="2"/>
+					</fieldset>
+					<ul>
+						<li>Clicking the "View" button will always limit the report up to a month starting from the given "From Date".</li>
+					</ul>
+				</form>
+			</section>
+			<!-- End of S4856 -->
+			<!-- Included in S4823-S5711 (Removal of deprecated report menus) -->
+			<!-- S6511: Remove Buyer Invoices & Supplier Invoices from the ScoreCard reports -->
+			<!-- Start of S4823-S5711 -->
+			<section>
+				<form name="etlestbybrmpup" id="etlestbybrmpup" method="post">
+					<h2>Estimated Buyer Ramp-Up</h2>
+					<fieldset>
+						<label for="">Date Range:</label>
+
+						<div class="select">
+							<select name="multiplier" id="multiplier" class="clickDateRange">
+								<option value="12" selected>1 Month</option>
+								<option value="04">3 Months</option>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">From Date:</label>
+						<input type="text" name="fromday" id="fromday" value="Day" disabled>
+						<input type="text" name="frommonth" id="frommonth" value="Month" disabled>
+						<input type="text" name="fromyear" id="fromyear" value="Year" disabled>
+					</fieldset>
+
+					<fieldset>
+						<label for="">To Date:</label>
+
+						<div class="select">
+							<select name="today" id="today" class="clickToDay">
+								<option value="00" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="tomonth" id="tomonth" class="clickToMonth">
+								<option value="00" selected>Month</option>
+								<?php $i = 0; ?>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+								<?php $i++ ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="toyear" id="toyear" class="clickToYear">
+								<option value="00" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Include POM Buyers?</label>
+
+						<div class="select">
+							<select name="pombyb" id="ispombyb">
+								<option value="1" selected>Yes</option>
+								<option value="0">No</option>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label>Region Type:</label>
+
+						<div class="select">
+							<select name="rgntype" id="rgntype">
+								<option value="ALL" selected>All</option>
+								<option value="TOPEMEA"     >Top Region - EMEA</option>
+								<option value="TOPAPAC"     >Top Region - APAC</option>
+								<option value="TOPAMERICA"  >Top Region - AMERICA</option>
+								<option value="ACCTEMEA"    >Account Region - EMEA</option>
+								<option value="ACCTAPAC"    >Account Region - APAC</option>
+								<option value="ACCTAMERICA" >Account Region - AMERICA</option>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Contract Type:</label>
+
+						<div class="select">
+							<select name="bybctype" id="bybctype">
+								<option value="ALL" selected>All</option>
+								<option value="CCP">CCP</option>
+								<option value="CN3">Connect3</option>
+								<option value="EXC">ExCustomer</option>
+								<option value="FREEOUTBOUND">FreeOutbound</option>
+								<option value="POM">POM</option>
+								<option value="STANDARD">Standard</option>
+								<option value="STARTBUYER">StartBuyer</option>
+								<option value="TRIAL">Trial</option>
+							</select>
+						</div>
+						<input id="submit" name="submit" type="button" value="View" class="runETLEstBybRmpUp btn white" disabled/>
+					</fieldset>
+				</form>
+
+			</section>
+			<!-- End of S4823-S5711 -->
+			<!--ronbugz modification end-->
+			<!-- Included in S4823-S5711 (Removal of deprecated report menus) -->
+			<!-- S6511: Remove Buyer Invoices & Supplier Invoices from the ScoreCard reports -->
+			<!-- Start of S3846-S4466 -->
+			<section>
+				<form name="etlavepovalue" id="etlavepovalue" method="post">
+					<h2>Average PO Value</h2>
+					<fieldset>
+						<label for="">From Date:</label>
+
+						<div class="select">
+							<select name="fromday" id="fromday">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="frommonth" id="frommonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="fromyear" id="fromyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">To Date:</label>
+
+						<div class="select">
+							<select name="today" id="today" >
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="tomonth" id="tomonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="toyear" id="toyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Include POM Buyers?</label>
+
+						<div class="select">
+							<select name="pombyb" id="ispombyb">
+								<option value="1" selected>Yes</option>
+								<option value="0">No</option>
+							</select>
+						</div>
+					</fieldset>
+					
+					<fieldset>
+						<label for="">Include BuyerConnect Buyers?</label>
+						<div class="select">
+				
+							<select name="bcbyb" id="bcbyb">
+                                <option value="1">Yes</option>
+                                <option value="0" selected>No</option>
+                            </select>
+  						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Minimum USD Value:</label>
+						<input name="minusdval" id="minusdval" value="0" type="text" />
+					</fieldset>
+
+					<fieldset>
+						<label for="">Maximum USD Value:</label>
+						<input name="maxusdval" id="maxusdval" value="999999999" type="text"/>
+					</fieldset>
+
+					<fieldset>
+						<label>Search by Buyer Name:</label>
+						<input name="bybname" id="bybname" value="All" type="text" />
+						<input name="submit" type="button" value="View" class="runETLAvePOValue btn white"/>
+					</fieldset>
+				</form>
+			</section>
+			<!-- End of S3846-S4466 -->
+			<section class="bgcolor cyan-blue">
+				<form name="constatsbysupp" id="constatsbysupp" method="post">
+					<h2>Consolidated statistics by supplier</h2>
+					<fieldset>
+
+						<div class="select">
+							<select name="month" id="month">
+								<option value="" Selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="year" id="year">
+								<option value="" Selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+						<input type="button" value="View" name="submit" class="fnOpenReportWin btn white" data-id="con_stats_by_supp"/>
+					</fieldset>
+				</form>
+			</section>
+			<!--ronbugz modification end-->
+			<section>
+				<form name="attlist" id="attlist" method="post">
+					<h2>File Attachment List</h2>
+					<fieldset>
+						<label for="">From:</label>
+
+						<input type="hidden" name="outputDate" value="DayMonYear">
+
+						<div class="select">
+							<select name="AD11" id="AD11">
+								<option value="" Selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AD12" id="AD12">
+								<option value="" Selected>Mon</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AD13" id="AD13">
+								<option value="" Selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">To:</label>
+
+						<input type="hidden" name="outputDate" value="DayMonYear">
+
+						<div class="select">
+							<select name="AD14" id="AD14">
+								<option value="" Selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AD15" id="AD15">
+								<option value="" Selected>Mon</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AD16" id="AD16">
+								<option value="" Selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+					</fieldset>
+					<fieldset>
+						<!-- new buyerstats-by_TNID added robin 28jun2008 -->
+						<label for="">Buyer TNID</label>
+						<input type="text" name="buyerTNID">
+						<input type="button" value="View" name="submit" class="fnOpenReportWin  btn white" data-id="AttachmentListByBuyer">
+					</fieldset>
+				</form>
+			</section>
+			<!-- hari-start -->
+			<section id="section_supppurvalue">
+				<!-- BEGIN OF ROBIN COMMENTING SUPPLIER PURCHASE VALUE 30jan06 -->
+				<form name="supppurvalue" id="supppurvalue" method="post">
+					<h2>Supplier Purchase Value</h2>
+                    <p>Note: This report also includes inactive buyers</p>
+					<fieldset>
+						<label for="">Enter TNID:</label>
+						<input type="text" name="suppname">
+						<!-- add empty optsuppname when adding TNID chooser 03nov06 -->
+						<input type="hidden" name="optsuppname" value="">
+					</fieldset>
+
+					<fieldset>
+						<label for="">From:</label>
+
+						<div class="select">
+							<select name="AE1" id="AE1">
+								<option value="" Selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AE2" id="AE2">
+								<option value="" Selected>Mon</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AE3" id="AE3">
+								<option value="" Selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>	
+
+					<fieldset>
+						<label for="">To:</label>
+
+						<div class="select">
+							<select name="AE4" id="AE4">
+								<option value="" Selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AE5" id="AE5">
+								<option value="" Selected>Mon</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="AE6" id="AE6">
+								<option value="" Selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<input type="button" value="View" name="submit" class="fnOpenReportWin btn white" data-id="supppurvalue">
+						 <!-- END OF ROBIN COMMENTING SUPPLIER PURCHASE VALUE -->
+					</fieldset>
+				</form>
+			</section>
+			<!-- Start of S4545 -->
+			<section>
+				<form name="telesupppurvalue" id="telesupppurvalue" method="post">
+					<h2>Telesales Supplier Purchase Value</h2>
+                    <p>Note: This report also includes inactive buyers</p>
+					<fieldset>
+						<label for="">From Date:</label>
+
+						<div class="select">
+							<select name="fromday" id="fromday">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="frommonth" id="frommonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="fromyear" id="fromyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">To Date:</label>
+
+						<div class="select">
+							<select name="today" id="today">
+								<option value="" selected>Day</option>
+								<?php for ($i = 1 ; $i <= 31; $i++): ?>
+									<option value="<?php printf('%02d', $i); ?>"><?php printf('%02d', $i); ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+
+						<div class="select">
+							<select name="tomonth" id="tomonth">
+								<option value="" selected>Month</option>
+								<?php foreach ($this->montsh  as $key => $value): ?>
+									<option value="<?php echo $key ?>"><?php echo $value ?></option>
+								<?php endforeach ?>
+							</select>
+						</div>
+						
+						<div class="select">
+							<select name="toyear" id="toyear">
+								<option value="" selected>Year</option>
+								<?php for ($i = 2000 ; $i <= $this->currentYear; $i++): ?>
+									<option value="<?php echo $i ?>"><?php echo $i ?></option>
+								<?php endfor ?>
+							</select>
+						</div>
+					</fieldset>
+
+					<fieldset>
+						<label for="">Search by Supplier TNID:</label>
+						<input name="supptnid" type="text" />
+						<input name="submit" type="button" value="View" class="runS4545 btn white"/>
+					</fieldset>
+
+				</form>
+			</section>
+		<!---  END Inner content -->
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+

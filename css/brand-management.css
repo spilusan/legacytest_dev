@@ -1,0 +1,219 @@
+.brand-request-company-info-column {
+	float:left;
+	font:bold 11px Arial;
+	width:220px;
+}
+
+.brand-request-company-info-column .company-name {
+	color:#FC630F;
+	font:bold 12px Arial;
+}
+
+.brand-request-auth-column {
+	float:left;
+	width:180px;
+	padding:0 10px;
+	font-size: 11px;
+}
+
+#pendingBrandAuths label {
+	margin:0;
+	display:inline;
+	color:#000;
+	font-size: 11px;
+}
+
+h3.blue {
+	color:#004d93;
+	font:bold 14px Arial;
+	padding-bottom:15px;
+}
+
+.blue-header {
+	color:#004d93;
+	font:bold 14px Arial;
+	padding-bottom:15px;
+	float:left;
+}
+
+#brandManagement h3.info-message {
+	margin-bottom:0;
+}
+
+#authorised-suppliers th {
+	vertical-align: bottom;
+	padding:10px;
+	border-left:solid 1px #696969;
+}
+
+#authorised-suppliers-table td {
+	background-color: white;
+	padding:10px;
+	border-right:solid 1px #e3e3e3;
+	border-bottom:solid 1px #e3e3e3;
+	font:normal 11px Arial;
+}
+
+#authorised-suppliers-table td.auth-rating {
+	text-align: center;
+	vertical-align: middle;
+	background: #ffffff url('/images/layout_v2/brands/grey_brandshield_nonactive.gif') center center no-repeat;
+	cursor: pointer;
+}
+
+#authorised-suppliers-table td.authorised {
+	background: #ffffff url('/images/layout_v2/brands/authorised_icon.png') center center no-repeat;
+}
+
+#authorised-suppliers-table td.auth-rating-hover {
+	background: #ffefe8 url('/images/layout_v2/brands/greyshield_on_orange.gif') center center no-repeat;
+}
+
+#authorised-suppliers-table td.auth-rating-hover.authorised {
+	background: #ffefe8 url('/images/layout_v2/brands/blueshield_on_orange.gif') center center no-repeat;
+}
+
+#authorised-suppliers-table td.brand-auth-company-name-hover {
+	background-color: #ffefe8;
+}
+
+.delete-all-company-auths {
+	background-color:#fb630f;
+	color:white;
+	font: bold 10px Arial;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+}
+
+.delete-all-company-auths .button {
+	float:right;
+	cursor:pointer;
+	margin:0 5px;
+}
+
+.delete-all-company-auths .text {
+	padding:5px;
+}
+
+#addSupplierAuthButton {
+	background: url('/images/layout_v2/brands/addnewsupplierforthisbrand_button.gif') 0 0 no-repeat;
+	width:217px;
+	height: 29px;
+	float:right;
+	cursor: pointer;
+}
+
+#addSupplierAuthButton.hover {
+	background: url('/images/layout_v2/brands/addnewsupplierforthisbrand_button.gif') 0 -29px no-repeat;
+}
+
+#addSupplierAuthsPanel .input-wrapper-sm {
+	background: url("/images/layout_v2/profile/input-bg.png") top left no-repeat;
+	width: 423px;
+	height: 28px;
+	padding: 7px 6px;
+	margin-top:10px;
+}
+
+#addSupplierAuthsPanel .input-wrapper-sm input {
+	display: block;
+	border: none;
+	border-color: transparent;
+	font-weight: bold;
+	font-size: 13px;
+	padding: 0px;
+	margin: 0px;
+	height: 21px;
+	width: 423px;
+}
+
+#addSupplierAuthsPanel label {
+	display:inline;
+	color:#000000;
+	font:bold 12px Arial;
+	margin-bottom:0;
+	padding-left:4px;
+}
+
+#addSupplierAuthNowButton {
+	background: url('/images/layout_v2/brands/addsuppliersnow_button.gif') 0 0 no-repeat;
+	width:144px;
+	height: 29px;
+	cursor: pointer;
+}
+
+#addSupplierAuthNowButton.hover {
+	background: url('/images/layout_v2/brands/addsuppliersnow_button.gif') 0 -29px no-repeat;
+}
+
+#addSupplierAuthNowButton {
+	background: url('/images/layout_v2/brands/addsuppliersnow_button.gif') 0 0 no-repeat;
+	width:144px;
+	height: 29px;
+	cursor: pointer;
+}
+
+#addSupplierAuthNowButton.hover {
+	background: url('/images/layout_v2/brands/addsuppliersnow_button.gif') 0 -29px no-repeat;
+}
+
+#inviteSuppliersButton {
+	background: url('/images/layout_v2/brands/cant_find_sprite.gif') 0 0 no-repeat;
+	width:451px;
+	height: 50px;
+	cursor: pointer;
+}
+
+#inviteSuppliersButton.hover {
+	background: url('/images/layout_v2/brands/cant_find_sprite.gif') 0 -50px no-repeat;
+}
+
+#brandManagementInviteSupplier {
+	font: normal 12px Arial;
+}
+
+#addSupplierAuthsPanel label, #brandManagementInviteSupplier label {
+	display:inline;
+	color:#000000;
+	font:bold 12px Arial;
+	margin-bottom:0;
+}
+
+#inviteSupplierMessageIcon {
+	width:56px;
+	height:42px;
+	background: url('/images/layout_v2/brands/invite_email_icon.gif') 0 0 no-repeat;
+	float:left;
+}
+
+#inviteSupplierButton {
+	background: url('/images/layout_v2/brands/send_invitation_button_sprite.gif') 0 0 no-repeat;
+	width:144px;
+	height: 32px;
+	cursor: pointer;
+}
+
+#inviteSupplierButton.hover {
+	background: url('/images/layout_v2/brands/send_invitation_button_sprite.gif') 0 -32px no-repeat;
+}
+
+#brandManagementInviteSupplier input {
+	background: url("/images/layout_v2/brands/text-input-box.png") no-repeat;
+	width: 288px;
+	height: 35px;
+	border: none;
+	border-color: transparent;
+	font-weight: bold;
+	font-size: 13px;
+	padding: 0px 10px;
+	margin: 0px;
+	line-height: 35px !important;
+}
+
+.company-name a {
+	color:#FC630F;
+}
+
+#uploadLink {
+	font: normal 12px Arial, sans-serif;
+}

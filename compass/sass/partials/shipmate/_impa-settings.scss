@@ -1,0 +1,35 @@
+#body {
+	#content {
+		h2 {
+			font-family: 'Open Sans', sans-serif;
+			display: block;
+			font-size: 20px;
+			font-weight: 400px;
+			color: #005AAD;
+			margin-bottom: 20px;
+		}
+	
+		section {
+			border-top: 1px solid #9BA7BA;
+			margin-top: 10px;
+			padding: 12px 6px;
+			&.bgcolor {
+				&.cyan-blue {
+					background-color: #BBEAFA;
+					border: 1px solid #005AAD;
+					border-radius: 4px;
+				}
+			}
+			p {
+				padding: 12px 12px 0px 0px;
+				font-size: 11px;
+			}
+		
+			form {
+				input[type="submit"] {
+					margin-left: 5px;
+				}
+			}
+		}
+	}
+}

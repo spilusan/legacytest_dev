@@ -1,0 +1,60 @@
+<?php
+
+// Successfully requested e-mail confirmation e-mail
+if ($this->confEmlSubmitted && $this->confEmlWasOk)
+{
+	?>
+	<div class="message-header"></div>
+	<div class="message-container">
+		<h3 class="email-confirmed">Confirmation e-mail sent</h3>
+		<p>To complete e-mail confirmation, please check your e-mail now and follow the link that has been sent to you.</p>
+	</div>
+	<div class="message-footer"></div>
+	<?php
+}
+
+// Re-send has not been submitted: default screen
+elseif (!$this->confEmlSubmitted)
+{
+	?>
+	<div class="warning-header"></div>
+	<div id="profile-emlconf-no" class="warning-block">
+		<h3>Your email address is not confirmed</h3>
+		<p>In order to continue you need to confirm your e-mail address.
+		You should have received an email with instructions when you registered.
+		If you did not, or have lost it, you can resend it by clicking on the button below.</p>
+		<form method="post" action="/user/send-confirm-email">
+			<input type="hidden" name="redirOk" value="<?php echo $this->redirOk ?>" />
+			<input type="hidden" name="redirFail" value="<?php echo $this->redirFail ?>" />
+			<input type="submit" value="" />
+		</form>
+	</div>
+	<div class="warning-footer"></div>
+	<?php
+}
+
+// Something's gone wrong
+else
+{
+	?>
+	<div class="warning-header"></div>
+	<div class="warning-block">
+		<h3>An error has occurred</h3>
+		<p>
+			<?php
+			if ($this->confEmlErrMsg != '')
+			{
+				echo $this->confEmlErrMsg;
+			}
+			else
+			{
+				?>
+				An error has occurred. Please try again later.
+				<?php
+			}
+			?>
+		</p>
+	</div>
+	<div class="warning-footer"></div>
+	<?php
+}

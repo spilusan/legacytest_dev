@@ -1,0 +1,15 @@
+/*
+Document   : ie/ie.scss
+Created on : Aug 24, 2012, 9:34:15 AM
+Author     : gly
+Description: styles for ie
+*/
+
+form {
+	label {
+		&.large {
+			position: relative;
+			top: -5px;
+		}
+	}
+}

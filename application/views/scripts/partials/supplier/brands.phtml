@@ -1,0 +1,181 @@
+<?php
+$brands = $this->supplier()->brands($this->brands);
+
+if (lg_count($brands['authorisedBrands']) > 0 || lg_count($brands['nonVerifiedBrands']) > 0 || lg_count($brands['listedBrands']) > 0 || lg_count($this->supplier->ownedBrands) > 0)
+{
+	if( lg_count($brands['authorisedBrands']) > 0 || lg_count($brands['nonVerifiedBrands']) > 0 || lg_count($this->supplier->ownedBrands) > 0){
+	?>
+		<div class="section_header_blue">
+			<div id="SSVerSysBrnd-<?php echo $this->supplier->tnid; ?>" class="ss-ver-system" style="float:right;">
+				<div style="width:25px;padding:6px 0;"><img src="/img/profile/svs.png" width="64" height="23" style="padding: 0;position: relative;top: -9px;left: -45px;"/></div>
+				<div class="clear"></div>
+			</div>
+			<h4>Authorized Agent or Distributor for:</h4>
+		</div>
+	<?
+	}
+	if (lg_count($this->supplier->ownedBrands) > 0)
+	{
+	?>
+		<div class="section_subheader_complex" style="padding-top:0px;position: relative;background-color: #f3f5f7;background-size: 100%;background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #eaedf1)); background-image: -moz-linear-gradient(#ffffff 0%, #eaedf1 100%); background-image: -webkit-linear-gradient(#ffffff 0%, #eaedf1 100%);background-image: linear-gradient(#ffffff 0%, #eaedf1 100%);-pie-background: linear-gradient(to bottom, #ffffff 0%, #eaedf1 100%);behavior: url(/css/PIE.htc);border-bottom: 1px solid #66aec6;height: 40px;padding-left: 10px;width: 418px;  border-left: 1px solid #66aec6;  border-right: 1px solid #66aec6;" >
+			<div style="float:left; width:210px;padding:8px 0;">
+				<img src="/img/profile/check.png" border="0" />
+				<div style="display: inline-block; position: relative; top: -7px;">Owned Brands</div>
+				<a href="javascript: void" class="cHelp veri" style="position: relative; top: -3px;">
+					<div class="tooltip">The Supplier owns these brands.</div>
+				</a>
+			</div>
+			<div class="ss-ver-system"></div>
+			<div class="clear"></div>
+		</div>
+		<div class="section_body" style="background-color: #caedf9;border-left: 1px solid #66aec6;  border-right: 1px solid #66aec6;border-bottom: 1px solid #66aec6;">
+			<ul class="affiliations">
+				<?php
+				foreach ($this->supplier->ownedBrands as $brand)
+				{
+					?>
+					<li id="<?php echo $brand['id'];?>" <?php if (strlen($brand["logoFileName"])>0) {
+							echo 'style=\'background: url("'.$this->supplier()->smallAffiliateLogo($brand["logoFileName"]).'") no-repeat scroll 0 6px transparent;  min-height: 23px;\'';
+						}
+						else {
+							echo 'style="background: url(/images/layout_v2/memberships/nologo.png) no-repeat left 6px transparent; min-height: 23px;"';
+						}?>>
+						<a href="/brand/<?php echo $this->string()->sanitiseForURI($brand['name']); ?>/<?php echo $brand['id']; ?>"><?php echo $brand['name'];?></a>
+					</li>
+					<?php
+				}
+				?>
+			</ul>
+		</div>
+		<?
+	}
+
+	if (lg_count($brands['authorisedBrands']) > 0)
+	{
+	?>
+		<div class="section_subheader_complex" style="padding-top:0px;position: relative;background-color: #f3f5f7;background-size: 100%;background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #eaedf1)); background-image: -moz-linear-gradient(#ffffff 0%, #eaedf1 100%); background-image: -webkit-linear-gradient(#ffffff 0%, #eaedf1 100%);background-image: linear-gradient(#ffffff 0%, #eaedf1 100%);-pie-background: linear-gradient(to bottom, #ffffff 0%, #eaedf1 100%);behavior: url(/css/PIE.htc);border-bottom: 1px solid #66aec6;height: 40px;padding-left: 10px;width: 418px;  border-left: 1px solid #66aec6;  border-right: 1px solid #66aec6;" >
+			<div style="float:left; width:210px;padding:8px 0;">
+				<img src="/img/profile/check.png" border="0" />
+				<div style="display: inline-block; position: relative; top: -7px;">Verified by manufacturer</div>
+				<a href="javascript: void" class="cHelp veri" style="position: relative; top: -3px;">
+					<div class="tooltip">The supplier has been verified by the manufacturer as an authorised agent or official distributor for these brands.</div>
+				</a>
+			</div>
+			<div class="ss-ver-system"></div>
+			<div class="clear"></div>
+		</div>
+		<div class="section_body" style="background-color: #caedf9;border-left: 1px solid #66aec6;  border-right: 1px solid #66aec6;border-bottom: 1px solid #66aec6;">
+			<ul class="affiliations">
+				<?php
+				foreach ($brands['authorisedBrands'] as $brand)
+				{
+					?>
+					<li id="<?php echo $brand['id'];?>" <?php if (strlen($brand["logoFileName"])>0) {
+							echo 'style=\'background: url("'.$this->supplier()->smallAffiliateLogo($brand["logoFileName"]).'") no-repeat scroll 0 6px transparent;  min-height: 23px;\'';
+						}
+						else {
+							echo 'style="background: url(/images/layout_v2/memberships/nologo.png) no-repeat left 6px transparent; min-height: 23px;"';
+						}?>>
+						<a href="/brand/<?php echo $this->string()->sanitiseForURI($brand['name']); ?>/<?php echo $brand['id']; ?>"><?php echo $brand['name'];?></a>
+						(<?php
+							echo implode(", ", $brand['authLevels']);
+						?>)
+					</li>
+					<?php
+				}
+				?>
+			</ul>
+		</div>
+
+		<?
+	}
+
+	if (lg_count($brands['nonVerifiedBrands']) > 0)
+	{
+		echo (lg_count($brands['nonVerifiedBrands']) > 0) ? '<div class="section_subheader" style="padding-top:5px; padding-bottom: 0; position: relative;background-color: #f3f5f7;background-size: 100%;background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #eaedf1)); background-image: -moz-linear-gradient(#ffffff 0%, #eaedf1 100%); background-image: -webkit-linear-gradient(#ffffff 0%, #eaedf1 100%);background-image: linear-gradient(#ffffff 0%, #eaedf1 100%);-pie-background: linear-gradient(to bottom, #ffffff 0%, #eaedf1 100%);behavior: url(/css/PIE.htc);border-bottom: 1px solid #66aec6;height: 35px;padding-left: 10px;width: 418px;  border-top: 0; border-left: 1px solid #66aec6;  border-right: 1px solid #66aec6;"><img src="/img/profile/question.png" border="0" /> <div style="display: inline-block; position: relative; top: -7px;">Self reported by this supplier<a href="javascript: void" class="cHelp nonveri" style="position: relative; top: 3px;"><div class="tooltip">The supplier claims to be an authorised agent or official distributor for these brands but the manufacturer has not verified this.</div></a></div></div>' : '';
+		?>
+		<div class="section_body" style="background-color: #caedf9;border-left: 1px solid #66aec6;  border-right: 1px solid #66aec6; border-bottom: 1px solid #66aec6;">
+			<ul class="basic">
+				<?php
+				foreach ($brands['nonVerifiedBrands'] as $brand)
+				{
+					?>
+					<li id="<?php echo $brand['id'];?>" style="background: none;">
+						<a href="/brand/<?php echo $this->string()->sanitiseForURI($brand['name']); ?>/<?php echo $brand['id']; ?>"><?php echo $brand['name'];?></a> (<?php	echo implode(", ", $brand['authLevels']);?>)
+						<?php
+						if ($brand["pending"])
+						{
+						 	echo ' <img title="the brand owner received an email notifying that this supplier is claiming to be an Authorised Agent/Installer/Repairer but is yet to respond" src="/images/layout_v2/profile/icon_pending_verification.gif" width="116" height="13" border="0" style="vertical-align:top; padding-left:5px"/>';
+						}
+						else
+						{
+							// give admin an option to remind brand owner about the authorisation
+							if( $this->userHasAdminRights == true ){
+
+								// translate authentication to 3 char
+								$authLevelIn3Chars = Array();
+
+								foreach( $brand["authLevels"] as $a){
+									$authLevelIn3Chars[] = Shipserv_BrandAuthorisation::getAuthLevelKeyByName( $a );
+
+								}
+								echo '<br /><a style="font-weight:bold; color:orange; cursor:pointer;" class="brand-verification-form" hasAdmin="' . $this->brandAdditionalInfo[ $brand["id"] ] . '" supplierId="' . $this->supplier->tnid . '" supplierName="' . $this->supplier->name . '" brandTitle="' . $brand['name'] . '" brandId="' . $brand['id'] . '" authLevel="' . implode(", ",  $authLevelIn3Chars) . '">Remind brand owner to approve your authorisation status</a>';
+
+							}
+						}
+						?>
+					</li>
+					<?php
+				}
+				?>
+			</ul>
+		</div>
+		<?
+	}
+
+	if (lg_count($brands['listedBrands']) > 0)
+	{
+		if (lg_count($brands['authorisedBrands']) > 0 || lg_count($brands['nonVerifiedBrands']) > 0 || lg_count($this->supplier->ownedBrands) > 0) {
+			?>
+			<div class="section_header_blue"><h4>Other Brands Supplied</h4></div>
+			<?
+		}
+		else {?>
+			<div class="section_header_blue"><h4>Brands Supplied</h4></div>
+		<?}?>
+		<div class="section_subheader_complex" style="padding-top:0px;position: relative;background-color: #f3f5f7;background-size: 100%;background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ffffff), color-stop(100%, #eaedf1)); background-image: -moz-linear-gradient(#ffffff 0%, #eaedf1 100%); background-image: -webkit-linear-gradient(#ffffff 0%, #eaedf1 100%);background-image: linear-gradient(#ffffff 0%, #eaedf1 100%);-pie-background: linear-gradient(to bottom, #ffffff 0%, #eaedf1 100%);behavior: url(/css/PIE.htc);border-bottom: 1px solid #e3e3e3;height: 28px;padding-left: 10px;width: 418px;  border-left: 1px solid #e3e3e3;  border-right: 1px solid #e3e3e3;" >
+			<div style="float:left; width:400px;padding:8px 0;">
+				<div style="display: inline-block; position: relative; top: -7px; font-weight: normal; font-size: 11px;">Supplier claims to supply following brands but not as an authorised agent</div>
+				<a href="javascript: void" class="cHelp other" style="position: relative; top: -3px;">
+					<div class="tooltip">The supplier claims to be able to supply products of these brands but not in an authorised capacity. Click the brand name to find alternative suppliers.</div>
+				</a>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="section_body">
+			<ul class="basic">
+				<?php
+				foreach ($brands['listedBrands'] as $brand) {
+					?>
+					<li id="<?php echo $brand['id'];?>">
+						<a href="/brand/<?php echo $this->string()->sanitiseForURI($brand['name']); ?>/<?php echo $brand['id']; ?>"><?php echo $brand['name'];?></a>
+						<?
+							if ($this->supplier()->isManagedBrand($this->brands, $brand['id'])) {
+								?>
+								<span style="color: red;">Non Authorized Reseller</span>
+								<?php 	
+							}
+							if( $this->userHasAdminRights == true ){
+								//echo ' - <a class="brand-verification-form" supplierId="' . $this->supplier->tnid . '" brand_title="' . $brand['name'] . '" brandId="' . $brand['id'] . '" authLevel="">contact</a>';
+							}
+						?>
+
+					</li>
+					<?
+				}
+				?>
+			</ul>
+		</div>
+	<?php
+	}
+}

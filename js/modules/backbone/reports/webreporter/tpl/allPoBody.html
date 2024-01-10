@@ -1,0 +1,16 @@
+<td title="{{ordrefno}}"><a href="/printables/app/print?md5={{rptData.user.usrmd5}}&docid={{ordintno}}&doctype=ORD&usercode={{rptData.user.usrcode}}&custtype=buyer&branchcode={{bybtnid}}" target="_blank">{{ordrefno}}</a></td>
+{{#if rptData.iscnsldt}}
+<td title="{{bybtnid}}">{{bybtnid}}</td>
+{{/if}}
+<td title="{{bybname}}">{{bybname}}</td>
+<td title="{{bybcontact}}">{{bybcontact}}</td>
+<td title="{{vesname}}">{{vesname}}</td>
+<td title="{{spbtnid}}">{{spbtnid}}</td>
+<td title="{{spbname}}">{{spbname}}</td>
+<td title="{{ordsubjc}}">{{ordsubjc}}</td>
+<td title="{{ordsubdt}}">{{ordsubdt}}</td>
+<td title="{{formatAwaiting ordsts}}">{{formatAwaiting ordsts}}</td>
+<td title="{{formatCurrency ordcost}}" class="right">{{formatCurrency ordcost}}</td>
+<td title="{{ordcurr}}">{{ordcurr}}</td>
+<td title="{{formatCurrency currconv}}"  class="right">{{formatCurrency currconv}}</td>
+<td title="{{formatCurrency gmvcurrconv}}"  class="right">{{formatCurrency gmvcurrconv}}</td>

@@ -1,0 +1,40 @@
+<?php
+if ($this->total > 0)
+{
+	?>
+	<div class="section_header_blue">
+		<h4>Trading History</h4>
+	</div>
+	<div class="section_body">
+		<div style="font-size:13px; line-height:18px;">
+			<?php if (lg_count($this->data) > 0) { ?>		
+			This supplier has traded with <?= $this->total ?>
+			companies on ShipServ. Here are the most recent:
+			<br />
+			<br />
+			<?php }else{?>
+			This supplier has traded with <?= $this->total ?> companies on ShipServ.<br /> 
+ 			<br />
+			The buyer or the supplier has chosen to keep the company names anonymous but you can see the locations and the trading frequency <br />by clicking <a style="font-weight:bold; cursor:pointer; font-size:12px;" href="/reviews/supplier/s/<?=$this->supplierUrlPart?>">here</a>.
+			<?php }?>
+		</div>
+		<?php if (lg_count($this->data) > 0) { ?>		
+		<ul class="basic">
+			<?php
+			foreach ($this->data as $endorsement)
+			{
+				$row++;
+				?>
+				<li>
+					<?php echo $endorsement['BYO_NAME'];?>
+				</li>
+				<?php
+				if( $row == 3 ) break;
+			}
+			?>			
+		</ul>
+		<a style="font-weight:bold; cursor:pointer; font-size:12px;" href="/reviews/supplier/s/<?=$this->supplierUrlPart?>">Click here for more details and more customers of <?= $this->supplier->name?></a>
+		<?php }?>
+	</div>
+	<?php
+}

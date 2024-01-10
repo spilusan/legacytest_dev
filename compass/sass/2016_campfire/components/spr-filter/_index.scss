@@ -1,0 +1,158 @@
+.content-box.content-box#date-pick-menu {
+    border: 0 !important;
+    box-shadow: 0px 3px 8px rgb(100, 100, 100);
+    &:before {
+        right: 20%;
+        top: -20px;
+        width: 0;
+        height: 0;
+        content: '';
+        display: block;
+        position: absolute;
+        border-top: 10px solid transparent;
+        border-bottom: 10px solid black;
+        border-left: 10px solid transparent;
+        border-right: 10px solid transparent;
+    }
+}
+
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+    background: $white !important;
+    position: relative;
+}
+
+.ui-selectmenu-menu li a,
+.ui-selectmenu-status {
+    font-size: 16px;
+    font-family: "Lato", sans-serif;
+}
+
+.ui-selectmenu-status {
+    font-family: 'Lato', sans-serif;
+}
+
+.spr-filter {
+    h4 {
+        font-size: 20px;
+        &.collapsible+* {
+            overflow: hidden;
+            margin-bottom: 0;
+        }
+        &.collapsible {
+            border-bottom: 1px solid $icon-grey;
+            position: relative;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-family: 'Open Sans', sans-serif;
+            padding-bottom: 15px;
+            &.collapsed+* {
+                overflow: hidden;
+                max-height: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+            &:hover {
+                cursor: pointer;
+            }
+            &:after {
+                top: -5px;
+                right: 0;
+                font-size: 30px;
+                content: "\f106";
+                position: absolute;
+                font-family: "FontAwesome";
+            }
+            &.collapsed:after {
+                content: "\f107";
+            }
+        }
+    }
+}
+
+.spr-filters {
+    box-sizing: border-box;
+    label {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    h4 {
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 15px;
+        font-family: 'Open Sans', sans-serif;
+    }
+    .row {
+        margin-bottom: 10px;
+        .btn.transparent.transparent-blue {
+            font-size: 16px;
+            padding: 7px 20px;
+        }
+    }
+    .content-box {
+        overflow-x: hidden;
+        cursor: pointer;
+        width: calc(100% - 50px);
+        height: 70px;
+        padding: 10px;
+        overflow: auto;
+        min-height: 70px;
+        box-sizing: border-box;
+        margin-right: 10px;
+        display: inline-block;
+        border: 1px solid $dark-grey;
+        div {
+            margin-bottom: 10px;
+            font-family: 'Lato', sans-serif;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        &.disabled {
+            background: $disable-grey;
+        }
+        &.select-warning {
+        		 border: 1px solid red;
+        }
+    }
+    .fa {
+        font-size: 36px;
+        color: #087EC5;
+        cursor: pointer;
+        position: absolute;
+        &.inactive {
+            opacity: .5;
+        }
+    }
+    #date-pick+span>a.ui-selectmenu {
+        min-width: 100%;
+        display: block;
+        padding: 4px 0;
+        font-size: 16px;
+        height: auto;
+    }
+    #run-report {
+        margin-top: 30px;
+    }
+    .btn {
+        width: 100%;
+        padding: 10px 0;
+        font-size: 16px;
+        margin-top: 48px;
+        &.inactive {
+            cursor: not-allowed;
+            background-color: $highlight-grey;
+            border-color: $highlight-grey;
+        }
+    }
+    /* move this to jquery ui campfire file when created */
+    .ui-state-default {
+        border-color: $dark-grey;
+    }
+    >* {
+        margin-bottom: 15px;
+    }
+}

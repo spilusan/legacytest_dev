@@ -1,0 +1,54 @@
+<ul class="filters">
+
+</ul>
+
+<div class="setFilter">
+	
+	<form class="new">
+		<label for="keywords">Keywords:</label>
+		<input type="text" name="keywords" {{#if keywords}}value="{{keywords}}"{{else}}value="supplier name, reference, brand, port" class="blur"{{/if}}/>
+		<label for="vessel">Vessel:</label>
+		<select name="vessel" id="vesselSelect">
+			<option value="">All vessels</option>
+			{{#each vessel.models}}
+				<option value="{{this.attributes.name}}" {{#if this.attributes.selected}}selected="selected"{{/if}}>{{this.attributes.name}}</option>
+			{{/each}}
+		</select>
+		<label for="poDate">Order Date:</label>
+		<select name="poDate" id="qotDateSelect">
+			<option value="30" {{#if monSel}}selected="selected"{{/if}}>Last 30 days</option>
+			<option value="90" {{#if quartSel}}selected="selected"{{/if}}>Last 3 Months</option>
+			<option value="180" {{#if halfSel}}selected="selected"{{/if}}>Last 6 Months</option>
+			<option value="365" {{#if yearSel}}selected="selected"{{/if}}>Last 12 Months</option>
+		</select>
+		<!--<label for="matchStat">Match status:</label>
+		<select name="matchStat" id="matchStatus">
+			<option selected="selected" value="">All</option>
+			<option value="matched">Matched</option>
+			<option value="notmatched">Not matched</option>
+			<option value="savings">Potential savings</option>
+		</select>-->
+		<label for="poStat">Order status:</label>
+		<select name="poStat" id="qotStatus">
+			<option value="">All</option>
+			<option value="ACC" {{#if accSel}}selected="selected"{{/if}}>Accepted</option>
+			<option value="DEC" {{#if decSel}}selected="selected"{{/if}}>Declined</option>
+			<option value="SUB" {{#if subSel}}selected="selected"{{/if}}>Open</option>
+		</select>
+		<label for="vessel">Buyer Branch:</label>
+		<select name="branch" id="branchSelect">
+			<option value="">All branches</option>
+			{{#each branch.models}}
+				<option value="{{this.attributes.id}}" {{#if this.attributes.selected}}selected="selected"{{/if}}>{{this.attributes.name}}</option>
+			{{/each}}
+		</select>
+		<div class="nameSelect">
+			<img src="/img/tooltip/selectTip.png" border="0" alt="tip">
+			<input type="text" name="filterName" /><input type="button" name="confirmSave" value="Save" class="button small green" />
+		</div>
+		
+		<input type="button" class="button small dblue" name="show" value="Show"/>
+		<!--<input type="button" class="button small white" name="save" value="Save" />
+		<input type="button" class="button small white" name="manage" value="Manage filters" />-->
+	</form>
+</div>

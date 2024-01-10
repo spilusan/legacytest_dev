@@ -1,0 +1,231 @@
+#body {
+	#content {
+		.pagination {
+			text-align: center;
+			padding-top: 15px;
+
+			ul {
+				height: 26px;
+				padding-top:10px;
+				text-align: center;
+
+				li {
+					display: inline;
+					margin-right: 5px;
+					padding: 9px;
+					cursor: pointer;
+
+					&.current {
+						cursor: default;
+						color: #008b00;
+					}
+
+					&.ellipsis {
+						padding: 0px;
+						cursor: default;
+					}
+
+					&.prev, &.next {
+						img {
+							position: relative;
+							top: 1px;
+						}
+
+						&.inactive {
+							cursor: default;
+						}
+					}
+				}
+			}
+		}
+
+		table {
+			&.poList {
+				width: 100%;
+				border-collapse: collapse;
+				border: 0;
+				border-top: 1px solid #d6dce4;
+				table-layout: fixed;
+
+				thead, tbody  {
+					tr {
+						&.unread {
+							th, td {
+								font-weight: bold;
+							}
+						}
+						th, td {
+							border-right: 1px dotted #818589;
+							border-bottom: 1px solid #d6dce4;
+							vertical-align: middle;
+
+							&.priority {
+								width: 4px;
+								text-align: center;
+							}
+
+							&.supplier {
+								width: 255px;
+							}
+
+							&.ref {
+								width: 71px;
+							}
+
+							&.vessel {
+								width: 124px;
+							}
+
+							&.date {
+								width: 69px;
+							}
+
+							&.qstat {
+								width: 91px;
+							}
+
+							&.ordered {
+								&.desc {
+									div {
+										background: url(/img/icons/small/sort-grey-desc.png) right center no-repeat transparent;
+									}
+								}
+
+								&.asc {
+									div {
+										background: url(/img/icons/small/sort-grey-asc.png) right center no-repeat transparent;
+									}
+								}
+							}
+
+							&.last {
+								text-align: center;
+							}
+						}
+
+						th, td.th {
+							font-size: 11px;
+							font-weight: bold;
+							color: #005aad;
+							background: #d6dce4;
+							padding: 10px 5px;
+							@include x-multiple-colored-gradient(#e9edf1 0%, #d6dce4 100%);
+  							-pie-background: linear-gradient(top, #e9edf1 0%, #d6dce4 100%);
+  							cursor: pointer;
+
+  							&.priority {
+  								border-left: 1px solid #d6dce4;
+  							}
+
+							&.last {
+								border: 0;
+								color: #2e3235;
+								cursor: default;
+								border-right: 1px solid #d6dce4;
+								border-top: 1px solid #d6dce4;
+							}
+						}
+
+						td.th {
+							cursor: default;
+							color: #2e3235;
+						}
+					}
+				}
+
+				tbody {
+					tr {
+						td {
+							font-size: 10px;
+							color: #2e3235;
+							border-top: 1px solid #d6dce4;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+							padding: 4px 5px;
+
+							&.priority {
+								border-left: 1px solid #d6dce4;
+							}
+
+							&.resp {
+								&.pending {
+									color: #e81e24;
+									font-weight: bold;
+								}
+							}
+
+							&.qstat {
+								&.open {
+									font-weight: bold;
+									color: #000000;
+								}
+								&.accepted {
+									font-weight: bold;
+									color: #008b00;
+								}
+								&.declined {
+									font-weight: bold;
+									color: #e81e24;
+								}
+							}
+
+							&.last {
+								border-right: 1px solid #d6dce4;
+
+								&.leftBorder {
+									border-left: 1px solid #d6dce4;
+									text-align: center;
+									color: #e81e24;
+									font-size: 14px;
+								}
+
+								input {
+									position: relative;
+									width: 25px;
+									height: 20px;
+									border: 0;
+									background: url(/img/buyer/rfq-outbox/action-buttons.png) no-repeat transparent;
+									cursor: pointer;
+								}
+
+								input[name="show"] {
+									background-position: 0 0;
+								}
+
+								input[name="related"] {
+									left: -2px;
+									background-position: -26px 0;
+									display: none;
+								}
+
+								input[name="expand"] {
+									left: -4px;
+									background-position: -52px 0;
+								}
+							}
+						}
+
+						&.last {
+							td {
+								border-bottom: 1px solid #d6dce4;
+							}
+						}
+
+						&.open {
+							background-color: #e5f8ff;
+
+							td {
+								&.last {
+									input[name="expand"]{
+										background-position: -78px 0;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,320 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+	#resultsTab{
+		margin-top:20px;
+	}
+	#indexContainer {
+		width:100%;
+		margin: auto;
+		padding-top: 20px;
+		
+	}
+	
+	table thead th {
+		padding:	5px 10px;
+		font-weight: 500;
+		border: 1px solid #BBB;
+	}
+        
+	table tr td {
+		padding: 5px 10px;
+                border-bottom: 1px solid #CCCCCC;
+                border-left: 1px solid #CCCCCC;
+                border-right: 1px solid #CCCCCC;
+                margin-bottom: 8px;
+	}
+</style>
+
+<div id="breadcrumbs">
+	<?php
+		$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+		$breadcrumbs[] = array('name' => 'Match', 'url'  => '/match/inbox');
+		$breadcrumbs[] = array('name' => 'Sent items', 'url'  => '');
+		echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); 
+	?>
+</div>
+<div id="body" class="inbox">
+	<div id="content">
+		<h1 class="styled">Match outbox</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<div id="indexContainer">
+			<?php
+			$dateParams = array('MATCH_RFQ_DATE_FROM', 'MATCH_RFQ_DATE_TO');
+			foreach ($dateParams as $param) {
+				if ($this->filters[$param]) {
+					$this->filters[$param] = $this->filters[$param]->format('Y-m-d H:i:s');
+				}
+			}
+
+            $linkParams = array();
+			foreach ($this->filters as $filterKey => $filterValue) {
+			    $linkParams['filter[' . $filterKey . ']'] = $filterValue;
+            }
+
+            $linkParams['orderBy']  = $this->orderBy;
+            $linkParams['orderDir'] = $this->orderDir;
+
+            $baseUrl = '/match/sent-box?';
+			?>
+
+			<div style="font-size: 10pt; float: left; display: inline;">
+				<form action="/match/sent-box" method="GET">
+					<table width="100%">
+						<tr>
+							<td style="border: none;">
+								<label for="filterBuyerId">Buyer&nbsp;ID:</label>
+							</td>
+							<td style="border: none;">
+								<input id="filterBuyerId" type="text" name="filter[BUYER_ID]" value="<?= htmlspecialchars($this->filters['BUYER_ID']); ?>">
+							</td>
+							<td style="border: none;">
+								<label for="filterRfqRefNo">RFQ&nbsp;reference:</label>
+							</td>
+							<td style="border: none;">
+								<input id="filterRfqRefNo" type="text" name="filter[RFQ_REF_NO]" value="<?= htmlspecialchars($this->filters['RFQ_REF_NO']); ?>">
+							</td>
+							<td rowspan="2" style="border: none; vertical-align: bottom;">
+								<input type="submit" value="Apply">
+							</td>
+							<td rowspan="2" style="border: none; text-align: right; vertical-align: bottom;" width="100%">
+								Pages:
+								<?php
+								foreach ($this->pageMarks as $mark) {
+									?>
+									<span style="margin-right: 10px;">
+								        <?php
+                                        $pageLinkParams = $linkParams;
+
+								        if (is_null($mark)) {
+								            ?>...<?php
+								        } else if ($this->pageNo != $mark) {
+								            $pageLinkParams['pageNo'] = $mark;
+                                            $url = $baseUrl . http_build_query($pageLinkParams);
+
+								            ?><a href="<?= $url; ?>"><?= $mark; ?></a><?php
+								        } else {
+								            ?><strong><?= $mark; ?></strong><?php
+								        }
+								        ?>
+							        </span>
+									<?php
+								}
+								?>
+							</td>
+						</tr>
+						<tr>
+							<td style="border: none;">
+								<label for="filterMatchRfqDataFrom">Processed&nbsp;from:</label>
+							</td>
+							<td style="border: none;">
+								<input id="filterMatchRfqDataFrom" type="text" name="filter[MATCH_RFQ_DATE_FROM]" value="<?= $this->filters['MATCH_RFQ_DATE_FROM']; ?>">
+							</td>
+							<td style="border: none;">
+								<label for="filterMatchRfqDataTo">Processed&nbsp;to:</label>
+							</td>
+							<td style="border: none;">
+								<input id="filterMatchRfqDataTo" type="text" name="filter[MATCH_RFQ_DATE_TO]" value="<?= $this->filters['MATCH_RFQ_DATE_TO']; ?>">
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+
+			<?php
+			$thead = array(
+				array(
+					'header'    => '',
+					'class'     => 'left',
+					'orderBy'   => null
+				),
+				array(
+					'header'    => 'RFQ ID',
+					'class'     => 'left',
+					'orderBy'   => 'RFQ_ID',
+					'orderDir'  => 'desc'
+				),
+				array(
+					'header'    => 'RFQ Subject',
+					'class'     => 'left',
+					'orderBy'   => 'RFQ_SUBJECT',
+					'orderDir'  => 'asc'
+				),
+				array(
+					'header'    => 'RFQ Reference',
+					'class'     => 'left',
+					'orderBy'   => 'RFQ_REF_NO',
+					'orderDir'  => 'asc'
+				),
+				array(
+					'header'    => 'Buyer ID',
+					'class'     => 'left',
+					'orderBy'   => 'BUYER_ID',
+					'orderDir'  => 'asc'
+				),
+				array(
+					'header'    => 'Buyer Name',
+					'class'     => 'left',
+					'orderBy'   => 'BUYER_NAME',
+					'orderDir'  => 'asc'
+				),
+				array(
+					'header'    => 'Processed',
+					'class'     => 'left',
+					'orderBy'   => 'MATCH_RFQ_DATE',
+					'orderDir'  => 'desc'
+				),
+				array(
+					'header'    => 'Sent',
+					'class'     => 'numberHead',
+					'orderBy'   => 'MATCH_RFQ_COUNT',
+					'orderDir'  => 'desc'
+				),
+				array(
+					'header'    => 'Quoted',
+					'class'     => 'numberHead',
+					'orderBy'   => 'MATCH_QOT_COUNT',
+					'orderDir'  => 'desc'
+				),
+				array(
+					'header'    => 'Declined',
+					'class'     => 'numberHead',
+					'orderBy'   => 'MATCH_DEC_COUNT',
+					'orderDir'  => 'desc'
+				)
+			);
+			?>
+
+			<div class="clear"></div>
+			<table id="resultsTab" width="100%">
+				<thead>
+				<?php
+				foreach ($thead as $th) {
+					?>
+					<th class="<?= $th['class']; ?>">
+						<?php
+						if (is_null($th['orderBy'])) {
+							?><?= htmlspecialchars($th['header']); ?><?php
+						} else {
+						    $orderLinkParams = $linkParams;
+						    $orderLinkParams['orderBy'] = $th['orderBy'];
+                            $orderLinkParams['orderDir'] = $th['orderDir'];
+                            $orderLinkParams['pageNo'] = $this->pageNo;
+
+							if ($this->orderBy != $th['orderBy']) {
+                                $url = $baseUrl . http_build_query($orderLinkParams);
+								?>
+								<a href="<?= $url; ?>">
+									<?= htmlspecialchars($th['header']); ?>
+								</a>
+								<?php
+							} else {
+								?>
+								<?= htmlspecialchars($th['header']); ?>
+								<?php
+								if ($this->orderDir === 'asc') {
+								    $orderLinkParams['orderDir'] = 'desc';
+                                    $url = $baseUrl . http_build_query($orderLinkParams);
+                                    ?>
+									<a href="<?= $url; ?>&orderDir=desc">&#8593;</a>
+									<?php
+								} else {
+                                    $orderLinkParams['orderDir'] = 'asc';
+                                    $url = $baseUrl . http_build_query($orderLinkParams);
+									?>
+									<a href="<?= $url; ?>&orderDir=asc">&#8595;</a>
+									<?php
+								}
+							}
+						}
+						?>
+					</th>
+					<?php
+				}
+				?>
+				</thead>
+		        <tbody>
+	                <?php
+	                $rowNo = ($this->pageNo - 1) * $this->pageSize;
+	                foreach ($this->rows as $result) {
+		                ?>
+		                <tr class="<?= ($rowNo++ % 2 == 0) ? "altColor" : ""; ?>">
+			                <td class="left" width="20">
+				                <?= $rowNo; ?>
+			                </td>
+			                <td class="left">
+				                <a href="<?= $this->matchUrl; ?>/inbox/open?rfqId=<?= $result['RFQ_ID']; ?>" target="_blank">
+					                <?= htmlspecialchars($result['RFQ_ID']); ?>
+				                </a>
+			                </td>
+			                <td class="left">
+				                <?= htmlspecialchars($result['RFQ_SUBJECT']); ?>
+			                </td>
+			                <td class="left">
+				                <?php
+				                $breakDownParams = http_build_query(
+                                    array(
+					                    'buyerId' => $result['BUYER_ID'],
+					                    'rfqId'   => $result['RFQ_ID']
+				                    )
+                                );
+				                ?>
+				                <a href="/match/breakdown-per-rfq?<?= $breakDownParams ?>">
+					                <?= htmlspecialchars($result['RFQ_REF_NO']); ?>
+				                </a>
+			                </td>
+			                <td class="left">
+				                <?= htmlspecialchars($result['BUYER_ID']); ?>
+			                </td>
+			                <td class="left">
+				                <?= htmlspecialchars($result['BUYER_NAME']); ?>
+			                </td>
+			                <td class="left">
+				                <?php
+			                    if ($result['MATCH_RFQ_DATE']) {
+			                        $processedAt = new DateTime($result['MATCH_RFQ_DATE']);
+				                    echo $processedAt->format('Y-m-d H:i:s');
+			                    } else {
+			                        ?>N/A<?php
+			                    }
+				                ?>
+			                </td>
+			                <td>
+				                <?= htmlspecialchars($result['MATCH_RFQ_COUNT']); ?>
+			                </td>
+			                <td>
+				                <?= htmlspecialchars($result['MATCH_QOT_COUNT']); ?>
+			                </td>
+			                <td>
+				                <?= htmlspecialchars($result['MATCH_DEC_COUNT']); ?>
+			                </td>
+		                </tr>
+		                <?php
+	                } ?>
+	            </tbody>
+	        </table>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+
+<?php
+
+/**
+ * 
+ * @package myshipserv
+ * @author Shane O'Connor <soconnor@shipserv.com>
+ * @copyright Copyright (c) 2012, ShipServ
+ */
+?>

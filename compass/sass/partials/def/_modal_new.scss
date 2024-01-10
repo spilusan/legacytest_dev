@@ -1,0 +1,47 @@
+#modal, #modalX, #modalContact, .modal_new, .modal, #modalBig, #modalInfo, #modalChanges, #generalModal {
+	display: none;
+	z-index: 99999;
+	width: 400px;
+
+	.modalControls {
+		height: 55px;
+
+		.close{
+			position: relative;
+			float: right;
+			font-size: 14px;
+			font-weight: bold;
+			color: #13b5ea;
+			background: #fcfdfe;
+			padding: 10px 20px;
+			cursor: pointer;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+		}
+	}
+
+	.modalBody {
+		position: relative;
+		padding: 5px;
+		background: #ffffff;
+		@include border-radius(6px);
+		behavior: url(/css/PIE.htc);
+
+		.modalContent {
+			padding: 5px 10px 10px 10px;
+			color:#525c64;
+			font-size: 12px;
+			line-height: 1.4;
+
+			p {
+				font-size: 12px;
+				color: #2e3235;
+				margin-bottom: 10px;
+			}
+
+			.red {
+				color: #e81e24;
+			}
+		}
+	}
+}

@@ -1,0 +1,8 @@
+@import "compass/css3";
+@import "partials/def/autocomplete";
+@import "partials/def/autocomplete-new";
+@import "partials/def/_gmv-autocomplete"; 
+
+.ui-datepicker {
+	z-index: 999 !important;
+}

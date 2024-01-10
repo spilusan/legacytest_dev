@@ -1,0 +1,227 @@
+<?php
+$this->headLink()->appendStylesheet('/css/shipmate.css')
+->appendStylesheet('/css/supplier/decline.css');
+
+?>
+<div id="body" style="width:1150px;">
+	<div id="content" style="width: 1150px;">
+        <h1 class="styled">Decline <?= $this->docLabel; ?></h1>
+		<div class="innerContent">
+			<div class="">
+                <div class="sub-heading-3">
+                    <?= $this->docLabel; ?> Reference Number: <?= _htmlspecialchars($this->docRefNo); ?>
+					<a class="button medium green" style="margin-top:-5px; float: right;" href="<?= $this->docUrl; ?>" target="_blank">View this <?= $this->docLabel; ?></a>
+                </div>
+
+				<div class="document-detail">
+					<table>
+	                    <tr>
+	                        <td>Subject</td>
+							<td class="content"><?= _htmlspecialchars($this->docSubject); ?></td>
+
+	                        <td>Delivery Date</td>
+							<td class="content"><?= _htmlspecialchars($this->docDeliveryDate); ?></td>
+	                    </tr>
+	                    <tr>
+	                        <td><?= $this->docLabel; ?> Submitted Date</td>
+	                        <td class="content"><?= _htmlspecialchars($this->docDate); ?></td>
+
+	                        <td>Delivery Port</td>
+							<td class="content">
+								<?php if (strlen($this->docPortLabel)) {
+									?><?= _htmlspecialchars($this->docPortLabel); ?> (<?= _htmlspecialchars($this->docPort); ?>)<?php
+								} else {
+									?><?= _htmlspecialchars($this->docPort); ?><?php
+								}
+								?>
+							</td>
+	                    </tr>
+	                    <tr>
+	                        <td>Buyer Company Name</td>
+	                        <td class="content"><?= _htmlspecialchars($this->buyer->bybName); ?>
+	                    </tr>
+	                    <tr>
+	                        <td>Vessel Name</td>
+	                        <td class="content"><?= _htmlspecialchars($this->docVessel); ?>
+	                    </tr>
+	                    <tr>
+	                        <td>Supplier Company Name</td>
+	                        <td class="content"><?= _htmlspecialchars($this->supplier->name); ?>
+	                    </tr>
+	                </table>
+				</div>
+
+				<?php
+				if (!is_null($this->success)) {
+                    if ($this->success === true) {
+                        ?>
+                        <div class="decline-reason">
+                            You have successfully declined this <?= $this->docLabel; ?>. Click <a href="/">here</a> to continue.
+                        </div><?php
+                    } else {
+                        ?>
+                        <div class="is-declined">
+                            There was an issue declining this <?= $this->docLabel; ?>. Our engineer has been notified and will be looking into this.
+                        </div><?php
+                    }
+                    ?></div><?php
+				} else {
+
+				    if (lg_count($this->declinedInformation) > 0 ) { ?>
+					    <div class="is-declined">
+						    This <?= $this->docLabel; ?> has already been
+                                <?php
+                                switch ( $this->declinedInformation[0]['STATUS']  ){
+                                    case 'CON':
+                                        ?>confirmed<?php
+                                        break;
+
+                                    case 'ACC':
+                                        ?>accepted<?php
+                                        break;
+
+                                    case 'DEC':
+                                        ?>declined<?php
+                                        break;
+
+                                    default:
+                                        ?>processed<?php
+                                }
+                                ?>
+                             on <?= _htmlspecialchars($this->declinedInformation[0]['CREATED_DATE']); ?>.
+                            <!--
+                            <?php if( $this->docType === 'rfq') { ?>
+                                You can still decline this <?= $this->docLabel; ?>. By doing this, we will send a notification to the buyer.
+                            <?php } else { ?>
+                                You can only decline Purchase Order once.
+                            <?php } ?>
+                            -->
+                        </div>
+                    <? } ?>
+
+                    <div class="decline-reason">
+                        <form action="/supplier/decline" method="POST">
+                            <input type="hidden" name="doc" value="<?= _htmlspecialchars($this->params['doc']); ?>" />
+                            <input type="hidden" name="id"  value="<?= _htmlspecialchars($this->params['id']); ?>" />
+                            <input type="hidden" name="s"   value="<?= _htmlspecialchars($this->params['s']); ?>" />
+                            <input type="hidden" name="h"   value="<?= _htmlspecialchars($this->params['h']); ?>" />
+                            <input type="hidden" name="a"   value="<?= md5($this->params['h']) ?>" />
+
+                            <?php
+                            if ($this->docType === 'rfq' ) {
+                                ?>
+                                <div class="i">
+                                    To decline this <?= $this->docLabel; ?>, please provide a reason below:
+                                </div>
+
+                                <div class="decline-survey">
+                                    <label class="c1">
+                                        <input type="radio" name="declineType" value="attractive" onclick="$('.unattractive-questionaire').hide().find('input').attr('checked', false); $('.attractive-questionaire').show(); ">
+                                        This <?= $this->docLabel; ?> is NOT interesting to me because:
+                                    </label>
+                                    <br /><br />
+
+                                    <div class="attractive-questionaire hidden">
+                                        <?php
+                                            $otherReason = null;
+
+                                            foreach ($this->documentIsUnattractive as $reason ) {
+                                                $reason['PSQ_QUESTION'] = str_replace("(Block product)", "", $reason['PSQ_QUESTION']);
+                                                $reason['PSQ_QUESTION'] = str_replace("(Block port)", "", $reason['PSQ_QUESTION']);
+                                                $reason['PSQ_QUESTION'] = str_replace("(Block Buyer)", "", $reason['PSQ_QUESTION']);
+
+	                                            if (trim($reason['PSQ_QUESTION']) === 'Other:') {
+		                                            $otherReason = $reason; // 'Other' option should appear last
+		                                            continue;
+	                                            }
+                                        ?>
+                                            <label>
+                                                <input type="checkbox" name="answers[<?= _htmlspecialchars($reason['PSQ_ID']); ?>]" value="<?= _htmlspecialchars($reason['PSQ_QUESTION']); ?>" />
+                                                <?= _htmlspecialchars($reason['PSQ_QUESTION']); ?>
+                                            </label>
+                                            <br /><br />
+                                        <?php }
+
+                                        if (!is_null($otherReason)) {
+	                                        ?>
+	                                        <label>
+		                                        <input type="checkbox" name="answers[<?= _htmlspecialchars($otherReason['PSQ_ID']); ?>]" value="<?= _htmlspecialchars($otherReason['PSQ_QUESTION']); ?>" />
+		                                        <?= _htmlspecialchars($otherReason['PSQ_QUESTION']); ?>
+	                                        </label>
+	                                        <br /><br />
+                                            <textarea name="otherDeclineReasonUnattractive"></textarea>
+	                                        <div class="clear"></div>
+	                                        <?php
+                                        }
+
+                                        ?>
+
+                                        <br /><br /><br />
+                                    </div>
+
+                                    <label class="c1">
+                                        <input type="radio" name="declineType" value="attractive" onclick="$('.unattractive-questionaire').show(); $('.attractive-questionaire').hide().find('input').attr('checked', false); ">
+                                        I would like to receive more <?= $this->docLabel; ?>s in the future but...<br /><br />
+                                    </label>
+                                    <div class="unattractive-questionaire hidden">
+
+                                    <?php
+                                    $otherReason = null;
+                                    foreach ($this->documentIsAttractive as $reason) {
+                                        if (trim($reason['PSQ_QUESTION']) === 'Other:') {
+	                                        $otherReason = $reason;
+	                                        continue;
+                                        }
+	                                    ?>
+                                        <label>
+                                            <input type="checkbox" name="answers[<?= _htmlspecialchars($reason['PSQ_ID']); ?>]" value="<?= _htmlspecialchars($reason['PSQ_QUESTION']); ?>" />
+                                            <?= _htmlspecialchars($reason['PSQ_QUESTION']); ?>
+                                        </label>
+                                        <br /><br />
+                                    <?php }
+
+                                    if (!is_null($otherReason)) {
+	                                    ?>
+	                                    <label>
+		                                    <input type="checkbox" name="answers[<?= _htmlspecialchars($otherReason['PSQ_ID']); ?>]" value="<?= _htmlspecialchars($otherReason['PSQ_QUESTION']); ?>" />
+		                                    <?= _htmlspecialchars($otherReason['PSQ_QUESTION']); ?>
+	                                    </label>
+	                                    <br /><br />
+	                                    <textarea name="otherDeclineReasonAttractive"></textarea>
+	                                    <div class="clear"></div>
+	                                    <?php
+                                    }
+                                    ?>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                                <br /><br />
+                            <?
+                            }
+                            ?>
+
+                            <?php if ((($this->docType === 'ord') and (lg_count($this->declinedInformation) === 0)) or $this->docType === 'rfq' ) { ?>
+                                <div class="action-pane">
+                                    If you decline this <?= $this->docLabel; ?> an email will be sent to the buyer that asked you to quote.
+                                    <div class="right">
+                                        <input type="submit" class="button medium green" name="action" value="Decline" />
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                            <? } ?>
+                        </form>
+                    </div>
+                <?php } ?>
+
+                <div class="clear"></div>
+                <?php if (!$this->isProduction) { ?>
+                        <div class="footnote">
+                            If you need somebody to decline this <?= $this->docLabel; ?>, please use the following URL:
+                            <a href="<?= $this->docDeclineUrl; ?>"><?= $this->docDeclineUrl; ?></a>
+                        </div>
+                 <?php } ?>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

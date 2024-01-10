@@ -1,0 +1,76 @@
+<?php 
+$x = 0;
+if ($this->refinedQuery['type'] === "category") {
+	//S20160 Uncommenting it instead of delete the full content, just in case if we have to revert it back
+	/*
+	$adapter = new Myshipserv_Search_CategoryStatistic();
+	$data = $adapter->generateStatisticByCategoryId($this->refinedQuery['id']);
+	?>
+	<div class="sidebar_body relatedCat">
+		<h2 class="styled grey blue"><b><?= ucwords($this->refinedQuery['query'])?></b> category information</b> </h2>
+		<p class="seo-text">
+		<?php 
+			foreach($data as $row)
+			{
+				$x++;
+				if( (int)str_replace(",", "", $row['total']) > 2 )
+				{
+					$x++;
+					
+					$idx = $this->refinedQuery['id'] % 3;
+					$idx += $x;
+					$idx = $idx % 3;
+					$text = $row['text'][$idx];
+					$text = str_replace("[number]", '<b>' . $row['total'] . '</b>', $text);
+					$text = str_replace("[category_name]", '<b>' . ucwords($this->refinedQuery['query']) . '</b>', $text);
+					echo $text . "<br /><br />";
+				}
+			}
+		?>
+		</p>
+	</div>
+	<?php 
+*/
+} else if ($this->refinedQuery['type'] === "brand") {
+	$adapter = new Myshipserv_Search_BrandStatistic();
+	$data = $adapter->generateStatisticByBrandId($this->refinedQuery['id']);
+
+	// DE6492: this block should be hidden if none of the numbers pass the check to be displayed (i.e. no empty box should appear)
+	$hiddenRowCount = 0;
+	foreach ($data as $rowNo => $row) {
+		$figure = (int) str_replace(",", "", $row['total']);
+		if ($figure <= 2) {
+			// this row should not be displayed
+			$data[$rowNo] = null;
+			$hiddenRowCount++;
+		}
+	}
+
+	// only display the block when there is at least one row to display
+	if ($hiddenRowCount < lg_count($data)) {
+		?>
+		<div class="sidebar_body relatedCat">
+			<h2 class="styled grey blue"><b><?= ucwords($this->refinedQuery['query'])?></b> brand information</b> </h2>
+			<p class="seo-text">
+				<?php
+				foreach ($data as $row) {
+					$x++;
+					if (!is_null($row)) {
+						$x++;
+
+						$idx = $this->refinedQuery['id'] % 3;
+						$idx += $x;
+						$idx = $idx % 3;
+						$text = $row['text'][$idx];
+						$text = str_replace("[number]", '<b>' . $row['total'] . '</b>', $text);
+						$text = str_replace("[brand_name]", '<b>' . ucwords($this->refinedQuery['query']) . '</b>', $text);
+						echo $text . "<br /><br />";
+					}
+				}
+				?>
+			</p>
+		</div>
+		<?php
+	}
+}	
+?>

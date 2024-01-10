@@ -1,0 +1,68 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/my-companies.js');
+
+$this->headLink()->appendStylesheet('/css/transition.css');						 
+$this->headLink()->appendStylesheet('/css/profile.css');
+?>
+
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		<div style="padding-top: 20px"></div>
+		<?php
+		echo $this->partial('profile/title-menu.phtml',
+			$this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], 'reviews', $this->pendingCompanies));
+			
+		?>
+		<div class="content_wide_body">
+			<div class="profile-body-right">
+				<div class="zz header">
+					<h2>Review Requests</h2>
+				</div>
+				<div class="profileContent">
+					<?php
+
+					foreach ($this->pendingReviewRequests as $reviewRequest) :
+						?>
+						<div class="review-request-block" id="<?php echo $reviewRequest['PUE_REQUEST_CODE']; ?>">
+							<div class="review-request-block-top"></div>
+							<div class="review-request-block-middle">
+								<div class="logo-column"><img src="<?php echo $reviewRequest['ENDORSEE_COMPANY_INFO']['SMALL_LOGO_URL'] ? $reviewRequest['ENDORSEE_COMPANY_INFO']['SMALL_LOGO_URL'] : '/images/layout_v2/default_image.gif' ?>"/></div>
+								<div class="text-column">
+									<h3><a href="<?php echo "/reviews/add-review/reqcode/".$reviewRequest['PUE_REQUEST_CODE']; ?>">Review <?php echo $reviewRequest['ENDORSEE_COMPANY_INFO']['SPB_NAME'] ?> ?</a></h3>
+									<h4><?php echo 'Requested by '.(($reviewRequest['REQUESTOR_USER_INFO']['FIRST_NAME'] && $reviewRequest['REQUESTOR_USER_INFO']['LAST_NAME'])?($reviewRequest['REQUESTOR_USER_INFO']['FIRST_NAME'].' '.$reviewRequest['REQUESTOR_USER_INFO']['LAST_NAME']):'').' '. strtolower($this->string()->ago($reviewRequest['PUE_REQUESTED_DATE']))  ?></h4>
+									<div class="request-text"><?php echo  $reviewRequest["PUE_REQUEST_TEXT"];  ?></div>
+								</div>
+								<div class="clear"></div>
+								<div class="dotted-line"></div>
+								<div class="review-request-actions">
+									<div class="review-request-action">
+										<a href="#" title="Ignore" class="review-request-action-ignore">
+											<img src="/images/icons/icon_ignore.gif" alt="Ignore Review Request" />
+											<span>Ignore</span>
+										</a>
+									</div>
+									<div class="review-request-action">
+										<a href="<?php echo "/reviews/add-review/reqcode/".$reviewRequest['PUE_REQUEST_CODE']; ?>" title="Review this company" class="review-request-action-add">
+											<img src="/images/icons/icon_add_your_review.gif" alt="Add your review" />
+											<span>Add your review</span>
+										</a>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div class="review-request-block-bottom"></div>
+						</div>
+						<?php
+					endforeach;
+					?>
+				</div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

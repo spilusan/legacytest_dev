@@ -1,0 +1,28 @@
+@import "compass/css3";
+@import "font-awesome";
+
+@import "2016_campfire/main/colours";
+@import "2016_campfire/main/buttons";
+@import "2016_campfire/main/typo";
+
+div.generalShipservError {
+	.warning {
+		font-size: 150px;
+		color: #9ba8bb;
+		margin: 30px 0px;
+	}
+	.buttons {
+		display: inline-block;
+		margin: 50px 0px 30px 0px;
+		a {
+			white-space: nowrap;
+		}
+	}
+
+	.left {
+		display: inline-block;
+		pre, h5 {
+			margin-left: 12px;
+		}
+	}
+}

@@ -1,0 +1,14 @@
+/*
+Document   : po.scss
+Created on : Mar 28, 2012, 10:00:43 AM
+Author     : gly
+Description: combining partials for po styles
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+@import "partials/def/modal_new";
+@import "partials/def/validation";
+
+@import "partials/trade/po/content";

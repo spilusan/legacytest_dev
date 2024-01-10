@@ -1,0 +1,182 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style type="text/css">
+	#header, .divider, #footer {
+		width: 2156px !important;
+	}
+</style>
+<div id="breadcrumbs">
+	<?php 
+		$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+		$breadcrumbs[] = array('name' => 'Match', 'url'  => '/match/inbox');
+		$breadcrumbs[] = array('name' => 'Reports', 'url'  => '/match/adoption-kpi');
+		$breadcrumbs[] = array('name' => 'Conversion', 'url'  => $_SERVER['HTTP_REFERER']);
+		$breadcrumbs[] = array('name' => 'Order detail', 'url'  => '');
+		echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+	?>
+</div>
+
+<div id="body" class="conversionOrderDetail">
+	<div id="content">
+		
+		<h1 class="styled">Conversion rate - order details</h1>
+		
+
+		<form method="POST" class="new">
+		<?php 
+			
+		$sql = "SELECT o.*, get_dollar_value(o.ord_currency, o.ord_total_cost, o.ord_submitted_date) as po_amount FROM ord o WHERE ord_internal_ref_no=:ordId";
+		$order = $this->db->fetchAll($sql, array('ordId' => $this->params['ordId']));
+		$order = $order[0];
+		
+		?>
+		
+		<table id="" style="font-size:12px;">
+			<tr>
+				<td width="150">Order Id</td>
+				<td>
+					<?= $order['ORD_INTERNAL_REF_NO']?>
+				</td>
+			</tr>
+			<tr>
+				<td width="150">Rfq Id <br />(Sent to Match)</td>
+				<td>
+					<?= $this->rfq->rfqInternalRefNo?>
+				</td>
+			</tr>
+			<tr>
+				<td>Reference #</td>
+				<td>
+					<?= $order['ORD_REF_NO']?>
+				</td>
+			</tr>
+			<tr>
+				<td>Subject</td>
+				<td>
+					<?= $order['ORD_SUBJECT']?>
+				</td>
+			</tr>
+			<tr>
+				<td>Vessel name</td>
+				<td>
+					<?= $order['ORD_VESSEL_NAME']?>
+				</td>
+			</tr>
+						
+			
+			<tr>
+				<td>Supplier</td>
+				<td>
+					<?= $order['SPB_BRANCH_CODE']?>
+				</td>
+			</tr>
+			<tr>
+				<td>Total cost</td>
+				<td>
+					<?= $order['ORD_TOTAL_COST']?> <?= $order['ORD_CURRENCY']?> = 
+					<span style="background-color:#b3c55c;"> &nbsp;&nbsp; $ <?= round($order['PO_AMOUNT'])?> &nbsp;&nbsp;</span><br />
+				</td>
+			</tr>	
+		</table>
+		
+		    <table style="margin: auto;  width:100%;">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		                <table id="resultsTab" width="100%">
+		                    <thead>
+		                        <tr>
+			                        <th class="minimal"></th>
+									<th class="minimal">Rfq ref no</th>
+			                        <th class="minimal">Rfq</th>
+									<th class="minimal">Quote</th>
+                        			<th class="minimal">Order</th>
+									<th class="minimal">TNID</th>
+			                        <th class="left">Supplier Name</th>
+			                        <th class="narrow">Bid</th>
+									<th class="narrow">Type</th>
+									<th class="narrow">Rfq Date</th>
+									<th class="narrow">Quote date - blank if supplier has not yet quoted</th>
+									<th class="narrow">Order date - blank if supplier has not yet place order</th>
+									<th class="narrow">Quote price (USD)  or 'Yet to Quote' if supplier has not quoted</th>
+									<th class="narrow">Order price (USD)</th>
+									<th class="narrow last">Quote completeness as %; blank if supplier has not quoted.</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php foreach ((array)$this->report->getData() as $key => $result) : ?>
+		                        	<?php 
+		                        		$quote = null;
+		                        		$order = null;
+		                        		if( $result['QOT_INTERNAL_REF_NO'] != "" )
+		                        		{
+		                        			$quote = Shipserv_Quote::getInstanceById($result['QOT_INTERNAL_REF_NO'], true);
+		                        		}
+		                        		if( $result['ORD_INTERNAL_REF_NO'] != "" )
+		                        		{
+		                        			$order = Shipserv_Order::getInstanceById($result['ORD_INTERNAL_REF_NO'], true);
+		                        		}
+		                        		
+		                        		try
+										{
+		                        			$rfq = Shipserv_Rfq::getInstanceById($result['RFQ_INTERNAL_REF_NO'], null, true);
+		                        		}
+		                        		catch(Exception $e)
+		                        		{
+		                        			//echo $e->getMessage();
+		                        		}
+
+		                        		$color = "";
+		                        		if( $result['RFQ_DESTINATION'] == 'MATCH_SELECTED' )
+		                        		{
+		                        			$rfqType = "Match";
+		                        			$color = "green";
+		                        		}
+		                        		else
+		                        		{
+		                        			$rfqType = "Buyer";
+		                        		}
+		                        		if( $result['ORD_INTERNAL_REF_NO'] != "" )
+		                        		{
+		                        			$color = "yellow";
+		                        		}
+		                        	?>
+		                            <tr class="<?php echo $color?>">
+		                                <td><?= ($key + 1)?></td>
+		                                <td class="left"><?php echo $result['RFQ_REF_NO']?></td>
+										<td><a target="_blank" href="<?php echo ($rfq!==null)?$rfq->getUrl():"";?>"><?php echo $result['RFQ_INTERNAL_REF_NO']?></a></td>
+										<td><a target="_blank" href="<?php echo ($quote!==null)?$quote->getUrl():"";?>"><?php echo $result['QOT_INTERNAL_REF_NO']?> <?php echo $result['QOT_IMPORTED']?></a></td>
+										<td><a target="_blank" href="<?php echo ($order!==null)?$order->getUrl():"";?>"><?php echo $result['ORD_INTERNAL_REF_NO']?></a></td>
+										<td><?php echo $result['TNID']?></td>
+										<td class="left"><?php echo $result['SPB_NAME']?></td>
+										<td><?php echo $result['SPB_MONETIZATION_PERCENT']?></td>
+										<td><?php echo $rfqType?></td>
+										<td><?php echo $result['RFQ_SUBMITTED_DATE']?></td>
+										<td><?php echo $result['QOT_SUBMITTED_DATE']?></td>
+										<td><?php echo $result['ORD_SUBMITTED_DATE']?></td>
+										<td class="currency qotStatus"><?php echo ($result['QOT_SUBMITTED_DATE']=="")?"":round($result['QOT_TOTAL_PRICE_IN_USD'],2)?></td>
+										<td class="currency qotStatus"><?php echo round($result['ORD_TOTAL_PRICE_IN_USD']);?></td>
+										<td class="percentage last"><?php echo ($result['QOT_SUBMITTED_DATE']=="")?"":round($result['QOT_COMPLETENESS'],0)?></td>
+									</tr>
+		                        <?php endforeach; ?>
+		                	</tbody>
+		                </table>
+		                <table id="header-fixed"></table>
+		            </td>
+		        </tr>
+		    </table>							
+		</form>
+	</div>
+</div>
+<div class="clear"></div>

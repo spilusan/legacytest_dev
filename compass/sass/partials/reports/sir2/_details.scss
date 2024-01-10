@@ -1,0 +1,224 @@
+.zc-license {
+	display: none !important;
+}
+
+.tables {
+	h3 {
+		height: 39px;
+		display: block;
+		margin-bottom: 19px;
+		padding-left: 54px;
+		color: #0e97d0;
+		font-size: 16px;
+		line-height: 39px;
+		@include border-radius(6px);
+		background: url(/images/icons/small/blue/up_arrow.png) no-repeat 30px 16px #f1f3f4;
+		cursor: pointer;
+		-webkit-user-select: none;
+		-khtml-user-select: none;
+		-moz-user-select: none;
+		-o-user-select: none;
+		user-select: none;
+		behavior: url(/css/PIE.htc);
+
+		&.collapsed {
+			background: url(/images/icons/small/blue/down_arrow.png) no-repeat 30px 16px #f1f3f4;
+		}
+	}
+
+	#totalNUnique {
+		overflow: auto;
+		height: 140px;
+		div {
+			width: 2000px;
+		}
+	}
+
+	table {
+		border-collapse: collapse;
+		//table-layout: fixed;
+		border: 0;
+		border-bottom:  1px solid #eaedef;
+
+		tr {
+			td, th {
+				text-align: center;
+				color: #474747;
+				font-size: 12px;
+				padding: 5px;
+				border-right: 1px solid #eaedef;
+				border-top: 1px solid #eaedef;
+				vertical-align: middle;
+
+				&:first-child {
+					border-left: 1px solid #eaedef;
+				}
+
+				&.left {
+					text-align: left;
+				}
+
+				&.positive {
+					color: #57b31b;
+				}
+
+				&.negative {
+					color: red;
+				}
+			}
+		}
+
+		thead {
+			tr {
+				&.title {
+					th {
+						border: none;
+						color: #ffffff;
+						@include x-multiple-colored-gradient(#ffd65e 0%, #fec006 100%);
+  						-pie-background: linear-gradient(top, #ffd65e 0%, #fec006 100%);
+  						behavior: url(/css/PIE.htc);
+  						font-size: 14px;
+					}
+				}
+
+				&.legend {
+					th {
+						&.noBorder {
+							font-size: 14px;
+							border-right: 1px solid #eaedef;
+							width: 200px;
+							max-width: 200px;
+
+							&.fixed {
+								width: 426px;
+							}
+						}
+					}
+				}
+
+				&.date {
+					th {
+						border-left:  1px solid #eaedef;
+						background: #dee2e4;
+
+						&.first-child {
+							background: transparent;
+						}
+
+						&.compare {
+							background: #ebeeef;
+						}
+					}
+				}
+
+				th {
+					&:first-child {
+						border-left: 1px solid #eaedef;
+					}
+
+					&.noBorder {
+						border: 0;
+						background: transparent;
+					}
+				}
+			}
+		}
+
+		&.tNu {
+			float: left;
+			margin-left: 3px;
+
+			&.profile {
+				thead {
+					tr {
+						th {
+							&.change {
+								background: #fff0c5;
+							}
+						}
+						&.title {
+							th {
+								@include x-multiple-colored-gradient(#ffd65e 0%, #fec006 100%);
+	  							-pie-background: linear-gradient(top, #ffd65e 0%, #fec006 100%);
+
+	  							&:first-child {
+	  								background: transparent;
+	  							}
+							}
+						}
+					}
+				}
+			}
+
+			&.contact {
+				thead {
+					tr {
+						th {
+							&.change {
+								background: #ffd8b2;
+							}
+						}
+						&.title {
+							th {
+								@include x-multiple-colored-gradient(#ffa03c 0%, #ff7d00 100%);
+  								-pie-background: linear-gradient(top, #ffa03c 0%, #ff7d00 100%);
+  								behavior: url(/css/PIE.htc);
+							}
+						}
+					}
+				}
+			}
+
+			&.rfq {
+				thead {
+					tr {
+						th {
+							&.change {
+								background: #ffcbc9;
+							}
+						}
+						&.title {
+							th {
+								@include x-multiple-colored-gradient(#ff6d39 0%, #e81e24 100%);
+  								-pie-background: linear-gradient(top, #ff6d39 0%, #e81e24 100%);
+  								behavior: url(/css/PIE.htc);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		&.large {
+			width: 100%;
+			
+			margin-bottom: 20px;
+			thead {
+				tr {
+					th {
+						&.change {
+							background: #caedf9;
+						}
+					}
+					&.title {
+						th {
+							@include x-multiple-colored-gradient(#bde8f7 0%, #85d8f5 100%);
+							-pie-background: linear-gradient(top, #bde8f7 0%, #85d8f5 100%);
+							behavior: url(/css/PIE.htc);
+
+							&.country {
+								@include x-multiple-colored-gradient(#90dcf7 0%, #59c5eb 100%);
+								-pie-background: linear-gradient(top, #90dcf7 0%, #59c5eb 100%);
+								behavior: url(/css/PIE.htc);
+							}
+
+							&.noBorder {
+								background: none;
+							}
+						}
+					}
+				}
+			}	
+		}
+	}
+}

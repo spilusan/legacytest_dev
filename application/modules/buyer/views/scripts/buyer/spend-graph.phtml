@@ -1,0 +1,65 @@
+<?php
+
+$this->headLink()
+	->appendStylesheet('/css/shipmate.css')
+	->appendStylesheet('/css/reports/dashboard-new.css')
+    ->appendStylesheet('/css/uniform.default.new.css')
+	->appendStylesheet('/css/reports/match-supplier-report.css')
+	->appendStylesheet('/css/uniform.rfq.css');
+
+
+$breadcrumbs = array(array('name' => 'Home',
+        'url' => '/search'),
+    array('name' => 'Reports',
+        'url' => '/reports'),
+    array('name' => 'Total Spend Graph',
+        'url' => ''));
+
+$user = Shipserv_User::isLoggedIn();
+$shipservUser = $user->isShipservUser();
+echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<style>
+	#filter{
+		border: 1px solid 939ba1;
+		background-color: #f5f7fa;
+		padding:10px;
+		margin-bottom: 20px;
+	}
+</style>
+<? if ($this->allowAcces): ?>
+<div id="waiting" style="display: block;">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>
+<? endif ?>
+<div id="body" style="width:1185px;">
+	<div id="content" style="width:950px;">
+		<h1 class="styled">Total Spend</h1>
+		<div class="innerContent">
+			<div id="filter">
+				<div style="float:left; ">Branches:</div>
+				<div style="float:left; ">
+					<form id="f" action="/buyer/spend-graph">
+						<select class="uniform" name="tnid" onchange="$('#f').trigger('submit');">
+							<option value="">All</option>
+							<? foreach($this->branches as $row){?>
+							<option <? echo (($this->params['tnid'] == $row->bybBranchCode)?'selected="selected"':"") ?> value="<?= $row->bybBranchCode?>"><?= $row->bybBranchCode?> - <?= $row->bybName?></option>
+							<? } ?>
+						</select>
+					</form>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<div>
+				<?= $this->partial('buyer/gmv-trend-chart.phtml', array('data' => $this->data, 'vesselData' => $this->vesselData, 'periodForTrends' => $this->periodForTrends)); ?>
+			</div>
+		</div>
+    </div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//$("input[type='checkbox']").uniform();
+	});
+</script>

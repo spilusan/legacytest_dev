@@ -1,0 +1,67 @@
+#sidebar-nav-new {
+  ul {
+    li {
+      padding-left: 6px;
+      cursor: pointer;
+      position: relative;
+      border-bottom: 1px solid $mid-grey;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 30px;
+      color: $blue-grey;
+
+      ul {
+        display: none;
+
+        li {
+          color: black;
+          border-bottom: none;
+          font-size: 10px;
+          font-weight: 400;
+          line-height: 20px;
+
+          &.has-link {
+            color: $dark-blue;
+            &:after {
+              content: "\F0D7";
+              font-size: 14px;
+              font-family: FontAwesome;
+              right: 0;
+              position: absolute;
+              top: 0;
+              font-weight: normal;
+              padding: 0px 6px;
+              background-color: white;
+            }
+          }
+
+          &:after {
+            content: "";
+          }
+        }
+      }
+    }
+
+    li {
+
+      &:after {
+        content: "";
+      }
+
+      &.has-link {
+
+        &:after {
+          content: "\F0D7";
+          font-size: 14px;
+          font-family: FontAwesome;
+          right: 0;
+          position: absolute;
+          top: 0;
+          font-weight: normal;
+          padding: 0px 6px;
+          background-color: white;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,16 @@
+/*
+Document   : shipmate.scss
+Created on : May 29, 2014, 1:00:43 PM
+Author     : gly
+Description: combining partials for shipmates tools styles
+*/
+
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/min";
+
+@import "partials/def/left_nav";
+@import "partials/def/context_help";
+@import "partials/def/modal_new";
+
+@import "partials/shipmate/manage_user"; 

@@ -1,0 +1,212 @@
+.category-request-company-info-column {
+	float:left;
+	font:bold 11px Arial;
+	width:220px;
+}
+
+.category-request-company-info-column .company-name {
+	color:#FC630F;
+	font:bold 12px Arial;
+}
+
+.category-request-auth-column {
+	float:left;
+	width:180px;
+	padding:0 10px;
+	font-size: 11px;
+}
+
+#pendingCategoryAuths label {
+	margin:0;
+	display:inline;
+	color:#000;
+	font-size: 11px;
+}
+
+h3.blue {
+	color:#004d93;
+	font:bold 14px Arial;
+	padding-bottom:15px;
+}
+
+#categoryManagement h3.info-message {
+	margin-bottom:0;
+}
+
+#authorised-suppliers th {
+	vertical-align: bottom;
+	padding:10px;
+	border-left:solid 1px #696969;
+}
+
+#authorised-suppliers td {
+	background-color: white;
+	padding:10px;
+	border-right:solid 1px #e3e3e3;
+	border-bottom:solid 1px #e3e3e3;
+	font:normal 11px Arial;
+}
+
+
+#addSupplierAuthButton {
+	background: url('/images/layout_v2/categories/add_new_supplier_sprite.png') 0 0 no-repeat;
+	width:131px;
+	height: 29px;
+	float:right;
+	cursor: pointer;
+}
+
+#addSupplierAuthButton.hover {
+	background: url('/images/layout_v2/categories/add_new_supplier_sprite.png') 0 -29px no-repeat;
+}
+
+#addSupplierAuthsPanel .input-wrapper-sm {
+	background: url("/images/layout_v2/profile/input-bg.png") top left no-repeat;
+	width: 423px;
+	height: 28px;
+	padding: 7px 6px;
+	margin-top:10px;
+}
+
+#addSupplierAuthsPanel .input-wrapper-sm input {
+	display: block;
+	border: none;
+	border-color: transparent;
+	font-weight: bold;
+	font-size: 13px;
+	padding: 0px;
+	margin: 0px;
+	height: 21px;
+	width: 423px;
+}
+
+#addSupplierAuthsPanel label {
+	display:inline;
+	color:#000000;
+	font:bold 12px Arial;
+	margin-bottom:0;
+	padding-left:4px;
+}
+
+#addSupplierAuthNowButton {
+	background: url('/images/layout_v2/categories/add_supplier_now_sprite.png') 0 0 no-repeat;
+	width:131px;
+	height: 29px;
+	cursor: pointer;
+}
+
+#addSupplierAuthNowButton.hover {
+	background: url('/images/layout_v2/categories/add_supplier_now_sprite.png') 0 -29px no-repeat;
+}
+
+
+#inviteSuppliersButton {
+	background: url('/images/layout_v2/categories/cant_find_sprite.gif') 0 0 no-repeat;
+	width:451px;
+	height: 50px;
+	cursor: pointer;
+}
+
+#inviteSuppliersButton.hover {
+	background: url('/images/layout_v2/categories/cant_find_sprite.gif') 0 -50px no-repeat;
+}
+
+
+#categoryManagementInviteSupplier {
+	font: normal 12px Arial;
+}
+
+#addSupplierAuthsPanel label, #categoryManagementInviteSupplier label{
+	display:inline;
+	color:#000000;
+	font:bold 12px Arial;
+	margin-bottom:0;
+}
+
+#inviteSupplierMessageIcon {
+	width:56px;
+	height:42px;
+	background: url('/images/layout_v2/categories/invite_email_icon.gif') 0 0 no-repeat;
+	float:left;
+}
+
+#inviteSupplierButton {
+	background: url('/images/layout_v2/categories/send_invitation_button_sprite.gif') 0 0 no-repeat;
+	width:144px;
+	height: 32px;
+	cursor: pointer;
+}
+
+#inviteSupplierButton.hover {
+	background: url('/images/layout_v2/categories/send_invitation_button_sprite.gif') 0 -32px no-repeat;
+}
+
+#categoryManagementInviteSupplier input {
+	background: url("/images/layout_v2/categories/text-input-box.png") no-repeat;
+	width: 288px;
+	height: 35px;
+	border: none;
+	border-color: transparent;
+	font-weight: bold;
+	font-size: 13px;
+	padding: 0px 10px;
+	margin: 0px;
+	line-height: 35px !important;
+}
+
+.profile-pagination {
+	float:right;
+}
+
+.profile-pagination .big-page-button {
+	width: 68px;
+	height:17px;
+	float:left;
+	text-align: center;
+	font:11px Arial;
+	padding-top:3px;
+	cursor:pointer;
+	margin:0px 3px 0px 0px;
+	color:black;
+	background:url("/images/layout_v2/endorsement/bulkreviews/pagination_previous_next.gif") no-repeat 0 0 transparent;
+}
+
+.profile-pagination .small-page-button {
+	width: 20px;
+	height:17px;
+	float:left;
+	text-align: center;
+	font:11px Arial;
+	padding-top:3px;
+	cursor:pointer;
+	margin:0px 3px 0px 0px;
+	color:black;
+	background:url("/images/layout_v2/endorsement/bulkreviews/pagination_normal.gif") no-repeat 0 0 transparent;
+}
+
+.profile-pagination .small-page-button-selected {
+	background:url("/images/layout_v2/endorsement/bulkreviews/pagination_selected.gif") no-repeat 0 0 transparent;
+}
+
+#filterByNameButton {
+	float:left;
+	background: url('/images/layout_v2/categories/search_button_sprite.png') 0 0 no-repeat;
+	width:28px;
+	height:28px;
+	margin:0 0 0 3px;
+	cursor: pointer;
+}
+
+#filterByNameButton:hover{
+	background: url('/images/layout_v2/categories/search_button_sprite.png') 0 -28px no-repeat;
+}
+
+a.category-auth-delete {
+	text-decoration: none;
+	color: #999999;
+}
+
+
+.company-name a {
+	color:#FC630F;
+}

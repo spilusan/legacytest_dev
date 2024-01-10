@@ -1,0 +1,200 @@
+/*
+Document   : _misc
+Created on : Jun 14, 2012, 10:13:01 AM
+Author     : gly
+Description: Misc. Profile styles
+*/
+
+.profile-body-company-list-item {
+	background-color:gray;
+	margin-bottom:10px;
+}
+
+#profile-heading-graphic { 
+	float:right;
+}
+
+#profile-subheading {
+	margin-left:10px;
+	padding-left:10px;
+	color:#76C5EE;
+	font-weight:400;
+	border-left:1px solid #76C5EE;
+}
+
+#profile-emlconf-no {
+    input {
+        background:url(https://cdn1.shipserv.com/images/layout_v2/profile/resend_email_now_spritebutton.gif) 0 0 no-repeat;
+        width:224px;
+        height:28px;
+        border:none;
+        cursor:pointer;
+        
+        &:hover {
+            background:url(https://cdn1.shipserv.com/images/layout_v2/profile/resend_email_now_spritebutton.gif) 0 -28px no-repeat;
+            cursor:pointer;
+        }
+    }
+    
+    p {
+        padding-bottom:20px;
+    }
+}
+
+h3 {
+    &.info-message-large {
+        background:url(/images/layout_v2/profile/orange-info.png) 0 0 no-repeat !important; 
+        font-size:12.5px; 
+        line-height:14px; 
+        font-weight:700; 
+        min-height:30px; 
+        color:#fc630f; 
+        margin:15px 0 0 15px; 
+        padding:0 0 0 27px;
+    }
+    
+    &.success-message {
+        background:url(/images/layout_v2/profile/green-tick.png) 0 0 no-repeat !important; 
+        margin-bottom: 10px; font-size:12.5px; 
+        font-weight:700; 
+        height:22px; 
+        color:#179c12; 
+        padding:5px 0 0 27px; 
+    }
+    
+    &.block-separator {
+        color:#999; 
+        font-size:12.5px; 
+        padding:15px 0; 
+    }
+}
+
+body.blank, .company-name-search .off {
+	background:none;
+}
+
+a, .browse_pagination ul li a, .review-request-action a, 
+.review-action a, .brand-action a, .category-action a {
+	text-decoration:none;
+}
+
+a:hover, .zone_block a:hover, .zone_block h3 a:hover, #searchResults .premium h3 a:hover, 
+#searchResults .searchResult h3 a:hover, .zone-exit-box:hover .zone-exit-link {
+	text-decoration:underline;
+}
+
+.content_wide_nav ul li a:hover, .content_wide_nav_top ul li a:hover,
+.sidewidget_body ul li a {
+	color:#fff;
+	text-decoration:none;
+}
+
+.pending-block h3 span {
+	color:#000;
+}
+
+#contact_content table tr td h2.tnid, #add-people-block .profile-body-group label, #add-company-block {
+	margin-bottom: 10px;
+}
+
+.check {
+    width: 24px;
+    height: 19px;
+    background: url(/images/layout_v2/check.png) no-repeat;
+}
+
+.cross {
+    width: 16px;
+    height: 18px;
+    background: url(/images/layout_v2/cross.png) no-repeat center center;
+}
+
+.match.level {
+    background-color: #caedf9;
+    @include border-radius(6px);
+    border: 1px solid #90dcf7;
+    clear: both;
+    padding: 15px;
+    position: relative;
+    margin: 10px 0 10px 0;
+    
+    .slider {
+        background: url(/images/profile/match_switch/slider.png);
+        width: 20px;
+        height: 20px;
+        display: none;
+        position: absolute;
+        left: 18px;
+    }
+    
+    .row {
+        float:left; 
+        width: 100%;
+        padding-bottom: 10px;
+        
+        background: #caedf9 url(/images/profile/match_switch/bg.png) repeat-y 8px 0;
+        
+        &.top {
+            .switch.position {
+                background: transparent url(/images/profile/match_switch/top.png) no-repeat center top; width: 30px; height: 15px;
+            }
+        }
+        
+        &.middle {
+            .switch.position {
+                background: transparent url(/images/profile/match_switch/middle.png) no-repeat center center; width: 30px; height: 14px;
+            }
+        }
+        
+        &.bottom {
+            padding-bottom: 0;
+            position: relative;
+            .switch.position {
+                position: absolute;
+                background: transparent url(/images/profile/match_switch/bottom.png) no-repeat center bottom; 
+                width: 30px;
+                height: 15px;
+                bottom: 0;
+            }
+            
+            .label { 
+                margin-left: 35px;
+            }
+        }
+        
+        .label {
+            margin-left: 5px;
+            
+            div.categories {
+                width: 600px;
+                padding: 8px;
+                border: 1px solid #90dcf7;
+                @include border-radius(6px);
+                margin: 10px 0 5px 0;
+                color: #333;
+                font-size: 12px;
+                font-style: italic;
+                
+                p {
+                    max-height: 25px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                }
+            }
+        }
+        
+        >div {
+            float:left;
+        }
+        
+        .switch.position {
+            input.radio {
+                display:none;
+            }
+        }
+    }
+}
+
+div.checker {
+    top: -2px;
+}

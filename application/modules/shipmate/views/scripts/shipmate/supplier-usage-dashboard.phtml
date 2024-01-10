@@ -1,0 +1,117 @@
+<?php
+$this->headLink()->appendStylesheet('https://fonts.googleapis.com/css?family=Lato:400,100,100italic,300,300italic,400italic,700,700italic,900,900italic')
+->appendStylesheet('https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic')
+->appendStylesheet('/css/shipmate/supplier-usage-dashboard.css');
+
+$hostname = $this->config['shipserv']['application']['hostname'];
+
+$this->getHelper('Requirejs')->addModule('backbone/shipmate/supplier-usage-dashboard/views/mainView');
+
+$user = Shipserv_User::isLoggedIn();
+$shipservUser = $user->isShipservUser();
+$breadcrumbs = array();
+$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+$breadcrumbs[] = array('name' => 'ShipMate', 'url'  => '/shipmate');
+$breadcrumbs[] = array('name' => 'Supplier Usage Dashboard', 'url'  => '');
+echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<div id="waiting" style="display: none;">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>
+<div id="body">
+	<div id="content">
+		<h1 class="pages">Supplier Applications Usage Dashboard</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<form class="filters">
+
+			<section>
+				<label for="tnidName">
+					<div>Name/TNID Filter</div>
+					<input type="text" name="tnidName" id="tnidName">
+				</label>
+				<label for="date">
+					<div>Date Range</div>
+					<div class="select">
+						<select name="date">
+							<option value="1">Last 30 days</option>
+							<option value="3">Last 3 months</option>
+							<option value="6">Last 6 months</option>
+							<option value="12">Last 12 months</option>
+							<option value="24">Last 24 months</option>
+							<option value="36">Last 36 months</option>
+						</select>
+					</div>
+				</label>
+				<label for="timezone">
+					<div>Timezone</div>
+					<div class="select">
+						<select name="timezone">
+							<option value="GMT">GMT</option>
+							<option value="CET">CET</option>
+							<option value="UTC">UTC</option>
+						</select>
+					</div>
+				</label>
+				<input type="button" name="run" value="Run Report" class="btn blue">
+			</section>
+
+			<section>
+				<label for="country">
+					<div>Country</div>
+					<div class="select">
+						<select name="country">
+							<option value="">-</option>
+						</select>
+					</div>
+				</label>
+				<label for="level">
+					<div>Level</div>
+					<div class="select">
+						<select name="level">
+							<option value="0">All</option>
+							<option value="1">Members Only</option>
+							<option value="2">Integrated Members Only</option>
+							<option value="3">SmartSupplier Members Only</option>
+							<option value="4">Non-Members Only</option>
+						</select>
+					</div>
+				</label>
+				<input type="checkbox" id="xcludeShipmate" name="xcludeShipmate" checked>
+				<label for="xcludeShipmate" class="checkbox-label">
+					Exclude ShipMate actions
+				</label>
+			</section>
+			
+			<section>
+				<label for="gmvFrom">
+					<div>GMV &gt;</div>
+					<input class="number" type="text" name="gmvFrom" id="gmvFrom">
+				</label>
+				
+				<label for="gmvTo">
+					<div>GMV &lt;</div>
+					<input class="number" type="text" name="gmvTo" id="gmvTo">
+				</label>
+			</section>
+
+		</form>
+		<table id="usageData">
+			<thead></thead>
+			<tbody></tbody>
+		</table>
+		<div id="warning">No result found, please refine your search.</div>
+		<div id="more500">This report displays maximum 500 rows, please refine your search if the required data is not shown.</div>
+		<div class="btnContainer">
+			<input type="button" name="export" value="Export" class="btn white">
+		</div>
+		<div id="englevelTooltip">
+			<ul>
+				<li><span class="lvl good">&nbsp;</span>>50% of the working days in the selected period have at least one event logged.</li>
+				<li><span class="lvl medium">&nbsp;</span>at least one event and <50% of working days in the event have one event logged.</li>
+				<li><span class="lvl bad">&nbsp;</span>no events during selected period.</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>

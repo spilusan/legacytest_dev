@@ -1,0 +1,35 @@
+<div id="topToolBar" style="height:40px;">
+		<div id="closeTooltipButton"></div>
+		<div class="clear"></div>
+</div>
+<div id="einvoice_body">
+    <div class="zz header">
+        <h2>e-Invoicing</h2>
+    </div>
+    <div class="cont">
+        <img src="/images/layout_v2/einvoice_title.png" alt="e-invoicing" border="0">
+        <p class=""><strong>This supplier has signed up to the ShipServ e-Invoicing service.</strong></p>
+        <p>This new service allows suppliers to send  invoices electronically to e-Invoicing enabled shipowners, ship managers and shipyards through the ShipServ TradeNet platform.</p>
+        <p>Our  e-Invoicing solution streamlines invoice processing, guarantees document delivery and eliminates delays in the invoicing process that can slow down payment.</p>
+        <p>With over a decade of experience handling electronic transactions exclusively for the maritime industry, ShipServ is uniquely placed to handle the complex demands of shipping-specific invoices and what's more our solution fits seamlessly into our existing supplier products.</p>
+        <p><strong>For further information about e-Invoicing contact our Sales Hotline +44 203 111 9700</strong></p>
+    </div>
+</div>
+<script type="text/javascript">
+	<!--	
+	$(document).ready(function(){
+		$('#closeTooltipButton').click(function (e) {
+			e.preventDefault();
+			$('#mask').hide();
+			$('#einvoice_tooltip').hide();
+			$('#einvoice_tooltip').html('');
+		});
+        $('#mask').click(function (e) {
+			e.preventDefault();
+			$('#einvoice_tooltip').hide();
+			$('#einvoice_tooltip').html('');
+		});
+
+	});
+	//-->
+</script>

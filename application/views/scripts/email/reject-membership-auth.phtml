@@ -1,0 +1,5 @@
+<?
+	$companyInfo = $this->requests[0]->getCompanyInfo();
+	$membershipInfo = $this->requests[0]->getMembershipInfo ();
+?>
+<h2>Request of <?php echo $companyInfo["SPB_NAME"]?> to have status of <?php echo $membershipInfo["BROWSE_PAGE_NAME"]?> was rejected</h2>

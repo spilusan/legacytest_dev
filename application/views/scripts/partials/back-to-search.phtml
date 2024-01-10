@@ -1,0 +1,21 @@
+<?php
+
+if ($this->backToSearch()->getUrl() != "")
+{
+	?>
+	<a class="back_to_results_button" href="<?php echo $this->backToSearch()->getUrl(); ?>">
+		<?php
+		if ($this->backToSearch)
+		{
+			?><img src="<?php echo $this->CDNLink()->image('/images/layout_v2/buttons/back_to_search.png'); ?>" class="png" alt="To Search Results" /><?php
+		}
+		else
+		{
+			?><img src="<?php echo $this->CDNLink()->image('/images/layout_v2/buttons/to_search_page.png'); ?>" class="png" alt="To Search Results" /><?php
+		}
+		?>
+	</a>
+	<?php
+}
+
+?>

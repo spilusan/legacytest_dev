@@ -1,0 +1,26 @@
+<?php
+$this->headLink()->appendStylesheet('/css/spr.css');
+?>
+<nav class="spr-breadcrumbs">
+	<ul class="clearfix">
+		<li><a href="#">Home</a></li>
+		<li><a href="#">Analyze</a></li>
+		<li><a href="#" class="active">Supplier Performance Report</a></li>
+	</ul>
+</nav>
+
+<div id="waiting" style="display: none;">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>
+<div id="body">
+	<!-- TOD Remove hardcoded with, fix properly in CSS -->
+	<div id="content">
+		<h1 class="styled">Supplier Performance Report</h1>
+		<div style="margin-top: 20px; text-align:center;">
+			<i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i><br>
+			You must have a buyer account selected to view this report
+		</div>
+	</div>
+</div>
+<div class="clear"></div>

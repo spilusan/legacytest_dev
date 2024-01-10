@@ -1,0 +1,29 @@
+<?php
+    $this->headLink()->appendStylesheet('/css/uniform.default.new.css');
+    $this->headLink()->appendStylesheet('/css/profile/promoLanding.css');
+
+    $breadcrumbs = array(array('name' => 'Home',
+                               'url'  => '/search'),
+                         array('name' => 'Profile',
+                               'url'  => '/profile'),
+                         array('name' => 'Set Active Promotion Status',
+                               'url'  => '/profile/active-promo-landing'));
+    $this->getHelper('Requirejs')->addModule('backbone/profile/targetCustomers/views/landing')
+                                  ->addDefinition('profile/targetCustomers/supplierId', $this->data['spbBranchCode'])
+                                  ->addDefinition('profile/targetCustomers/buyerId', $this->data['bybBranchCode']);
+    $validTill = ($this->params['validTill']) ? 'until '.$this->params['validTill']->format('d M Y') : 'permanently';
+?>
+<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+<div id="body">
+    <h1 class="styled"><i class="fa fa-lock" aria-hidden="true"></i> This account has been locked</h1>
+    <div id="content">
+            <div class="messageBox">
+              <p>
+              This customer was set to <b>&quot;Active Promotion&quot;</b> on <?= $this->params['validFrom']->format('d M Y') ?> and an order has been received.<br />
+              This account has now been locked <?= $validTill ?> as part of the Active Promotion Programme.
+              </p>
+              <a class="button medium green"href="/profile/target-customers/type/v/id/<?= $this->params['supplierid'] ?>/?tab=promo">View Active Promotion Settings</a>
+            </div>
+    </div>
+</div>
+

@@ -1,0 +1,477 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->headLink()->appendStylesheet('/css/uniform.rfq.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+$this->requirejs()
+	->addModule('match/report')
+	->addDefinition('/match/reportType', '"buyer-gmv"')
+	;
+?>
+<style>
+	table tr.child td {
+		background-color:#d6dce4;
+	}
+
+	table tr.bold td {
+		font-weight:bold;;
+	}
+
+	#body #content {
+		left: 0 !important;
+	}
+
+	.editable{
+		/*
+		background-color:#caedf9;
+		*/
+	}
+	</style>
+<?php
+
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'GMV Report', 'url'  => '/reports/gmv');
+	$breadcrumbs[] = array('name' => 'Buyer', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+
+	Shipserv_DateTime::monthsAgo(3, $startDate, $endDate);
+	$startDate = ((isset($_GET['fromDate']) && $_GET['fromDate'])? strip_tags($_GET['fromDate']) : $startDate->format("d/m/Y"));
+	$endDate =  ((isset($_GET['toDate']) && $_GET['toDate'])? strip_tags($_GET['toDate']) : $endDate->format("d/m/Y"));
+	
+?>
+
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.colVis.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.CSV.css" media="screen" rel="stylesheet" type="text/css">
+
+<div id="body" class="buyerGmv">
+	<div id="content">
+		<h1 class="styled">GMV Report by Buyer</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<form method="get" class="new" action="/buyer/gmv" id="buyerGmvForm">
+		    <table style="">
+		        <tr>
+		        	<td>
+		        			<input type="hidden" value="<?= $this->params['parentId']?>" name="parentId" id="parentId">
+		        			<input type="hidden" value="" name="resetMemcache" id="resetMemcache">
+		        			<input type="hidden" value="" name="r" id="reportIsRunning">
+							<input type="hidden" value="<?= $this->params['t']?>" name="terminated">
+			        		<table>
+								<tr>
+						            <td width="130">
+										<label class="date">Account manager:</label>
+						                <select id="accountManagerSelector" name="accountManager">
+						                	<option value="">All</option>
+							                <?foreach($this->accountManager as $data){?>
+							                <option value="<?= $data['NAME']?>" <? if($data['NAME']==$this->params['accountManager']) echo 'selected="selected"';?>>- <?= $data['NAME']?></option>
+							                <?}?>
+						                </select>
+						            </td>
+						            <td width="130">
+						                <label class="date">Region:</label>
+						                <select id="regionSelector" name="region">
+						                	<option value="">All</option>
+							                <?foreach($this->region as $data){?>
+							                <option value="<?= $data['REGION']?>" <? if($data['REGION']==$this->params['region']) echo 'selected="selected"';?>>- <?= $data['REGION']?></option>
+							                <?}?>
+						                </select>
+						            </td>
+						            <td width="130">
+						                <label class="date">From:</label>
+						                <input type="text" name="fromDate" id="fromDate" value="<?php echo $startDate ?>" class="datepicker" />
+						            </td>
+						            <td width="130">
+						                <label class="date">To:</label>
+						                <input type="text" name="toDate" id="toDate" class="datepicker" value="<?php echo $endDate ?>"/>
+						            </td>
+						            <td width="30" class="buttonCell">
+						            	<input type="submit" value="Run report" id="runReport" class="button dblue medium"/>
+						            </td>
+
+						            <td width="" style="">&nbsp;</td>
+						            <?php if( $this->params['parentId'] != "" ){?>
+						            <td width="30" class="buttonCell">
+						            	<input type="button" onclick="goBack();" value="Back to all buyers"  class="button red medium"/>
+						            </td>
+
+						            <td width="" style="">&nbsp;</td>
+						            <?php }?>
+
+						            <td width="30" class="buttonCell">
+						            	<input type="button" onclick="refreshFromDb();" value="Run report" id="refreshFromDbButton" style="display: none;" class="button hidden dblue medium"/>
+										<? if( lg_count($this->results) > 0 ){ ?>
+											<input type="button" onclick="hideZeroGmv();" value="Hide Buyers with 0 Actual GMV" id="hideZeroGMV" style="display: none;" class="button hidden dblue medium"/>
+										<? } ?>
+						            </td>
+						            <td width="" style="">&nbsp;</td>
+								</tr>
+								<tr>
+						            <td width="130">
+						                <label>
+						                	Filter account name by
+						                	<input type="text" name="buyerName" value="<?= $this->params['buyerName'] ?>" />
+						                </label>
+						            </td>
+
+						            <td width="130">
+						                <label>Show buyers:</label>
+						                <div class="clear"></div>
+						                <div style="float:left; "><label><input type="checkbox" name="contractType[]" <?= (isset($this->params['contractType']) == false || (lg_count($this->params['contractType']) > 0 && in_array('STANDARD', $this->params['contractType']))?'checked="checked"':'') ?> value="STANDARD">STANDARD</label></div>
+						                <div style="float:left; "><label><input type="checkbox" name="contractType[]" <?= (isset($this->params['contractType']) == false || (lg_count($this->params['contractType']) > 0 && in_array('POM', $this->params['contractType']))?'checked="checked"':'') ?> value="POM">POM</label></div>
+						                <div style="float:left; "><label><input type="checkbox" name="contractType[]" <?= (isset($this->params['contractType']) == false || (lg_count($this->params['contractType']) > 0 && in_array('CCP', $this->params['contractType']))?'checked="checked"':'') ?> value="CCP">CCP</label></div>
+						                <div style="float:left; "><label><input type="checkbox" name="contractType[]" <?= (isset($this->params['contractType']) == false || (lg_count($this->params['contractType']) > 0 && in_array('CN3', $this->params['contractType']))?'checked="checked"':'') ?> value="CN3">CN3</label></div>
+						                <div style="float:left; "><label><input type="checkbox" name="contractType[]" <?= (isset($this->params['contractType']) == false || (lg_count($this->params['contractType']) > 0 && in_array('TRIAL', $this->params['contractType']))?'checked="checked"':'') ?> value="TRIAL">TRIAL</label></div>
+						                <div class="clear"></div>
+						            </td>
+									<!--
+						            <td width="130">
+						                <br />
+						                <label><input type="checkbox" name="includeValidImo" <?= ((isset($this->params['includeValidImo']) == false || $this->params['includeValidImo'] == 1)?'checked="checked"':'') ?> value="1">Include Trading Unit without IMO number</label>
+						                <div class="clear"></div>
+						            </td>
+									-->
+									<td width="130">
+										<br />
+						                <label><input type="checkbox" name="includeCapexSupplier" <?= ((isset($this->params['includeCapexSupplier']) == false || $this->params['includeCapexSupplier'] == 1)?'checked="checked"':'') ?> value="1">Include transaction with CAPEX Supplier</label>
+						                <div class="clear"></div>
+						            </td>
+
+									<td width="130">
+										<br />
+						                <label><input type="checkbox" name="leakage" <?= (($this->params['leakage'] == 1)?'checked="checked"':'') ?> value="1">Include leakage calculation (this will take approximately 15 minutes longer)</label>
+						                <div class="clear"></div>
+						            </td>
+
+								</tr>
+			        		</table>
+		        	</td>
+		        </tr>
+		        <tr style="position: relative;">
+		            <td colspan="5">
+						<? if( lg_count($this->results) > 0 ){ ?>
+		            	<table id="resultsTab" class="stripe">
+		                    <thead>
+		                        <tr>
+		                        	<th></th>
+		                            <th>TNID</th>
+		                            <th>Account <br />Name</th>
+		                        	<th>Child <br />TNIDs</th>
+		                        	<th>Region</th>
+		                        	<th>Country</th>
+		                        	<th title="Pulled daily from SF">Account <br />Manager <br /></th>
+		                        	<th>Contract <br />type</th>
+		                        	<th>Date of First PO</th>
+		                        	<th title="Pulled daily from SF">Con<br />tracted <br />Units</th>
+		                        	<th>Tra<br />ding <br />Units</th>
+									<th>Active Purchaser</th>
+		                        	<th>Yearly<br />Potential <br />GMV <br />Per Unit <br />(USD)</th>
+		                        	<th>Potential <br />GMV <br />Per Unit <br />for current <br />time period</th>
+		                        	<th>Total <br />Potential <br />GMV <br />during period if Fully <br />Ramped <br />(USD)</th>
+		                        	<th>Actual <br />Total GMV during period <br />(USD)</th>
+		                        	<th>%GMV <br />Cap<br />tured</th>
+
+		                        	<th>%RFQ <br />events <br />with <br />PO</th>
+									<th><b>Total <br />Supp<br />liers <br />Interacted<br /> with (RFQ and PO)</b></th>
+		                        	<th>Total NON <br />Paying <br />Suppliers <br />Serving <br />Buyer</th>
+		                        	<th>Total <br />GMV to <br />NON <br />Paying <br />Supp<br />liers <br />(USD)</th>
+		                        	<th>Total <br />Paying <br />Suppliers <br />Serving <br />Buyer</th>
+		                        	<th>Total <br />GMV to <br />Paying <br />Suppliers <br />(USD)</th>
+		                        	<th>%GMV to <br />Paying <br />Supp<br />liers</th>
+
+									<!--<th>Total <br />GMV to <br />Prime <br />Supplier</th>-->
+									<th>Actual <br />Supplier <br />Revenue <br />(USD)</th>
+		                        	<th>GMV <br />Moneti<br/>-sation <br />Rate <br />on <br />Supp<br />lier <br />side</th>
+		                        	<th>Potential <br />Supplier <br />Revenue <br />(USD)</th>
+		                        	<th>%Potential <br />Supplier<br />Revenue <br />Captured</th>
+
+									<? if(isset($this->params['leakage']) && $this->params['leakage']==1 ){ ?>
+		                        	<th>GMV Leakage</th>
+		                        	<th>Revenue Leakage</th>
+									<? }?>
+
+		                        	<th>GMV Trend Graph</th>
+		                        	<th>GMV Trend - Trailing 3 months vs Prior 3 months</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php
+		                        foreach ( (array) $this->results as $result)
+		                        {
+		                        	++$no;
+
+		                        	// check if row should be editable
+		                        	if( $this->params['parentId'] == '' && $result['TOTAL_CHILDREN'] == 0 )
+		                        	{
+										$editable = 'editable';
+		                        	}
+		                        	else if( $this->params['parentId'] != '' )
+		                        	{
+		                        		$editable = 'editable';
+		                        	}
+		                        	else
+		                        	{
+		                        		$editable = '';
+		                        	}
+
+		                        	?>
+		                            <tr class="dr" tnid="<?= $result['BYB_BRANCH_CODE']?>">
+		                            	<!-- 111 -->
+		                            	<td><?= $no ?></td>
+		                                <!-- 222 -->
+		                                <td><?= $result['BYB_BRANCH_CODE']?></td>
+		                                <!-- 333 -->
+		                                <td class="left">
+			                                <?= $result['BUYER_NAME'] ?>
+		                                </td>
+		                                <!-- 444 -->
+		                                <td><a style="cursor: pointer; font-weight:bold;" onclick="changeParentId(<?= $result['BYB_BRANCH_CODE']?>)"><?= $result['TOTAL_CHILDREN']?></a></td>
+		                                <!-- 555 -->
+		                                <td><?= $result['BUYER_REGION']?></td>
+		                                <!-- 666 -->
+		                                <td><?= $result['BUYER_COUNTRY']?></td>
+		                                <!-- 777 -->
+		                                <td col="BYB_ACCT_MNGR_NAME">
+                                		<?= $result['BYB_ACCT_MNGR_NAME']?>
+		                                </td>
+		                                <!-- 888 -->
+		                                <td col="BYB_CONTRACT_TYPE"><?= $result['BYB_CONTRACT_TYPE']?></td>
+		                                <!-- 888AAA -->
+		                                <td><?= $result['FIRST_TRADING_DATE']?></td>
+		                                <!-- 999 -->
+		                                <td><?= $result['BYB_POTENTIAL_UNITS']?></td>
+		                                <!-- 101010 -->
+		                                <td><a target="_blank" style="font-weight:bold;" href="/buyer/gmv/breakdown-by-trading-unit?buyerId=<?= $result['BYB_BRANCH_CODE'] ?>&fromDate=<?= $this->params['fromDate']?>&toDate=<?= $this->params['toDate']?>&parent=<?= ($result['TOTAL_CHILDREN']>0?1:0)?>"><?= $result['TRADING_UNIT']?></a></td>
+										<td><a target="_blank" style="font-weight:bold;" href="/buyer/gmv/breakdown-by-purchaser?buyerId=<?= $result['BYB_BRANCH_CODE'] ?>&fromDate=<?= $this->params['fromDate']?>&toDate=<?= $this->params['toDate']?>&parent=<?= ($result['TOTAL_CHILDREN']>0?1:0)?>"><?= $result['UNIQUE_PURCHASER']?></a></td>
+										<!-- 111111 -->
+		                                <td class="currency">
+											<?
+												echo $result['BYB_POTENTIAL_GMV_PER_UNIT'];
+											?>
+										</td>
+										<!-- 303030 -->
+		                                <td class="currency"><?= $result['BYB_POTENTIAL_GMV_PER_UNIT_PR']?></td>
+		                                <!-- 121212 -->
+		                                <td class="currency"><?= $result['TOTAL_POTENTIAL_GMV']?></td>
+		                                <!-- 131313 -->
+		                                <td class="currency gmv"><?= $result['GMV']?></td>
+		                                <!-- 141414 -->
+		                                <td class="percentage"><?= $result['PC_GMV_CAPTURED']?></td>
+		                                <!-- 151515 -->
+		                                <td class="percentage"><?= $result['PC_RFQ_EVENT_WITH_PO']?></td>
+										<!-- 191919 -->
+		                                <td class="emptyas0">
+											<a target="_blank" style="font-weight:bold;" href="/buyer/gmv/breakdown-by-supplier-interacted-with?buyerId=<?= $result['BYB_BRANCH_CODE'] ?>&fromDate=<?= $this->params['fromDate']?>&toDate=<?= $this->params['toDate']?>&parent=<?= ($result['TOTAL_CHILDREN']>0?1:0)?>">
+												<?= $result['UNIQUE_SPB_INTERACTED_WITH']?>
+											</a>
+										</td>
+		                                <!-- 202020 -->
+		                                <td class="emptyas0"><?= $result['UNIQUE_BASIC_SUPPLIER']?></td>
+		                                <!-- 212121 -->
+		                                <td class="currency"><?= $result['GMV_UNIQUE_BASIC_SUPPLIER']?></td>
+		                                <!-- 222222 -->
+		                                <td class="emptyas0"><?= $result['UNIQUE_PREMIUM_SUPPLIER']?></td>
+		                                <!-- 232323 -->
+		                                <td class="currency"><?= $result['GMV_UNIQUE_PREMIUM_SUPPLIER']?></td>
+		                                <!-- 242424 -->
+		                                <td class="percentage"><?= $result['PC_GMV_TO_PREMIUM_SPB']?></td>
+		                                <!-- 252525 -->
+		                                <td class="currency"><?= $result['REVENUE_SUPPLIER']?></td>
+		                                <!-- 262626 -->
+		                                <td class="percentage"><?= $result['PC_GMV_SPB_MONETISATION_RATE']?></td>
+		                                <!-- 272727 -->
+		                                <td class="currency"><?= $result['POTENTIAL_SPB_REV']?></td>
+		                                <!-- 282828 -->
+		                                <td class="currency">
+			                                <?= ($result['POTENTIAL_SPB_REV']>0)?($result['REVENUE_SUPPLIER']/$result['POTENTIAL_SPB_REV'] * 100):0?>
+		                               	</td>
+
+										<? if(isset($this->params['leakage']) && $this->params['leakage']==1 ){ ?>
+		                                <td class="currency"><?= $result['GMV_LEAKAGE']?></td>
+		                                <td class="currency"><?= $result['REVENUE_LEAKAGE']?></td>
+										<? } ?>
+
+		                                <td style="text-align: center; vertical-align: middle;;"><a target="_blank" href="/buyer/gmv-trend?tnid=<?= $result['BYB_BRANCH_CODE']?>&parent=<?= ($result['TOTAL_CHILDREN']>0?1:0)?>"><img src="/img/reports/gmv/Graph.png" style="float:none; " /></a></td>
+		                                <td style="text-align: center; vertical-align: middle;;">
+											<? if( $result['GMV_TREND'] == 'up' || $result['GMV_TREND'] == 'down' ){ ?>
+												<img style="float:none; " src="/img/reports/gmv/<?= ($result['GMV_TREND']=='up')?'Trend_Up.png':'Trend_Down.png'?>" />
+											<? }?>
+										</td>
+		                            </tr>
+		                        	<?
+
+		                        	$total['BYB_MONTHLY_FEE_PER_UNIT'] += $result['BYB_MONTHLY_FEE_PER_UNIT'];
+		                        	$total['BYB_POTENTIAL_GMV_PER_UNIT'] += $result['BYB_POTENTIAL_GMV_PER_UNIT'];
+		                        	$total['BYB_POTENTIAL_GMV_PER_UNIT_PR'] += $result['BYB_POTENTIAL_GMV_PER_UNIT_PR'];
+
+		                        	$total['BYB_POTENTIAL_UNITS'] += $result['BYB_POTENTIAL_UNITS'];
+		                        	$total['TRADING_UNIT'] += $result['TRADING_UNIT'];
+		                        	$total['TOTAL_POTENTIAL_GMV'] += $result['TOTAL_POTENTIAL_GMV'];
+		                        	$total['GMV'] += $result['GMV'];
+		                        	$total['ACTUAL_SUBCR_REV'] += $result['ACTUAL_SUBCR_REV'];
+		                        	$total['POTENTIAL_SUBCR_REV'] += $result['POTENTIAL_SUBCR_REV'];
+		                        	$total['UNIQUE_BASIC_SUPPLIER'] += $result['UNIQUE_BASIC_SUPPLIER'];
+		                        	$total['GMV_UNIQUE_BASIC_SUPPLIER'] += $result['GMV_UNIQUE_BASIC_SUPPLIER'];
+		                        	$total['UNIQUE_PREMIUM_SUPPLIER'] += $result['UNIQUE_PREMIUM_SUPPLIER'];
+		                        	$total['GMV_UNIQUE_PREMIUM_SUPPLIER'] += $result['GMV_UNIQUE_PREMIUM_SUPPLIER'];
+		                        	$total['REVENUE_SUPPLIER'] += $result['REVENUE_SUPPLIER'];
+		                        	$total['POTENTIAL_SPB_REV'] += $result['POTENTIAL_SPB_REV'];
+		                        	$total['TOTAL_POTENTIAL_REV'] += $result['TOTAL_POTENTIAL_REV2'];
+									$total['ACTUAL_TOTAL_REV'] += $result['ACTUAL_TOTAL_REV'];
+		                        	$total['REV_OPPORTUNITY'] += $result['TOTAL_POTENTIAL_REV2']-$result['ACTUAL_TOTAL_REV'];
+
+									$total['UNIQUE_SPB_INTERACTED_WITH'] += $result['UNIQUE_SPB_INTERACTED_WITH'];
+									$total['UNIQUE_SUPPLIER'] += $result['UNIQUE_SUPPLIER'];
+		                        	$total['PC_RFQ_EVENT_WITH_PO'] += $result['PC_RFQ_EVENT_WITH_PO'];
+									$total['ANNUAL_POTENTIAL_REVENUE'] += ($result['TRADING_UNIT'] * $result['BYB_POTENTIAL_GMV_PER_UNIT']);
+									$total['ANNUAL_POTENTIAL_REVENUE_IN_PERIOD'] += ($result['TRADING_UNIT'] * $result['BYB_POTENTIAL_GMV_PER_UNIT_PR']);
+									$total['GMV_LEAKAGE'] += $result['GMV_LEAKAGE'];
+									$total['REVENUE_LEAKAGE'] += $result['REVENUE_LEAKAGE'];
+
+									//$total['GMV_PRIME_SUPPLIER'] += $result['GMV_PRIME_SUPPLIER'];
+		                        }
+
+		                        ?>
+		                        </tbody>
+								<? if( $no > 1 ){ ?>
+		                        <tfoot>
+		                            <tr style="background-color: #d6dce4">
+		                                <td></td>
+		                                <td></td>
+		                                <td></td>
+		                                <td></td>
+		                                <td></td>
+		                                <td></td>
+		                                <td></td>
+										<td></td>
+		                                <td></td>
+		                                <td>Total</td>
+		                                <td class="">Total</td>
+										<td></td>
+		                                <td class="">Average (per unit)</td>
+										<td class="">Average (per unit)</td>
+		                                <td class="">Total</td>
+		                                <td class="">Overall</td>
+										<td class="">Average</td>
+										<td class=""></td>
+		                                <td class="">Average</td>
+		                                <td class="">Average</td>
+		                                <td class="">Total</td>
+		                                <td class="">Total</td>
+		                                <td class="">Overall</td>
+		                                <td class="">Overall</td>
+		                                <td class="">Total</td>
+										<td class="">Total</td>
+		                                <td class="">Total</td>
+		                                <td class="">Total</td>
+										<? if(isset($this->params['leakage']) && $this->params['leakage']==1 ){ ?>
+		                                <td class="">Total</td>
+		                                <td class="">Total</td>
+										<? } ?>
+		                                <td class=""></td>
+		                                <td class=""></td>
+		                            </tr>
+		                            <tr>
+		                                <td></td>
+		                                <td></td>
+		                                <td></td>
+		                                <td></td>
+		                                <td></td>
+		                                <td></td>
+		                                <td></td>
+		                                <td></td>
+		                                <td></td>
+		                                <td><?= $total['BYB_POTENTIAL_UNITS']?></td>
+		                                <td><?= $total['TRADING_UNIT']?></td>
+										<td></td>
+		                                <td class="currency"><?= ($total['BYB_POTENTIAL_UNITS'] != 0) ? $total['ANNUAL_POTENTIAL_REVENUE']/$total['BYB_POTENTIAL_UNITS'] : 0?></td>
+		                                <td class="currency"><?= ($total['BYB_POTENTIAL_UNITS'] != 0) ? $total['ANNUAL_POTENTIAL_REVENUE_IN_PERIOD']/$total['BYB_POTENTIAL_UNITS'] : 0?></td>
+		                                <td class="currency"><?= $total['TOTAL_POTENTIAL_GMV']?></td>
+		                                <td class="currency"><?= $total['GMV']?></td>
+		                                <td class="percentage"><?=($total['TOTAL_POTENTIAL_GMV'] != 0) ? ($total['GMV']/$total['TOTAL_POTENTIAL_GMV']*100) : 0 ?></td>
+		                                <td class="currency"><?= $total['UNIQUE_SPB_INTERACTED_WITH']/$no?></td>
+		                                <td class="currency"><?= $total['UNIQUE_SUPPLIER']/$no?></td>
+		                                <td class="currency"><?= $total['UNIQUE_BASIC_SUPPLIER']/$no?></td>
+		                                <td class="currency"><?= $total['GMV_UNIQUE_BASIC_SUPPLIER']?></td>
+		                                <td class="currency"><?= $total['UNIQUE_PREMIUM_SUPPLIER']?></td>
+		                                <td class="currency"><?= $total['GMV_UNIQUE_PREMIUM_SUPPLIER']?></td>
+		                                <td class="percentage"><?= ($total['GMV'] != 0) ? $total['GMV_UNIQUE_PREMIUM_SUPPLIER']/$total['GMV']*100 : 0?></td>
+		                                <td class="currency"><?= $total['REVENUE_SUPPLIER']?></td>
+		                                <td class="percentage"><?= ($total['GMV'] != 0) ? $total['REVENUE_SUPPLIER']/$total['GMV']*100 : 0?></td>
+		                                <td class="currency"><?= $total['POTENTIAL_SPB_REV']?></td>
+		                                <td class="currency"><?= $total['TOTAL_POTENTIAL_REV']?></td>
+										<? if(isset($this->params['leakage']) && $this->params['leakage']==1 ){ ?>
+										<td class="currency"><?= $total['GMV_LEAKAGE']?></td>
+										<td class="currency"><?= $total['REVENUE_LEAKAGE']?></td>
+										<? } ?>
+		                                <td></td>
+										<td></td>
+		                            </tr>
+		                    	</tfoot>
+								<? } ?>
+		                	</table>
+							<div style="font-size:10px; ">
+								<?
+									$now = new DateTime();
+									$diff = $this->executionStarts->diff( $now );
+									echo 'It took ' . $diff->format( '%H:%I:%S' ) . ' to generate this report';
+								?>
+							</div>
+		                <?php }?>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>
+
+<script type="text/javascript">
+	function changeParentId(parentId){
+		$('#resetMemcache').val(0);
+		$('#parentId').val(parentId);
+		$("input[value='Run report']").click();
+	}
+
+	function goBack(parentId){
+		$('#resetMemcache').val(0);
+		$('#parentId').val('');
+		$("input[value='Run report']").click();
+	}
+
+	function refreshFromDb(){
+		$('#resetMemcache').val(1);
+
+		if( $('#reportIsRunning').val() != 1 ){
+			$('#reportIsRunning').val(1);
+			$('#refreshFromDbButton').val("Please wait while report is running and do not press refresh button.");
+			$("#runReport").click();
+		} else {
+			return false;
+		}
+	}
+
+	function hideZeroGmv(){
+		$(".dr").each(function(){
+			if($(this).find('.gmv').html() == "0"){
+				if( $("#hideZeroGMV").val() == "Hide Buyers with 0 Actual GMV" ){
+					$(this).css("display", "none");
+				}else{
+					$(this).css("display", "block");
+				}
+			}
+		})
+
+		if( $("#hideZeroGMV").val() == "Hide Buyers with 0 Actual GMV" ){
+			$("#hideZeroGMV").val("Show Buyers with 0 Actual GMV");
+		}else{
+			$("#hideZeroGMV").val("Hide Buyers with 0 Actual GMV");
+		}
+
+	}
+
+</script>

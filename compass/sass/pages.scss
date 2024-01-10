@@ -1,0 +1,18 @@
+/*
+Document   : partials/guidelines/_pages.scss
+Created on : August 18, 2016
+Author     : Daniele Manca
+Description: default styles for page sections 
+*/
+/* All devices */
+
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+@import "2016_campfire/main/colours";
+@import "partials/mixins/mixins";
+
+@import "2016_campfire/corporate/pages/index";
+
+

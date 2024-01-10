@@ -1,0 +1,1052 @@
+<?php
+/** @var $quote Shipserv_Quote */
+$quote = $this->quote;
+$rfq = $quote->getRfq();
+
+$lineItemChanges = $quote->getLineItemChanges();
+
+// Translation for Terms of delivery
+$tod = array(
+    'EXW' => "Ex Works",
+    'FCA' => "Free Carrier",
+    'FAS' => "Free Alongside Ship",
+    'FOB' => "Free On Board",
+    'CFR' => "Cost and Freight",
+    'CIF' => "Cost, Insurance, Freight",
+    'CPT' => "Carriage Paid To",
+    'CIP' => "Carriage and Insurance Paid To",
+    'DAF' => "Delivered at Frontier",
+    'DES' => "Delivered Ex Ship",
+    'DEQ' => "Delivered Ex Quay",
+    'DDU' => "Delivered Duty Unpaid",
+    'DDP' => "Delivered Duty Paid"
+);
+
+/**
+ * Prints out table row with quote details
+ *
+ * @param   array       $row
+ * @param   Zend_View   $view
+ */
+$echoQuoteRow = function(array $row, Zend_View $view, $buyerSelectedHasQuoted100Percent = false) {
+    $isMatch = in_array($row['QOT_INTERNAL_REF_NO'], $view->matchQuoteIds);
+    $isThis = $row['QOT_INTERNAL_REF_NO'] == $view->quote->qotInternalRefNo;
+
+    // the quote which email is about has its own row style
+    // style of other rows depends on whether they are match quotes or not
+
+    $tdStyle = implode('; ', array(
+        "font-family: Arial, Helvetica, Sans-Serif",
+        "font-size: 11px",
+        "padding: 9px",
+        "border-right:  1px solid #bec4cb",
+        "border-bottom: 1px solid #bec4cb",
+        "color: #2e3235"
+    ));
+
+    if ($isThis) {
+        $bgColour = '#83cc4e';
+    } else if ($isMatch) {
+        $bgColour = '#e5f8d8';
+    } else {
+        $bgColour = "#ffffff";
+    }
+
+    $tdStyle .= implode('; ', array(
+        "background-color: " . $bgColour,
+        ""
+    ));
+    ?>
+
+    <tr bgcolor="<?= $bgColour; ?>" style="background-color: <?php echo $bgColour; ?>">
+        <td bgcolor="<?= $bgColour; ?>" style="border-left: 1px solid #bec4cb; <?= $tdStyle; ?>; font-weight: bold;">
+            <?php
+            if ($isThis) {
+                ?>This quote<br/><?php
+            }
+            ?><a href="<?= $row['QUOTE_URL'] ?>"><?php
+            if ($isMatch) {
+                ?><?= $this->quoteTypeLabel ; ?> selected<?php
+            } else {
+                ?>Buyer selected<?php
+            }
+            ?></a>
+        </td>
+
+        <td bgcolor="<?= $bgColour; ?>" style="<?= $tdStyle; ?>">
+            <?= $row['QUOTEDATE']->format('j M Y'); ?>
+            <!-- Quote ID:     <?= $row['QOT_INTERNAL_REF_NO']; ?> -->
+            <!-- Quote RFQ ID: <?= $row['QOT_RFQ_INTERNAL_REF_NO']; ?> -->
+        </td>
+
+        <td bgcolor="<?= $bgColour; ?>" style="<?php echo $tdStyle; ?>">
+            <b><?= htmlentities($row['SPB_NAME']); ?></b>
+            <br/>
+            <?php
+            $statusCellStr = array();
+
+            // check if the supplier is whitelisted by the buyer from the quote
+            if ($row['WHITELISTED'] and !$row['WHITELISTDISABLED']) {
+                $statusCellStr[] = "This supplier is on your approved vendor list.";
+            }
+
+            // check the last order date for the buyer from the quote
+            $lastOrderDate = $row['LASTORDERDATE'];
+            if (is_null($lastOrderDate)) {
+                $statusCellStr[] = "You have never used this supplier before.";
+            } else {
+                $statusCellStr[] = "You last ordered from this supplier on " . $lastOrderDate->format('j M Y') . ".";
+            }
+
+            echo implode(" ", $statusCellStr);
+            ?>
+
+        </td>
+
+        <td bgcolor="<?= $bgColour; ?>" style="<?php echo $tdStyle; ?>">
+            <?= htmlentities($row['QUOTE_GENUINE_MESSAGE']); ?>
+            <?php
+                /* switch ($row[Shipserv_Quote::COL_GENUINE]) {
+                case Shipserv_Quote::GENUINE_YES:
+                    echo 'Yes';
+                    break;
+
+                case Shipserv_Quote::GENUINE_NO:
+                    echo 'No';
+                    break;
+
+                case Shipserv_Quote::GENUINE_NA:
+                    echo 'Not Applicable';
+                    break;
+
+                case Shipserv_Quote::GENUINE_UNKNOWN:
+                default:
+                    echo 'Unknown';
+                } */ ?>
+        </td>
+
+        <td bgcolor="<?= $bgColour; ?>" style="<?php echo $tdStyle; ?>">
+            <?= htmlentities(Myshipserv_View_Helper_String::truncateToWord($row[Shipserv_Quote::COL_PAYMENT_TERMS], 100)); ?>
+        </td>
+
+        <td bgcolor="<?= $bgColour; ?>" style="<?php echo $tdStyle; ?>">
+            <?= htmlentities(Shipserv_Quote::getReadableDeliveryTermsForKey($row[Shipserv_Quote::COL_DELIVERY_TERMS])); ?>
+        </td>
+
+        <td bgcolor="<?= $bgColour; ?>" style="<?php echo $tdStyle; ?>">
+            <?= htmlentities($row[Shipserv_Quote::COL_LEAD_TIME]); ?>
+        </td>
+
+        <td bgcolor="<?= $bgColour ?>" style="<?= $tdStyle ?>; text-align: center; font-weight: bold;">
+            <span style="color: #<?php echo ($row['COMPLETENESS'] < 100) ? "e81e24" : "008b00"; ?>"><?php echo $row['COMPLETENESS'] ?>%</span>
+        </td>
+
+        <td bgcolor="<?= $bgColour ?>" style="<?= $tdStyle ?>;text-align: right;">
+            <?= number_format($row['QOT_TOTAL_COST'], 2); ?> <?= $row['QOT_CURRENCY'] ?>
+        </td>
+
+        <td bgcolor="<?= $bgColour ?>" style="<?php echo $tdStyle ?>;text-align: right;">
+            <?= number_format($row['NORMALISEDTOTAL'], 2) ?> USD
+            <?
+                if( $row['CHEAPEST_RANK'] == 1){
+                    ?><span style="color: red">Cheapest</span><?
+                }
+            ?>
+        </td>
+
+        <td bgcolor="<?= $bgColour ?>" style="<?php echo $tdStyle ?>;text-align: right;">
+            <?
+                if( $isMatch )
+                {
+                    $ps = $this->matchQuotePotentialSaving[$row['QOT_SPB_BRANCH_CODE'] . '-' . $row['QOT_INTERNAL_REF_NO']];
+                    if( $ps > 0 )
+                    {
+                        echo number_format($ps, 2) . " USD";
+                    }
+                    else if( $ps == null )
+                    {
+                        if( $row['NORMALISEDTOTAL'] == 0 )
+                        {
+                            echo "None";
+                        }
+                        else
+                        {
+                            echo "No comparable quotes";
+                        }
+
+                    }
+                    else if( $ps <= 0 )
+                    {
+                        if( $buyerSelectedHasQuoted100Percent == false )
+                        {
+                            echo "No comparable quotes";
+                        }
+                        else
+                        {
+                            echo 'None';
+                        }
+                    }
+                }
+            ?>
+        </td>
+    </tr>
+    <?php
+}
+?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>ShipServ <?= $this->quoteTypeLabel ; ?></title>
+</head>
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="#f5f7fa">
+	<table border="0" cellpadding="0" cellspacing="0" width="880" bgcolor="#f5f7fa" style="margin:0 auto;">
+        <?php
+        $delimiterStyle = implode(';', array(
+            "font-size: 14px;",
+            "line-height: 1;",
+            "height: 11px;"
+        )); ?>
+        <tr><td style="<?php echo $delimiterStyle; ?>">&nbsp;</td></tr>
+
+		<tr>
+			<td style="font-size: 14px; padding-left: 8px; font-family: Arial, Helvetica, sans-serif; color: #2e3235;">
+				<?php if ($this->isAutomatch) {
+					?>ShipServ <?= $this->quoteTypeLabel ; ?> has obtained the following comparison<?php
+				} else {
+					?>In response to sending your RFQ to ShipServ <?= $this->quoteTypeLabel ; ?>, you have received the following<?php
+				} ?>
+                quote from
+                <?= htmlentities($quote->getSupplier()->name); ?>.
+            </td>
+		</tr>
+        <tr><td style="<?php echo $delimiterStyle; ?>">&nbsp;</td></tr>
+
+		<?php if(lg_count($this->quotes) > 1): ?>
+		<tr>
+			<td bgcolor="#13b5ea" style="background-color: #13b5ea; padding-left: 15px; padding-top: 10px; padding-bottom: 10px; color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 15px; font-weight: bold;">
+				Quote comparison for this RFQ
+			</td>
+		</tr>
+		<tr><td style="<?php echo $delimiterStyle; ?>">&nbsp;</td></tr>
+
+		<tr>
+			<td style="font-size: 11px; font-family: Arial, Helvetica, sans-serif; color: #2e3235; line-height: 1.5;">
+				The table below shows the price in this <?= $this->quoteTypeLabel ; ?> quote against other quotes already received
+				- both original suppliers you added as well as other <?= $this->quoteTypeLabel ; ?> suppliers (shown highlighted in the table)
+				who have responded. This table will be updated if other <?= $this->quoteTypeLabel ; ?> suppliers submit a quote.
+                <!-- RFQ ID: <?php echo $this->sourceRfqId; ?>-->
+			</td>
+		</tr>
+		<tr><td style="<?php echo $delimiterStyle; ?>">&nbsp;</td></tr>
+
+		<tr>
+			<td>
+				<table border="0" cellpadding="0" cellspacing="0" width="100%" valign="top" style="border-left: 0px solid #bec4cb; border-top: 1px solid #bec4cb;">
+					<tr bgcolor="#D6DCE4" style="background-color: #D6DCE4;">
+                        <?php $thStyle = implode(';', array(
+                            "font-family: Arial, Helvetica, sans-serif",
+                            "color: #2e3235",
+                            "font-size: 11px",
+                            "font-weight: bold",
+                            "padding: 9px",
+                            "border-right: 1px solid #bec4cb",
+                            "border-bottom: 1px solid #bec4cb",
+                            "border-left: 1px solid #bec4cb"
+                        )); ?>
+
+                        <th style="<?php echo $thStyle ;?>" valign="top" width="62">Quote (click to view)</th>
+						<th style="<?php echo $thStyle ;?>" valign="top" width="57">Date Received</th>
+						<th style="<?php echo $thStyle ;?>" valign="top" width="318">Supplier</th>
+
+                        <th style="<?php echo $thStyle ;?>" valign="top" width="67">Quality</th>
+                        <th style="<?php echo $thStyle ;?>" valign="top" width="67">Payment Terms</th>
+                        <th style="<?php echo $thStyle ;?>" valign="top" width="67">Delivery Terms</th>
+                        <th style="<?php echo $thStyle ;?>" valign="top" width="67">Lead Time (Days)</th>
+
+                        <th style="<?php echo $thStyle ;?>" valign="top" width="67">Items Quoted <sup>**</sup></th>
+
+						<th style="<?php echo $thStyle ;?>" valign="top" width="87">Price <sup>*</sup><br/><span style="font-weight: normal;">(Local)</span></th>
+						<th style="<?php echo $thStyle ;?>" valign="top">Price <sup>*</sup><br/><span style="font-weight: normal;">(USD)</span></th>
+                        <th style="<?php echo $thStyle ;?>" valign="top">Potential Savings <br/><span style="font-weight: normal;">(USD)</span></th>
+					</tr>
+
+					<!-- This quote -->
+                    <?php
+                    $buyerSelectedHasQuoted100Percent = false;
+
+                    // ** checking total count of buyer selected quote that quoted 100% of the items
+                    foreach ($this->quotes as $row) {
+                        $isMatch = in_array($row['QOT_INTERNAL_REF_NO'], $this->matchQuoteIds);
+                        if( $isMatch == false ){
+                            if( $row['COMPLETENESS'] == 100 ) $buyerSelectedHasQuoted100Percent = true;
+                        }
+                    }
+
+                    foreach($this->quotes as $cQuote) {
+                        if ($cQuote['QOT_INTERNAL_REF_NO'] != $quote->qotInternalRefNo) {
+                            // first line is for the quote email is about, so skip everything else
+                            continue;
+                        }
+
+                        $echoQuoteRow($cQuote, $this, $buyerSelectedHasQuoted100Percent);
+                    }
+                    ?>
+                    <tr>
+                        <td colspan="14" style="background-color: #f5f7fa; border-left:0px; font-family: Arial, Helvetica, Sans-Serif; font-size: 12px; padding: 12px; border-right: 0px; border-bottom: 1px solid #bec4cb; color: #2e3235; ">Other quotes received for this RFQ...</td>
+                    </tr>
+                    <?
+                    foreach ($this->quotes as $cQuote) {
+                        if ($cQuote['QOT_INTERNAL_REF_NO'] == $quote->qotInternalRefNo) {
+                            continue;
+                        }
+
+                        $echoQuoteRow($cQuote, $this, $buyerSelectedHasQuoted100Percent);
+                    }
+                    ?>
+			</table>
+		</td>
+	</tr>
+
+	<tr><td style="font-size: 15px; line-height: 1; height: 15px;">&nbsp;</td></tr>
+	<tr>
+		<td style="font-family: Arial, Helvetica, sans-serif; color: #2e3235;font-size: 11px; font-family: Arial, Helvetica, sans-serif; line-height: 1.5">
+			<sup>*</sup> ) The price shown is the total price as per the quote. To see detail of any discounts or freight cost, see the details on the original
+			quote. ShipServ has used an estimated exchange rate to convert into USD.<br />
+			<sup>**</sup> ) Quote completeness: the percentage of quoted line items (Line items that have not been declined).
+		</td>
+	</tr>
+<tr><td height="20" style="height: 20px;font-size: 1px;">&nbsp;</td></tr>
+<?php endif; ?>
+
+
+<!-- ------------------- Quote Summary ------------------------ -->
+
+<tr>
+	<td bgcolor="#13b5ea" style="background-color: #13b5ea; padding-left: 15px; padding-top: 10px; padding-bottom: 10px; color: #ffffff; font-family: Arial, Helvetica, sans-serif; font-size: 15px; font-weight: bold;">
+		Quote summary
+	</td>
+</tr>
+<tr><td style="height: 1px; font-size: 1px; line-height: 1px;">&nbsp;</td></tr>
+<tr>
+	<td>
+		<table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#f5f7fa" style="font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: normal;color: #2e3235;">
+			<tr>
+				<td colspan="7" bgcolor="#ffffff" style="background-color: #ffffff; font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: normal;color: #2e3235;border: 1px solid #d6dce4; padding: 10px; padding-top: 13px; padding-bottom: 13px;">
+					Subject: <span style="color: #13b5e7; font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: bold;">&nbsp;<?= ($quote->qotSubject!="")?$quote->qotSubject:"N/A"?></span>
+				</td>
+			</tr>
+			<tr><td colspan="7" style="font-size:1px; height: 5px;line-height: 1;">&nbsp;</td></tr>
+			<tr>
+				<td width="136" bgcolor="#ffffff" style="background-color: #ffffff; border: 1px solid #d6dce4; padding: 10px; padding-top: 13px; padding-bottom: 13px;color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: normal;">
+					RFQ ref: <span style="color: #13b5e7; font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: bold;"><br /><?= $rfq->rfqRefNo?></span>
+				</td>
+				<td width="3" style="font-size: 1px;">&nbsp;</td>
+				<td width="136" bgcolor="#ffffff" style="background-color: #ffffff; border: 1px solid #d6dce4; padding: 10px; padding-top: 13px; padding-bottom: 13px;color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: normal;">
+					Vessel name: <span style="color: #13b5e7; font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: bold;"><br /><?= ($rfq->rfqVesselName!="")?$rfq->rfqVesselName:"N/A"?></span>
+				</td>
+				<td width="5" style="font-size: 1px;">&nbsp;</td>
+				<td width="136" bgcolor="#ffffff" style="background-color: #ffffff; border: 1px solid #d6dce4; padding: 10px; padding-top: 13px; padding-bottom: 13px;color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: normal;">
+					Vessel IMO: <span style="color: #13b5e7; font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: bold;"><br /><?= ($rfq->rfqImoNo!="")?$rfq->rfqImoNo:"N/A"?></span>
+				</td>
+				<td width="3" style="font-size: 1px;">&nbsp;</td>
+				<td width="137" bgcolor="#ffffff" style="background-color: #ffffff; border: 1px solid #d6dce4; padding: 10px; padding-top: 13px; padding-bottom: 13px;color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: normal;">
+					Total price: <span style="color: #13b5e7; font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: bold;"><br /><?= $quote->qotCurrency?> <?= number_format($quote->qotTotalCost, 2);php ?></span>
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr><td height="20" style="height: 20px;font-size: 1px;">&nbsp;</td></tr>
+
+
+<!-- -------------------QUOTE DETAILS ------------------------ -->
+
+<tr><td bgcolor="#13b5ea" style="background-color: #13b5ea; padding-left: 15px; padding-top: 10px; padding-bottom: 10px; color: #ffffff; font-family: Arial, Helvetica, sans-serif;font-size: 15px; font-weight: bold;">Quote details</td></tr>
+<tr><td style="font-size: 1px; line-height: 1px; height: 1px;">&nbsp;</td></tr>
+<tr>
+	<td>
+		<table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#ffffff" style="background-color: #ffffff; border: 1px solid #c4ccd7;">
+			<tr>
+				<td width="50%" bgcolor="#ffffff" style="padding: 15px 10px;font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2;" valign="top">
+					<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: bold; color: #2e3235;line-height: 1.2;margin-top: 0; margin-bottom: 3px;">Delivery port:</p>
+					<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;margin-top: 0;margin-bottom: 5px;line-height: 1.2;"><?= ($rfq->getPort()!="") ? $rfq->getPort():"N/A"?></p>
+					<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: bold; color: #2e3235;line-height: 1.2;margin-top: 0; margin-bottom: 3px;">Delivery address:</p>
+					<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;margin-top: 0;margin-bottom: 5px;line-height: 1.2;"><?= ($rfq->rfqAddress!="") ? nl2br($rfq->rfqAddress):"N/A"?></p>
+					<hr style="height: 1px; border:0; border-bottom: 1px solid #c4ccd7; margin-top: 0; margin-bottom: 7px;">
+					<table border="0" cellpadding="0" cellspacing="0" width="100%">
+						<tr>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;">RFQ Ref:</td>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;"><?= $rfq->rfqRefNo?></td>
+						</tr>
+						<tr>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;">RFQ Date:</td>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;"><?= ($rfq->rfqSubmittedDate!=null) ? $rfq->rfqSubmittedDate->format():"N/A"?></td>
+						</tr>
+						<tr>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;">Subject:</td>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;"><?= ($rfq->rfqSubject!="")?$rfq->rfqSubject:"N/A"?></td>
+						</tr>
+						<tr>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;">Vessel:</td>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;"><?= ($rfq->rfqVesselName!="")?$rfq->rfqVesselName:"N/A"?></td>
+						</tr>
+						<tr>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;">Port</td>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;"><?= ($rfq->getPort()!="")?$rfq->getPort():"N/A"?></td>
+
+						</tr>
+						<tr>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;">ETA/ETD:</td>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;">
+								<?= ($rfq->rfqEstimatedArrivalTime) ? $rfq->rfqEstimatedArrivalTime->format():"--"?> / <?= ( $rfq->rfqEstimatedDepartureTime != null ) ? $rfq->rfqEstimatedDepartureTime->format() : "--"?>
+							</td>
+						</tr>
+					</table>
+
+				</td>
+				<td width="50%" bgcolor="#ffffff" style="padding: 15px 10px;font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2;" valign="top">
+					<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: bold; color: #2e3235;line-height: 1.2;margin-top:0;margin-bottom: 3px;">Requested delivery time:</p>
+					<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2;margin-top:0;margin-bottom: 5px;"><?= ($rfq->rfqDateTime!=null) ? $rfq->rfqDateTime : 'N/A'?></p>
+					<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: bold; color: #2e3235;line-height: 1.2;margin-top:0;margin-bottom: 3px;">Supplier delivery lead time in days:</p>
+					<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2;margin-top:0;margin-bottom: 5px;"><?= ($quote->qotDeliveryLeadTime!=null) ? $quote->qotDeliveryLeadTime : 'N/A'?></p>
+					<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: bold; color: #2e3235;line-height: 1.2;margin-top:0;margin-bottom: 3px;">Order by:</p>
+					<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2;margin-top:0;margin-bottom: 5px;"><?= ($quote->qotOnTimeDeliveryTill!=null) ? $quote->qotOnTimeDeliveryTill->format() : 'N/A'?></p>
+					<hr style="height: 1px; border:0; border-bottom: 1px solid #c4ccd7; margin-top: 0; margin-bottom: 7px;">
+					<table border="0" cellpadding="0" cellspacing="0" width="100%" valign="top">
+						<tr>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;">Quote ref:</td>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;"><?= $quote->qotRefNo?></td>
+						</tr>
+						<tr>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;">Quote date:</td>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;"><?= ($quote->qotSubmittedDate!=null) ? $quote->qotSubmittedDate->format() : 'N/A'?></td>
+						</tr>
+						<tr>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;">Prices good until:</td>
+							<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;line-height: 1.2; padding-bottom: 3px;"><?= ($quote->qotExpiryDate!=null) ? $quote->qotExpiryDate->format() : 'N/A'?></td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+
+<!-- ------------------- Line Items ------------------------ -->
+
+<tr><td bgcolor="#d6dce4" style="background-color: #d6dce4; border: 1px solid #d6dce4; border-bottom: 3px solid #13b5ea; padding-left: 15px; padding-top: 10px; padding-bottom: 10px;font-family: Arial, Helvetica, sans-serif; color: #2e3235;font-size: 15px; font-weight: normal;">Line items (Currency: <span <?= ($quote->qotCurrency!="" && $rfq->rfqCurrency!="" && $quote->qotCurrency != $rfq->rfqCurrency)?'title="was ' . $rfq->rfqCurrency . '" style="background: #83cc4e;"':'' ?>><?= $quote->qotCurrency?></span>)</td></tr>
+<tr><td style="font-size: 1px; line-height: 1px; height: 1px;">&nbsp;</td></tr>
+<tr>
+	<td>
+		<table border="0" cellpadding="0" cellspacing="0" width="100%" valign="top" id="lineItems" style="background-color: #ffffff; border-top: 1px solid #c4ccd7; border-right:0;border-left:0; border-bottom: 0;">
+			<tr style="">
+				<th bgcolor="#d6dce4" style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;background-color: #d6dce4;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;border-left: 1px solid #c4ccd7;padding: 9px;">#</th>
+				<th bgcolor="#d6dce4" style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;background-color: #d6dce4;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">Qty</th>
+				<th bgcolor="#d6dce4" style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;background-color: #d6dce4;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">Unit</th>
+				<th bgcolor="#d6dce4" style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;background-color: #d6dce4;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">IdType&nbsp;/&nbsp;IdCode</th>
+				<th bgcolor="#d6dce4" style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;background-color: #d6dce4;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">Description</th>
+				<th bgcolor="#d6dce4" style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;background-color: #d6dce4;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">Unit&nbsp;price</th>
+				<th bgcolor="#d6dce4" style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;background-color: #d6dce4;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">%</th>
+				<th bgcolor="#d6dce4" style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;background-color: #d6dce4;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">Total&nbsp;price</th>
+				<th bgcolor="#d6dce4" style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal; color: #2e3235;background-color: #d6dce4;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">Status</th>
+			</tr>
+
+			<?php
+			$rows = $rfq->getLineItem();
+			foreach( $rows as $row )
+			{
+				$rfqLineItems[$row['RFL_LINE_ITEM_NO']] = $row;
+			}
+
+			foreach( $quote->getLineItem() as $line )
+			{
+				$no++;
+				$spec = array();
+
+								/*
+								if( $line['QLI_LINE_ITEM_NUMBER'] == 4 )
+								{
+									var_dump( $line );
+									var_dump( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']] );
+								}
+								*/
+
+								if( ( /* $line['QLI_CONFG_NAME'] 			!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_NAME'] != "" && */ $line['QLI_CONFG_NAME'] != $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_NAME'] ) ||
+									( /* $line['QLI_CONFG_DESC'] 			!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DESC'] != "" && */$line['QLI_CONFG_DESC'] 		!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DESC'] ) ||
+									( /* $line['QLI_CONFG_DEPT_TYPE'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DEPT_TYPE'] != "" && */$line['QLI_CONFG_DEPT_TYPE'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DEPT_TYPE'] ) ||
+									( /* $line['QLI_CONFG_MANUFACTURER'] 	!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MANUFACTURER'] != "" &&*/ $line['QLI_CONFG_MANUFACTURER'] != $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MANUFACTURER'] )||
+									( /* $line['QLI_CONFG_MODEL_NO'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MODEL_NO'] != "" && */$line['QLI_CONFG_MODEL_NO'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MODEL_NO'] ) ||
+									( /* $line['QLI_CONFG_SERIAL_NO'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_SERIAL_NO'] != "" && */$line['QLI_CONFG_SERIAL_NO'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_SERIAL_NO'] ) ||
+									( /* $line['QLI_CONFG_DRAWING_NO'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DRAWING_NO'] != "" && */$line['QLI_CONFG_DRAWING_NO'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DRAWING_NO'] ) ||
+									( /* $line['QLI_CONFG_RATING'] 			!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_RATING'] != "" && */$line['QLI_CONFG_RATING'] 		!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_RATING'] )
+									)
+{
+	$rfqSpec = array();
+									//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_NAME'] != "" )
+	$rfqSpec[] = 'For: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_NAME'];
+									//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_DESC'] != "" )
+	$rfqSpec[] = 'Desc: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_DESC'];
+									//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_DEPT_TYPE'] != "" )
+	$rfqSpec[] = 'type: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_DEPT_TYPE'];
+									//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_MANUFACTURER'] != "" )
+	$rfqSpec[] = 'man: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_MANUFACTURER'];
+									//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_MODEL_NO'] != "" )
+	$rfqSpec[] = 'M/n: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_MODEL_NO'];
+									//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_SERIAL_NO'] != "" )
+	$rfqSpec[] = 'S/n: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_SERIAL_NO'];
+									//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_DRAWING_NO'] != "" )
+	$rfqSpec[] = 'Drwg: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_DRAWING_NO'];
+									//if( $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_RATING'] != "" )
+	$rfqSpec[] = 'Rating: ' . $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFQ_CONFG_RATING'];
+
+
+	$spec[] = "<span style=\"background:#83cc4e;\" title=\"was: " . addslashes( implode(" ", $rfqSpec) ) ."\">" ;
+}
+
+if( $line['QLI_CONFG_NAME'] != "" )
+	$spec[] = 'For: ' . $line['QLI_CONFG_NAME'];
+if( $line['QLI_CONFG_DESC'] != "" )
+	$spec[] = 'Desc: ' . $line['QLI_CONFG_DESC'];
+if( $line['QLI_CONFG_DEPT_TYPE'] != "" )
+	$spec[] = 'type: ' . $line['QLI_CONFG_DEPT_TYPE'];
+if( $line['QLI_CONFG_MANUFACTURER'] != "" )
+	$spec[] = 'man: ' . $line['QLI_CONFG_MANUFACTURER'];
+if( $line['QLI_CONFG_MODEL_NO'] != "" )
+	$spec[] = 'M/n: ' . $line['QLI_CONFG_MODEL_NO'];
+if( $line['QLI_CONFG_SERIAL_NO'] != "" )
+	$spec[] = 'S/n: ' . $line['QLI_CONFG_SERIAL_NO'];
+if( $line['QLI_CONFG_DRAWING_NO'] != "" )
+	$spec[] = 'Drwg: ' . $line['QLI_CONFG_DRAWING_NO'];
+if( $line['QLI_CONFG_RATING'] != "" )
+	$spec[] = 'Rating: ' . $line['QLI_CONFG_RATING'];
+
+
+if( ( /* $line['QLI_CONFG_NAME'] 			!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_NAME'] != "" && */ $line['QLI_CONFG_NAME'] != $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_NAME'] ) ||
+	( /* $line['QLI_CONFG_DESC'] 			!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DESC'] != "" && */$line['QLI_CONFG_DESC'] 		!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DESC'] ) ||
+	( /* $line['QLI_CONFG_DEPT_TYPE'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DEPT_TYPE'] != "" && */$line['QLI_CONFG_DEPT_TYPE'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DEPT_TYPE'] ) ||
+	( /* $line['QLI_CONFG_MANUFACTURER'] 	!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MANUFACTURER'] != "" &&*/ $line['QLI_CONFG_MANUFACTURER'] != $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MANUFACTURER'] )||
+	( /* $line['QLI_CONFG_MODEL_NO'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MODEL_NO'] != "" && */$line['QLI_CONFG_MODEL_NO'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_MODEL_NO'] ) ||
+	( /* $line['QLI_CONFG_SERIAL_NO'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_SERIAL_NO'] != "" && */$line['QLI_CONFG_SERIAL_NO'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_SERIAL_NO'] ) ||
+	( /* $line['QLI_CONFG_DRAWING_NO'] 		!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DRAWING_NO'] != "" && */$line['QLI_CONFG_DRAWING_NO'] 	!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_DRAWING_NO'] ) ||
+	( /* $line['QLI_CONFG_RATING'] 			!= "" && $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_RATING'] != "" && */$line['QLI_CONFG_RATING'] 		!= $rfqLineItems[$line['QLI_LINE_ITEM_NUMBER']]['RFL_CONFG_RATING'] )
+	)
+{
+	$spec[] = "</span>";
+}
+
+?>
+<? if ($lineItemChanges[$line['QLI_LINE_ITEM_NUMBER']-1]['RQLC_LINE_ITEM_STATUS']=="NEW"){?>
+	<tr bgcolor="#caedf9">
+<? }else if ($lineItemChanges[$line['QLI_LINE_ITEM_NUMBER']-1]['RQLC_LINE_ITEM_STATUS']=="DEC"){?>
+	<tr bgcolor="#ffcbc9">
+<? }else{?>
+	<tr bgcolor="#<?= (Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], '', true)) ? 'e5f8d8':'ffffff'?>">
+<? }?>
+			<td <?=($lineItemChanges[$line['QLI_LINE_ITEM_NUMBER']-1]['RQLC_LINE_ITEM_STATUS']=="DEC")?"style='font-family: Arial, Helvetica, sans-serif;font-size: 12px; border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;border-left: 1px solid #c4ccd7;padding: 9px;color:#e81e24; font-weight:bold;'":"style='border-left: 1px solid #c4ccd7;font-weight: normal;font-family: Arial, Helvetica, sans-serif;font-size: 12px; border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;'"?>>
+				<?= $line['QLI_LINE_ITEM_NUMBER'];?>
+			</td>
+			<td <?= Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_QUANTITY_CHANGE')?> style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">
+				<? if( Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_QUANTITY_CHANGE', true) == true ) {?>
+				<center><strong><i>
+					<?}?>
+				<?= $line['QLI_QUANTITY']?>
+				<? if( Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_QUANTITY_CHANGE', true) == true ) {?>
+				</strong></i></center>
+				<?}?>
+			</td>
+			<td <?= Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_UNIT_CHANGE')?> style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">
+				<? if( Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_UNIT_CHANGE', true) == true ) {?>
+				<center><strong><i>
+				<?}?>
+				<?= $line['QLI_UNIT']?>
+				<? if( Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_UNIT_CHANGE', true) == true ) {?>
+				</strong></i></center>
+				<?}?>
+			</td>
+			<td <?= Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_ID_TYPE_AND_CODE_CHANGE')?> style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">
+				<? if( Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_ID_TYPE_AND_CODE_CHANGE', true) == true ) {?>
+				<center><strong><i>
+				<?}?>
+				<?= $line['QLI_ID_TYPE'] . " / " . $line['QLI_ID_CODE']?>
+				<? if( Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_ID_TYPE_AND_CODE_CHANGE', true) == true ) {?>
+				</strong></i></center>
+				<?}?>
+			</td>
+			<td style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">
+				<table border="0" cellpadding="5" cellspacing="0"><tr>
+					<td <?= Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_PRODUCT_DESC_CHANGE')?>
+						<? if( Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_PRODUCT_DESC_CHANGE', true) == false ) {?>style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal;"<?}?>>
+						<? if( Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_PRODUCT_DESC_CHANGE', true) == true ) {?>
+						<center><strong><i>
+						<? }?><?= $line['QLI_DESC']?>
+						<? if( Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], 'RQLC_PRODUCT_DESC_CHANGE', true) == true ) {?>
+						</i></strong></center>
+						<?}?>
+					</td></tr></table>
+				<?= lg_count($spec) > 0 ? '<br />' . implode(" ", $spec) . '<br />':''?>
+				<?= ($line['QLI_COMMENTS']!="") ? "<br /><div style=\"background:#83cc4e; font-style:italic; font-weight:bold;\">Supplier comments: " . $line['QLI_COMMENTS']."</div>":""; ?>
+			</td>
+			<td align="right" style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;"><?= number_format($line['QLI_UNIT_COST'],2)?></td>
+			<td align="center" style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;">
+				<?
+				if( !empty($line['QLI_DISCOUNT_PERCENTAGE']) ) echo $line['QLI_DISCOUNT_PERCENTAGE'];
+				else if( !empty($line['QLI_DISCOUNTED_UNIT_COST']) )
+				{
+					$priceDiff = $line['QLI_DISCOUNTED_UNIT_COST']-$line['QLI_UNIT_COST'];
+					$discount = $priceDiff/$line['QLI_UNIT_COST'] * 100;
+					if( $discount != 0 )
+						echo ($discount<0)?"less " . number_format(abs($discount), 2) . "%": "more " . number_format(abs($discount), 2) . "%";
+				}
+				?>
+
+			</td>
+			<td align="right" style="font-family: Arial, Helvetica, sans-serif;font-size: 12px; font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;padding: 9px;"><?= ($lineItemChanges[$line['QLI_LINE_ITEM_NUMBER']-1]['RQLC_LINE_ITEM_STATUS']!="DEC")?number_format($line['QLI_TOTAL_LINE_ITEM_COST'],2):""?>&nbsp;</td>
+			<?= Shipserv_Supplier::lineItemHasBeenChanged($lineItemChanges, $line['QLI_LINE_ITEM_NUMBER'], '')?>
+		</tr>
+		<?php }?>
+
+		<!-- summary -->
+
+		<tr>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0; font-size: 13px; text-align: right; padding-right: 9px;font-family: Arial, Helvetica, sans-serif; font-weight: normal;padding: 9px;" colspan="7">Line Item Total:</td>
+			<td bgcolor="#d6dce4" style="background-color: #d6dce4; font-size: 13px; text-align: right;font-family: Arial, Helvetica, sans-serif; font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;border-left: 1px solid #c4ccd7;padding: 9px;"><?= number_format($quote->qotSubtotal,2)?></td>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0; font-size: 13px; text-align: right; font-family: Arial, Helvetica, sans-serif;font-weight: normal;padding-right: 9px;" colspan="7">Discount (<?= $quote->qotDiscountPercentage?>%):</td>
+			<td bgcolor="#d6dce4" style="background-color: #d6dce4; font-size: 13px; text-align: right;font-family: Arial, Helvetica, sans-serif;font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;border-left: 1px solid #c4ccd7;padding: 9px;"><?= number_format($quote->qotDiscountPercentage * $quote->qotSubtotal/100,2)?></td>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0; font-size: 13px; text-align: right; font-family: Arial, Helvetica, sans-serif;font-weight: normal;padding-right: 9px;" colspan="7">Discounted total:</td>
+			<td bgcolor="#d6dce4" style="background-color: #d6dce4; font-size: 13px; text-align: right;font-family: Arial, Helvetica, sans-serif;font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;border-left: 1px solid #c4ccd7;padding: 9px;"><?= number_format($quote->qotSubtotal - ( $quote->qotDiscountPercentage * $quote->qotSubtotal/100 ),2 )?></td>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0;">&nbsp;</td>
+		</tr>
+		<tr>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0; font-size: 13px; text-align: right; font-family: Arial, Helvetica, sans-serif;font-weight: normal;padding-right: 9px;" colspan="7">Freight:</td>
+			<td bgcolor="#d6dce4" style="background-color: #d6dce4; font-size: 13px; text-align: right;font-family: Arial, Helvetica, sans-serif;font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;border-left: 1px solid #c4ccd7;padding: 9px;"><?= number_format($quote->qotShippingCost,2 )?></td>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0;">&nbsp;</td>
+		</tr>
+		<?if( $quote->qotAdditionalCostDesc1 != "" && $quote->qotAdditionalCostAmount1 != "" ){?>
+		<tr>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0; font-size: 13px; text-align: right; font-family: Arial, Helvetica, sans-serif;font-weight: normal;padding-right: 9px;" colspan="7"><?= $quote->qotAdditionalCostDesc1 ?>:</td>
+			<td bgcolor="#d6dce4" style="background-color: #d6dce4; font-size: 13px; text-align: right;font-family: Arial, Helvetica, sans-serif;font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;border-left: 1px solid #c4ccd7;padding: 9px;"><?= number_format($quote->qotAdditionalCostAmount1,2 )?></td>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0;">&nbsp;</td>
+		</tr>
+		<?}?>
+		<?if( $quote->qotAdditionalCostDesc2 != "" && $quote->qotAdditionalCostAmount2 != "" ){?>
+		<tr>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0; font-size: 13px; text-align: right; font-family: Arial, Helvetica, sans-serif;font-weight: normal;padding-right: 9px;" colspan="7"><?= $quote->qotAdditionalCostDesc2 ?>:</td>
+			<td bgcolor="#d6dce4" style="background-color: #d6dce4; font-size: 13px; text-align: right;font-family: Arial, Helvetica, sans-serif;font-weight: normal;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;border-left: 1px solid #c4ccd7;padding: 9px;"><?= number_format($quote->qotAdditionalCostAmount2,2 )?></td>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0;">&nbsp;</td>
+		</tr>
+		<?}?>
+		<tr>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0; font-size: 13px; text-align: right; font-family: Arial, Helvetica, sans-serif;font-weight: normal;padding-right: 9px;" colspan="7"><strong>Total price (<?= $quote->qotCurrency?>):</strong></td>
+			<td bgcolor="#939ba1" style="background-color: #939ba1; font-size: 13px; text-align: right;font-family: Arial, Helvetica, sans-serif;font-weight: bold;border-bottom: 1px solid #c4ccd7;border-right: 1px solid #c4ccd7;border-left: 1px solid #c4ccd7;padding: 9px;"><?= number_format($quote->qotTotalCost,2)?></td>
+			<td bgcolor="#f5f7fa" style="background-color: #f5f7fa;border: 0;">&nbsp;</td>
+		</tr>
+	</table>
+</td>
+</tr>
+
+<tr><td>&nbsp;</td></tr>
+
+<?php
+// added by Yuriy Akopov on 2013-12-05, S8971
+if (!empty($this->attachments)) {
+    ?>
+    <tr><td bgcolor="#d6dce4" style="background-color: #d6dce4; border: 1px solid #d6dce4; border-bottom: 3px solid #13b5ea; padding-left: 15px; padding-top: 10px; padding-bottom: 10px;font-family: Arial, Helvetica, sans-serif; color: #2e3235;font-size: 15px; font-weight: normal;">Attachments</td></tr>
+    <tr><td style="font-size: 1px; line-height: 1px; height: 1px;">&nbsp;</td></tr>
+    <tr>
+        <td bgcolor="#ffffff" style="margin:0; padding:12px; font-family: Arial, Helvetica, sans-serif; color: #525c64; font-size: 12px; background-color: #fff; border: 1px solid #d6dce4;color: #2e3235;">
+            <?php
+            foreach ($this->attachments as $attType => $attachments) {
+                if ($attType === 'QOT') {
+                    ?><strong>Quote:</strong><?php
+                } else if ($attType === 'RFQ') {
+                    ?><strong>Request For Quote:</strong><?php
+                } else if ($attType === 'PIN') {
+                    ?><strong>Quote Enquiry:</strong><?php
+                }
+                ?>
+                <br/>
+                <ul style="list-style: none; margin: 0; padding: 0;">
+                <?php
+                foreach ($attachments as $attItem) {
+                    ?>
+                    <li>
+                        <?php if ($attItem['url_absolute']) {
+                            $attUrl = $attItem['url'];
+                        } else {
+                            $attUrl = $this->hostname . $attItem['url'];
+                        }?>
+
+                        <a href="http://<?php echo $attUrl; ?>">
+                            <?php echo htmlentities($attItem['filename_orig']); ?>
+                        </a>
+                        (<?php echo $attItem['size']; ?>)
+                    </li>
+                    <?php
+                }
+                ?>
+                </ul>
+                <br/>
+                <?php
+            }
+            ?>
+        </td>
+    </tr>
+    <tr><td>&nbsp;</td></tr>
+    <?php
+}
+?>
+
+        <!-- ------------------- Other Information ------------------------ -->
+
+<?php if( trim( $quote->qotComments ) != "" || trim( $quote->qotCurrencyInstructions ) != "" || trim( $quote->qotTermsOfDelivery ) != "" || trim( $quote->qotTermsOfPayment ) != "" || trim( $quote->qotPackagingInstructions ) != "" || trim( $quote->qotSuggestedShipper ) != "" || trim( $quote->qotTransportationMode ) != "" ){?>
+<tr><td bgcolor="#d6dce4" style="color: #2e3235;background-color: #d6dce4; border: 1px solid #d6dce4; border-bottom: 3px solid #13b5ea; padding-left: 15px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, Helvetica, sans-serif;font-size: 15px; font-weight: normal;">Other Information</td></tr>
+<tr><td style="font-size: 1px; line-height: 1px; height: 1px;">&nbsp;</td></tr>
+<tr>
+	<td bgcolor="#ffffff" style="padding:10px; padding-bottom: 0;border: 1px solid #d6dce4;background-color: #ffffff;">
+		<p style="font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 11px; color: #2e3235; line-height: 1.2; margin-top:0; margin-bottom: 0; ">
+
+			<? if( trim($quote->qotComments) != "" ){?>
+			<b>Comments:</b><br />
+			<?= nl2br($quote->qotComments)?><br />
+			<br />
+			<?php  } ?>
+			<? if( trim($quote->qotCurrencyInstructions) != "" ){?>
+			<b>Currency Instructions:</b><br />
+			<?= nl2br($quote->qotCurrencyInstructions)?><br />
+			<br />
+			<?php  } ?>
+
+			<? if( trim($quote->qotTermsOfDelivery) != "" ){?>
+			<b>Delivery terms:</b><br />
+			<?= $quote->qotTermsOfDelivery ?> - <?= $tod[$quote->qotTermsOfDelivery]?><br />
+			<br />
+			<?php  } ?>
+			<? if( trim($quote->qotTermsOfPayment) != "" ){?>
+			<b>Payment Terms:</b><br />
+			<?= nl2br($quote->qotTermsOfPayment)?><br />
+			<br />
+			<?php  } ?>
+			<? if( trim($quote->qotGeneralTermsConditions) != "" ){?>
+			<b>General Terms & Conditions:</b><br />
+			<?= nl2br($quote->qotGeneralTermsConditions)?><br />
+			<br />
+			<?php  } ?>
+			<? if( trim($quote->qotPackagingInstructions) != "" ){?>
+			<b>Packing instructions:</b><br />
+			<?= nl2br($quote->qotPackagingInstructions)?><br />
+			<br />
+			<?php  } ?>
+			<? if( trim($quote->qotSuggestedShipper) != "" ){?>
+			<b>Freight forwarder:</b><br />
+			<?= nl2br($quote->qotSuggestedShipper)?><br />
+			<br />
+			<?php  } ?>
+
+			<? if( trim($quote->qotTransportationMode) != "" ){?>
+			<b>Transportation Mode:</b><br />
+			<?= nl2br($quote->qotTransportationMode)?><br />
+			<br />
+			<?php  } ?>
+		</p>
+	</td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<?php }?>
+
+
+<!-- ------------------- Supplier Details ------------------------ -->
+
+<tr>
+	<td bgcolor="#13b5ea" style="background-color: #13b5ea; padding-left: 15px; padding-top: 10px; padding-bottom: 10px; color: #ffffff; font-family: Arial, Helvetica, sans-serif;font-size: 15px; font-weight: bold;">
+		Supplier details
+	</td>
+</tr>
+<tr><td>&nbsp;</td></tr>
+<tr>
+	<td style="font-family: Arial, Helvetica, sans-serif;font-size: 14px; color: #00386e; padding-bottom: 10px; padding-left: 8px; padding-right: 8px; font-weight: bold;">
+		<?= $quote->getSupplier()->name . " (TNID: " . $quote->getSupplier()->tnid . ")" ?>
+		<?php
+		if ($quote->getSupplier()->smartSupplier)
+		{
+			?><span style="color: #13b5ea">(Smart Supplier)</span><?php
+		}
+
+		if ($quote->getSupplier()->expertSupplier)
+		{
+			?><span style="color: #13b5ea">(Expert Supplier)</span><?php
+		}
+		?>
+		<br />
+		<p style="color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: normal; margin-bottom: 3px;"><?= $quote->getSupplier()->getAddress(); ?></p>
+		<? if( $quote->getSupplier()->isPublished() ){?>
+		<a href="<?=$quote->getSupplier()->getUrl()?>" title="View profile on ShipServ">
+			<img src="http://<?php echo $this->hostname; ?>/images/match/email/viewprofile.jpg" alt="View profile on ShipServ" width="186" height="20" style="margin-top: 5px; margin-bottom: 3px;" border="0">
+		</a>
+		<? }?>
+	</td>
+</tr>
+<tr><td style="font-size:1px; height: 3px;">&nbsp;</td></tr>
+
+<!-- ------------------- Trade Rank ------------------------ -->
+
+<tr>
+	<td bgcolor="#caedf9" style="background-color: #caedf9; padding-left: 2px; padding-right: 7px; padding-top: 10px; padding-bottom: 10px;">
+		<table border="0" cellpadding="0" cellspacing="0" width="100%">
+			<tr>
+				<td width="150" height="100%" style="height:100%; position: relative;">
+					<table border="0" cellpadding="0" cellspacing="0" width="100%" valign="middle">
+						<tr>
+							<td width="150"><img src="http://<?php echo $this->hostname; ?>/images/match/email/traderank1.png" alt="TradeRank"></td>
+						</tr>
+						<tr>
+							<td style="text-align: left;">
+								<?php
+								$score = $quote->getSupplier()->tradeRank;
+								$stars = round($score/20 * 5,1);
+								for($i=1; $i<=floor($stars); $i++)
+								{
+									?><img src="http://<?php echo $this->hostname; ?>/images/match/email/1tr.png" alt="3.5/5" style="float: left;"><?php
+								}
+								$x=5;
+								?>
+								<?if( ($stars - floor($stars) >= 0.1 && $stars - floor($stars) <= 0.9 || $stars == 4.1 || $stars == 4.9) == true ){ $x = 4;?><img src="http://<?php echo $this->hostname; ?>/images/match/email/<?php echo $stars - floor($stars)?>tr.png" style="float: left;"><?}?>
+								<?php
+								for($i=1; $i<=$x-floor($stars); $i++)
+								{
+									?><img src="http://<?php echo $this->hostname; ?>/images/match/email/0tr.png" style="float: left;"><?php
+								}
+								?>
+
+							</td>
+						</tr>
+						<tr>
+							<td style="text-align: center; padding-top: 20px;"> <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/2012/05/21/shipserv-explained-what-is-traderank/" style="font-family: Arial, Helvetica, sans-serif;color: #005aad; font-size: 11px; font-weight: bold;text-decoration: none;">What is TradeRank?</a></td>
+						</tr>
+					</table>
+				</td>
+				<td width="14" style="border-left: 2px solid #71cae8; font-size: 1px;">&nbsp;</td>
+				<td>
+					<p style="font-family: Arial, Helvetica, sans-serif;font-weight: bold; font-size: 14px; color: #000000; line-height: 22px;">Reviews:</p>
+					<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ffffff; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; border: 1px solid #d6dce4; margin-bottom: 5px; ">
+						<tr>
+							<td width="189" style="border-right: 1px dotted #333333; padding-left: 10px;">
+								<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: normal;color: #58a32d; vertical-align: middle; line-height: 16px;"><img src="http://<?php echo $this->hostname; ?>/images/match/email/positive.png" alt="positive" width="18" height="16"> <?php echo $this->reviews["countPositive"]?> positive review<?php if ($this->reviews["countPositive"]!=1) echo "s";?></p>
+								<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: normal;color: #939ba1; vertical-align: middle; line-height: 16px;"><img src="http://<?php echo $this->hostname; ?>/images/match/email/neutral.png" alt="neutral" width="18" height="16"> <?php echo $this->reviews["countNeutral"]?> neutral review<?php if ($this->reviews["countNeutral"]!=1) echo "s";?></p>
+								<p style="font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: normal;color: #e81e24; vertical-align: middle; line-height: 16px;"><img src="http://<?php echo $this->hostname; ?>/images/match/email/negative.png" alt="negative" width="18" height="16"> <?php echo $this->reviews["countNegative"]?> negative review<?php if ($this->reviews["countNegative"]!=1) echo "s";?></p>
+							</td>
+							<td width="253" style="padding-left: 10px;">
+								<table border="0" cellpadding="0" cellspacing="0" width="100%">
+									<tr>
+										<td style="color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: normal;">
+											Delivered items as described:
+										</td>
+										<td width="100" style="color: #2e3235; font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: normal;padding-left: 25px; text-align: right;">
+											<?if($this->reviews["sumIAD"] != 0 && $this->reviews["countIAD"] != 0 ){?>
+											<img src="http://<?php echo $this->hostname; ?>/images/match/email/<?= round($this->reviews["sumIAD"]/$this->reviews["countIAD"],0)?>stars.png">
+											<?}else{?>
+											No rating yet
+											<?}?>
+										</td>
+									</tr>
+									<tr><td colspan="2" height="2" style="height: 2px; font-size:1px;">&nbsp;</td></tr>
+									<tr>
+										<td style="color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: normal;">On-time delivery:</td>
+										<td width="75" style="padding-left: 25px; text-align: right;color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: normal;">
+											<?if($this->reviews["sumDOT"] != 0 && $this->reviews["countDOT"] != 0 ){?>
+											<img src="http://<?php echo $this->hostname; ?>/images/match/email/<?= round($this->reviews["sumDOT"]/$this->reviews["countDOT"],0)?>stars.png">
+											<?}else{?>
+											No rating yet
+											<?}?>
+										</td>
+									</tr>
+									<tr><td colspan="2" height="2" style="height: 2px; font-size:1px;">&nbsp;</td></tr>
+									<tr>
+										<td style="color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: normal;">Customer service:</td>
+										<td width="75" style="padding-left: 25px; text-align: right;color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: normal;">
+											<?if($this->reviews["sumCS"] != 0 && $this->reviews["countCS"] != 0 ){?>
+											<img src="http://<?php echo $this->hostname; ?>/images/match/email/<?= round($this->reviews["sumCS"]/$this->reviews["countCS"],0)?>stars.png">
+											<?}else{?>
+											No rating yet
+											<?}?>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+					<p style="color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-size: 14px;font-weight: bold; line-height: 22px;">Trading Performance:</p>
+					<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ffffff; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; border: 1px solid #d6dce4; margin-bottom: 5px;">
+						<tr>
+							<td style="padding-left: 10px;padding-bottom: 5px;">
+								<p style="margin-bottom: 10px; color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-weight: bold; font-size: 12px;">
+									<span style="font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: bold;color: #e52929;"><?= lg_count($this->endorsements) . ' buyer' . ((lg_count($this->endorsements)>1)?"s":"") ?></span>
+									(with <span style="font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: bold;color: #e52929;"><?= $quote->getSupplier()->getTotalTransactionInYear()?> transactions</span>)
+									have traded with this Supplier in the last 5 years on TradeNet, including:
+								</p>
+								<p style="margin-bottom: 10px;color: #2e3235;font-family: Arial, Helvetica, sans-serif;font-size: 12px;font-weight: normal;">
+									<?php foreach( (array) $this->endorsements as $e ){if( lg_count($endorsee) > 5 ){  continue; } $endorsee[] = $e['BYO_NAME']; } if(lg_count($e)) echo implode(', ', $endorsee);?>
+								</p>
+								<? if( $quote->getSupplier()->isPublished() ){?>
+								<a href="<?= $quote->getSupplier()->getUrl()?>#reviews" title="View all buyers" style="text-decoration: none;font-family: Arial, Helvetica, sans-serif;font-size: 12px;color: #005aad; font-weight: bold;">View all buyers</a>
+								<? }?>
+							</td>
+						</tr>
+					</table>
+					<?php
+					$authorised = $notAuthorised = array();
+					$helper = new Myshipserv_View_Helper_Supplier();
+					$brands = $helper->brands($quote->getSupplier()->brands);
+
+					$authorised = $brands['authorisedBrands'];
+					$notAuthorised = $brands['nonVerifiedBrands'];
+
+					foreach( (array)$authorised as $b)
+					{
+						$a[] = '<strong>'.$b['name'] .'</strong> ('.implode(', ', $b['authLevels']) .')';
+					}
+					foreach( (array)$notAuthorised as $b)
+					{
+						$c[] = '<strong>'.$b['name'] .'</strong> ('.implode(', ', $b['authLevels']) .')';
+					}
+
+					if( lg_count($c) > 0 || lg_count($a) > 0 )
+					{
+						?>
+						<p style="font-weight: bold; font-family: Arial, Helvetica, sans-serif; font-size: 14px; line-height: 22px;">Verification System:</p>
+						<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #ffffff; padding-left: 10px; padding-right: 10px; padding-top: 5px; padding-bottom: 5px; border: 1px solid #d6dce4; ">
+							<tr>
+								<td style="padding-left: 10px;">
+									<table border="0" cellpadding="0" cellspacing="0" width="100%" style="vertical-align: top;" valign="top">
+										<?if( lg_count($a)>0 ){ ?>
+										<tr valign="top">
+											<td style="width: 150px; padding-bottom: 3px; font-family: Arial, Helvetica, sans-serif;"><strong>Verified as Agent for:</strong></td>
+											<td style="font-size: 11px; font-family: Arial, Helvetica, sans-serif;">
+												<?= implode(", ", $a) ?>
+											</td>
+										</tr>
+										<?} if( lg_count($c)>0 ){?>
+										<tr valign="top">
+											<td style="font-family: Arial, Helvetica, sans-serif;"><strong>Not-yet-verified as Agent for:</strong></td>
+											<td style="font-size: 11px; font-family: Arial, Helvetica, sans-serif;" >
+												<?= implode(", ", $c) ?>
+											</td>
+										</tr>
+										<?} ?>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<?}?>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr><td>&nbsp;</td></tr>
+	<tr><td style="font-size: 15px; line-height: 1; height: 15px;">&nbsp;</td></tr>
+	<tr>
+		<td bgcolor="#ffffff" style="padding: 15px 20px;background-color: #ffffff; border: 1px solid #d6dce4; font-family: Arial, Helvetica, sans-serif; color: #2e3235;font-size: 13px;text-align: center;">
+			<div style="font-family: Arial, Helvetica, sans-serif; color: #2e3235;font-size: 20px; font-weight: bold; text-align:left;">
+			Want to import this quote into your purchasing system?
+			</div>
+			<div style="font-family: Arial, Helvetica, sans-serif; color: #2e3235;font-size: 14px; text-align:left; margin-top:10px;">
+				To import this quote, please setup this supplier in your purchasing system and resend the RFQ to them with the same reference number.
+				We will automatically match this RFQ to the	quote we have in our database and will respond immediately. The supplier will not need to quote again.
+
+				<!--
+				If you wish to send this supplier a direct RFQ then please use their TNID.<br />
+				If you wish to receive this quote into your purchasing system, please send this RFQ with same reference:  <?php echo $rfq->rfqRefNo; ?> to TradeNet ID:
+				 -->
+			</div>
+			<br />
+			<table style="border: 0; border-collapse: collapse; width: 100%" cellpadding="0" cellspacing="0">
+				<tr>
+					<td style="width: 50%">
+						<table width="220" cellpadding="0" cellspacing="0" border="0" style="margin: 15px 15px 10px 0;">
+							<tr>
+								<td height="43" width="24" valign="middle" bgcolor="#83cc44">&nbsp;</td>
+								<td height="43" width="160" valign="middle" bgcolor="#83cc44" style="font-family: Arial, Helvetica, sans-serif; color: #2e3235; font-size: 15px; font-weight: bold;text-align: left;">
+									Supplier TNID:
+								</td>
+								<td height="43" valign="middle" bgcolor="#83cc44">
+									<table border="0" cellpadding="0" cellspacing="0" width="80">
+										<tr>
+											<td valign="middle" height="28" bgcolor="#ffffff" style="font-family: Arial, Helvetica, sans-serif; color: #2e3235; font-size: 15px; font-weight: bold; text-align: center;">
+												<?= $quote->qotSpbBranchCode;?>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td width="28" valign="middle" bgcolor="#83cc44">&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+					<td style="text-align: right;">
+						<table width="350" cellpadding="0" cellspacing="0" border="0" style="margin: 15px auto 10px;">
+							<tr>
+								<td height="43" width="24" valign="middle" bgcolor="#83cc44">&nbsp;</td>
+								<td height="43" width="170" valign="middle" bgcolor="#83cc44" style="font-family: Arial, Helvetica, sans-serif; color: #2e3235; font-size: 15px; font-weight: bold;text-align: left;">
+									RFQ Reference:
+								</td>
+								<td height="43" valign="middle" bgcolor="#83cc44">
+									<table border="0" cellpadding="0" cellspacing="0" width="200">
+										<tr>
+											<td valign="middle" height="28" bgcolor="#ffffff" style="white-space: nowrap; padding: 0 15px; font-family: Arial, Helvetica, sans-serif; color: #2e3235; font-size: 15px; font-weight: bold; text-align: center;">
+												<?php echo $rfq->rfqRefNo; ?>
+											</td>
+										</tr>
+									</table>
+								</td>
+								<td width="28" valign="middle" bgcolor="#83cc44">&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr><td style="font-size: 15px; line-height: 1; height: 15px;">&nbsp;</td></tr>
+
+	<!-- --------------------  Footer ---------------------- -->
+
+	<tr><td>&nbsp;</td></tr>
+
+	<tr>
+		<td>
+			<table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-size: 11px; border-top: 1px dotted #d7dade; padding-top: 10px;">
+				<tr>
+					<td style="font-family: Arial, Helvetica, sans-serif; color: #2e3235; font-weight: normal; font-size: 11px;padding-right:4px;">
+						ShipServ &copy; <?= date('Y'); ?>
+						<span style="font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 11px;color: #d7dade;">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+						<a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/legal-notes/terms-and-conditions" style="font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 11px;color: #00386e;text-decoration: none;">Terms &amp; Conditions</a>
+						<span style="font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 11px;color: #d7dade;">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+						<a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/privacy-policy" style="font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 11px;color: #00386e;text-decoration: none;">Privacy Policy</a>
+					</td>
+					<td style="text-align:right;"><img src="http://<?php echo $this->hostname; ?>/images/match/email/logo_foot.png" alt="ShipServ"></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+
+	<tr><td>&nbsp;</td></tr>
+
+</tr>
+</table>
+</center>
+<?php //var_dump( $quote );?>
+<?php //var_dump( $lineItemChanges );?>
+<?php //var_dump( $quote->getLineItem() );?>
+<?php //var_dump( $rfq );?>
+<?php //var_dump( $rfq->getLineItem() );?>
+<?php //var_dump( $rfq->getBuyer() );?>
+
+</body>
+</html>

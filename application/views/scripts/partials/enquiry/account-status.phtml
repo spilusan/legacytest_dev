@@ -1,0 +1,150 @@
+<div class="supplier-info">
+	<div class="logo">
+		<?php
+		if ($this->supplier->logoUrl)
+		{
+			?>
+			<img src="<?php echo $this->supplier->logoUrl; ?>" alt="logo" />
+			<?php
+		}
+		?>
+	</div>
+	
+	<h3><?php echo $this->supplier->name; ?></h3>
+	
+	<p class="address">
+		<?php echo $this->supplier()->address($this->supplier, "<br />\n", array('hideName' => true,
+																				 'url'      => false,
+																				 'phone'    => false)); ?>
+	</p>
+	<ul class="supplier-options">
+		<?php if( ( $this->user === null || $this->user === false ) || ( $this->user !== false && $this->user->canEditListing($this->supplier->tnid) === true ) ){?>
+		<li><a href="http://www.shipserv.com/pages/admin/selfService/access-code-input.jsf?accessCode=<?php echo $this->supplier->accessCode; ?>" title="Improve your profile" target="_blank">Improve my Company Profile</a></li>
+		<?php }else{ ?>
+		<li><a onclick="alert('ShipServ employees cannot edit profile of a company unless he/she is part of that company.');" title="Improve your profile" target="_blank">Improve my Company Profile</a></li>
+		<?php }?>
+		<li><a href="<?php echo $this->supplierProfileUrl($this->supplier); ?>" title="View your listing on ShipServ Pages" target="_blank">View my Company Profile</a></li>
+		<li><a href="<?php echo $this->supplierProfileUrl($this->supplier); ?>#reviews" title="View your reviews on ShipServ Pages" target="_blank">View my reviews</a></li>
+		<li><a href="/info/pages-for-suppliers/win-new-business-with-a-premium-listing">More info about Premium Profile</a></li>
+		
+	</ul>
+	
+	<?php if(!empty($this->params['r'])){?>
+	<ul class="supplier-options">
+		<li><a href="<?= $this->uri()->deobfuscate($this->params['r']);?>">Back to RFQs list</a></li>
+	</ul>
+	<?php }?>
+	<div class="side-block">
+		<h4>Account Type <span><img src="/images/icons/enquiries/account-type.png" alt="Account Type" /></span></h4>
+		<p class="highlight">
+			<?php
+			switch ($this->accountData['PEA_ACCOUNT_TYPE'])
+			{
+				case 'PREMIUM':
+					echo 'Premium Profile<br />Annual Subscription';
+				break;
+			
+				case 'PREPAY':
+					echo 'Premium Profile<br />PrePay';
+				break;
+				
+				case 'PAYASYOUGO':
+					echo 'Premium Profile<br />Pay-As-You-Go';
+				break;
+			
+				case 'BASIC':
+					echo 'Basic Listing';
+				break;
+			}
+			?>
+		</p>
+		
+		<div class="side-block-footer"></div>
+	</div>
+	
+	<?php
+	if ($this->accountData['PEA_ACCOUNT_TYPE'] == 'PREPAY')
+	{
+		?>
+		<div class="side-block">
+			<h4>Remaining Balance <span><img src="/images/icons/enquiries/remaining-balance.png" alt="Remaining Balance" /></span></h4>
+			
+			<?php
+			if ($this->accountData['remainingBalance'] > 0)
+			{
+				?>
+				<p><?php echo $this->accountData['remainingBalance']; ?> <?php echo $this->accountData['PEA_CURRENCY_CODE']; ?></p>
+				<?php
+			}
+			?>
+			
+			<p><?php echo $this->accountData['remainingCredits']; ?> enquiries remaining before downgrade</p>
+			
+			<div class="side-block-footer"></div>
+		</div>
+		<?php
+	}
+	
+	if ($this->accountData['PEA_ACCOUNT_TYPE'] == 'PAYASYOUGO')
+	{
+		?>
+		<div class="side-block">
+			<h4>Outstanding Balance <span><img src="/images/icons/enquiries/remaining-balance.png" alt="Remaining Balance" /></span></h4>
+			
+			<p><?php echo $this->accountData['unpaidBalance']; ?> <?php echo $this->accountData['PEA_CURRENCY_CODE']; ?></p>
+			
+			<div class="side-block-footer"></div>
+		</div>
+		<?php
+	}
+	
+	if ($this->accountData['PEA_ACCOUNT_TYPE'] == 'BASIC')
+	{
+		?>
+		<div class="side-block">
+			<h4>Manage Account <span><img src="/images/icons/enquiries/account-history.png" alt="Manage Account" /></span></h4>
+			
+			<p class="left-content">Premium listers get 20x more enquiries than a basic listing. You are missing out on new business right now! Call +44 203 111 9700 to upgrade to a Premium Profile.</p>
+			
+			<ul class="supplier-options small">
+				<li><a href="/info/pages-for-suppliers/webstore" target="_blank">Buy online</a></li>
+			</ul>
+			
+			<div class="side-block-footer"></div>
+		</div>
+		<?php
+	}
+	
+	if ($this->accountData['PEA_ACCOUNT_TYPE'] == 'PREMIUM')
+	{
+		?>
+		<div class="side-block">
+			<h4>Account Renewals <span><img src="/images/icons/enquiries/account-history.png" alt="Manage Account" /></span></h4>
+			
+			<p class="left-content">Your Premium Profile is due to expire on <?php echo date('j M Y', strtotime($this->accountData['PEA_CONTRACT_EXPIRY_DATE'])); ?>.
+			
+			<?php
+			if ($this->accountData['showRenew'])
+			{
+				?>
+				Renew now by calling +44 203 111 9700.
+				<?php
+			}
+			?>
+			</p>
+			
+			<div class="side-block-footer"></div>
+		</div>
+		<?php
+	}
+	?>
+	
+	<div class="side-block">
+		<h4>Account is valid since <span><img src="/images/icons/enquiries/account-calendar.png" alt="Valid Since" /></span></h4>
+		
+		<p class="highlight"><?php echo date('d/m/Y', strtotime($this->accountData['PEA_CONTRACT_START_DATE'])); /* . ' - ' . date('d/m/Y', strtotime($this->accountData['PEA_CONTRACT_EXPIRY_DATE'])); */?></p>
+		
+		<div class="side-block-footer"></div>
+	</div>
+	
+</div>

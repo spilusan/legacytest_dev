@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<ruleset name="ShipservCodeSniffer">
+ <description>Shipserv code sniffer scritps to have some custom phpcs analysis on pre-commit hooks</description>
+</ruleset>

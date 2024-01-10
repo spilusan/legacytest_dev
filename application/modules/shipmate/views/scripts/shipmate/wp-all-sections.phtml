@@ -1,0 +1,252 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/wp-styles.css');
+	$this->headLink()->appendStylesheet('/css/default-new.css');
+	$this->requirejs()	->addModule('backbone/shipmate/design-guidelines/views/mainView');
+	$user = Shipserv_User::isLoggedIn();
+?>
+<script type="text/javascript">
+$(function(){
+	$('li.tab').bind('click', function(){
+		console.log('aaaa', $(this));
+		$('li.tab').removeClass('selected');
+		$(this).addClass('selected');
+		var active = $(this).index();
+		console.log(active);
+		$('div.content').removeClass('active')
+		$('div.content').eq(active).addClass('active');
+
+	});
+});
+</script>
+
+<section class="white">
+	<div class="wrapper">
+		<h4 class="center">SECTION TITLE</h4>
+		<div class="tabs">
+			<ul>
+				<li class="tab selected">Tab 1</li>
+				<li class="tab">Tab 2</li>
+				<li class="tab">Tab 3</li>
+			</ul>
+			<div class="clear"></div>
+			<div class="content active">
+				<ul class="togglebox">
+
+			<li class="accordionItem">
+				<input type="checkbox" name="toggle1" id="toggle1" checked>
+				<label for="toggle1">What is ShipServ Pages?</label>	  
+				<div class="accordionItemContent">
+					<h5>Send us your details</h5>
+					<form>
+						<fieldset>
+							<div class="labels">
+								<label for="name">Name:*</label>
+								<label for="email">Email:*</label>
+								<label for="company">Your company:*</label>
+								<label for="title">Job title:*</label>
+								<label for="phone">Phone number:*</label>
+								<label for="website">Your website:*</label>
+								<label for="message">Message:*</label>
+								<label for="required">*Required fields</label>
+							</div>
+							<div class="fields">
+								<input type="text" name="name">
+								<input type="email" name="email">
+								<input type="text" name="company">
+								<input type="text" name="title">
+								<input type="text" name="phone">
+								<input type="text" name="website" placeholder="http://">
+								<textarea name="message"></textarea>
+							</div>
+							<div class="clear"></div>
+							<div class="interactions">
+								<input class="btn link-blue large" type="submit" value="Submit">
+							</div>
+						</fieldset>
+					</form>
+					<div class="contacts-container">
+						<div class="contact-block">
+							<p class="location">Europe, Middle East, Africa</p>
+							<p class="tel">Tel: +45 332 3120</p>
+						</div>
+						<div class="contact-block">
+							<p class="location">Hong Kong</p>
+							<p class="tel">Tel: +852 3953 3262</p>
+						</div>
+						<div class="contact-block">
+							<p class="location">Singapore</p>
+							<p class="tel">Tel: +65 6809 5045</p>
+						</div>
+						<div class="contact-block">
+							<p class="location">Japan</p>
+							<p class="tel">Tel: +81 3 5157 8757</p>
+						</div>
+						<div class="contact-block">
+							<p class="location">Americas</p>
+							<p class="tel">Tel: +1 732 738 6500</p>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+			</li>
+
+			<li class="accordionItem">
+				<input type="checkbox" name="toggle2" id="toggle2">
+				<label for="toggle2">Why should I use ShipServ Pages to find a supplier?</label>		  
+				<div class="accordionItemContent">
+					<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, sit, quam. Accusantium esse voluptate explicabo illo ea dignissimos nobis, fugiat, quo praesentium rerum odio provident eius nihil quas? Id, iure.
+					</p>
+					<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, sit, quam. Accusantium esse voluptate explicabo illo ea dignissimos nobis, fugiat, quo praesentium rerum odio provident eius nihil quas? Id, iure.
+					</p>
+				</div>
+			</li>
+
+			<li class="accordionItem">
+				<input type="checkbox" name="toggle3" id="toggle3">
+				<label for="toggle3">Tell me more about TradeRank</label>		  
+				<div class="accordionItemContent">
+					<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, sit, quam. Accusantium esse voluptate explicabo illo ea dignissimos nobis, fugiat, quo praesentium rerum odio provident eius nihil quas? Id, iure.
+					</p>
+					<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, sit, quam. Accusantium esse voluptate explicabo illo ea dignissimos nobis, fugiat, quo praesentium rerum odio provident eius nihil quas? Id, iure.
+					</p>
+				</div>
+			</li>
+
+
+			<li class="accordionItem">
+				<input type="checkbox" name="toggle4" id="toggle4">
+				<label for="toggle4">Why should I use Pages to send my RFQs?</label>		  
+				<div class="accordionItemContent">
+					<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, sit, quam. Accusantium esse voluptate explicabo illo ea dignissimos nobis, fugiat, quo praesentium rerum odio provident eius nihil quas? Id, iure.
+					</p>
+					<p>
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio, sit, quam. Accusantium esse voluptate explicabo illo ea dignissimos nobis, fugiat, quo praesentium rerum odio provident eius nihil quas? Id, iure.
+					</p>
+				</div>
+			</div>
+
+		</ul>
+			</div>
+			<div class="content">
+				<p>Content 2</p>
+			</div>
+			<div class="content">
+				<p>Content 3</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+&nbsp;
+
+<section class="white">
+	<div class="wrapper">
+		<h4 class="center">LATEST NEWS & WHITE PAPERS</h4>
+		<div class="blog-post-container">
+			<div class="blog-post">
+				<div class="featured-image">
+					<img src="http://lorempixel.com/400/200/">
+				</div>
+				<h6>MaK (Caterpillar) uses ShipServ’s Brand Zone and Verification</h6>
+				<p class="excerpt">ShipServ today announced that leading OEM Caterpillar Motoren GmbH, under its MaK brand, is…</p>
+			</div>
+			<div class="blog-post">
+				<div class="featured-image">
+					<img src="http://lorempixel.com/400/200/">
+				</div>
+				<h6>MaK (Caterpillar) uses ShipServ’s Brand Zone and Verification</h6>
+				<p class="excerpt">ShipServ today announced that leading OEM Caterpillar Motoren GmbH, under its MaK brand, is…</p>
+			</div>
+			<div class="blog-post">
+				<div class="featured-image">
+					<img src="http://lorempixel.com/400/200/">
+				</div>
+				<h6>MaK (Caterpillar) uses ShipServ’s Brand Zone and Verification</h6>
+				<p class="excerpt">ShipServ today announced that leading OEM Caterpillar Motoren GmbH, under its MaK brand, is…</p>
+			</div>
+			<div class="blog-post">
+				<div class="featured-image">
+					<img src="http://lorempixel.com/400/200/">
+				</div>
+				<h6>MaK (Caterpillar) uses ShipServ’s Brand Zone and Verification</h6>
+				<p class="excerpt">ShipServ today announced that leading OEM Caterpillar Motoren GmbH, under its MaK brand, is…</p>
+			</div>
+		</div>
+	</div>
+</section>
+
+&nbsp;
+
+<section class="white">					
+	<div class="wrapper">
+		<div class="case-study-two-columns">
+			<div class="summary">
+				<h5>Summary</h5>
+				<ul>
+					<li>Put ShipServ’s TradeNet platform at the heart of it’s Single Point of Contact purchasing strategy</li>
+					<li>Common MTML connection makes it easy for supplier branches to all see and work on the same </li>
+					<li>Uses ShipLink and ShipCat to speed up onboard requisition process and eliminate error</li>
+					<li>ShipServ pages used to verify and keep up-to-date supplier records</li>
+				</ul>
+			</div>
+			<div class="objective">
+				<h5>Objective</h5>
+				<p>Established in the 1980s, Anglo-Eastern Ship Management has established itself as one of the leading ship managers in the world over the last 30 years and now has a pool of over 15,000 professional crewmembers and over 1,100 full-time qualified shore-based staff around the world managing close to 450 ships for some of the biggest names in shipping.</p>
+				<p>As a truly global operation with seven different offices around the world handling thousands of suppliers, Anglo-Eastern was to use technology to provide automation and a high-level of control over its global purchasing activities and this has culminated in its strategy of pursuing a Single Point of Contact for all its suppliers, with multiple locations around the world.</p>
+			</div>
+		</div>        
+	</div>	
+</section>
+
+&nbsp;
+
+<section class="darkGrey">					
+	<div class="wrapper">
+		<h5 class="white">Solution</h5>
+		<div class="case-study-solution">
+			<div class="logo">
+				<img src="/img/shipmate/wp/logos/logo1.jpg">
+			</div>
+			<div class="text">
+				<p>What's is TradeNet?</p>
+				<p>It is the world’s largest maritime e-commerce platform used by over 7,400 vessels from 175 shipowners, shipmanagers and shipyards.</p>
+				<p>ShipLink and ShipCat</p>
+				<p>ShipLink helps create and send requisitions onboard and send to shore-based department or directly to a supplier via the ShipServ TradeNet service</p>
+				<p>ShipCat allows buyers to browse and tailor supplier catalogues to make onboard purchasing easy.</p>
+				<p>How does it work?</p>
+				<p>All RFQs, quotes, purchase orders, confirmations and acknowledgements sent over TradeNet using MTML (Marine Trading Mark-up Language), the industry standard</p>
+			</div>
+		</div>     
+	</div>	
+</section>
+
+&nbsp;
+
+<section class="white">					
+	<div class="wrapper">
+		<h5>Results</h5>
+		<div class="case-study-results">
+			<p>What's is TradeNet?</p>
+			<p>It is the world’s largest maritime e-commerce platform used by over 7,400 vessels from 175 shipowners, shipmanagers and shipyards.</p>
+			<p>ShipLink and ShipCat</p>
+			<p>ShipLink helps create and send requisitions onboard and send to shore-based department or directly to a supplier via the ShipServ TradeNet service</p>
+			<p>ShipCat allows buyers to browse and tailor supplier catalogues to make onboard purchasing easy.</p>
+			<p>How does it work?</p>
+			<p>All RFQs, quotes, purchase orders, confirmations and acknowledgements sent over TradeNet using MTML (Marine Trading Mark-up Language), the industry standard</p>
+		</div>     
+	</div>	
+</section>
+
+
+<footer class="wp-footer">
+	<div class="wrapper">
+		<div class="footer-contact">
+			<a href ="" class="btn transparent">Contact us</a>
+		</div>
+	</div>
+</footer>

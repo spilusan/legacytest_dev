@@ -1,0 +1,71 @@
+#preHeader {
+	width: 100%;
+	height: 2px;
+
+	&.closed {
+		height: 2px !important; 
+	}
+
+	#cAlert > div {
+		width: auto !important;
+		height: 27px !important;
+		padding-left: 5px !important;
+		a#accept {
+			display: inline;
+			color: #7ED6F5;
+			position: absolute;
+			top: -10px !important;
+			left: 185px;
+
+			img {
+				display: none;
+			}
+
+			&:after {
+				content: "Close";
+			}
+		}
+	}
+}
+
+#header {
+	width: 100%;
+	height: 42px;
+
+	#logo {
+		width: 118px;
+		padding-left: 5px;
+		float: left;
+		height: 45px;
+
+		h2 {
+			height: 35px;
+			width: 100px;
+			background-size: auto 15px;
+			margin-top: 11px;
+		}	
+	}
+
+	.nav {
+		width: 197px;
+		height: 40px;
+		top: 5px;
+		margin-top: 0px;
+		margin-left: 0;
+		float: right;
+
+		ul {
+			li {
+				@include border-radius(4px);
+				margin-right: 5px;
+
+				a {
+					line-height: 1;
+					height: 10px;
+					padding: 10px 9px;
+					font-size: 10px;
+				}
+			}
+		}
+	}
+}

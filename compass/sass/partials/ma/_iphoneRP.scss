@@ -1,0 +1,137 @@
+#preHeader {
+	width: 640px;
+	height: 2px;
+}
+
+#header {
+	width: 640px;
+	height: 95px;
+
+	#logo {
+		width: 205px;
+		padding-left: 10px;
+		float: left;
+		height: 90px;
+
+		h2 {
+			height: 70px;
+			width: 200px;
+			background-size: auto 30px;
+			margin-top: 29px;
+		}
+	}
+
+	.nav {
+		width: 395px;
+		height: 80px;
+		top: 0;
+		padding-top: 20px;
+		margin-top: 0px;
+		margin-left: 0;
+
+		ul {
+			li {
+				@include border-radius(8px);
+				margin-right: 10px;
+
+				a {
+					line-height: 1;
+					height: 12px;
+					padding: 20px 30px;
+					font-size: 20px;
+				}
+			}
+		}
+	}
+}
+
+.divider {
+	height: 5px;
+	width: 640px;
+}
+
+#body {
+	width: 640px;
+	background: url(../img/ma/bg.png) 0 no-repeat transparent;
+	background-size: 640px auto;
+	overflow:visible;
+	margin: 0 auto;
+	background-position: -62px 110px;
+	background-size: 620px auto;
+	padding: 0;
+
+	#content {
+		padding-left: 0;
+
+		h1 {
+			padding-top: 0;
+		}
+
+		p.subline, h1 {
+			text-align: center;
+		}
+		.box_wrapper {
+			float: none;
+			margin-bottom: 10px;
+			margin-left: 235px;
+			width: 350px;
+
+			.box {
+				width: 350px;
+				height: 280px;
+
+				&.first {
+					height: 235px;
+				}
+
+				p {
+					font-size: 20px;
+
+					&.thin {
+						font-size: 20px;
+						margin-bottom: 10px;
+					}
+
+					&.left {
+						width: 268px;
+						margin-bottom: 10px;
+					}
+				}
+				.button {
+					display: block;
+					padding: 10px 15px;
+					font-size: 20px;
+					margin-bottom: 5px;
+
+					&.dl {
+						width: 142px;
+					}
+
+					&.iphone {
+						width: 105px;
+						float: left;
+					}
+
+					&.ipad {
+						width: 81px;
+						margin-left: 149px;
+					}
+
+					&.white {
+						width: 163px;
+						top: 10px;
+					}
+				}
+
+				&.left {
+					float: none;
+				}
+			}
+
+			.shadow {
+				width: 350px;
+				background-size: 350px auto;
+			}
+		}
+	}
+}

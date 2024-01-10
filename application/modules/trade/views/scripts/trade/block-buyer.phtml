@@ -1,0 +1,36 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/trade/block-buyer.css');
+
+	$this->getHelper('Requirejs')->addModule('backbone/trade/block-buyer/views/mainView');
+
+	$user = Shipserv_User::isLoggedIn();
+
+	$shipservUser = ($user) ? $user->isShipservUser() : false;
+	$hash = $this->hash;
+
+	$this->getHelper('Requirejs')->addDefinition('trade/block-buyer/hash', '"'.$hash.'"');
+	$this->getHelper('Requirejs')->addDefinition('trade/block-buyer/tnid', $this->activeCompany->company->tnid);
+	$this->getHelper('Requirejs')->addDefinition('trade/block-buyer/shipMate', '"'.$shipservUser.'"');
+?>
+<div id="body">
+	<div id="content">
+		<h1 class="styled">Block Buyer</h1>
+		<div class="innerContent">
+			<table border="0" cellpadding="0" cellspacing="0" width="100%">
+				<thead>
+					<tr>
+						<th class="blocked">Blocked Buyers</th>
+						<th class="name">Name</th>
+						<th class="email">Email</th>
+						<th class="blockDate">Date</th>
+						<th class="action">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>

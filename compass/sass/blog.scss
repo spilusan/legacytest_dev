@@ -1,0 +1,13 @@
+/*
+Document   : partials/guidelines/_blog.scss
+Created on : September 15, 2016
+Author     : Daniele Manca
+Description: default styles for Shipserv's blog
+*/
+/* All devices */
+
+@import "compass/css3";
+@import "partials/mixins/mixins";
+
+@import "2016_campfire/main/colours";
+@import "2016_campfire/corporate/blog/index";

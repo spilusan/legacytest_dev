@@ -1,0 +1,7 @@
+<?php
+$byo = Shipserv_Buyer::getInstanceById($this->company['id']);
+
+foreach($byo->getBranchesTnid(false) as $buyer)
+{
+	?><label><input type="checkbox"><?= $buyer->bybName?></label><?php 	
+}

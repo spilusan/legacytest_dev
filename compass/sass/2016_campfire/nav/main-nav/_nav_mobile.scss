@@ -1,0 +1,561 @@
+/*
+Document   : partials/guidelines/_nav_mobile.scss
+Created on : May 12, 2016, 14:24:15 AM
+Author     : .:Gly:.
+Description: mobile styles for navigation
+*/
+/* Mobile */
+
+@import "partials/mixins/mixins";
+
+@media only screen and (max-width : 1044px) {
+	body {
+		&.noscroll {
+			overflow: hidden;
+		}
+	}
+
+	header {
+		.navigations {
+			z-index: 900; /*carefull changing this: there's a direct dependency in navigation.js (thanks Gily)*/
+			position: fixed;
+			top: 60px;
+			right: calc(0px - 100%);
+			height: calc(100% - 60px);
+			background: #002955;
+			overflow-y: auto;
+
+			nav {
+				display: block;
+				position: relative;
+				float: none;
+				top: 0px;
+
+				ul, ul.top {
+					li {
+						display: block;
+						float: none;
+						border-right: none;
+						max-width: 100%;
+						padding: 0;
+						margin-bottom: 0 !important;
+						position: relative;
+
+						a {
+							display: block;
+							font-size: 14px;
+							color: $white;
+						}
+
+						&.selected:before {
+							content: "\f105";
+							display: block;
+							position: absolute;
+							font: normal normal normal 22px/1 FontAwesome;
+							color: #FFFFFF;
+							font-weight: 400;
+							top: 50%;
+							margin-top: -12px;
+							left: 3px;
+						}
+					}
+				}
+
+				&#pagesNav {
+
+					.menu {
+						position: relative;
+						list-style: none;
+
+						.menu-item {
+							cursor: pointer;
+
+							.menu-label {
+								display: block;
+								font-size: 14px;
+							}
+						}
+					}
+
+					.show-submenu > .menu {
+						max-height: 99999px;
+					}
+
+					.menu-0 {
+						> .menu-item {
+							margin: -1px 10px 0 10px;
+							background: none;
+							padding-top: 1px;
+
+							> .menu-label {
+								color: $cyan-blue;
+								padding: 20px;
+								border-bottom: 1px solid $highlight-grey;
+								text-transform: uppercase;
+							}
+
+							&.show-submenu {
+								background-color: $link-blue;
+
+								> .menu-label {
+									color: $white;
+								}
+							}
+
+							&.has-children > .menu-label:after {
+								font: normal normal normal 14px/1 FontAwesome;
+								content: "\f107";
+								margin-left: 5px;
+								float: right;
+							}
+						}
+
+						> .show-submenu {
+							&.has-children > .menu-label:after {
+								content: "\f106";
+							}
+						}
+					}
+
+					.menu-1 {
+						display: none;
+
+						.show-submenu {
+							>.menu-label {
+								background-color: #d5dce4;
+							}
+							.menu-2 .menu-item {
+								background-color: #d5dce4;
+							}
+						}
+
+						> .menu-item {
+							background-color: #ffffff;
+							border-top: 1px dotted #c2c3c5;
+
+							&:first-child {
+								border-top: none;
+							}
+
+							> .menu-label {
+								color: $black;
+								padding: 20px;
+								margin: 0;
+							}
+
+							&.has-children > .menu-label:after {
+								font: normal normal normal 14px/1 FontAwesome;
+								content: "\f107";
+								margin-left: 5px;
+								float: right;
+							}
+						}
+
+					}
+
+					.menu-2 {
+						display: none;
+
+						> .menu-item {
+							> .menu-label {
+								margin: 0;
+								padding: 20px;
+								border-bottom: none;
+								color: $black;
+							}
+						}
+					}
+
+					.menu-1, .menu-2 {
+						overflow: hidden;
+						max-height: 0px;
+						display: block;
+
+						.current {
+							border-left: 3px solid #13B5EA;
+							text-indent: -3px;
+						}
+					}
+
+					ul {
+						li {
+							padding: 0px;
+							border-left: 0;
+
+							&.shipTab {
+								a {
+									width: initial;
+									height: initial;
+									text-indent: initial;
+									background-size: initial;
+									background: initial;
+									padding: 20px;
+								}
+								&.selected {
+									a {
+										background: initial;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				&#corporateNav {
+					float: none;
+					top: 0px;
+
+					ul {
+						li {
+							padding: 0px;
+							border-top: 0;
+
+							a {
+								padding: 20px 30px;
+							}
+
+							&:last-child {
+								a {
+									color: $cyan-blue;
+									border-bottom: 0;
+								}
+							}
+
+							i {
+								&.fa-angle-down, &.fa-angle-up {
+								    float: right;
+								    position: absolute;
+								    right: 10px;
+								    top: 18px;
+								}
+							}
+
+							&.selected {
+								top: 0;
+								padding-top: 0;
+								border-bottom: 0;
+
+								i.fa-angle-right {
+									display: none;
+									//Temporarily removed
+									/*
+									position: absolute;
+									font: normal normal normal 22px/1 FontAwesome;
+									color: $white;
+									font-weight: 400;
+									top: 20px;
+									*/
+								}
+								&.selected:before {
+									font-weight: 300;
+									top: 50%;
+									margin-top: -12px;
+									left: 12px;
+								}
+							}
+						}
+					}
+				}
+			}
+
+			&.loggedIn {
+				nav {
+					&#pagesNav {
+						top: 47px;
+					}
+
+					&#corporateNav {
+						top: 47px;
+
+						.top {
+							top: 0px;
+						}
+					}
+				}
+
+				.company {
+					left: 0;
+					top: 0;
+					padding-left: 0;
+					height: 47px;
+					background: $dk-navy;
+					right: 0px;
+					width: 100%;
+
+					form {
+						input {
+							border: 1px solid $cyan-blue;
+							@include border-radius(4px);
+							margin: 7px 10px 8px;
+							padding: 9px 10px;
+							width: calc(100% - 40px);
+							font-size: 16px;
+
+							&::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+								color: $cyan-blue;
+							}
+							&::-moz-placeholder { /* Firefox 19+ */
+								color: $cyan-blue;
+							}
+							&:-ms-input-placeholder { /* IE 10+ */
+								color: $cyan-blue;
+							}
+							&:-moz-placeholder { /* Firefox 18- */
+								color: $cyan-blue;
+							}
+						}
+					}
+
+					.addWrapper {
+						padding-left: 10px;
+						a {
+							&.addCompany {
+								display: block;
+								top: 12px;
+								right: auto;
+							}
+						}
+					}
+
+					ul {
+						li {
+							padding: 13px;
+							font-size: 14px;
+							border: 0;
+
+							&:first-child {
+								padding: 13px 13px;
+								border: 0;
+
+								a {
+									line-height: 1.2;
+									top: 1px;
+									position: relative;
+									span {
+										width: 315px;
+										top: -2px;
+									}
+
+									i {
+										&.fa-angle-down {
+											top: 0px;
+										}
+									}
+								}
+
+								&.single {
+									padding-top: 15px;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		i {
+			&.fa-bars {
+			    display: block;
+			}
+		}
+	}
+
+	nav {
+		&.secondLevel {
+			height: 45px;
+			overflow: hidden;
+			@include box-shadow(0px 2px 5px 0px rgba(0,0,0,0.6));
+
+			&.open {
+				overflow: visible;
+			}
+
+			ul {
+				height: 47px;
+				@include display-flex-ie;
+				flex-wrap: wrap;
+
+				li {
+					background: $mid-grey;
+					float: none;
+					padding: 0;
+					border-right: 0;
+					@include display-order(1);
+					flex: 1 100%;
+					margin-bottom: 0;
+					margin-top: -1px;
+
+					a {
+						display: block;
+						padding: 15px;
+						text-decoration: none;
+						font-family: Lato, sans-serif;
+						font-size: 15px;
+						font-weight: normal;
+						color: $black;
+					}
+
+					&.selected {
+						background: $white;
+						@include display-order(0);
+
+						a {
+							color: $black;
+
+							i {
+								&.fa-angle-down {
+									display: block;
+									float: right;
+									font-size: 18px;
+									font-weight: bold;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	nav {
+		&.secondLevel {
+			background: yellow;
+		}
+	}
+}
+
+@media only screen and (max-width : 1043px) and (min-width : 768px) {
+	header {
+		.navigations {
+			width: 375px;
+			nav {
+				ul {
+					li {
+						&.selected {
+					    	i {
+								&.fa-angle-right {
+									display: block;
+									position: absolute;
+									font: normal normal normal 22px/1 FontAwesome;
+									color: $white;
+									font-weight: 400;
+									top: 15px;
+									left: 12px;
+								}
+							}
+					    }
+					}
+				}
+
+				&#corporateNav {
+					top: 0;
+					ul.top {
+						top: 0;
+
+						li {
+							padding-bottom: 0;
+							margin: 0 15px;
+							border-bottom: 1px solid #BAC6D8;
+							a {
+								top: 0px;
+							}
+						}
+					}
+				}
+			}
+
+			&.open {
+				animation-name: slideInMob;
+				animation-duration: 0.5s;
+				right: 0px;
+			}
+
+			&.closed {
+				animation-name: slideOutMob;
+				animation-duration: 0.5s;
+				right: calc(0px - 100%);
+			}
+		}
+	}
+}
+
+@media only screen and (max-width : 767px) {
+	header {
+		.navigations {
+			width: 100%;
+
+			nav {
+				ul {
+					li {
+						&.selected {
+					    	i {
+								&.fa-angle-right {
+									display: block;
+									position: absolute;
+									font: normal normal normal 22px/1 FontAwesome;
+									color: $white;
+									font-weight: 400;
+									top: 15px;
+									left: 12px;
+								}
+							}
+					    }
+					}
+				}
+
+				&#corporateNav {
+					top: 0;
+					ul.top {
+						top: 0;
+
+						li {
+							padding-bottom: 0;
+							a {
+								top: 0px;
+							}
+						}
+					}
+				}
+			}
+
+			&.loggedIn {
+				.company {
+					ul {
+						li {
+							&.selected {
+								a {
+									span {
+										width: 346px;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			&.open {
+				animation-name: slideInMob;
+				animation-duration: 0.5s;
+				right: 0px;
+			}
+
+			&.closed {
+				animation-name: slideOutMob;
+				animation-duration: 0.5s;
+				right: calc(0px - 100%);
+			}
+		}
+	}
+}
+
+@keyframes slideInMob {
+    from {right: calc(0px - 100%);}
+    to {right: 0px;}
+}
+
+@keyframes slideOutMob {
+    from {right: 0px;}
+    to {right: calc(0px - 100%);}
+}
+

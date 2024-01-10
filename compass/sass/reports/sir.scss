@@ -1,0 +1,35 @@
+/*
+Document   : sir.scss
+Created on : May 22, 2014, 1:00:43 PM
+Author     : gly
+Description: combining partials for sir
+*/
+
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/min";
+
+@import "partials/def/left_nav";
+@import "partials/def/context_help";
+@import "partials/def/modal_new";
+@import "partials/def/datepicker";
+
+//Item selector component
+@import "partials/itemselector/selectorNew";
+
+@import "partials/reports/sir/membership";
+@import "partials/reports/sir/content";
+@import "partials/reports/sir/summary";
+@import "partials/reports/sir/details";
+/* @import "partials/reports/sir/filters"; */
+@import "partials/reports/sir/filters-new"; 
+@import "partials/reports/sir/emailDialog";
+@import "partials/reports/sir/transaction";
+@import "partials/reports/sir/gmv-table";
+@import "partials/reports/sir/summary-analysis";
+@import "partials/reports/sir/summary-calculator";
+@import "partials/reports/sir/customers";
+@import "partials/reports/sir/help";
+@import "partials/reports/sir/error";
+@import "partials/reports/sir/progressBar";
+

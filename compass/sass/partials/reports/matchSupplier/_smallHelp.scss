@@ -1,0 +1,57 @@
+
+body {
+
+	.smallHelp {
+		cursor: pointer;
+		display: none;
+		position: absolute;
+		width: 220px;
+		/* height: 145px; */
+		top: 0;
+		left: 0;
+		margin-top: 25px;
+		z-index: 997;
+		background-color: white;
+		border: 2px solid #b2b2b2;
+		box-shadow: 2px 2px 1px #cccccc;
+		@include border-radius(6px);
+		p {
+			cursor: pointer;
+			padding: 14px;
+			line-height: 18px;
+			font-size: 14px;
+		}
+
+	}
+	.smallHelp::before {
+		content: "";
+		z-index: 999;
+		position: absolute;
+		left: 50px;
+		bottom: -15px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 18px 8px 0 8px;
+		border-color: #ffffff transparent transparent transparent;
+		line-height: 0px;
+		_border-color: #ffffff #000000 #000000 #000000;
+		_filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+	}
+	.smallHelp::after {
+		content: "";
+		z-index: 998;
+		position: absolute;
+		bottom: -19px;
+		left: 49px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 20px 9px 0px 9px;
+		border-color:  #b2b2b2 transparent transparent transparent;
+		line-height: 0px;
+		_border-color: #b2b2b2 #000000 #000000 #000000;
+		_filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+
+	}
+}

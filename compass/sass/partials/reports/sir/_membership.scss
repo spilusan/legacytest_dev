@@ -1,0 +1,47 @@
+.membership {
+	fieldset {
+		width: 909px;
+		background-color: #e9edf1;
+		border: 1px solid #e9edf1;
+		padding: 13px 0px 25px 20px;
+		margin: 0px 0px 12px 0px;
+		@include border-radius(6px);
+		behavior: url(/css/PIE.htc);
+		label {
+			font-size: 12px;
+			display: inline-block;
+			margin-right: 25px;
+			&.strong {
+				font-weight: bold;
+			}
+		}
+		.circle {
+			position: relative;
+			top: 8px;
+			display: inline-block;
+			width: 26px;
+			height: 26px;
+			background: white;
+			border: 1px solid #bec1c5;
+			@include border-radius(13px);
+			behavior: url(/css/PIE.htc);
+			span {
+
+				position: absolute;
+				width: 12px;
+				height: 12px;
+				left: 6px;
+				top: 6px;
+				border: 1px solid #2aa216;
+				@include border-radius(7px);
+				background-color: #2aa216;
+				@include background-image(linear-gradient(#eaeef2 0%, #2aa216 100%));
+				-pie-background: linear-gradient(top, #eaeef2 0%, #2aa216 100%);
+				behavior: url(/css/PIE.htc);
+			}
+		}
+		.tHelp {
+			cursor: pointer;
+		}
+	}
+}

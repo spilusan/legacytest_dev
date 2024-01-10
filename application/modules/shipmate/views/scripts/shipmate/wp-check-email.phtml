@@ -1,0 +1,17 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/wp-styles.css');
+	$this->headLink()->appendStylesheet('/css/default-new.css');
+	$this->requirejs()	->addModule('backbone/shipmate/design-guidelines/views/mainView');
+	$user = Shipserv_User::isLoggedIn();
+?>	
+
+<section class="white">
+	<div class="wrapper">
+		<div class="check-your-email">
+			<h4>Please check your email</h4>
+			<p>The instructions for updating your password have been emailed to you.</p>
+			<p>If you do not receive this email within the next few minutes, please check your junk/spam folder in case it was not delivered to your main inbox.</p>
+			<a href="#" class="btn transparent transparent-blue">Return to login page</a>
+		</div>
+	</div>	
+</section>

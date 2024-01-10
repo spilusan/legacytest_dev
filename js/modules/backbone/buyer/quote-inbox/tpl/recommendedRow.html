@@ -1,0 +1,31 @@
+<table cellpadding="0" cellspacing="0" border="0" width="100%">
+	<thead>
+		<tr>
+			<th class="first">
+				<strong>Supplier {{position}}</strong>
+			</th>
+			<th>
+				<input type="button" name="sendRfq" class="button small white" value="Send RFQ" />
+				<span><a href="{{url}}">{{name}}</a> ({{city}})</span>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="first"><strong>Match rank</strong></td>
+			<td><span>{{#if match_rank}}{{match_rank}}{{else}}-{{/if}}</span></td>
+		</tr>
+		<tr>
+			<td class="first">Trade rank</td>
+			<td>{{getTradeStar trade_rank}}</td>
+		</tr>
+		<!--<tr>
+			<td class="first">RFQ response rate</td>
+			<td>????</td>
+		</tr>-->
+		<tr class="last">
+			<td class="first">Match criteria</td>
+			<td>{{comment}}</td>
+		</tr>
+	</tbody>
+</table>

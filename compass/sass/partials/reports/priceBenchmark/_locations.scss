@@ -1,0 +1,114 @@
+  
+/*
+Document   : partials/reports/priceBenchmark/_locations.scss
+Created on : Sep 6, 2012, 1:00:43 PM
+Author     : Attila O
+Description: default styles for map canvas
+*/
+  #map-canvas {
+        height: 630px;
+        width: 100%;
+        margin: 12px 0px 12px 0px;
+        padding: 0px
+  }
+  .mapHead {
+  	display: block;
+  	widht: 100%;
+  	height: 35px;
+  	line-height: 35px;
+  	h3 {
+  		display: block;
+  		float: left;
+  	}
+  	div {
+  	  	display: block;
+  		float: right;
+  		font-size: 12px;
+  		margin-right: 12px;
+
+	  		span {
+		  		display: block;
+		  		float: left;
+		  		width: 12px;
+		  		height: 12px;
+		  		margin: 12px 6px 0px 0px;
+		  		background-color: #70dcf7;
+	  		}
+
+  	}
+
+  }
+
+/* Map overlay */
+
+ .mapInfo {
+    margin-left: -35px;
+    margin-top: -19px;
+     .mapValue {
+        display: block;
+        background-color: #FFFFFF;
+        padding: 0px;  
+        text-align: center;
+        line-height: 40px;
+        border: 2px solid #13b5ea;
+        width: 40px;
+        height: 40px;
+        @include border-radius(25px);
+        behavior: url(/css/PIE.htc); 
+     }
+     .mapLine {
+        display: block;
+        width: 0px;
+        height: 22px;
+        border: 2px solid #13b5ea;
+        margin-left: 18px;
+
+     }
+     .mapBullet {
+        display: block;
+        float: left;
+        border: 1px solid #13b5ea;
+        background-color: #13b5ea;
+        width: 10px;
+        height: 10px;
+        margin-left: 14px;
+        @include border-radius(5px);
+        behavior: url(/css/PIE.htc); 
+
+     }
+     .mapTriangle {
+
+        display: block;
+        float: left;
+        margin: 0px 0px 0px 3px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 5px 10px 5px 0;
+        border-color: transparent #9a9899 transparent transparent;
+        line-height: 0px;
+        _border-color: #000000 #9a9899 #000000 #000000;
+        _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+     }
+     .mapLabel {
+        display: block;
+        float: left;
+        font-weight: bold;
+        color: white;
+        font-size: 12px;
+        padding: 3px;
+        margin-top: -7px;
+        background-color: #838b93;
+        border: 2px solid #838b93;
+        @include border-radius(3px);
+        behavior: url(/css/PIE.htc);
+     }
+     div {
+        display: table;
+        width: 30px;
+        margin: 2px auto 2px auto;
+        background-color: #90dcf7;
+        clear: both;
+        min-heigt: 1px;
+     }
+ }

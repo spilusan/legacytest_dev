@@ -1,0 +1,23 @@
+<div class="trade-rank">
+	<?php
+		if ($this->rank < 3)
+		{
+			$this->rank = 3;
+		}
+		if ($this->rank >18)
+		{
+			$this->rank = 18;
+		}
+		$this->rank -=3;
+		$this->rank = round($this->rank/3);
+		for ($i = 1; $i <= $this->rank; $i++ )
+		{
+			echo "<div class='rank-active'></div>";
+		}
+		for ($i = ($this->rank+1); $i <= 5; $i++ )
+		{
+			echo "<div class='rank-passive'></div>";
+		}
+	?>
+	<div class="clear"></div>
+</div>

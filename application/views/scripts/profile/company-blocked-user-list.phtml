@@ -1,0 +1,53 @@
+<?php
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'RFQ Blocked list',
+						   'url'  => '/profile/company-blocked-user-list'));
+
+$this->getHelper('Requirejs')->addModule('profile/company-blocked-user-list');
+
+$this->headLink()->appendStylesheet('/css/transition.css');
+$this->headLink()->appendStylesheet('/css/profile.css');
+
+?>
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->CDNLink()->css('/css/profile/company-blocked-list.css'); ?>" />
+<script type="text/javascript">
+<!--
+	var tnid=<?php echo $this->tnid;?>;
+//-->
+</script>
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'],$this->companyDetail['id'], 'company-blocked-list', $this->pendingUsers)
+				)
+			);
+			?>
+			
+			
+			<div class="profile-body-right">
+                <div class="zz header">
+					<h2>Edit blocked list</h2>
+				</div> 
+
+				<div class="profileContent">
+					ShipServ has improved this page- Click here to <a href="/trade/block-buyer">view</a>.<br/><br/>
+					
+					(We’ve also moved it to the Trade tab.)      
+                </div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,107 @@
+Dear <?= trim($this->supplierName) ?>, 
+
+<?php if( $this->mode == "pages_user_accepting_enquiries" ){?>
+In the last year, these are your usage statistics about your business from your ShipServ Pages listing:
+
+<?php if( $this->statistic->pagesEnquiry > 0 ){?>- <?= $this->statistic->pagesEnquiry ?> Enquir<?= ( ( $this->statistic->pagesEnquiry > 1 )?"ies":"y" )?><?php }?>
+<?php if( $this->statistic->profileView > 0 ){?>- <?= $this->statistic->profileView ?> Profile View<?= ( ( $this->statistic->profileView > 1 )?"s":"" )?><?php }?>
+<?php if( $this->statistic->contactView > 0 ){?>- <?= $this->statistic->contactView ?> Contact View<?= ( ( $this->statistic->contactView > 1 )?"s":"" )?><?php }?>
+
+Want more detail on this or how this compares to the average? Then click below to view your Supplier Insight Report. It will only take a second and the link below takes you straight there - you don't need a login or password this time.
+
+VIEW YOUR SUPPLIER INSIGHT REPORT NOW
+<?=$this->url;?>
+
+
+I'd really like you to have the chance to see how a Premium Profile could benefit your company as a Premium Profile on average can bring 20x more enquiries and with the brand new Supplier Insight Report you can measure your results instantly.   
+
+So, for the first time ever, we're able to offer a Premium Profile for 3 months at a very special price of $295.  
+
+For more details about this offer and to buy now, go to our secure Webstore (<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/pages-for-suppliers/webstore). Or if you'd like a ShipServ account manager to contact you then just reply to this email. 
+
+To speak to someone now, phone our Sales Hotline on +44 203 111 9700.
+
+But don't delay - this offer WILL close on 31 March so please act now!
+
+Best regards,
+
+Freddy Ingemann
+Senior VP 
+ShipServ
+<?php } else if( $this->mode == "pages_user_zero_enquiries" ){?>
+In the last year, these are your usage statistics about your business from your ShipServ Pages listing:
+
+<?php if( $this->statistic->profileView > 0 ){?>- <?= $this->statistic->profileView ?> Profile View<?= ( ( $this->statistic->profileView > 1 )?"s":"" )?><?php }?>
+<?php if( $this->statistic->contactView > 0 ){?>- <?= $this->statistic->contactView ?> Contact View<?= ( ( $this->statistic->contactView > 1 )?"s":"" )?><?php }?>
+
+Want more detail on this or how this compares to the average? Then click below to view your Supplier Insight Report. It will only take a second and the link below takes you straight there - you don't need a login or password this time.
+
+VIEW YOUR SUPPLIER INSIGHT REPORT NOW
+<?=$this->url;?>
+
+
+I'd really like you to have the chance to see how a Premium Profile could benefit your company as a Premium Profile on average can bring 20x more enquiries and with the brand new Supplier Insight Report you can measure your results instantly.   
+
+So, for the first time ever, we're able to offer a Premium Profile for 3 months at a very special price of $295.  
+
+For more details about this offer and to buy now, go to our secure Webstore (<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/pages-for-suppliers/webstore). Or if you'd like a ShipServ account manager to contact you then just reply to this email. 
+
+To speak to someone now, phone our Sales Hotline on +44 203 111 9700.
+
+But don't delay - this offer WILL close on 31 March so please act now!
+
+Best regards,
+
+Freddy Ingemann
+Senior VP 
+ShipServ
+
+<?php } else if( $this->mode == "salesforce_user_accepting_enquiries" ){?>
+Did you know you have received enquiries from ShipServ Pages over the last twelve months?
+
+To get further details on these enquiries plus a lot more information including the number of times a prospective client has looked at your profile, click the link below and enter either your account details or register as a new user. 
+
+VIEW YOUR SUPPLIER INSIGHT REPORT NOW
+<?=$this->url;?>
+
+
+I'd really like you to have the chance to see how a Premium Profile could benefit your company as a Premium Profile on average can bring 20x more enquiries and with the brand new Supplier Insight Report you can measure your results instantly.   
+
+So, for the first time ever, we're able to offer a Premium Profile for 3 months at a very special price of $295.  
+
+For more details about this offer and to buy now, go to our secure Webstore (<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/pages-for-suppliers/webstore). Or if you'd like a ShipServ account manager to contact you then just reply to this email.
+
+To speak to someone now, phone our Sales Hotline on +44 203 111 9700.
+
+But don't delay - this offer WILL close on 31 March so please act now!
+
+Best regards,
+
+Freddy Ingemann
+Senior VP 
+ShipServ
+<?php } else if( $this->mode == "salesforce_user_zero_enquiries" ){?>
+Did you know your listing has been viewed on  ShipServ Pages?
+
+To get further details on your Profile Views  plus a lot more information including the number of times you have appeared in searches, click the link below and enter either your account details or register as a new user. 
+
+VIEW YOUR SUPPLIER INSIGHT REPORT NOW
+<?=$this->url;?>
+
+
+I'd really like you to have the chance to see how a Premium Profile could benefit your company as a Premium Profile on average can bring 20x more enquiries and with the brand new Supplier Insight Report you can measure your results instantly.   
+
+So, for the first time ever, we're able to offer a Premium Profile for 3 months at a very special price of $295.  
+
+For more details about this offer and to buy now, go to our secure Webstore (<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/pages-for-suppliers/webstore). Or if you'd like a ShipServ account manager to contact you then just reply to this email. 
+
+To speak to someone now, phone our Sales Hotline on +44 203 111 9700.
+
+But don't delay - this offer WILL close on 31 March so please act now!
+
+Best regards,
+
+Freddy Ingemann
+Senior VP 
+ShipServ
+<?php }?>

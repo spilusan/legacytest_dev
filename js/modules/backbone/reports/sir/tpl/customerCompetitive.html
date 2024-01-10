@@ -1,0 +1,21 @@
+						{{#each periodData.attributes.competitive-buyer.buyers}}
+							<tr>
+								<td>{{this.company-name}}</td>	
+								<td>{{formatNumRound this.rfq-count}}</td>
+								<td>
+									<span class="leftRightBlock">
+										<span class="spanLeft">{{formatNumRound this.qot-count}}</span>
+										<span class="spanRight">{{formatNumRound this.qot-rate}}%</span>
+									</span>
+								</td>
+								<td>
+									<span class="leftRightBlock">
+										<span class="spanLeft">{{formatNumRound this.po-count}}</span>
+										<span class="spanRight">{{formatNumRound this.win-rate}}%</span>
+									</span>
+								</td>
+								<td>{{formatNumRound this.ave-qot-time}}</td>
+								<td>{{formatNumRound this.po-value}}</td>	
+							</tr>
+
+						{{/each}}

@@ -1,0 +1,66 @@
+<?php
+$this->headLink()->appendStylesheet('/css/uniform.rfq.css')
+				 ->appendStylesheet('/css/rfq.css');
+
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+	table tr.child td {
+		background-color:#d6dce4;
+	}
+	
+	table tr.bold td {
+		font-weight:bold;;
+	}
+	#body #content {
+		left: 0 !important;
+	}
+</style>
+
+<div id="breadcrumbs"></div>
+
+<div id="body" style="width: 700px!important;">
+
+	<h1 class="styled">
+		Please accept our revised Terms of Use
+	</h1>
+	<div id="content">
+		<?
+			if( $this->termAndCondition->userHasAgreed() === false || $this->privacyPolicy->userHasAgreed() === false )
+			{
+				?>
+				<form action="/profile/agreement">
+					<input type="hidden" name="redirect" value="<?php echo $this->redirect; ?>" />
+					<input type="hidden" value="1" name="benc" />
+					
+					<p>
+					Our <a href="/info/privacy-policy/" target="_blank">Privacy Policy</a> and <a href="/info/terms-of-use" target="_blank">Terms of Use</a> have been updated to enable us to share some of your information with suppliers. 
+					<b>By doing this, suppliers on our system have more reason to improve their profiles which gives users, such as you, a better experience.</b><br />
+					<br />
+					
+					<b>We only share your information with your consent.</b> The default setting is that we share only your job title and company name, but not your name. However, you can change this setting at any time to a number of other options including anonymity. If you wish to change how we share your personal information you can do so by firstly agreeing to the changed Privacy Policy and Terms of Use, and thereafter go to Settings in the Account section, and change your settings.<br />
+					<br />
+					
+					<input type="checkbox" name="agree" value="1"  />
+					<strong><sup>*</sup> I have read and agree to the changed <a href="/info/privacy-policy/" target="_blank">Privacy Policy</a> and latest <a href="/info/terms-of-use" target="_blank">Terms of Use</a>.</strong><br />
+					<br />
+					<div class="clear"></div>
+					<input type="submit" class="button medium green" value="Continue" name="act" />
+					</p>
+				</form>	
+				<?php 
+			}
+			else
+			{
+				?>
+					You have agreed to these legal documents on <?= $this->user->getAgreementDateForLatestLegalAgreement()?>
+				<?
+			}
+		?>
+	</div>
+</div>

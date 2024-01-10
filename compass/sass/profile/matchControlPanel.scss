@@ -1,0 +1,16 @@
+/*
+Document   : default.scss
+Created on : Oct 02, 2014, 14:57:00 PM
+Author     : Attila O
+Description: main stylesheet combining match controll panel partials
+*/
+
+@import "compass/css3";
+
+@import "partials/profile/matchControlPanel/content";
+//Item selector component
+@import "partials/itemselector/selectorNew";
+
+div.itemselector.inner > .left ul, div.itemselector.inner > .right ul {
+	height: 300px !important;
+}

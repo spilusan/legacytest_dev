@@ -1,0 +1,55 @@
+<?
+/**
+ * When included on a page, this will render AND THEN REMOVE error and success flash messages from their session store
+ * This means that a pending message will usually be displayed on the next including page if this partial is omitted.
+ */
+$sessionNamespace = Myshipserv_Helper_Session::getNamespaceSafely('Myshipserv_Flashmessages');
+
+if (isset($sessionNamespace->errorMessages) && is_array($sessionNamespace->errorMessages)) {
+	$this->errorMessages = $sessionNamespace->errorMessages;
+}
+if (isset($sessionNamespace->successMessages) && is_array($sessionNamespace->successMessages)) {
+	$this->successMessages = $sessionNamespace->successMessages;
+}
+
+$this->headScript()->appendFile('/js/modules/backbone/lib/jquery.min.1.8.3.js')
+				   ->appendFile('/js/jquery.countdown.js') ;
+
+$this->CDNLink()->appendStylesheet('/css/enquiries.css');
+$this->CDNLink()->appendStylesheet('/css/info.css');
+?>
+<div class="zz content_wide new clearfix no-marg">
+    <div class="success-box">
+		<ul class="error messages general <?=empty($this->errorMessages) ? 'empty' : ''?>">
+			<?if(!empty($this->errorMessages)):?>
+				<?foreach($this->errorMessages as $errorMessage):?>
+					<li><?=$errorMessage?></li>
+				<?endforeach?>
+			<?endif?>
+		</ul>
+		
+		<ul class="success messages general <?=empty($this->successMessages) ? 'empty' : ''?>">
+			<?if(!empty($this->successMessages)):?>
+				<li class="title">Information</li>
+				<?foreach($this->successMessages as $successMessage):?>
+					<li><?=$successMessage?></li>
+				<?endforeach?>
+				<li>You will be redirected in <span id="countdown"></span> seconds.</li>
+			<?endif?>
+		</ul>
+    </div>
+</div>
+<?
+	$sessionNamespace->successMessages = array();
+	$sessionNamespace->errorMessages = array();
+?>
+
+<script>
+	$(function() {
+		$("#countdown").countDown(5);
+	});
+	setTimeout(function(){
+		location.href="<?php echo $this->url?>";
+	},3000);
+
+</script>

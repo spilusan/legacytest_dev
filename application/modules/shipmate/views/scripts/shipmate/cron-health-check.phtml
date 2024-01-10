@@ -1,0 +1,63 @@
+<?php
+$this->headLink()->appendStylesheet('/css/shipmate.css')
+->appendStylesheet('/css/uniform.rfq.css');
+
+
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+
+?>
+
+<style>
+	td{
+		font-size:12px;
+	}
+	td b{
+		font-size:16px;
+		line-height:20px;
+	}
+</style>
+
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Salesforce', 'url'  => '/shipmate/value-event');
+	$breadcrumbs[] = array('name' => 'Cron Health Check', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<div id="body" style="width:1637px;">
+	<div id="content" style="width: 1400px;">
+		<h1 class="styled">Cron Health Check</h1>
+		<div class="innerContent">
+			<div class="">	
+				<table id="resultsTab" width="100%" style="display:block; ">
+					<thead>
+						<tr>
+							<th class="left">Last executed</th>
+							<th class="left">Days ago</th>
+							<th class="left">Type</th>
+							<th class="left">Script</th>
+						</tr>
+					</thead>	
+					<tbody>			
+						<?php foreach($this->result as $row){?>
+						<tr>
+							<td><?= $row['JOB_RUN']?></td>
+							<td><?= round($row['DAYS_AGO'],1)?></td>
+							<td class="left"><?= $row['JOB_TYPE']?></td>
+							<td class="left"><?= $row['JOB_DESCRIPTION']?></td>
+						</tr>
+						<?php }?>
+					</tbody>
+				</table>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

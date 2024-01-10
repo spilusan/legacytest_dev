@@ -1,0 +1,278 @@
+@import "compass/css3";
+@import "partials/def/forms";
+@import "partials/def/modal_new";
+
+.modal {
+	width: 400px;
+
+	.modalBody {
+		.modalContent {
+			padding-top: 10px;
+			padding-bottom: 0;
+		}
+	}
+}
+
+#modal {
+	width: 455px;
+
+	.modalBody {
+		.modalContent {
+			form {
+				input[type="password"]{
+					margin-bottom: 3px;
+					width: 200px;
+				}
+
+				label {
+					display: inline-block;
+					top: -2px;
+					width: 140px;
+				}
+
+				.error {
+					margin-bottom: 10px;
+				}
+
+				div.zz.button {
+					margin-top: 10px;
+				}
+			}
+		}
+	}
+}
+
+.chgPwd {
+	float: right;
+	margin-top: 5px;
+	margin-right: 10px;
+}
+
+.chgPwd:hover {
+	text-decoration: none;
+}
+
+.profile-body-right {
+	padding-bottom: 20px;
+}
+
+.profile-body-right .profileContent h3 {
+	font-size: 16px;
+	font-weight: normal;
+	margin: 15px 0;
+}
+
+.profile-body-right .profile-form.new {
+	border: 0;
+	margin:0;
+	padding: 0;
+	
+	.error {
+		margin-bottom: 10px;
+    	margin-left: 144px;
+	    margin-top: 5px;
+
+	}
+
+	div.save-button {
+		margin-top: 10px;
+	}
+
+	.box {
+		position: relative;
+		background: #f5f7fa;
+		border: 1px solid #d6dce4;
+		@include border-radius(6px);
+		margin: 10px 0 10px 0;
+		padding: 15px;
+		border: 1px solid #d6dce4;
+		margin: 10px 0 10px 0;
+		padding: 15px;
+		behavior: url(/css/PIE.htc);
+
+		input[type="text"], input[type="email"], input[type="password"]{
+	        width: 237px;
+	        margin-bottom: 3px;
+
+	        &#cNoOfVessel {
+	        	width: 100px;
+	        }
+	    }
+
+	    input[name="numberOfVessel"] {
+            width: 70px;
+        }
+
+	    .checker {
+            top: -1px;
+        }
+
+        .selector {
+            width: 250px;
+            margin-top: -2px;
+
+            &.invalid {
+                border: 1px solid red;
+            }
+
+            &#uniform-country, &#uniform-spend, &#uniform-companyType, &#uniform-jobFunction, &#uniform-cCountryCode {
+                margin-bottom: 2px;
+            }
+
+            &#uniform-spend {
+                top: -4px;
+            }
+
+            span {
+                width: 225px;
+            }
+
+            select#jobFunction, select#companyType, select#cSpending {
+                width: 262px;
+                margin-bottom: 0;
+            }
+        }
+
+        input[name="zipCode"] {
+        	width: 100px;
+        }
+
+        span.dec {
+            position: relative;
+            top: 3px;
+            font-size: 12px;
+
+            &.no {
+            	top: -4px;
+            }
+            
+            &.priv {
+            	top:-6px;
+            }
+        }
+		div.radio {
+			top: 2px;
+		}
+		label {
+			display: inline-block;
+			font-size: 12px;
+			font-weight: bold;
+			top: 0;
+			width: 140px;
+
+			&[for="companyType"], &[for="jobFunction"], &[for="cCountryCode"], &[for="cSpending"] {
+				width: 138px;
+			}
+
+			&[for="cNoOfVessel"] {
+				width: 168px;
+			}
+
+			sup {
+	            color: #fe2121;
+	        }
+
+	        &[for="alias"]{
+	        	font-weight: normal;
+	        }
+
+	        &[for="cNoOfVessel"] {
+	        	font-weight: normal;
+	        }
+
+	        &[for="isDecisionMaker"] {
+	            display: block;
+	            font-weight: normal;
+	            margin-bottom: 10px;
+	            width: 167px;
+	            margin-top: 10px;
+
+	            input[type="image"]{
+	                display: block;
+	                width: 15px;
+	                height: 15px;
+	                float: right;
+	                position: relative;
+	                top: -2px;
+	            }
+	        }
+
+	        &[for="cAddress2"] {
+	            font-weight: normal;
+	        }
+
+	        &[for="cAddress3"] {
+	            font-weight: normal;
+	        }
+
+	        &[for="cPhone"] {
+	            font-weight: normal;
+	        }
+
+	        &[for="cWebsite"] {
+	            font-weight: normal;
+	        }
+
+	        &[for="cSpending"] {
+	            font-weight: normal;
+	            top: -5px;
+
+	            input[type="image"]{
+	                display: block;
+	                width: 15px;
+	                height: 15px;
+	                float: right;
+	                position: relative;
+	                top: -2px;
+	            }
+	        }
+
+	        &[for="numberOfVessel"] {
+	            margin-right: 64px;
+	            font-weight: normal;
+	        }
+		}
+
+		#uniform-decYes, #uniform-decNo {
+			margin-left: 144px;
+		}
+
+		#uniform-decNo {
+			margin-bottom: 15px;
+		}
+
+		.types {
+            margin-top: 10px;
+
+            .title {
+                width: 170px;
+                float: left;
+                height: 200px;
+                font-size: 12px;
+            }
+
+            .checks {
+            	padding-right: 40px;
+
+				.check-wrapper {
+					display: inline-block;
+
+					.checker {
+						cursor: pointer;
+					}
+				}
+
+            	label {
+	            	&[for="vesselType[]"] {
+			            font-weight: normal;
+			        }
+
+			        &[for="vesselType[]"]{
+			            display: inline-block;
+			            width: 112px;
+			        }
+	            }
+            }
+        }
+	}
+}

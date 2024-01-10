@@ -1,0 +1,113 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()
+	//->addModule('match/match')
+	->addModule('match/report')	
+	->addDefinition('/match/reportType', '"pages-dashboard"')
+	;
+
+
+function getMonth($number)
+{
+	$dateObj   = new DateTime;
+	$dateObj->setDate('2014', $number, '1');
+	$monthName = $dateObj->format('M'); // March
+	return strtoupper($monthName);
+}
+
+?>
+
+<?php
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Usage report', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'Engagement report', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.colVis.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+
+<div id="body" class="usage">
+	<div id="content">
+		<h1 class="styled">Pages</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<form method="get" class="new" id="report-form">
+			<input type="hidden" id="selectedTnid" />
+		    <table style=";">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		            	<span style="font-size:12px; ;">
+                            	<select name="yyyy" onchange="$('#report-form').submit();">
+                            		<? 
+                            		for($i=2012; $i<=date('Y'); $i++)
+									{
+										$selectedYear = ($_GET['yyyy']=="")?date('Y'):$_GET['yyyy'];
+										?>
+                            			<option value="<?= $i?>" <?php echo ($selectedYear == $i)?'selected="selected"':"" ?>><?=$i?></option>
+                            			<? 
+									}
+									?>
+                            	</select>
+                            	grouped by month
+            			</span>
+            			
+            			
+            			<div style="font-size:14px; margin-top:20px; font-weight: bold;" id="titleOfChart"></div>
+            			<div class="clear"></div>
+            			<div id="chart_div" style="width: 800px; height: 400px;"></div>
+						
+						<table id="resultsTab" style="border-collapse: collapse; width:800px;">
+		                    <thead>
+		                    	<tr>
+									<th style="width:350px; text-align:left;"></th>
+		                    		<?php for( $i=1; $i<13; $i++){?>
+		                            <th class="<?= ($i==12)?'last':''?>"><?= getMonth( $i) ?></th>
+		                            <?php }?>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php foreach ((array)$this->data as $type => $result) : $key=1; $totalNotNull = $totalPerBuyer=0; ?>
+		                            <tr class="dr <?php if ($key % 2 == 0): ?>altColor<?php endif; ?> handCursor">
+		                                <td class="statsName" style=" text-align:left; border-bottom: 1px solid #d6dce4;">
+		                                	<?php echo $type; ?>
+		                                </td>
+			                            <?php for( $i=1; $i<13; $i++){?>
+				                            <td style="border-bottom: 1px solid #d6dce4;" class="<?php echo 'm' . $i; ?> <?= ($i==12)?'last':''?>" ><? 
+			                            		$keyData = (($_GET['yyyy']=="")? date('Y') :$_GET['yyyy']) . '-' .  getMonth($i);
+			                            		$output = ($result[$keyData]==null)?"0":round($result[$keyData]);
+			                            		echo $output;
+			                            		$aggregate[$type][$i] = round($output);
+				                            ?></td>
+			                            <?php }?>		                                
+									</tr>
+		                        <?php endforeach; ?>
+		                    </tbody>
+		                </table>
+		                </div>
+		        	</td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>
+
+<script>
+	var allData = JSON.parse('<?php echo json_encode( $aggregate )?>');
+</script>
+<script type="text/javascript" src="/js/modules/match/dashboard/pages.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+//<![CDATA[
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(draw);
+//]]>
+</script>

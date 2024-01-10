@@ -1,0 +1,154 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/my-companies.js');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'User manager',
+						   'url'  => '/profile/user-management'));
+					 
+					 
+$this->requirejs()->addDefaultModule('profile/user-management');
+					  
+$this->headLink()->appendStylesheet('/css/transition.css');			 
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->CDNLink()->css('/css/profile.css'); ?>" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->CDNLink()->css('/css/profile/user-management.css'); ?>" />
+<div id="main_content_area">	
+	<div class="clear"></div>
+	<div class="content_wide">
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				$this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], 'user-management'));
+				
+				
+			?>
+			<div class="profile-body-right">
+				<div class="zz header">
+					<h2>Users</h2>
+				</div>
+				<div class="profileContent">
+					<form class="main">
+						<fieldset>
+							<div style="float:left; width:360px;">
+								<?=$this->partial('/forms/regular/textfield.phtml',
+									array(
+										'label'		=> 'TNID',
+										'name'      => 'tnid',
+									  	'required'	=> true,
+										'value'     => $this->supplier->tnid,
+										'maxchar'	=> 5,
+										'div'		=> array('class' => 'tnid')
+								 ))?>
+							 </div>
+						 	 <div class="zz medium green button" id="changeTnid" style="margin-top:7px;"><button>Go</button></div>
+							 <div class="clear"></div>
+						 	 <div class="user-container">
+							 	<?if( $this->supplier->name!="" ){?>
+							 	<strong>Company name:</strong><br />
+							 	<?= $this->supplier->name?><br />
+							 	<? 
+							 	}
+							 		foreach( (array) $this->users['approved'] as $u )
+                                    {
+                                        $name = $u['firstName'] . " " . $u['lastName'];
+                                        if( $u['roles']['administrator'] == 1)
+                                        {
+                                            $admin[] = $u['email'] . ( ( trim($name) != "" ) ? " (". $name . ")" : "" ) ;
+                                        }
+                                        else 
+                                        {
+                                            $user[] = $u['email'] . ( ( trim($name) != "" ) ? " (". $name . ")" : "" ) ;
+                                        }
+                                    }
+							 	
+							 	?>
+							 	<?php if (isset($_GET['tnid']) && $_GET['tnid'] != "") { ?>
+							 	<br/><strong>Current Pages Administrators:</strong><br />
+							 	<?= (lg_count($admin) > 0)? implode('<br />', $admin) : "NONE"; ?>
+							 	<br /><br /><strong>Current Pages User:</strong><br />
+							 	<?= (lg_count($user) > 0)? implode('<br />', $user) : "NONE"; ?>
+							 	<?php } ?>
+							 </div>
+							<?php 
+								if( $_SERVER['APPLICATION_ENV'] == "production" || $_SERVER['APPLICATION_ENV'] == "testing")
+								{
+									$allowedShipservUserToAddNewUsers = array("eloretizo@shipserv.com","jramos@shipserv.com","etan@shipserv.com","jmanayon@shipserv.com","royek-daya@shipserv.com","walcolea@shipserv.com","ksalonga@shipserv.com","dhombrebueno@shipserv.com","lnuqui@shipserv.com","wlinatoc@shipserv.com","fguevara@shipserv.com","emascardo@shipserv.com","hguillermo@shipserv.com","kcua@shipserv.com","edavis@shipserv.com");
+								}
+								else
+								{
+									$allowedShipservUserToAddNewUsers = array('jgo@shipserv.com');
+								}
+								
+								if( in_array($this->loggedMember->email, $allowedShipservUserToAddNewUsers ))
+								{
+							?>	
+							</fieldset>
+							<div class="clear"></div>
+							<br />
+							<h3>Add new user or administrator</h3>
+							<fieldset>
+											 
+							 <?=$this->partial('/forms/regular/textfield.phtml',
+								array(
+									'label'		=> 'Email address',
+									'name'      => 'email',
+								  	'required'	=> true,
+									'value'     => "",
+									'maxchar'	=> 7,
+									'input'		=> array('attr', array('style' => 'width: 100px;')),
+									'div'		=> array('class' => 'tnid')
+							 ))?>
+
+
+							<div class="field textfield">
+								<label class=" required" for="email">Make this person:<span class="asterisk">*</span></label>
+								<div style="float:left; overflow:inherit;">
+								<?=$this->partial('/forms/regular/radio.phtml',
+									array(
+										'label'		=> 'Admin',
+										'name'      => 'level',
+									  	'required'	=> true,
+										'value'     => 'ADM',
+										'maxchar'	=> 5,
+										'div'		=> array('class' => '')
+								 ))?>
+								 <?=$this->partial('/forms/regular/radio.phtml',
+									array(
+										'label'		=> 'User',
+										'name'      => 'level',
+									  	'required'	=> true,
+										'value'     => 'USR',
+										'maxchar'	=> 5,
+										'div'		=> array('class' => '')
+								 ))?>
+								 </div>
+							</div>				
+							<div class="clear"></div>
+							<strong>This email CANNOT be recalled once sent, so click this box to confirm:</strong><br />
+							<div style="float:left">
+								<input type="checkbox" name="agree" id="agree" value="1" />
+							</div>
+							<div style="float:left; margin-left:20px; clear:right; width:370px;">
+								<ul>
+									<li>I have checked that this person is employed by this company (TNID)</li>
+									<li>I have checked that this person is expecting to receive this email making them a User or Administrator</li>
+								</ul>
+							</div>
+							<div class="clear"></div>
+							<div class="zz medium green button" id="sendButton" style="margin-top:20px; margin-left:0px;"><button>Add user and send them an email</button></div>
+							<?php }?>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

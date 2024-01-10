@@ -1,0 +1,236 @@
+.print-report {
+    font-size: 15px !important;
+    width: 245px;
+    text-align: center;
+    display: none;
+    .fa {
+        font-size: 24px;
+        display: inline-block;
+        position: relative;
+    }
+}
+
+@media print {
+    header,
+    .header-container,
+    .header-space,
+    .mainFooter,
+    #filter,
+    .container,
+    .spr-tabs-container>div {
+        &.charts {
+            .row {
+                page-break-inside: auto;
+                -webkit-page-break-inside: avoid;
+            }
+        }
+    }
+    @page {
+        size: 210mm 297mm;
+        margin: 10mm 0;
+        padding: 0;
+    }
+}
+
+.print {
+    background: #f2f2f2;
+    width: 210mm;
+    padding: 0;
+    font-family: 'Lato', sans-serif;
+    font-size: 8pt;
+    #content {
+        padding: 0 10mm!important;
+    }
+    #body {
+        padding: 10mm 0!important;
+    }
+    .print-only {
+        display: block;
+    }
+    .spr-tabs {
+        display: none !important;
+    }
+    margin: 0 auto;
+    padding: 0;
+    overflow: auto;
+    .container {
+        overflow: visible;
+    }
+    h1,
+    h2,
+    h3,
+    h4 {
+        font-family: 'Open Sans', sans-serif;
+        margin: 0 0 5mm 0;
+    }
+    h1 {
+        font-size: 20pt;
+        font-weight: bold;
+        margin-bottom: 20mm;
+    }
+    h2 {
+        font-size: 14pt;
+        font-weight: bold;
+    }
+    h3 {
+        font-size: 11pt;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+    h4 {
+        font-size: 10pt;
+        font-weight: normal;
+        white-space: nowrap;
+    }
+    .fa.fa-info-circle.tip {
+        display: none;
+    }
+    h2.print-only {
+        display: block;
+        margin: 0 10px 25px;
+    }
+    ul {
+        li {
+            font-size: 10pt;
+            line-height: 14pt;
+        }
+    }
+    ul {
+        li {
+            font-family: 'Lato', sans-serif;
+        }
+    }
+    a.btn {
+        display: none!important;
+    }
+    .charts #chart1 div span,
+    table.simple tbody tr tr,
+    table.simple tbody tr td {
+        font-size: 8pt;
+        line-height: 12pt;
+    }
+    .btn {
+        margin: 10px 0!important;
+        display: inline-block!important;
+    }
+    .text-center {
+        text-align: center;
+    }
+    .table-bordered,
+    .dataTable,
+    .legend-table {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        th,
+        td {
+            font-size: 6pt;
+            padding: 2pt 4pt!important;
+            height: 0;
+            border: 1px solid #ccc;
+            white-space: normal;
+            overflow: hidden;
+            position: relative;
+            background: none;
+            line-height: 12pt;
+        }
+        th:after {
+            content: ' ';
+            border: 1000px solid rgba(0, 0, 0, 0.1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        tr:nth-child(odd) td:after {
+            content: ' ';
+            border: 1000px solid rgba(0, 0, 0, 0.05);
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+    }
+    #buyer-supplier-list {
+        margin-bottom: 30px;
+    }
+    #sprFunnel {
+        height: auto;
+        min-height: auto;
+        margin-top: 15mm;
+        margin-bottom: 20mm;
+    }
+    table {
+        tr {
+            height: auto;
+            th,
+            td {
+                font-size: 9pt;
+            }
+        }
+    }
+    #chart1 div {
+        line-height: 6mm;
+        font-size: 12pt;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+    }
+    .charts #chart1 div {
+        height: auto;
+    }
+    .spr-tabs-container,
+    .container {
+        >.row {
+            border-bottom: 1px solid #ccc;
+        }
+    }
+    .container .row {
+        padding-bottom: 10mm;
+    }
+    table.simple {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        td {
+            border-bottom: 1px solid #ccc;
+            padding: 5pt 0;
+            text-transform: capitalize;
+        }
+    }
+    .text-right {
+        text-align: right;
+    }
+    .spr-tabs-container>div {
+        break-inside: avoid-page;
+    }
+    .bar {
+        background: none;
+    }
+    .bar-fill {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 0;
+        border-width: 100px;
+        border-style: solid;
+    }
+    .cycle {
+        .bar {
+            min-height: 16px;
+            height: 16px;
+            line-height: 16px;
+            &.point {
+                &:after,
+                &:before {
+                    border-width: 8px;
+                }
+            }
+        }
+    }
+
+    #sprFunnel {
+        height: 400px;
+    }
+    #pie-co-quoters{
+        height: 400px!important;
+        width: 300px!important;
+    }
+}

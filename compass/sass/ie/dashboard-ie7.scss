@@ -1,0 +1,43 @@
+/*
+Document   : ie/dashboard-ie7.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: additional dashboard styles for ie7
+*/
+
+div#body {
+	h1 {
+		.selector {
+			position: relative;
+			top: 3px;
+		}
+	}
+
+	#content {
+
+		.box {
+			.value {
+				position: relative;
+				top: 2px;
+			}
+
+			&.grad {
+				p {
+					position: relative;
+					top: 10px;
+				}
+			}
+
+			&.white {
+				.value {
+					margin-top: 4px;
+				}
+
+				p {
+					position: relative;
+					top: 2px;
+				}
+			}
+		}
+	}
+}

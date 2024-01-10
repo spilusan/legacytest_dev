@@ -1,0 +1,134 @@
+@media only screen and (max-width: 640px) {
+		
+	section {
+		&.registration-header {
+			.left, .right {
+				float: none;
+			}
+
+			.left {
+
+				h4 {
+					margin-bottom: 20px;
+
+					span {
+						font-size: 14px;
+						margin-bottom: 15px;
+					}
+				}
+			}
+		}
+
+		.registration-form-wrapper {
+
+			form {
+
+				.inputs-wrapper {
+
+					.inline {
+
+						&.smaller {
+
+							input {
+								width: 100%;
+							}
+						}
+
+						.select {
+							width: 100%;
+
+							select {
+								font-size: 16px;
+							}
+
+						}
+
+						label {
+							width: 100%;
+							font-size: 16px;
+							margin-bottom: 15px;
+						}
+
+						input {
+							width: 100%;
+						}
+					}
+
+					.required {
+						font-size: 12px;
+					}
+				}
+
+				
+
+				.checkboxes-wrapper {
+					.checkbox-container {
+						width: 100%;
+						height: 44px;
+						padding: 15px 20px 0 20px;
+						margin-bottom: 0;
+						box-sizing: border-box;
+						border-top: 1px solid $grey;
+
+						&.checked {
+							background-color: $reg-grey;
+						}
+
+						label {
+							font-size: 16px;
+						}
+					}
+				}
+
+				h4 {
+					padding-bottom: 20px;
+				}
+
+				.vessels {
+					margin-top: 30px;
+				}
+
+				.terms-and-cons {
+					padding: 20px;
+
+					p, label {
+						font-size: 16px;
+					}
+				}
+
+				.btn-container {
+					margin-top: 0;
+
+					.btn {
+						max-width: 100%;
+						margin-bottom: 20px;
+					}
+
+					&.submit {
+
+						.btn {						
+							width: 100%;
+							max-width: 100%;
+						}
+					}
+				}
+			}		
+			
+		}
+
+		.forgotten-password-wrapper {
+
+			p {
+				font-size: 16px;
+			}
+			
+			.forgotten-password {
+				input[type="submit"] {
+					width: 100%;
+				}
+			}
+
+		}
+
+	}
+}

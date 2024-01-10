@@ -1,0 +1,18 @@
+/*
+Document   : txnmon.scss
+Created on : Aug 21, 2014, 2:54:43 PM
+Author     : Attila O.
+Description: combining partials for rfq-outbox styles
+*/
+
+@import "compass/css3";
+@import "compass/css3/inline-block";
+
+@import "partials/def/modal_new"; 
+@import "partials/def/datepicker";
+
+@import "partials/reports/txnmon/oldlookcontent";
+@import "partials/def/reports/txnmonoldlookforms";
+@import "partials/def/reports/txnmonoldlooktables";
+
+

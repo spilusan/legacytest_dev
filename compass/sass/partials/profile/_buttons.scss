@@ -1,0 +1,39 @@
+/*
+Document   : _buttons
+Created on : Jun 14, 2012, 10:11:20 AM
+Author     : gly
+Description: Profile button related styles
+*/
+
+.profile-submit-button { 
+	background:url(/images/layout_v2/profile/save-changes.png) 0 0 no-repeat !important;
+	width:220px !important;
+	height:44px !important;
+	border:none !important;
+	cursor:pointer;
+	margin:0;
+	padding:0 !important;
+    
+    &:hover {
+        background:url(https://cdn1.shipserv.com/images/layout_v2/profile/save-changes.png) 0 -44px no-repeat !important;
+    }
+}
+
+.profile-update-pass-button {
+	background:url(/images/layout_v2/profile/update-password.png) 0 0 no-repeat !important; 
+	width:220px !important;
+	height:44px !important;
+	border:none !important;
+	cursor:pointer;
+	margin:0;
+	padding:0 !important;
+    
+    &:hover {
+        background:url(https://cdn1.shipserv.com/images/layout_v2/profile/update-password.png) 0 -44px no-repeat !important;
+    }
+}
+
+.add-button { 
+	float:right; 
+	margin-top:15px; 
+}

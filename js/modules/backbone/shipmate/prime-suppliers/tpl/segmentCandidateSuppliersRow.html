@@ -1,0 +1,32 @@
+<td class="left">{{relevance}}</td>
+<td class="left">{{id}}</td>
+<td class="left">{{name}}</td>
+<td class="center" title="{{country.name}}">{{country.code}}</td>
+<td>{{formatNumRoundOne monetisation}}</td>
+<td class="center">
+	{{#if previouslyTargeted}}Y{{else}}N{{/if}}
+</td>
+<td class="center small">{{#if autoMatch.enabled}}<img src="/img/prime-supplier/greentick.png" alt="check" />{{/if}}</td>
+<td>{{formatNumRound gmv.total.gmv}}</td>
+<td {{#ifCond gmv.trend.positive 1}}class="up"{{/ifCond}}{{#ifCond gmv.trend.positive 2}}class="down"{{/ifCond}}>
+	{{#ifCond gmv.trend.positive 1}}
+		<img src="/img/prime-supplier/up.png" border="0" alt="up" />
+	{{/ifCond}}
+	{{#ifCond gmv.trend.positive 2}}
+		<img src="/img/prime-supplier/down.png" border="0" alt="down" />
+	{{/ifCond}}
+	{{#ifCond gmv.trend.positive 1}}+{{/ifCond}}{{formatNumRoundOne gmv.trend.rate}}
+</td>
+<td>{{formatNumRoundOne responsiveness.rate}}</td>
+<td>{{competitiveness.eventCount}}</td>
+<td>{{formatNumRoundOne competitiveness.winRate}}</td>
+<td>{{formatNumRoundOne competitiveness.cheapestRate}}</td>
+<td>
+	<a href="#" class="actionButton moveUp" title="Promote"><img src="/img/prime-supplier/roundarrowup.png"></a> 
+	<a href="/reports/gmv?tnid={{id}}" class="actionButton money" title="GMV Report" target="_blank"><img src="/img/prime-supplier/dollar.png"></a> 
+	<a href="/supplier-conversion?tnid={{id}}" class="actionButton check" title="Conversions" target="_blank"><img src="/img/prime-supplier/tick.png"></a> 
+	<a href="/supplier/profile/s/{{id}}" class="actionButton view" title="View" target="_blank"><img src="/img/prime-supplier/eye.png"></a> 
+	<a href="/admin" class="actionButton edit" title="Edit profile" target="_blank"><img src="/img/prime-supplier/edit.png"></a>
+	<a href="/reports/supplier-stats?tnid={{id}}" class="actionButton graph" title="Supplier stats" target="_blank"><img src="/img/prime-supplier/graph.png"></a> 
+	<a href="#" class="actionButton text" title="Automatch settings"><img src="/img/prime-supplier/a.png"></a> 
+</td>

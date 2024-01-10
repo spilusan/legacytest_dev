@@ -1,0 +1,109 @@
+<?php
+$this->CDNLink()->appendStylesheet('/css/endorsements.css');
+$this->CDNLink()->appendStylesheet('/css/textboxlist.css');
+$this->CDNLink()->appendStylesheet('/css/supplier/supplier.css');
+$this->CDNLink()->appendStylesheet('/css/supplier/dt.css');
+
+$this->headTitle('DanishTools, Special Tools, Non Standard Tools, Odd Sizes of Thread Cutting Tools', 'SET');
+$this->headMeta()->appendName('description', 'DANISHTOOLS.com - Specialist High Quality Cutting Tools, Select from a wide range of Special Non Standard Tools, Odd Sizes not Usually Sourced from Stock');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Search Results',
+						   'url'  => $this->backToSearch()->getUrl()),
+					 array('name' => 'Supplier Profile',
+						   'url'  => '/supplier/profile/'));
+?>
+<div id="main_content_area">
+	<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+	<div class="content_wide">
+		<div class="content_wide_header">
+
+			<h1 class="profile">DANISHTOOLS.com</h1>
+			
+			<h2>Copenhagen, Denmark</h2>
+			
+			<a href="/enquiry/index/clearBasket/1/tnid/<?=$this->tnid;?>" rel="nofollow" class="send_enquiry_button"></a>
+			
+		</div>
+		<div class="content_wide_nav">
+			<ul>
+				<li class="off" id="profile_toggle">
+					<a href="/supplier/profile/s/danishtools-com-<?=$this->tnid;?>" class="profile_toggle">Profile</a>
+				</li>
+				<li class="off" id="contact_toggle">
+					<a href="/supplier/profile/s/danishtools-com-<?=$this->tnid;?>#contact_box" class="contact_toggle">Contact</a>
+				</li>
+				<li class="off" id="reviews_toggle">
+					<a href="/reviews/supplier/s/danishtools-com-<?=$this->tnid;?>#reviews" class="reviews_toggle" id="reviewsToggleText">Reviews</a>
+				</li>
+				<li class="off" id="catalogue_toggle">
+					<a class="catalogue_toggle" href="/supplier/profile/s/danishtools-com-<?=$this->tnid;?>#catalogue">Catalogue</a>
+				</li>
+			</ul>
+		</div>
+		<div class="content_wide_body">
+			<div class="cont">
+				<div class="top"></div>
+				<div class="image">
+					<img src="/img/supplier/dt/hand-machine-taps.png" alt="DanishTools Non Standard Special Tools" title="DanishTools Non Standard Special Tools" />
+				</div>
+				<div class="textContainer">
+					<div class="left">
+						<h1>SPECIAL TOOLING</h1>
+					</div>
+					<div class="right">
+						<p class="bm">
+							<strong>FOR REQUESTS - PLEASE STATE:</strong><br />
+							Type, Thread Type, Size – in detail
+						</p>
+					</div>
+					<div class="text">
+						<p>
+							<strong>DANISHTOOLS.com</strong> is based on more than 100 years of production of thread cutting tools. We carry odd sizes in stock, and have a number of ways to help if you have a request for a non standard thread cutting tool.
+						</p>
+						<p>
+							<strong>Special tools in stock</strong><br />
+							We have a range of special tools and odd sizes of thread cutting tools not usually sourced from stock.
+						</p>
+						<p>
+							<strong>Special tools through change of standard tools</strong><br />
+							Danishtools.com can change the cutting angles on standard thread cutting tools to conform to your requirements, so the tool can be used in brass, cast iron or other material. We offer this service on many standard thread cutting tools.
+						</p>
+						<p>
+							<strong>Production of special tools:</strong><br />
+							We can make the physical dimensions on request.<br /><br />
+							Special request for:<br />
+							<span>
+								- length, shank, cutting length and coating<br />
+								- tolerance of the thread<br />
+								- diameter or pitch of the thread
+							</span>
+						</p>
+						<p>
+							<strong>Design of special tools:</strong><br />
+							The staff of Danishtools.com is expert in the design and production of threads. All special designs are carried out in close cooperation with the customer.<br />
+							Send a drawing or a sketch, and let us take it from there. We can offer tolerances within microns, both in cylindrical grinding and thread cutting. We also offer custom made pitches or multiple runs on the grinding.
+						</p>
+						<p>
+							<strong>About DANISHTOOLS.com</strong><br />
+							The Thürmer family has produced thread cutting tools since 1898, when Fritz. Chr. Thürmer invented and patented the square die and founded the company in Denmark. Erick Thürmer is the great-grandson and fourth generation in the tread cutting company. He is the founder of DANISHTOOLS.com and established the company with the intention to rethink the business model and secure the continued production of high quality thread cutting tools, which the family name has represented for over 100 years.
+						</p>
+					</div>
+				</div>
+				<div class="logo">
+					<img src="/img/supplier/dt/dn-logo.png" border="0" alt="Danishtools Thread Cutting Tools since 1898" title="Danishtools Thread Cutting Tools since 1898" />
+					<div>Danishtools.com<br />
+					Info@danishtools.com<br />
+					Copenhagen, Denmark<br />
+					Tel: +45 7027 5727 Fax: +45 3173 2639</div>
+				</div>
+			</div>
+		</div>
+		<div class="content_wide_footer_shadow"></div>
+	</div>
+	<div class="zone">
+		<div style="padding-top: 20px;"></div>
+		<?php echo $this->partial('general-google-ads.phtml'); ?>
+	</div>
+</div>

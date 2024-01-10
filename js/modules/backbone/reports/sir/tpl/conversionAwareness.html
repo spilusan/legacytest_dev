@@ -1,0 +1,38 @@
+			<div class="graph">
+				<a href="onboard" class="cHelp light"></a>
+				<div class="clear"></div>
+				<p>Onboard influencer exposure</p>
+				{{#if hasSpinner}}
+				<div class="value">
+					<div class="spinnerIcon"></div>
+				</div>
+				{{else}}
+				<div class="value {{#ifCond brand.onboardInf 0}}red{{/ifCond}}">{{brand.onboardInf}}</div>
+				{{/if}}
+				<a href="/info/im-a-supplier/get-on-board-with-mariners-annual/" class="button yellow small"><img src="/img/icons/small/attention-black.png" target="_blank" alt="Improve" border="0" />Improve</a>
+			</div>
+			<div class="graph">
+				<a href="banner" class="cHelp light"></a>
+				<div class="clear"></div>
+				<p>Banner impressions</p>
+				{{#if hasSpinner}}
+				<div class="value">
+					<div class="spinnerIcon"></div>
+				</div>
+				{{else}}
+				<div class="value {{#ifCond brand.banner-impression 0}}red{{/ifCond}}" style="margin-bottom: 26px;">{{formatNumRound brand.banner-impression}}</div>
+				{{/if}}
+				<a href="/info/im-a-supplier/banner-advertising-on-pages/" target="_blank" class="button yellow small"><img src="/img/icons/small/attention-black.png" alt="Improve" border="0" />Improve</a>
+			</div>
+			<div class="graph">
+				<a href="search" class="cHelp light"></a>
+				<div class="clear"></div>
+				<p>Search impressions</p>
+				{{#if hasSpinner}}
+				<div class="value">
+					<div class="spinnerIcon"></div>
+				</div>
+				{{else}}
+				<div class="value">{{formatNumRound brand.search-impression}}</div>
+				{{/if}}
+			</div>

@@ -1,0 +1,23 @@
+<?php
+$this->headLink()->appendStylesheet('/css/uniform.rfq.css')
+	 ->appendStylesheet('/css/rfq.css');
+?>
+<div id="breadcrumbs">
+	<span class="title">You are here: </span>
+	<ul>
+		<li>
+			<a href="/">Home</a>
+		</li>
+		<li class="current">
+			<span></span>
+			Activities
+		</li>
+	</ul>
+</div>
+
+<div id="body">
+	<h1 class="styled">Activities</h1>
+	<div id="content">
+		<?php echo $this->partial('profile/user-activity-stats.phtml', array('data' => $this->userActivityStats)); ?>
+	</div>
+</div>

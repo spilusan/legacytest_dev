@@ -1,0 +1,19 @@
+/*
+Document   : profile/targetCutomers.scss
+Created on : Feb 11, 2016, 11:00:43 PM
+Author     : gly
+Description: combining partials for target customers styles
+*/
+
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/min";
+@import "font-awesome";
+
+@import "2016_campfire/main/colours";
+@import "2016_campfire/main/buttons";
+@import "2016_campfire/main/forms";
+@import "2016_campfire/main/tooltip";
+@import "2016_campfire/components/shipservPopup/index";
+@import "partials/def/modal_new";
+@import "partials/profile/targetCustomers/content";

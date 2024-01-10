@@ -1,0 +1,235 @@
+form {
+	width: 915px;
+	/* margin: 0 0 20px 0; */
+	.error {
+		padding-bottom: 10px;
+	}
+
+	&.new {
+		input[type="text"] {
+			margin-bottom: 6px;
+		}
+
+		.selector {
+			margin-bottom: 6px;
+			margin-top: -4px;
+		}
+
+		.help {
+			position: relative;
+			top: 2px;
+		}
+
+		.hidden {
+			display: none;
+		}
+
+		.changedMsg {
+			font-size: 11px;
+			font-weight: bold;
+			margin-top: 15px;
+		}
+
+		.filters {
+			position: relative;
+			display: block;
+			float: left;
+			width: 685px;
+			height: 128px;
+			background-color: #d6dce4;
+			margin-right: 3px;
+			padding: 17px 10px 13px 10px;
+			@include border-radius(6px 0 0 6px);
+			behavior: url(/webreporter/css/PIE.htc);
+
+			&.sub {
+				height: 185px;
+			}
+
+			&.analysis {
+				height: 210px;
+
+				&.sub {
+					height: 267px;
+				}
+			}
+
+			&.adv {
+				height: 270px;
+
+				&.sub {
+					height: 331px;
+				}
+			}
+
+			label {
+				display: block;
+				float: left;
+				font-size: 11px;
+				color: #525c64;
+				font-weight: bold;
+			}
+
+			.delayInfo {
+				font-size:11px;
+				margin-top: 10px;
+			}
+
+			fieldset {
+				&.reportInfo {
+					float: left;
+					width: 435px;
+					border-right: 1px dotted #6b6e72;
+
+					label {
+						width: 100px;
+					}
+
+					select {
+						width: 320px;
+					}
+
+					.selector {
+						width: 310px;
+
+						span {
+							width: 284px;
+						}
+					}
+
+					#spbAnalysis1 {
+						input[name="rptAsOfDate"] {
+							height:15px;
+							width:136px;
+						}
+
+						label {
+							width: 150px;
+						}
+
+						.advancedOpts {
+							input[type="text"] {
+								width:136px;
+							}
+						}
+					}
+				}
+
+				&.reportDates {
+					padding-left: 15px;
+
+					label {
+						width: 73px;
+					}
+
+					select, input, textarea {
+						width: 137px;
+					}
+
+					input[name="fromDate"], input[name="toDate"] {
+						height:15px;
+						width:136px;
+					}
+
+					textarea {
+						height: 60px;
+					}
+
+					.selector {
+						width: 150px;
+
+						span {
+							width: 124px;
+						}
+					}
+
+					#spbAnalysis2{
+						label {
+							width: 140px;
+						}
+
+						.advancedOpts {
+							input[type="text"] {
+								width:50px;
+								margin-top:1px;
+							}
+						}
+
+						.pdfDown {
+							a {
+								font-size: 11px;
+								vertical-align: 40%;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		.actions {
+			position: relative;
+			display: block;
+			float: right;
+			width: 186px;
+			height: 128px;
+			background-color: #bec4cb;
+			padding: 10px 10px 20px 10px;
+			@include border-radius(0 6px 6px 0);
+			behavior: url(/webreporter/css/PIE.htc);
+
+			&.sub {
+				height: 185px;
+			}
+
+			&.analysis {
+				height: 210px;
+
+				&.sub {
+					height: 267px;
+				}
+			}
+
+			&.adv {
+				height: 270px;
+
+				&.sub {
+					height: 331px;
+				}
+			}
+
+			hr {
+				border:0;
+				border-top: 1px dotted #686c6f;
+			}
+
+			input.button.large {
+				padding-right: 38px;
+				padding-left: 38px;
+			}
+
+			input[name="runReport"] {
+				margin-bottom: 10px;
+			}
+			
+
+			button[name="csvExport"] {
+				padding-left: 49px;
+				padding-right: 49px;
+				margin-bottom: 10px;
+			}
+
+			select {
+				width: 186px;
+				margin-top: 2px;
+			}
+
+			.selector {
+				width: 170px;
+
+				span {
+					width: 144px;
+				}
+			}
+		}
+	}
+}

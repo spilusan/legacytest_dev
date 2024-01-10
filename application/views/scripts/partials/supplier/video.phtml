@@ -1,0 +1,27 @@
+<?php
+$video = current($this->videos);
+?>
+
+<!--SVP embed code begin-->
+<div id="svp_playera39q9rzlfg0s" style="width:440px;height:261px;position:relative;">
+	<div style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; background:#fff;">
+		<div id="svp_no_flash_layera39q9rzlfg0s" style="margin:auto; position:absolute; top:50%; left:50%; margin-left:-150px; margin-top:-50px; color:#fff; width:300px; height:120px; text-align:center; font-size:11px; font-family:Arial, Helvetica, sans-serif; display:none;">
+			<p align="left">
+				<a href="https://get.adobe.com/flashplayer/" target="_blank"><img border="0" src="https://play.streamingvideoprovider.com/img/flash_icon.png" style="float:left; width:80px; margin-right:11px;"/></a>
+				<b style="font-size:14px;">ADOBE FLASH PLAYER</b><br />
+				You are either missing or need to update your <b>ADOBE Flash Player</b> in order to see this video .<br /><br />
+				<a style="color:#3ac9f8; text-decoration:none; font-size:11px; font-weight:bold;" href="https://get.adobe.com/flashplayer/" target="_blank">Download Now</a>
+			</p>
+		</div>
+	</div>
+	VIDEO PLAYER by <a href="http://www.streamingvideoprovider.co.uk" title="stream services">video hosting</a>
+</div>
+<script language="javascript" type="text/javascript" src="https://play.streamingvideoprovider.com/js/dplayer.js"></script>
+<script language="javascript">
+<!--
+var vars = {clip_id:"<?php echo $video['clipKey']; ?>",player_color1:"#c8c8c8",player_color:"#a6a6a6",transparent:"false",pause:"1",repeat:"",bg_color:"#FFFFFF",fs_mode:"2",no_fullscreen:"0",no_controls:"",start_img:"1",start_volume:"100",close_button:"",brand_new_window:"1",auto_hide:"1",prebuffer:"",stretch_video:"",player_align:"NONE",offset_x:"",offset_y:"",bg_transp:"",player_color_ratio:0.6,skinAlpha:"50",colorBase:"#555555",colorIcon:"#ffffff",colorHighlight:"#777777"};
+var svp_player = new SVPDynamicPlayer("svp_playera39q9rzlfg0s", "", "440", "261", {use_div:"svp_playera39q9rzlfg0s",skin:"3"}, vars);
+svp_player.execute();
+//-->
+</script>
+<noscript>Your browser does not support JavaScript! JavaScript is needed to display this video player from <a href="http://www.streamingvideoprovider.co.uk" title="Streaming Video Hosting">Streaming Video Hosting</a></noscript>

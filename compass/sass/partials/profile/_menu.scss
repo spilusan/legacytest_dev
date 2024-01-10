@@ -1,0 +1,38 @@
+/*
+Document   : _menu
+Created on : Jun 14, 2012, 10:25:59 AM
+Author     : gly
+Description: Profile menu styles
+*/
+
+#profile-menu {
+	background-image: none;
+	padding-top: 0;
+    
+    h3 {
+        width: 161px;
+        margin:0;
+        font-size: 15px;
+        font-weight: normal;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding: 0 14px;
+        white-space: nowrap;
+        
+        &.company-menu {
+            margin-top: 15px;
+        }
+    }
+    
+    >ul {
+        padding-top: 5px;
+        
+        li{
+            &.profile-menu-item-selected {
+                span {
+                    color:#000;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,86 @@
+<?
+ /**
+  * Textfield element for forms-complex.css form style
+  * @param String name - parameter name
+  * @param String label - label to display for field. Empty label suppresses <label> element altogether
+  * @param String value - default value
+  * @param Boolean readonly - default false
+  */
+
+  static $instanceId;
+  if( $this->instanceId == "" ) $this->instanceId = 1;
+  else $this->instanceid++;
+  
+  //Defaults
+  if (!isset($this->value)) $this->value = '';
+  if (!isset($this->readonly)) $this->readonly = false;
+  if (!isset($this->required)) $this->required = false;
+
+  $countryCodes = $this->phone()->getDataForCountryCode();
+  
+  $divClass = 'field textfield' . ($this->hasErrors ? ' invalid' : '') . (isset($this->div['class']) ? ' '.$this->div['class'] : '') . ($this->required ? ' required' : '');
+  $inputClass = 'textfield' . ($this->hasErrors ? ' invalid' : '') . ' clearfix' . ($this->required ? ' required' : '') . (empty($this->label) ? ' nolabel' : '') . (isset($this->input['class']) ? ' '.$this->input['class'] : '') . ($this->readonly ? ' readonly' : '' );
+  $labelClass = ($this->hasErrors ? 'invalid' : '') . ($this->required ? ' required' : '') . $this->readonly ? ' disabled' : '' ;
+  
+  // get selected country code
+  $result = preg_match('/(\+[0-9]+)/', $this->value, $matches);
+  $valueCC = $matches[0];
+  $valueTN = str_replace( $valueCC, "", $this->value );
+  
+  // get additional notes
+  $result = preg_match('/\(([\s]{0,})([0-9]+)([\s]{0,})([A-Za-z]+)([\s]{0,})\)|\(([\s]{0,})([A-Za-z]+)([\s]{0,})([0-9]+)([\s]{0,})\)/', $this->value, $matches);
+  $valueAN = $matches[0];  
+  $valueTN = str_replace( $valueAN, "", $valueTN );
+  
+  $countryCode = array( "name" => $this->name . "-cc", "value" => $valueCC );
+  $phoneNumber = array( "name" => $this->name . "-tn", "value" => $valueTN );
+  $additionalNotes = array( "name" => $this->name . "-an", "value" => $valueAN );
+  
+  // get unique id of this partial 
+  $partialId = $this->phone()->getPhonePartialInstanceId();
+	  
+  foreach( $countryCodes as $code => $name ){
+	$options["+" . $code ] = $name . ' (+' . $code . ')';
+  }
+  
+?>
+
+<div class="<?=$divClass?>">
+	<?if (!empty($this->label)):?>
+		<label class="<?=$labelClass?>"><?=$this->label?><?if($this->required){?><span class="asterisk">*</span><?}?></label>
+	<?endif?>
+
+	<?=$this->partial('/forms/regular/select.phtml',
+		array(
+			'name'      => $countryCode["name"],
+		  	'label'     => '&nbsp;',
+			'required'	=> true,
+			'selected'  => $valueCC,
+			'options'   => $options,
+			'select'    => array('attr' => array('style' => 'float:left;', 'id' => 'p-cc' . $partialId ), 'class' => 'select')
+	 ))?>
+	
+	<?=$this->partial('/forms/regular/textfield.phtml',
+		array(
+			'name'      => $phoneNumber["name"],
+		  	'label'     => '&nbsp;',
+			'required'	=> false,
+			'value'     => $phoneNumber["value"],
+			'input'		=> array('attr' => array('autocomplete' => 'off', 'id' => 'p-tn' . $partialId), 'class' => 'buyer')
+	 ))?>
+	 
+	<?=$this->partial('/forms/regular/textfield.phtml',
+		array(
+			'name'      => $additionalNotes["name"],
+		  	'label'     => '&nbsp;',
+			'required'	=> false,
+			'value'     => $additionalNotes["value"],
+			'input'		=> array('attr' => array('autocomplete' => 'off', 'id' => 'p-an' . $partialId), 'class' => 'buyer')
+	 ))?>	 
+		
+	<div class="errorContainer">
+		<div class="errorMessage">
+			<div class="bottom"></div>
+		</div>
+	</div>
+</div>

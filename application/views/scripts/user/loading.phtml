@@ -1,0 +1,25 @@
+<?php
+	$this->CDNLink()->appendStylesheet('/css/loading-error.css');
+?>
+
+<div class="error clearfix">
+	<div class="messages">
+		<div style="background-color:#fff; width: 160px; border: 1px solid #d6dce4; margin-left:-40px; padding: 40px 40px;">
+        	<img src="/img/loader/gears.svg" style="margin-left:10px;" />
+		</div>
+
+		<div style="margin-left:-80px; color: #525c64; margin-top:50px; font-size:22px; font-weight:bold;">
+			This page is currently loading
+		</div>
+		<div style="margin-left:-50px; color: #525c64; margin-top:10px; font-size:14px; font-weight:normal;">
+			Please note, this may take a few minutes
+		</div>
+	</div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            location.href="<?= $this->params['url']?>";
+        });
+    </script>
+</div>

@@ -1,0 +1,11 @@
+<?
+	$companyInfo = $this->brandAuthRequest->getCompanyInfo();
+	$brandInfo = $this->brandAuthRequest->getBrandInfo ();
+?>
+<p>
+Dear supplier,
+
+<br/><br/>Please be aware that your ShipServ Pages listing will temporarily show <?php echo $brandInfo["NAME"]?> as a 'pending' brand association. This is because <?php echo $this->data['company']['name'] ?> have decided to manage their brand presence on ShipServ Pages more actively, including a review of suppliers listing their brand.
+
+<br/><br/>As soon as <?php echo $this->data['company']['name'] ?> have completed their review, your Pages listing will be updated accordingly. This e-mail is for your information only: you need take no action.
+</p>

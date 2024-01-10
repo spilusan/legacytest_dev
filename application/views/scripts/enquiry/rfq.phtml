@@ -1,0 +1,176 @@
+<?php
+$this->headLink()->appendStylesheet('/css/uniform.rfq.css')
+				 ->appendStylesheet('/css/rfq.css');
+
+$this->getHelper('Requirejs')->addModule('backbone/rfq/views/mainView');
+
+// supported filetypes
+$data['fileTypes'] = implode("|", $this->acceptedFileTypes);
+$data['fileCount'] = $this->acceptedFileCount;
+
+// back to search result url
+$data['backToSearchUrl'] = $this->backToSearch()->getUrl();
+
+if ($this->params['contact']) {
+    $data['contact'] = true;
+}
+
+// all unit of measurements
+foreach($this->uom as $u)  {
+	$data['uom'][] = array("id" => $u['MSU_CODE'], "name" => $u['MSU_CODE'] . " - " . $u['MSU_CODE_DESC']);
+}
+
+// put all countries
+foreach($this->country as $u) {
+    if ((int)$u['IS_RESTRICTED'] !== 1) {
+        $data['country'][] = array('code' => $u['CNT_COUNTRY_CODE'], 'name' => $u['CNT_NAME']);
+    }
+}
+
+// put all selected suppliers
+foreach ((array)$this->selectedSupplier as $tnid => $supplier) {
+    $supplierData = array("tnid" => $tnid, "name" => $supplier);
+
+    if ($this->params['clearBasket'] == 1) {
+        $supplier = Shipserv_Supplier::getInstanceById($tnid);
+        $supplierData['contactDetail'] = $supplier->getContactDetail();
+    }
+    $data['selectedSupplier'][] = $supplierData;
+}
+
+// passing unique hash
+$data['hash'] = $this->hash;
+
+// put user details to the JSON object
+if ($this->user !== false) {
+	$data['user']['userId'] = $this->user->userId;
+	$data['user']['email'] = $this->user->email;
+	$data['user']['name'] = $this->user->firstName." ".$this->user->lastName;
+	$data['user']['companyName'] = (!is_null($this->activeCompany->company->name) ? $this->activeCompany->company->name : $this->user->companyName);
+    $data['user']['companyTnid'] = $this->activeCompany->id;	
+}
+
+// captcha related
+if (isset($this->captcha)) {
+	$data['captcha']['id'] = $this->captchaId;
+	$data['captcha']['img']['url'] = $this->captcha->getImgUrl() . $this->captcha->getId() . $this->captcha->getSuffix();
+	$data['captcha']['img']['height'] = $this->captcha->getHeight();
+	$data['captcha']['img']['width'] = $this->captcha->getWidth();
+}
+
+$data['countryIsCompulsory'] = (($this->countryIsCompulsory === true)?true:false);
+
+if($this->params['ProfileRecId'] && $this->params['ProfileRecId'] !== '' && $this->params['ProfileRecId']!==null) {
+    $data['ProfileRecId'] = $this->params['ProfileRecId'];
+}
+// encoding to JSON
+$data = json_encode($data);
+
+// pass this json to frontend
+$this->getHelper('Requirejs')->addDefinition('rfq/rfqData', $data);
+
+if ($this->params['clearBasket'] == 1 && $this->params['integration'] != 1) {
+    $this->getHelper('Requirejs')->addDefinition('rfq/solo', 1);
+} else {
+    $this->getHelper('Requirejs')->addDefinition('rfq/solo', 0);
+}
+// breadcrumbs
+$breadcrumbs[] = array('name' => 'Home', 'url'  => '/search');
+$breadcrumbs[] = array('name' => 'Search Results', 'url'  => $this->backToSearch()->getUrl());
+if ($this->params['tnid'] != '') {
+	$supplier = Shipserv_Supplier::getInstanceById( $this->params['tnid'] );
+	$breadcrumbs[] = array('name' => $supplier->name, 'url'  => $supplier->getUrl());
+}
+$breadcrumbs[] = array('name' => 'New RFQ', 'url'  => '');
+
+?>
+
+<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+
+
+<!--[if IE 7]>
+    <link href="/css/ie/rfq-ie7.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+
+<?php
+//@todo: Attila, please pass this error into your JS and style it appropriately 
+if (lg_count($this->errors['top']) > 0) {
+	echo "Please check the following:";
+	echo "<ul>";
+	foreach ($this->errors['top'] as $error) {
+		echo "<li>" . $error . "</li>";
+	}
+	echo "</ul>";
+}	
+	
+?>
+
+<div id="body">
+</div>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody"></div>
+</div>
+<div id="modalContact">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody"></div>
+</div>
+
+
+<!-- Templates for jquery multi file upload plugin file list display -->
+<!-- The template to display files available for upload -->
+<script id="template-upload" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-upload fade">
+        <td class="name"><span>{%=file.name%}</span></td>
+        <td class="size"><span>{%=file.size%}</span></td>
+        {% if (file.error) { %}
+            <td><span class="error">Error {%=file.error%}</span></td>
+        {% } else if (o.files.valid && !i) { %}
+            <td>
+                <div class="progress progress-success progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="bar" style="width:0%;"></div></div>
+            </td>
+        {% } else { %}
+            <td></td>
+        {% } %}
+        <td class="cancel">{% if (!i) { %}
+            <button class="button white small">
+                Cancel
+            </button>
+        {% } %}</td>
+    </tr>
+{% } %}
+</script>
+<!-- The template to display files available for download -->
+<script id="template-download" type="text/x-tmpl">
+{% for (var i=0, file; file=o.files[i]; i++) { %}
+    <tr class="template-download fade">
+        {% if (file.error) { %}
+            <td class="name"><span>{%=file.name%}</span></td>
+            <td class="size"><span>{%=file.size%}</span></td>
+            <td><span class="error">Error {%=file.error%}</span></td>
+        {% } else { %}
+            <td class="name">
+                <a href="{%=file.url%}" title="{%=file.name%}" rel="{%=file.thumbnail_url&&'gallery'%}" download="{%=file.name%}">{%=file.name%}</a>
+            </td>
+            <td class="size"><span>{%=file.size%}</span></td>
+            <td></td>
+        {% } %}
+        <td class="delete">
+            <button class="button white small" data-type="{%=file.delete_type%}" data-url="{%=file.delete_url%}"{% if (file.delete_with_credentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                Delete
+            </button>
+            <input type="checkbox" name="delete" value="1">
+        </td>
+    </tr>
+{% } %}
+</script>
+
+<script type="text/javascript">
+    setTimeout(function(){
+        var a=document.createElement("script");
+        var b=document.getElementsByTagName("script")[0];
+        a.src=document.location.protocol+"//dnn506yrbagrg.cloudfront.net/pages/scripts/0017/6893.js?"+Math.floor(new Date().getTime()/3600000);
+        a.async=true;a.type="text/javascript";b.parentNode.insertBefore(a,b)}
+    , 1);
+</script>

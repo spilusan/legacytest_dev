@@ -1,0 +1,93 @@
+<h2>Transaction Details</h2>
+
+<form>
+    <fieldset class="bordered" id="document">
+        <div class="loader">
+            <div class="label">
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i> Loading...
+            </div>
+        </div>
+        <label class="pull-right">Status: <strong id="documentStatus"></strong></label>
+        <h3>Document</h3>
+        <div class="container">
+            <div class="gr-6 gr-12@tablet">
+                <div class="field">
+                    <label>Transaction ID</label>
+                    <input class="input-control md" disabled="disabled" type="text" id="transactionId" />
+                </div>
+                <div class="field">
+                    <label>Transaction Date</label>
+                    <input class="input-control lg transactionDate" disabled="disabled" type="text" id="transactionDate" />
+                </div>
+                <div class="field">
+                    <label>Buyer Name</label>
+                    <input class="input-control lg" disabled="disabled" type="text" id="buyerName" />
+                </div>
+                <div class="field">
+                    <label>Buyer ID</label>
+                    <input class="input-control md" disabled="disabled" type="text" id="buyerId" />
+                </div>
+                <div class="field">
+                    <label>Supplier Name</label>
+                    <input class="input-control lg" disabled="disabled" type="text" id="supplierName" />
+                </div>
+                <div class="field">
+                    <label>Supplier ID</label>
+                    <input class="input-control md" disabled="disabled" type="text" id="supplierId" />
+                </div>
+            </div>
+            <div class="gr-6 gr-12@tablet">
+                <div class="field">
+                    <label>File name</label>
+                    <div class="group">
+                        <input class="input-control lg" type="text" disabled="disabled" id="fileName" />
+                        <a class="btn sm blue input-control" id="view-document">View</a>
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="group">
+                        <label>Type</label>
+                        <input class="input-control sm" disabled="disabled" type="text" id="docType" />
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="group">
+                        <label>Format</label>
+                        <input class="input-control sm" disabled="disabled" type="text" id="fileFormat" />
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Config</label>
+                    <div class="group">
+                        <input class="input-control md" disabled="disabled" type="text" id="configId" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <fieldset class="bordered" id="remarks">
+        <div class="loader">
+            <div class="label">
+                <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i> Loading...
+            </div>
+        </div>
+        <h3>Remarks</h3>
+        <div class="field">
+            <textarea class="input-control" disabled="disabled" id="remarks"></textarea>
+        </div>
+    </fieldset>
+
+    <div id="parsedDetails"></div>
+</form>
+
+<div class="content">
+    <div class="gr-6">
+        <a href="#" class="btn transparent transparent-blue" show-transactions><i class="fa fa-chevron-left" aria-hidden="true"></i> Back to Transactions</a>
+    </div>
+    <div class="gr-6 gr-12@tablet text-right">
+        <a href="#" class="btn blue" id="process"><i class="fa fa-refresh" aria-hidden="true"></i> Reprocess</a>
+        <a href="#" class="btn blue" id="update"><i class="fa fa-floppy-o" aria-hidden="true"></i> Update</a>
+        <a href="#" class="btn red" id="mark-unfixable"><i class="fa fa-ban" aria-hidden="true"></i> Mark as Unfixable</a>
+    </div>
+</div>

@@ -1,0 +1,23 @@
+<ul class="jqueryfiletree" style="display: none;">
+	<?php                                        
+	foreach ($this->catalogue['folders'] as $document)
+	{
+		if ($this->catalogue['itemsFound'] < 1)
+		{
+			?> 
+			<li class="directory collapsed">
+				<a href="/supplier/list/format/html/tnid/<?php echo $document['id'];?>" id="<?php echo $this->tnid; ?>" name="<?php echo $this->catId; ?>" class="sidebodge" rel="/<?php echo $document['id']; ?>/"><div style="display: block; width: 170px; overflow: hidden; text-overflow: ellipsis;"><?php echo $document['name'];?></div></a>
+			</li> 
+			<?php
+		}
+		else
+		{
+			?>
+			<li id="<?php echo $document['id'];?>" class="file ext_txt collapsed" style="background: none;">
+				<a href="#" rel="<?php echo $document['id']; ?>"><?php echo $document['name']; ?></a>
+			</li>
+			<?php
+		}   
+	}
+	?>
+</ul>

@@ -1,0 +1,53 @@
+<style>
+    div#container {
+        margin-left: 50px;
+    }
+
+    div#container h1 {
+        font-weight: bold;
+        font-size: 12pt;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    div#container pre {
+        font-family: Consolas, Courier New;
+        margin-left: 50px;
+    }
+
+    div#container p {
+        margin-bottom: 20px;
+        margin-top: 10px;
+    }
+</style>
+
+
+<div id="container">
+    <h1>Match tokenisation test page</h1>
+
+    <form action="/match/explain-tags" method="POST">
+        <textarea name="rfqText" cols="80" rows="10"><?php
+        print htmlentities($this->rfqText);
+        ?></textarea>
+
+        <p><input type="submit" value="Tokenise"></p>
+    </form>
+    <?php
+    if (!empty($this->results)) {
+        ?>
+        <hr />
+        <?php
+        foreach ($this->results as $group) {
+            ?><h1><?php echo $group['label']; ?> (<?php printf('%.3f', $group['time']); ?> sec)</h1>
+            <?php
+            if (is_array($group['value'])) {
+                ?><pre><?php print_r($group['value']); ?></pre><?php
+            } else {
+                ?>
+                <p><?php echo $group['value']; ?></p>
+                <?php
+            }
+        }
+    }
+    ?>
+</div>

@@ -1,0 +1,223 @@
+<?php
+$this->compressedScript()->appendFile('/js/pending-actions.js')
+						 ->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/company-people.js');
+
+$this->headLink()->appendStylesheet('/css/transition.css');						   
+$this->headLink()->appendStylesheet('/css/profile.css');
+$this->headLink()->appendStylesheet('/css/profile/company-profile.css');
+$this->getHelper('Requirejs')->addModule('supplier/profile-completeness');
+$this->requirejs()->addModule('help')
+				  ->addModule('modal');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'User Activity',
+						   'url'  => '/profile/user-activity'));
+
+// redirect user if company changes by the input box on the top
+if( $this->params['id'] != $this->activeCompany->id )
+{
+	?><script>location.href='/profile/company-people/type/<?php echo $this->activeCompany->type?>/id/<?php echo $this->activeCompany->id?>';</script><?php 
+} 
+?>
+
+<style>
+	table{
+		width:100%;
+		margin-top:10px;
+		font-size:14px;
+		margin-bottom:40px;
+        padding:0;
+        table-layout: fixed;
+	}
+    
+    td {
+        padding: 10px !important;
+        line-height: 1.2 !important;
+    }
+    
+    td.white {
+        background: white;
+    }
+</style>
+
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		
+		<div class="content_new-wide_body">
+            <?php
+            echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], 'company-people', $this->pendingUsers, $isAdmin)
+				)
+			);?>
+            <div class="profile-body-right companyProfile">
+				<div class="zz header">
+					<h2>Pages User Activity</h2>
+				</div>
+				<div class="profileContent">	
+
+                        <div>
+                            <p style="font-size: 14px; float: left;">
+                            	This tab and all information on it is only visible to ShipMates. No Customers see this.<br /><Br />
+                            	Activities for <strong><?php echo $this->subject->firstName . " " . $this->subject->lastName . " (" . $this->subject->email . ")"?></strong> from <strong><?php echo $this->period['end']->format("d M Y")?></strong>. 
+                            	<?php echo ($this->report['logins'][0]['date'] != "" ) ? " User last logged in:" . $this->report['logins'][0]['date']: "" ?><br />
+                            	<br />
+                            	Show activity for:
+                            		<label style="display:inline;"><input name="period" type="radio" <?php if( $this->params['period'] == "3" ) echo "checked='checked';"?> onclick="location.href='/profile/user-activity/type/<?php echo $this->params['type']?>/id/<?php echo $this->params['id']?>/userId/<?php echo $this->params['userId']?>?period=3';"> 3 months</label>
+                            		<label style="display:inline;"><input name="period" type="radio" <?php if( $this->params['period'] == "6" || $this->params['period'] == "" ) echo "checked='checked';"?> onclick="location.href='/profile/user-activity/type/<?php echo $this->params['type']?>/id/<?php echo $this->params['id']?>/userId/<?php echo $this->params['userId']?>?period=6';"> 6 months</label>
+                            		<label style="display:inline;"><input name="period" type="radio" <?php if( $this->params['period'] == "12" ) echo "checked='checked';"?> onclick="location.href='/profile/user-activity/type/<?php echo $this->params['type']?>/id/<?php echo $this->params['id']?>/userId/<?php echo $this->params['userId']?>?period=12';"> 12 months</label>
+                            	<br />
+                            </p>
+                            <div class="zz small dblue button" id="back" style="float: right;"><a href="/profile/company-people/type/<?php echo $this->params['type']?>/id/<?php echo $this->params['id']?>/">Back</a></div>
+                            <div class="clear" style="padding-bottom: 10px;"></div>
+
+                            <h3 class="zz grey no-marg"><span style="display: block; float: left;">Views of the RFQ Inbox</span> <div class="inline contextual help" style="float: right; margin-top: 10px; display: block;" data-title="Views of the RFQ Inbox" data-message="<p><strong>Shows when this individual User viewed their RFQ Inbox.</strong></p><p><strong>If you see 'No data found' this User has never viewed their RFQ Inbox.</strong></p><p>To see if other Users of this TNID might have viewed it, select a different User by clicking on ‘Users’ (in the navigation on the left hand side).</p><p>This is only seen by ShipMates, not customers.</p><p>Time period: Only shows views from May 2012 (when this feature was launched).</p>"></div></h3>
+                            <table cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="font-weight: bold;" width="394">Company</td>
+                                    <td style="font-weight: bold;" width="120">Date</td>
+                                    <td style="font-weight: bold;" width="130">Action</td>
+                                </tr>
+                            <?php 
+                            if( lg_count( (array) $this->report['RFQInbox'] ) == 0 )
+					        echo '<tr><td class="white" colspan="3">This user has not done this action (in the time period you selected)</td></tr>';	
+                            
+                            foreach( (array) $this->report['RFQInbox'] as $x)
+                            { 
+                                ?>
+                                <tr>
+                                    <td class="white">
+                                    	<?php 
+                                    		$supplier = Shipserv_Supplier::fetch( $x['id'], null, true );
+   					                			if( $supplier->directoryStatus != "PUBLISHED")
+					                			{
+					                				$s = '<span title="supplier is no longer published">' . $supplier->name . '</span>';
+					                			}
+					                			else
+					                			{
+					                				$s = '<a href="' . $supplier->getUrl() . '" target="_blank" title="' . $supplier->name . '">' . $supplier->name . '</a>';
+					                			}
+					                		echo $s;
+                                   		?>
+                                    </td>
+                                    <td class="white" style="text-align: center"><?= $x['date']?></td>
+                                    <td class="white" style="text-align: center"><a href="/user/switch-company?tnid=v<?= $x['id'] ?>&redirect=/profile/enquiry-browser?tnid=<?= $x['id']?>">Go to RFQ Inbox</a></td>
+                                </tr>
+                                <?php 
+                            }
+                            ?>
+                            </table>
+
+					        <h3 class="zz grey no-marg"><span style="display: block; float: left;">Pages RFQs sent</span><div class="inline contextual help" style="float: right; margin-top: 10px; display: block;" data-title="Pages RFQs sent" data-message="<p>Shows when this individual User sent Pages RFQs and the supplier the RFQ was sent to.</p><p>If you see ‘No data found’ then this User has never sent a RFQ on Pages.</p><p>This is only seen by ShipMates, not customers.</p><p>Time period: as you selected/shown on the buttons at the top.</p>"></div></h3>
+					        <table cellspacing="0" cellpadding="0">
+					        	<tr>
+					                <td style="font-weight:bold" width="394">Subject</td> 
+                                    <td style="font-weight: bold;" width="120">Date</td>
+                                    <td style="font-weight: bold;" width="130">Action</td>
+					         	</tr>
+					        <?php 
+					        if( lg_count( (array) $this->report['enquiries'] ) == 0 )
+					        echo '<tr><td class="white" colspan="3">This user has not done this action (in the time period you selected)</td></tr>';	
+					
+					        $count = 0;
+					        foreach( (array) $this->report['enquiries'] as $x)
+					        {
+					            ?>
+					            <tr class="<?php if ( $count > 10 ) //echo 'hidden'; ?>">
+					                <td class="white" style="display:block; overflow:hidden; word-wrap:break-word;">
+					                	<?= $x['enquiry']->pinSubject?>
+					                	<br />
+					                	Sent to: <?php 
+					                		$s = array();
+					                		foreach( $x['enquiry']->getRecipient() as $row)
+					                		{
+					                			$supplier = Shipserv_Supplier::fetch( $row['PIR_SPB_BRANCH_CODE'], null, true );
+
+					                			if( $supplier->directoryStatus != "PUBLISHED")
+					                			{
+					                				$s[] = $supplier->name;
+					                			}
+					                			else
+					                			{
+					                				$s[] = '<a href="' . $supplier->getUrl() . '" title="' . $supplier->name . '">' . $supplier->name . '</a>';
+					                			}
+					                		}
+					                		echo implode(", ", $s);
+					                	?>
+					                </td> 
+					                <td class="white" style="text-align: center"><?= $x['date']?></td> 
+					                <td class="white" style="text-align: center">
+					                	<a href="/user/switch-company?tnid=v<?= $x['enquiry']->pirSpbBranchCode ?>&redirect=<?= $x['enquiry']->getUrl(true) ?>">Read RFQ</a>
+					                </td> 					                
+					            </tr>
+					            <?php
+					            $count++; 
+					        }
+					        ?>
+					        </table>
+
+                            <h3 class="zz grey no-marg"><span style="display: block; float: left;">Views of the online Supplier Insight Report</span> <div class="inline contextual help" style="float: right; margin-top: 10px; display: block;" data-title="Views of the online Supplier Insight Report" data-message="<p><strong>Shows when this Pages User viewed their online Supplier Insight Report.</strong></p><p><strong>If you see ‘No data found’ then this User has never viewed it.</strong></p><p>To see if other Users of this TNID might have viewed it, select a different User by clicking on ‘Users’ (in the navigation on the left hand side).</p><p>This is only seen by ShipMates, not customers.</p><p>Time period: Only shows views from May 2012 (when the tracking was turned on).</p>"></div></h3>
+                            <table cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="font-weight: bold;" width="394">Company</td>
+                                    <td style="font-weight: bold;" width="120">Date</td>
+                                    <td style="font-weight: bold;" width="130">Action</td>
+                                </tr>
+                            <?php 
+                            if( lg_count( (array) $this->report['SIR'] ) == 0 )
+					        echo '<tr><td class="white" colspan="3">This user has not done this action (in the time period you selected)</td></tr>';	
+					
+                            foreach( (array) $this->report['SIR'] as $x)
+                            {
+                                ?>
+                                <tr>
+                                    <td class="white"><a href="<?php echo $x['url'] ?>" target="_blank"><?php echo $x['name']?></a></td>
+                                    <td class="white" style="text-align: center"><?= $x['date']?></td>
+                                    <td class="white" style="text-align: center"><a href="/reports?tnid=<?= $x['id']?>">Go to SIR</a></td>
+                                </tr>
+                                <?php 
+                            }
+                            ?>
+                            </table>
+                            					        
+                            <h3 class="zz grey no-marg"><span style="display: block; float: left;">Searches on Pages</span><div class="inline contextual help" style="float: right; margin-top: 10px; display: block;" data-title="Searches on Pages" data-message="<p><strong>Shows the searches done on Pages by this individual User.</strong></p><p><strong>If you see ‘No data found’ then this User has not done any searches on Pages (when logged in).</strong></p><p>Any searches done by this User on Pages when they were NOT logged in will NOT show.</p><p>The words shown in the 'Keyword' column are the exact words they typed into the search box on Pages.</p><p>This is only seen by ShipMates, not customers.</p><p>To change User, click the User tab on the left hand side.</p><p>Time period: as you selected/shown on the buttons at the top.</p>"></div></h3>
+                            <table cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="font-weight: bold;" width="394">Keyword</td>
+                                    <td style="font-weight: bold;" width="120">Date</td>
+                                    <td style="font-weight: bold;" width="130">Action</td>
+                                </tr>
+                                <?php 
+                                if( lg_count( (array) $this->report['searches'] ) == 0 )
+					        	echo '<tr><td class="white" colspan="3">This user has not done this action (in the time period you selected)</td></tr>';	
+                                
+                                foreach( (array) $this->report['searches'] as $x)
+                                {
+                                    ?>
+                                    <tr>
+                                        <td class="white"><?= strip_tags($x['SEARCH_QUERY'])?></td>
+                                        <td class="white" style="text-align: center"><?= $x['LAST_DATE']?></td> 
+                                        <td class="white" style="text-align: center"><a href="/search/results?newSearch=1&searchType=product&ssrc=32&searchWhat=<?= urlencode($x['SEARCH_QUERY']) ?>&searchText=&searchWhere=">Perform search</a></td> 
+                                    </tr>
+                                    <?php 
+                                }
+                                ?>
+                            </table>					        
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+

@@ -1,0 +1,135 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/pending-actions.js');
+
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Review Requests',
+						   'url'  => '/profile/review-requests'));
+
+$this->headLink()->appendStylesheet('/css/transition.css');						   
+$this->headLink()->appendStylesheet('/css/profile.css');
+?>
+
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], 'review-requests'),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], '', $this->pendingUsers, $isAdmin)
+				)
+			);
+						?>
+			<div class="profile-body-right">
+				<div class="zz header">
+					<h2>Review Requests</h2>
+				</div>
+                <div class="profileContent">
+					<?php
+
+					foreach ($this->pendingReviewRequests as $reviewRequest) :
+						$endorseeInfo = $reviewRequest->getEndorseeInfo();
+						$endorserInfo = $reviewRequest->getEndorserInfo();
+						$requestorUserInfo = $reviewRequest->getRequestorUserInfo();
+
+						?>
+						<div class="review-request-block" id="review-request-<?php echo $reviewRequest->code; ?>">
+							<div class="review-request-block-top"></div>
+							<div class="review-request-block-middle">
+								<div class="logo-column"><img src="<?php echo $endorseeInfo['SMALL_LOGO_URL'] ? $endorseeInfo['SMALL_LOGO_URL'] : '/images/layout_v2/default_image.gif' ?>"/></div>
+								<div class="text-column">
+									<h3><a href="<?php echo "/reviews/add-review/reqcode/".$reviewRequest->code; ?>">Review <?php echo $endorseeInfo['SPB_NAME'] ?> ?</a></h3>
+									<h4><?php echo 'Requested by '.(($requestorUserInfo->firstName && $requestorUserInfo->lastName)?($requestorUserInfo->firstName.' '.$requestorUserInfo->lastName):'').' '. strtolower($this->string()->ago($reviewRequest->requestedDate))  ?></h4>
+									<div class="request-text"><?php echo  $reviewRequest->text;  ?></div>
+								</div>
+								<div class="clear"></div>
+								<div class="dotted-line"></div>
+								<div class="review-request-actions">
+									<div class="review-request-action">
+										<a href="#" title="Ignore" class="review-request-action-ignore">
+											<img src="/images/icons/icon_ignore.gif" alt="Ignore Review Request" />
+											<span>Ignore</span>
+										</a>
+									</div>
+									<div class="review-request-action">
+										<a href="<?php echo "/reviews/add-review/reqcode/".$reviewRequest->code; ?>" title="Review this company" class="review-request-action-add">
+											<img src="/images/icons/icon_add_your_review.gif" alt="Add your review" />
+											<span>Add your review</span>
+										</a>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<div class="clear"></div>
+							</div>
+							<div class="review-request-block-bottom"></div>
+						</div>
+						<?php
+					endforeach;
+					
+					?>
+                </div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		
+	</div>
+</div>
+<script type="text/javascript">
+	<!--
+
+	$.fn.idle = function(time)
+  {
+      var o = $(this);
+      o.queue(function()
+      {
+         setTimeout(function()
+         {
+            o.dequeue();
+         }, time);
+      });
+      return this;              //****
+  }
+
+	$(document).ready(function(){
+
+		$('a[class="review-request-action-ignore"]').click(function(){
+			var requestId = $(this).parent().parent().parent().parent().attr('id').replace('review-request-', '');
+
+			$.post('/reviews/ignore-request/format/json/',
+				{
+					requestId: requestId
+				},
+				function(data) {
+					$('#review-request-' + requestId).hide();
+					$('#global-pending-actions').pendingActions();
+					// update the pending count blocks around the page
+					var count = parseInt($('span[class="jq-pending-reviews-actions-span"]').html());
+					count--;
+
+					$('span[class="jq-pending-reviews-actions-span"]').html(function () {
+						return count;
+					});
+
+					if (count==0){
+						$('#jq-pending-reviews-actions').fadeOut('fast');
+					}
+				},
+				'json'
+			);
+
+			return false;
+		});
+	});
+	//-->
+</script>

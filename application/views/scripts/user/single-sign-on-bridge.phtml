@@ -1,0 +1,33 @@
+<?
+$this->headScript()->appendFile('/js/jquery.countdown.js') ;
+$this->CDNLink()->appendStylesheet('/css/enquiries.css');
+$this->CDNLink()->appendStylesheet('/css/info.css');
+?>
+<script type="text/javascript">
+
+//location.href='<?= $this->redirectTo ?>';
+//alert(u);
+
+</script>
+
+<div class="zz content_wide new clearfix no-marg">
+    <div class="success-box">
+    	<div style="margin-top:26px; font-size:14px; color: #444 ">
+    		<?php if( $this->params['c'] != "1"){?>
+			    The application that you try to access does not currently support Pages user. To continue, you need to logout from Pages and log back in again on that application.  
+				<br /><br />
+				What would you like to do?
+				<br /><br />
+				<input id="continueButton" type="button" onclick="location.href='<?= $this->redirectTo;?>';" value="Continue" class="button dblue medium"/>
+				<input type="button" onclick="location.href='<?= $_SERVER['HTTP_REFERER']?>';" value="Stay in Pages" class="button dblue medium"/>
+			<?php } else {?>
+			    You're currently logged in as <?php echo ($this->userTradenet->username);?>. Your username is not supported by Pages. To continue, you need to logout and log back in with your Pages account which usually your email address.  
+				<br /><br />
+				What would you like to do?
+				<br /><br />
+				<input id="continueButton" type="button" onclick="location.href='<?= $this->redirectTo ?>';" value="Continue" class="button dblue medium"/>
+				<input type="button" onclick="location.href='<?= $this->params['r']?>';" value="Go back to your previous application" class="button dblue medium"/>
+			<?php }?>
+		</div>
+    </div>
+</div>

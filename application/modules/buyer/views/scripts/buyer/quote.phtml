@@ -1,0 +1,69 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/buyer/quote-inbox.css')
+					 ->appendStylesheet('/css/uniform.rfq.css');
+
+	$this->getHelper('Requirejs')->addModule('backbone/buyer/quote-inbox/views/mainView');
+
+	$user = Shipserv_User::isLoggedIn();
+
+	$shipservUser = $user->isShipservUser();
+	$hash = $this->hash;
+	if($this->params['page']){
+		$page = $this->params['page'];
+	}
+	else {
+		$page = 1;
+	}
+	if($this->params['branchId']){
+		$branchId = $this->params['branchId'];
+	}
+	else {
+		$branchId = "false";
+	}
+
+	if($this->params['setFilter']){
+		$setFilter = "true";
+	}
+	else {
+		$setFilter = "false";
+	}
+
+	$this->getHelper('Requirejs')->addDefinition('buyer/rfq-outbox/branchId', $branchId)
+								 ->addDefinition('buyer/rfq-outbox/setFilter', $setFilter);
+?>
+
+<div id="body" class="liquid">
+	<div id="sidebar">
+		<div class="filterSection"></div>
+	</div>
+	<div id="content">
+		<h1 class="styled"><strong><span class="sum"></span> Quotes</strong> found</h1>
+		<table class="quoteList" cellpadding="0" cellspacing="0" border>
+			<thead>
+				<tr>
+					<th class="setorder priority" title="priority"><img src="/img/buyer/rfq-outbox/priority-dblue.png" border="0" alt="Priority" /></th>
+					<th class="setorder supplier" title="supplier"><div>Supplier</div></th>
+					<th class="setorder ref" title="reference"><div>Reference</div></th>
+					<th class="setorder vessel" title="vessel"><div>Vessel</div></th>
+					<th class="setorder date ordered desc" title="date"><div>Date</div></th>
+					<th class="setorder qstat" title="status"><div>Status</div></th>
+					<th class="last">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				
+			</tbody>
+		</table>
+		<div class="pagination"></div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="clear"></div>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody"></div>
+</div>
+<div id="waiting">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>

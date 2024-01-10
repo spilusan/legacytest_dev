@@ -1,0 +1,803 @@
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+#body {
+	.leftContent {
+		.zones {
+			margin: 20px 0;
+
+			.zoneBox {
+				position: relative;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+				width: 315px;
+				height: 120px;
+				overflow: hidden;
+
+				&.left {
+					float: left;
+				}
+
+				&.right {
+					float: right;
+				}
+
+				.zoneTitle {
+					padding: 0 13px;
+					position: relative;
+					display: block;
+					height: 83px;
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/man-logo.png) no-repeat right center transparent;
+
+					.text {
+						position: relative;
+						font-size: 22px;
+						color: #ffffff;
+
+						.light {
+							font-weight: normal;
+						}
+					}
+
+					&:after {
+						content: "";
+						position: absolute;
+						display: block;
+						width: 18px;
+						height: 6px;
+						bottom: 0px;
+						left: 13px;
+					}
+				}
+
+				.zoneFooter {
+					position:relative;
+					display: block;
+					height: 26px;
+					font-size: 15px;
+					color: #ffffff;
+					padding-left: 37px;
+					@include border-radius(0 0 6px 6px);
+					behavior: url(/css/PIE.htc);
+					padding-top: 11px;
+
+					&:before {
+						content: "";
+						display: block;
+						position: absolute;
+						width: 20px;
+						height: 17px;
+						left: 11px;
+						top: 10px;
+						background: url(/info/wp-content/themes/shipserv/images/zone/img/shipservLogo-white.png) no-repeat left top transparent;
+					}
+
+					span {
+						position: absolute;
+						display: block;
+						width: 5px;
+						height: 10px;
+						overflow: hidden;
+						top: 13px;
+						right: 0;
+						margin-right: 11px;
+						background: url(/info/wp-content/themes/shipserv/images/zone/img/icons/small/white-arrows.png) no-repeat -5px top transparent;
+					}
+				}
+
+				&.man {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/man.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/man-logo.png) no-repeat 260px center transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/lblueTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #23b6fa;
+						@include x-multiple-colored-gradient(#23b6fa 0%, #0299df 100%);
+  						-pie-background: linear-gradient(top, #23b6fa 0%, #0299df 100%);
+					}
+				}
+
+				&.yanmar {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/yanmar.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/yanmar-logo.png) no-repeat 187px center transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/tealTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #de483b;
+						@include x-multiple-colored-gradient(#de483b 0%, #c03a2e 100%);
+  						-pie-background: linear-gradient(top, #de483b 0%, #c03a2e 100%);
+					}
+				}
+
+				&.bnwas {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/bnwas.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/dgreenTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #071c0b;
+					}
+				}
+
+				&.chandlery {
+					background-color: #005aad;
+					@include x-multiple-colored-gradient(#005aad 0%, #00386e 100%);
+  					-pie-background: linear-gradient(top, #005aad 0%, #00386e 100%);
+
+					.zoneTitle {
+						background:transparent;
+
+						.text {
+							top: 20px;
+							color: #dbdbdb;
+
+							&:after {
+								content: "Need a supplier with local knowledge?";
+								display: block;
+								font-size: 13px;
+								color: #ffffff;
+								font-weight: normal;
+								margin-top: 5px;
+							}
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/lblueTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #23b6fa;
+						@include x-multiple-colored-gradient(#23b6fa 0%, #0299df 100%);
+  						-pie-background: linear-gradient(top, #23b6fa 0%, #0299df 100%);
+					}
+				}
+
+				&.copenhagen, &.hamburg, &.rotterdam, &.shanghai, &.singapore, &.issa, &.viking {
+					background-color: #005aad;
+					@include x-multiple-colored-gradient(#005aad 0%, #00386e 100%);
+  					-pie-background: linear-gradient(top, #005aad 0%, #00386e 100%);
+
+					.zoneTitle {
+						background:transparent;
+
+						.text {
+							top: 20px;
+							color: #dbdbdb;
+
+							&:after {
+								content: "Everyone you need to know";
+								display: block;
+								font-size: 13px;
+								color: #ffffff;
+								font-weight: normal;
+								margin-top: 5px;
+							}
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/lblueTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #23b6fa;
+						@include x-multiple-colored-gradient(#23b6fa 0%, #0299df 100%);
+  						-pie-background: linear-gradient(top, #23b6fa 0%, #0299df 100%);
+					}
+				}
+
+				&.issa {
+					.zoneTitle {
+						.text {
+							&:after {
+								content: "Search the ISSA member list";
+							}
+						}
+					}
+				}
+
+				&.viking {
+					.zoneTitle {
+						.text {
+							&:after {
+								content: "Find approved Viking suppliers";
+							}
+						}
+					}
+				}
+
+				&.hamworthy {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/hamworthy.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/hamworthy-logo.png) no-repeat 215px 20px transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/mgreenTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #386d25;
+					}
+				}
+
+				&.hms {
+					background-color: #ffffff;
+					@include x-multiple-colored-gradient(#d6d4d5 0%, #ffffff 70%);
+  					-pie-background: linear-gradient(top, #d6d4d5 0%, #ffffff 70%);
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/hms-logo.png) no-repeat 215px center transparent;
+
+						.text {
+							top: 33px;
+							color: #000000;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/mblueTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #025797;
+					}
+				}
+
+				&.sauer {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/sauer.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/sauer-logo.png) no-repeat 220px 2px transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/orangeTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #f77f2e;
+					}
+				}
+
+				&.life {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/life.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/redTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #af0011;
+					}
+				}
+
+				&.pump {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/pumps.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/dviolTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #0f2c56;
+					}
+				}
+
+				&.sperre {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/sperre.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/sperre-logo.png) no-repeat 215px center transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/purpTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #a30121;
+					}
+				}
+
+				&.tts {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/tts.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/tts-logo.png) no-repeat 234px center transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/yellowTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #feb143;
+						@include x-multiple-colored-gradient(#feb143 0%, #f29003 100%);
+  						-pie-background: linear-gradient(top, #feb143 0%, #f29003 100%);
+					}
+				}
+
+				&.valves {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/valves.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/lviolTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #8c0056;
+					}
+				}
+
+				&.wartsila {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/wartsila.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/wartsila-logo.png) no-repeat 234px center transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/pblueTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #0f4464;
+					}
+				}
+
+				&.wencon {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/wencon.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/wencon-logo.png) no-repeat 222px center transparent;
+
+						.text {
+							color: #000000;
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/salmonTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #f99768;
+					}
+				}
+
+				&.sinwa {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/sinwa.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/sinwa-logo.png) no-repeat 234px center transparent;
+
+						.text {
+							color: #000000;
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/lpblueTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #5590c5;
+						@include x-multiple-colored-gradient(#5590c5 0%, #3072af 100%);
+  						-pie-background: linear-gradient(top, #5590c5 0%, #3072af 100%);
+					}
+				}
+
+				&.ppg {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/ppg.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/ppg-logo.png) no-repeat 234px center transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/llpblueTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #63a9de;
+						@include x-multiple-colored-gradient(#63a9de 0%, #55a0d8 100%);
+  						-pie-background: linear-gradient(top, #63a9de 0%, #55a0d8 100%);
+					}
+				}
+
+				&.rs {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/rs.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/rs-logo.png) no-repeat 250px center transparent;
+
+						.text {
+							top: 33px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/redTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #af0011;
+					}
+				}
+
+				&.timavo {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/timavo.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/timavo-logo.png) no-repeat 200px center transparent;
+
+						.text {
+							top: 25px;
+							color: #000000;
+							font-size: 16px;
+							@include inline-block;
+							width: 175px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/navygreenTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #20796d;
+					}
+				}
+
+				&.iss {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/iss.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background:url(/info/wp-content/themes/shipserv/images/zone/img/iss_logo.png) no-repeat 180px center transparent;
+
+						.text {
+							top: 18px;
+							color: #1f456e;
+							font-size: 21px;
+							display: block;
+							width: 160px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/yellowTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #feb143;
+						@include x-multiple-colored-gradient(#feb143 0%, #f29003 100%);
+  						-pie-background: linear-gradient(top, #feb143 0%, #f29003 100%);
+					}
+				}
+
+				&.manitowoc {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/manitowoc.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background: url(/info/wp-content/themes/shipserv/images/zone/img/manitowoc-logo.png) no-repeat 140px center transparent;
+
+						.text {
+							top: 22px;
+							color: #2c3942;
+							display: block;
+							width: 150px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/mredTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #e72b2e;
+					}
+				}
+
+
+				&.wrist {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/wrist.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background: url(/info/wp-content/themes/shipserv/images/zone/img/wrist-logo.png) no-repeat 195px center transparent;
+
+						.text {
+							top: 21px;
+							color: #2c3942;
+							display: block;
+							width: 150px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/pinkTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #ed483d;
+					}
+				}
+
+				&.mak {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/mak.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background: url(/info/wp-content/themes/shipserv/images/zone/img/mak-logo.png) no-repeat 175px center transparent;
+
+						.text {
+							top: 21px;
+							color: #4a804f;
+							display: block;
+							width: 150px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/makgreenTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #4e824f;
+					}
+				}
+
+				&.gns {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/gns.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background: url(/info/wp-content/themes/shipserv/images/zone/img/gns-logo.png) no-repeat 10px 25px transparent;
+
+						.text {
+							top: 21px;
+							color: #2c3942;
+							display: block;
+							width: 150px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/lblueTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						@include x-multiple-colored-gradient(#23b6fa 0%, #0299df 100%);
+  						-pie-background: linear-gradient(top, #23b6fa 0%, #0299df 100%);
+					}
+				}
+
+				&.alfa {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/alfa.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background: url(/info/wp-content/themes/shipserv/images/zone/img/alfa-logo.png) no-repeat 195px center transparent;
+
+						.text {
+							top: 21px;
+							color: #453e81;
+							display: block;
+							width: 150px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/violetTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #453e81;
+					}
+				}
+
+				&.oil-gas {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/oil-gas.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background: none;
+						.text {
+							top: 35px;
+							color: #ffffff;
+							display: block;
+							width: 160px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/oilVioTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background-color: #241f3b;
+					}
+				}
+
+				&.ems {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/ems.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background: url(/info/wp-content/themes/shipserv/images/zone/img/ems-logo.png) no-repeat 12px center transparent;
+
+						.text {
+							top: 32px;
+							left: 40px;
+							color: #083f5c;
+							display: block;
+							width: 185px;
+							font-size: 18px;
+						}
+
+						&:after {
+							width: 0;
+							height: 0;
+							border-style: solid;
+							border-width: 0 9px 6px 9px;
+							border-color: transparent transparent #ef3d32 transparent;
+							line-height: 0px;
+							_border-color: #000000 #000000 #ef3d32 #000000;
+							_filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+						}
+					}
+
+					.zoneFooter {
+						background-color: #ef3d32;
+					}
+				}
+
+				&.rms {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/rms.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background: url(/info/wp-content/themes/shipserv/images/zone/img/rms-logo.png) no-repeat 10px 18px transparent;
+
+						.text {
+							top: 21px;
+							color: #2c3942;
+							display: none;
+							width: 150px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/rmsBlueTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background: #172a88;
+					}
+				}
+
+				&.klinger {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/klinger.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background: url(/info/wp-content/themes/shipserv/images/zone/img/klinger-logo.png) no-repeat 10px 18px transparent;
+
+						.text {
+							top: 21px;
+							color: #2c3942;
+							display: none;
+							width: 150px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/kBlueTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background: #008bb9;
+					}
+				}
+
+				&.abb {
+					background:url(/info/wp-content/themes/shipserv/images/zone/img/abb.png) no-repeat left top transparent;
+
+					.zoneTitle {
+						background: url(/info/wp-content/themes/shipserv/images/zone/img/abb-logo.png) no-repeat 10px 21px transparent;
+
+						.text {
+							top: 21px;
+							color: #2c3942;
+							display: none;
+							width: 150px;
+						}
+
+						&:after {
+							background: url(/info/wp-content/themes/shipserv/images/zone/img/blkTri.png) no-repeat left top transparent;
+						}
+					}
+
+					.zoneFooter {
+						background: #000000;
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,71 @@
+<div class="container">
+    <div class="tab-title line-bottom">
+        <div class="pull-right form-inline">
+            <div class="form-group">
+                <label>Date range:</label>
+                <i class=" fa fa-fw fa-calendar" aria-hidden="true"></i>
+                <input class="form-control with-icon" id="date-picker" />
+                <button class="back btn blue blue-outline">
+                    <i class=" fa fa-fw fa-angle-left" aria-hidden="true"></i> Back
+                </button>
+            </div>
+        </div>
+
+        <h3>
+            <span class="title-inner">
+                {{#if supplier}} 
+                POs from {{buyer.name}}
+                <i class="tnid">({{buyer.tnid}})</i>
+                &gt;
+                <br/> {{supplier.name}}
+                <i class="tnid">({{supplier.tnid}})</i>
+                {{else}}
+                <i class=" fa fa-fw fa-spinner fa-pulse fa-fw"></i>
+                {{/if}}
+            </span>
+        </h3>
+    </div>
+
+    {{#if buyer}}
+    <table class="bordered plane" id="totals-table">
+        <tbody>
+            <tr>
+                <td>
+                    <b>Total POs:</b>
+                    <span class="pull-right">
+                         {{formatNumber total_po_cnt 2}}
+                    </span>
+                </td>
+                <td>
+                    <b>Total (USD):</b>
+                    <span class="pull-right">
+                        ${{formatCurrency total_po_spend 2}}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    {{/if}}
+
+    <div id="buyers-table" class="table-container"></div>
+
+    <div class="line-top line-bottom">
+        <div class="text-center">
+            <div class="pull-left">
+                <label>Show:</label>
+                <select class="page-size form-control">
+                    <option>10</option>
+                    <option>20</option>
+                    <option>50</option>
+                </select>
+                <label>per page</label>
+            </div>
+
+            <ul class="pager"></ul>
+
+            <div class="pull-right">
+                <button class="export-csv btn green">Export to CSV</button>
+            </div>
+        </div>
+    </div>
+</div>

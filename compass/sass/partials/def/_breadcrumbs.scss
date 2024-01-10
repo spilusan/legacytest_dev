@@ -1,0 +1,55 @@
+/*
+Document   : partials/def/_breadcrumbs.scss
+Created on : Aug 24, 2012, 4:00:43 PM
+Author     : gly
+Description: default styles for breadcrumbs
+*/
+
+div#breadcrumbs {
+	/* Temporarily hiding it, until it is removed from code */
+	display: none; 
+	width: 1105px;
+	height: 50px;
+	background: transparent;
+	line-height: 50px;
+	margin: 0 0 0 20px;
+	vertical-align: middle;
+
+	.title {
+		color: #2e3235;
+		font-size: 11px;
+		float: left;
+		margin-right: 7px;
+	}
+
+	ul {
+		display: inline;
+		list-style: none;
+
+		li {
+			float: left;
+			padding-right: 10px;
+			font-size: 11px;
+
+			a {
+				font-weight: normal;
+			}
+
+			&.active {
+				font-weight: bold;
+			}
+
+			span {
+				display: -moz-inline-stack;
+       			display: inline-block;
+       			zoom: 1;
+       			*display: inline;
+				width: 7px;
+				height: 7px;
+				_height: 7px;
+				margin-right: 7px;
+				background: url(/img/global/bread_arrow.png) no-repeat transparent;
+			}
+		}
+	}
+}

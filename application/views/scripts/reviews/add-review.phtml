@@ -1,0 +1,167 @@
+<?php
+if ($this->metaDescription)
+{
+	$this->headMeta()->appendName('description', $this->metaDescription);
+}
+
+if ($this->metaKeywords)
+{
+	$this->headMeta()->appendName('keywords', $this->metaKeywords);
+}
+
+$this->googledfp()->addTargeting('keywords','ALL');
+$this->googledfp()->addTargeting('country','ALL');
+$this->googledfp()->addTargeting('port','ALL');
+$this->googledfp()->addTargeting('supplier','ALL');
+
+$this->CDNLink()->appendStylesheet('/css/endorsements.css');
+$this->CDNLink()->appendStylesheet('/css/supplier/supplier.css');
+
+$this->compressedScript()->appendFile('/js/jquery.easing.js')
+				   ->appendFile('/js/jquery.auto-complete.js')
+				   ->appendFile('/js/jquery.filetree.js')
+				   ->appendFile('/js/jquery.urlparse.js')
+				   ->appendFile('/js/json2.js')
+				   ->appendFile('/js/jquery.modalwindows.js')
+				   ->appendFile('/js/jquery.jsoncookie.js')
+				   ->appendFile('/js/jquery.cookie.js')
+				   ->appendFile('/js/jquery.metadata.js')
+				   ->appendFile('/js/jquery.urlencode.js')
+				   ->appendFile('/js/jquery.add-review.js');
+
+
+$this->googledfp()->add('TargetedOrGeneralAdSlot1');
+$this->googledfp()->add('TargetedOrGeneralAdSlot2');
+$this->googledfp()->add('TargetedOrGeneralAdSlot3');
+
+$this->googledfp()->render();
+				   
+?>
+
+<input type="hidden" name="tnid-name-<?php echo $this->supplier->tnid; ?>" id="tnid-name-<?php echo $this->supplier->tnid; ?>" value="<?php echo trim($this->supplier->name); ?>" />
+
+<div id="main_content_area">
+
+	<div style="padding:10px"></div>
+
+	<div class="content_wide">
+
+		<div class="content_wide_header">
+
+			<h1 class="review"> You are reviewing <?php echo $this->supplier->name; ?></h1>
+		</div>
+		<div class="content_wide_body">
+
+		<div id="review_box">
+			<form method="post" name="addReview">
+				<input type="hidden" name="hdnAction" value="submitReview"/>
+				<?php if($this->formValues["reqcode"]) echo '<input type="hidden" name="reqcode" value="'. $this->formValues["reqcode"] .'"/>';?>
+				<h2><span>1.</span> Your overall impression</h2>
+				<div class="overall_impression">
+					<input type="hidden" name="overallImpression" value="<?php if (isset($this->formValues["overallImpression"])) echo $this->formValues["overallImpression"];?>"/>
+					<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/positive_normal.gif'); ?>" id="positive" class="radiobutton"/>
+					<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/neutral_normal.gif'); ?>" id="neutral" class="radiobutton"/>
+					<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/negative_normal.gif'); ?>" id="negative" class="radiobutton"/>
+					<div class="clear"></div>
+				</div>
+				<div class="dotted-line"></div>
+				<h2><span>2.</span> What did they supply to you?</h2>
+				<div class="reviewTextBox"><input type="text" name="category1" class="textBox" maxlength="70" value="<?php if (isset($this->formValues["category1"])) echo $this->formValues["category1"]; ?>"/></div>
+				<input type="hidden" name="category1Id" value="<?php if (isset($this->formValues["category1Id"])) echo $this->formValues["category1Id"]; ?>"/>
+				<div class="dotted-line"></div>
+				<h2><span>3.</span> Detailed Rating</h2>
+				<input type="hidden" name="did" value="<?php if (isset($this->formValues["did"])) echo $this->formValues["did"]; else echo "0";?>"/>
+				<input type="hidden" name="otd" value="<?php if (isset($this->formValues["otd"])) echo $this->formValues["otd"]; else echo "0";?>"/>
+				<input type="hidden" name="cs" value="<?php if (isset($this->formValues["cs"])) echo $this->formValues["cs"]; else echo "0";?>"/>
+				<div id="detailedRaiting">
+					<div id="labelColumn">
+						<div class="rating-label" id="didLabel">Delivered items as described?</div>
+						<div class="rating-label" id="otdLabel">On time delivery?</div>
+						<div class="rating-label" id="csLabel">Customer service?</div>
+					</div>
+					<div id="ratingColumn">
+						<div class="rating-label" id="did">
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="did_1"/>
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="did_2"/>
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="did_3"/>
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="did_4"/>
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="did_5"/>
+						</div>
+						<div class="rating-label" id="otd">
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>'); ?>" width="18" height="18" border="0" class="star" id="otd_1"/>
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="otd_2"/>
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="otd_3"/>
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="otd_4"/>
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="otd_5"/>
+						</div>
+						<div class="rating-label" id="cs">
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="cs_1"/>
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="cs_2"/>
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="cs_3"/>
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="cs_4"/>
+							<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/star_passive.gif'); ?>" width="18" height="18" border="0" class="star" id="cs_5"/>
+						</div>
+					</div>
+					<div id="hintColumn">
+						<div id="did_hint" class="rating-hint"></div>
+						<div id="otd_hint" class="rating-hint"></div>
+						<div id="cs_hint" class="rating-hint"></div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<div class="dotted-line"></div>
+				<h2><span>4.</span> Detailed Feedback</h2>
+				<div class="reviewCommentBox"><textarea name="reviewComment" cols="5" rows="100"><?php echo $this->formValues["reviewComment"]?></textarea></div>
+				<?php
+				if ($this->userCompanies) {
+					if (lg_count($this->userCompanies)>1) {
+
+				?>
+					<h2><span>5.</span> Which of your companies are you representing here?</h2>
+					<select name="buyerOrganisation">
+						<?php
+						foreach ($this->userCompanies as $buyerOrganisation)
+						{
+						?>
+						<option value="<?php echo $buyerOrganisation["id"]?>"><?php echo $buyerOrganisation["name"]?></option>
+						<?php
+						}
+						?>
+					</select>
+					<div class="dotted-line"></div>
+				<?
+					}
+					elseif(lg_count($this->userCompanies)==1)
+					{
+						?>
+					<input type="hidden" name="buyerOrganisation" value="<?php echo $this->userCompanies[0]["id"]?>"/>
+						<?php
+					}
+				}
+				if($this->endorserId)
+				{
+					?>
+				<input type="hidden" name="buyerOrganisation" value="<?php echo $this->endorserId?>"/>
+					<?php
+				}
+				?>
+				<br/><br/>
+				<img id="submitReview" src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/submit_review.gif'); ?>" width="209" height="44" alt="Submit"/>
+			</form>
+		</div>
+
+	</div>
+	<div class="content_wide_footer_shadow">
+	</div>
+	<div class="clear"></div>
+
+</div>
+
+	<div class="zone">
+		<div style="padding-top: 20px;"></div>
+		<?php echo $this->partial('general-google-ads.phtml'); ?>
+	</div>
+
+</div>
+
+<div class="clear"></div>

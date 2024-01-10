@@ -1,0 +1,178 @@
+/*
+Document   : _trade_rank_tt
+Created on : Jun 13, 2012, 4:39:47 PM
+Author     : gly
+Description: Trade rank tooltip
+*/
+
+/* TRADERANK TOOLTIP */
+#traderankTooltip { 
+	position:absolute; 
+	width:666px; 
+	height:450px; 
+	z-index:10000; 
+	display:none; 
+}
+
+.tooltip-panel { 
+	float:left; 
+}
+
+#scrollLeftArrow { 
+	width:58px; 
+	height:58px; 
+	background: url('/images/layout_v2/tr_popup/arrow_left_sprite.png') 0 0 no-repeat; 
+	cursor:pointer;
+    
+    &:hover { 
+        background: url('/images/layout_v2/tr_popup/arrow_left_sprite.png') 0 -58px no-repeat; 
+    }
+}
+
+#scrollRightArrow { 
+	width:58px; 
+	height:58px; 
+	background: url('/images/layout_v2/tr_popup/arrow_right_sprite.png') 0 0 no-repeat; 
+	cursor:pointer;
+    
+    &:hover { 
+        background: url('/images/layout_v2/tr_popup/arrow_right_sprite.png') 0 -58px no-repeat; 
+    }
+}
+
+#closeTooltipButton, #closeMapButton { 
+	width:65px; 
+	height:25px; 
+	background: url('/images/layout_v2/tr_popup/button_close_sprite.png') 0 0 no-repeat; 
+	cursor:pointer; 
+	float:right;
+    
+    &:hover { 
+        background: url('/images/layout_v2/tr_popup/button_close_sprite.png') 0 -25px no-repeat; 
+    }
+}
+
+#tradeRankTab { 
+	width:110px; 
+	height:36px; 
+	background: url('/images/layout_v2/tr_popup/button_traderank_a_sprite.gif') 0 0 no-repeat; 
+	cursor:pointer; 
+	float:left;
+    
+    &:hover { 
+        background: url('/images/layout_v2/tr_popup/button_traderank_a_sprite.gif') 0 -36px no-repeat; 
+    }
+    
+    &.on { 
+        background: url('/images/layout_v2/tr_popup/button_traderank_b_active.gif') 0 0 no-repeat; 
+    }
+}
+
+#tradePerfTab { 
+	width:159px; 
+	height:36px; 
+	background: url('/images/layout_v2/tr_popup/button_tradingperformance_a_sprite.gif') 0 0 no-repeat; 
+	cursor:pointer; 
+	float:left;
+    
+    &:hover{ 
+        background: url('/images/layout_v2/tr_popup/button_tradingperformance_a_sprite.gif') 0 -36px no-repeat; 
+    }
+    
+    &.on { 
+        background: url('/images/layout_v2/tr_popup/button_tradingperformance_b_active.gif') 0 0 no-repeat; 
+    }
+}
+
+#revTab{ 
+	width:90px; 
+	height:36px; 
+	background: url('/images/layout_v2/tr_popup/button_reviews_a_sprite.gif') 0 0 no-repeat; 
+	cursor:pointer; 
+	float:left;
+    
+    &:hover { 
+        background: url('/images/layout_v2/tr_popup/button_reviews_a_sprite.gif') 0 -36px no-repeat; 
+    }
+    
+    &.on { 
+        background: url('/images/layout_v2/tr_popup/button_reviews_b_active.gif') 0 0 no-repeat; 
+    }
+}
+
+#verSysTab { 
+	width:157px; 
+	height:36px; 
+	background: url('/images/layout_v2/tr_popup/button_verificationsys_a_sprite.gif') 0 0 no-repeat; 
+	cursor:pointer; 
+	float:left;
+    
+    &:hover { 
+        background: url('/images/layout_v2/tr_popup/button_verificationsys_a_sprite.gif') 0 -36px no-repeat; 
+    }
+    
+    &.on { 
+        background: url('/images/layout_v2/tr_popup/button_verificationsys_b_active.gif') 0 0 no-repeat; 
+    }
+}
+
+#tradeRankTooltip { 
+	background: url('/images/layout_v2/tr_popup/01_traderank/stars_all_grey.png') 0 0 no-repeat; 
+	width:133px; 
+	height:25px; 
+	margin-left:15px; 
+	position:relative;
+    
+    #bottomImage { 
+        background: url('/images/layout_v2/tr_popup/01_traderank/stars_all_blue.png') 0 0 no-repeat; 
+        width:133px; 
+        height:25px; 
+        left: 0; 
+        position: absolute; 
+        top: 0; 
+    }
+    
+     #topImage { 
+        background: url('/images/layout_v2/tr_popup/01_traderank/stars_transparent_cutout.png') 0 0 no-repeat; 
+        width:133px; 
+        height:25px; 
+        left: 0; 
+        position: absolute; 
+        top: 0; 
+    }
+    
+    #trPerfTitle { 
+        font: bold 12px Arial,sans-serif; 
+        color:#336699; 
+        padding:3px 0; 
+    }
+    
+    #reviewsTitle { 
+        font: bold 12px Arial,sans-serif; 
+        color:#294468; 
+        padding:3px 0; 
+    }
+    
+    #verSysTitle { 
+        font: bold 12px Arial,sans-serif; 
+        color:#169ccc; padding:3px 0; 
+    }
+}
+
+.tooltip-panel-body { 
+	background:#FFF; 
+	padding:21px; 
+	font:normal 11px Arial; 
+	display:none; 
+}
+
+.window2 { 
+	width:300px; 
+	position:absolute; 
+	z-index:10000;
+    
+    img { 
+        width:300px; 
+    }
+}
+/* END TRADERANK TOOLTIP */

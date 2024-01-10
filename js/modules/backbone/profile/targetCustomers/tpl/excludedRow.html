@@ -1,0 +1,17 @@
+<td>{{#if SpbEnabled}}<img src="/img/icons/small/check.png" alt="y" border="0" />{{else}}&nbsp;{{/if}}</td>
+<td>{{buyerId}}</td>
+<td class="left">{{name}}</td>
+<td>{{formatIsoDateTarget excludeDate}}</td>
+<td>{{Location}}</td>
+<td>{{formatNumRoundTarget vessel.vesselCount}}</td>
+<td>
+      {{#each vessels}}
+            {{this}}
+      {{/each}}
+</td>
+<td>{{#ifCond excludedBy ""}}Automatically by System{{else}}{{excludedBy}}{{/ifCond}}</td>
+<td>{{formatNumRoundTarget OrderValue}}</td>
+<td>{{formatIsoDateTarget lastTransactionDate}}</td>
+<td>
+      <input type="button" name="target" class="button medium target" value="Promote" /><input type="button" style="cursor: default; background: transparent; border: 0; width: 1px; padding: 0;" name="doTarget" />
+</td>

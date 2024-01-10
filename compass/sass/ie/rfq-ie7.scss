@@ -1,0 +1,100 @@
+#header {
+	.nav {
+		ul {
+			&.primary {
+				li {
+					a.trade {
+						width: 60px;
+					}
+				}
+			}
+		}
+	}
+}
+
+ #body {
+ 	#content {
+ 		h2.styled {
+ 			zoom:1;
+ 			margin-bottom: 5px;
+ 		}
+
+ 		fieldset {
+ 			zoom: 1;
+ 		}
+
+ 		form.rfq
+ 		{
+ 			.details {
+ 				div {
+					fieldset.buyer {
+						div.data, div.label {
+							margin-bottom: 7px !important;
+						}
+					}
+
+					fieldset.delivery, fieldset.vessel {
+						height: 100px;
+					}
+				}
+ 			}
+
+ 			.rfqDet {
+ 				.detailBox {
+ 					.sectionList {
+ 						input.remove, input.removeSec {
+							behavior: none !important;
+						}
+
+ 						.itemBox {
+ 							.boxContent {
+
+ 								fieldset {
+ 									input[type="text"] {
+ 										-pie-poll: true;
+ 									}
+ 								}
+ 								h4 {
+ 									background: #d7dce5;
+ 									behavior: none;
+ 								}
+
+ 								.lineItemHead {
+ 									.cell {
+ 										behavior: none;
+ 										background: #d7dce5;
+
+ 										&.del {
+	 										width: 16px;
+	 									}
+ 									}
+ 								}
+
+ 								.item {
+ 									position: relative;
+ 									top: -5px;
+
+ 									.cell.del {
+ 										width: 32px;
+ 									}
+ 								}
+ 								.lineItemFoot {
+ 									position: relative;
+ 									top: -10px;
+ 								}
+ 							}
+ 						}
+ 					}
+ 				}
+ 			}
+ 		}
+
+ 		.clear.small {
+ 			height: 0px;
+ 			line-height: 0px;
+ 			margin: 0;
+ 			padding: 0;
+ 			font-size: 0px;
+ 		}
+ 	}
+ }

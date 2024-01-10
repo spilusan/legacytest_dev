@@ -1,0 +1,71 @@
+#body {
+	#content {
+		.box {
+			position: relative;
+			border: 1px solid #d6dce4;
+			padding: 5px 10px;
+			background: #f5f7fa;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+			margin: 20px 0;
+
+			.error {
+				position: relative;
+				left: 418px;
+				top: 0px;
+				padding-bottom: 8px;
+			}
+
+			.selector {
+				margin-top: 0;
+				width: 315px;
+				margin-bottom: 0;
+
+				span {
+					width: 290px;
+				}
+
+				select {
+					width: 330px;
+				}
+			}
+
+			label {
+				display: inline-block;
+				top: 0px;
+				&[for="purchaser"], &[for="vessel"]{
+					width: 60px;
+				}
+				
+			}
+
+			.filters {
+				width: 399px;
+				border-right: 1px dotted #000000;
+				float: left;
+				margin-right: 10px;
+			}
+
+			.period {
+				padding-top: 13px;
+
+				label {
+					top: -1px;
+				}
+
+				input[type="text"] {
+					width: 75px;
+					padding: 6px 5px;
+				}
+
+				input[name="show"] {
+					margin-left: 25px;
+				}
+
+				input[type="button"], input[type="submit"] {
+					padding: 6px 10px;
+				}
+			}
+		}
+	}
+}

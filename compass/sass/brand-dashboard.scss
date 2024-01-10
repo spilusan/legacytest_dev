@@ -1,0 +1,59 @@
+/*
+Document   : brand-management.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : Attila O
+Description: combining partials for rfq styles
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+@import "partials/def/modal_new";
+@import "partials/def/left_nav";
+@import "partials/match/form";
+@import "partials/def/tab_nav";
+
+
+#detailsTab {
+	display: none;
+		form {
+			&.new {
+				overflow: auto;
+			}
+			table {
+				border-collapse: collapse; 
+				width: 100%;
+
+			}
+		}
+}
+#content {
+	.tabs {
+		margin-top: 10px;
+		margin-left: -15px;
+	}
+}
+#summaryTab {
+	table {
+		border-collapse: collapse;
+		width:100%;
+		border: 1px solid #d6dce4;
+
+		tr {
+			td {
+				border-bottom: 1px solid #d6dce4;
+				border-right: 1px solid #d6dce4;
+				background-color: #f5f7fa;
+				padding: 10px;
+				font-size: 12px;
+				vertical-align: middle;
+				word-break: break-word;
+			}
+			td:first-child {
+				text-align: right;
+				width: 50px;
+				font-weight: bold;
+			}
+		}
+	}
+}

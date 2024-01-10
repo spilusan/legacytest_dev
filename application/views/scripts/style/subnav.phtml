@@ -1,0 +1,10 @@
+<? $action = Zend_Controller_Front::getInstance()->getRequest()->getActionName(); ?>
+<div class="subnav">
+	<ul>
+		<li class="<?=($action == '' || $action == 'index') ? 'selected' : ''?>"><a href="/uicomponents/">Design Guide</a></li>
+		<li class="<?=($action == 'buttons') ? 'selected' : ''?>"><a href="/uicomponents/buttons">Buttons</a></li>
+		<li class="<?=($action == 'modal') ? 'selected' : ''?>"><a href="/uicomponents/modal">Popups</a></li>
+		<li class="<?=($action == 'tables') ? 'selected' : ''?>"><a href="/uicomponents/tables">Tables</a></li>
+		<li class="<?=($action == 'useful') ? 'selected' : ''?>"><a href="/uicomponents/useful">Useful bits</a></li>
+	</ul>
+</div>

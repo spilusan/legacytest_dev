@@ -1,0 +1,8 @@
+<div class="topBar"></div>
+	<ul id="nav">
+		{{#each menuOptions}}
+			<li{{#ifCondLower title "webreporter"}} class="selected"{{/ifCondLower}}>
+				<a{{#ifCondLower title "webreporter"}} style="padding: 0px;"{{/ifCondLower}} href="{{href}}">{{title}}</a>
+			</li>
+		{{/each}}
+	</ul>

@@ -1,0 +1,108 @@
+section {
+	.sign-in-wrapper {
+		width: 60%;
+		margin: 0 auto;
+		
+		.sign-in, .new-user {
+			float: left;
+			width: 45%;
+		}
+
+		
+
+		.sign-in {
+			margin-right: 5%;
+
+			 h4 {
+			 	margin-bottom: 20px;
+			 }
+
+			label, input {
+				display: block;
+				margin-bottom: 20px;
+			}
+
+			input {
+				width: 100%;
+				padding: 10px;
+				box-sizing: border-box;
+			}
+			
+			input[type="submit"] {
+				width: 200px;
+				margin-top: 30px;
+			} 
+
+			input[type="checkbox"] {
+				width: auto;
+			}
+
+			input[type="checkbox"]:checked + .checkbox-label:before {
+				border-color: $green;
+    			background: $green;
+			}
+
+			label {
+				font-size: 18px;
+
+				span {
+					color: $red;
+				}
+			}
+
+			p {
+				text-align: left;
+				font-size: 18px;
+
+				&.error {
+					margin-top: -10px;
+					font-size: 16px;
+					color: $red;
+				}
+
+				&.email {
+					margin-top: -20px;
+				}
+			}
+		}
+
+		.new-user {
+			margin-left: 5%;
+			box-sizing: border-box;
+			border: 1px solid $dark-grey;
+			
+			h4 {
+				color: $white;
+				padding: 15px;
+				background-color: $link-blue;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+
+			p {
+				text-align: left;
+				padding: 0 20px;
+
+				&.with-padding {
+					padding-top: 20px;
+				}
+
+				&.free {
+					span {
+						color: $red;
+					}
+				}
+			}
+
+			.btn.transparent.transparent-blue {
+				margin-left: 20px;
+				margin-bottom: 20px;
+				box-sizing: border-box;
+				display: inline-block;
+				width: 200px;
+			}
+
+		}
+
+	}
+}

@@ -1,0 +1,130 @@
+<h1 class="styled">Title</h1>
+<div class="modalContent">
+    {{#if models}}
+	<form class="tradingAccForm new">
+		<input id="tradingAccountUserId" type="hidden" name="userId" value="">
+		{{#each models}}
+		<input type="hidden" value="{{this.attributes.id}}" name="allBybBranchCode[]" />
+		{{/each}}
+		<table>
+			<thead>
+				<tr>
+					<th class="first center"><span>Default</span></th>
+					<!-- <th class="">ORG ID</th> -->
+					<th class="center"><span>TNID</span></th>
+					<th class="center"><span>Branch name<br />(Trading Account)</span></th>
+					<th style="width:60px;" class="center"><span>Status</span></th>
+					<th class="center"><span>Spend<br />Management</span><i class="fa fa-info-circle taHelp" aria-hidden="true" data-tooltip="Allows user to view Supplier Recommendations, Sourcing Engine Dashboard and Sourcing Engine Transactions Report for the specified trading accounts."></i></th>
+					<th class="center"><span>Reports</span><i class="fa fa-info-circle taHelp" aria-hidden="true" data-tooltip="Allows user to view WebReporter, the KPI Dashboard and Supplier Performance Reports for the specified trading accounts."></i></th>
+					<th class="center"><span>Transaction<br />Monitor</span><i class="fa fa-info-circle taHelp" aria-hidden="true" data-tooltip="Allows user to view transaction monitor for the specified trading accounts."></i></th>
+					{{#if isDeadlineManager}}
+						<th class="center"><span>Transaction<br />Monitor<br />Admin</span><i class="fa fa-info-circle taHelp" aria-hidden="true" data-tooltip="Allows access to transaction monitor admin user features including RFQ unlock."></i></th>
+					{{/if}}
+					<th class="center"><span>Buy Tab</span><i class="fa fa-info-circle taHelp" aria-hidden="true" data-tooltip="User can access Buy Tab features for selected branches."></i></th>
+					<!--
+					<th class="center">Approved Supplier</th>
+					-->
+					<th class="center"><span>Automatic<br />Reminders</span><i class="fa fa-info-circle taHelp" aria-hidden="true" data-tooltip="Allows the user to configure Automatic Reminders for the specified trading accounts."></i></th>
+				</tr>
+			</thead>
+			<tbody>
+			<tbody>
+				{{#if hasList}}
+					<tr>
+						<td colspan="2">
+							&nbsp;
+						</td>
+						<td>
+							All
+						</td>
+						<td>
+						</td>						
+						<td class="center">
+							<span class="toggleOnOff" data-toggle="bybBranchCode">
+						</td>
+						<td class="center">
+							<span class="toggleOnOff" data-toggle="webReporterAccess">
+						</td>
+						<td class="center">
+							<span class="toggleOnOff" data-toggle="txnMonitorAccess">
+						</td>
+						{{#if isDeadlineManager}}
+							<td class="center">
+								<span class="toggleOnOff" data-toggle="txnMonitorAccessD">
+							</td>
+						{{/if}}
+						<td class="center">
+							<span class="toggleOnOff" data-toggle="buyTabAccess">
+						</td>
+						<!--
+						<td class="center">
+							<span class="toggleOnOff" data-toggle="approvedSupplAccess">
+						</td>
+						-->
+						<td class="center">
+							<span class="toggleOnOff" data-toggle="automaticReminders">
+						</td>
+					</tr>
+				{{/if}}
+				{{#each models}}
+					{{#if this.attributes.show}}
+					<tr>
+						<td class="center" style="width:60px;">
+							<div style="margin-left:0px;"><input type="radio" name="defaultBybBranchCode" value="{{this.attributes.id}}" {{#if this.attributes.defaulted }}checked="checked"{{/if}} /></div>
+						</td>
+						<!-- 
+						<td>
+							{{this.attributes.orgId}}
+						</td>
+						 -->
+						<td class="first" style="width:80px;">
+							{{this.attributes.id}}
+						</td>						
+						<td style="width: 350px;">
+							<div style="margin-left:0px;">{{this.attributes.name}}</div>
+						</td>
+						<td>
+							{{this.attributes.status}}
+						</td>						
+						<td class="center">
+							<input id="cb{{this.attributes.id}}" type="checkbox" class="buyerBranchCode toggleCheckBox" name="bybBranchCode[]" value="{{this.attributes.id}}" {{#if this.attributes.match }}checked="checked"{{/if}} />
+						</td>
+						<td class="center">
+							<input type="checkbox" name="webReporterAccess[]" class="toggleCheckBox" value="{{this.attributes.id}}" {{#if this.attributes.webReporter }}checked="checked"{{/if}} /> 
+						</td>
+						
+						<td class="center">
+							<input type="checkbox" name="txnMonitorAccess[]" class="toggleCheckBox" value="{{this.attributes.id}}" {{#if this.attributes.txnMon }}checked="checked"{{/if}} /> 
+						</td>
+						{{#if ../../isDeadlineManager}}
+							<td class="center">
+								
+								<input type="checkbox" name="txnMonitorAccessD[]" class="toggleCheckBox" value="{{this.attributes.id}}" {{#if this.attributes.txnMonAdm }}checked="checked"{{/if}}{{#unless this.attributes.branchIsDeadlineManager}} disabled{{/unless}}/> 
+								
+							</td>
+						{{/if}}
+						<td class="center">
+							<input type="checkbox" name="buyTabAccess[]" class="toggleCheckBox" value="{{this.attributes.id}}" {{#if this.attributes.buy }}checked="checked"{{/if}} /> 
+						</td>	
+						<!-- 
+						<td class="center">
+							<input type="checkbox" name="approvedSupplAccess[]" class="toggleCheckBox" value="{{this.attributes.id}}" {{#if this.attributes.appSup }}checked="checked"{{/if}} /> 
+						</td>
+						-->
+						<!--  TODO implement as new -->
+						<td class="center">
+							<input type="checkbox" name="automaticReminders[]" class="toggleCheckBox" value="{{this.attributes.id}}" {{#if this.attributes.autoReminder }}checked="checked"{{/if}} /> 
+						</td>
+					</tr>
+					{{/if}}
+				{{/each}}
+			</tbody>
+		</table>
+		<input type="button" class="button medium green cancel" name="save" value="Cancel"/>
+		<input type="button" class="button medium green save" name="save" value="Save"/>
+		<div class="clear"></div>
+	</form>
+	{{else}}	
+		The selected organisation does not have any active branch. If you believe this is an error, don't hesitate to contact us at info@shipserv.com  
+	{{/if}}
+</div>

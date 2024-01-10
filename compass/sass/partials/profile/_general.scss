@@ -1,0 +1,52 @@
+/*
+Document   : _general
+Created on : Jun 14, 2012, 10:05:49 AM
+Author     : gly
+Description: General styles for profile page
+*/
+
+#body{
+    #content { 
+        float:left;
+        width:960px;
+        margin-bottom:30px;
+        padding: 5px;
+
+        .inner-content {
+            padding: 15px;
+        }
+    }
+}
+
+.content-shaded-header {
+	background:url(https://cdn1.shipserv.com/images/layout_v2/new-wide-header.png) no-repeat;
+	width:742px;
+	height:73px;
+	position:relative;
+}
+
+.content_wide_header, .content-shaded-header {
+    h1 {
+        color:#fff;
+        font-size:19px;
+        padding:19px 20px 4px 30px;
+    }
+}
+
+.content-shaded-header {
+    h1 {
+        &.profile {
+            font-size:17px!important;
+            font-weight:700;
+            padding-top:22px;
+            
+            select#tnidSelector {
+                max-width: 250px;
+            }
+        }
+    }
+}
+
+#profile-menu ul li a {
+	display: inline;
+}

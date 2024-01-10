@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Supplier Insight Report</title>
+		<style type="text/css">
+		
+			#outlook a { padding:0; } /* Force Outlook to provide a "view in browser" button. */
+			body { width:100% !important; } /* Force Hotmail to display emails at full width */
+			body { -webkit-text-size-adjust:none; } /* Prevent Webkit platforms from changing default text sizes. */		
+		
+			/* Reset Styles */
+			body { margin:0; padding:0; }
+			img { border:none; font-size:14px; font-weight:bold; height:auto; line-height:100%; outline:none; text-decoration:none; text-transform:capitalize; }
+			#container { margin:0; padding:0; width:636px !important; }
+			/*-*/
+		
+			body, #container { background-color: #f5f7fa; color: #2e3235; font-size: 12px; font-family: Arial, sans-serif; font-weight: normal; }
+			p, h1, h2, div, td { font-family: Arial, sans-serif; font-weight: normal; padding: 0; margin: 0; }
+			table { margin: 0; border: 0; padding: 0; }
+		
+			a { text-decoration: none; }
+		
+			h1.dear { font-size: 17px; font-weight: bold; color: #13b5ea; }
+			h2 { font-size: 16px; font-weight: bold; color: #2e3235; }
+			p.intro { font-size: 15px; margin-bottom: 20px; line-height: 1.1em; }
+			ul.points, ul.points li { /*list-style-position: inside;*/ margin: 0; text-align: left; }
+			ul.points { margin-top: 20px; margin-bottom: 20px; }
+			ul.points li { margin-bottom: 12px; padding: 2px; }
+		
+			div.dotted { border-bottom: 1px dotted #333333; height: 1px; width: 358px; margin: 20px auto; }
+		</style>
+
+		<!--[if gte mso 9]>
+		<style type="text/css">
+			ul.points { margin-left: 5px; }
+			ul.points li { padding: 0; margin-left: 14px; }
+		</style>
+		<![endif]-->
+
+	</head>
+
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="#f2f2f2">
+		<center>
+			<table id="container" border="0" cellpadding="0" cellspacing="0" width="636" bgcolor="#f2f2f2">
+				
+				<tr height="15" style="height:15px">
+					<td>&nbsp;</td>
+				</tr>
+				
+				<tr>
+					<td>
+						<?php echo nl2br($this->message) ?><br /><br />						
+						<?php echo nl2br($this->salutation) ?>						
+						<div class="dotted">&nbsp;</div>
+						
+						<h2>Summary of your ShipServ Pages Supplier Insight Report</h2>
+						<p class="intro">Shows data for <?= trim($this->supplierName) ?> from <?= $this->period['from']; ?> to <?= $this->period['to']; ?></p>
+					</td>
+				</tr>
+				
+				<tr height="200" style="height:200px">
+					<td style="background: url(<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/images/email/sir_invite/funnel_bg.png) no-repeat top left;">
+					<!--[if gte mso 9]>
+							<v:image xmlns:v="urn:schemas-microsoft-com:vml" id="" style='behavior: url(#default#VML); display:inline-block; position:absolute; height:200px; width:636px; top:0; left:0; border:0; z-index:1;' src="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname;?>/images/email/sir_invite/funnel_bg.png"/>
+							<v:shape xmlns:v="urn:schemas-microsoft-com:vml" id="over_funnel" style='behavior: url(#default#VML); display:inline-block; position:absolute; height:200px; width:636px; vertical-align:top; top:0; left:0; border:0; z-index:2;'>
+					<![endif]-->
+
+					<table border="0" cellpadding="0" cellspacing="0" width="636">
+						<tr height="110" style="height: 110px;">
+							<td width="159">
+								<table border="0" cellpadding="0" cellspacing="0" width="159" style="text-align: center; ">
+									<tr height="50" style="height: 50px;">
+										<td width="159" style="width: 159px;">&nbsp;</td>
+									</tr>
+									<tr height="16" style="height: 16px;">
+										<td style="font-weight: bold;">Search Impressions</td>
+									</tr>
+									<tr height="15" style="height: 15px;">
+										<td>&nbsp;</td>
+									</tr>
+									<tr height="29" style="height: 29px;">
+										<td style="line-height: 29px; height: 29px;"><span style="color: #fff; background-color: #008b00; line-height: 29px; padding: 6px; font-weight: bold; height: 29px; font-size: 15px;">&nbsp;<?=$this->statistic->targetedSearch?>&nbsp;</span></td>
+									</tr>
+									
+								</table>
+							</td>
+							<td width="159">
+								<table border="0" cellpadding="0" cellspacing="0" width="159" style="text-align: center; ">
+									<tr height="50" style="height: 50px;">
+										<td width="159" style="width: 159px;">&nbsp;</td>
+									</tr>
+									<tr height="16" style="height: 16px;">
+										<td style="font-weight: bold;">Profile Views</td>
+									</tr>
+									<tr height="15" style="height: 15px;">
+										<td>&nbsp;</td>
+									</tr>
+									<tr height="29" style="height: 29px;">
+										<td style="line-height: 29px; height: 29px;"><span style="color: #fff; background-color: #fec008; line-height: 29px; padding: 6px; font-weight: bold; height: 29px; font-size: 15px;">&nbsp;<?=$this->statistic->profileView?>&nbsp;</span></td>
+									</tr>
+									
+								</table>
+								
+							</td>
+							<td width="159">
+								<table border="0" cellpadding="0" cellspacing="0" width="159" style="text-align: center; ">
+									<tr height="50" style="height: 50px;">
+										<td width="159" style="width: 159px;">&nbsp;</td>
+									</tr>
+									<tr height="16" style="height: 16px;">
+										<td style="font-weight: bold;">Contact Views</td>
+									</tr>
+									<tr height="15" style="height: 15px;">
+										<td>&nbsp;</td>
+									</tr>
+									<tr height="29" style="height: 29px;">
+										<td style="line-height: 29px; height: 29px;"><span style="color: #fff; background-color: #ff7f04; line-height: 29px; padding: 6px; font-weight: bold; height: 29px; font-size: 15px;">&nbsp;<?=$this->statistic->contactView?>&nbsp;</span></td>
+									</tr>
+									
+								</table>
+							</td>
+							<td width="159">
+								<table border="0" cellpadding="0" cellspacing="0" width="159" style="text-align: center; ">
+									<tr height="50" style="height: 50px;">
+										<td width="159" style="width: 159px;">&nbsp;</td>
+									</tr>
+									<tr height="16" style="height: 16px;">
+										<td style="font-weight: bold;">RFQs</td>
+									</tr>
+									<tr height="15" style="height: 15px;">
+										<td>&nbsp;</td>
+									</tr>
+									<tr height="29" style="height: 29px;">
+										<td style="line-height: 29px; height: 29px;"><span style="color: #fff; background-color: #e81e24; line-height: 29px; padding: 6px; font-weight: bold; height: 29px; font-size: 15px;">&nbsp;<?= $this->statistic->rfq; ?>&nbsp;</span></td>
+									</tr>
+								</table>
+							</td>							
+						</tr>
+						<tr height="90" style="height: 90px;"><td>&nbsp;</td></tr>
+					</table>
+
+					<!--[if gte mso 9]>
+						</v:shape>
+			      	<![endif]-->
+					
+					</td>
+				</tr>
+
+				<tr>
+					<td height="50" style="color:#8A8A8A">
+						<br />
+						<br />
+						<br />
+						<br />
+						<b>What's in the full online report?</b><br />
+						The above data is a summary of the full Supplier Insight Report for your company.  The full report has these features:<br />
+						<div style="margin-left:20px;">
+							&bull; Updated every day<br />
+							&bull; Interactive so you can change time periods or zoom in on a section of the data to see more detail<br />
+							&bull; Compare your performance to market benchmarks, which you can adjust<br />
+							&bull; Easily change your company Listing to boost your performance<br />
+						</div>
+						<br />
+						<b>How you access the full online Supplier Insight Report for your company</b><br />
+						To view the full online tool you need to be a registered ShipServ Pages user and connected to your company Profile.  The good news is that to arrange this you only need to email your company's Pages administrator and request it.  If you don't know your company administrator contact your ShipServ account manager or email us at: <a href="mailto:support@shipserv.com">support@shipserv.com</a>. 
+						<br />
+						<br />
+						<br />
+						<br />
+						<br />
+					</td>
+				</tr>
+
+				<tr>
+					<td style="color: #333333; font-size: 12px; " align="center" style="text-align:center">
+						ShipServ &copy; 2012 | <a href="https://www.shipserv.com/info/terms-of-use">Terms &amp; Conditions</a> | <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/privacy-policy/">Privacy Policy</a>
+					</td>
+				</tr>
+
+				<tr>
+					<td height="40">&nbsp;</td>
+				</tr>
+				
+			</table>
+			
+			
+		</center>
+	</body>
+</html>

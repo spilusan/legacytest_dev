@@ -1,0 +1,14 @@
+#body {
+	#content {
+		h2 {
+			input {
+				position: relative;
+				top: 3px;
+			}
+		}
+
+		input[type="button"]{
+			-pie-poll: true;
+		}
+	}
+}

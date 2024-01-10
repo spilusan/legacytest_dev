@@ -1,0 +1,167 @@
+<?php
+$this->headScript()->appendFile('/js/json2.js');
+				   
+$this->CDNLink()->appendStylesheet('/css/enquiries.css');
+$this->getHelper('Requirejs')->addModule('enquiry/reject');
+$breadcrumbs = array(array('name' => 'Home',
+		'url'  => '/search'),
+		array('name' => 'RFQs from Pages',
+				'url'  => '/trade/rfq/page/' . $this->params['page'] .''),
+		array('name' => 'RFQ',
+				'url'  => $this->enquiry->getUrl() . "/page/" . $this->params['page']),
+		array('name' => 'Respond',
+				'url'  => '/enquiry/post-respond-survey/'));
+
+?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->CDNLink()->css('/css/enquiry/rfq.css'); ?>" />
+<div id="main_content_area">
+<?php 
+echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+if( $this->mode == "survey" )
+{ 
+?>
+<div id="validation-message" class="hidden clearfix">
+	<div style="float:left; width:20px;"><img src="/images/icons/large/blue/info.png" width="30" align="middle" /></div>
+	<div style="float:left; width: 510px; margin-left:30px;">
+		<div class="question-header">You have not provided feedback about this RFQ</div>
+		<br />
+		<div class="validation-message-intro">
+			This information will help us learn about the matching process. <br />
+			Will you please take a few seconds to provide this information?
+		</div>
+		<div class="clearfix" style="margin-top:20px;">
+			<div class="big-button">
+				<div class="big-button-content">
+					<div class="zz medium red button clearfix" style="margin-left:35px;" id="big-button-continue-without">No thanks</div>
+					<div class="clear"></div>
+					<div class="description-for-button" style="margin-top: 4px;">I would not like to provide any additional information at this time</div>
+				</div>
+			</div>
+			
+			<div class="big-button">
+				<div class="big-button-content">
+					<div class="zz medium green button clearfix" style="margin-left:60px;" id="big-button-continue-with">Yes</div>
+					<div class="clear"></div>
+					<div class="description-for-button" style="margin-top: 4px;">I will provide a feedback</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="content_wide new rep">
+	<div class="zz header">
+		<h2>
+			RFQ Respond
+		</h2>
+	</div>
+	<div class="survey-container ">
+		<div class="survey clearfix">
+			<form class="main" method="post">
+				<input type="hidden" name="enquiryId" value="<? echo $this->enquiryId ?>" />
+				<input type="hidden" name="supplierBranchId" value="<? echo $this->tnid ?>" />
+				<input type="hidden" name="hash" value="<? echo $this->hash ?>" />
+				
+				<div class="question-header">Can you please take a moment to help us learn about the matching process (check all that apply):</div>
+				<div>
+					<?=$this->partial('/forms/regular/checkbox.phtml',
+						array(
+							'id'		=> 'option1',
+							'name'      => 'reason[]',
+						  	'label'     => 'This is a new prospect.',
+							'required'	=> false,
+							'value'     => "This is a new prospect",
+							'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+							'div'		=> array('class' => '')
+					 ))?>
+			
+					<?=$this->partial('/forms/regular/checkbox.phtml',
+						array(
+							'id'		=> 'option2',
+							'name'      => 'reason[]',
+						  	'label'     => 'This is a request from an existing prospect.',
+							'required'	=> false,
+							'value'     => "This is a request from an existing prospect",
+							'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+							'div'		=> array('class' => '')
+					 ))?>
+			
+					<?=$this->partial('/forms/regular/checkbox.phtml',
+						array(
+							'id'		=> 'option3',
+							'name'      => 'reason[]',
+						  	'label'     => 'This is a high quality RFQ.',
+							'required'	=> false,
+							'value'     => "This is a high quality enquiry",
+							'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+							'div'		=> array('class' => '')
+					 ))?>
+			
+					<?=$this->partial('/forms/regular/checkbox.phtml',
+						array(
+							'id'		=> 'option4',
+							'name'      => 'reason[]',
+						  	'label'     => 'This is a low probability/speculative RFQ.',
+							'required'	=> false,
+							'value'     => "This is a low probability/speculative enquiry",
+							'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+							'div'		=> array('class' => '')
+					 ))?>
+				
+					<?=$this->partial('/forms/regular/checkbox.phtml',
+						array(
+							'id'		=> 'option5',
+							'name'      => 'reason[]',
+						  	'label'     => 'This is a request for information only.',
+							'required'	=> false,
+							'value'     => "This is a request for information only",
+							'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+							'div'		=> array('class' => '')
+					 ))?>
+				
+					<?=$this->partial('/forms/regular/checkbox.phtml',
+						array(
+							'id'		=> 'option6',
+							'name'      => 'reason[]',
+						  	'label'     => 'Other.',
+							'required'	=> false,
+							'value'     => "",
+							'input'		=> array('attr' => array('autocomplete' => 'off'), 'class' => ''),
+							'div'		=> array('class' => '')
+					 ))?>
+					 
+					 <div class="clear"></div>
+					 
+					 <?=$this->partial('/forms/regular/textarea.phtml',
+						array(
+							'name'      => 'other',
+						  	'required'	=> false,
+							'value'     => "",
+							'div'		=> array('class' => '')
+					 ))?>
+					 
+					<div style="font-size:12px; line-height:18px;">
+						This information will not be sent to the buyer who sent you <br />this RFQ. Only ShipServ will see or use this information, and<br /> we will use it to improve our services to you.
+					</div>
+					 <div class="clear"></div>
+					<div class="clear" style="margin-top:20px;"></div>
+					<div class="zz medium green button clearfix"><button type="button" id="decline">Submit</button></div>
+					<div class="clear"></div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+<?php  
+} else if( $this->mode == "completed" ) {
+?>
+<div class="success-box">
+	<div class="positive"></div>
+	<h2>Thank you for your feedback</h2>
+	
+	<a href="/search/" style="left:185px;" class="new-search"></a> 
+</div>
+<?php 
+} 
+?>
+</div>

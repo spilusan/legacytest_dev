@@ -1,0 +1,258 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+
+<div id="breadcrumbs">
+<?php
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Match', 'url'  => '/match/inbox');
+	$breadcrumbs[] = array('name' => 'Reports', 'url'  => '/match/adoption-kpi');
+	$breadcrumbs[] = array('name' => 'Orphaned RFQ', 'url'  => '');
+	
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); 
+?>
+</div>
+
+<div id="body">
+	<div class="head">
+		<?php echo $this->partial('match/tab.phtml', array('selected' => 'internal')); ?>
+	</div>
+	<div id="content">
+		<h2 class="styled grey blue">
+			<a href="/match/adoption-kpi" class="button tab white medium">Adoption Rate</a>
+			<a href="/match/conversion-kpi" class="button tab white medium ">Conversion</a>
+			<a href="/match/orphaned-order" class="button tab white medium active">Orphaned Purchase Order</a>
+			<a href="/match/usage-report" class="button tab white medium">Match Usage</a>
+			<a href="/reports/transactions" class="button tab white medium">TradeNet Usage</a>
+			<a href="/reports/pages" class="button tab white medium">Pages Usage</a>
+		</h2>
+		<form method="GET" class="new" id="formA" style="background-color:#f5f7fa;">
+		    <table style="margin: auto;  width:100%;">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		            	<div style="float: right;">
+							<iframe name="documentPreview" style="width:800px; height:1200px;"></iframe>
+		            	</div>
+	            		<div style="font-size:14px; margin-top:10px; margin-bottom:10px; line-height:16px;">
+	            			<b>Data filter</b><br />
+	            			<input type="hidden" id="page" name="page" />
+							<select name="certainty" onchange="$('#formA').submit();">
+								<option value="">Certainty (%)</option>
+								<option value="75" <?= ($this->params['certainty'] == 75 )?"selected='selected'":""?>>&raquo; 100-75%</option>
+								<option value="50" <?= ($this->params['certainty'] == 50 )?"selected='selected'":""?>>&raquo; 75-50%</option>
+								<option value="25" <?= ($this->params['certainty'] == 25 )?"selected='selected'":""?>>&raquo; 50-25%</option>
+								<option value="0"  <?= ($this->params['certainty'] == "0" )?"selected='selected'":""?>>&raquo; &lt;25%</option>
+							</select>
+							<select name="pageSize" onchange="$('#formA').submit();">
+								<option value="">Rows/page</option>
+							    <option value="500" <?= ($this->params['pageSize'] == 500 )?"selected='selected'":""?>>&raquo; 500</option>
+							    <option value="250" <?= ($this->params['pageSize'] == 250 )?"selected='selected'":""?>>&raquo; 250</option>
+							    <option value="100" <?= ($this->params['pageSize'] == 100 )?"selected='selected'":""?>>&raquo; 100</option>
+								<option value="50" <?= ($this->params['pageSize'] == 50 )?"selected='selected'":""?>>&raquo; 50</option>
+							    <option value="10" <?= ($this->params['pageSize'] == 10 || $this->params['pageSize'] == "" )?"selected='selected'":""?>>&raquo; 10</option>
+							</select>
+							<select name="qotType" onchange="$('#formA').submit();">
+								<option value="">PO Type</option>
+							    <option value="backtest" <?= ($this->params['qotType'] == "backtest" )?"selected='selected'":""?>>&raquo; Backtested</option>
+							    <option value="non-backtest" <?= ($this->params['qotType'] == "non-backtest" )?"selected='selected'":""?>>&raquo; Orphaned</option>
+							</select>
+							<select name="ordType" onchange="$('#formA').submit();">
+								<option value="">Type of Order</option>
+							    <option value="matched" <?= ($this->params['ordType'] == "matched" )?"selected='selected'":""?>>&raquo; with Quotes</option>
+							    <option value="not-matched" <?= ($this->params['ordType'] == "not-matched" )?"selected='selected'":""?>>&raquo; without Quotes</option>
+							</select>
+	            			<br />
+	            			<br />
+		            		<b>Parameters for Algorithm</b><br />
+		            		Created date for QOT vs ORD: <?= Shipserv_Match_OrphanedOrder::ALGORITHM_MONTH_DIFFERENCE_FOR_QOT?> month(s) difference<br />
+		            		<br />
+	            			<b>Summary</b><br />
+	            			Total PO processed: <?= $this->stats[0]['TOTAL_ROW']?> (based on the filters above)<br />
+		            		Matched PO: <?= $this->stats[0]['TOTAL_MATCHED_QOT']?> = <?= @round($this->stats[0]['TOTAL_MATCHED_QOT']/$this->stats[0]['TOTAL_ROW']*100)?>%<br />
+	                        <? if( $this->params['qotType'] == "backtest" ){?>
+	                        Accuracy of algorithm (for backtesting only): <br />&nbsp;<?= $this->accuracyData?>% of <?= $this->stats[0]['TOTAL_MATCHED_QOT']?> = <span style="text-decoration: underline; font-weight:bold;"><?= @round($this->stats[0]['TOTAL_MATCHED_QOT']/$this->stats[0]['TOTAL_ROW']*100) * $this->accuracyData / 100?>%</span> of <?= $this->stats[0]['TOTAL_ROW']?><br />
+	                        <? }?>
+		            		<br />
+		            		</div>
+	            		<div style="height:800px; overflow:scroll;">
+							<table id="resultsTab" width="400">
+			                    <thead>
+			                        <tr>
+				                        <th class="minimal"></th>
+										<th class="minimal">Rfq</th>
+	                        			<th class="minimal" style="width:55px;">Matched Quote</th>
+	                        			<? if( $this->params['qotType'] == "backtest" ){?>
+	                        			<th class="minimal">Original<br />Quote</th>
+	                        			<? }?>
+	                        			<th class="minimal last">Order</th>
+	                        			<!-- 
+	                        			<th class="minimal last" style="width:50px;">Certainty</th>
+	                        			 -->
+			                        </tr>
+			                    </thead>
+			                    <tbody>
+			                        <?php 
+			                        	foreach ((array)$this->data as $key => $result) 
+			                        	{
+			                        		if( $result['DEBUG'] != ""  )
+			                        		{
+			                        			$quotesData = unserialize($result['DEBUG']);
+			                        			//$quotesData = array_slice($quotesData, 0, 10);
+			                        			if( $quotesData[0] == $result['QOT_INTERNAL_REF_NO'] )
+			                        			{
+			                        				$quotesData = array();
+			                        			}
+			                        		}
+			                        		
+			                        		$quote = null;
+			                        		$order = null;
+			                        		
+											if( $result['QOT_INTERNAL_REF_NO'] != "" )
+			                        		{
+			                        			$quote = Shipserv_Quote::getInstanceById($result['QOT_INTERNAL_REF_NO']);
+			                        		}
+			                        		if( $result['ORIGINAL_QOT_INTERNAL_REF_NO'] != "" )
+			                        		{
+			                        			$originalQuote = Shipserv_Quote::getInstanceById($result['ORIGINAL_QOT_INTERNAL_REF_NO']);
+			                        		}
+			                        		if( $result['ORD_INTERNAL_REF_NO'] != "" )
+			                        		{
+			                        			$order = Shipserv_Order::getInstanceById($result['ORD_INTERNAL_REF_NO']);
+			                        		}
+			                        		
+			                        		try
+											{
+												$rfq = Shipserv_Rfq::getInstanceById(($result['ORIGINAL_RFQ_INTERNAL_REF_NO']!="")?$result['ORIGINAL_RFQ_INTERNAL_REF_NO']:$result['RFQ_INTERNAL_REF_NO']);
+			                        			
+			                        		}
+			                        		catch(Exception $e)
+			                        		{
+			                        			//echo $e->getMessage();
+			                        		}
+
+			                        		if( trim($result['QUOTE_TYPE']) == "match" ) $color = "orange";
+			                        		if( $this->params['qotType'] == "backtest" && $result['ORIGINAL_QOT_INTERNAL_REF_NO']!=$result['QOT_INTERNAL_REF_NO'] )
+			                        		{
+			                        			$totalNonMatchedForBacktesting++;
+			                        		}
+			                        	?>
+			                            <tr class="highlighted <?php echo $color?>">
+			                                <td><?= ($key + 1)?></td>
+											<td><a target="documentPreview" href="<?php echo ($rfq!==null)?$rfq->getUrl():"";?>"><?php echo $rfq->rfqInternalRefNo?></a></td>
+											<td>
+												<?= ($result['QOT_INTERNAL_REF_NO']=="")?"not found":""?>
+												<a target="documentPreview" href="<?php echo ($quote!==null)?$quote->getUrl():"";?>"><?php echo $result['QOT_INTERNAL_REF_NO']?></a> 
+												
+												<? if( lg_count($quotesData)>0 ){?><a onclick="$('#detailFor<?= ($key+1)?>').toggle();"><img alt="see detail" src="/img/icons/small/sort-grey-desc.png"></a><? } ?>
+											</td>
+											<? if( $this->params['qotType'] == "backtest" ){?>
+											<td style="background-color: <?php echo ($result['ORIGINAL_QOT_INTERNAL_REF_NO']!="" && $result['ORIGINAL_QOT_INTERNAL_REF_NO']==$result['QOT_INTERNAL_REF_NO'])?"#83cc4e":""?>"><a target="documentPreview" href="<?php echo ($originalQuote!==null)?$originalQuote->getUrl():"";?>"><?php echo $result['ORIGINAL_QOT_INTERNAL_REF_NO']?></a></td>
+											<? }?>
+											<td><a target="documentPreview" href="<?php echo ($order!==null)?$order->getUrl():"";?>"><?php echo $result['ORD_INTERNAL_REF_NO']?></a></td>
+											<!-- <td><?php echo @round($result['SCORE']/60*100)?>%</td>  -->
+										</tr>
+										<? if( lg_count($quotesData)>0 ){?>
+										<tr style="display: none" id="detailFor<?= ($key+1)?>">
+											<td colspan="8"  style="background-color: #ff5f5fa;">
+												<table width="100%">
+													<thead>
+								                        <tr>
+									                        <th class="minimal"></th>
+									                        <th class="minimal last">Quote</th>
+						                        			<!-- 
+						                        			<th class="minimal">Line item</th>
+						                        			<th class="minimal">RFQ vs ORD Ref No</th>
+						                        			<th class="minimal">QOT vs ORD Ref No</th>
+						                        			<th class="minimal">Subject</th>
+						                        			<th class="minimal">Vessel Name</th>
+						                        			<th class="minimal">Cost</th>
+						                        			<th class="minimal last">Total Score</th>
+						                        			 -->
+								                        </tr>
+													</thead>
+													<tbody>
+														<? 
+														$pp = 0;
+														foreach((array)$quotesData as $quoteId)
+														{
+															if( $quoteId != "" )
+															{
+																$qo = Shipserv_Quote::getInstanceById($quoteId);
+															}
+															?>
+															<tr>
+																<td><?= ++$pp ?></td>
+																<td><a target="documentPreview" href="<?php echo ($qo!==null)?$qo->getUrl():"";?>"><?php echo $quoteId?></a></td>
+																<!-- 
+																<td><?= $q['SCORE_LINE_ITEM']?></td>
+																<td><?= $q['SCORE_PUBLIC_REF_NO']?></td>
+																<td><?= $q['SCORE_RFQ_REF_NO']?></td>
+																<td><?= $q['SCORE_SUBJECT']?></td>
+																<td><?= $q['SCORE_VESSEL_NAME']?></td>
+																<td><?= $q['SCORE_COST']?></td>
+																<td><?= $q['TOTAL_SCORE']?></td>
+																 -->
+															</tr>
+															<? 
+														}
+														?>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+										<?
+			                        	}
+			                        } 
+			                        ?>
+			                	</tbody>
+			            	</table>
+		            	</div>
+		            	<div style="font-size:12px; padding-top:20px; border-top:1px solid #d6dce4; width:400px; margin-top:-1px;">
+		            		<?php 
+			            		for($i=1; $i<=ceil($this->paginatorInfo['total']/$this->paginatorInfo['pageSize']); $i++)
+			            		{
+			            			?><a onclick="$('#page').val($(this).attr('page')); $('#formA').submit();" page="<?= $i?>" href="#" total="<?= $this->paginatorInfo['total']?>" pageSize="<?= $this->paginatorInfo['pageSize']?>"><?= $i?></a> &nbsp;&nbsp;&nbsp;<?
+			            		}
+		            		?>
+			            	<br /><br />
+			            	<div style="padding:5px; background-color: #ff9e38; float:left; margin-right:10px;; width:100px; height:30px;">Originated from Match</div>
+			            	<div style="padding:5px; background-color: #83CC4E; float:left; width:100px; height:30px;">Algorithm guessed it correctly</div>
+		            	</div>
+	            		
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		$(".toggleDetail").click(function(){
+			$(this).parent().parent().find(".detail").toggle();
+		});
+
+		$("#resultsTab tbody tr.highlighted").click(function(){
+			$("#resultsTab tbody tr.highlighted").each(function(){
+				$(this).removeClass("green");
+			});
+			$(this).addClass("green");
+		});
+	});
+</script>
+
+
+
+
+

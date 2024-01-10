@@ -1,0 +1,42 @@
+<?php 
+    $user = (isset($this->user)? $this->user : null);
+    $activeCompany = (isset($this->activeCompany)? $this->activeCompany : null);
+    $uriSignature = Myshipserv_Helper_RouteByUrl::getByRelativeUrl(Zend_Controller_Front::getInstance()->getRequest()->getRequestUri());
+    
+    //recursive anonim lambda to process any level of menus
+    $renderMenu = function ($pagesNav, $level = 1, $selected = null) use (&$renderMenu, $uriSignature) {
+        foreach ($pagesNav as $idstr => $tab) {
+            $target = $tab['target'] ?? null;
+            $tabUrl = $tab['url'] ?? null;
+            $tabChildren = $tab['children'] ?? null;
+            $tabTitle = $tab['title'] ?? '';
+            $isSelected = $tab['isSelected'] ?? false;
+
+            if ($level === 1) {
+                $nodeSelected  = $isSelected;
+                $currentClass  = ($isSelected ? ' selected' : '') . ($idstr === 'shipmate'?  ' shipTab' : '');
+            } else {
+                $nodeSelected = $selected;
+                $currentClass = ($tabUrl) ? (($uriSignature === Myshipserv_Helper_RouteByUrl::getByRelativeUrl($tabUrl)) && $selected) ? ' current' : '' : '';
+            }
+            ?>
+                <li class="menu-item<?= $currentClass ?>">
+                    <?php if ($tabChildren !== null && lg_count((array) $tabChildren)): ?>
+                    		<span class="menu-label<?= $currentClass ?>"><?= _htmlspecialchars($tabTitle); ?></span>
+                        		<ul class="menu menu-<?= $level ?>">
+                        			<?php $renderMenu($tabChildren, $level + 1, $nodeSelected); ?>
+                        		</ul>
+                    <?php else: ?>
+                    		<a class="menu-label<?= $currentClass ?>" href="<?= ($tabUrl? $tabUrl : '#'); ?>"<?= ($target? ' target="' . $target . '"' : ''); ?>><?= _htmlspecialchars($tabTitle); ?></a>
+                    <?php endif ?>
+            		</li>
+        		<?php 
+        }
+    };
+?>
+    
+<nav id="pagesNav" class="primaryNavUl">
+	<ul class="menu menu-0">
+	<?php $renderMenu($this->pagesNav($user, $activeCompany)); ?>
+    </ul>
+</nav>

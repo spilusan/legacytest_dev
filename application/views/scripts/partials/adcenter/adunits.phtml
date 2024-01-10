@@ -1,0 +1,99 @@
+<?php 
+	$this->headLink()->appendStylesheet('/css/ads/unit.css');
+
+	/*
+	$categoryId['fireFighting'] = 274;
+	$categoryId['anchor'] 		= 38;
+	$categoryId['gasket'] 		= 3769;
+	
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ //
+	
+	$ads[$categoryId['fireFighting']][]			= array(	"tnid" => 211979,
+															"adUnitId" => 1,
+															"title" => "Naval safety and fire fighting systems | Extinval USA",
+															"description" => "Over 25 years of experience in fire fighting and liferaft service, serving Mediterranean & Houston ports.");
+	
+	$ads[$categoryId['fireFighting']][] 		= array(	"tnid" => 203583,
+															"adUnitId" => 2,
+															"title" => "Marine fire fighting equipment and systems | Seasafe",
+															"description" => "Specialized in the design, supply, installation and servicing of world class fire safety systems");
+	
+	$ads[$categoryId['fireFighting']][] 		= array(	"tnid" => 51606,
+															"adUnitId" => 3,
+															"title" => "Fire Fighting apparatus and Pyrotechnics | Seven Seas Shipchandlers",
+															"description" => "Suppling all ports of the UAE including offshore");
+	
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ //
+	
+	$ads[$categoryId['anchor']][] 				= array(	"tnid" => 205939,
+															"adUnitId" => 4,
+															"title" => "Anchors, chains and fenders | Mak Kee International H.K.",
+															"description" => "Highly specialized in steel wire rope and lifting equipments. First class quality at competitive prices.");
+
+	$ads[$categoryId['anchor']][] 				= array(	"tnid" => 58505,
+															"adUnitId" => 5,
+															"title" => "Anchors, chains and fenders | Leader Marine (China)",
+															"description" => "A one stop shop for all ships calling in major Chinese ports");
+
+	$ads[$categoryId['anchor']][] 				= array(	"tnid" => 66710,
+															"adUnitId" => 6,
+															"title" => "Anchors | Senda Shipping Engineering & Service Ltd.",
+															"description" => "A professional ship spares supplier and stockist for both new and reconditioned products. Serving all major ports in China as well as Singapore");
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ //
+
+	$ads[$categoryId['gasket']][] 				= array(	"tnid" => 80347,
+															"adUnitId" => 7,
+															"title" => "Premium Seals, Gaskets & Packings| Fastenal Company",
+															"description" => "A full line marine & offshore distributor, with 2600+ store locations");
+	
+	$ads[$categoryId['gasket']][] 				= array(	"tnid" => 58603,
+															"adUnitId" => 8,
+															"title" => "Gaskets | Unimasters Logistics SCS Ltd",
+															"description" => "A well-known supplier of high quality port and marine services, freight management and integrated logistic services. With presence in 3 countries, 10 offices and agent partnerships in over 100 countries.");
+	
+	$ads[$categoryId['gasket']][] 				= array(	"tnid" => 212110,
+															"adUnitId" => 9,
+															"title" => "Premium Seals, Gaskets & Packings| Fastenal Company",
+															"description" => "For over 35 years, van Brethorst GMBH has provided quality worldwide ship repairs at a moment's notice in harbor or at sea. Fully certified by Germanische Lloyd (GL) and complete all maintenance and repairs in accordance with makers instructions and with OEM parts.");
+	
+	// ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ //
+	$categories = array();
+		
+	if( $this->refinedQuery['type'] == "category" )
+	{
+		$categories = (array) $this->refinedQuery['id'];
+	}
+	if( in_array(274, $categories) )
+	{
+		$category = 274;	
+	}
+	if( in_array(38, $categories) )
+	{
+		$category = 38;	
+	}
+	if( in_array(3769, $categories) )
+	{
+		$category = 3769;	
+	}
+	*/
+	
+	if (lg_count( $this->ads ) > 0) {
+		?>
+		<div class="adc">
+			<?php 
+				foreach( $this->ads as $ad) {
+					$supplier = Shipserv_Supplier::fetch( $ad['PAD_TNID'] );
+					$impressionId = $supplier->registerImpression($ad['PAD_ID'], _htmlspecialchars($_GET['searchWhat']), _htmlspecialchars($_GET['searchWhere']), $this->searchRecId);
+			?>
+					<div class="adUnit">
+						<div class="headline"><a href="<?= $supplier->getUrlForAdUnit($ad['PAD_ID'], $impressionId)?>"><?= $ad['PAD_TITLE']?></a></div>
+						<div class="description"><?= $ad['PAD_DESCRIPTION']?></div>
+						<div class="link"><a href="<?= $supplier->getUrlForAdUnit($ad['PAD_ID'], $impressionId)?>">View company profile</a></div>
+					</div>
+			<?php 
+				}
+			?>
+		</div>
+		<?php 
+	}
+?>

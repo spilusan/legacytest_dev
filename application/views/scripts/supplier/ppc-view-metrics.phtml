@@ -1,0 +1,351 @@
+<style>
+	#data, #data tr, #data td {
+		border:1px solid #caedf9;
+		font-size:12px;
+	}
+	#data .table-head{
+		background-color:#caedf9;
+		font-weight:bold;
+		font-size:14px;
+	}
+	#data td{
+		vertical-align:center;
+		text-align:center;
+		padding:5px;
+	}
+	
+	#data .table-head td{
+		font-weight:bold;
+		font-size:16px;
+	}
+	
+	#data .detail{
+		text-align:left;
+	
+	}
+	
+	#data .attributes{
+		font-size:10px;
+		margin-top:5px;
+		margin-bottom:5px;
+	}
+	#data .secondary-row td{
+		font-size:12px;
+	}
+	
+	#data .ctr{
+		background-color:#f5f7fa;
+	}
+	
+	#data .ca-rate{
+		background-color:#e9edf1;
+		font-weight:bold;
+	}
+	
+	.content_wide .ppc-metric-container{
+		margin:10px;
+	}
+
+	.border-head{
+		border-right: 1px #fff solid !important; 
+	}
+</style>
+
+<div class="zz content_wide new clearfix">
+
+	<div class="content_wide" style="background-color: #fff; padding:10px;">
+		
+		<div class="zz header"><h2>PPC KPI Tracker</h2> </div>	
+		<div class="ppc-metric-container">
+			<form>
+				Days <input name="days" value="<?= $this->days?>" maxlength="3" size="3" />
+				<input type="submit" value="Go" />
+			</form>
+			<br />
+			<br />
+			
+			<!-- 
+			All Impression and clicks
+			<table border="1" width=520" id="data">
+				<tr class="table-head">
+					<td class="detail" rowspan="2">Category</td>
+					<td colspan="7">Search Result</td>
+				</tr>
+				<tr class="table-head secondary-row">
+					<td width="40">Click</td>
+					<td width="40">Click (top5)</td>
+					<td width="40" title="impression">Imp</td>
+					<td width="40">CTR %</td>
+					<td width="40">CTR % (top5)</td>
+					<td width="40">RFQ Sent</td>
+					<td width="40">Contact views</td>
+				</tr>
+				<?php if(lg_count($this->searchData) == 0 ){?>
+				<tr>
+					<td class="detail" colspan=10>No data</td>
+				</tr>
+				<?php }?>
+				<?php
+				
+				$total['row'] = lg_count( $this->searchData );
+				foreach($this->searchData as $row){
+					$no++;
+				?>
+				<tr>
+					<td class="detail" style="font-size:14px;"><?= $row['CATEGORY_NAME']?></td>
+					<td><?= $row['SEARCH_CLICK']?></td>
+					<td><?= $row['TOP_5_CLICK']?></td>
+					<td><?= $row['SEARCH_IMPRESSION']?></td>
+					<td class="ctr"><?= $row['SEARCH_CTR']?></td>
+					<td class="ctr"><?= $row['TOP_5_SEARCH_CTR']?></td>
+					<td><?= $row['RFQ_SENT']?></td>
+					<td><?= $row['CONTACT_VIEW']?></td>
+				</tr>
+				<?php 
+					$total['searchClick'] += $row['SEARCH_CLICK'];
+					$total['top5Click'] += $row['TOP_5_CLICK'];
+					$total['searchImpression'] += $row['SEARCH_IMPRESSION'];
+					$total['searchCTR'] += $row['SEARCH_CTR'];
+					$total['top5SearchCTR'] += $row['TOP_5_SEARCH_CTR'];
+					$total['rfqSent'] += $row['RFQ_SENT'];
+					$total['contactView'] += $row['CONTACT_VIEW'];
+					?>
+				<?php }?>
+				<?php if(lg_count($this->searchData) > 0 ){?>
+				<tr style="background-color: #e5f8d8">
+					<td class="detail" style="text-align: right; font-size:14px;">Total</td>
+					<td><?= $total['searchClick']?></td>
+					<td><?= $total['top5Click']?></td>
+					<td><?= $total['searchImpression']?></td>
+					<td></td>
+					<td></td>
+					<td><?= $total['rfqSent']?></td>
+					<td><?= $total['contactView']?></td>
+				</tr>
+				<tr style="background-color: #ebf0d0;">
+					<td class="detail" style="text-align: right; font-size:14px;">Average</td>
+					<td><?= round($total['searchClick']/$total['row'])?></td>
+					<td><?= round($total['top5Click']/$total['row'])?></td>
+					<td><?= round($total['searchImpression']/$total['row'])?></td>
+					<td><?= round($total['searchCTR']/$total['row'])?></td>
+					<td><?= round($total['top5SarchCTR']/$total['row'])?></td>
+					<td><?= round($total['rfqSent']/$total['row'])?></td>
+					<td><?= round($total['contactView']/$total['row'])?></td>
+				</tr>
+				<?php }?>
+			</table>
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			<br />
+			<br />
+			<br />
+			
+			-->
+			
+			
+			<?php if($this->config['shipserv']['ppc']['enable'] == 1 ){?>
+			<?php $total = array();?>
+			All impression and clicks that are related to the AdUnits' Impression
+			<table border="1" width="100%" id="data">
+				<tr class="table-head">
+					<td class="detail border-head" rowspan="2">Ad Unit</td>
+					<td rowspan="2" class="border-head">Category</td>
+					<td colspan="5" class="border-head">Ads/PPC</td>
+					<td colspan="8" style="border-bottom:1px solid white;">Search Result</td>
+				</tr>
+				<tr class="table-head secondary-row">
+					<td width="40">Click</td>
+					<td width="40" title="impression">Imp</td>
+					<td width="40">CTR %</td>
+					<td width="40">RFQ Sent</td>
+					<td width="40" class="border-head">Contact viewed</td>					
+					
+					<td width="40">Click (all)</td>
+					<td width="40" title="impression">Imp (all)</td>
+					<td width="40" class="border-head">CTR % (all)</td>
+					
+					<td width="50">Click (top5)</td>
+					<td width="40" title="impression">Imp (top5)</td>
+					<td width="50" class="border-head">CTR % (top5)</td>
+					
+					<td width="40">RFQ Sent</td>
+					<td width="40">Contact viewed</td>
+				</tr>
+				<?php if(lg_count($this->ppcAndSearchData) == 0 ){?>
+				<tr>
+					<td class="detail" colspan=10>No data</td>
+				</tr>
+				<?php }?>
+				<?php
+				
+				function getDetailedData($input)
+				{
+					if( $input == "" ) return array();
+					$x = explode(",", $input);
+					foreach( $x as $value )
+					{
+						$y = explode("=", $value);
+						$output[$y[0]] = $y[1];
+					}
+					return $output;
+				}
+				
+				function addOrdinalNumberSuffix($num) 
+				{
+					if (!in_array(($num % 100),array(11,12,13)))
+					{
+						switch ($num % 10) 
+						{
+							// Handle 1st, 2nd, 3rd
+							case 1:  return $num.'<sup style="font-size:8px; position:relative; top:-5px;">st</sup>';
+							case 2:  return $num.'<sup style="font-size:8px; position:relative; top:-5px;">nd</sup>';
+							case 3:  return $num.'<sup style="font-size:8px; position:relative; top:-5px;">rd</sup>';
+						}
+					}
+					return $num.'<sup style="font-size:8px; position:relative; top:-5px;">th</sup>';
+				}
+				
+				
+				$total['row'] = lg_count( $this->ppcAndSearchData );
+				$no=0;
+				
+				foreach($this->ppcAndSearchData as $row){
+					$x[$row['CATEGORY_NAME']]['CONTACT'] += $row['PPC_CONTACT_VIEW'];
+				}
+				foreach($this->ppcAndSearchData as $row){
+					$no++;
+					$supplier = Shipserv_Supplier::fetch( $row['AD_UNIT_TNID'] );
+					$detailed = getDetailedData($row['TOP_5_SEARCH_CLICK_DETAILED']);
+					$row['CONTACT_VIEW'] = $row['CONTACT_VIEW'] - $x[$row['CATEGORY_NAME']]['CONTACT'];
+					if( $row['CONTACT_VIEW']<=0 ) $row['CONTACT_VIEW'] = '';
+				?>
+				<tr>
+					<td class="detail">
+						<div style="font-size:14px;"><?= $no ?>. <?= $row['AD_UNIT']?></div>
+						<div class="attributes">
+							TNID: <?= $row['AD_UNIT_TNID']?>
+							|
+							<a href="<?= $supplier->getUrl()?>"><?= $supplier->name ?></a>
+							|
+							AdUnit ID:<?= $row['AD_UNIT_ID']?>
+						</div>
+					</td>
+					<td><?= $row['CATEGORY_NAME']?></td>
+					<td><?= $row['PPC_CLICK']?></td>
+					<td><?= $row['PPC_IMPRESSION']?></td>
+					<td class="ctr"><?= $row['PPC_CTR']?></td>
+					<td><?= $row['PPC_RFQ_SENT']?></td>
+					<td><?= $row['PPC_CONTACT_VIEW']?></td>
+					<td><?= $row['SEARCH_CLICK']?></td>
+					<td><?= $row['SEARCH_IMPRESSION']?></td>
+					<td class="ctr"><?= $row['SEARCH_CTR']?></td>
+					
+					<td><?php
+							echo $row['TOP_5_SEARCH_CLICK']; 
+							if( lg_count($detailed) > 0 )
+							{
+								echo "<br />----------";
+								echo "<div style='text-align:left; font-size:10px; line-height: 1.5'>";
+								foreach( (array) $detailed as $k => $r )
+								{
+									echo "<br />" . addOrdinalNumberSuffix($k) . " = " . $r;
+								}
+								echo "</div>";
+							}
+						?></td>
+					<td><?= $row['TOP_5_SEARCH_IMPRESSION']?></td>
+					<td class="ctr"><?
+							echo $row['TOP_5_SEARCH_CTR'];
+							if( lg_count($detailed) > 0 )
+							{
+								echo "<br />----------";
+								echo "<div style='text-align:left; font-size:10px; line-height: 1.5'>";
+								foreach( (array) $detailed as $k => $r )
+								{
+									echo "<br />" . addOrdinalNumberSuffix($k) . " = " . round($r/$row['TOP_5_SEARCH_IMPRESSION']*100,2);
+								}
+								echo "</div>";
+							}
+						?></td>
+					<td><?= $row['RFQ_SENT']?></td>
+					<td><?= $row['CONTACT_VIEW']?></td>					
+				</tr>
+				<?php 
+					$total['ppcClick'] += $row['PPC_CLICK'];
+					$total['ppcImpression'] += $row['PPC_IMPRESSION'];
+					$total['ppcCTR'] += $row['PPC_CTR'];
+					$total['ppcContactView'] += $row['PPC_CONTACT_VIEW'];
+					$total['ppcRfqSent'] += $row['PPC_RFQ_SENT'];
+					$total['searchClick'] += $row['SEARCH_CLICK'];
+					$total['searchImpression'] += $row['SEARCH_IMPRESSION'];
+					$total['searchCTR'] += $row['SEARCH_CTR'];
+					
+					$total['top5SearchClick'] += $row['TOP_5_SEARCH_CLICK'];
+					$total['top5SearchImpression'] += $row['TOP_5_SEARCH_IMPRESSION'];
+					$total['top5SearchCTR'] += $row['TOP_5_SEARCH_CTR'];
+					
+					$total['rfqSent'] += $row['RFQ_SENT'];
+					$total['contactView'] += $row['CONTACT_VIEW'];
+				?>
+				<?php }?>
+				<?php if(lg_count($this->ppcAndSearchData) > 0 ){?>
+				<tr style="background-color: #e5f8d8">
+					<td colspan="2" class="detail" style="text-align: right; font-size:14px;">Total</td>
+					<td><?= $total['ppcClick']?></td>
+					<td><?= $total['ppcImpression']?></td>
+					<td></td>
+					<td><?= $total['ppcRfqSent']?></td>
+					<td><?= $total['ppcContactView']?></td>
+					
+					<td><?= $total['searchClick']?></td>
+					<td><?= $total['searchImpression']?></td>
+					<td></td>
+					<td><?= $total['top5SearchClick']?></td>
+					<td><?= $total['searchImpression']?></td>
+					<td></td>
+					<td><?= $total['rfqSent']?></td>
+					<td><?= $total['contactView']?></td>
+				</tr>
+				<tr style="background-color: #ebf0d0;">
+					<td colspan="2" class="detail" style="text-align: right; font-size:14px;">Average</td>
+					<td><?= round($total['ppcClick']/$total['row'],2)?><?= ($total['row'])?></td>
+					<td><?= round($total['ppcImpression']/$total['row'],2)?></td>
+					<td><?= round($total['ppcCTR']/$total['row'],2)?></td>
+					<td><?= round($total['ppcRfqSent']/$total['row'],2)?></td>
+					<td><?= round($total['ppcContactView']/$total['row'],2)?></td>
+					<td><?= round($total['searchClick']/$total['row'],2)?></td>
+					<td><?= round($total['searchImpression']/$total['row'],2)?></td>
+					<td><?= round($total['searchCTR']/$total['row'],2)?></td>
+					
+					<td><?= round($total['top5SearchClick']/$total['row'],2)?></td>
+					<td><?= round($total['top5SearchImpression']/$total['row'],2)?></td>
+					<td><?= round($total['top5SearchCTR']/$total['row'],2)?></td>
+					
+					<td><?= round($total['rfqSent']/$total['row'],2)?></td>
+					<td><?= round($total['contactView']/$total['row'],2)?></td>
+				</tr>
+				<?php }?>
+			</table>
+			<?php }?>
+		</div>
+	</div><!--End content-wide-->
+</div> 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#data td").each(
+			function(){
+				if( $(this).html() == "" ){
+					$(this).html("--").css({"color":"#ff5f40"});
+				}
+			}
+		);
+		$(".content_wide").css("width", "1200px");
+	});
+</script>

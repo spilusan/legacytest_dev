@@ -1,0 +1,34 @@
+<?php if (false): /*Disabled for new navigation prototype*/?>
+<div id="breadcrumbs">
+	<span class="title">You are here:</span>
+	<ul>
+		<?php
+		$last = $this->breadcrumbs[lg_count($this->breadcrumbs)-1];
+		foreach ($this->breadcrumbs as $order => $crumb)
+		{
+			?>
+			<li <?= ( $last['url'] == $crumb['url'] ) ? 'class="active"':'' ?>>
+				<?php
+				if ($order > 0)
+				{
+					?><span></span><?php
+				}
+				if( $crumb['url'] == "" )
+				{
+					//echo '<a>' . $crumb['name'] . '</a>';
+					echo $crumb['name'];
+				}
+				else
+				{
+				?>
+				<? if($last['url'] != $crumb['url']) :?><a href="<?php echo $crumb['url']; ?>" title="<?php echo $crumb['name']; ?>"><?endif?><?php echo $crumb['name']; ?><? if($last['url'] != $crumb['url']) :?></a><?endif?>
+				<?php 
+				}
+				?>
+			</li>
+			<?php
+		}
+		?>
+	</ul>
+</div>
+<?php endif; ?>

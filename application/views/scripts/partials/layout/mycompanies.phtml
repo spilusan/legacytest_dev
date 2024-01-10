@@ -1,0 +1,62 @@
+<div class="company">
+
+    <!-- ShipMates -->
+    <?php if ($this->user && $this->user->isShipservUser()) { ?>
+        <form action="/user/switch-company">
+        		<?php if ($this->activeCompany->type === 'b' && $this->params['module'] === 'reports' &&  in_array($this->params['action'], array('price-tracker', 'price-benchmark')) && Myshipserv_Impa_Anonymize::getStatus()): ?>
+            	<input name="tnid" type="text" value="" placeholder="demo / anonymous name">
+            <?php elseif ($this->activeCompany->type === 'b' && $this->params['module'] === 'spr' &&  $this->params['action'] === 'index' && Myshipserv_Spr_Anonymize::getStatus()): ?>
+            <input name="tnid" type="text" value="" placeholder="demo / anonymous name">
+            <?php else: ?>
+            	<input name="tnid" type="text" value="" placeholder="<?= Myshipserv_CompanyTypeInfo::getName($this->activeCompany->type)  ?> - <?= $this->activeCompany->id; ?> - <?= $this->activeCompany->company->name;?> ">
+            <?php endif ?>
+        </form>
+
+    <!-- No company -->
+    <?php } elseif ($this->user && !$this->companies) {?>
+        <div class="addWrapper">
+            <a href="/profile/companies" title="Add a company to your account" class="addCompany">
+                <span class="fa-stack">
+                    <i class="fa fa-circle-thin fa-stack-2x"></i>
+                    <i class="fa fa-plus fa-stack-1x"></i>
+                </span>
+                Add a company to your account
+            </a>
+        </div>
+
+    <!-- Only one company -->   
+    <?php } elseif (isset($this->companies) && lg_count((Array) $this->companies) === 1) { ?>
+        
+        <ul>
+            <?php foreach ($this->companies as $company) { ?>
+                <li class="single selected">
+                    <a href="#" title="<?= Myshipserv_CompanyTypeInfo::getName($company['type'], true) ?> - <?= $company['id']; ?> - <?= $company['name']; ?>"><i class="fa fa-circle-thin"><div><?= Myshipserv_CompanyTypeInfo::getName($company['type']) ?></div></i><span> - <?= $company['id']; ?> - <?= $company['name']; ?></span></a>
+                </li>
+            <?php } ?>
+        </ul>
+
+    <!-- Multiple companies -->
+    <?php } elseif (isset($this->companies) && lg_count((Array) $this->companies) > 1) { ?>    
+        
+        <ul>
+            <?php foreach ($this->companies as $company) { 
+                if($company['id']==$this->activeCompany->id) { ?>
+                    <li class="selected">
+                        <a href="#" title="<?= Myshipserv_CompanyTypeInfo::getName($company['type'], true) ?> - <?= $company['id']; ?> - <?= $company['name']; ?>"><i class="fa fa-angle-down"></i><i class="fa fa-circle-thin"><div><?= Myshipserv_CompanyTypeInfo::getName($company['type']) ?></div></i><span> - <?= $company['id']; ?> - <?= $company['name']; ?></span></a>
+                        <div class="clear"></div>
+                    </li>
+                <?php }
+            }?>
+
+            <?php foreach ($this->companies as $company) {
+                if($company['id']!=$this->activeCompany->id) { ?>
+                    <li>
+                        <a href="/user/switch-company?tnid=<?=$company['type'] . $company['id'];?>" title="<?= Myshipserv_CompanyTypeInfo::getName($company['type'], true) ?> - <?= $company['id']; ?> - <?= $company['name']; ?>"><i class="fa fa-circle-thin"><div><?= Myshipserv_CompanyTypeInfo::getName($company['type']) ?></div></i><span> - <?= $company['id']; ?> - <?= $company['name']; ?></span></a>
+                    </li>
+            <?php } 
+        }?>
+
+        </ul>
+     
+    <?php } ?>
+</div>

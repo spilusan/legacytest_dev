@@ -1,0 +1,55 @@
+<!-- segment properties -->
+<td class="left">{{name}}</td>
+<td class="left">{{formatIsoDate date.start}}</td>
+<td class="center">{{supplierCount.total}}</td>
+
+<!-- RFQ related stats -->
+<td class="center">{{transactions.categorisedEventCount}}</td>
+<td class="center">{{transactions.match.rfqCount}}</td>
+
+<!-- quote related stats -->
+<td class="center">
+	{{#if transactions.match.quoteRate}}
+		{{formatNumRoundOne transactions.match.quoteRate}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+<td class="center">
+	{{#if transactions.match.competitiveRate}}
+		{{formatNumRoundOne transactions.match.competitiveRate}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+<td class="center">
+	{{#if transactions.match.cheapestRate}}
+		{{formatNumRoundOne transactions.match.cheapestRate}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+
+<!-- active promotion related stats -->
+<td class="center">{{activePromotion.buyerCount}}</td>
+<td class="center">{{activePromotion.potentialRelationshipCount}}</td>
+<td class="center">
+	{{#if activePromotion.unlockedCoverage}}
+		{{formatNumRoundOne activePromotion.unlockedCoverage}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+<td class="center">
+	{{#if activePromotion.lockedCoverage}}
+		{{formatNumRoundOne activePromotion.lockedCoverage}}
+	{{else}}
+		N/A
+	{{/if}}
+</td>
+
+<td>
+	<a href="#" class="open">Open</a>
+	<a href="#" class="editS">Define</a>
+	<a href="#" class="remove"><img src="/img/prime-supplier/bin.png"></a>
+</td>

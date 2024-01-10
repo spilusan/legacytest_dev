@@ -1,0 +1,36 @@
+<?php
+
+$this->headLink()->appendStylesheet('/css/shipmate.css')->appendStylesheet('/css/reports/dashboard-new.css')->appendStylesheet('/css/profile/membership-error.css');
+switch ($this->menu) {
+	case 'analyse':
+		break;
+	case 'account':
+		$this->headLink()->appendStylesheet('/css/transition.css')->appendStylesheet('/css/profile.css');
+		break;
+	default:
+		break;
+}
+
+$breadcrumbs = array(
+	array('name' => 'Upgrade your membership',
+        'url' => '/search')
+    );
+
+echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<div id="body">
+	<div id="content">	
+        <h2>Membership upgrade required</h2>
+        <i class="fa fa-ship" aria-hidden="true"></i>
+        <p>
+        	You have tried to access a feature that is not included in your
+        	membership package. To find out more about this feature and to
+        	explore adding it to your membership package, please contact your
+        	ShipServ Account Manager, or email <a href="mailto:support@shipserv.com">support@shipserv.com</a> and we
+        	will contact your account manager for you.
+        </p>
+        <div class="clear"></div>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>

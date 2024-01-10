@@ -1,0 +1,31 @@
+RewriteEngine On
+
+#removing trailing slash
+#RewriteRule ^(.*)/$ http://%{HTTP_HOST}/$1 [L,R=301]
+
+# redirecting 404 to search result page
+RewriteRule ^virtual/(.*)$ http://%{HTTP_HOST}/search [L,R=301]
+
+# Rewrite rule to check the referer of the browser when user want to download Mariners
+# Annual PDF (150mb) - if referer is not the landing page, then force the user to 
+# go to the landing page
+# ---------------------------------------------------------------------------------------
+RewriteCond %{REQUEST_URI} mariners_annual_2012.pdf$
+RewriteCond %{HTTP_REFERER} !ma|mariners_annual_2012.pdf$ 
+RewriteRule .* /help/ma [L,R=302]
+
+# Danish tools's PDFs
+RewriteRule ^supplier/danish-tools/(.*)$ supplier/danish-tools?page=$1
+
+# Zend related
+# ---------------------------------------------------------------------------------------
+RewriteCond %{REQUEST_FILENAME} -s [OR]
+RewriteCond %{REQUEST_FILENAME} -l [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^.*$ - [NC,L]
+RewriteRule ^.*$ index.php [NC,L]
+
+# Explicitly tell IE browser to treat this extension as given mime
+# ---------------------------------------------------------------------------------------
+AddType text/x-component .htc
+

@@ -1,0 +1,37 @@
+{
+  "name": "ShipServPages",
+  "version": "0.0.0",
+  "description": "ShipServ pages",
+  "main": "gulpfile.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@usgit.shipserv.com:ShipServPages"
+  },
+  "author": "",
+  "license": "BSD",
+  "devDependencies": {
+    "buffer-shims": "^1.0.0",
+    "del": "^3.0.0",
+    "gulp-bundle-assets": "^2.29.0",
+    "gulp-debug": "^3.1.0",
+    "gulp-filter": "^5.0.1",
+    "gulp-ignore": "^2.0.2",
+    "gulp-replace": "^0.6.1",
+    "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.1",
+    "orchestrator": "^0.3.8",
+    "process-nextick-args": "^1.0.7",
+    "require-dir": "^0.3.2",
+    "run-sequence": "^2.2.0",
+    "util-deprecate": "^1.0.2"
+  },
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
+}

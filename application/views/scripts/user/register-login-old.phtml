@@ -1,0 +1,391 @@
+<?php
+$this->headScript()->appendFile('/js/jquery.urlparse.js');
+				   
+$this->headLink()->appendStylesheet('/css/user.css');
+
+?>
+<script type="text/javascript" charset="utf-8">
+	$(document).ready(function() {
+		var anchor= jQuery.url.attr("anchor");
+
+		if(anchor=='reg'){
+			$('#login').hide();
+			$('#register').show();
+		}
+		
+		$('a.join').live('click',function () {
+			$('#login').hide();
+			$('#register').show();
+		});
+
+		$('a.register_toggle').live('click',function () {
+			$('#login').hide();
+			$('#register').show();
+		});
+		
+		$('a.i_dont_have_account').live('click', function () {
+			$('#login').hide();
+			$('#register').show();
+			return false;
+		});
+		
+		$('a.i_already_have_account').live('click',function () {
+			$('#login').show();
+			$('#register').hide();
+			return false;
+		});
+		
+		$('a.register-link').live('click',function() {
+			$('#login').hide();
+			$('#register').show();
+		});
+		
+		$('#registerCompanyType').change(function() {
+			if ($(this).val() == '9') {
+				$('#registerOtherCompanyType').show();
+				$('#registerOtherCompanyType').removeAttr('disabled');
+			} else {
+				$('#registerOtherCompanyType').hide();
+				//$('#registerOtherCompanyType').addAttr('disabled');  	
+			}
+		 });
+		
+		$('#registerJobFunction').change(function() {
+			if ($(this).val() == '16') {
+				$('#registerOtherJobFunction').show();
+				$('#registerOtherJobFunction').removeAttr('disabled');
+			} else {
+				$('#registerOtherJobFunction').hide();
+				//$('#registerOtherJobFunction').addAttr('disabled'); 	
+			}
+		 });
+	});
+</script>
+
+<div id="main_content_area">
+	
+	<div class="content_slim" id="login">
+		<form id="loginForm" method="post" action="/user/register-login/act/login/">
+				
+			<?if(!empty($this->redirectUrl)):?>
+				<input type="hidden" id="loginRedirectUrl" name="redirectUrl" value="<?php echo $this->redirectUrl; ?>" />
+				<input type="hidden" name="benc" value="1" />	
+			<?endif?>
+			
+			<div class="content_slim_wrapper">
+				<div class="content_slim_header">
+					<h1>Login Form</h1>
+					<a class="i_dont_have_account png" href="#reg"></a>
+				</div>
+				<div id="modal_form">
+					
+					<div class="modal_left" style="float:none;">
+						<div class="form_inner">
+						<?php
+						if (is_array($this->errors['top']))
+						{
+							?>
+							<div id="form_error" style="margin: 0 0 10px 0px;">
+								<?php
+								foreach ($this->errors['top'] as $error)
+								{
+									if (!is_array($error))
+									{
+										?>
+										<p><?php echo $error; ?></p>
+										<?php
+									}
+								}
+								?>
+							</div>
+							<?php
+						}
+						?>
+						<div class="form_inner_body">
+							<div <?php if($this->errors['loginUsername']){ ?>class="form_error" <?php } ?>>
+								<p class="label">Email*</p>  			
+							<?php if($this->errors['loginUsername']){foreach ($this->errors['loginUsername'] as $key => $value){?>
+								<p><?echo $value;?></p>
+							<?php }}?>
+							<?php if($this->errors['loginUsername']){?><div class="error_msg_arrow"></div><?php }?>
+							</div>
+							<input type="text" <?php if($this->errors['loginUsername']){?>class="error"<?php }?> id="loginUsername" name="loginUsername" value="<?php echo $this->formValues['loginUsername']; ?>" />
+							  
+							<div <?php if($this->errors['loginPassword']){?>class="form_error"<?php }?>>
+								<p class="label">Password*</p>  			
+							<?php if($this->errors['loginPassword']){foreach ($this->errors['loginPassword'] as $key => $value){?>
+								<p><?echo $value;?></p>
+							<?}}?>
+							<?php if($this->errors['loginPassword']){?><div class="error_msg_arrow"></div><?php }?>
+							</div>
+							<input type="password" <?php if($this->errors['loginPassword']){?>class="error"<?php }?> id="loginPassword" name="loginPassword" maxlength="20" value="" />
+							
+							<p class="subtext"><input type="checkbox" <?php echo ($this->rememberMe) ? 'checked="checked"' : ''; ?> id="loginRememberMe" name="loginRememberMe" /> Keep me logged in</p>
+							<div class="alert-notice">
+								<h3 class="png">TradeNet Users</h3>
+								
+								<p>You must now login to Pages using your email address rather than your TradeNet user name.</p>
+								<p>To retrieve your new password, please click the '<a href="/user/forgotten-password">Have you lost your password?</a>' link and enter your email address. Once signed in, you can change your password via the My Profile link.</p>
+								<p>If your email address is not recognised, you will need to register a new account by clicking '<a class="register-link" href="/user/register-login#reg">I don't have account, sign me up</a>'.</p>
+								<p>Other ShipServ applications are not affected by this change.</p>
+							</div>
+							<p class="subtext"><a class="lost" href="/user/forgotten-password">Have you lost your password?</a></p>
+							<p class="subtext">Can't access your account? Email us at <a class="lost" href="mailto:support@shipserv.com">support@shipserv.com</a></p>
+							<?php if( stristr($_SERVER['REQUEST_URI'], 'reports') ){?>
+							<p class="subtext"><b>Supplier Insight Report users should sign in above. If you do not have a password please <a class="i_dont_have_account png" href="#reg">register here</a> and then add your company through the My Profile &gt; My Companies page</b></p>
+							<?php }?>
+						</div>
+							
+					</div>
+				</div>
+				<div class="clear"></div>
+                    <div class="form_buttons">
+                    <?php
+                    if ($this->hasEnquiry)
+                    {
+                        ?>
+                        <input type="submit" class="sign_in_and_continue" id="loginSubmit2" name="loginSubmit2" value="" />
+                        <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <input type="submit" class="sign_in_and_continue" id="loginSubmit2" name="loginSubmit2" value="" />
+                        <?php
+                    }
+                    ?> 
+                    <div class="clear"></div>
+                </div>
+			</div>
+			<div class="content_wide_footer_shadow"></div> 
+		</div>
+	</form>
+</div>	   
+
+	<div class="content_slim" id="register" style="display:none;">
+		<div class="content_slim_wrapper">
+			<form id="registerForm" method="post" action="/user/register-login/act/register/#reg">
+				<input type="hidden" id="registerRedirectUrl" name="registerRedirectUrl" value="<?php echo $this->redirectUrl; ?>" />
+				 				<input type="hidden" name="benc" value="1" />	
+				 
+		 	<div class="content_slim_header">
+				<h1>Registration Form</h1>
+			   	<a class="i_already_have_account png" href="/user/register-login"></a>  
+			</div>
+			<div id="modal_form">
+				<div class="modal_left" style="float:none;">
+					<div class="form_inner">
+						<?php
+						                  if (is_array($this->errors['top']))
+						                {
+							                        ?>
+							                         <div id="form_error" style="margin: 0 0 10px 0px; line-height: 1.2;">
+								                      <?php
+								                       foreach ($this->errors['top'] as $error)
+								                    {
+									                             if (!is_array($error))
+										                      {
+											                               ?>
+											                                    <p><?php echo $error; ?></p>
+											                                <?php
+												                          }
+												                       }
+												                        ?>
+												                         </div>
+													                      <?php
+													                   }
+
+			?>			
+						<div class="form_inner_body">
+							<div class="form_info" style="margin-bottom:10px;margin-right:0;">
+								<h2>First time using ShipServ?</h2>
+								<p>Just fill in a few extra details</p>
+							</div>
+							<div <?if($this->errors['registerEmail']){?>class="form_error"<?}?>>
+								<p class="label">Email*</p>  			
+							<?if($this->errors['registerEmail']){foreach ($this->errors['registerEmail'] as $key => $value){?>
+		                        <p><?echo $value;?></p>
+							<?}}?>
+							<?if($this->errors['registerEmail']){?><div class="error_msg_arrow"></div><?}?>
+							</div>	
+							<input type="text" id="registerEmail" <?if($this->errors['registerEmail']){?>class="error"<?}?> name="registerEmail" maxlength="100" value="<?php echo $this->formValues['registerEmail']; ?>" /> 
+							
+							<div <?if($this->errors['registerPassword']){?>class="form_error"<?}?>>
+								<p class="label">Password*</p>  			
+							<?if($this->errors['registerPassword']){foreach ($this->errors['registerPassword'] as $key => $value){?>
+		                        <p><?echo $value;?></p>
+							<?}}?>
+							<?if($this->errors['registerPassword']){?><div class="error_msg_arrow"></div><?}?>
+							</div>
+							<input type="password" <?if($this->errors['registerPassword']){?>class="error"<?}?> id="registerPassword" maxlength="20" name="registerPassword" value="<?php echo $this->formValues['registerPassword']; ?>" /> 
+							
+							<div <?if($this->errors['registerConfirmPassword']){?>class="form_error"<?}?>>
+								<p class="label">Confirm Password*</p>  			
+							<?if($this->errors['registerConfirmPassword']){foreach ($this->errors['registerConfirmPassword'] as $key => $value){?>
+		                        <p><?echo $value;?></p>
+							<?}}?>
+							<?if($this->errors['registerConfirmPassword']){?><div class="error_msg_arrow"></div><?}?>
+							</div>
+							<input type="password" <?if($this->errors['registerConfirmPassword']){?>class="error"<?}?> id="registerConfirmPassword" maxlength="20" name="registerConfirmPassword" value="<?php echo $this->formValues['registerConfirmPassword']; ?>" />
+							
+							<div <?if($this->errors['registerFirstName']){?>class="form_error"<?}?>>
+								<p class="label">First Name*</p>  			
+							<?if($this->errors['registerFirstName']){foreach ($this->errors['registerFirstName'] as $key => $value){?>
+		                        <p><?echo $value;?></p>
+							<?}}?>
+							<?if($this->errors['registerFirstName']){?><div class="error_msg_arrow"></div><?}?>
+							</div>
+							<input type="text" <?if($this->errors['registerFirstName']){?>class="error"<?}?> id="registerFirstName" name="registerFirstName" maxlength="50" value="<?php echo $this->formValues['registerFirstName']; ?>" />
+							
+							 <div <?if($this->errors['registerLastName']){?>class="form_error"<?}?>>
+									<p class="label">Last Name*</p>  			
+								<?if($this->errors['registerLastName']){foreach ($this->errors['registerLastName'] as $key => $value){?>
+			                        <p><?echo $value;?></p>
+								<?}}?>
+								<?if($this->errors['registerLastName']){?><div class="error_msg_arrow"></div><?}?>
+								</div>
+							<input type="text" <?if($this->errors['registerLastName']){?>class="error"<?}?> id="registerLastName" name="registerLastName" maxlength="50" value="<?php echo $this->formValues['registerLastName']; ?>" /> 
+							
+							<div <?if($this->errors['registerCompany']){?>class="form_error"<?}?>>
+									<p class="label">Company Name*</p>  			
+								<?if($this->errors['registerCompany']){foreach ($this->errors['registerCompany'] as $key => $value){?>
+			                        <p><?echo $value;?></p>
+								<?}}?>
+								<?if($this->errors['registerCompany']){?><div class="error_msg_arrow"></div><?}?>
+								</div>
+							<input type="text" <?if($this->errors['registerCompany']){?>class="error"<?}?> id="registerCompany" name="registerCompany" maxlength="100" value="<?php echo $this->formValues['registerCompany']; ?>" />
+							
+							<div <?if($this->errors['registerCompanyType']){?>class="form_error"<?}?>>
+									<p class="label">Company Type*</p>  			
+								<?if($this->errors['registerCompanyType']){foreach ($this->errors['registerCompanyType'] as $key => $value){?>
+			                        <p><?echo $value;?></p>
+								<?}}?>
+								<?if($this->errors['registerCompanyType']){?><div class="error_msg_arrow"></div><?}?>
+								</div>
+							<table class="ie_fix"> 
+								<tr>
+									<td>
+										<select <?if($this->errors['registerCompanyType']){?>class="error"<?}?> id="registerCompanyType" name="registerCompanyType">
+										<option value="">Company Type</option>
+										<?php
+										foreach ($this->companyTypes as $companyType)
+										{
+											?>
+											<option value="<?php echo $companyType['PCT_ID']; ?>" <?php echo ($companyType['PCT_ID'] == $this->formValues['registerCompanyType']) ? 'selected="selected"' : ''; ?>><?php echo $companyType['PCT_COMPANY_TYPE']; ?></option>
+											<?php
+										}
+										?>
+										</select>
+									</td>
+									<td><input type="text" maxlength="50" class="half" id="registerOtherCompanyType" name="registerOtherCompanyType" style="<?php if ($this->formValues['registerCompanyType'] != '9') echo 'display:none;'; ?>margin-top:5px;color:#666;margin-left:20px;" <?php if ($this->formValues['registerCompanyType'] != '9') echo 'disabled="disabled"'; ?> value="<?php echo (isset($this->formValues['registerOtherCompanyType'])) ? $this->formValues['registerOtherCompanyType'] : 'Please Enter Company Type'; ?>"></td>
+								</tr>
+							</table>
+							<div class="clear"></div>
+							
+							<div <?if($this->errors['registerJobFunction']){?>class="form_error"<?}?>>
+									<p class="label">Job Type*</p>  			
+								<?if($this->errors['registerJobFunction']){foreach ($this->errors['registerJobFunction'] as $key => $value){?>
+			                        <p><?echo $value;?></p>
+								<?}}?>
+								<?if($this->errors['registerJobFunction']){?><div class="error_msg_arrow"></div><?}?>
+								</div>
+							<table class="ie_fix"> 
+								<tr> 
+									<td>
+										<select <?if($this->errors['registerJobFunction']){?>class="error"<?}?> id="registerJobFunction" name="registerJobFunction">
+											<option value="">Job Function</option>
+											<?php
+											foreach ($this->jobFunctions as $jobFunction)
+											{
+												?>
+												<option value="<?php echo $jobFunction['PJF_ID']; ?>" <?php echo ($jobFunction['PJF_ID'] == $this->formValues['registerJobFunction']) ? 'selected="selected"' : ''; ?>><?php echo $jobFunction['PJF_JOB_FUNCTION']; ?></option>
+												<?php
+											}
+											?>
+										</select>
+										<!--input type="text" id="registerJob" name="registerJob" class="half" value="<?php echo $this->formValues['registerJob']; ?>" /--></td>
+									<td>
+									 <input type="text" class="half" maxlength="50" id="registerOtherJobFunction" name="registerOtherJobFunction" style="<?php if ($this->formValues['registerJobFunction'] != '16') echo 'display:none;'; ?>margin-top:5px;color:#666;margin-left:20px;" <?php if ($this->formValues['registerJobFunction'] != '16') echo 'disabled="disabled"'; ?> value="<?php echo (isset($this->formValues['registerOtherJobFunction'])) ? $this->formValues['registerOtherJobFunction'] : 'Please Enter Job Function'; ?>">   
+									</td>
+								</tr>
+							</table> 
+							<div class="clear"></div>
+
+                            <?php
+                            if ($this->errors['tocConfirmed']) {
+                                ?>
+                                <div class="form_error">
+                                    <?php
+                                    foreach ($this->errors['tocConfirmed'] as $key => $value) {
+                                    ?>
+                                        <p><?php echo $value; ?></p>
+                                        <?php
+                                    }
+                                    ?>
+                                    <div class="error_msg_arrow"></div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                            <p class="subtext">
+                                <input type="checkbox" id="tocConfirmed" name="tocConfirmed" value="1"<?php if ($this->formValues['tocConfirmed'] == '1') { ?>checked="checked"<?php } ?> />
+                                I have read and agree to the <a href="/info/legal-notes">terms and conditions</a>
+                            </p>
+
+                            <p class="subtext"><input type="checkbox" id="registerMarketingUpdated" <?//php echo ($this->formValues['registerMarketingUpdated']) ? 'checked="checked"' : ''; ?> checked="checked" name="registerMarketingUpdated" /> Keep me up to date with all the latest news from the ShipServ community</p>
+							
+							<p class="subtext" style="margin-bottom:20px;"><input type="checkbox" <?php echo ($this->rememberMe) ? 'checked="checked"' : ''; ?> id="registerRememberMe" name="registerRememberMe" /> Keep me logged in</p>   
+							<p style="color:#666;margin-top:20px;font-weight:normal;font-size:12px;line-height:20px;">Note that the use of ShipServ Pages involves the use of cookies. Please read our <a target="_blank" href="https://www.shipserv.com/privacy">privacy policy</a> regarding this.</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="clear"></div>
+                <div class="form_buttons">
+                    <?php
+                    if ($this->hasEnquiry)
+                    {
+                        ?>
+                        <input type="submit" id="registerSubmit2" class="registerSubmit" name="registerSubmit2" value="" />
+                        <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <input type="submit" id="registerSubmit2" class="registerSubmit_2" name="registerSubmit2" value="" />
+                        <?php
+                    }
+                    ?>
+                </div>
+                <div class="clear"></div>
+			</div>
+			<div class="content_wide_footer_shadow"></div>
+			<div class="clear"></div>
+			</form>
+			
+		</div>
+		
+    </div>
+</div>
+<div class="clear"></div>    
+<script type="text/javascript" charset="utf-8">
+
+$("#registerOtherCompanyType").focus(function() {
+	$(this).css('color','#000'); 
+	if ( $(this).val() == 'Please Enter Company Type')
+	{
+		$(this).val('');
+		
+	}
+});
+
+$("#registerOtherJobFunction").focus(function() {
+	$(this).css('color','#000'); 
+	if ( $(this).val() == 'Please Enter Job Function')
+	{
+		$(this).val('');
+		
+	}
+});
+
+</script> 

@@ -1,0 +1,112 @@
+{{#if isCompare}}
+
+	<table class="containerTable">
+		<tbody>
+			<tr>
+				<td class="rotatedColumn darkBlue"><span>Total</span></td>
+				<td>
+					<table class="headTable">
+						<tbody>
+						<tr>
+							<td>Total order value:</td>
+							<td class="valueCell">{{formatNumRound periodData.attributes.revenue-value}} USD</td>
+							<td class="compareCell"><span class="{{comparPercentageStyle periodData.attributes.revenue-value comparePeriodData.attributes.revenue-value}}"></span></td>
+							<td class="compareCell">{{comparPercentage periodData.attributes.revenue-value comparePeriodData.attributes.revenue-value}}%</td>
+						</tr>
+
+						<tr>
+							<td>Number of customers:</td>
+							<td>{{periodData.attributes.no-of-customers}}</td>
+							<td><span class="{{comparPercentageStyle periodData.attributes.no-of-customers comparePeriodData.attributes.no-of-customers}}"></span></td>
+							<td>{{comparPercentage periodData.attributes.no-of-customers comparePeriodData.attributes.no-of-customers}}%</td>
+						</tr>
+						</tbody>		
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Competitive block -->
+	<table class="containerTable">
+		<tbody>
+			<tr>
+				<td class="rotatedColumn darkGray competitive">&nbsp;</td>
+				<td>
+					<table class="dataTable">
+						<thead>
+							<th data-ord="l_company-name" class="arrow-down">Company name</th>
+							<th data-ord="l_rfq-count">RFQs</th>
+							<th data-ord="l_qot-rate">Quotes &amp; Quote rate</th>
+							<th data-ord="l_win-rate">POs &amp; Win rate</th>
+							<th data-ord="l_ave-qot-time">Average quote time hours</th>
+							<th data-ord="l_po-value">PO value [USD]</th>
+						</thead>
+						<tbody id="compatitive1">
+						</tbody>
+					</table>
+
+					<!-- sum of competitive -->
+						<table class="headTable">
+							<tbody>
+							<tr>
+								<td>Total order value:</td>
+								<td class="valueCell">{{formatNumRound periodData.attributes.competitive-buyer.revenue-value}} USD</td>
+								<td class="compareCell"><span class="{{comparPercentageStyle periodData.attributes.competitive-buyer.revenue-value comparePeriodData.attributes.competitive-buyer.revenue-value}}"></span></td>
+								<td class="compareCell">{{comparPercentage periodData.attributes.competitive-buyer.revenue-value comparePeriodData.attributes.competitive-buyer.revenue-value}}%</td>
+							</tr>
+							<tr>
+								<td>Number of customers:</td>
+								<td>{{periodData.attributes.competitive-buyer.no-of-customers}}</td>
+								<td><span class="{{comparPercentageStyle periodData.attributes.competitive-buyer.no-of-customers comparePeriodData.attributes.competitive-buyer.no-of-customers}}"></span></td>
+								<td>{{comparPercentage periodData.attributes.competitive-buyer.no-of-customers comparePeriodData.attributes.competitive-buyer.no-of-customers}}%</td>
+							</tr>
+							</tbody>		
+						</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Direct block -->
+		<table class="containerTable">
+		<tbody>
+			<tr>
+				<td class="rotatedColumn darkGray direct">&nbsp;</td>
+				<td>
+					<table class="smallDataTable">
+						<thead>
+							<th data-ord="l_company-name" class="arrow-down">Company name</th>
+							<th data-ord="l_po-count">POs</th>
+							<th data-ord="l_po-value">PO value [USD]</th>
+						</thead>
+						<tbody id="direct1">
+						</tbody>
+					</table>
+
+					<!-- sum of direct  -->
+
+					<table class="headTable">
+						<tbody>
+						<tr>
+							<td>Total order value:</td>
+							<td class="valueCell">{{formatNumRound periodData.attributes.direct-buyer.revenue-value}}USD</td>
+							<td class="compareCell"><span class="{{comparPercentageStyle periodData.attributes.direct-buyer.revenue-value comparePeriodData.attributes.direct-buyer.revenue-value}}"></span></td>
+							<td class="compareCell">{{comparPercentage periodData.attributes.direct-buyer.revenue-value comparePeriodData.attributes.direct-buyer.revenue-value}}%</td>
+						</tr>
+						<tr>
+							<td>Number of customers:</td>
+							<td>{{formatNumRound periodData.attributes.direct-buyer.no-of-customers}}</td>
+							<td><span class="{{comparPercentageStyle periodData.attributes.direct-buyer.no-of-customers comparePeriodData.attributes.direct-buyer.no-of-customers}}"></span></td>
+							<td>{{comparPercentage periodData.attributes.direct-buyer.no-of-customers comparePeriodData.attributes.direct-buyer.no-of-customers}}%</td>
+						</tr>
+						</tbody>		
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	{{/if}}
+
+	<div class="clear"></div>

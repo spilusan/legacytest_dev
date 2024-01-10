@@ -1,0 +1,96 @@
+<?php
+//check if we need to display search box for region zone
+$isRegionZone = false;
+if ($this->currentZoneIdent and isset($this->zone['content']['search']['filters']['searchWhere'])) {
+	$isRegionZone = true;
+}
+?>
+
+<div id="search_box" <?php if ($this->currentZoneIdent) echo 'class="zone_search_box' . (($isRegionZone) ? ' region_zone' : '') . '"' ?> <?php if ($this->currentZoneIdent and isset($this->zone['content']['searchbox']['style'])) echo 'style="' . $this->zone['content']['searchbox']['style'] . '"' ?>>
+<?php
+if (!$this->currentZoneIdent) {
+?>
+	<p class="total_suppliers"><?php echo $this->supplierCount; ?> marine suppliers</p>
+<?php
+} else {
+	if (isset($this->zone['content']['searchbox']['title'])) {
+		?>
+			<p class="zone_title" id="searchBoxZoneTitle"><?php echo $this->zone['content']['searchbox']['title'] ?></p>
+		<?php
+	} else {
+		echo '<div id="searchBoxZoneTitle" class="zone_title"></div>';
+	}
+}
+?>
+
+<p class="search_for" <?php if ($this->currentZoneIdent and isset($this->zone['content']['searchbox']['label-style'])) {
+	echo 'style="' . $this->zone['content']['searchbox']['label-style'] . '"';
+}
+?>><b>Search <?php if ($isRegionZone && !empty($this->zone['content']['search']['filters']['searchWhere']['searchText'])) {
+	echo " all suppliers in " . $this->zone['content']['search']['filters']['searchWhere']['searchText'] . " ";
+} ?>for</b></p>
+            
+<?php
+if (!$isRegionZone) {
+?>
+<p class="located_in" <?php if ($this->currentZoneIdent and isset($this->zone['content']['searchbox']['label-style'])) echo 'style="' . $this->zone['content']['searchbox']['label-style'] . '"' ?>><b>Located in</b></p>
+<?php } ?>
+	<form id="anonSearch" enctype="application/x-www-form-urlencoded" action="/search/results<?php if ($this->currentZoneIdent) echo "/index/zone/" . $this->currentZoneIdent ?>" method="get">
+		<input type="hidden" name="newSearch" id="newSearch" value="1" />
+		<input type="hidden" name="searchType" id="searchType" value="product" />
+        <input type="hidden" name="ssrc" id="ssrc" value="<?php	echo Zend_Controller_Action_HelperBroker::getStaticHelper('SearchSource')->getObscuredKey("KEYWORD"); ?>" />
+
+		<fieldset>
+			<div class="input-wrapper search-what-wrapper png">
+				<input type="text" name="searchWhat" id="searchWhat" size="30" value="<?php echo $this->searchWhat ?>" class="search-what" />
+			</div>
+			<?php
+			if ($this->currentZoneIdent and isset($this->zone['content']['search']['filters']['searchWhere'])) {
+			?>
+			<input type="hidden" name="searchText" id="searchText" value="<?php echo $this->searchText; ?>" class="search-country"/>
+			<?php
+			} else {
+			?>
+			<div class="input-wrapper search-country-wrapper png">
+				<input type="text" name="searchText" id="searchText" value="<?php echo $this->searchText; ?>" class="search-country"/>
+			</div>
+			<?php } ?>
+
+            <input type="hidden" name="searchWhere" id="searchWhere" value="<?php echo $this->searchWhere; ?>" />
+			<?php
+			if ($this->currentZoneIdent and !isset($this->zone['content']['searchbox']['exitButton']['disable'])) {
+			?>
+				<a href="#" title="" id="zoneExitButton" class="zone-exit-button png"></a>
+			<?php } ?>
+			<a href="#" title="" id="searchButton" class="search-button png"><div id="searchButtonIcon" style="display: none !important;"></div></a>
+		</fieldset>
+	</form>
+</div>
+<?php
+	$zoneClass = ($this->currentZoneIdent) ? ' in_zone' : '';
+	if (isset($this->relatedSearches)) {
+		?><p class="related_searches<?php echo $zoneClass; ?>"><?php echo $this->relatedSearches; ?></p><?php
+	} else {
+		?><p class="related_searches<?php echo $zoneClass; ?>"></p><?php
+	}
+?>
+<?php
+if ($this->currentZoneIdent && isset($this->displayZoneReturnLink)) {
+	// SPC-613
+	
+	$lastZoneRedirect = Myshipserv_Helper_Cookie::get('last_zone');
+	$fullSearchUrl = ($lastZoneRedirect) ? $lastZoneRedirect .'&full=true' : '#';
+	//$lastZoneRedirect = Myshipserv_Helper_Session::getNamespaceSafely('Shipserv_Last_Zone_Redirect');
+	//$fullSearchUrl = ($lastZoneRedirect->url) ? $lastZoneRedirect->url .'&full=true' : '#';
+	?>
+	<div class="search-fullsearch-box">
+		This brand zone only shows suppliers that the brand owner has verified. For full search results for this search term click here
+		<a href="<?php echo $fullSearchUrl; ?>">
+			Full search results &gt;
+		</a>
+	</div>
+	<script type="text/javascript">
+		zoneExitSSRC = "<?php echo Zend_Controller_Action_HelperBroker::getStaticHelper('SearchSource')->getObscuredKey("ZONE_EXIT_INVITE"); ?>";
+	</script>
+	<?php
+}

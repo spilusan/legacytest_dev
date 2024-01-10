@@ -1,0 +1,155 @@
+<table style="width: 100%; border-collapse: collapse; table-layout: fixed;" cellpadding="0" cellspacing="0" border="0">
+	<tr>
+		<td>&nbsp;</td>
+		<td style="height: 30px; font-size: 1px; width: 600px;">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td>
+			<table style="width: 100%; border-collapse: collapse; table-layout: fixed;" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+					<td style="width: 20px; background-color: #002f5f;">&nbsp;</td>
+					<td style="height: 80px; vertical-align: middle; background-color: #002f5f;">
+						<img src="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/wp-content/themes/shipserv/images/email/reminders/logo.png" border="0" style="margin: 0; padding: 0;" alt="ShipServ">
+					</td>
+					<td style="width: 20px; background-color: #002f5f;">&nbsp;</td>
+				</tr>
+				<tr>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+					<td style="height: 20px; font-size: 1px;">
+						&nbsp;
+					</td>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+				</tr>
+				<tr>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+					<td style="height: 30px; font-size: 1px;">
+						&nbsp;
+					</td>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+				</tr>
+				<tr>
+					<td style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #000000;" colspan="3">
+						Dear ShipServ User,
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+					<td style="height: 15px; font-size: 1px;">
+						&nbsp;
+					</td>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+				</tr>
+				<tr>
+					<td style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #000000; line-height: 1.5;" colspan="3">
+						You have received this email because you are registered as an administrator of your company's presence on ShipServ.<br><br>
+						Another user has indicated that they are an employee of your company and requests that you approve them as a member.
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+					<td style="height: 30px; font-size: 1px;">
+						&nbsp;
+					</td>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+				</tr>
+				<tr>
+					<td style="background: #E9EDF1;" colspan="3">
+						<table style="width: 100%; border-collapse: collapse; table-layout: auto;" cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td style="width: 10px; font-size: 1px; background: #13B5EA;">&nbsp;</td>
+								<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+								<td style="font-size: 1px; height: 20px;">&nbsp;</td>
+								<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+							</tr>
+							<tr>
+								<td style="width: 10px; font-size: 1px; background: #13B5EA;">&nbsp;</td>
+								<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+								<td style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #000000;">
+									Requesters name: <?php echo $this->data['requester']['name']? strip_tags($this->data['requester']['name']['firstName']) . ' ' . strip_tags($this->data['requester']['name']['lastName']) : 'Unknown' ?><br><br>
+									Requesters email: <a href="mailto:<?php echo strip_tags($this->data['requester']['email']); ?>" style="text-decoration: none; color: #005AAD;"><?php echo strip_tags($this->data['requester']['email']); ?></a><br><br>
+									Company requested: <?php echo strip_tags($this->data['company']['name']); ?>
+								</td>
+								<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+							</tr>
+							<tr>
+								<td style="width: 10px; font-size: 1px; background: #13B5EA;">&nbsp;</td>
+								<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+								<td style="font-size: 1px; height: 20px;">&nbsp;</td>
+								<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+					<td style="height: 30px; font-size: 1px;">
+						&nbsp;
+					</td>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+				</tr>
+				<tr>
+					<td style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #000000; line-height: 1.5;" colspan="3">
+						Granting membership to this user will allow them to view company information in accordance with their defined privileges.<br><br>
+						To view this request and approve or decline it, please click below:
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+					<td style="height: 30px; font-size: 1px;">
+						&nbsp;
+					</td>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+				</tr>
+				<tr>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+					<td style="font-size: 16px; text-align: center;">
+						<div>
+				        <!--[if mso]>
+				          <v:rect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="<?php echo $this->data['links']['companyUsers'] ?>" style="height:36px;v-text-anchor:middle;width:242px;" fillcolor="#005aad">
+				            <w:anchorlock/>
+				            <center style="color:#ffffff;font-family:Arial, Helvetica, sans-serif;font-size:16px;font-weight: bold;">View request</center>
+				          </v:rect>
+				        <![endif]-->
+				        <a href="<?php echo $this->data['links']['companyUsers'] ?>" style="background-color:#005aad;color:#ffffff;display:inline-block;font-family:Arial, Helvetica, sans-serif;font-size:16px;line-height:44px;text-align:center;font-weight: bold;text-decoration:none;width:242px;-webkit-text-size-adjust:none;mso-hide:all;">View request</a>
+				      </div>
+					</td>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+				</tr>
+				<tr>
+					<td style="width: 20px; font-size: 1px; border-bottom: 1px solid #BECBD7;">&nbsp;</td>
+					<td style="height: 40px; font-size: 1px; border-bottom: 1px solid #BECBD7;">
+						&nbsp;
+					</td>
+					<td style="width: 20px; font-size: 1px; border-bottom: 1px solid #BECBD7;">&nbsp;</td>
+				</tr>
+				<tr>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+					<td style="height: 20px; font-size: 1px;">
+						&nbsp;
+					</td>
+					<td style="width: 20px; font-size: 1px;">&nbsp;</td>
+				</tr>
+				<tr>
+					<td style="margin: 0; padding: 0; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #000000; text-align: center;" colspan="3">
+						If you require assistance visit our <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/support/" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #0070BB;">support page</a> or email: <a href="mailto: support@shipserv.com" style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #0070BB;">support@shipserv.com</a>
+					</td>
+				</tr>
+				<tr>
+					<td style="width: 20px; font-size: 1px; border-bottom: 1px solid #BECBD7;">&nbsp;</td>
+					<td style="height: 20px; font-size: 1px; border-bottom: 1px solid #BECBD7;">
+						&nbsp;
+					</td>
+					<td style="width: 20px; font-size: 1px; border-bottom: 1px solid #BECBD7;">&nbsp;</td>
+				</tr>
+			</table>
+		</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>&nbsp;</td>
+		<td style="height: 30px; font-size: 1px;">&nbsp;</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>

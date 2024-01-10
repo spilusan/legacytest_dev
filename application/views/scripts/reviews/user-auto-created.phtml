@@ -1,0 +1,207 @@
+<?php
+if ($this->metaDescription)
+{
+	$this->headMeta()->appendName('description', $this->metaDescription);
+}
+
+if ($this->metaKeywords)
+{
+	$this->headMeta()->appendName('keywords', $this->metaKeywords);
+}
+
+$this->googledfp()->addTargeting('keywords','ALL');
+$this->googledfp()->addTargeting('country','ALL');
+$this->googledfp()->addTargeting('port','ALL');
+$this->googledfp()->addTargeting('supplier','ALL');
+
+$this->headLink()->appendStylesheet('/css/endorsements.css');
+$this->CDNLink()->appendStylesheet('/css/supplier/supplier.css');
+
+$this->headScript()
+->appendFile('/js/jquery.easing.js')
+->appendFile('/js/jquery.auto-complete.js')
+->appendFile('/js/jquery.filetree.js')
+->appendFile('/js/jquery.urlparse.js')
+->appendFile('/js/json2.js')
+->appendFile('/js/jquery.modalwindows.js')
+->appendFile('/js/jquery.jsoncookie.js')
+->appendFile('/js/jquery.cookie.js')
+->appendFile('/js/jquery.metadata.js')
+->appendFile('/js/jquery.urlencode.js')
+->appendFile('/js/jquery.add-review.js');
+
+$this->googledfp()->add('TargetedOrGeneralAdSlot1');
+$this->googledfp()->add('TargetedOrGeneralAdSlot2');
+$this->googledfp()->add('TargetedOrGeneralAdSlot3');
+
+$this->googledfp()->render();
+?>
+
+<input type="hidden" name="tnid-name-<?php echo $this->supplier->tnid; ?>" id="tnid-name-<?php echo $this->supplier->tnid; ?>" value="<?php echo trim($this->supplier->name); ?>" />
+
+
+<div id="main_content_area">
+
+	<div style="padding-top: 20px"></div>
+
+	<div class="content_wide">
+
+		<div class="content_wide_header">
+
+			<h1 class="profile"><?php echo $this->supplier->name; ?></h1>
+
+			<h2>
+				<?php
+				echo $this->supplier->city;
+				if ($this->supplier->state && $this->string()->alphaStringLength($this->supplier->state) > 1)
+				{
+					echo ', '.$this->supplier->state;
+				}
+
+				echo ', '.$this->supplier->countryName;
+				?>
+			</h2>
+
+			<a href="/enquiry/index/clearBasket/1/tnid/<?php echo $this->supplier->tnid; ?>" class="send_enquiry_button"></a>
+
+		</div>
+		<div class="content_wide_nav">
+			<ul>
+				<li class="off" id="profile_toggle"><a class="profile_toggle" href="<?php echo $this->supplierProfileUrl($this->supplier);?>#profile_box">Profile</a></li>
+				<li class="off" id="contact_toggle"><a href="<?php echo $this->supplierProfileUrl($this->supplier);?>#contact_box" class="contact_toggle">Contact</a></li>
+				<li class="off" id="map_toggle"><a href="<?php echo $this->supplierProfileUrl($this->supplier);?>#map" class="map_toggle">Map</a></li>
+				<li class="on" id="reputation_toggle"><a href="<?php echo $this->supplierProfileUrl($this->supplier);?>#reviews" class="reputation_toggle">Reviews</a></li>
+				<?php
+				if ($this->supplier->onlineCatalogue)
+				{
+					?>
+				<li class="off" id="catalogue_toggle"><a class="catalogue_toggle" href="<?php echo $this->supplierProfileUrl($this->supplier);?>#catalogue">Catalogue</a></li>
+					<?php
+				}
+				?>
+			</ul>
+			<?php
+			if ($this->supplier->onlineCatalogue)
+			{
+				?>
+			<div class="search_wide_nav">
+				<input type="text" name="query" id="query" class="query" value="<?php if ($this->catQuery)
+	{
+		echo $this->catQuery;
+				} ?>" />
+				<input type="image" src="/images/layout_v2/buttons/magnifer.gif" class="magnifer" id="magnifer" />
+			</div>
+	<?php
+}
+?>
+		</div>
+
+		<div class="content_wide_body">
+			<div class="review-result" style="padding:20px">
+
+				<table class="nbox">
+					<tr>
+						<td class="nbox-top-left"></td>
+						<td class="nbox-top"></td>
+						<td class="nbox-top-right"></td>
+					</tr>
+					<tr>
+						<td class="nbox-left"></td>
+						<td class="nbox-content">
+							<div style="padding:10px">
+								<div class="result-alert">
+								<table class="wbox">
+									<tr>
+										<td class="wbox-top-left"></td>
+										<td class="wbox-top"></td>
+										<td class="wbox-top-right"></td>
+									</tr>
+									<tr>
+										<td class="wbox-left"></td>
+										<td class="wbox-content">
+											<div style="padding-left:160px">
+											<div class="result-image"><img src="/images/layout_v2/endorsement/created/green_tick.gif" width="43" height="43" alt=""/></div>
+											<div class="result-text">Thank you, your review has been sent!</div>
+											<div class="clear"></div>
+											</div>
+										</td>
+										<td class="wbox-right"></td>
+									</tr>
+									<tr>
+										<td class="wbox-bottom-left"></td>
+										<td class="wbox-bottom"></td>
+										<td class="wbox-bottom-right"></td>
+									</tr>
+								</table>
+								</div>
+								<div class="summary">
+									<h2>Meanwhile we have done following things for you:</h2>
+									<div class="summary-action">
+										<div class="summary-action-icon">
+											<img src="/images/layout_v2/endorsement/created/account_on_pages_icon.gif"/>
+										</div>
+										<div class="summary-action-text">
+											<h3>Created a Pages account</h3>
+											
+											Welcome to ShipServ, the world’s largest maritime trading community.
+
+											<br/>
+											<br/><b>Your account information:</b>
+											<br/><b>Email:</b> <?php echo $this->user->email?>
+											<br/><b>Password:</b> <?php echo $this->password?>
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="summary-action">
+										<div class="summary-action-icon">
+											<img src="/images/layout_v2/endorsement/created/requested_membership_icon.gif"/>
+										</div>
+										<div class="summary-action-text">
+											<h3>Requested company membership</h3>
+											Once <?php
+												if ($this->review) {
+													$endorserInfo = $this->review->getEndorserInfo();
+													echo $endorserInfo["BYO_NAME"];
+												}
+											?> have confirmed your membership, your review will be published.
+										</div>
+										<div class="clear"></div>
+									</div>
+									<div class="summary-action">
+										<div class="summary-action-icon">
+											<br/>
+										</div>
+										<div class="summary-action-text">
+											<a href="/profile/overview"><img src="/images/layout_v2/endorsement/created/gotomyaccount_button.gif" border="0" alt="Go to my account"/></a>
+										</div>
+										<div class="clear"></div>
+									</div>
+								</div>
+							</div>
+						</td>
+						<td class="nbox-right"></td>
+					</tr>
+					<tr>
+						<td class="nbox-bottom-left"></td>
+						<td class="nbox-bottom"></td>
+						<td class="nbox-bottom-right"></td>
+					</tr>
+				</table>
+				
+			</div>
+
+		</div>
+		<div class="content_wide_footer_shadow">
+		</div>
+		<div class="clear"></div>
+
+	</div>
+
+	<div class="zone">
+		<div style="padding-top: 20px;"></div>
+<?php echo $this->partial('general-google-ads.phtml'); ?>
+	</div>
+
+</div>
+
+<div class="clear"></div>

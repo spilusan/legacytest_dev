@@ -1,0 +1,158 @@
+<?php
+
+$this->compressedScript()->appendFile('/js/pending-actions.js')
+						 ->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/company-people.js');
+						 
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Company Profile',
+						   'url'  => '/profile/company-profile'));
+
+$this->headLink()->appendStylesheet('/css/transition.css');			   
+$this->headLink()->appendStylesheet('/css/profile.css');
+$this->headLink()->appendStylesheet('/css/profile/company-profile.css');
+
+$this->getHelper('Requirejs')->addModule('supplier/profile-completeness');
+
+$products = $this->supplier->getProducts();
+$products = $products->products;
+$period = Myshipserv_Period::yearAgo(1)->toArray();
+?>
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		
+		<div class="content_new-wide_body">
+			<?php
+			$isAdmin = false;
+			foreach((array)$this->myCompanies as $company){ if( $company['id'] == $this->companyDetail['id'] ){ if( $company['amAdmin'] ) { $isAdmin = true; } } }
+
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], 'company-profile', $this->pendingUsers, $isAdmin)
+				)
+			);
+			?>
+			<div class="profile-body-right companyProfile">
+				<div class="zz header">
+					<h2>Company Profile - <?php echo $this->supplier->name ?></h2>
+				</div>
+                	<div class="profileContent companyProfile">
+                    <?php if (!$this->unpublishedCompany): //if ($this->supplier->tnid != ''): ?>
+					<h3 class="zz grey no-marg"><span style="display: block; float: left; font-weight: normal;">Profile Complete Score</span><div class="inline contextual help" style="float: right; margin-top: 10px; display: block;" data-title="Profile Complete Score" data-message="<p><strong>This is a score of how complete your company profile (which appears publically on ShipServ Pages) is.</strong></p><p><strong>The more complete your profile, the more RFQs and profile views you will get.</strong></p><p>Premium profiles have a maximum score of 100. Basic listings have a maximum score of 50 (we restrict how much data you can show).</p><p>To see hints about what you should add click on 'Completion tips'.</p>"></div></h3>
+                    <p class="right small top">
+                    	<?php if($this->supplier->getLastUpdatedProfile()==999){?>
+                    	You never update your profile on Pages.
+                    	<?php }else{?>
+                    	Your profile was last updated <strong><?php echo $this->supplier->getLastUpdatedProfile() ?></strong> days ago
+                    	<?php }?>
+                    </p>
+                    
+					<?php 
+                    echo $this->partial('supplier/profile-completion.phtml', array('tnid' => $this->supplier->tnid, 'supplier'=>$this->supplier, 'mode' => 'profile', 'user' => $this->user));?>
+                    <div class="zz small <?php echo ($this->supplier->getProfileCompletionScore() < 49)?'green':'green'?> button" id="editListingBtn" onclick="<?if($this->user->canEditListing($this->supplier->tnid) == false ){?>alert('ShipServ employees cannot edit profile of a company unless he/she is part of that company.');<?php }else{ ?>location.href='<?php echo $this->supplier->getEditUrl(); ?>';<?php }?>"><button>Update Company Profile</button></div>
+					<div class="zz small white button completionTipsBtnP" style="margin-left:5px;"><button>Completion tips</button></div>
+                    <div class="clear dist"></div>
+
+                    <h3 class="zz grey no-marg"><span style="display: block; float: left; font-weight: normal;">RFQs from Pages</span> <div class="inline contextual help" style="float: right; margin-top: 10px; display: block;" data-title="RFQs from Pages" data-message="<p>This is the number of RFQs you received in the last year from buyers searching on ShipServ Pages.</p><p>View them by clicking on the 'Go to RFQ Inbox' button.</p><p><strong>To maximise the number you receive from buyers you need to have a Premium profile and also to have a high Profile complete score.</strong></p><p>To learn more go to our Help section – the tab on the top right of the webpage.</p>"></div></h3>
+					<?php 
+						$statistic = $this->supplier->getEnquiriesStatistic();
+					?>
+                    <p class="small">ShipServ Pages buyers sent you <strong><?=$statistic['sent'];?> 
+                         RFQs from Pages</strong> from: <strong><?= $period['end']->format('d M Y');?></strong>.
+                         <?php if($statistic['notClicked'] > 1){?><span class="red"><img class="pcs-alert stat" src="/images/profile-completeness/icon_alert_big.jpg" height="30" width="35" margin-top:0px; margin-right:15px;">You haven't viewed <strong><?php echo $statistic['notClicked'];?> RFQs!</strong></span><?}?>
+                    </p>
+                     
+                    <div class="zz small lblue button goRFQ"><a href="/trade">Go to RFQ Inbox</a></div>
+                    <div class="clear dist"></div>
+
+                    <?php else: ?>
+                        <p class="zz small">(Unpublished profile)</p>
+                    
+                    <? endif ?>
+					
+					<h3 class="zz grey no-marg">
+	       				<span style="display: block; float: left; font-weight: normal;">My ShipServ Services</span>
+	                    <div class="inline contextual help" style="float: right; margin-top: 10px; display: block;" data-title="My ShipServ Services" data-message="<p>This table shows which ShipServ services you currently have.</p><p>If you want to discuss any of these services please contact us, <br/><a href='http://ukdev.shipserv.com/info/contact-us/'>click here</a> for contact details.</p>">
+                        </div>
+					</h3>
+					
+					<div class="subscribed-products">
+                        <table border="0" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom: 10px;">
+                            <tbody>
+                                <tr>
+                                    <td valign="middle">Pages listing level</td>
+                                    <td valign="middle" class="type <?php if( $products['premiumListing'] ) {echo 'premium';}else{echo 'basic';}?>"><?php if( $products['premiumListing'] ) { echo 'Premium'; } else {echo 'Basic';}?></td>
+                                    <td valign="middle" class="btn"><?php if( $products['premiumListing'] ) {echo '<div class="zz small white button"><a href="/info/pages-for-suppliers/win-new-business-with-a-premium-listing/">Learn more</a></div>';} else { echo "<div class='zz small green button'><a href='/info/pages-for-suppliers/webstore'>Upgrade</a></div>"; }?>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td valign="middle">Spotlight (top position) Listing</td>
+                                    <td valign="middle" class="type"><div class="<?php if( $products['spotlight'] ) { echo 'check'; }else{ echo 'cross';}?>"></div>&nbsp;</td>
+                                    <td valign="middle" class="btn">&nbsp;</td>
+                                </tr>                                
+                                <tr>
+                                    <td valign="middle">SmartSupplier</td>
+                                    <td valign="middle" class="type"><div class="<?php if( $products['smartSupplier'] ) { echo 'check'; }else{ echo 'cross';}?>"></div>&nbsp;</td>
+                                    <td valign="middle" class="btn"><div class="zz small white button"><a href="/info/im-a-supplier/tradenet/">Learn more</a></div>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td valign="middle">
+                                    	Banner advert on Pages
+                                    </td>
+                                    <td valign="middle" class="type"><div class="<?php if( $products['bannerAdvert'] ) { echo 'check'; }else{ echo 'cross';}?>"></div>&nbsp;</td>
+                                    <td valign="middle" class="btn"><div class="zz small white button"><a href="/info/pages-for-suppliers/banner-advertising-on-pages/">Learn more</a></div>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td valign="middle">Catalogue upload</td>
+                                    <td valign="middle" class="type"><div class="<?php if( $products['catalogue'] ) { echo 'check'; }else{ echo 'cross';}?>"></div>&nbsp;</td>
+                                    <td valign="middle" class="btn">&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td valign="middle">Mariner's Annual Listing and advertising</td>
+                                    <td valign="middle" class="type"><div class="<?php if( $products['MAListing'] ) { echo 'check'; }else{ echo 'cross';}?>"></div>&nbsp;</td>
+                                    <td valign="middle" class="btn"><div class="zz small white button"><a href="/info/im-a-supplier/get-on-board-with-mariners-annual/">Learn more</a></div>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td valign="middle">Trade on TradeNet</td>
+                                    <td valign="middle" class="type"><div class="<?php if( $products['tradeNet'] ) { echo 'check'; }else{ echo 'cross';}?>"></div>&nbsp;</td>
+                                    <td valign="middle" class="btn"><div class="zz small white button"><a href="/info/im-a-supplier/tradenet/">Learn more</a></div>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td valign="middle">Brand verification</td>
+                                    <td valign="middle" class="type">
+                                    	<?php if( $products['brandVerification'] == 1 ) { ?>
+                                    	<div class="<?php if( $products['brandVerification'] ) { echo 'check'; }else{ echo 'cross';}?>"></div>&nbsp;
+                                    	<?php }?>
+                                    </td>
+                                    <td valign="middle" class="btn"><div class="zz small white button"><a href="/help/sellerfaq/brandSupplier">Learn more</a></div>&nbsp;</td>
+                                </tr>
+                                </tbody>
+                        </table>
+						
+						<h3 class="zz grey no-marg"><span style="display: block; float: left;font-weight: normal;">Other ShipServ Services</span></h3>
+
+						<table border="0" width="100%" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td valign="middle">Ad Network banner advertising</td>
+                                    <td valign="middle" class="type"><div class=""></div>&nbsp;</td>
+                                    <td valign="middle" class="btn"><div class="zz small white button"><a href="/info/im-a-supplier/ad-network-homepage/">Learn more</a></div>&nbsp;</td>
+                                </tr>
+                            </tbody>
+                        </table>
+					</div>
+					
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

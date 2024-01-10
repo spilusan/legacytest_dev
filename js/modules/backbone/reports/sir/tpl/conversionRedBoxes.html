@@ -1,0 +1,49 @@
+{{#if redBoxes}}
+<div class="redboxes">
+	<div class="brandSpace"></div>
+	<div class="line medium"></div>
+	<div class="leadSpace"></div>
+	<div class="line medium"></div>
+	{{#if notQuotTrue}}
+	<div class="redbox">
+		<div class="lines"></div>
+		<div class="info">
+			<p>{{#if hasSpinner}}<span class="spinnerIcon smallIcon"></span>{{else}}<strong>{{formatNumRound notQot.count}}</strong>{{/if}} not quoted RFQs <a href="noQuot" class="cHelp light"></a></p>
+			<div class="worth noQot">worth <div class="red">{{#if hasSpinner}}<span class="spinnerIcon smallIcon"></span>{{else}}$ {{formatNumRound notQot.worth}}{{/if}}</div></div>
+			<div class="greybox unactioned">
+				<!--
+				<a href="">See RFQs</a>
+				-->
+				<p>{{formatNumRound notQot.unactioned-rfq-worth.count}} are unactioned</p>
+				<p>worth {{#if hasSpinner}}<span class="spinnerIcon smallIcon"></span>{{else}}<span>$ {{formatNumRound notQot.unactioned-rfq-worth.worth}}</span>{{/if}}</p>
+			</div>
+			<div class="greybox">
+				<!--
+				<a href="">See RFQs</a>
+				-->
+				<p>{{#if hasSpinner}}<span class="spinnerIcon smallIcon"></span>{{else}}{{formatNumRound notQot.declined-rfq-worth.count}}{{/if}} you have declined</p>
+				<p>worth {{#if hasSpinner}}<span class="spinnerIcon smallIcon"></span>{{else}}<span>$ {{formatNumRound notQot.declined-rfq-worth.worth}}{{/if}}</span></p>
+			</div>
+		</div>
+	</div>
+	{{else}}
+		<div class="redbox space">
+		</div>
+	{{/if}}
+	{{#if qotLostTrue}}
+	<div class="redbox win">
+		<div class="info">
+			<p>{{#if hasSpinner}}<span class="spinnerIcon smallIcon"></span>{{else}}<strong>{{formatNumRound lostQot.count}}</strong> quotes lost<a href="lostQuot" class="cHelp light" style="float: right;"></a>{{/if}}</p>
+
+			<div class="worth lost"><div class="toShrink"><span>worth <div class="red">{{#if hasSpinner}}<span class="spinnerIcon smallIcon"></span>{{else}}$ {{formatNumRound lostQot.worth}}{{/if}}</div></span></div></div>
+
+			<div class="greybox">
+				<p>{{#if hasSpinner}}<span class="spinnerIcon smallIcon"></span>{{else}}{{formatNumRound undefQotCount}}{{/if}} Quotes pending</p>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+	<div class="connectLine"></div>
+	{{/if}}
+</div>
+{{/if}}

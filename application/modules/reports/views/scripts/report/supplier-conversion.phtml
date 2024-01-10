@@ -1,0 +1,308 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->headLink()->appendStylesheet('/css/uniform.rfq.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+$this->headLink()->appendStylesheet('/css/supplier/gmv.css');
+
+$this->requirejs()
+	->addModule('match/report')
+	->addDefinition('/match/reportType', '"supplier-conversion-report"')
+;
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+	table tr.child td {
+		background-color:#d6dce4;
+	}
+	
+	table tr.bold td {
+		font-weight:bold;;
+	}
+	#body #content {
+		left: 0 !important;
+	}
+
+	.left{
+		text-align:left;
+	}
+</style>
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+
+<!--<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+-->
+ <link href="/css/dataTables.colVis.css" media="screen" rel="stylesheet" type="text/css">
+
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'GMV Report', 'url'  => '/reports/gmv');
+	$breadcrumbs[] = array('name' => 'Supplier', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'Conversion', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+
+	$startDate = ((isset($_GET['fromDate']) && $_GET['fromDate'])? _htmlspecialchars($_GET['fromDate']) : date("d/m/Y", mktime(0, 0, 0, date('n'), date('j'), date('Y')-1)));
+	$endDate =  ((isset($_GET['toDate']) && $_GET['toDate'])? _htmlspecialchars($_GET['toDate']) : date('d/m/Y'));
+?>
+
+
+<div id="body" class="gmvBreakdown">
+	<div id="content">
+		<h1 class="styled">Conversion Report for Supplier</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<form method="get" class="new">
+		    <table style="margin:auto; width:100%;">
+		        <tr>
+		        	<td>
+		        		<form action="/reports/gmv-supplier-detail" id="buyerGmvForm">
+		        			<input type="hidden" name="parent" id="parentMode">
+			        		<table>
+								<tr>
+						            <td width="130">
+										<label class="date">TNID:</label>
+										<input type="text" name="id" value="<?= $this->params['id']?>" id="tnid" />
+										<div class="tnidAutocomplete"></div>
+						            </td>
+						            <td width="130">
+										<label class="date">Period:</label>
+						                <select id="periodSelector" name="period">
+							                <option value="monthly" <? if($this->params['period'] == 'monthly') echo 'selected="selected"';?>>Monthly</option>
+						                	<option value="weekly" <? if($this->params['period'] == 'weekly') echo 'selected="selected"';?>>Weekly</option>
+							                <option value="quarterly" <? if($this->params['period'] == 'quarterly') echo 'selected="selected"';?>>Quarterly</option>
+						                </select>
+						            </td>
+
+						            <td width="130">
+						                <label class="date">From:</label>
+						                <input type="text" name="fromDate" id="fromDate" value="<?php echo $startDate ?>" class="datepicker" />
+						            </td>
+						            <td width="130">
+						                <label class="date">To:</label>
+						                <input type="text" name="toDate" id="toDate" class="datepicker" value="<?php echo $endDate ?>"/>
+						            </td>
+						            <td class="buttonCell">
+						            	<input type="submit" value="Go"  class="button dblue medium" style="float:left; margin-right:10px;"/>
+
+		                        		<? if( $this->params['parent'] == 1 ){?>
+		                        			<input type="submit" value="Back"  class="button dblue medium" style="float:left; margin-right:10px;"/>
+		                        		<? }?>
+						            </td>
+						            <td width="" style="">&nbsp;</td>
+								</tr>
+			        		</table>
+		        		</form>
+		        	</td>
+		        </tr>
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		            	<? if( lg_count($this->results) > 0 ){ ?>
+						<!--
+						TODO:<br />
+		            	add orphaned PO logic here.<br />
+		            	add number of children after branch and change make the number link to the drilldown of the children<br />
+		            	TODO:<br />
+		            	[done] Children needs to be 0 if no children found<br />
+		            	[done] Winner resp - needs to show RS if they won<br />
+		            	[done] Princess is not the new customer, check the RFQ/PO<br />
+		            	[done] Winner resp time and PO still missing!!!<br />
+		            	[done] If orphaned PO raised for an order, then winner resp time should be UNKNOWN<br />
+		            	[done] Add new column: "Speed compettitiveness"<br />
+		            	[done] No quote (Won) ->>> ORPHANED PO<br />
+		            	-->
+
+		                <table id="resultsTab" width="100%" style="display:block; ">
+		                    <thead>
+		                        <tr>
+		                        	<th colspan="2" class="left">Period</th>
+		                        	<th colspan="3" class="sectionEnd left">Business Unit</th>
+		                        	<th colspan="9" class="sectionEnd left">Overall Lead to Order Conversion (RFQ issued during this period)</th>
+		                        	<th colspan="9" class="sectionEnd left">TradeNet Lead to Order Conversion (RFQ issued during this period)</th>
+		                        	<th colspan="9" class="sectionEnd left">Match Lead to Order Conversion (RFQ issued during this period)</th>
+		                        	<th colspan="9" class="sectionEnd left">Pages Lead to Order Conversion (RFQ issued during this period)</th>
+		                        	<th colspan="8" class="sectionEnd left">GMV Received (PO issued during this period)</th>
+
+		                        </tr>
+		                    	<tr>
+		                            <th style="width:100px;" class="left">From</th>
+		                            <th style="width:100px;" class="left">To</th>
+		                        	<th class="narrow left">TNID</th>
+		                        	<th style="width:150px;" class="left">Branch name</th>
+		                        	<th style="width:40px;" class="sectionEnd left">Children</th>
+
+		                        	<th class="narrow">RFQs received during period</th>
+		                        	<th class="narrow">Resulting Quotes</th>
+		                        	<th class="narrow">Resulting Orders quote detected</th>
+		                        	<th class="narrow">Resulting Orders only rfq detected</th>
+		                        	<th class="narrow">Total Resulting Orders</th>
+		                        	<th class="narrow">Resulting GMV ($)</th>
+		                        	<th class="narrow">Resulting POCs</th>
+		                        	<th class="narrow">Quote Rate</th>
+		                        	<th class="narrow sectionEnd">Win Rate</th>
+
+		                        	<th class="narrow">RFQs received during period</th>
+		                        	<th class="narrow">Resulting Quotes</th>
+		                        	<th class="narrow">Resulting Orders quote detected</th>
+		                        	<th class="narrow">Resulting Orders only rfq detected</th>
+		                        	<th class="narrow">Total Resulting Orders</th>
+		                        	<th class="narrow">Resulting GMV ($)</th>
+		                        	<th class="narrow">Resulting POCs</th>
+		                        	<th class="narrow">Quote Rate</th>
+		                        	<th class="narrow sectionEnd">Win Rate</th>
+
+		                        	<th class="narrow">RFQs received during period</th>
+		                        	<th class="narrow">Resulting Quotes</th>
+		                        	<th class="narrow">Resulting Orders quote detected</th>
+		                        	<th class="narrow">Resulting Orders only rfq detected</th>
+		                        	<th class="narrow">Total Resulting Orders</th>
+		                        	<th class="narrow">Resulting GMV ($)</th>
+		                        	<th class="narrow">Resulting POCs</th>
+		                        	<th class="narrow">Quote Rate</th>
+		                        	<th class="narrow sectionEnd">Win Rate</th>
+
+		                        	<th class="narrow">RFQs received during period</th>
+		                        	<th class="narrow">Resulting Quotes</th>
+		                        	<th class="narrow">Resulting Orders quote detected</th>
+		                        	<th class="narrow">Resulting Orders only rfq detected</th>
+		                        	<th class="narrow">Total Resulting Orders</th>
+		                        	<th class="narrow">Resulting GMV ($)</th>
+		                        	<th class="narrow">Resulting POCs</th>
+		                        	<th class="narrow">Quote Rate</th>
+		                        	<th class="narrow sectionEnd">Win Rate</th>
+
+		                        	<th class="narrow">POs with Related Rfq/Quote Received During Period (include orphaned PO)</th>
+		                        	<th class="narrow">GMV (for PO with related Quote in $) </th>
+		                        	<th class="narrow">Direct POs Received During Period</th>
+		                        	<th class="narrow">GMV ( for Direct PO $)</th>
+		                        	<th class="narrow">Total POs Received During Period</th>
+		                        	<th class="narrow sectionEnd">Total GMV ($)</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php
+		                        $supplierDetail = array();
+		                        $startDate = "";
+		                        $totalRow = lg_count($this->results);
+		                        foreach ( (array) $this->results as $result)
+		                        {
+		                        	++$no;
+		                        	$tmp = explode(" -- ", $result['GROUPING_STRING']);
+		                        	$tmp = explode(" TO ", $tmp[1]);
+		                        	$from = $tmp[0];
+		                        	$to = $tmp[1];
+
+		                        	if( $startDate == "" )
+		                        	{
+		                        		$startDate = $this->startDate->format("d M Y");
+		                        		$from = $startDate;
+		                        	}
+
+		                        	if( $supplierDetail[$result['SPB_BRANCH_CODE']] === null )
+		                        	{
+		                        		$supplierDetail[$result['SPB_BRANCH_CODE']] = Shipserv_Supplier::getInstanceById($result['SPB_BRANCH_CODE'], null, true);
+		                        	}
+
+		                        	if( $totalRow == $no )
+		                        	{
+		                        		$to = $this->endDate->format("d M Y");
+		                        	}
+
+		                        	// create url
+		                        	//$urlToTradenetRfqList = "/reports/supplier-conversion/rfq-list?" . http_build_query($this->params);
+
+		                        	$fromObject = new DateTime($from);
+		                        	$toObject = new DateTime($to);
+
+		                        	$queryStringToRfqList = array(
+	                        			'period' => $this->params['period'],
+	                        			'fromDate' => $fromObject->format("d/m/Y"),
+	                        			'toDate' => $toObject->format("d/m/Y")
+		                        	);
+		                        	?>
+			                        <tr>
+			                            <td class="narrow left"><?= $from?></td>
+			                            <td class="narrow left"><?= $to?></td>
+			                        	<td class="narrow left">
+			                        		<?= $result['SPB_BRANCH_CODE']?>
+			                        	</td>
+			                        	<td class="narrow left"><?= $supplierDetail[$result['SPB_BRANCH_CODE']]->name?></td>
+			                        	<td class="narrow left sectionEnd">
+			                        		<? if( $this->params['parent'] == 1 ){?>
+			                        			<?= $result['TOTAL_CHILDREN']?>
+			                        		<? }else{ ?>
+			                        			<!-- <a class="drilldown" tnid="<?= $result['SPB_BRANCH_CODE']?>" href="#"><?= $result['TOTAL_CHILDREN']?></a>-->
+			                        			<a href="/reports/supplier-conversion?parent=1&id=<?= $result['SPB_BRANCH_CODE']?>&<?= http_build_query($queryStringToRfqList);?>"><?= $result['TOTAL_CHILDREN']?></a>
+			                        		<? }?>
+			                        	</td>
+			                        	<td class="narrow">
+			                        		<a target="_blank" href="/reports/supplier-conversion/rfqs?drilldown=all&tnid=<?= $result['SPB_BRANCH_CODE']?>&<?= http_build_query($queryStringToRfqList);?>"><?= $result['OVR_TOTAL_RFQ']?></a>
+			                        	</td>
+			                        	<td class="narrow"><?= $result['OVR_TOTAL_QOT']?></td>
+			                        	<td class="narrow"><?= $result['OVR_TOTAL_ORD']?></td>
+			                        	<td class="narrow"><?= $result['OVR_TOTAL_ORD_NO_QOT']?></td>
+			                        	<td class="narrow"><?= $result['OVR_TOTAL_ORD'] + $result['OVR_TOTAL_ORD_NO_QOT']?></td>
+			                        	<td class="narrow currency"><?= $result['OVR_TOTAL_GMV']?></td>
+			                        	<td class="narrow"><?= $result['OVR_TOTAL_POC']?></td>
+			                        	<td class="narrow percentage"><?= $result['OVR_QUOTE_RATE']?></td>
+			                        	<td class="narrow percentage sectionEnd"><?= $result['OVR_WIN_RATE']?></td>
+
+			                        	<td class="narrow"><?= $result['TN_TOTAL_RFQ']?></td>
+			                        	<td class="narrow"><?= $result['TN_TOTAL_QOT']?></td>
+			                        	<td class="narrow"><?= $result['TN_TOTAL_ORD']?></td>
+			                        	<td class="narrow"><?= $result['TN_TOTAL_ORD_NO_QOT']?></td>
+										<td class="narrow"><?= $result['TN_TOTAL_ORD'] + $result['TN_TOTAL_ORD_NO_QOT']?></td>
+			                        	<td class="narrow currency"><?= $result['TN_TOTAL_GMV']?></td>
+			                        	<td class="narrow"><?= $result['TN_TOTAL_POC']?></td>
+			                        	<td class="narrow percentage"><?= $result['TN_QUOTE_RATE']?></td>
+			                        	<td class="narrow percentage sectionEnd"><?= $result['TN_WIN_RATE']?></td>
+
+			                        	<td class="narrow"><?= $result['M_TOTAL_RFQ']?></td>
+			                        	<td class="narrow"><?= $result['M_TOTAL_QOT']?></td>
+			                        	<td class="narrow"><?= $result['M_TOTAL_ORD']?></td>
+			                        	<td class="narrow"><?= $result['M_TOTAL_ORD_NO_QOT']?></td>
+			                        	<td class="narrow"><?= $result['M_TOTAL_ORD_NO_QOT'] + $result['M_TOTAL_ORD_NO_QOT']?></td>
+			                        	<td class="narrow currency"><?= $result['M_TOTAL_GMV']?></td>
+			                        	<td class="narrow"><?= $result['M_TOTAL_POC']?></td>
+			                        	<td class="narrow percentage"><?= $result['M_QUOTE_RATE']?></td>
+			                        	<td class="narrow percentage sectionEnd"><?= $result['M_WIN_RATE']?></td>
+
+			                        	<td class="narrow"><?= $result['PGS_TOTAL_RFQ']?></td>
+			                        	<td class="narrow"><?= $result['PGS_TOTAL_QOT']?></td>
+			                        	<td class="narrow"><?= $result['PGS_TOTAL_ORD']?></td>
+			                        	<td class="narrow"><?= $result['PGS_TOTAL_ORD_NO_QOT']?></td>
+			                        	<td class="narrow"><?= $result['PGS_TOTAL_ORD_NO_QOT'] + $result['PGS_TOTAL_ORD_NO_QOT']?></td>
+			                        	<td class="narrow currency"><?= $result['PGS_TOTAL_GMV']?></td>
+			                        	<td class="narrow"><?= $result['PGS_TOTAL_POC']?></td>
+			                        	<td class="narrow percentage"><?= $result['PGS_QUOTE_RATE']?></td>
+			                        	<td class="narrow percentage sectionEnd"><?= $result['PGS_WIN_RATE']?></td>
+
+			                        	<td class="narrow"><?= $result['G_TOTAL_LINKED']?></td>
+			                        	<td class="narrow currency"><?= $result['G_GMV_LINKED']?></td>
+			                        	<td class="narrow"><?= $result['G_TOTAL_DIRECT']?></td>
+			                        	<td class="narrow currency"><?= $result['G_GMV_DIRECT']?></td>
+			                        	<td class="narrow"><?= $result['G_TOTAL_ORD']?></td>
+			                        	<td class="narrow currency sectionEnd"><?= $result['G_GMV']?></td>
+
+			                        </tr>
+
+		                        	<?
+		                        	}
+		                        ?>
+		                    </tbody>
+		                </table>
+		                <?php }?>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>

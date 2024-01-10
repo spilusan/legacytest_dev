@@ -1,0 +1,413 @@
+<?php
+$this->headLink()->appendStylesheet('/css/reports/dashboard.css')
+        ->appendStylesheet('/css/uniform.default.new.css');
+
+$breadcrumbs = array(array('name' => 'Home',
+        'url' => '/search'),
+    array('name' => 'Reports',
+        'url' => '/reports'),
+    array('name' => 'ShipServ Match',
+        'url' => '/reports/match'));
+
+echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+
+$browser = new Shipserv_Browser();
+$ie = strpos($browser->getUserAgent(), "msie 7.0");
+
+if ($ie !== false) {
+    $this->headLink()->appendStylesheet('/css/ie/dashboard-ie7.css');
+}?>
+<form method="POST" id="matchDashboard" class="new">
+    <input type="hidden" name="page" value="<?php echo $this->page; ?>" />
+    <input type="hidden" name="periodOld" value="<?php echo $this->selectedPeriod; ?>" />
+    <input type="hidden" name="branchOld" value="<?php echo $this->selectedBranch; ?>" />
+    <input type="hidden" name="sortMethodOld" value="<?php echo $this->sortMethod; ?>" />
+
+    <div id="pagewidth">
+
+        <!-- Sidebar -->
+
+        <div id="sidebar" class="right">
+                <?php
+                if($this->page < 2) {?>
+                    <div class="box">
+                        <h1 class="styled">About ShipServ Match</h1>
+                        <img src="/img/reports/dashboard/info-img.png" alt="About ShipServ Match" border="0"/>
+                        <p>An easy way for you to get additional competitive quotes for a particular RFQ from a small number of relevant suppliers.</p>
+                        <p>We have a complex matching engine which enables us to find different suppliers than the ones you have already included in your RFQ.</p>
+                        <a href="#" class="button green medium">View PDF Guide</a>
+                        <p><a href="#">Click here for more help</a></p>
+                    </div>
+                    <div class="margin"></div>
+                    <div class="rfqBanner">
+                        <h3>
+                            ShipServ Match
+                        </h3>
+                        <p>waiting for your new RFQ</p>
+                        <a href="#" class="button large red">
+                            <span>Send to</span>
+                            999999 today!
+                        </a>
+                    </div>
+                <?php }
+                else {?>
+                    <div class="box">
+                        <h1 class="styled">Summary</h1>
+                        <div class="summary">
+                            <div class="row">
+                                <div class="text">Number of your RFQs you’ve sent to Match (TNID: 999999)</div>
+                                <div class="value blue"><?php echo $this->noRFQsSentToMatch; ?></div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="row">
+                                <div class="text">% of all RFQs you’ve sent to Match.</div>
+                                <div class="value white"><img src="/img/global/icons/attention_15x15.png" alt="" border="0"/><?php echo $this->percentageQuotesToMatch; ?>%</div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="row">
+                                <div class="text">Number of Quotes from Match Suppliers</div>
+                                <div class="value green"><?php echo $this->noQuotesFromMatch; ?></div>
+                                <div class="clear"></div>
+                            </div>
+                            <div class="row last">
+                                <div class="text">Number of POs placed with Match Suppliers</div>
+                                <div class="value yellow"><?php echo $this->noPOsFromMatchSuppliers; ?></div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                <?}?>
+
+        </div>
+
+        <!-- Dashboard Content -->
+
+        <div id="body" class="left">
+            <h1 class="styled">
+
+                <select id="period" name="period" onchange="javascript: document.forms['matchDashboard'].submit();">
+                    <option value="10" <?php
+if ($this->selectedPeriod == 10) {
+    echo "selected";
+}
+?>>Last Week</option>
+                    <option value="20" <?php
+                            if ($this->selectedPeriod == 20) {
+                                echo "selected";
+                            }
+?>>Last Month</option>
+                    <option value="30" <?php
+                            if ($this->selectedPeriod == 30) {
+                                echo "selected";
+                            }
+?>>Last 2 Month</option>
+                    <option value="40" <?php
+                            if ($this->selectedPeriod == 40) {
+                                echo "selected";
+                            }
+?>>Last 6 Month</option>
+                    <option value="50" <?php
+                            if ($this->selectedPeriod == 50) {
+                                echo "selected";
+                            }
+?>>All</option>
+                </select>
+                My Dashboard 
+            </h1>
+            <div id="content">
+
+            <!-- Summary -->
+            <?php
+            if($this->page < 2) {?>
+                <div class="box grad">
+                    <div class="value blue"><?php echo $this->noRFQsSentToMatch; ?></div>
+                    <p>Number of your RFQs you’ve sent to Match (TNID: 999999)</p>
+                    <div class="clear"></div>
+                </div>
+                <div class="box white">
+                    <div class="value white"><?php echo $this->percentageQuotesToMatch; ?>%</div>
+                    <div class="text">
+                        <p>% of all RFQs you’ve sent to Match.<br />
+                            <span class="small"><span>You sent <?php echo $this->noRFQsNotSentToMatch; ?> RFQs without adding Match.</span><br />
+                                Remember Match can help with all your RFQs - it is totally free to Buyers.</span>
+                        </p>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+                <div class="box grad">
+                    <div class="value green"><?php echo $this->noQuotesFromMatch; ?></div>
+                    <p>Number of Quotes from Match Suppliers</p>
+                    <div class="clear"></div>
+                </div>
+                <div class="box grad">
+                    <div class="value yellow"><?php echo $this->noPOsFromMatchSuppliers; ?></div>
+                    <p>Number of POs placed with Match Suppliers</p>
+                    <div class="clear"></div>
+                </div>
+            <?}?>
+
+                <!-- RFQs-->
+                <?php
+                if (lg_count($this->rfqs) > 0):
+                    ?>
+
+                    <div class="rfqs <?php if($this->page < 2) { echo 'first';}?>">
+                        <h2 class="styled grey blue title">
+                            <select id="sortMethod" name="sortMethod" onchange="javascript: document.forms['matchDashboard'].submit();">
+                                <option value="1" <?php if ($this->sortMethod == 1): ?>selected<?php endif; ?>>Sort by date</option>
+                                <option value="2"  <?php if ($this->sortMethod == 2): ?>selected<?php endif; ?>>Sort by vessel</option>
+                            </select>
+                            Match RFQs & Quotes
+                        </h2>
+
+                        <!-- RFQ -->
+                        <?php
+                        foreach ($this->rfqs as $rfq):
+                            $quotes = $this->stats->getQuotesForRFQ($rfq['RFQ_INTERNAL_REF_NO']);
+                            $stats = $quotes['stats'];
+                            ?>
+                            <div class="rfqContainer">
+                                <div class="box rfq">
+
+                                    <!-- RFQ header -->
+
+                                    <div class="title">
+                                        <p class="sent">RFQ Sent: <span><?php echo date_format(date_create($rfq['RQR_SUBMITTED_DATE']), "d/m/Y") ?></span></p>
+                                        <p class="subject">RFQ Subject: <span class="blue"><a href="/printables/app/print?docid=<?php echo $rfq['RFQ_INTERNAL_REF_NO']; ?>&usercode=<?php echo $this->user->userId; ?>&branchcode=<?php echo $this->selectedBranch; ?>&doctype=RFQ&custtype=buyer&md5=<?php echo $this->userMD5; ?>" target="_blank"><?php echo $rfq['RFQ_SUBJECT']; ?></a></span></p>
+                                    </div>
+
+                                    <!-- RFQ info -->
+
+                                    <div class="rfqInfo">
+                                        <div class="left">
+                                            <p class="ref">RFQ Ref.: <span><?php echo $rfq['RFQ_REF_NO']; ?></span></p>
+                                            <p>Delivery by: 
+                                                <span>
+                                                    <?php 
+                                                        if($rfq['RFQ_DELIVERY_DATE'] != "") {
+                                                            echo date_format(date_create($rfq['RFQ_DELIVERY_DATE']), "d/m/Y");
+                                                        }
+                                                        else {
+                                                            echo "N/A";
+                                                        }
+                                                    ?>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="left">
+                                            <p class="vessel">Vessel: <span><?php echo $rfq['RFQ_VESSEL_NAME']; ?></span></p>
+                                            <p>Delivery to: <span>
+                                                    <?php
+                                                    if (!empty($rfq['PRT_NAME'])) {
+                                                        echo $rfq['PRT_NAME'];
+                                                        if (!empty($rfq['PRT_CNT_COUNTRY_CODE'])) {
+                                                            echo ",";
+                                                        }
+                                                    }
+                                                    if (!empty($rfq['PRT_CNT_COUNTRY_CODE'])) {
+                                                        echo $rfq['PRT_CNT_COUNTRY_CODE'];
+                                                    }
+                                                    if (empty($rfq['PRT_NAME']) && empty($rfq['PRT_NAME'])) {
+                                                        echo "N/A";
+                                                    }
+                                                    ?>
+
+                                                </span></p>
+                                            <?php //echo print_r($stats, true); ?>
+                                        </div>
+                                        <div>
+                                            <p class="best">Best original quote price: 
+                                                <span>
+                                                    <?php if($stats['lowOriginal'][value] > 0 ) {
+                                                        echo(number_format($stats['lowOriginal']['value'], 2).' USD');
+                                                    }
+                                                    else {
+                                                        echo "N/A";
+                                                    }?>
+                                                </span>
+                                            </p>
+                                            <p class="best <?php if($stats['lowMatch'][value] > 0 ) { echo 'match';}?>">Best match quote price: 
+                                                <span>
+                                                    <?php if($stats['lowMatch'][value] > 0 ) {
+                                                        echo(number_format($stats['lowMatch']['value'], 2).' USD');
+                                                    }
+                                                    else {
+                                                        echo "N/A";
+                                                    }?>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- RFQ quotes table -->
+                                    <?php
+                                    //
+                                    //echo $rfq['RFQ_INTERNAL_REF_NO'];
+                                    if (lg_count($quotes['quotes']) > 0):
+                                        ?>
+                                        <table cellpadding="0" cellspacing="0" border="0" width="635">
+                                            <thead>
+                                                <tr>
+                                                    <th width="60">
+                                                        Quote date
+                                                    </th>
+                                                    <th width="80">Quote type</th>
+                                                    <th>
+                                                        Supplier
+                                                    </th>
+                                                    <th width="100">
+                                                        Total price <br />
+                                                        <span>(original currency)</span>
+                                                    </th>
+                                                    <th width="90">
+                                                        Total price<br />
+                                                        <span>(USD currency)</span>
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+            <?php
+            $i = 0;
+            foreach ($quotes['quotes'] as $quote) :
+                if($quote['QOT_BYB_BRANCH_CODE'] == 11107){
+                    $matchQuote = true;
+                }else{
+                    $matchQuote = false;
+                }
+                $poAwarded = false;
+                if($matchQuote){
+                    $PODetails = $this->stats->getPOsforQuote($quote['QOT_INTERNAL_REF_NO']);
+
+                    if($PODetails){
+                        $poAwarded = true;
+                    }                    
+                }else{
+                    $poAwarded = (bool) $quote['POSAWARDED'];
+                }
+                ?>
+                                                    <tr class="<?php
+                                    if ($poAwarded) {
+                                        echo "yellow";
+                                    } else {
+                                        if ($matchQuote) {
+                                            echo "green";
+                                        }
+                                    }
+                ?>">
+                                                        <td>
+                                                        <?php echo date_format(date_create($quote['QOT_SUBMITTED_DATE']), "d/m/Y"); ?><!--<br />
+                                                            <a href="">View Details</a>-->
+                                                        </td>
+                                                        <td class="<?php if ($matchQuote) : ?>bold match<?php else: ?><?php endif; ?>">
+                <?php
+                if ($matchQuote) {
+                    echo "Match";
+                } else {
+                    echo "Original";
+                }
+                ?> quote
+                                                            <?php
+                                                            if ($poAwarded) {
+                                                                echo " <span title=\"" . $PODetails['ORD_INTERNAL_REF_NO'] . "\">PO Awarded</span>";
+                                                            }
+                                                            ?>
+                                                        </td>
+                                                        <td>
+                <?php
+                $url = '/supplier/profile/s/' . preg_replace('/(\W){1,}/', '-', $quote['SPB_NAME']) . '-' . $quote['SPB_BRANCH_CODE'];
+                ?>
+                                                            <a href="<?php echo $url; ?>" target="_blank"><?php echo $quote['SPB_NAME']; ?></a>                                                            
+                                                        </td>
+                                                        <td class="number">
+                <?php echo number_format($quote['QOT_TOTAL_COST'], 2); ?> <?php echo $quote['QOT_CURRENCY']; ?>
+                                                        </td>
+                                                        <td class="number">
+                <?php echo number_format($quote['NORMALISEDTOTAL'], 2); ?> USD
+                                                        </td>
+                                                    </tr>
+                <?php
+            endforeach;
+            ?>
+                                            </tbody>
+                                        </table>
+            <?php
+        endif;
+        ?>
+
+
+                                    <!-- Additional Match Supplier RFQ message if applies -->
+                                    <!-- <p class="message">
+                                         <strong>XXXX additional</strong> Match Suppliers have received your RFQ. They currently deciding whether to quote.
+                                        </p> -->
+                                </div>
+                            </div>
+        <?php
+    endforeach;
+    ?>
+
+                    </div>
+    <?php
+endif;          //if(lg_count($this->rfqs) > 0):
+?>
+            </div>
+
+            <!-- Pagination -->
+
+            <div class="pagination">
+                <a <?php if ((int) $this->page > 1) echo 'href="?period=' . $this->selectedPeriod . '&buyerId=' . $this->selectedBranch . '&page=' . ($this->page - 1) . '"'; ?> class="prev <?php if ((int) $this->page == 1): ?>disabled<?php endif; ?>" <?php if ((int) $this->page == 1): ?>onclick="javascript: void(0);"<?php endif; ?>><span></span></a>
+                <ul>
+
+<?php
+$isGap = false; // A "gap" is the pages to skip
+$current = $this->page - 1; // Current page
+$cntPages = $this->lastPage; // Total number of pages
+$cntAround = 2;
+
+for ($i = 0; $i < $cntPages; $i++) { // Run through pages
+    $isGap = false;
+
+    // Are we at a gap?
+    if (($cntAround >= 0 && $i > 0 && $i < $cntPages - 1 && abs($i - $current) > $cntAround)) { // If beyond "cntAround" and not first or last.
+        $isGap = true;
+        // Skip to next linked item (or last if we've already run past the current page)
+        $i = ($i < $current ? $current - $cntAround : $cntPages - 1) - 1;
+    }
+
+    $lnkTxt = ($isGap ? '...' : ($i + 1)); // If gap, write ellipsis, else page number
+    $lnk = "<a ";
+    if ($i != $current && !$isGap) { // Do not link gaps and current
+        $lnk .= 'href="?sortMethod=' . $this->sortMethod . '&period=' . $this->selectedPeriod . '&buyerId=' . $this->selectedBranch . '&page=' . ($i + 1) . '"';
+    } else {
+        if ($i == $current) {
+            $extra = ' class="current" ';
+        } else {
+            $extra = ' class="ellipsis" ';
+        }
+    }
+    $lnk .= '>' . $lnkTxt . '</a>';
+    if ($i == $current || $isGap) {
+        echo "\t<li $extra>" . $lnkTxt . "</li>\n";
+    } else {
+        echo "\t<li>" . $lnk . "</li>\n";
+    }
+    //echo "<li $extra>" . $lnk . "</li>"; // Wrap in list items
+}
+?>
+
+                </ul>
+                <a <?php if ($this->page < $this->lastPage) {
+                        echo 'href="?period=' . $this->selectedPeriod . '&buyerId=' . $this->selectedBranch . '&page=' . ($this->page + 1) . '"';
+                    } ?> class="next <?php if ($this->page == $this->lastPage): ?>disabled<?php endif; ?>" <?php if ($this->page == $this->lastPage): ?>onclick="javascript: void(0);"<?php endif; ?>><span></span></a>
+
+            </div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>
+<!-- Scripts -->
+
+<!-- lib -->
+<script type="text/javascript" src="/js/lib/jquery.uniform.min.js"></script>
+
+<!-- src -->
+<script type="text/javascript" src="/js/src/dashboard.js"></script>

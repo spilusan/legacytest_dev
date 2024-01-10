@@ -1,0 +1,157 @@
+<?php
+
+$this->headMeta()->appendName('robots', 'noindex, follow');
+
+$this->googledfp()->addTargeting('keywords','ALL');
+$this->googledfp()->addTargeting('country','ALL');
+$this->googledfp()->addTargeting('port','ALL');
+$this->googledfp()->addTargeting('supplier','ALL');
+
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+				   ->appendFile('/js/jquery.metadata.js')
+				   ->appendFile('/js/jquery.footer.js');
+
+$this->googledfp()->add('TargetedOrGeneralAdSlot1');
+$this->googledfp()->add('TargetedOrGeneralAdSlot2');
+$this->googledfp()->add('TargetedOrGeneralAdSlot3');
+
+$this->googledfp()->render();
+
+echo $this->partial('searchbar.phtml', array('searchWhat'    => $this->searchValues['searchWhat'],
+											 'searchText'    => $this->searchText,
+											 'searchWhere'   => $this->searchValues['searchWhere'],
+											 'supplierCount' => $this->supplierCount));
+											 
+$this->CDNLink()->appendStylesheet('/css/search.css');
+
+?>
+
+<style type="text/css">
+.sidebar_apply_button input:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/apply_small_sprite.png) 0 -24px no-repeat; cursor:pointer; }
+.content_header h5 a:hover{-moz-border-radius:6px; -webkit-border-radius:6px; background:#fff; }
+.content_slim{width:591px; margin:0 auto 30px; padding:0; }
+.content_slim_wrapper{margin:0; padding:30px; }
+.content_slim_header{background:url(https://cdn1.shipserv.com/images/layout_v2/content_slim_header.jpg) no-repeat; width:537px; height:65px; position:relative; }
+.content_slim_header h1{color:#fff; font-size:20px; padding:24px 20px 0 30px; }
+.content_slim_header a.i_dont_have_account:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/i_dont_have_account_sprite.png) 0 -22px no-repeat; }
+.content_slim_header a.i_already_have_account:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/i_already_have_account_sprite.png) 0 -22px no-repeat; }
+.content_wide_header a.send_enquiry_button:hover,.content-shaded-header a.send_enquiry_button:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_enquiry_sprite.png) 0 -43px no-repeat; cursor:pointer; }
+.content_wide_footer_shadow{width:100%; height:8px; background:url(https://cdn1.shipserv.com/images/layout_v2/footer_shadow.jpg) repeat-x; }
+#searchResults .searchResultdetail .top .affiliations ul li.1{background:url(https://cdn1.shipserv.com/images/layout_v2/impa_cal.png) 0 6px no-repeat; }
+#searchResults .searchResultdetail .top .affiliations ul li.2{background:url(https://cdn1.shipserv.com/images/layout_v2/issa_cal.png) 0 6px no-repeat; }
+ul.jqueryfiletree a:hover{background:#bdf; }
+#modal_form{width:537px; background:#fff url(https://cdn1.shipserv.com/images/layout_v2/side_shadow.jpg) 531px repeat-y; padding-top:10px; padding-bottom:20px; position:relative; }
+.modal_left{float:right; width:541px; }
+#modal_form .form_inner{width:491px; margin:0 25px; }
+#modal_form p{font-weight:700; color:#00478a; font-size:16px; text-align:left; margin:0; padding:15px 35px 10px; }
+#modal_form .modal_right input[type=checkbox]{position:absolute; top:4px; left:0; margin:0; padding:0; }
+#modal_form .form_inner_body{width:489px; margin-bottom:20px; margin-left:-30px; padding:0; }
+input.sign_in_and_continue:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/sign_in_and_continue_sprite.png) 0 -43px no-repeat; cursor:pointer; }
+input.send_password:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_password_sprite.png) 0 -43px no-repeat; cursor:pointer; }
+input.registerSubmit:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/register_me_send_sprite.png) 0 -43px no-repeat; cursor:pointer; }
+input.registerSubmit_2:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/register_me_sprite.png) 0 -43px no-repeat; cursor:pointer; }
+#success_box a.new_search:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/new_search_sprite.png) 0 -43px no-repeat; }
+#modal_form input{font-weight:700; width:460px; font-size:14px; border:3px solid #ccc; margin:0 30px; padding:6px; }
+#modal_form input[type=checkbox]{width:20px; border:none; background:none; }
+#modal_form input.send_button:hover{ background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_sprite.png) 0 -43px no-repeat; cursor:pointer; }
+#modal_form input.attach_files:hover{ background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/attach_sprite.png) 0 -21px no-repeat; cursor:pointer; outline:none; }
+.form_error { background:#DF2929; width:480px; position:relative; margin:10px 30px 20px; padding:10px 0; }
+#modal_form .form_error p.label{font-weight:700; color:#fff; font-size:16px; text-align:left; margin:0; padding:5px 10px; }
+.error_msg_arrow{width:20px; height:11px; background:url(https://cdn1.shipserv.com/images/layout_v2/error_msg_arrow.gif) no-repeat; position:absolute; bottom:-11px; left:30px; }
+#modal_form .form_error p{line-height:20px; color:#fff; font-size:12px; font-weight:400; padding:5px 10px; }
+.form_error_2{border:1px solid red; background:#DF2929; width:480px; margin:0 30px; padding:10px 0; }
+.form_error_2 p{line-height:20px; color:red; font-size:12px; font-weight:400; padding:5px 10px; }
+#modal_form .form_info h2{line-height:20px; color:#00478a; font-size:16px; font-weight:700; padding:10px 10px 5px; }
+#modal_form .form_info{border:1px solid #7fc0e5; background:#d7e3ee; width:480px; margin:0 30px; padding:10px 0; }
+#modal_form .form_info p{line-height:20px; color:#00478a; font-size:13px; font-weight:400; padding:5px 10px; }
+.sidewidget_body input[type=checkbox]{margin:0 6px 0 0; padding:0; }
+a.back:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/back_sprite.png) 0 -20px no-repeat; }
+a.view_more_countries:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/view_more_countries_sprite.png) 0 -22px no-repeat; }
+a.browse_all_categories:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/browse_all_categories_sprite.png) 0 -22px no-repeat; }
+.the_corner_piece{width:11px; height:11px; background:url(https://cdn1.shipserv.com/images/layout_v2/corner.jpg) no-repeat; position:absolute; bottom:-6px; right:0; }
+#tradePerfTab:hover{background:url('/images/layout_v2/tr_popup/button_tradingperformance_a_sprite.gif') 0 -36px no-repeat; }
+#revTab:hover{background:url('/images/layout_v2/tr_popup/button_reviews_a_sprite.gif') 0 -36px no-repeat; }
+#verSysTab:hover{background:url('/images/layout_v2/tr_popup/button_verificationsys_a_sprite.gif') 0 -36px no-repeat; }
+#search_box.zone_search_box a.search-button:hover #searchButtonIcon{background:url(/images/layout_v2/zones/search_icon_hover.png) no-repeat; width:20px; height:20px; position:relative; top:7px; left:11px; }
+#search_box.zone_search_box a.search-button:hover{background:url(/images/layout_v2/zones/searchzone_sprite_button.png) 0 -35px no-repeat; }
+#search_box.zone_search_box a.zone-exit-button:hover{background:url(/images/layout_v2/zones/backtodirectory_sprite_button.png) 0 -35px no-repeat; }
+#competitors ul li .block:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/profile/competitor-background.gif) 0 -121px no-repeat; }
+.profile-body-right p.label-header{margin-left:5px!important; margin-bottom:8px!important; line-height:14px; }
+.profile-submit-button:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/profile/save-changes.png) 0 -44px no-repeat!important; }
+.profile-update-pass-button:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/profile/update-password.png) 0 -44px no-repeat!important; }
+#profile-emlconf-no input:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/profile/resend_email_now_spritebutton.gif) 0 -28px no-repeat; cursor:pointer; }
+.review-request-action,.review-action,.brand-action,.category-action{float:right; padding-left:8px; font:normal 11px Arial; }
+.company-name-search button:hover{background:url(/images/layout_v2/profile/cancel-sprite.gif) no-repeat scroll 0 -30px transparent; }
+a:hover,.zone_block a:hover,.zone_block h3 a:hover,#searchResults .premium h3 a:hover,#searchResults .searchResult h3 a:hover,.zone-exit-box:hover .zone-exit-link{text-decoration:underline; }
+.content_wide_nav a.enquiry_send:hover,.content_wide_nav_top a.enquiry_send:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_enquiry_down_sprite.png) 0 -43px no-repeat; }
+.content_wide_footer #search_next_previous,.content_wide_footer_cat #search_next_previous{border-right:1px solid #ccc; width:auto; float:left; }
+.content_wide_footer a.enquiry_send_bottom:hover,.content_wide_footer_cat a.enquiry_send_bottom:hover{background:url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_enquiry_up_sprite.png) 0 -43px no-repeat; }
+.content_wide_footer #search_next_previous a,.content_wide_footer #search_pagination a,#search_pagination span,.content_wide_footer_cat #search_next_previous a,.content_wide_footer_cat #search_pagination a {display:block; float:left; margin:0; }
+.content_wide_body_left p.links:hover,#searchResults .searchResult p.link:hover,span.shipserv_icon:hover,#searchResults .searchResult .tradenettop:hover,h1.supplier_cell:hover,.tradenet_large_top:hover,.content_wide_body_left .tradenettop:hover,.content_wide_body_left p.links a:hover,.ss-ver-system:hover{cursor:help; }
+#search_pagination a:hover {color:#000; }
+.rejected-block h3 {color:#999; }
+</style>
+
+
+<div id="main_content_area" style="margin-top:20px;"> 
+	
+	<div class="content_wide">
+	
+		<div class="content_wide_header">
+			<h1 style="margin-left:-10px;">Supplier Directory A-Z</h1>
+			<div class="clear"></div>
+		</div>
+	
+		<div class="content_wide_body">
+			<div class="browse_pagination">
+				<p class="indicator"><?php echo strtoupper($this->letter); ?></p>
+				
+				<ul>
+					<li style="color: #666; font-size: 11px;">Go to:</li>
+					<li><a href="/supplier/browse/l/marine-suppliers-beginning-with-&#35;" title="Marine suppliers beginning with non-alpha characters" id="non-alpha">&#35;</a></li>
+					<?php
+					foreach (range('a', 'z') as $l)
+					{
+						?>
+						<li><a href="/supplier/browse/l/marine-suppliers-beginning-with-<?php echo $l; ?>" id="<?php echo $l; ?>" title="Marine suppliers beginning with <?php echo $l; ?>"><?php echo strtoupper($l);?></a></li>
+						<?php
+					}
+					?>
+				</ul>
+				<div class="clear"></div>
+			</div>  
+		
+			<?php
+			if (is_array($this->profiles[$this->letter]))
+			{   
+				foreach ($this->profiles[$this->letter] as $p)
+				{
+					?>
+					<p class="browse_list">
+						<a href="<?php echo $this->supplierProfileUrl($p, 'BROWSE_AZ') ?>"
+						   title="<?php echo htmlentities($p['name']); ?> in <?php echo htmlentities($p['city']); ?>, <?php echo $p['countryName'];?>"><?php echo $this->string()->shorten($p['name'], 40); ?></a> <span style="color:#47B054;font-size:13px; padding-left: 10px;"> <?php echo $p['city']; ?>, <?php echo $p['countryName'];?></span>
+					</p>
+					<?php
+				}
+			}
+			
+			if ($this->onlyPremiums)
+			{
+				?>
+				<p class="browse_list" style="height:60px;"><a href="/supplier/browse/view/all/l/marine-suppliers-beginning-with-<?php echo $this->letter; ?>" title="All marine suppliers beginning with <?php echo $this->letter; ?>" class="view_more_suppliers">View all marine suppliers beginning with <?php echo $this->letter; ?></a></p>
+				<?php
+			}
+			?>
+		</div>
+		
+		<div class="content_wide_footer_shadow"></div>
+	</div>
+	
+	<div class="zone">
+		<?php echo $this->partial('general-google-ads.phtml'); ?>
+	</div>
+	
+	<div class="clear"></div>   
+
+</div> 
+<script type="text/javascript" src="<?php echo $this->CDNLink()->javascript('/js/jquery.searchvariables.js'); ?>" charset="utf-8"></script>

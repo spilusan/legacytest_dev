@@ -1,0 +1,958 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/jquery.ui.js')
+						 ->appendFile('/js/jquery.tools.tooltip.min.js')
+						 ->appendFile('/js/jquery.selectmenu.js')
+						 ->appendFile('/js/pending-actions.js');
+						 
+$this->headLink()->appendStylesheet('/css/transition.css');
+$this->headLink()->appendStylesheet('/css/jquery.ui.smoothness.css')
+					->appendStylesheet('/css/brand-management.css')
+					->appendStylesheet('/css/jquery.selectmenu.css')
+					->appendStylesheet('/css/profile.css');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Brand Management',
+						   'url'  => '/profile/company-brands'));
+
+$isShipservUser = $this->user->isShipservUser();
+$isAdminOfCompany = $this->user->isAdminOf($this->companyDetail['id']);
+
+?>
+
+<style>
+	#pagination {
+		text-align:center;
+	}
+	#pagination .active{
+		font-size:14px;
+		font-weight:bold;
+		color:#F54713;
+		text-decoration:underline;
+	}
+	#pagination a{
+		cursor:pointer;
+	}
+	.displayed td{
+		/*color:red;*/
+	}
+</style>
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], 'company-brands', $this->pendingUsers, $isAdmin)
+				)
+			);
+			?>
+			<div class="profile-body-right" id="brandManagement">
+				<div class="zz header">
+					<h2>Brand Verification</h2>
+				</div>
+				<div class="profileContent">
+					<div class="profile-body-header" style="margin-top: 10px;"></div>
+					<div class="profile-body-group">
+						<div style="padding-bottom:15px">
+							<?php
+							if (lg_count($this->managedBrands)>0)
+							{
+							?>
+							<h3 class="blue">Choose brand you would like to manage:</h3>
+							
+							<div>
+								<div style="float:left;width:60px;position:relative">
+									<img id="brandLogoImage" width="50" src="<?php echo (strpos($this->managedBrands[$this->selectedBrand]["LOGO_FILENAME"],"http")!==false)?$this->managedBrands[$this->selectedBrand]["LOGO_FILENAME"]:$this->logoUrlPrefix.$this->managedBrands[$this->selectedBrand]["LOGO_FILENAME"];?>"/>
+								</div>
+								<div style="float:left">
+									<form id="brandsSelectForm">
+									<select id="brand" name="brand" onChange="javascript:$('#brandsSelectForm').submit();" style="width:380px;">
+										<?php
+										foreach ($this->managedBrands as $brand)
+										{
+											echo '<option value="'.$brand["ID"].'" '.(($brand["ID"]==$this->selectedBrand)?'selected="true"':'').' >'.$brand["NAME"].(($brand["PENDING_REQUESTS_COUNT"]>0)?(" (".$brand["PENDING_REQUESTS_COUNT"].")"):"").'</option>';
+										}
+										?>
+									</select>
+									</form>
+									<?php if( $isAdminOfCompany === true ){?>
+									<div style="position:relative;margin-top:5px;">
+										<form enctype="multipart/form-data" method="POST" id="logoUploadForm">
+											<a href="javascript:void(0)" id="uploadLink">Upload new logo</a>
+											<input type="file" id="brandLogo" name="brandLogo" name="file" style="display:none"/>
+										</form>
+									</div>
+									<?php }?>
+								</div>
+								<div class="clear"></div>
+							</div>
+						</div>
+						<div>
+							<?php
+							if (lg_count($this->pendingRequestsByCompany)>0)
+							{
+							?>
+							<div id="pendingBrandAuths">
+							<h3 class="pending-count info-message">
+								<span id="jqPendingCountRoot" class="jqPendingCount"><?php echo lg_count($this->pendingRequestsByCompany);?></span>
+								<span class="jqCompanyPlural"> compan<?php echo (lg_count($this->pendingRequestsByCompany)>1)?"ies are":"y is";?></span> waiting for your brand authorisation
+							</h3>
+							<?php
+								foreach ($this->pendingRequestsByCompany as $companyId=>$requests)
+								{
+									?>
+									<table class="wbox" id="brand-auth-request-<?php echo $companyId;?>">
+										<tr>
+											<td class="wbox-top-left"></td>
+											<td class="wbox-top"></td>
+											<td class="wbox-top-right"></td>
+										</tr>
+										<tr>
+											<td class="wbox-left"></td>
+											<td class="wbox-content" style="padding:3px">
+												<div class="brand-request-body">
+													<div class="brand-request-company-info-column">
+														<?php
+															$companyInfo = $requests[0]->getCompanyInfo(true);
+															echo '<div class="company-name" id="company-name-req-'.$companyId.'"><a target="_blank"  title="View profile" href="'.$this->supplierProfileUrl(array("name"=>$companyInfo["SPB_NAME"],"tnid"=>$companyId)).'">'.$companyInfo["SPB_NAME"].'</a></div><div id="company-address-req-'.$companyId.'">';
+															if (strlen($companyInfo["SPB_CITY"]>1))
+															{
+																echo $companyInfo["SPB_CITY"].', ';
+															}
+															echo $companyInfo["CNT_NAME"].'</div>';
+														?>
+													</div>
+													<div class="brand-request-auth-column">
+														<div style="font-weight:bold; padding-bottom: 5px">Authorise as:</div>
+														<?php
+															foreach ($requests as $request)
+															{
+															?>
+															<?php
+
+																echo '<input type="checkbox" class="checkbox" id="req-auth-level-'.$request->authLevel.'-'.$request->companyId.'" name="requestedAuthLevel-'.$request->companyId.'" checked="true" value="'.$request->authLevel.'"/>';
+																echo '<label for="req-auth-level-'.$request->authLevel.'-'.$request->companyId.'">'.$request->getAuthLevelDisplayName().'</label><br/>';
+
+															}
+														?>
+													</div>
+													<div class="clear"></div>
+												</div>
+												<div class="dotted-line"></div>
+												<div class="brand-actions">
+													<?php if( $isAdminOfCompany === true ){?>
+													<div class="brand-action">
+														<a href="javascript:void(0);" title="Authorise" class="brand-request-action-authorise" id="authorise-<?php echo $companyId?>">
+															<img src="/images/icons/authorise_request_icon.gif" alt="Authorise" />
+															<span>Authorise</span>
+														</a>
+													</div>
+													<div class="brand-action">
+														<a href="#" title="Reject" class="brand-request-action-reject" id="reject-<?php echo $companyId?>">
+															<img src="/images/icons/reject_request_icon.gif" alt="Reject Request" />
+															<span>Reject</span>
+														</a>
+													</div>
+													<?php }?>
+													<div class="clear"></div>
+												</div>
+											</td>
+											<td class="wbox-right"></td>
+										</tr>
+										<tr>
+											<td class="wbox-bottom-left"></td>
+											<td class="wbox-bottom"></td>
+											<td class="wbox-bottom-right"></td>
+										</tr>
+									</table>
+									<?php
+								}
+								?>
+								</div>
+							<?php
+							}
+							?>
+							<div id="authorised-suppliers" style="padding-top:5px;">
+								<div style="padding-bottom:10px">
+									<div class="blue-header">Authorised suppliers:</div>
+									<?php if( $isAdminOfCompany === true ){?>
+									<div id="addSupplierAuthButton"></div>
+									<?php }?>
+									<div class="clear"></div>
+								</div>
+								<div id="addSupplierAuthsPanel" style="display:none;">
+									<table class="wbox">
+										<tr>
+											<td class="wbox-top-left"></td>
+											<td class="wbox-top"></td>
+											<td class="wbox-top-right"></td>
+										</tr>
+										<tr>
+											<td class="wbox-left"></td>
+											<td class="wbox-content">
+												<?php if( $isAdminOfCompany === true ){?>
+												<h3 class="blue" style="padding:3px">Add new supplier</h3>
+												<input id="supplierToAddId" type="hidden" value=""/>
+												<input id="supplierToAddName" type="hidden" value=""/>
+												<input id="supplierToAddLocation" type="hidden" value=""/>
+												<div class="input-wrapper-sm">
+													<input type="text" name="company_search" id="supplierToAdd" value="Type supplier name to add" />
+												</div>
+												<input type="checkbox" name="addAuthLevel" value="AGT" id="addAuthLevelAGT" class="checkbox"/><label for="addAuthLevelAGT">Authorised Agent</label><br/>
+												<input type="checkbox" name="addAuthLevel" value="REP" id="addAuthLevelREP" class="checkbox"/><label for="addAuthLevelREP">Authorised Installer/Repairer</label><br/>
+												<input type="checkbox" name="addAuthLevel" value="OEM" id="addAuthLevelOEM" class="checkbox"/><label for="addAuthLevelOEM">Certified Genuine/Original spares</label>
+												<div class="dotted-line"></div>
+												<div id="addSupplierAuthNowButton"></div>
+												<?php }?>
+											</td>
+											<td class="wbox-right"></td>
+										</tr>
+										<tr>
+											<td class="wbox-bottom-left"></td>
+											<td class="wbox-bottom"></td>
+											<td class="wbox-bottom-right"></td>
+										</tr>
+									</table>
+									<?php if( $isAdminOfCompany === true ){?>
+									<div id="inviteSuppliersButton"></div>
+									<?php }?>
+								</div>
+								<div style="padding:10px 0;">
+									<div style="float:left;background: url('/images/layout_v2/brands/filter_textfield.gif') no-repeat scroll left top transparent;width:234px;height:28px;padding:5px 0 0 5px;">
+										<input type="text" id="filterName" value="Filter list by name" style="border:medium none transparent; height:14px; width:219px; padding:0;font-size: 11px;"/>
+									</div>
+									<div style="float:right">
+										<select id="regionFilter" name="regionFilter" style="width:150px;">
+											<option value="">All Continents</option>
+											<option value="AF">Africa</option>
+											<option value="AS">Asia</option>
+											<option value="EU">Europe</option>
+											<option value="NA">North America</option>
+											<option value="SA">South America</option>
+											<option value="OC">Oceania</option>
+										</select>
+									</div>
+									<div class="clear"></div>
+								</div>
+								<table cellpadding="0" cellspacing="0" width="100%" id="authorised-suppliers-table">
+									<tbody>
+									<tr style="background-color:#333333; color:white; font: bold 10px Arial;" height="46" id="authTableHeader">
+										<th height="46" valign="bottom" style="background:url('/images/layout_v2/brands/left_grey_topbar.gif') top left no-repeat; background-color:#333333; border-left: none;">Supplier</th>
+										<th height="46" width="55">Authorised Agent</th>
+										<th height="46" width="85">Authorised Installer/Repairer</th>
+										<th height="46" width="65" style=" background:url('/images/layout_v2/brands/right_grey_topbar.gif') top right no-repeat;background-color:#333333;">Certified<br/>Genuine/Original Spares</th>
+									</tr>
+									<?php
+									foreach ($this->authorisationsByCompany as $companyId=>$auths)
+									{
+										?>
+										<tr id="company-auths-<?php echo $companyId;?>" class="companyBrandAuths displayed">
+											
+											<td class="brand-auth-company-name" id="company-info-<?php echo $companyId;?>">
+												<?php
+													echo '<div id="company-name-'. $companyId .'"><a target="_blank"  title="View profile" href="'.$this->supplierProfileUrl(array("name"=>$auths["companyInfo"]["SPB_NAME"],"tnid"=>$companyId)).'">'.$auths["companyInfo"]["SPB_NAME"]."</a></div><span style='font-size:10px'>";
+													if (strlen($auths["companyInfo"]["SPB_CITY"])>1)
+													{
+														echo $auths["companyInfo"]["SPB_CITY"].', ';
+													}
+													echo $auths["companyInfo"]["CNT_NAME"].'</span>';
+												?>
+												<div id="region-<?php echo $companyId;?>" style="display:none"><?php echo $auths["companyInfo"]["CNT_CON_CODE"]?></div>
+											</td>
+											<td class="<?php if($isAdminOfCompany === false) echo "x-" ?>auth-rating<?php if (isset($auths["auths"]["AGT"])) echo ' authorised';?>" id="auth-AGT-<?php echo $companyId;?>"></td>
+											<td class="<?php if($isAdminOfCompany === false) echo "x-" ?>auth-rating<?php if (isset($auths["auths"]["REP"])) echo ' authorised';?>" id="auth-REP-<?php echo $companyId;?>"></td>
+											<td class="<?php if($isAdminOfCompany === false) echo "x-" ?>auth-rating<?php if (isset($auths["auths"]["OEM"])) echo ' authorised';?>" id="auth-OEM-<?php echo $companyId?>"></td>
+										</tr>
+										<?php
+									}
+									?>
+									</tbody>
+									<tfoot>
+										<tr>
+											<td id="pagination" colspan="5"></td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+						<?php
+						}
+						?>
+					</div>
+					<div class="profile-body-footer"></div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	<!--
+	Paginator = function () {
+		this.currentPage = 1;
+		this.total = 0;
+		this.totalPerPage = 10;
+		
+		this.init = function() {
+			this.total = $("tr.companyBrandAuths.displayed").length;
+			this.totalPage = Math.ceil(this.total/this.totalPerPage);
+			this.addControl();
+		}
+
+		this.applyStyle = function() {
+			$('#pagination a').removeClass('active');
+
+			$('#pagination a[page=' + this.currentPage + ']').addClass('active');
+
+			if( this.currentPage == 1 ){
+				$('.prev').hide();
+			}
+			
+			if( this.currentPage > 1 ){
+				$('.prev').show();
+			}
+
+			if( parseInt(this.currentPage) + 1 > this.totalPage ){
+				$('.next').hide();
+			}else{
+				$('.next').show();
+			}
+			
+		}
+		
+		this.buildHtml = function() {
+			var output = '';
+			var space = '&nbsp;&nbsp;&nbsp;&nbsp;';
+
+			if( this.totalPage > 1 && ( this.currentPage > 1 || this.currentPage < this.totalPage ) )
+			{
+				output += '<span class="prev"><a page="prev" >PREV</a>' + space + '</span>';
+			}
+
+			// get available page
+			for( i=1; i<=this.totalPage; i++ ){
+				output += '<a page="' + i + '">' + i + '</a>';
+				output += space;
+			}
+			if( this.totalPage > 1 && this.currentPage < this.totalPage )
+			{
+				output += '<a page="next" class="next">NEXT</a>';
+			}
+
+			if( this.totalPage == 1 )
+				$('#pagination').html('');
+			else
+				$('#pagination').html(output);
+			
+			$('tr.displayed').hide();
+			// process the display
+			var start = 0;
+			var end = this.totalPerPage;
+			for(i=start; i< end; i++)
+			{
+				$( $('tr.displayed')[i] ).show();
+			} 
+		}
+		
+		this.attachEvent = function() {
+			var paginator = this;
+			
+			$('#pagination a').unbind('click').bind('click', function(){
+				var object = $(this);
+				var action = $(this).attr('page');
+
+				// get the current page and total page
+				paginator.currentPage = parseInt(paginator.currentPage);
+				paginator.totalPerPage = parseInt(paginator.totalPerPage);
+				
+				if( action == 'next' )
+				{
+					paginator.currentPage += 1;
+				}
+				else if( action == 'prev' )
+				{
+					paginator.currentPage -= 1;
+				}
+				else
+				{
+					paginator.currentPage = action;
+				}
+
+				// hide all needs to be displayed
+				$('tr.displayed').hide();
+
+				// process the display
+				var start = (paginator.currentPage == 1 ) ? 0 : ((paginator.currentPage-1) * paginator.totalPerPage);
+				var end = ((paginator.currentPage == 1 ) ? paginator.totalPerPage : ((parseInt(paginator.currentPage)) * paginator.totalPerPage)) -1;
+
+				for(i=start; i<= end; i++)
+				{
+					$( $('tr.displayed')[i] ).show();					
+				}
+				paginator.applyStyle();
+			});
+		}
+		
+		this.addControl = function() {
+			this.buildHtml();
+			this.applyStyle();
+			this.attachEvent();
+		}
+
+		this.rebuild = function(){
+			this.currentPage = 1;
+			this.init();
+		}
+	};
+
+	var p = new Paginator();
+	
+
+	$(document).ready(function(){
+		brandDropdown = $('select#brand').selectmenu({style:'dropdown',width:'388px'});
+		regionFilterDropdown = $('select#regionFilter').selectmenu({style:'dropdown',width:'150px'});
+
+		initAuthElement($('.auth-rating'));
+
+		$('select#regionFilter').change(function(){
+			filterList();
+		});
+
+		$("input#filterName").keyup(function(){
+			filterList();
+		})
+		.click(function() {
+			if (this.value == 'Filter list by name') {
+				$(this).val('');
+			}
+		})
+		.blur(function() {
+			if (this.value == '') {
+				$(this).val('Filter list by name');
+			}
+		});
+
+		p.init();
+
+		
+		$('#brandLogo').change(function(){
+			$('#brandLogo').slideUp(300);
+			if ($('#brandLogo').val()!="")	$('#logoUploadForm').submit();
+		});
+		$('#uploadLink').click(function(){
+			if ($('#brandLogo').is(':hidden'))
+			{
+				$('#brandLogo').slideDown(300);
+			}
+			else
+			{
+				$('#brandLogo').slideUp(300);
+				$('#brandLogo').val("");
+			}
+
+		});
+
+		$('#addSupplierAuthButton').mouseover(function(){
+			$(this).addClass("hover");
+		})
+		.mouseout(function(){
+			$(this).removeClass("hover");
+		})
+		.click(function(){
+			if ($('#addSupplierAuthsPanel').is(':hidden'))
+			{
+				$('#addSupplierAuthsPanel').slideDown(300);
+			}
+			else
+			{
+				$('#addSupplierAuthsPanel').slideUp(300);
+				$('#supplierToAddId').val("");
+				$('#supplierToAdd').val("Type supplier name to add");
+			}
+
+		});
+		$('#inviteSuppliersButton').mouseover(function(){
+			$(this).addClass("hover");
+		})
+		.mouseout(function(){
+			$(this).removeClass("hover");
+		})
+		.click(function(){
+			window.location='/profile/company-brands-invite/type/<?php echo $this->companyDetail['type']?>/id/<?php echo $this->companyDetail['id']?>/brand/'+$('select#brand').val();
+		});
+
+
+		$('#addSupplierAuthNowButton').mouseover(function(){
+			$(this).addClass("hover");
+		})
+		.mouseout(function(){
+			$(this).removeClass("hover");
+		})
+		.click(function(){
+
+			var allVals = [];
+			$('input[name=addAuthLevel]').each(function() {
+				if ($(this).is(':checked')){
+					allVals.push($(this).val());
+				}
+			});
+			var companyId = $('#supplierToAddId').val().split('-')[1];
+
+			if (companyId == "" || allVals.length == 0)
+			{
+				alert ("Please, select company and at least one authorisation you would like to grant")
+			}
+			else
+			{
+				$.post('/brand-auth/authorise-company/format/json/',
+						{
+							companyId: companyId,
+							brandId: $('select#brand').val(),
+							authLevels: allVals.join(',')
+						},
+						function(data) {
+							$('#addSupplierAuthsPanel').slideUp(300);
+							if (allVals.length>0)
+							{
+								if ($('#company-auths-'+companyId).length==0)
+								{
+									addCompanyRow(companyId,$('#supplierToAddName').val(),$('#supplierToAddLocation').val());
+								}
+							}
+
+							for (i=0;i<allVals.length;i++)
+							{
+								if ($('#auth-'+allVals[i]+'-'+companyId))
+								{
+									$('#auth-'+allVals[i]+'-'+companyId).addClass("authorised");
+								}
+							}
+							
+							$('#supplierToAddId').val("");
+							$('#supplierToAddName').val("");
+							$('#supplierToAddLocation').val("");
+							$('#supplierToAdd').val("Type supplier name to add");
+							$('input[name=addAuthLevel]').each(function() {
+								if ($(this).is(':checked')){
+									$(this).attr('checked', false);
+								}
+							});
+
+						},
+						'json'
+					);
+				}
+
+
+			
+
+		});
+
+
+		$('#supplierToAdd').click(function() {
+			if (this.value == 'Type supplier name to add') {
+				$(this).val('');
+			}
+		})
+		.blur(function() {
+			if (this.value == '') {
+				$(this).val('Type supplier name to add');
+			}
+		});
+
+		$('a[class="brand-request-action-authorise"]').click(function(){
+			if (confirm('Are you sure you want to authorise this request?')) {
+				var companyId = $(this).attr('id').replace('authorise-', '');
+				var allVals = [];
+				$('input[name=requestedAuthLevel-'+companyId+']').each(function() {
+					if ($(this).is(':checked')){
+						allVals.push($(this).val());
+					}
+					if ($(this).attr('type')=='hidden'){
+						allVals.push($(this).val());
+					}
+				});
+
+
+				$.post('/brand-auth/authorise-brand-auth-request/format/json/',
+					{
+						companyId: companyId,
+						brandId: $('select#brand').val(),
+						authLevels: allVals.join(',')
+					},
+					function(data) {
+						$('#brand-auth-request-' + companyId).slideUp(200);
+
+						// update the pending count blocks around the page
+						var count = parseInt($('#jqPendingCountRoot').html());
+						count--;
+
+						$('span[class="jqPendingCount"]').html(function () {
+							return count;
+						});
+
+						// make sure the text makes sense
+						var plural = (count == 1) ? 'company is' : 'companies are';
+						$('span[class="jqCompanyPlural"]').html(function () {
+							return plural;
+						});
+
+						if (count == 0) {
+							$('#pendingBrandAuths').slideUp(300);
+						}
+
+						reduceCounters ();
+
+						if (allVals.length>0)
+						{
+							if ($('#company-auths-'+companyId).length==0)
+							{
+								addCompanyRow(companyId,$('#company-name-req-'+companyId).html(),$('#company-address-req-'+companyId).html());
+							}
+						}
+
+						for (i=0;i<allVals.length;i++)
+						{
+							if ($('#auth-'+allVals[i]+'-'+companyId))
+							{
+								$('#auth-'+allVals[i]+'-'+companyId).addClass("authorised");
+							}
+						}
+
+					},
+					'json'
+				);
+			}
+
+			return false;
+		});
+
+
+		$('a[class="brand-request-action-reject"]').click(function(){
+			if (confirm('Are you sure you want to reject this request?')) {
+				var companyId = $(this).attr('id').replace('reject-', '');
+				var allVals = [];
+				$('input[name=requestedAuthLevel-'+companyId+']').each(function() {
+					if ($(this).is(':checked')){
+						allVals.push($(this).val());
+					}
+					if ($(this).attr('type')=='hidden'){
+						allVals.push($(this).val());
+					}
+				});
+
+
+				$.post('/brand-auth/reject-brand-auth-request/format/json/',
+					{
+						companyId: companyId,
+						brandId: $('select#brand').val(),
+						authLevels: allVals.join(',')
+					},
+					function(data) {
+						$('#brand-auth-request-' + companyId).slideUp(200);
+
+						// update the pending count blocks around the page
+						var count = parseInt($('#jqPendingCountRoot').html());
+						count--;
+
+						$('span[class="jqPendingCount"]').html(function () {
+							return count;
+						});
+
+						// make sure the text makes sense
+						var plural = (count == 1) ? 'company is' : 'companies are';
+						$('span[class="jqCompanyPlural"]').html(function () {
+							return plural;
+						});
+
+						if (count == 0) {
+							$('#pendingBrandAuths').slideUp(300);
+						}
+
+						reduceCounters ();
+
+					},
+					'json'
+				);
+			}
+
+			return false;
+		});
+
+		$('#supplierToAdd').autoComplete({
+			backwardsCompatible: true,
+			ajax: '/profile/supplier-search/format/json',
+			useCache: false,
+			minChars: 3,
+			list: 'auto-complete-list-wide',
+			preventEnterSubmit: true,
+			onRollover: function(data) {
+				$('#supplierToAdd').val(data.nonDisplay);
+				return false;
+			},
+			onSelect: function(data) {
+				var companyId = data.code.split('-')[1];
+				if ($('#company-auths-'+companyId).length==0)
+				{
+					$('#supplierToAdd').val(data.nonDisplay);
+					$('#supplierToAddId').val(data.code);
+					$('#supplierToAddName').val(data.value);
+					$('#supplierToAddLocation').val(data.location);
+				}
+				else
+				{
+					alert("This supplier is already on the list of authorised suppliers");
+					$('#supplierToAdd').val("Type supplier name to add");
+				}
+				return false;
+			},
+			width: 400
+		});
+
+	});
+
+	BrandAuthorisation = function (authLevelCode,companyId) {
+		this.authLevelCode = authLevelCode;
+		this.companyId = companyId;
+
+		this.getAuthLevelName = function() {
+			switch (this.authLevelCode){
+				case "AGT":
+					return "Authorised Agent";
+					break;
+				case "REP":
+					return "Authorised Installer/Repairer";
+					break;
+				case "OEM":
+					return "Certified Genuine/Original spares";
+					break;
+			}
+		}
+
+		this.getCompanyName = function()
+		{
+			return $('#company-name-'+this.companyId).html();
+		}
+	};
+
+	BrandAuthorisation.initFromCell = function (cellId) {
+		var idInfo = cellId.split("-");
+		return new BrandAuthorisation(idInfo[1],idInfo[2]);
+	}
+
+	function getTooltip (el)
+	{
+		var brandAuth = BrandAuthorisation.initFromCell(el.id);
+		if (!$(el).hasClass("authorised")) return "Authorise " + brandAuth.getCompanyName() + " to be "+ brandAuth.getAuthLevelName() +"?"
+		else return "Withdraw authorisation from " + brandAuth.getCompanyName() + " to be "+ brandAuth.getAuthLevelName() +"?";
+	}
+	function deleteCompanyAuthsWindow(companyId)
+	{
+		if ($('.delete-all-company-auths').length==0)
+		{
+			var deleteWindow = $('<div id="delete-all-auths-'+companyId+'"><div class="text">Do you want to completely remove this supplier?</div><div><img src="/images/layout_v2/brands/cancel_normal.gif" class="button" id="cancelButton"/><img src="/images/layout_v2/brands/yes_normal.gif" width="41" height="19" class="button" id="yesButton"/><div class="clear"></div></div>').addClass("delete-all-company-auths").appendTo(document.body).css({position:'absolute', top: $('#company-info-'+companyId).offset().top, left: $('#company-info-'+companyId).offset().left+$('#company-info-'+companyId).outerWidth(), width:$("#auth-AGT-"+companyId).outerWidth()+$("#auth-REP-"+companyId).outerWidth()+$("#auth-OEM-"+companyId).outerWidth()+'px', height:$('#company-info-'+companyId).outerHeight()+'px'});
+			$('#yesButton').mouseover(function(){
+				$(this).attr("src", "/images/layout_v2/brands/yes_hover.gif");
+			})
+			.mouseout(function(){
+				$(this).attr("src", "/images/layout_v2/brands/yes_normal.gif");
+			})
+			.click(function(){
+				$('.delete-all-company-auths').hide();
+				var companyId = $('.delete-all-company-auths')[0].id.split('-')[3];
+				$.post('/brand-auth/remove-company-auths/format/json/',
+					{
+						companyId: companyId,
+						brandId: $('select#brand').val()
+					},
+					function(data) {
+
+					},
+					'json'
+				);
+				$('#company-auths-'+companyId).remove();
+
+				// rebuild the pagination
+				p.rebuild();
+				
+			});
+			$('#cancelButton').mouseover(function(){
+				$(this).attr("src", "/images/layout_v2/brands/cancel_hover.gif");
+			})
+			.mouseout(function(){
+				$(this).attr("src", "/images/layout_v2/brands/cancel_normal.gif");
+			})
+			.click(function(){
+				$('.delete-all-company-auths').hide();
+			});
+		}
+		else
+		{
+			var deleteInfoId = $('.delete-all-company-auths')[0].id.split("-");
+			if (deleteInfoId[3]!=companyId)
+			{
+				var deleteWindow = $('.delete-all-company-auths').css({position:'absolute', top: $('#company-info-'+companyId).offset().top, height:$('#company-info-'+companyId).outerHeight()+'px'}).attr("id","delete-all-auths-"+companyId).show();
+			}
+			else
+			{
+				if ($('#delete-all-auths-'+companyId).is(':hidden'))
+				{
+					$('.delete-all-company-auths').show();
+				}
+				else
+				{
+					$('.delete-all-company-auths').hide();
+				}
+			}
+		}
+	}
+
+	function initAuthElement (elements)
+	{
+		elements.attr( "title", function(index, attr){
+			return getTooltip(this);
+		});
+		elements.tooltip({
+			tip: '.tooltip',
+			predelay: 0,
+			position: "bottom right",
+			offset: [-10, -10]
+		});
+		elements.mouseover(function(){
+			$(this).addClass("auth-rating-hover");
+		})
+		.mouseout(function(){
+			$(this).removeClass("auth-rating-hover");
+		})
+		.click(function(){
+
+				var brandAuth = BrandAuthorisation.initFromCell(this.id);
+
+
+				if ($(this).hasClass("authorised"))
+				{
+					var somethingElseSelected = false;
+					if ($('#auth-AGT-'+brandAuth.companyId).hasClass("authorised") && ('auth-AGT-'+brandAuth.companyId)!=this.id ) somethingElseSelected = true;
+					if ($('#auth-REP-'+brandAuth.companyId).hasClass("authorised") && ('auth-REP-'+brandAuth.companyId)!=this.id ) somethingElseSelected = true;
+					if ($('#auth-OEM-'+brandAuth.companyId).hasClass("authorised") && ('auth-OEM-'+brandAuth.companyId)!=this.id ) somethingElseSelected = true;
+
+					if (!somethingElseSelected)
+					{
+						deleteCompanyAuthsWindow(brandAuth.companyId);
+						return true;
+					}
+				}
+
+
+
+				if ($(this).hasClass("authorised"))
+				{
+					var action = "remove-brand-auth";
+
+					$(this).removeClass("authorised");
+				}
+				else
+				{
+					$(this).addClass("authorised");
+					var action = "set-brand-auth";
+				}
+
+				;
+
+				$.post('/brand-auth/'+action+'/format/json/',
+					{
+						companyId: brandAuth.companyId,
+						authLevel: brandAuth.authLevelCode,
+						brandId: $('select#brand').val()
+					},
+					function(data) {
+
+					},
+					'json'
+				);
+
+
+				$(this).data("tooltip").getTip().html(getTooltip(this));
+
+		});
+
+		// rebuild the pagination
+		p.rebuild();
+	}
+
+	function addCompanyRow(companyId,companyName,companyAddress)
+	{
+		$('#authTableHeader').after('<tr id="company-auths-'+companyId+'" class="companyBrandAuths displayed"><td class="brand-auth-company-name" id="company-info-'+companyId+'"><div id="company-name-'+companyId+'">'+companyName+'</div><span style="font-size:10px">'+companyAddress+'</span></td><td class="auth-rating" id="auth-AGT-'+companyId+'"></td><td class="auth-rating" id="auth-REP-'+companyId+'"></td><td class="auth-rating" id="auth-OEM-'+companyId+'"></td></tr>');
+		initAuthElement($('#company-auths-'+companyId+' > .auth-rating'));
+	}
+
+	function reduceCounters ()
+	{
+		$('#global-pending-actions').pendingActions();
+		// update the pending count blocks around the page
+		var count = parseInt($('span[class="jq-pending-brands-actions-span"]').html());
+		count--;
+
+		$('span[class="jq-pending-brands-actions-span"]').html(function () {
+			return count;
+		});
+
+		if (count==0){
+			$('#jq-pending-brands-actions').fadeOut('fast');
+		}
+	}
+
+	function filterList ()
+	{
+		$("tr.companyBrandAuths").each (function(index){
+			var id = this.id.split("-")[2];
+			var show = true;
+
+			if ($("#filterName").val()!="" && $("#filterName").val()!="Filter list by name")
+			{
+				if ($('#company-name-'+id).text().toLowerCase().indexOf($("#filterName").val().toLowerCase())==-1)
+				{
+					show = false;
+				}
+
+			}
+
+			if ($("#regionFilter").val()!="")
+			{
+				if ($('#region-'+id).text().toLowerCase()!=$("#regionFilter").val().toLowerCase())
+				{
+					show = false;
+				}
+			}
+
+			$(this).removeClass('displayed');
+			if (show)
+			{
+				$(this).addClass('displayed');
+				$(this).show();
+			}
+			else
+			{
+				$(this).hide();
+			}
+		});
+		
+		// rebuild the pagination
+		p.rebuild();
+		
+	}
+
+
+	
+	//-->
+</script>

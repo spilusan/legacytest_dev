@@ -1,0 +1,68 @@
+<?php 
+	$user = Shipserv_User::isLoggedIn();
+	
+	$collection = $user->fetchCompanies();
+	$supplierIds = $collection->getSupplierIds();
+	
+	$supplier = Shipserv_Supplier::fetch( $supplierIds[0]);
+	$sirTnids = array();
+	foreach ( $supplierIds as $id )
+	{
+		$supplier = Shipserv_Supplier::fetch($id);
+		$sirTnids[] = $supplier->tnid;
+		
+	}
+	if($user->isPartOfBuyer()){?> 
+		<div class="section-x" style="height: auto; padding-bottom: 20px;<?php if(!$user->isPartOfSupplier()):?> border-bottom: 0;<? endif; ?>" >
+			<div class="title">Changes to the Send new RFQ or Enquiry form</div>
+			We have recently changed the send new RFQ or Enquiry form for our Pages Buyers on ShipServ Pages. <br /><br />
+			This change has been made to ensure that each RFQ or enquiry sent to any of our 42,000 suppliers has as much detail as possible and is sent and received in a structured format. <br /><br />
+			By adding as much information as possible, the chance of a supplier responding to the RFQ is increased and means that you as a Buyer will receive more relevant and timely quotes.<br /><br />
+			We now require you to either fill out RFQ details, Line Items or upload an attachment. And to get the most quotes back from suppliers, we recommend using the Line Items.<br /><br />
+			If you have any further questions or comments about the change visit our relevant FAQs <a href="/help#5">here</a> or contact <a href="mailto:support@shipserv.com">support@shipserv.com</a>
+		</div>
+	<?}
+	
+	if($user->isPartOfSupplier()){
+		if( lg_count($sirTnids) > 0 || $user->isShipservUser()){?>
+			<div class="section-x" style="height: auto; padding-bottom: 20px;<?php if(!$user->isPartOfSupplier()):?> border-bottom: 0;<? endif; ?>" >
+				<div class="title">New Version of Your Supplier Insight Report</div>
+				Your Supplier Insight Report now provides you with more awareness of your business on ShipServ.  Understand if you have any outstanding RFQs – you might well be missing out on new business. Also see your current purchase order total, unique buyer contact views and how often your company shows up on page 1 of all search results.<br /><br />
+				<?php if( $user->isShipservUser() === false && lg_count($supplierIds) > 0 ){?>
+					<div class="zz medium dblue button" style="margin-left: 243px; display: block;"><button onclick="location.href='/reports?tnid=<?= $sirTnids[0]?>';">View Supplier Insight Report</button></div>
+				<?php }?>
+				<?php if( $user->isShipservUser() === true ){?>
+					<div class="zz medium dblue button" style="width: 195px; margin-left: 243px; display: block;"><button onclick="location.href='/reports';">View Supplier Insight Report</button></div>
+				<?php }?>
+				<img src="/img/notifications/sirChanges.jpg" alt="SIR" border="0" /><br /><br />
+				To read more about your Supplier Insight Report – <a href="/help/sir">click here</a>
+			</div>
+		<?}?>
+
+		<div style="color: #939ba1">
+		<?php if( lg_count($sirTnids) > 0 || $user->isShipservUser()){?>
+				<b>CONTACT YOUR ACCOUNT MANAGER FOR MORE HELP</b><br />
+				If you are a Premium Lister, you can email your <a href="/reports">account manager</a> (look on the bottom right of the Supplier Insight Report for their name).<br />
+		<?php }?>
+				<br />
+				<b>LET MORE OF YOUR COLLEAGUES SEE THESE TOOLS</b><br />
+				You need to be signed in to Pages to see these tools but it's easy to add new users - one of your existing Pages Administrators can do this.  
+				<a href="/profile/companies">Click here</a> to see who the administrators are (find them in People &amp; Settings). <a href="/help/sellerfaq/register">Click here</a> for more information on how to add users.<br />
+				<br />
+			</div>
+	<?}
+	if(!$user->isPartOfBuyer() && !$user->isPartOfSupplier()){?>
+		<div class="section-x" style="border-bottom: 0;">
+			<img src="/images/new/img_pcs.jpg" />
+			<div class="title">Your Company's Profile Complete Score</div>
+			The higher your profile the more new business you'll get. Click <a href="/help/premium">here</a> to see why your Pages profile is so important to you.				
+		</div>
+		<div style="color: #939ba1">
+			<br />
+			<br />
+			<b>LET MORE OF YOUR COLLEAGUES SEE THESE TOOLS</b><br />
+			You need to be signed in to Pages to see these tools but it's easy to add new users - one of your existing Pages Administrators can do this.  
+			<a href="/profile/companies">Click here</a> to see who the administrators are (find them in People &amp; Settings). <a href="/help/sellerfaq/register">Click here</a> for more information on how to add users.<br />
+			<br />
+		</div>
+	<?}?>

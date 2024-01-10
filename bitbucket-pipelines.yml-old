@@ -1,0 +1,49 @@
+# Check guides at https://confluence.atlassian.com/x/e8YWN for more examples.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: centos:6
+
+pipelines:
+  default:
+    - step:
+        caches:
+        - composer
+        - node
+        script:
+          #Fix of centos packages become archieved
+          - sed -i '/^mirrorlist/s/^/#/;/^#baseurl/{s/#//;s/mirror.centos.org\/centos\/$releasever/vault.centos.org\/6.10/}' /etc/yum.repos.d/*B*
+          #Packages
+          - rpm -Uvh --force https://archives.fedoraproject.org/pub/archive/epel/6/x86_64/epel-release-6-8.noarch.rpm
+          - rpm -Uvh --force https://mirror.webtatic.com/yum/el6/latest.rpm
+          - yum update -y
+          - yum install -y php56w php56w-soap php-xmlwriter git
+          #Composer
+          - echo "*** Composer"               
+          - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+          - echo '{"name":"shipserv/pages", "require":{"squizlabs/php_codesniffer":"2.5.1"}}' > composer.json
+          - composer update
+          #Node, gulp, sass and compass
+          - echo "*** Frontend build (gulp)"                    
+          - export PATH="$HOME/.node/bin:$PATH"
+          - curl --silent --location https://rpm.nodesource.com/setup_8.x | bash -
+          - yum install -y nodejs
+          - npm install -g jshint@2.9.5 csslint gulp npm
+          - npm install
+          - gulp release
+          #Validate Php syntax
+          - echo "*** Validating php syntax..."
+          - for file in `find . -name '*.php' | grep -v ./vendor`; do php -l -d display_errors=0 $file; done
+          #Validating Js syntax
+          - echo "*** Validating Js synatx"
+          - jserrors=$(jshint --config ./application/configs/jshint.conf --verbose ./js --exclude js/w2ui-1.3.2.min.js,js/w2ui-1.3.2.js,js/modules/r.2.3.1.js,js/lib/highcharts/lib/svg2pdf.src.js,js/lib/highcharts/lib/svg2pdf.js,js/essm/bootstrap.js,js/lib/flexibility.js,js/modules/jquery.validate.js,js/modules/domReady.js,js/modules/backbone/lib/backbone-deep-model.js | grep -E E[0-9]+.$ | wc -l)
+          - if [ $jserrors -gt 0 ]; then exit 1; fi
+          #Validating css syntax (only the legacy non-sass-compiled css files)
+          - echo "*** Validating Css synatx"          
+          - csslint --errors=errors --quiet ./css/ --exclude-list=./css/reports/svr.css,./css/jqModal.css,./css/uniform.default.new.css,./css/uniform.rfq.css,./css/uniform.webreporter.css,./css/myshipserv.css,./css/search.css,./css/supplier/supplier.css,./css/compressed.css,./css/profile/company-blocked-list.css,./css/myshipserv_19_10_09.css,./css/essm/bootstrap.min.css,./css/essm/bootstrap.css
+          #Php code quality report
+          #- PROJECT=`pwd`
+          #- $PROJECT/vendor/bin/phpcs --config-set installed_paths $PROJECT/vendor,$PROJECT/git-hooks;
+          #- echo "Php quality report - code sniffing the whole library directory..."
+          #- $PROJECT/vendor/bin/phpcs --standard=$PROJECT/application/configs/phpcs-shipserv-ruleset.xml --tab-width=4 --error-severity=4 --warning-severity=6 --colors --ignore="*.js,*.css,*.xml,*.png,*.jpg,*.gif,*.jpeg,*.json,*.svg" -s --report=source $PROJECT/library/ | grep -v "Missing @return tag"
+          #- echo "Php quality report - code sniffing the whole application directory..."
+          #- $PROJECT/vendor/bin/phpcs --standard=$PROJECT/application/configs/phpcs-shipserv-ruleset.xml --tab-width=4 --error-severity=4 --warning-severity=6 --colors --ignore="*.js,*.css,*.xml,*.png,*.jpg,*.gif,*.jpeg,*.json,*.svg" -s --report=source $PROJECT/application/ | grep -v "Missing @return tag"

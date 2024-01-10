@@ -1,0 +1,153 @@
+/*
+Document   : partials/reports/dashboard/_sidebar.scss
+Created on : Sep 5, 2012, 1:36:56 PM
+Author     : gly
+Description: Styles for dashboard sidebar
+*/
+
+#pagewidth {
+	margin: 0 20px 0;
+	#sidebar {
+		.box {
+			position: relative;
+			background: #ffffff;
+			padding: 5px;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+
+			img {
+				margin: 10px 0 10px 17px;
+				width: 190px;
+			}
+
+			p {
+				font-size: 12px;
+				color: #2e3235;
+				line-height: 1.3;
+				padding: 0 15px 10px 15px;
+
+				a {
+					font-size: 12px;
+					display: block;
+				}
+			}
+
+			.button {
+				display: block;
+				width: 111px;
+				margin-left: 15px;
+				margin-bottom: 15px;
+			}
+		}
+
+		.margin {
+			height: 15px;
+		}
+
+		.rfqBanner {
+			position: relative;
+			border-color:#003a72;
+			border-top-color: #2b76bb;
+			border-bottom-color: #003160;
+			padding: 20px 15px;
+			text-align: center;
+			@include border-radius(6px);
+			@include x-multiple-colored-gradient(#92b8dc 0%, #005aac 2%, #00366a 100%);
+			-pie-background: linear-gradient(top, #92b8dc 0%, #005aac 2%, #00366a 100%);
+			behavior: url(/css/PIE.htc);
+
+			h3, p {
+				font-size: 23px;
+				color: #ffffff;
+				line-height: 1.5;
+			}
+
+			h3 {
+				font-weight: bold;
+			}
+
+			a {
+				display: block;
+				font-weight: bold;
+				font-size: 18px;
+				width: 120px;
+				margin-left: 14px;
+				margin-top: 10px;
+
+				span {
+					font-size: 28px;
+					font-weight: normal;
+					display: block;
+				}
+			}
+		}
+
+		.summary {
+			padding: 0 5px;
+			.row {
+				border-bottom: 1px dotted #000000;
+				padding: 10px 0px;
+
+				&.last {
+					border-bottom: 0;
+				}
+
+				.value {
+					position: relative;
+					float: left;
+					font-size: 16px;
+					font-weight: bold;
+					text-align: center;
+					width: 60px;
+					padding: 5px 0;
+					@include border-radius(6px);
+					behavior: url(/css/PIE.htc);
+
+					&.blue {
+						color: #087ec5;
+						border: 1px solid #13b5ea;
+						background: #caedf9;
+					}
+
+					&.white {
+						font-size: 12px;
+						color: #e81e24;
+						background: #ffffff;
+						border: 1px solid #d6dce4;
+						padding: 4px 0;
+						line-height: 15px;
+						vertical-align: middle;
+
+						img {
+							width: 15px;
+							height: 15px;
+							margin: 0;
+							padding:0 4px 0 0;
+							vertical-align: middle;
+						}
+					}
+
+					&.green {
+						color: #008b00;
+						border: 1px solid #83cc4e;
+						background: #e5f8d8;
+					}
+
+					&.yellow {
+						color: #ff7f04;
+						border: 1px solid #fdd45c;
+						background: #fff0c5;
+					}
+				}
+
+				.text {
+					width: 145px;
+					float: right;
+					color: #2e3235;
+					font-size: 12px;
+					line-height: 1.3;
+				}
+			}
+		}
+	}
+}

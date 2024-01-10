@@ -1,0 +1,43 @@
+<div class="product-content">
+    {{#if productImageFull}}
+        <a id="fbox-prod-img" href="/reports/resize-image?url={{urlEncode productImageFull}}&width=440"><img class="prod-img" alt="{{description}}" src="/reports/resize-image?url={{urlEncode productImageFull}}&width=150" /></a>
+    {{/if}}
+    <div class="product-props{{#unless productImageFull}}-full{{/unless}}">
+    <div>{{description}}</div>
+        <div>
+            <div>Supplier Part No:</div>
+            <div>{{partNumber}}</div>
+        </div>
+        <div>
+            <div>UOM:</div>
+            <div>{{uom}}</div>
+        </div>
+        <div>
+            <div>IMPA No:</div>
+            <div>{{impaNumber}}</div>
+        </div>
+        {{#if manufacturerName}}
+        <div>
+            <div>Mfr. name:</div>
+            <div>{{manufacturerName}}</div>
+        </div>
+        {{/if}}
+        {{#if manufacturerNumber}}
+        <div>
+            <div>Mfr. Part No:</div>
+            <div>{{manufacturerNumber}}</div>
+        </div>
+        {{/if}}
+    </div>
+
+    {{#if extendedDescription}}
+        <p>{{extendedDescription}}</p>
+    {{/if}}
+
+    {{#if specSheetFull}}
+        <div class="specSheet">
+            <span>Click image to enlarge</span>
+            <a href="{{specSheetFull}}" target="_blank"><img class="spec-sheet-img" alt="{{description}}" src="/reports/specsheet-image?url={{urlEncode specSheetFull}}" /></a>
+        </div>
+    {{/if}}
+</div>

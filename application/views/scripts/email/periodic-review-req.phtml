@@ -1,0 +1,9 @@
+Dear ShipServ User<br /><br />
+
+<?php echo lg_count($this->data['revReqs']) ?> review request<?php lg_count($this->data['revReqs']) > 1 ? 's' : '' ?> are waiting<br />
+for your attention on ShipServ Pages.<br /><br />
+
+To view these pending requests and provide the feedback requested by your<br />
+suppliers, please click this link:<br /><br />
+
+<a href="<?php echo $this->data['links']['reviews'] ?>"><?php echo $this->data['links']['reviews'] ?></a><br />

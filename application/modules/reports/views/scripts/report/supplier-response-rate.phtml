@@ -1,0 +1,105 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()
+	->addModule('match/report')
+		->addDefinition('/match/reportType', '"supplier-response-rate-dashboard"')
+
+	;
+
+function getMonth($number)
+{
+	$dateObj   = new DateTime;
+	$dateObj->setDate('2014', $number, '1');
+	$monthName = $dateObj->format('M'); // March
+	return strtoupper($monthName);
+}
+
+$heading = array(
+	'RFQ Action Rates'
+	, '%RFQ Events Resulting in a PO'
+	, 'RFQ Counts'
+	, 'RFQ Event Counts'
+	, 'Actioned RFQ Counts'
+	, 'RFQ Events resulting in a PO'
+);
+
+?>
+
+<?php
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Usage report', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'Engagement report', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.colVis.css" media="screen" rel="stylesheet" type="text/css">
+
+<div id="body" class="usage">
+	<div id="content">
+		<h1 class="styled">Paying Supplier Response Report</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<form method="get" class="new" id="report-form">
+			<input type="hidden" id="selectedTnid" />
+		    <table style=";">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+					    <table>
+					        <tr>
+					            <td width="130">
+					                <label class="date">From:</label>
+					                <input type="text" name="fromDate" id="fromDate" value="<?php echo $this->startDate->format("d/m/Y") ?>" class="datepicker" />
+					            </td>
+					            <td width="130">
+					                <label class="date">To:</label>
+					                <input type="text" name="toDate" id="toDate" class="datepicker" value="<?php echo $this->endDate->format("d/m/Y") ?>"/>
+					            </td>
+					            <td width="30" class="buttonCell">
+					            	<input type="submit" value="Go"  class="button dblue medium"/>
+					            </td>
+					       </tr>
+					    </table>
+		            	<div class="clear"></div>
+						<table id="resultsTab" style="border-collapse: collapse; width:800px;">
+		                    <thead>
+		                    	<tr>
+		                    		<th>TNID</th>
+		                    		<th>Supplier</th>
+		                    		<th>RFQ Event</th>
+		                    		<th>RFQ</th>
+		                    		<th>Declined</th>
+		                    		<th>Quoted</th>
+		                    		<th>Response</th>
+		                    		<th>Response rate (%)</th>
+		                    		<th>Quote rate (%)</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php foreach ((array)$this->data as $result) : $key=1; $totalNotNull = $totalPerBuyer=0; ?>
+		                            <tr class="<?php if ($key % 2 == 0): ?>altColor<?php endif; ?>">
+		                                <td class=""><?php echo $result['SPB_BRANCH_CODE']; ?></td>
+		                                <td class="left"><?php echo $result['SPB_NAME']; ?></td>
+		                                <td class="narrow-x "><?php echo number_format($result['TOTAL_RFQ_EVENT']); ?></td>
+		                                <td class="narrow-x "><?php echo number_format($result['TOTAL_RFQ']); ?></td>
+		                                <td class="narrow-x "><?php echo number_format($result['TOTAL_DECLINED']); ?></td>
+		                                <td class="narrow-x "><?php echo number_format($result['TOTAL_QUOTED']); ?></td>
+		                                <td class="narrow-x "><?php echo number_format($result['TOTAL_RESPONSE']); ?></td>
+		                                <td class="narrow-x percentage "><?php echo $result['RESPONSE_RATE']; ?></td>
+		                                <td class="narrow-x percentage"><?php echo $result['QUOTE_RATE']; ?></td>
+			                    	</tr>
+		                        <?php endforeach; ?>
+		                    </tbody>
+		                </table>
+		                </div>
+		        	</td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>

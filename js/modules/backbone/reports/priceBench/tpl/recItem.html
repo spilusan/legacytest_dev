@@ -1,0 +1,37 @@
+<div class="searchResult">
+		<h3>
+			<a href="{{createUrl name tnid null}}">{{name}}</a> {{city}}, {{countryName}}
+			<input type="checkbox" name="{{tnid}}" id="{{tnid}}">
+			<input type="hidden" name="tnid-name-{{tnid}}" id="tnid-name-{{tnid}}" value="{{name}}" />
+		</h3>
+	<div class="avatar">
+		<img src="{{logoUrl}}" alt="">
+	</div>
+	<div class="searchContent">
+		<div class="searchContentTop">
+			<p>{{description}}</p>
+	<!--
+		<p>
+			<b>Recently Supplied:</b> {{recent}}
+		</p>
+	-->
+		</div>
+		<div class="searcContentBottom">
+			<!-- TODO add functionality here to manage these buttons -->
+			<span class="contentButtonNoFrame tradeRank">TradeRank</span>
+			<img class="ratingImg" data-rank="{{tradeRank}}" src="/images/layout_v2/pb-rating.png">
+			{{#if smartSupplier}}
+				<span class="contentButtonNoFrame expertSupplier cHelp">SmartSupplier</span>
+			{{/if}}
+			{{#if expertSupplier}}
+				<span class="contentButtonNoFrame expertSupplier cHelp">ExpertSupplier</span>
+			{{/if}}
+			{{#if reviewCount}}
+				<a href="{{createUrl name tnid 'review'}}" class="contentButtonNoFrame buttonFrame reviewBtn">Reviews ({{reviewCount}})</a>
+			{{/if}}
+			{{#if onlineCatalogue}}
+				<span class="contentButtonNoFrame buttonFrame catalogBtn">Catalogue</span>
+			{{/if}}
+		</div>
+	</div>
+</div>

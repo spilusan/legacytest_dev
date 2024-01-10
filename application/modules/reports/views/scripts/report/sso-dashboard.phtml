@@ -1,0 +1,91 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+$this->headLink()->appendStylesheet('/css/font-awesome.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()
+	->addModule('match/report')
+		->addDefinition('/match/reportType', '"sso-dashboard"')
+	;
+
+
+function getMonth($number)
+{
+	$dateObj   = new DateTime;
+	$dateObj->setDate('2014', $number, '1');
+	$monthName = $dateObj->format('M'); // March
+	return strtoupper($monthName);
+}
+
+?>
+
+<?php
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Usage report', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'SSO Dashboard', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.colVis.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+
+<script type="text/javascript">
+<!--
+	var paginationPageLenth = <?php echo (array_key_exists('resultsTab_length', $this->params)) ? $this->params['resultsTab_length'] : -1; ?>
+//-->
+</script>
+
+<div id="body" class="usage">
+	<div id="content">
+		<h1 class="styled">ShipServ Onboard Dashboard</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<form method="get" class="new" id="report-form">
+			<input type="hidden" id="selectedTnid">
+			<?php if (!array_key_exists('paying', $this->params)): ?>
+				<input type="hidden" name="paying" value="1">
+			<?php endif ?>
+			<a href="#" onclick="$(this).closest('form').submit()"><span style="color: green; font-size: 20px;"><?php echo (array_key_exists('paying', $this->params)) ? ' <i class="fa fa-square-o" aria-hidden="true"></i>' : '<i class="fa fa-check-square-o" aria-hidden="true"></i>'; ?></span> Show all members</a>
+		    <div class="clear"></div>
+		    <table style=";">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+            			<?php
+            			$row = array_pop($this->data);
+            			$columns = array_keys($row);
+            			?>
+            			<div style="font-size:12px; float: right;">
+            				<a href="/reports/sso-installation-dashboard">Switch to installation dashboard</a>
+            			</div>
+            			<div class="clear"></div>
+						<table id="resultsTab" style="border-collapse: collapse; width:800px;">
+		                    <thead>
+		                    	<tr>
+		                    		<?php foreach($columns as $column){?>
+		                            <th><? echo ucwords( str_replace("_", ' ', strtolower($column) ) );?></th>
+		                            <?php }?>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php foreach ((array)$this->data as $result) : $key=1; $totalNotNull = $totalPerBuyer=0; ?>
+		                            <tr class="<?php if ($key % 2 == 0): ?>altColor<?php endif; ?> handCursor">
+		                                <?php foreach($columns as $column){?>
+		                                	<td style="<?= ($column == 'NAME')?'text-align:left;':''?>"><?= $result[$column] ?></td>
+			                            <?php }?>
+									</tr>
+		                        <?php endforeach; ?>
+		                    </tbody>
+		                </table>
+		                </div>
+		        	</td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>

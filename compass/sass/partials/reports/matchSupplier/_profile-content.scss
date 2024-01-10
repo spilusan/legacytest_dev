@@ -1,0 +1,165 @@
+#body {
+	#content {
+		#innerContent {
+			.top-summary {
+				font-size: 14px;
+				display: block;
+				position: relative;
+				width: 100%;
+				color: #3d3e40;
+				min-height: 170px;
+				padding-bottom: 12px;
+				.summary-block {
+					min-height: 156px;
+					float: left;
+					padding: 6px;
+
+
+					
+					&.b1 {
+						width: 28%;
+					}
+					&.b2 {
+						width: 26%;
+					}
+					&.b3 {
+						width: 26%;
+						position: relative;
+						a {
+							position: absolute;
+							left: 0;
+							bottom: 3px;
+							padding: 14px 55px;
+						}
+					}
+					&.b4 {
+						display: block;
+						position: absolute;
+						top: 0;
+						right: 0;
+						width: 185px;
+						text-align: center;
+						a {
+							font-size: 12px;
+						}
+						
+						div {
+							.info {
+								display: inline-block;
+								vertical-align: text-top;
+								width: 18px;
+								height: 18px;
+								background: transparent url('/images/matchSupplierReport/info-trans-icon.png') no-repeat;
+							}
+						}
+					}
+					.summary-top {
+						img {
+							/* width: 30%; */
+							width: 85px;
+							/* max-height: 80px; */
+							border: 0;
+							float: left;
+							margin: 6px 12px 0px 0px;
+						}
+						div {
+							width: 60%;
+							float: left;
+							overflow: hidden;
+							h2 {
+								padding: 4px;
+								font-size: 18px;
+								color: #0f4174;
+								font-weight: bold;
+
+							}
+							h3 {
+								padding: 3px;
+							}
+
+						}
+					}
+
+					.traderank {
+						position: relative;
+						margin: 6px 0px;
+						top: 0;
+						left: 0;
+						bottom: 30px;
+						background-color: #bdc7d1;
+						width: 205px;
+						height: 33px;
+						#td-bar {
+							height: 33px;
+							position: absolute;
+							top: 0px;
+							left: 120px;
+							width: 57px;
+							background-color: #0059ad;
+						}
+						img {
+							position: absolute;
+							top: 0px;
+							left: 0px;
+							z-index: 998;
+
+
+						}
+						#tr-no-data {
+							display: none;
+							position: absolute;
+							z-index: 999;
+							background-color: #f3f4f6;
+							right: 0px;
+							top: 5px;
+							width: 86px;
+							height: 25px;
+							line-height: 25px;
+							color: #999999;
+						}
+
+					}
+
+					.tnid {
+						clear: both;
+						padding-top: 12px;
+					}
+
+					ul {
+						li {
+							min-height: 26px;
+							line-height: 20px;
+							padding-top: 6px;
+							width: 90%;
+
+						}
+						li:not(:last-child) {
+							border-bottom: 1px solid #c8d0db; 
+						}
+					}
+
+					p {
+						font-size: 14px;
+						&.supplyCat {
+						    height: 55px;
+	    					overflow: hidden;
+	    					text-overflow: ellipsis;
+	    				    display: -webkit-box;
+						    -webkit-line-clamp: 3;
+						    -webkit-box-orient: vertical;
+						}
+					}
+
+					.currency 
+					{
+						font-weight: bold;
+						font-size: 24px;
+						width: 100%;
+						text-align: center;
+					}
+
+				}
+			}
+		}
+	}
+}

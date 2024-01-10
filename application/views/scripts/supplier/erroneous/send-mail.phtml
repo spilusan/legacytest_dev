@@ -1,0 +1,22 @@
+<? $this->headLink()->appendStylesheet('/css/erroneous-trans-landing.css'); ?>
+<div id="body">
+   <div id="content" class="size2">
+        <h1 class="styled">Request Buyer corrects and re-issues PO</h1>    
+        <div class="inner_content">
+            <?php echo $this->partial('erroneous/header.phtml', array('response' => $this->response, 'display' => 'buyer')) ?>
+            <ul>
+              <li>The buyer will be informed by email that they have issued an incorrect PO.</li> 
+              <li> The email will request that they re-issue the PO with the mistake rectified. Details on the mistake will be provided.</li>
+              <li>If the issue is not resolved within 5 days, the warning will be raised to you again.</li>
+            </ul>
+            <form name="reply" method="post" action="/supplier/erroneous-reply">
+              <input type="hidden" name="answ" value="send">
+              <input type="hidden" name="id" value="<?= $this->response['ordInternalRefNo'] ?>">
+              <input type="hidden" name="h" value="<?= md5($this->response['ordInternalRefNo'].'_send_ord') ?>">
+              <label>Send the buyer a personalised message (optional):</label>
+              <textarea name="message"></textarea>
+              <input type="submit" name="send" value="Send Email">
+            </form>
+          </div>
+    </div>        
+</div>

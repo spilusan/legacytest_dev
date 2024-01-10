@@ -1,0 +1,33 @@
+<?php
+$this->headLink()->appendStylesheet('/css/shipmate.css')
+->appendStylesheet('/css/uniform.rfq.css');
+
+
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+
+?>
+
+<style>
+	td{
+		font-size:12px;
+	}
+	td b{
+		font-size:16px;
+		line-height:20px;
+	}
+</style>
+<div id="body" style="width:1150px;">
+	<div id="content" style="width: 1105px;">
+		<h1 class="styled">Trailing 12 months GMV Trend Report - For <?= $this->supplier->name . ' (' . $this->supplier->tnid .')'?></h1>
+		<div class="innerContent">
+			<div class="">
+				<?= $this->partial('buyer/gmv-trend-chart.phtml', array('data' => $this->data, 'vesselData' => $this->vesselData, 'periodForTrends' => $this->periodForTrends, 'showVesselChart' => false)); ?>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

@@ -1,0 +1,31 @@
+<?php 
+echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:og="http://ogp.me/ns#" > 
+	<head>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<?php 
+			// S5704
+			if( $_SERVER['HTTP_HOST'] != 'www.shipserv.com' )
+			{
+				?><meta name="robots" content="noindex"><?php 
+			}
+		?>
+		<?php 
+		echo $this->headTitle()."\n";
+		$this->CDNLink()->prependStylesheet('/css/default.css', 'all')
+						->prependStylesheet('/css/reset.css', 'all')."\n";
+		echo $this->CDNLink()."\n";
+		echo $this->headLink()."\n";
+		echo $this->headMeta()."\n";
+		
+		$this->requirejs()->render();
+		
+		echo $this->headScript()."\n";
+		echo $this->compressedScript()."\n";
+		?>
+	</head>
+	<body class="print">
+		<?php echo $this->layout()->content ?>
+	</body>
+</html>

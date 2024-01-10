@@ -1,0 +1,72 @@
+<?php 	
+echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml"> 
+	<html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:og="http://ogp.me/ns#" >
+<?= $this->partial('application-signature.phtml', array());?> 
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<?php 
+			// S5704
+			if( $_SERVER['HTTP_HOST'] != 'www.shipserv.com' )
+			{
+				?><meta name="robots" content="noindex"><?php 
+			}
+		?>
+	    <?php 
+		echo $this->headTitle()."\n";
+		$this->CDNLink()
+						->prependStylesheet('/css/whats_new.css')
+						->prependStylesheet('/css/default.css')
+						->prependStylesheet('/css/reset.css')."\n";
+				
+		echo $this->CDNLink()."\n";
+		
+		if( !($_SERVER['HTTP_X_REQUESTED_WITH'] == "XMLHttpRequest") && !($_SERVER['REQUEST_URI'] == "/favicon.ico" ) )
+		{
+			if( $this->canonical != "" )
+			{
+            	$pageURL = $this->canonical;
+			}
+			else
+			{
+                switch ($_SERVER['HTTP_HOST']) {
+                	case 'www.shipserv.net':
+                    case 'www.shipserv.com.tr':
+                    	$server = 'www.shipserv.com';
+                    break;
+                    default:
+                    	$server =  $_SERVER['HTTP_HOST'];
+		   	 	}
+	         	//$server = "www.shipserv.com" ;  
+	            $pageURL = 'https';
+	            $pageURL .= "://";
+	            $pageURL .= $server . str_replace("?" . $_SERVER['QUERY_STRING'], '', $_SERVER["REQUEST_URI"]);
+	            $pageURL = preg_replace('/\/$/i', '', $pageURL);
+	            $pageURL = preg_replace('/\/zone$/i', '', $pageURL);
+			}
+
+			$this->headLink()->headLink(array('rel'  => 'canonical',
+											  'href' => $pageURL),
+											  'PREPEND');
+		}
+		
+		echo $this->headLink()."\n";
+		echo $this->headMeta()."\n";
+		
+		$this->requirejs()->render();
+		
+		echo $this->headScript()."\n";
+		echo $this->compressedScript()."\n";
+		?>
+		
+		<!--[if lt IE 8 ]>
+			<link rel="stylesheet" type="text/css" href="/css/ie/ie7.css" />
+		<![endif]-->
+	</head>
+	<body class="blank">
+		<div class="container">
+			<?php echo $this->layout()->content ?>
+		</div>
+	</body>
+</html>

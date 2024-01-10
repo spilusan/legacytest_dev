@@ -1,0 +1,34 @@
+
+<h3 class="zz"><?php $user = Shipserv_User::isLoggedIn(); echo ($user->firstName!="")?$user->firstName:"Pages user";?></h3>
+<ul>
+	<?php
+	foreach ($this->menuItems as $menuItem) :
+		?>
+		<li class="<?php if ($menuItem['selected']) echo 'selected'; ?>">
+			<a href="<?php echo $menuItem['link'] ?>" title="<?php echo htmlentities($menuItem['text']) ?>">
+				<span>
+					<?php echo htmlentities($menuItem['text']); ?> 
+				</span>
+				</a>
+                <?php if( isset($menuItem['isNew']) && $menuItem['isNew'] == true ){ ?>
+                <span style="color:#e81e24; position:relative; top:-7px;font-weight:700;font-size:7px; text-decoration: none !important;">NEW</span>
+                <?php }
+				//$menuItem['countOverlay'] = 10;
+				if ($menuItem['countOverlay'])
+				{
+					?>
+					<div class="countOverlay" id="<?php echo $menuItem['countOverlayId']; ?>"><span class="<?php echo $menuItem['countOverlayId']; ?>-span"><?php echo $menuItem['countOverlay']; ?></span></div>
+					<?php
+				}
+				else
+				{
+					// we still need to output the div so we can update it inline when the user adds a company
+					?>
+					<div class="countOverlay" id="<?php echo $menuItem['countOverlayId']; ?>" style="display: none;"><span class="<?php echo $menuItem['countOverlayId']; ?>-span"></span></div>
+					<?php
+				}
+				?>
+		</li>
+		<?php
+	endforeach; ?>
+</ul>

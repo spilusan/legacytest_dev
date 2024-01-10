@@ -1,0 +1,24 @@
+<td class="first" title="{{RFQ_REF_NO}}"><a href="#" class="showDet">{{RFQ_REF_NO}}</a></td>
+<td title="{{RFQ_SUBJECT}}">{{RFQ_SUBJECT}}</td>
+<td title="{{RFQ_VESSEL_NAME}}">{{RFQ_VESSEL_NAME}}</td>
+<td title="PURCHASER_NAME">{{PURCHASER_NAME}}</td>
+<td title="{{RFQ_SUBMITTED_DATE}}">{{RFQ_SUBMITTED_DATE}}</td>
+<td title="{{TOTAL_BUYER_SUPPLIER}}">{{TOTAL_BUYER_SUPPLIER}}</td>
+<td title="{{TOTAL_MATCH_SUPPLIER}}">{{TOTAL_MATCH_SUPPLIER}}</td>
+<td title="{{TOTAL_QOT_BY_BYB}}">{{TOTAL_QOT_BY_BYB}}</td>
+<td title="{{TOTAL_QOT_BY_MATCH}}">{{TOTAL_QOT_BY_MATCH}}</td>
+<td title="{{poAward}}" {{#if matchedStyle}}class="matched"{{/if}}>
+	{{#if poAward}}
+		<span title="{{WINNER_SUPPLIER_NAME}}">{{poAward}}</span>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td title="{{POTENTIAL_SAVINGS}}">{{POTENTIAL_SAVINGS}}</td>
+<td class="last" title="{{ACTUAL_SAVINGS}}">
+	{{#if ACTUAL_SAVINGS}}
+		{{ACTUAL_SAVINGS}}
+	{{else}}
+		-
+	{{/if}}
+</td>

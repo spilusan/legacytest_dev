@@ -1,0 +1,208 @@
+#!/bin/sh
+
+echo "start pre-commit hook";
+
+#Global vars
+PROJECT=`php -r "echo dirname(dirname(realpath('$0')));"`;
+STAGED_FILES_CMD=`git diff --cached --name-only --diff-filter=ACMR HEAD`;
+SHOULDFIX=0;
+BRANCH=`git branch --color=never| grep '^*'|cut -c3-`;
+
+#Allow non blocking errors for already existing files, disallow for new ones
+function should_or_must_fix {
+	is_new_file=`git diff --name-only --diff-filter=A HEAD | grep -e "^$1$" | wc -l`;
+	file_creation_year=`git log --format=%ad $newfile | tail -1 | cut -d' ' -f5`;
+	if [ "$is_new_file" -eq 1 ] || [ "$file_creation_year" -gt "2016" ]; then
+		newfile=`git diff --name-only --diff-filter=A HEAD | grep -e "^$1$"`;
+		echo "!!! ALL KIND OF ERRORS OVER NEW FILES (new or created in 2017) MUST BE FIXED before committing. Please fix '$newfile' and then try to recommit. exiting...  !!!";
+		exit 10;
+	else
+		SHOULDFIX=1;
+	fi
+}
+
+#Get the list of files to analyze
+if [ "$#" -eq 1 ]
+then
+	oIFS=$IFS;
+	IFS='
+	';
+	SFILES="$1";
+	IFS=$oIFS;
+fi
+SFILES=${SFILES:-$STAGED_FILES_CMD};
+
+
+
+
+#Disallow direct commit to master
+if [ "$BRANCH" == "master" ]; then
+	if [ -e "${GIT_DIR}/MERGE_MODE" ]; then
+		echo "* Merging to master - Pre-commit execution start on files: $SFILES";
+	else
+		echo "* Commit directly to master is disallowed! You can only merge to master!";
+		exit 20;
+	fi
+else 
+	echo "* Pre-commit execution start on files: $SFILES";
+fi
+
+
+
+
+echo "* Running PHP Syntax checker (blocking)...";
+for FILE in $SFILES
+do
+	if [ `echo $FILE | grep -E ".*\.(php|phtml)$"` ]; then
+		php -l -d display_errors=0 $FILE &> /dev/null;
+		if [ "$?" -ne "0" ]; then
+			echo "!!! FIX THE PHP SYNTAX ERROR BEFORE COMMIT !!!";
+			exit 1;
+		fi
+	fi
+done
+
+
+
+
+echo "* Running JsHint Syntax checker (blocking)..."
+which jshint &> /dev/null #check if jshint is installed
+if [ "$?" = "0" ]; then 
+	for FILE in $SFILES
+	do
+		if [ `echo $FILE | grep -E "*.js$" | grep -v "js/lib/"` ]; then 		
+	        	out=`jshint --config $PROJECT/application/configs/jshint.conf --verbose $FILE | grep -E E[0-9]+.$`;
+	        	if [ "$out" != "" ]; then
+	    			echo $out;
+				echo "!!! FIX THE JS SYNTAX ERRORS BEFORE COMMIT !!!";
+				exit 2;
+        		fi
+		fi
+	done
+else 
+	echo "!!! jshint is not installed in your machine, and it's REQUIRED for committing: yum install nodejs npm && npm install -g jshint !!!";
+	exit 100;
+fi
+
+
+echo "* Running CssHint Syntax checker (blocking)..."
+which csslint &> /dev/null #check if csslint is installed
+if [ "$?" = "0" ]; then 
+	for FILE in $SFILES
+	do
+		if [ `echo $FILE | grep -E "*\.css$"` ]; then
+        		out=`csslint --errors=errors --quiet $FILE`;
+        	if [ "$out" != "" ]; then
+    			echo $out;
+				echo "!!! FIX THE CSS SYNTAX ERRORS BEFORE COMMIT !!!";
+				exit 4;
+        	fi
+		fi
+	done
+else 
+	echo "!!! csslint is not installed in your machine, and it's REQUIRED for committing: yum install nodejs npm && npm install -g csslint !!!";
+	exit 100;
+fi
+
+
+
+
+echo "* Check forbidden functions (blocking)...";
+for FILE in $SFILES
+do
+	if [ `echo $FILE | grep -E "(*\.php$|*\.phtml$)"` ]; then
+	    pattern="shell_exec( )*\(";
+	    pattern="$pattern|shell_exec( )*\(";
+	    pattern="$pattern|eval( )*\(";
+	    pattern="$pattern|system( )*\(";
+	    pattern="$pattern|pcntl_exec( )*\(";
+	    pattern="$pattern|passthru( )*\(";
+	    pattern="$pattern|preg_replace( )*\(['\"]/.*/e";
+	    pattern="$pattern|\$_GET|\$_POST|\$_REQUEST";
+	    out=`cat $FILE | grep -E "($pattern)" | egrep -v "( )*//"`;
+	    count=`echo -n $out | wc -l`
+	    if [ $count != 0 ]; then
+			echo $out;
+			echo "!!! A FORBIDDEN FUNCTION/VAR WAS DETECTED in file $FILE. You should remove it before committing !!!";
+			exit 5;
+	    fi
+    fi
+done
+
+
+
+
+echo "* Running Code Sniffer (blocking only on new files)...";
+for FILE in $SFILES
+do
+	if [ -f $PROJECT/vendor/bin/phpcs ]; then
+		$PROJECT/vendor/bin/phpcs --config-set installed_paths $PROJECT/vendor,$PROJECT/git-hooks &> /dev/null;
+		$PROJECT/vendor/bin/phpcs --standard=$PROJECT/application/configs/phpcs-shipserv-ruleset.xml --tab-width=4 --error-severity=4 --warning-severity=6 --colors --ignore="*.js,*.css,*.xml,*.png,*.jpg,*.gif,*.jpeg,*.json,*.svg,.buildpath" $FILE;
+		#bin/php-cs-fixer fix . --config=sf23 --dry-run -vv
+		if [ "$?" -ne "0" ]; then
+			echo "!!! The code you are committing does not respect STYLE NORMS which are important for code readability! It's RECOMMENDED that you refactor this code !!!"
+			should_or_must_fix $FILE;
+		fi
+	else
+		echo "!!! $PROJECT/vendor/bin/phpcs is not installed in your machine, and it's REQUIRED for committing: probably you just need to run 'composer install'";
+		exit 100;
+	fi
+done
+
+
+
+
+#echo "* Running Mess Detector (blocking only on new files)...";
+#if [ -f $PROJECT/vendor/bin/phpmd ]; then
+#	for FILE in $SFILES
+#	do
+#	    $PROJECT/vendor/bin/phpmd $FILE text codesize,unusedcode;
+#	    if [ "$?" -ne "0" ]; then
+#			echo "!!! MESS DETECTED into file $FILE. It's RECOMMENDED that you refactor this code !!!"
+#			should_or_must_fix $FILE;
+#	    fi
+#	done
+#else
+#	echo "!!! $PROJECT/vendor/bin/phpmd is not installed in your machine, and it's REQUIRED for committing: probably you just need to run 'composer install'";
+#	exit 100;
+#fi
+
+
+
+
+echo "* Running JsHint (blocking only on new files)...";
+which jshint &> /dev/null #check if jshint is installed
+if [ "$?" = "0" ]; then 
+	for FILE in $SFILES
+	do
+		if [ `echo $FILE | grep -E "*.js$" | grep -v "js/lib/"` ]; then		
+        	out=`jshint --config $PROJECT/application/configs/jshint.conf --verbose $FILE`;
+        	if [ "$out" != "" ]; then
+        		echo "$out";
+    			echo "!!! JsHint found a non optimal code in file $FILE. It's RECOMMENDED that you refactor this code !!!"
+			should_or_must_fix $FILE;
+        	fi
+		fi
+	done
+else 
+	echo "!!! jshint is not installed in your machine, and it's REQUIRED for committing: yum install nodejs npm && npm install -g jshint !!!";
+	exit 100;
+fi
+
+
+
+
+if [ "$SHOULDFIX" -ne "0" ]; then 
+	echo -e "\n\n\n!!!!! There are some fixes you should do (see output above), and we recommend you to do. If you want to commit anyway, please wait 10 second. Otherwise stop your commit with ctrl+c";
+	sleep 11;
+fi
+
+
+
+
+echo "* pre-commit execution end with success";
+exit 0;
+
+
+
+

@@ -1,0 +1,267 @@
+/*
+Document   : partials/def/_content.scss
+Created on : Aug 24, 2012, 4:00:43 PM
+Author     : gly
+Description: default styles for content
+*/
+
+
+body {
+	position: relative;
+	
+	&.app {
+		main {
+			box-sizing: border-box;
+		}		
+
+		#body, #main_content_area {
+			margin-bottom: 30px;
+		}
+	}
+
+	.italic {
+		font-style: italic;
+	}
+
+	h1 {
+		&.styled {			
+			color: #ffffff;
+			display: block;
+			font-size: 18px;
+			overflow: hidden;
+			position: relative;			
+			padding: 10px 15px;
+			@include border-radius(6px);
+			@include x-multiple-colored-gradient(#13b5ea 0%, #087fc5 100%);
+			-pie-background: linear-gradient(#13b5ea 0%, #087fc5 100%);
+			behavior: url(/css/PIE.htc);
+		}
+	}
+
+	h2 {
+		&.styled {
+			position: relative;
+			display: block;
+			overflow: hidden;
+			padding: 0 18px;
+			height: 36px;
+			line-height: 36px;
+			vertical-align: middle;
+			background: #ffffff;
+			font-weight: normal;
+			font-size: 15px;
+			border: 1px solid #d6dce4;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+
+			&.white {
+				@include x-multiple-colored-gradient(#ffffff 0%, #f6f8fa 100%);
+				-pie-background: linear-gradient(top, #ffffff 0%, #f6f8fa 100%);
+
+				&.blue {
+					border-bottom: 2px solid #13b5ea;
+				}
+
+				&.green {
+					border-bottom: 2px solid #83cc4e;
+				}
+			}
+
+			&.grey {
+				background-image: linear-gradient(#E9EDF1, #D6DCE4);
+				@include x-multiple-colored-gradient(#e9edf1 0%, #d6dce4 100%);
+				-pie-background: linear-gradient(top, #e9edf1 0%, #d6dce4 100%);
+
+				&.blue {
+					border-bottom: 2px solid #13b5ea;
+				}
+
+				&.green {
+					border-bottom: 2px solid #83cc4e;
+				}
+
+				&.dgreen {
+					border-bottom: 2px solid #008b00;
+				}
+			}
+		}
+	}
+}
+
+#body {	
+	padding: 5px;
+	height: 100%;
+	min-height: 30vh;
+	position: relative;
+	margin: 0 20px 0 20px;	
+	background-color: #ffffff;
+	behavior: url(/css/PIE.htc);
+
+	&.center {
+		margin: 0 auto;
+	}
+
+	&.liquid {
+		width: auto;
+		min-width: 1105px;
+		width: 90%;
+	}
+
+	#content {
+		padding: 20px 15px 15px 15px;
+
+		p {
+			display: block;
+			font-size: 12px;
+			color: #2e3235;
+			line-height: 1.5;
+			padding-bottom: 10px;
+
+			&.margin {
+				margin-bottom: 15px;
+			}
+		}
+
+		a {
+			text-decoration: none;
+			cursor: pointer;
+		}
+
+		.contactBox {
+			position: relative;
+			display: block;
+			float: left;
+			width: 185px;
+			width: 189px;
+			padding: 15px;
+			margin: 0;
+			margin-right: 14px;
+			background-color: #e9edf1;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+
+			&.last {
+				margin-right: 0;
+			}
+		}
+
+		.infoBox {
+			position: relative;
+			width: 875px;
+			margin: 0 auto;
+			padding: 20px 20px 20px 20px;
+			@include border-radius(6px);
+			border: 1px solid #d6dce4;
+			behavior: url(/css/PIE.htc);
+			margin-bottom: 20px;
+
+			&.bottom {
+				margin-bottom: 0;
+			}
+
+			&.yellow {
+				border-color: #fec008;
+				@include x-multiple-colored-gradient(#fffffe 0%, #fff0c6 100%);
+				-pie-background: linear-gradient(#fffffe 0%, #fff0c6 100%);
+			}
+
+			&.info {
+				width: 791px;
+				padding-left: 104px;
+				background: url(/img/info_box/info_icon_large.png) 20px 20px no-repeat transparent;
+			}
+
+			&.attention {
+				width: 895px;
+				line-height: 36px;
+				vertical-align: middle;
+				font-size: 13px;
+				padding: 10px;
+
+				img {
+					vertical-align: middle;
+				}
+
+				strong {
+					vertical-align: middle;
+				}
+			}
+
+			h2 {
+				color: #13b5ea;
+				font-size: 18px;
+				font-weight: bold;
+				margin:0 0 10px 0;
+			}
+
+			p {
+				font-size: 12px;
+				line-height: 1.5;
+				color: #2e3235;
+			}
+
+			.button {
+				float: right;
+				width: 127px;
+				height: 14px;
+				line-height: 1.2;
+				margin-top: 3px;
+			}
+		}
+	}
+}
+
+div#waiting{
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 9990;
+
+	div.waitingMask {
+		position: fixed;
+		background: #000000;;
+		filter: alpha(opacity=80);
+		opacity: 0.8;
+		behavior: url(/css/PIE.htc);
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		z-index: 9991;
+	}
+
+	div.waitingMessage {
+		width: 201px;
+		height: 108px;
+		margin: auto;
+		margin-top: 100px;
+		padding-left: 111px;
+		background: #ffffff url('/images/layout_v2/file_icons/spinner_big.gif') no-repeat 66px center;
+		color: #595959;
+		font-size: 14px;
+		line-height: 108px;
+		border-radius: 7px;
+		behavior: url(/css/PIE.htc);
+		z-index: 9999;
+		position: relative;
+	}
+}
+
+p {
+	color: #2e3235;
+}
+
+.hide { 
+	display: none; 
+}
+
+html[data-useragent*='iPhone'],
+html[data-useragent*='iPad'],
+html[data-useragent*='iPod'] {
+	.scrollWrapper {
+		overflow-x: visible;
+	}
+}

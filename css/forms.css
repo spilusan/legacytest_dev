@@ -1,0 +1,245 @@
+/**
+ *
+ */
+
+ul.validation.errors {
+	width: 730px;
+	margin: auto;
+	border: 1px solid #FF0000;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+ul.validation.errors>li {
+	background: url(/images/icons/32/warning.png) 0 0 no-repeat;
+	height: 32px;
+	line-height: 32px;
+	vertical-align: middle;
+	padding-left: 36px;
+	margin: 5px;
+}
+
+form.main {
+	width: 730px;
+	margin: auto;
+	background-color: #fff;
+	border: 1px solid #d9d9d9;
+	
+	/*CSS3 and curvycorners javascript*/
+	
+	/*CSS3 and curvycorners javascript*/
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+}
+
+
+form.main legend {
+	color: #01478c;
+	font-size: 1em;
+	padding-left: 7.8em;
+	padding-bottom: 10px;
+}
+
+form.main div.field {
+	margin: 7px 0 7px;	
+}
+
+form.main label {
+	text-align:right;
+	width: 8.5em;
+	display: block;
+	float:left;
+	margin-right: 20px;
+	line-height: 31px;
+	vertical-align: middle;
+	
+}
+
+form.main label.required:after {
+	content: ' *';
+	color: #1170cf;
+	font-weight: bold;
+}
+
+form.main input.textfield, form.main select.select, form.main textarea.textarea {
+	border: 1px solid #d9d9d9;
+	height: 29px;	
+}
+
+form.main input.textfield, form.main textarea.textarea {
+	width: 402px; 
+	padding: 0 10px 0 10px;
+	
+	/*CSS3 Only - ENSURE curvyIgnore class is also applied*/
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+form.main textarea.textarea {
+	height: 100px;
+	font-size: 11px;
+	padding: 10px;
+}
+
+form.main select.select {
+	width: 425px;
+	background: none;
+	padding-left: 10px;
+	padding-top: 0.5em;
+	
+	/*CSS3 Only - ENSURE curvyIgnore class is also applied*/
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+form.main input.checkbox {
+	width: 16px;
+	height: 16px;
+}
+
+
+form.main .textfield:focus {
+	border: 1px solid #13b5ea;
+	
+	/*CSS 3*/
+	-moz-box-shadow: 0 0 2px 2px #c7edfa;
+	-webkit-box-shadow: 0 0 2px 2px #c7edfa;
+	box-shadow: 0 0 2px 2px #c7edfa;
+}
+
+
+form.main .textfield.error, form.main .textarea.error {
+	border: 1px solid #F00;
+}
+
+form.main .textfield.error:focus, form.main .textarea.error:focus {
+	border: 1px solid #F00;
+	/*CSS 3*/
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+form.main label.error {
+	color: #F00;
+	float:left;
+	margin: 5px 0 0 11.5em;
+	clear: both;
+	font-size: 10px;
+	line-height: 10px;
+	width: inherit;
+}
+
+
+form.main label.right {
+	width: auto;
+	line-height: 23px;
+	clear: none;
+}
+
+form.main input.labelRight {
+	float: left;
+}
+
+form.main input.textfield.error, form.main input.select.error {
+	margin: 0; /* Cancel nonsense from old stylesheet*/
+}
+
+form.main label.checkboxError {
+	color: #F00;
+}
+
+/*Div element for summary pages, fits into standard form layout as if it were an input*/
+form.main div.formValue {
+	float:left;
+	width: 420px;
+	font-size: 12px;
+	color: #333;
+	height: 29px;
+	line-height: 29px;
+	vertical-align:middle;
+}
+
+/* Fancy search box */
+
+fieldset.fancySearch {
+	background-image: url(/images/forms/fancysearchRight.png);
+	background-repeat: no-repeat;
+	background-position: right;
+	display: inline;
+}
+
+fieldset.fancySearch>div {
+	background: #fff url(/images/forms/fancysearchLeft.png) no-repeat 0 0;
+	height: 34px;
+	width:17px;
+	float:left;
+}
+
+fieldset.fancySearch .textfield {
+	width: 250px;
+	height: 30px;
+	border: none;
+	border-top: 1px solid #e0e0e0;
+	border-bottom: 1px solid #e0e0e0;
+	float: left;
+}
+
+fieldset.fancySearch .button {
+	margin-top: 5px;
+	margin-right: 5px;
+	float: left;
+	height: 24px;
+	background: url(/images/forms/fancysearchButton.png) 0 0 no-repeat;
+	width: 48px;
+	height: 24px;
+	border: none;
+	text-indent: -9000px;
+	text-transform: capitalize;
+	cursor: pointer;
+}
+
+fieldset.fancySearch .button:hover {
+	background: url(/images/forms/fancysearchButton.png) 0 -24px no-repeat;	
+}
+
+form.main input.submit {
+	background-image: url(/images/forms/submit_btn.png);
+	border: 0;
+	width: 214px;
+	height: 42px;
+	line-height: 42px;
+	vertical-align: middle;
+	text-align: center;
+	color: #fff;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+form.main hr {
+	border: dashed #c1c1c1;
+	border-width: 1px 0 0;
+	height: 0;
+	width: 670px;
+	margin: 13px 30px 20px;
+	float:left;
+}
+
+ul.errors.general{ list-style: none; width: 880px; margin: 20px auto; }
+ul.errors.general>li{ height: 33px; font-size: 15px; font-weight: bold; color: #FFF; line-height:33px; vertical-align: middle; padding-left: 26px; display: block; background: #e80000 url(/images/icons/small/red/x.png) 6px center no-repeat; }
+
+#cssp-forms { position: fixed; z-index:12345; }
+
+form.main .spinner {
+	display: inline-block;
+	width: 16px;
+	height: 16px;
+	background: url(/img/ajax-loader.gif);
+	margin-left: 10px;
+	margin-top: 6px;
+	display: none;
+}

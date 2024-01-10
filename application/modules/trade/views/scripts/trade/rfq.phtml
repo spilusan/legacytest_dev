@@ -1,0 +1,99 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+
+	$this->getHelper('Requirejs')->addModule('backbone/trade/rfq-inbox/views/mainView');
+	
+	$user = Shipserv_User::isLoggedIn();
+
+	$shipservUser = $user->isShipservUser();
+	$hash = $this->hash;
+	if($this->params['page']){
+		$page = $this->params['page'];
+	}
+	else {
+		$page = 1;
+	}
+	
+	$isPartOfCompany = $this->user->isPartOfCompany($this->activeCompany->company->tnid);
+	$enquiryId = $this->params['enquiryId'];
+	$this->getHelper('Requirejs')->addDefinition('trade/rfq-inbox/hash', '"'.$hash.'"');
+	$this->getHelper('Requirejs')->addDefinition('trade/rfq-inbox/tnid', $this->activeCompany->company->tnid);
+	$this->getHelper('Requirejs')->addDefinition('trade/rfq-inbox/userId', $user->userId);
+	$this->getHelper('Requirejs')->addDefinition('trade/rfq-inbox/shipMate', '"'.$shipservUser.'"');
+	$this->getHelper('Requirejs')->addDefinition('trade/rfq-inbox/page', $page);
+	$this->getHelper('Requirejs')->addDefinition('trade/rfq-inbox/enquiryId', '"'.$enquiryId.'"');
+	$this->getHelper('Requirejs')->addDefinition('trade/rfq-inbox/isPartOfCompany', '"'.(($isPartOfCompany)?'true':'false').'"');
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<div id="body" class="liquid">
+	<div id="content">
+		<h1 class="styled">Pages RFQs</h1>
+		<div class="innerContent">
+			<div class="listInfo">
+				ShipServ sent you <span class="sum"></span> RFQs from: <span class="from"></span> to <span class="to"></span>.<br/>
+				<p>Pages RFQs notifications are currently being sent to: <span class="email"></span>. <a href="/js/modules/backbone/trade/rfq-inbox/tpl/shipMateEmail.html" rel="#modal" class="ovl change">Change this email</a><a href="/js/modules/backbone/trade/rfq-inbox/tpl/emailChangeHelp.html" rel="#modal" class="cHelp ovl"></a></p>
+			</div>
+			<div class="pagesRfqList">
+				<h2 class="styled grey blue"><input type="button" class="button medium white refresh" value="Refresh"/>List of RFQs from Pages</h2>
+				<table class="rfqList" cellpadding="0" cellspacing="0" border="0">
+					<thead>
+						<tr>
+							<th class="icons">
+								<p>&nbsp;</p>
+							</th>
+							<th class="attachments">
+								<img src="/img/icons/rfq-inbox/attachment_black.png" alt="" border="0" />
+							</th>
+							<th class="date">
+								<p>Date</p>
+							</th>
+							<th class="subject">
+								<p>Subject</p>
+							</th>
+							<th class="buyer">
+								<p>Buyer</p>
+							</th>
+							<th class="name">
+								<p>Name</p>
+							</th>
+							<th class="email">
+								<p>Email</p>
+							</th>
+							<th class="status">
+								<p>Status</p>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+					</tbody>
+				</table>
+			</div>
+			<div class="pagination">
+				
+			</div>
+			<div class="rfqDisplay" style="display: none">
+				<h2 class="styled grey blue"><input type="button" class="button dblue medium back" value="Back" /><input type="button" class="button white medium print" value="Print" />RFQ Preview</h2>
+				
+			</div>
+			<div class="smartInfo" style="display: none;"><img src="/img/icons/medium/info.png" border="0" /> <span>You need to quote or decline this RFQ from your SmartSupplier inbox</span></div>
+			<div class="buttons">
+				<input type="button" class="button medium dblue back" value="Back"/>
+				<input type="button" class="button medium green reply" value="Create a quote"/>
+				<input type="button" class="button medium red decline" value="Decline" />
+				<input type="button" class="button medium white block" value="Block this buyer" />
+				<div class="clear"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody"></div>
+</div>

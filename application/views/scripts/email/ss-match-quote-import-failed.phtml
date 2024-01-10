@@ -1,0 +1,57 @@
+<?php
+/**
+ * Email sent to buyer when match quote import process has failed for their RFQ
+ *
+ * @author  Yuriy Akopov
+ * @date    2014-08-07
+ * @story   S10774
+ */
+$rfqDate = '';
+if ($this->rfq->rfqUpdatedDate) {
+    $date = new DateTime($this->rfqUpdatedDate);
+    $rfqDate = $date->format('Y-m-d H:i:s') . ' UTC';
+}
+?>
+<p>Dear ShipServ Customer,</p>
+
+<p>
+    <ul>
+        <li><strong>RFQ Ref:</strong> <?php echo htmlentities($this->rfq->rfqRefNo); ?></li>
+        <li><strong>Subject:</strong> <?php echo htmlentities($this->rfq->rfqSubject); ?></li>
+        <li><strong>Supplier:</strong> <?php echo htmlentities($this->supplier->name); ?> (<?php echo $this->supplier->tnid; ?>)</li>
+        <li><strong>Vessel:</strong> <?php echo htmlentities($this->rfq->rfqVesselName); ?> <?php if (strlen($this->rfq->rfqImoNo)) { echo '(' . htmlentities($this->rfqImoNo) . ')'; } ?></li>
+        <li><strong>Sent:</strong> <?php echo $rfqDate; ?></li>
+    </ul>
+</p>
+
+<p>Your RFQ encountered a match import failure for the following reason:</p>
+
+<p>
+    <ul>
+        <?php
+        foreach ($this->userMessages as $code => $info) {
+            ?>
+            <li><strong><?php echo htmlentities($info['error']); ?></strong>
+                <ul>
+                    <?php foreach ($info['details'] as $msg) { ?>
+                        <li><?php echo htmlentities($msg); ?></li>
+                    <?php } ?>
+                </ul>
+            </li>
+            <?php
+        }
+        ?>
+    </ul>
+</p>
+
+<p>
+    Should you have any questions or require immediate service, please contact ShipServ through
+    <a href="https://www.shipserv.com/support">https://www.shipserv.com/support</a> or send an email to
+    <a href="mailto:support@shipserv.com">support@shipserv.com</a>
+</p>
+
+<p>
+    Best regards,<br/>
+    ShipServ<br/>
+    <a href="mailto:support@shipserv.com">support@shipserv.com</a>
+</p>

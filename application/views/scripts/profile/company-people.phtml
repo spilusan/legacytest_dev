@@ -1,0 +1,470 @@
+<?php
+$this->compressedScript()->appendFile('/js/pending-actions.js')
+						 ->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/company-people.js');
+
+$this->getHelper('Requirejs')->addModule('backbone/profile/companyPeople/views/mainView');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Users',
+						   'url'  => '/profile/company-people'));
+
+$this->headLink()->appendStylesheet('/css/transition.css');
+$this->headLink()->appendStylesheet('/css/profile.css');
+$this->headLink()->appendStylesheet('/css/profile/company-people.css')
+				 ->appendStylesheet('/css/uniform.default.new.css')
+				 ->appendStylesheet('/css/tooltip.css');
+if( $_SERVER['APPLICATION_ENV'] == "production" || $_SERVER['APPLICATION_ENV'] == "testing")
+{
+	$allowedShipservUserToAddNewUsers = array( "eloretizo@shipserv.com","jramos@shipserv.com","etan@shipserv.com","jmanayon@shipserv.com","royek-daya@shipserv.com","walcolea@shipserv.com","ksalonga@shipserv.com","dhombrebueno@shipserv.com","lnuqui@shipserv.com","wlinatoc@shipserv.com","fguevara@shipserv.com","emascardo@shipserv.com","hguillermo@shipserv.com","kcua@shipserv.com","edavis@shipserv.com", "hromero@shipserv.com","smadamba@shipserv.com");
+}
+else
+{
+	$allowedShipservUserToAddNewUsers = array('jgo@shipserv.com');
+}
+
+$canAddUsers = false;
+$isMemberOfCompany = false;
+$isAdminOfSupplier = $this->user->isAdminOfSupplier($this->companyDetail['id']);
+$isAdminOfBuyer = $this->user->isAdminOfBuyer($this->companyDetail['id']);
+$isShipservUser = $this->user->isShipservUser();
+$canAddUsers = $this->user->canPerform('PSG_ADD_USER');
+$isAdmin = ($isAdminOfSupplier == true || $isAdminOfBuyer == true);
+
+if( $this->user->canPerform('PSG_ADD_USER') || $isAdminOfSupplier == true || $isAdminOfBuyer == true )
+{
+	$canAddUsers = true;
+}
+
+//If the user is deleted, override the already set value of canAddUsers
+if ($this->allowAddUser === false) {
+	$canAddUsers = false;
+}
+?>
+
+
+
+<? if($this->companyDetail['id'] == $this->ssCompanyId ){ ?>
+<script type="text/javascript">
+	var refreshAfterAdding = true;
+	$(document).ready(function(){
+		window.location.href='#<?= _htmlspecialchars($_GET['email']) ?>';
+	});
+</script>
+<? }?>
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], 'company-people', $this->pendingUsers, $isAdmin)
+				)
+			);
+			?>
+			<div class="profile-body-right">
+				<div class="zz header">
+					<?php if ($canAddUsers) { ?>
+					<div id="add_btn" class="zz medium dblue button add_btn">
+						<a href="#" id="add-people" class="button" title="Add a new person to your company">Add users</a>
+					</div>
+					<?php } ?>
+					<h2>Users</h2>
+				</div>
+				<div class="profileContent">
+					<div id="add-people-block" style="display: none;">
+						<div class="profile-body-header"></div>
+						<div class="profile-body-group">
+							<h3 class="info-message-large" style="padding-bottom: 40px;">Use this facility to add colleagues to your company. As company members, they will be able to submit reviews, post responses and access company specific data.</h3>
+							<label for="person_search" class="required bold">Invite people:</label>
+							<div id="invite_person">
+								<a href="#" class="invite_person_button" title=""><img src="<?php echo $this->CDNLink()->image('/images/layout_v2/profile/invite.png'); ?>" class="png" alt="Invite" /></a>
+							</div>
+							<input type="text" name="person_search" id="person_search" value="Type in the email of the person" class="email" maxlength="100" />
+							<input type="hidden" name="person_search_ctype" id="person_search_ctype" value="<?php echo $this->companyDetail['type'] ?>" />
+							<input type="hidden" name="person_search_cid" id="person_search_cid" value="<?php echo $this->companyDetail['id'] ?>" />
+							<input type="hidden" name="person_search_name" id="person_search_name" value="<?php echo _htmlspecialchars($this->companyDetail['name']); ?>" />
+							<?php if( $isShipservUser ){?>
+							<div style="width:200px">
+                                <label class="required bold">Make this person:</label>
+								<label><input type="radio" value="ADM" name="level">Admin</label>
+								<label><input type="radio" value="USR" name="level">User</label>
+							 </div>
+
+							 <div style="font-size:12.5px; line-height:15px; color:#0157A8;">
+								<div class="clear"></div>
+								<br />
+								This email CANNOT be recalled once sent, so click this box to confirm:<br /><br />
+								<div style="float:left">
+									<input type="checkbox" name="agree" id="agree" value="1" />
+								</div>
+								<div style="float:left; margin-left:10px; clear:right; width:370px;">
+									<ul>
+										<li>I have checked that this person is employed by this company</li>
+										<li>I have checked that this person is expecting to receive this email making them a User or Administrator</li>
+									</ul>
+								</div>
+								<div class="clear"></div>
+							 </div>
+							 <?php }?>
+						</div>
+						<div class="profile-body-footer"></div>
+					</div>
+
+					<? $displayTag = ((lg_count($this->approvedUsers) + lg_count($this->pendingConfirmationUsers)) > 0 ) ? '' :  ' style="display:none;"'; ?>
+					<div id="filterBlock" class="filter"<?= $displayTag ?>>
+						<label>Search:</label>
+						<input type="text" name="userFilter" value="" placeholder="Search text...">
+						<a class="button green medium reset">Clear</a>
+						<a class="button lblue medium search">Search</a>
+					</div>	
+
+					<?php
+					$pendingCount = lg_count($this->pendingUsers);
+					?>
+					<div id="pending-users" <?php if ($pendingCount == 0 ) echo 'style="display: none;"'; ?>>
+						<h3 class="pending-count info-message"><span class="jq-pending-people-actions-span" id="jq-pending-people-actions-root"><?php echo $pendingCount; ?></span> <span class="jqPersonPlural"><?php echo ($pendingCount == 1) ? 'person is' : 'people are'; ?></span> waiting for approval</h3>
+						<?php
+						if ($pendingCount > 0)
+						{
+							foreach ($this->pendingUsers as $id => $user)
+							{
+								$fullName = ($user['firstName'] || $user['lastName']) ? $user['firstName'].' '.$user['lastName'] : 'Unknown Name';
+								?>
+								<div class="pending-block" id="joinreq-<?php echo $user['joinRequest']['PUCR_ID']; ?>" data-id="userid-<?php echo $id; ?>-<?php echo $this->companyDetail['type']; ?>-<?php echo $this->companyDetail['id']; ?>" data-hash="<?= md5('sid-'.$id) ?>">
+									<div class="logo-holder <?php if($canAddUsers == false) { echo 'pending';}?>">
+										<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/profile/pending-user.png'); ?>" class="png" />
+									</div>
+									<? if ($isShipservUser || $isAdmin) { ?>
+										<i class="fa fa-pencil-square-o editUserEmailBtn"></i>
+									<? } ?>
+									<h3>Add: <span><?php echo $fullName ?>?</span></h3>
+									<?php if( $isShipservUser || $isAdmin){?>
+										<div class="editFullName">
+											<label>First name:</label>
+											<input type="text" class="firstNameEdit" value="<?= _htmlspecialchars($user['firstName']); ?>" data-initvalue="<?= _htmlspecialchars($user['firstName']); ?>"><br>
+											<label>Last name:</label>
+											<input type="text" class="lastNameEdit" value="<?= _htmlspecialchars($user['lastName']); ?>" data-initvalue="<?= _htmlspecialchars($user['lastName']); ?>">
+											<i class="fa fa-times cancelUserEmailBtn"></i>
+											<i class="fa fa-check-square-o checkUserEmailBtn"></i>
+											<i class="fa fa-spinner fa-spin"></i>
+										</div>
+									<?}?>
+									<h4><?php echo $user['email'] ?></h4>
+									<?php if( ($isShipservUser || $isAdmin) && $user['emailConfirmed'] != 'Y') {?>
+										<a class="button small green vResend" href="#" data-email="<?= $user['email'] ?>">Resend Verification</a><i class="fa fa-spinner fa-spin hiddenSpinner"></i>
+									<?}?>
+									<?php
+									// we are not allowing user to approve themselves
+									if( $this->user->username != $user['username'] && $canAddUsers == true)
+									{
+									?>
+										<hr class="dotted" style="width:460px; margin-bottom:8px;" />
+										<div class="clear"></div>
+										<div class="icons-holder">
+											<div class="company-icons">
+												<a href="#" title="Accept this request, and add this person to your company" class="accept-request">
+													<img src="<?php echo $this->CDNLink()->image('/images/icons/people.png'); ?>" alt="Accept Request" />
+													<span>Yes, add this person</span>
+												</a>
+												<a href="#" title="Reject Request" class="reject-request">
+													<img src="<?php echo $this->CDNLink()->image('/images/icons/reject.png'); ?>" alt="Reject Request" />
+													<span>Reject</span>
+												</a>
+											</div>
+										</div>
+									<?php
+									}
+
+									else {?>
+										<div class="clear"></div>
+									<?}?>
+								</div>
+								<?php
+							}
+						}
+						?>
+					</div>
+
+
+					<h3 id="approved-people-header" class="block-separator" <?php if (lg_count($this->approvedUsers) == 0) echo 'style="display: none";'; ?>>Current Members</h3>
+					<style>
+						.ss-groups{
+							font-size:12px;
+							margin-bottom:10px;
+							display:none;
+						}
+
+						.group-selector-action{
+							display:none;
+						}
+					</style>
+
+
+					<div id="approved-people">
+						<?php
+						$displayTag = " display:none;";
+						if( (lg_count($this->approvedUsers) + lg_count($this->pendingConfirmationUsers)) == 0 )
+						{
+							if( $isShipservUser )
+							{
+								$displayTag = "";
+							}
+						}
+						?>
+
+						<span id="noUserMessage" style='font-size:14px;<?= $displayTag ?>'>There are no users for this TNID. <br /><br />It is important to have users so they can see the new tools and we can send them emails.<br /><br />Please try and sign up some users from this TNID<br /><br />To see help on signing up new users please <a href='/help/sellerfaq#register'>click here</a></span>
+
+						<?php
+						// go through all approved and pending confirmation users;
+						foreach ($this->approvedUsers + $this->pendingConfirmationUsers as $id => $user) {
+							$userAsObject = Shipserv_User::getInstanceById( $id );
+
+							// checking the fullname
+							$fullName = '';
+							if (!empty($user['fullName']) && trim($user['fullName']) != '') {
+								$fullName = $user['fullName'];
+							} else {
+								if (!empty($user['firstName'])) {
+									$fullName .= $user['firstName'] . ' ';
+								}
+
+								if (!empty($user['lastName'])) {
+									$fullName .= $user['lastName'];
+								}
+							}
+							if (trim($fullName) == '') {
+                                $fullName = 'Unknown Name';
+							}
+							
+							$fullName = _htmlspecialchars($fullName);
+							$tradingAccountDispName = _htmlspecialchars(in_array(trim($fullName), array('', 'Unknown Name'))? $user['username'] : $fullName);
+						?>
+							<a id="<?php echo $user['email'] ?>"></a>
+							<div class="approved-block" id="userid-<?php echo $id; ?>-<?php echo $this->companyDetail['type']; ?>-<?php echo $this->companyDetail['id']; ?>" data-hash="<?= md5('sid-'.$id) ?>">
+								<div class="logo-holder">
+									<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/profile/user.png'); ?>" />
+								</div>
+								<? if ($isShipservUser || $isAdmin) { ?>
+									<i class="fa fa-pencil-square-o editUserEmailBtn"></i>
+								<? } ?>
+								<h3><?php echo $fullName; ?></h3>
+								<?php if( $isShipservUser || $isAdmin ){?>
+									<div class="editFullName">
+										<label>First name:</label>
+										<input type="text" class="firstNameEdit" value="<?= _htmlspecialchars($user['firstName']); ?>" data-initvalue="<?= _htmlspecialchars($user['firstName']); ?>"><br>
+										<label>Last name:</label>
+										<input type="text" class="lastNameEdit" value="<?= _htmlspecialchars($user['lastName']); ?>" data-initvalue="<?= _htmlspecialchars($user['lastName']); ?>">
+										<i class="fa fa-times cancelUserEmailBtn"></i>
+										<i class="fa fa-check-square-o checkUserEmailBtn"></i>
+										<i class="fa fa-spinner fa-spin"></i>
+									</div>
+								<?}?>
+								<h4 <?php echo (($userAsObject->emailConfirmed == 'P' || $userAsObject->emailConfirmed == 'N') ? 'title="Email is not confirmed" style="color: #ff9e38; line-height:14px;"':'')?>><?php
+									echo $user['email'];
+									if ($userAsObject->emailConfirmed == 'P' || $userAsObject->emailConfirmed == 'N') echo '<br /><span style="font-weight:normal;">This user still need to verify his/her email</span>';
+								?></h4>
+								<?php if (($isShipservUser || $isAdmin) && $user['emailConfirmed'] != 'Y' && ( $userAsObject->emailConfirmed == 'P' || $userAsObject->emailConfirmed == 'N')) { ?>
+									<a class="button small green vResend" href="#" data-email="<?= _htmlspecialchars($user['email']); ?>">Resend Verification</a><i class="fa fa-spinner fa-spin hiddenSpinner"></i>
+								<? } ?>
+
+								<? if ($this->companyDetail['id'] == $this->ssCompanyId) { ?>
+								<br /><br />
+								<select class="group-selector" userId="<?=$id?>" <?= ($id == $this->user->userId || $isAdminOfSupplier == false) ? 'disabled="disabled"':''?>>
+									<option>--</option>
+									<?php foreach( $this->availableGroups as $groupId => $row ){?>
+									<option value="<?php echo $groupId?>" <?= ($userAsObject->getGroupId() == $groupId) ? 'selected="selected"':''?> title="<?php echo _htmlspecialchars($row['PSG_DESCRIPTION']); ?>"><?php echo _htmlspecialchars($row['PSG_NAME']); ?></option>
+									<?php }?>
+								</select>
+								<input type="button" value="Apply" name="group-selector-action" class="group-selector-action" userId="<?= $id?>" id="group-action-<?=$id?>" />
+								<? }?>
+
+								<? if($this->companyDetail['id'] == $this->ssCompanyId ){ ?>
+									<div id="ss-group-container-<?= $id?>">
+										<?php foreach( $this->availableGroups as $groupId => $row ){?>
+										<div class="ss-groups" id="ss-group-<?= $groupId?>-<?=$id?>">
+											<?
+												echo " - " . (($row['PSG_ACCESS_SIR']=="Y")?"can":"cannot" ) . " access SIR ";
+												if( $row['PSG_ACCESS_SIR']=="Y" )
+												{
+													echo (($row['PSG_IP_RESTRICTED']=="N")?"from anywhere":"from ShipServ Offices");
+												}
+
+												echo "<br /> - " . (($row['PSG_ADD_USER']=="Y")?"can":"cannot" ) . " add user ";
+												if( $row['PSG_ADD_USER']=="Y" )
+												{
+													echo (($row['PSG_IP_RESTRICTED']=="N")?"from anywhere":"from ShipServ Offices");
+												}
+
+												echo "<br /> - " . (($row['PSG_TURN_TN_INTEGRATION']=="Y")?"can":"cannot" ) . " turn on/off TradeNet integration ";
+												if( $row['PSG_TURN_TN_INTEGRATION']=="Y" )
+												{
+													echo (($row['PSG_IP_RESTRICTED']=="N")?"from anywhere":"from ShipServ Offices");
+												}
+
+												echo "<br /> - " . (($row['PSG_FORWARD_SIR']=="Y")?"can":"cannot" ) . " forward SIR report ";
+												if( $row['PSG_FORWARD_SIR']=="Y" )
+												{
+													echo (($row['PSG_IP_RESTRICTED']=="N")?"from anywhere":"from ShipServ Offices");
+												}
+
+												echo "<br /> - " . (($row['PSG_VIEW_USER_ACTIVITY']=="Y")?"can":"cannot" ) . " view user activity ";
+												if( $row['PSG_VIEW_USER_ACTIVITY']=="Y" )
+												{
+													echo (($row['PSG_IP_RESTRICTED']=="N")?"from anywhere":"from ShipServ Offices");
+												}
+
+												echo "<br /> - " . (($row['PSG_COMPANY_SWITCHER']=="Y")?"can":"cannot" ) . " see/switch to any company ";
+												if( $row['PSG_COMPANY_SWITCHER']=="Y" )
+												{
+													echo (($row['PSG_IP_RESTRICTED']=="N")?"from anywhere":"from ShipServ Offices");
+												}
+
+												echo "<br /> - " . (($row['PSG_VIEW_BILLING_REPORT']=="Y")?"can":"cannot" ) . " access billing report ";
+												if( $row['PSG_VIEW_BILLING_REPORT']=="Y" )
+												{
+													echo (($row['PSG_IP_RESTRICTED']=="N")?"from anywhere":"from ShipServ Offices");
+												}
+
+												echo "<br /> - " . (($row['PSG_ACCESS_MATCH']=="Y")?"can":"cannot" ) . " access match reports ";
+												if( $row['PSG_ACCESS_MATCH']=="Y" )
+												{
+													echo (($row['PSG_IP_RESTRICTED']=="N")?"from anywhere":"from ShipServ Offices");
+												}
+
+												echo "<br /> - " . (($row['PSG_ACCESS_MATCH_INBOX']=="Y")?"can":"cannot" ) . " access match inbox and match engine setting ";
+												if( $row['PSG_ACCESS_MATCH']=="Y" )
+												{
+													echo (($row['PSG_IP_RESTRICTED']=="N")?"from anywhere":"from ShipServ Offices");
+												}
+
+												echo "<br /> - " . (($row['PSG_ACCESS_SALESFORCE']=="Y")?"can":"cannot" ) . " access salesforce related tools ";
+												if( $row['PSG_ACCESS_SALESFORCE']=="Y" )
+												{
+													echo (($row['PSG_IP_RESTRICTED']=="N")?"from anywhere":"from ShipServ Offices");
+												}
+
+											?>
+										</div>
+										<?php }?>
+									</div>
+								<? }?>
+								<hr class="dotted" style="width:460px; margin-bottom:10px;" />
+								<div class="clear"></div>
+
+								<div class="icons-holder" >
+									<div class="company-icons">
+										<div class="people-settings">
+											<?php
+											$disabledAttr = ($id == $this->user->userId ? 'disabled="disabled"' : '');
+											$tooltipText = "Administrators can add and remove user accounts for this company and can set their privileges by trading account. They can also configure company level privacy settings and can access the spend management control panel, the approved supplier list and spend benchmarking tools.";
+											?>
+											<?php if( $isShipservUser && $canAddUsers !== false ) {?>
+											<div style="float:left;"><input type="checkbox" class="administrator" value="1" id="admin-<?php echo $id; ?>" <?php if ($user['roles']['administrator'] == true) echo 'checked="checked"'; ?> <?php echo $disabledAttr ?>  style="margin-right: 5px;"/><label for="admin-<?php echo $id; ?>" style="font-size:10px; margin-right:5px; padding:0px; display:inline;">Administrator</label><i class="fa fa-info-circle administratorInfo" aria-hidden="true" data-tooltip="<?php echo $tooltipText ?>"></i></div>
+											<?php }else{?>
+											<div style="float:left;"><input type="checkbox" <? if ($isAdminOfSupplier == false && $isAdminOfBuyer == false) echo 'disabled="disabled"';?> class="administrator" value="1" id="admin-<?php echo $id; ?>" <?php if ($user['roles']['administrator'] == true) echo 'checked="checked"'; ?> <?php echo $disabledAttr ?>  / style="margin-right: 5px;"><label for="admin-<?php echo $id; ?>" style="font-size:10px; margin-right:5px; padding:0px; display:inline;">Administrator</label><i class="fa fa-info-circle administratorInfo" aria-hidden="true" data-tooltip="<?php echo $tooltipText ?>"></i></div>
+											<?php }?>
+											<div style="float:right; margin-right:5px;margin-top: 5px; display:block;">
+												<?php
+												$t = array();
+												if (
+												 	($id != $this->user->userId && $isAdminOfSupplier == true)
+													|| ($id != $this->user->userId && $isAdminOfBuyer == true)
+												 	|| ($isShipservUser && $canAddUsers !== false)
+												)
+												{
+													$t[] = '
+													<a href="#" title="Remove this person from your company" class="remove-user">
+														<span>Remove</span>
+													</a>
+													';
+												}
+
+												
+												// Yuriy added the following IF because of DE6288, claudio changed it because of S16320
+												//if (($user['emailConfirmed'] === 'Y') and ($this->companyDetail['type'] === 'b') and (($isAdminOfBuyer == true) || ($isShipservUser && $canAddUsers !== false))) {
+												if (($this->companyDetail['type'] === 'b') && ($isAdminOfBuyer || ($isShipservUser && $canAddUsers !== false))) {
+												    $t[] = '<a href="' . $id . '//' . $this->companyDetail['id'] . '//' . $tradingAccountDispName . '" class="showBuyerBranches" title="Access to trading accounts" class="remove-user"><span>Trading accounts</span></a>';
+												}
+
+
+												if( $isShipservUser && $this->user->canPerform('PSG_VIEW_USER_ACTIVITY'))
+												{
+												$t[] = '
+													<a href="/profile/user-activity/type/' . $this->companyDetail['type'] . '/id/' . $this->companyDetail['id'] . '/userId/'. $id .'" title="See latest activity of this user" class="remove-user user-activity">
+														<span>Show activity</span>
+													</a>
+												';
+												}
+
+												if( $isShipservUser || $isAdmin )
+												{
+												$t[] = '
+													<a href="#" data-email="' . _htmlspecialchars($user['email']) . '" title="Send password reset email" class="passwordReset">
+														<span>Send Password Reset</span>
+													</a>
+													<i class="fa fa-spinner fa-spin passResendSpinner"></i>
+												';
+												}
+
+												echo implode("<span class='remove-user'> | </span>", $t);
+												?>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<?php
+						}
+						?>
+					</div>
+					<?php
+					/*
+					if( lg_count($this->approvedUsers) > 0 )
+					Requested to be removed 
+					*/
+					if( false )
+					{
+						?>
+						<br />
+						<br />
+						<span class="normal-text">It's free and quick to sign up new users so they have access to your company information and reports on ShipServ Pages.<br /><br />
+						<a href='/help/sellerfaq#register'>Click here</a> to learn more</span>
+						<?
+					}
+					?>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<a rel="aaa1"></a>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+    	<h1 class="styled">Title</h1>
+    	<div class="modalContent">&nbsp;</div>
+    </div>
+</div>
+<div id="waiting">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>	
+<div id="generalModal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody">
+    	<h1 class="styled">Title</h1>
+    	<div class="modalContent">&nbsp;</div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<?php
+
+$this->headLink()
+->appendStylesheet('/css/reset.css')
+->appendStylesheet('/css/default.css');
+
+
+$user = Shipserv_User::isLOggedIn();
+
+if ($user) {
+    $isPagesUser = 1;
+    $isShipMate = $user->isShipservUser();
+} else {
+    $isPagesUser = 0;
+    $isShipMate = false;
+}
+
+$redirectUrl = urlencode('https://'.$this->appDomain.'/user/cas?redirect='.urlencode('https://'.$this->appDomain.'/webreporter'))
+?>
+<div id="body" style="margin: 0px;">
+    <div id="content" style="width: 1075px;">
+        <h1 class="styled">WebReporter not available for TradeNet users.</h1>
+        <div id="infoBox" class="infoBox info" style="width: 945px;"> 
+            To access WebReporter, you must now login via the <a href="<?php echo $this->cas->getRootDomain() ?>/auth/cas/login?pageLayout=new&service=<?php echo $redirectUrl; ?>" target="_blank">main login page</a>. This login page 
+            uses a different username and password to that which you used to login to this application. Your username is your email address
+            and you can use the <a href="/auth/cas/passwordManager?pmTask=forgotPassword" target="blank">Have you lost your password?</a> 
+            option to reset your password. If you have any problems logging in, please contact your internal ShipServ administrator or 
+            contact our <a href="/info/support/" target="_blank">customer support team</a>.
+            <br />
+        </div>
+    </div>
+</div>
+

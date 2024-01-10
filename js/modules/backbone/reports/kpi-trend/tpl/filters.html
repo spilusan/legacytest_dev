@@ -1,0 +1,27 @@
+<form class="new">
+	<fieldset>
+		<label class="large" for="tnid">Supplier branch:</label>
+			<div class="selector" id="tnid-selector">
+					<span id="selText" class="noClose">{{selectedElement}}}</span>
+			</div>
+		<div id="pullDown"></div>
+	</fieldset>
+
+	<fieldset>
+		<label class="large" for="children">Include children:</label>
+		<input type="checkbox" name="children" id="children">
+	</fieldset>
+
+	<fieldset>
+		<label class="large" for="dateRange">Date range:</label>
+		<select name="dateRange">
+			<option value="3">Last 3 months</option>
+			<option value="12">Last 12 Months</option>
+			<option value="0">All</option>
+		</select>
+	</fieldset>
+
+	<div class="align">
+		<input type="submit" value="Show" class="button medium dblue show" />
+	</div>
+</form>

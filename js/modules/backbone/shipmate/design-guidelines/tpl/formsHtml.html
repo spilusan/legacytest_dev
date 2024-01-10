@@ -1,0 +1,34 @@
+<form class="filters">
+	<label for="tnidName">
+		<div>Name/TNID Filter</div>
+		<input type="text" name="tnidName">
+	</label>
+	<label for="date">
+		<div>Date Range</div>
+		<div class="select">
+			<select name="date">
+				<option value="1">Last 30 days</option>
+				<option value="3">Last 3 months</option>
+				<option value="6">Last 6 months</option>
+				<option value="12">Last 12 months</option>
+				<option value="24">Last 24 months</option>
+				<option value="36">Last 36 months</option>
+			</select>
+		</div>
+	</label>
+	<label for="timezone">
+		<div>Timezone</div>
+		<div class="select">
+			<select name="timezone">
+				<option value="GMT">GMT</option>
+				<option value="CET">CET</option>
+				<option value="UTC">UTC</option>
+			</select>
+		</div>
+	</label>
+	<input type="checkbox" id="xcludeShipmate" name="xcludeShipmate">
+	<label for="xcludeShipmate" class="checkbox-label">
+		Exclude Shipmate actions
+	</label>
+	<input type="button" name="run" value="Run report" class="btn blue">
+</form>

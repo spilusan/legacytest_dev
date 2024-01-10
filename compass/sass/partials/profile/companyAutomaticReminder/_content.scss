@@ -1,0 +1,191 @@
+/*
+Document   : _content
+Created on : Mar 13, 20152, 10:15:00 AM
+Author     : Attila O
+Description: Company automatic supplier default stules
+*/
+
+.companyContent {
+	padding-left: 10px;
+	form {
+		padding: 0 10px 0 10px;
+		p {
+			margin-bottom: 12px;
+		}
+
+		.inputHeader, .inputBox {
+			display: block;
+			float: left;
+			width: 310px;
+			padding: 10px 10px 5px 10px;
+			margin-bottom: 2px;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+			&.boxRight {
+				margin-left: 10px;
+			}
+
+		}
+
+		.inputHeader {
+			background-color: #d9dfe6;
+		 	border: 1px solid #d6dce4;
+  			border-bottom: 2px solid #13b5ea;
+  				span {
+  					color: #2e3235;
+  					font-size: 14px;
+  				}
+		}
+
+		.inputBox {
+			height: 160px;
+			background-color: #caedf9;
+			border: 1px solid #90dcf7;
+
+		}
+		.inputBoxContent {
+			margin-left: 28px;
+			width: 260px;
+
+		}
+
+		input[type="checkbox"] {
+			float: left;
+		}
+
+		label {
+			float: left;
+			height: 30px;
+			line-height: 30px;
+			&.largeLabel {
+				width: 139px;
+				margin-right: 10px;
+				&.textRight {
+					text-align: right;
+					margin-left: 7px;
+				}
+			}
+			&.captionLabel {
+				width: 163px;
+				margin-right: 10px;
+			}
+			&.smallLabel {
+				width: 40px;
+			}
+			&.mediumLabel {
+				text-align: right;
+				width: 125px;
+				margin-right: 10px;
+				text-indent: 0px;
+			}
+
+		}
+		.labelIndent {
+			float: left;
+			width: 20px;
+			padding: 6px 0px 0px 0px;
+		}
+		.checkboxHolder {
+			clear: both;
+		}
+		.spaceBefore {
+			margin-top: 16px;
+		}
+		.cHelp {
+			float: right;
+			cursor: pointer;
+		}
+		h6 {
+			clear: both;
+			font-size: 10px;
+			font-weight: normal;
+			padding-top: 6px;
+		}
+
+		#bbs_byb_tnid {
+			width: 490px;
+		}
+
+		.selector {
+			width: 490px;
+			span {
+				width: 465px;
+			}
+		}
+
+		.grayout {
+				width: 16px;
+				height: 16px;
+				margin-top: 2px;
+				background-color: #f0f0f0;
+				border: 1px solid #d9d9d9;
+				background-image: none;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+		}
+
+		.spinner {
+			float: left;
+			position: relative;
+			width: 62px;
+			input {
+				float: left;
+				width: 45px;
+				height: 25px;
+				line-height: 25px;
+				text-align: right;
+				background-color: white;
+				border: 1px solid #abb0b6;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+				padding-right: 6px;
+				font-weight: bold;
+				font-size: 14px;
+				&.disabled {
+					background-color: #f0f0f0;
+					background-image: none;
+				}
+				&.validationError {
+					border: 2px solid red;
+				}
+			}
+		}
+
+		.spin-up, .spin-down {
+			display: block;
+			position: absolute;
+			width: 18px;
+			height: 10px;
+			cursor: pointer;
+			border: 1px solid #d6dce4;
+			@include x-multiple-colored-gradient(top, #fefefe, #ebeff2);
+ 			-pie-background: linear-gradient(left, #fefefe, #ebeff2);
+ 			left: 3px;
+ 			z-index: 999;
+		}
+		.spin-up {
+			top: 2px;
+			div {
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 0 5px 7px 5px;
+				border-color: transparent transparent #084886 transparent;
+				margin: 1px 0px 0px 4px;
+			}
+		}
+		.spin-down {
+			top: 15px;
+			div {
+
+				width: 0;
+				height: 0;
+				border-style: solid;
+				border-width: 7px 5px 0 5px;
+				border-color: #084886 transparent transparent transparent;
+				margin: 2px 0px 0px 4px;
+			}
+		}
+
+	}
+}

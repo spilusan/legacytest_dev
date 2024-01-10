@@ -1,0 +1,101 @@
+<div class="modal_left">
+	<form id="registerForm" method="post" action="/user/perform-register/format/json/">
+	
+	<!-- Hidden Stuff as it should be pulled from DB if logged in-->	
+		<input type="hidden" id="registerRedirectUrl" name="registerRedirectUrl" value="/" /> 
+	<!-- EOF Hidden Stuff as it should be pulled from DB if logged in-->  
+		   
+	<div class="form_inner">
+	   
+		<div class="form_inner_body">
+			
+			<p>Email</p> 	
+			<input type="text" id="registerEmail" name="registerEmail" value="" />
+
+			<p>Password</p>
+			<input type="password" id="registerPassword" name="registerPassword" value="" />
+
+			<p>Confirm Password</p>
+			<input type="password" id="registerConfirmPassword" name="registerConfirmPassword" value="" />
+
+			<p>First Name</p>
+			<input type="text" id="registerFirstName" name="registerFirstName" value="" />
+
+			<p>Last Name</p>
+			<input type="text" id="registerLastName" name="registerLastName" value="" />
+
+			<p>Company</p>
+			<table> 
+			<tr> 
+			<td><input type="text" id="registerCompany" name="registerCompany" class="half" value="" /></td>
+            
+			<td><select id="registerCompanyType" name="registerCompanyType">
+				<option value="">Company Type</option>
+				<?php
+				foreach ($this->companyTypes as $companyType)
+				{
+					?>
+					<option value="<?php echo $companyType['PCT_ID']; ?>"><?php echo $companyType['PCT_DESCRIPTION']; ?></option>
+					<?php
+				}
+				?>
+			</select></td>
+			</tr>
+			</table>
+             
+			<div class="clear"></div>
+			
+			<input type="text" id="registerOtherCompanyType" name="otherCompanyType" style="display:none;margin-top:5px;" isabled="disabled" value="">
+			
+			<p>Job</p>
+			
+			<table> 
+			<tr> 
+			<td><input type="text" id="registerJob" name="registerJob" class="half" value="" /></td>
+			
+			<td><select id="registerJobFunction" name="registerJobFunction">
+				<option value="">Job Function</option>
+				<?php
+				foreach ($this->jobFunctions as $jobFunction)
+				{
+					?>
+					<option value="<?php echo $jobFunction['PJF_ID']; ?>"><?php echo $jobFunction['PJF_DESCRIPTION']; ?></option>
+					<?php
+				}
+				?>
+			</select></td>
+			</tr>
+			</table> 
+			
+			<div class="clear"></div>   
+
+			<input type="text" id="registerOtherJobFunction" name="registerOtherJobFunction" style="display:none;margin-top:5px;" disabled="disabled" value="">
+			<p class="subtext" style="margin-bottom:20px;">Marketing Updates<input type="checkbox" id="registerMarketingUpdated" name="registerMarketingUpdated" /></p>
+            <div class="form_buttons">
+		
+                <input type="image" style="float:right;" src="/images/layout_v2/buttons/register_button.gif" id="registerSubmit" class="registerSubmit" name="registerSubmit" value="Register" />  
+
+            </div>   
+		  
+		</div>
+		
+	 </div>
+		
+		<div class="clear"></div> 
+		
+	</form>
+	
+	</div>
+	
+	<div class="modal_right">
+		 <div id="form_error_2" style="display:none;">
+		</div>
+	</div> 
+	
+	<div class="clear"></div>
+	
+</div>
+
+	
+
+<?php// var_dump($this->errors); ?>

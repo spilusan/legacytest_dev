@@ -1,0 +1,155 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+
+?>
+
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Usage', 'url'  => '/reports/transactions');
+	$breadcrumbs[] = array('name' => 'Pages', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+
+<div id="body" class="tradenet">
+	<div id="content">
+		<h1 class="styled">Pages usage</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<form method="get" class="new" id="report-form">
+		    <table style=";">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+						<div style="font-size:12px; background-color:#f5f7fa; padding:5px;">
+                            Year: 
+                            <select name="yyyy" onchange="$('#report-form').submit();">
+                            		<? 
+                            		for($i=2007; $i<=date('Y'); $i++)
+									{
+										$selectedYear = ($_GET['yyyy']=="")?date('Y'):$_GET['yyyy'];
+										?>
+                            			<option value="<?= $i?>" <?php echo ($selectedYear == $i)?'selected="selected"':"" ?>><?=$i?></option>
+                            			<? 
+									}
+									?>
+                            </select>
+            			</div>
+                        <div style="clear:both; margin-bottom:0px;"></div>
+		            	<div id="chart_div" style="width: 1500px; height: 400px;"></div>
+            			<div style="clear:both; margin-bottom:10px;"></div>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>
+
+<script type="text/javascript">
+	var report = JSON.parse('<?php echo json_encode( $this->report )?>');
+</script>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+function number_format (number, decimals, dec_point, thousands_sep) {
+	//return number;
+    // http://kevin.vanzonneveld.net/techblog/article/javascript_equivalent_for_phps_number_format/
+    number = (number + '').replace(/[^0-9+\-Ee.]/g, '');
+    var n = !isFinite(+number) ? 0 : +number,
+        prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+        sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+        dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+        s = '',
+        toFixedFix = function (n, prec)
+        {
+            var k = Math.pow(10, prec);
+            return '' + Math.round(n * k) / k;
+        };
+    // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+    s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+    if (s[0].length > 3)
+    {
+        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+    if ((s[1] || '').length < prec)
+    {
+        s[1] = s[1] || '';
+        s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+    return s.join(dec);
+}
+
+google.load("visualization", "1", {packages:["corechart"]});
+google.setOnLoadCallback(function(){
+
+	var totalLogin 
+		= totalSir
+		= totalRfq
+		= totalRfqInbox
+		= totalSearch
+		= 0;
+		
+	for(var i=1; i<53; i++){
+		if( typeof report['USER_LOGIN'] != 'undefined' ) totalLogin += parseInt(typeof report['USER_LOGIN'][i] == 'undefined' ? 0:report['USER_LOGIN'][i]);
+		if( typeof report['SIR_VIEW'] != 'undefined' ) totalSir += parseInt(typeof report['SIR_VIEW'][i] == 'undefined' ? 0:report['SIR_VIEW'][i]);
+		if( typeof report['ENQUIRY_SENT'] != 'undefined' ) totalRfq += parseInt(typeof report['ENQUIRY_SENT'][i] == 'undefined' ? 0:report['ENQUIRY_SENT'][i]);
+		if( typeof report['ENQUIRY_BROWSER_VIEW'] != 'undefined' ) totalRfqInbox += parseInt(typeof report['ENQUIRY_BROWSER_VIEW'][i] == 'undefined' ? 0:report['ENQUIRY_BROWSER_VIEW'][i]);
+		totalSearch += parseInt(typeof report['SEARCH'][i] == 'undefined' ? 0:report['SEARCH'][i]);
+	}
+
+	if( typeof report['USER_LOGIN'] != 'undefined' )
+	{
+		var data = [[
+	         	'Weeks in year', 
+	            'Logins (' + number_format(totalLogin, ".", 2) + ')', 
+	            'SIR viewed (' + number_format(totalSir, ".", 2) + ')',
+	            'RFQ sent(' + number_format(totalRfq, ".", 2) + ')', 
+	            'RFQ inbox viewed (' + number_format(totalRfq, ".", 2) + ')', 
+	            'Searches (' + number_format(totalSearch, ".", 2) + ')'
+	     	]];
+	}
+	else
+	{
+		var data = [[
+			         	'Weeks in year', 
+			            'Performed search (' + number_format(totalSearch, ".", 2) + ')'
+			     	]];
+	}
+	for(var i=1; i<53; i++){
+		x = new Array();
+		x.push( i );
+		( typeof report['USER_LOGIN'] != 'undefined' ) ? x.push( typeof report['USER_LOGIN'][i] == 'undefined' ? 0:report['USER_LOGIN'][i]) : x.push(0);
+		( typeof report['SIR_VIEW'] != 'undefined' ) ? x.push( typeof report['SIR_VIEW'][i] == 'undefined' ? 0:report['SIR_VIEW'][i]) : x.push(0);
+		( typeof report['ENQUIRY_SENT'] != 'undefined' ) ? x.push( typeof report['ENQUIRY_SENT'][i] == 'undefined' ? 0:report['ENQUIRY_SENT'][i]) : x.push(0);
+		( typeof report['ENQUIRY_BROWSER_VIEW'] != 'undefined' ) ? x.push( typeof report['ENQUIRY_BROWSER_VIEW'][i] == 'undefined' ? 0:report['ENQUIRY_BROWSER_VIEW'][i]) : x.push(0);
+		( typeof report['SEARCH'] != 'undefined' ) ? x.push( typeof report['SEARCH'][i] == 'undefined' ? 0:report['SEARCH'][i]) : x.push(0);
+		data.push(x);
+	} 	
+	var d = google.visualization.arrayToDataTable(data);
+
+    var options = {
+        title: '',
+        vAxes: [
+			{ title: 'Actions'}
+    		, { title: 'Searches'}
+        ],
+        hAxis: {title: "Weeks"},
+        seriesType: "bars",
+        series: 
+		{
+        	0: {type: "line", targetAxisIndex:1},
+        	1: {type: "line", targetAxisIndex:1},
+        	2: {type: "line", targetAxisIndex:1},
+        	3: {type: "line", targetAxisIndex:1},
+    	}
+    };
+
+    var chart = new google.visualization.ComboChart(document.getElementById('chart_div'));
+    chart.draw(d, options);
+});
+</script>
+

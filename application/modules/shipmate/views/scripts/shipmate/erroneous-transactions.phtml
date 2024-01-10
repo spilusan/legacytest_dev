@@ -1,0 +1,26 @@
+<?php
+	$this->headLink()->appendStylesheet('/css/shipmate.css')
+					 ->appendStylesheet('/css/erroneous-transactions.css');
+	$this->requirejs()->addModule('backbone/shipmate/erroneous-transactions/views/mainView');
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Finance', 'url'  => '/shipmate/value-event');
+	$breadcrumbs[] = array('name' => 'Erroneous Transactions', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<div id="body" class="liquid">
+	<div id="content">
+		<h1 class="styled">Erroneous Transactions</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<div class="innerContent">
+			<div id="erroneous-transactions"></div>
+			 <div class="pagination"></div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<div id="emailPreview">
+	<i id="closeEmailPev" class="fa fa-times"></i>
+	<div id="emailWrapper"></div>
+</div>

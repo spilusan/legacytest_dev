@@ -1,0 +1,80 @@
+@import "compass/css3";
+
+#main_content_area {
+	.content_wide {
+		.content_new-wide_body {
+			.profile-body-right {
+				h1 {
+					margin-bottom: 20px;
+				}
+
+				.profileContent {
+					form {
+						.box {
+							@include border-radius(6px);
+							behavior: url(/css/PIE.htc);
+							padding: 10px 15px;
+							margin-top: 5px;
+							margin-bottom: 15px;
+
+							&.blue {
+								border: 1px solid #90dcf7;
+								background: #caedf9;
+							}
+
+							&.grey {
+								border: 1px solid #d6dce4;
+								background:#e9edf1;
+							}
+
+							&.white {
+								border: 1px solid #d6dce4;
+								height: 27px;
+								/*height temporary till hide contact hidden*/
+							}
+
+							label {
+								&[for="automate"], &[for="scope"], &[for="useMatchBlacklist"] {
+									font-size: 14px;
+								}
+
+								&[for="onlyCheap"], &[for="useMaxSuppliers"], &[for="hideContact"] {
+									font-size: 12px;
+									position: relative;
+									top: 5px;
+								}
+
+								&[for="useMaxSuppliers"] {
+									float: left;
+									margin-right: 10px;
+								}
+							}
+
+							input[name="numSuppliers"] {
+								width: 20px;
+							}
+
+							div.checker {
+								&#uniform-onlyCheap {
+									position: relative;
+									top: 2px;
+								}
+							}
+
+							img {
+								&.corner {
+									float: left;
+									margin-left: 9px;
+								}
+							}
+
+							.specSuppliers {
+								margin-bottom: 10px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

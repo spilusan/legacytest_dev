@@ -1,0 +1,93 @@
+						<?php //print_r($this->data); ?>
+						<div id="<?= $this->name?>" class="resultTables" style="display: <?= ($this->display)?"block":"none"; ?>;">
+						
+						<table id="resultsTab" style="border-collapse: collapse; width:800px;">
+		                    <thead>
+		                    	<tr>
+		                    		<th style="width:40px; text-align:left;">TNID</th>
+									<th style="width:350px; text-align:left;">BUYER NAME</th>
+		                    		<?php for( $i=1; $i<13; $i++){?>
+		                            <th class="<?= ($i==12)?'last':''?>"><?= getMonth( $i) ?></th>
+		                            <?php }?>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php foreach ((array)$this->data as $buyerId => $result) : $key=1; $totalNotNull = $totalPerBuyer=0; ?>
+		                        	<?php 
+		                        		$tmp = explode(' - ', $buyerId);
+		                        		$buyerName = $tmp[1];
+		                        		$buyerTnid = $tmp[0];
+		                        	?>
+		                            <tr class="<?php if ($key % 2 == 0): ?>altColor<?php endif; ?> handCursor" tnid="<?= $buyerTnid ?>" buyerName="<?= $buyerName ?>">
+		                                <td style=" text-align:left; border-bottom: 1px solid #d6dce4;"><?php echo $buyerTnid; ?></td>
+		                                <td style=" text-align:left; border-bottom: 1px solid #d6dce4;"><?php echo $buyerName; ?></td>
+			                            <?php for( $i=1; $i<13; $i++){?>
+				                            <td style="border-bottom: 1px solid #d6dce4;" class="<?php echo $this->name . 'b' . $buyerTnid . 'm' . $i; ?> <?= ($i==12)?'last':''?>" ><? 
+				                            		$keyData = ((!isset($_GET['yyyy']) || $_GET['yyyy']=="")? 2014 : _htmlspecialchars($_GET['yyyy'])) . getMonth($i);
+				                            		echo ($result[$keyData]==null)?"":round($result[$keyData]); 
+				                            		
+				                            		$totalPerBuyer += $result[$keyData];
+				                            		
+				                            		if( $result[$keyData] !== null )
+				                            		{
+				                            			$totalNotNull += 1;
+				                            			$weeklyStats['notNull'][$i] += 1;
+				                            		}
+
+				                            		$weeklyStats['data'][$i] += $result[$keyData];
+				                            ?></td>
+			                            <?php }?>		                                
+									</tr>
+		                        <?php endforeach; ?>
+		                     </tbody>
+		                        <tfoot>
+	                            <tr <?php if ($key+1 % 2 == 0): ?>class="altColor"<?php endif; ?> style="font-weight: bold; background-color:#D6DCE4;">
+	                                <th colspan="2" style=" text-align:left; border-bottom: 1px solid #d6dce4;">
+		                            	<?php 
+		                            		echo ($this->operation == 'avg') ? "Average": "Total";
+		                            		echo " per month";
+		                            	?>
+	                                </th>
+	                                <?php 
+	                                	if( $this->report )
+	                                	{
+	                                		$x = $this->report->getStatisticAverageOfQuoteRate();
+	                                	}
+	                                
+	                                	for( $i=1; $i<13; $i++)
+										{
+			                            $keyData = (($_GET['yyyy']=="")?2014:$_GET['yyyy']) . getMonth($i);
+
+		                            	?>
+			                            <th class="narrow" style="border-bottom: 1px solid #d6dce4;">
+		                                	<?php
+												if($this->operation == 'avg')
+												{
+													$output = $x[$keyData];;
+												}
+												else
+												{
+		                                			$output = round($weeklyStats['data'][$i]);
+												} 
+												
+												$aggregate[$i] = $output;
+												
+												if( $x )
+												{
+													echo $x[$keyData];
+												}
+												else
+												{
+													echo $output;
+												}
+		                                	?> 
+				                            
+			                            </th>
+		                            <?php }?>		                                
+								</tr>
+								</tfoot>
+		                </table>
+		                </div>
+		                <script>
+							var <?= $this->name?> = JSON.parse('<?php echo json_encode( $aggregate )?>');
+		                </script>

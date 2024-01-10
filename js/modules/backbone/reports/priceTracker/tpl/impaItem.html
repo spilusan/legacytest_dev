@@ -1,0 +1,9 @@
+<input type="image" src="/img/icons/small/smallredx.png" alt="Remove" class="remove">
+<span>{{name}}</span>
+{{#if unitExists}}
+	<select class="unit">
+	{{#each units}}
+		<option value="{{this}}">{{this}}</option>
+	{{/each}}
+	</select>
+{{/if}}

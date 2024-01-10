@@ -1,0 +1,9 @@
+<h1 class="styled">{{Action}} RFQ</h1>
+<div class="modalContent">
+	Your colleague{{#if rfqAction.actor}} {{rfqAction.actor}}{{/if}} clicked the {{button}} button on 
+	{{#if rep}}{{enquiry.pirRepliedDate}}{{/if}}
+	{{#if dec}}{{enquiry.pirDeclinedDate}}{{/if}} 
+	and so might have already {{actionPast}} this RFQ.<br /><br />
+	Would you like to continue to {{action}} this RFQ?<br /><br />
+	<button class="button green medium close">Cancel</button><button class="medium red button {{action}}">{{Button}}</button>
+</div>

@@ -1,0 +1,157 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/profile-privacy.js');
+
+$this->headLink()->appendStylesheet('/css/transition.css');
+$this->CDNLink()->appendStylesheet('/css/uniform.default.css')
+			    ->appendStylesheet('/css/profile.css');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Privacy',
+						   'url'  => '/profile/company'));
+?>
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		
+		<div class="content_new-wide_body">
+			<?php
+			//echo $this->partial('profile/title-menu.phtml',
+			//	$this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'],$this->companyDetail['id'], 'company-privacy', $this->pendingUsers));
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'],$this->companyDetail['id'], 'company-privacy', $this->pendingUsers)
+				)
+			);
+			
+			?>
+			<div class="profile-body-right">
+				<div class="zz header">
+					<h2>Privacy</h2>
+				</div>
+				<div class="profileContent">
+					<?php
+					if ($this->companyDetail['reviewsOptout'] == true)
+					{
+						?>
+						<h3 class="info-message">Reviews and customer lists are disabled for this company</h3>
+						<?php
+					}
+					else
+					{
+						?>
+						<form class="profile-form" method="<?php echo $this->privacyForm->getMethod() ?>" action="<?php echo $this->privacyForm->getAction() ?>" >
+							<?php
+							if ($this->saveSuccess)
+							{
+								?>
+								<h3 class="success-message">Your settings were successfully saved</h3>
+								<?php
+							}
+							?>
+							
+							<div class="profile-body-header"></div>
+							<div class="profile-body-group">
+								
+								<?php
+								$value = $this->privacyForm->getElement(Myshipserv_Form_Endorsement_PrivacyAbstract::FIELD_ANON)->getValue();
+								// buyer form
+								if ($this->companyDetail['type'] == 'b')
+								{
+									$excludedSuppliers = $this->privacyForm->getElement(Myshipserv_Form_Endorsement_PrivacyAbstract::FIELD_SELECTIVE_ANON)->getMultiOptions();
+									?>
+									
+									<p>Supplier listings on Pages include a list of customers who have placed orders with them via TradeNet. This helps the buyer community make informed decisions when choosing new suppliers.</p>
+									<p>If you prefer not to reveal your company, you can choose to anonymize your company name. Your anonymized name will appear as "<?php echo $this->companyDetail['anonName']; echo ($this->companyDetail['anonLocation']) ? ', '.$this->companyDetail['anonLocation'] : '' ?>".</p>
+									
+									<label class="radio" for="global_anon-never">
+										<input type="radio" name="global_anon" id="global_anon-never" value="never" <?php if ($value == 'never') echo 'checked="checked"'; ?> />
+										Allow my suppliers to list my company and allow all Pages users to see it (recommended).
+									</label>
+									
+									<label class="radio noborder" for="global_anon-selective">
+										<input type="radio" name="global_anon" id="global_anon-selective" value="selective" <?php if ($value == 'selective') echo 'checked="checked"'; ?> />
+										Allow my suppliers to list my company, but anonymise my relationship with specific suppliers:
+									</label>
+									
+									<div id="profile-privacy-selective" style="display: block;">
+										<div class="input-speech-bubble">
+											<input id="profile-privacy-search"  name="privacy_search_supplier" type="text" value="Type supplier name to exclude" />
+										</div>
+										
+										<div style="margin-left: 30px;">
+											<p style="margin-bottom: 5px;">Excluded suppliers:</p>
+											
+											<div id="selective_anon-element">
+												<?php
+												foreach ($excludedSuppliers as $tnid => $name)
+												{
+													?>
+													<label for="selective_anon-<?php echo $tnid; ?>">
+														<input type="checkbox" name="selective_anon[]" id="selective_anon-<?php echo $tnid; ?>" value="<?php echo $tnid; ?>" checked="checked" class="checkbox" />
+														<?php echo $name; ?>
+													</label>
+													<?php
+												}
+												?>
+											</div>
+										</div>
+									</div>
+									
+									<label class="radio" for="global_anon-tnonly">
+										<input type="radio" name="global_anon" id="global_anon-tnonly" value="tn_only" <?php if ($value == 'tn_only') echo 'checked="checked"'; ?> />
+										Allow my suppliers to list my company, but only allow buyers within the TradeNet community to see it.
+									</label>
+									
+									<label class="radio" for="global_anon-always">
+										<input type="radio" name="global_anon" id="global_anon-always" value="always" <?php if ($value == 'always') echo 'checked="checked"'; ?> />
+										Anonymise my company name on all supplier listings.
+									</label>
+									<?php
+								}
+								else
+								// supplier form
+								{
+									?>
+									
+									<p>Your Pages listing includes a list of buyers that have placed orders with you via TradeNet. This information shows other potential customers that you are an active member of the TradeNet community and will help you win new business.</p>
+									<p>If you prefer not to share this information, you can choose to anonymise your customers. Anonymised customers appear as e.g. 'A buyer in Europe'</p>
+									
+									<label class="radio" for="global_anon-never">
+										<input type="radio" name="global_anon" id="global_anon-never" value="never" <?php if ($value == 'never') echo 'checked="checked"'; ?> />
+										Show my customers' company details if they are willing (recommended).
+									</label>
+									
+									<label class="radio" for="global_anon-always">
+										<input type="radio" name="global_anon" id="global_anon-always" value="always" <?php if ($value == 'always') echo 'checked="checked"'; ?> />
+										Anonymise all my customers
+									</label>				
+									<?php
+								}
+								?>
+							</div>
+							
+							<div class="profile-body-footer"></div>
+							
+							<div style="padding-top: 15px;">
+								<div class="zz medium green button save-button" id><input type="submit" value="Save changes" id="submit" name="submit"></div>
+							</div>
+                            <div class="clear" style="height: 1px;"></div>
+						</form>
+						<?php
+					}
+					?>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>

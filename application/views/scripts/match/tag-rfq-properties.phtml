@@ -1,0 +1,257 @@
+<?php
+/**
+ * A partial view for tag.phtml displaying the RFQ properties
+ *
+ * @author  Yuriy Akopov
+ * @date    2013-09-27
+ */
+?>
+<table cellpadding="0" cellspacing="0" class="canv">
+    <tr>
+        <td width="22"></td>
+        <td>
+            <br />
+
+            <table cellpadding="0" cellspacing="0" class="bnr" width="700">
+                <tr>
+                    <td class="bnr">
+                        <p align="center">
+                            RFQ from <span><?php echo $this->rfq->rfq_header->bybName; ?></span>
+                            <br />
+                            <span class="form">
+                                <?php echo $this->rfq->rfq_header->bybAddress_1 . "," . $this->rfq->rfq_header->bybAddress_2 . "," . $this->rfq->rfq_header->bybCity . "," . $this->rfq->rfq_header->bybStateProvince . "," . $this->rfq->rfq_header->bybCountry . $this->rfq->rfq_header->bybZipCode; ?>
+                            </span>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+
+            <table cellpadding="0" cellspacing="0" class="bnr2" width="700">
+                <tr>
+                    <td class="bnr2">
+                        <p align="left">
+                            RFQ <span><strong><?php echo $this->rfq->rfq_header->rfqRef; ?></strong></span>
+                            received <span><?php echo $this->rfq->rfq_header->rfqCreatedDate; ?></span>
+                        </p>
+                    </td>
+                    <td class="bnr2" width="70">
+                        &nbsp;
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+<table cellpadding="0" cellspacing="0" class="canv">
+    <tr>
+        <td width="22"></td>
+        <td width="353" valign="top">
+            &nbsp;
+            <table border="0" cellpadding="0" cellspacing="0" width="346" class="form">
+                <tr>
+                    <td class="formHd">To Supplier</td>
+                    <td width="180" class="formHdInp">Shipserv Match</td>
+                </tr>
+                <tr>
+                    <td class="form">Company:</td>
+                    <td width="180" class="formRd"><span>ShipServ</span></td>
+                </tr>
+                <tr>
+                    <td class="form">Contact:</td>
+                    <td width="180" class="formRd"><span> &nbsp;</span></td>
+                </tr>
+                <tr>
+                    <td class="form">Tel:</td>
+                    <td width="180" class="formRd"><span>&nbsp;</span></td>
+                </tr>
+                <tr>
+                    <td class="form">Email:</td>
+                    <td width="180" class="formRd"><span>999999@shipserv.com</span></td>
+                </tr>
+            </table>
+
+            <br/>
+
+            <table border="0" cellpadding="0" cellspacing="0" width="346" class="form">
+                <tr>
+                    <td class="formHd">RFQ</td>
+                    <td width="180" class="formHdInp">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="form">RFQ reference:</td>
+                    <td width="180" class="formRd"><span><?php echo $this->rfq->rfq_header->rfqRefNo; ?></span></td>
+                </tr>
+                <tr>
+                    <td class="form">Subject:</td>
+                    <td width="180" class="formRd">
+                        <?php echo $this->rfq->rfq_header->rfqSubject; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form">Contact:</td>
+                    <td width="180" class="formRd"><span><?php echo $this->rfq->rfq_header->rfqContact; ?></span></td>
+                </tr>
+                <tr>
+                    <td class="form">Tel:</td>
+                    <td width="180" class="formRd"><span><?php echo $this->rfq->rfq_header->rfqTel; ?></span></td>
+                </tr>
+                <tr>
+                    <td class="form">Email:</td>
+                    <td width="180" class="formRd"><span><?php echo $this->rfq->rfq_header->rfqEmail; ?></span></td>
+                </tr>
+            </table>
+
+            <br />
+
+            <table border="0" cellpadding="0" cellspacing="0" width="346" class="form">
+                <tr>
+                    <td class="formHd">Buyer Terms&nbsp;&amp; Conditions</td>
+                </tr>
+                <tr>
+                    <td class="formRd">
+                        <p><?php echo $this->rfq->rfq_header->rfqGeneralTermsConditions; ?></p>
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+
+            <table border="0" cellpadding="0" cellspacing="0" width="346" class="form">
+                <tr>
+                    <td class="formHd">Buyer Comments&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="formRd">
+                        <?php echo $this->rfq->rfq_header->rfqComments; ?>
+                        <br />
+                        Freight fwd: <span></span>
+                        <br />
+                        Payment terms: <?php echo $this->rfq->rfq_header->rfqTermsOfPayment; ?>
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+        </td>
+        <td valign="top">
+            &nbsp;
+            <table border="0" cellpadding="0" cellspacing="0" width="346" class="form">
+                <tr>
+                    <td class="formHd">Buyer</td>
+                    <td width="180" class="formHdInp">&nbsp;</td>
+                </tr>
+
+
+                <tr>
+                    <td class="form">Invoice to:</td>
+                    <td width="180" class="formRd">
+                        <span><?php echo $this->rfq->rfq_header->rfqBillingAddress_1 . "," . $this->rfq->rfq_header->rfqBillingAddress_2 . "," . $this->rfq->rfq_header->rfqBillingCity . "," . $this->rfq->rfq_header->rfqBillingStateProvince . "," . $this->rfq->rfq_header->rfqBillingCountry . $this->rfq->rfq_header->rfqBillingPostalZipCode; ?></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form">Tax Status:</td>
+                    <td width="200" class="formRd"><span><?php echo $this->rfq->rfq_header->rfqTaxSts; ?></span></td>
+                </tr>
+            </table>
+
+            <br />
+
+            <table border="0" cellpadding="0" cellspacing="0" width="346" class="form">
+                <tr>
+                    <td class="formHd">Vessel</td>
+                    <td width="180" class="formHdInp">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="form">Name:</td>
+                    <td width="180" class="formRd"><span><?php echo $this->rfq->rfq_header->rfqVesselName; ?></span></td>
+                </tr>
+                <tr>
+                    <td class="form">IMO Number:</td>
+                    <td width="180" class="formRd"><span><?php echo $this->rfq->rfq_header->rfqImoNo; ?></span></td>
+                </tr>
+                <tr>
+                    <td class="form">Classification:</td>
+                    <td width="180" class="formRd"><span><?php echo $this->rfq->rfq_header->rfqVesselClassification; ?></span></td>
+                </tr>
+            </table>
+
+            <br />
+
+            <table border="0" cellpadding="0" cellspacing="0" width="346" class="form">
+                <tr>
+                    <td class="formHd">Port &amp; Dates&nbsp;</td>
+                    <td width="180" class="formHdInp">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="form">Port</td>
+                    <td width="180" class="formRd"><span><?php echo $this->rfq->rfq_header->rfqDeliveryPort; ?></span></td>
+                </tr>
+                <tr>
+                    <td class="form">Country</td>
+                    <td width="180" class="formRd"><span><?php echo $this->rfq->rfq_header->rfqDeli; ?></span></td>
+                </tr>
+                <tr>
+                    <td class="form">
+                        Vessel ETA:
+                    </td>
+                    <td width="180" class="formRd">
+                        <span><?php echo $this->rfq->rfq_header->rfqEstimatedArrivalTime; ?></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form">Vessel ETD:</td>
+                    <td width="180" class="formRd">
+                        <span><?php echo $this->rfq->rfq_header->rfqEstimatedDepartureTime; ?></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form">Quote before:</td>
+                    <td width="180" class="formRd">
+                        <span><?php echo $this->rfq->rfq_header->rfqAdviceBeforeDate; ?></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form">Requested delivery:</td>
+                    <td width="180" class="formRd">
+                        <span></span>
+                    </td>
+                </tr>
+            </table>
+
+            <br />
+
+            <table border="0" cellpadding="0" cellspacing="0" width="346" class="form">
+                <tr>
+                    <td class="formHd">Delivery</td>
+                    <td width="180" class="formHdInp">&nbsp;</td>
+                </tr>
+                <tr>
+                    <td class="form">Delivery/release to, or contact:</td>
+                    <td width="180" class="formRd">
+                        <p><span><?php echo $this->rfq->rfq_header->rfqContact; ?></span></p>
+                        <p><?php echo $this->rfq->rfq_header->rfqAddress; ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form">Delivery terms:</td>
+                    <td width="180" class="formRd"><span><?php echo $this->rfq->rfq_header->rfqTermsOfDelivery; ?></span></td>
+                </tr>
+                <tr>
+                    <td class="form">Transport mode:</td>
+                    <td width="180" class="formRd"><span><?php echo $this->rfq->rfq_header->rfqTRansportationMode; ?></span></td>
+                </tr>
+            </table>
+
+            <br />
+
+            <table border="0" cellpadding="0" cellspacing="0" width="346" class="form">
+                <tr>
+                    <td class="formHd">Attachments</td>
+                </tr>
+            </table>
+
+            <br />
+        </td>
+    </tr>
+</table>

@@ -1,0 +1,120 @@
+<?php
+/**
+ * A partial view for tag.phtml displaying the form to modify current stored search
+ *
+ * @author  Yuriy Akopov
+ * @date    2013-10-09
+ */
+?>
+
+<form action="/match/tag" id="amendListForm" method="POST">
+    <input type="hidden" name="txtRfqid" value="<?php echo $this->rfq->rfq_header->rfqInternalRefNo; ?>" />
+    <input type="hidden" name="userAction" value="stored_search_amend">
+    <input type="hidden" name="searchId" value="<?php echo $this->searchId; ?>">
+    <input type="hidden" name="feedType" value="at_risk">
+
+    <div class="list_not_at_risk">
+        <h3>Suppliers not at risk:</h3>
+        <ul class="supplier_amendments" operation="remove">
+        </ul>
+    </div>
+
+    <div class="list_at_risk">
+        <h3>Suppliers at risk:</h3>
+        <ul class="supplier_amendments" operation="add">
+        </ul>
+    </div>
+    <div class="breaker"></div>
+
+    <br/>
+    <input type="button" class="amend_list" value="Apply the changes above and reload" />
+</form>
+
+<script>
+    function addSupplierToListAmendments(operation, supplierId) {
+        var list = $('ul.supplier_amendments[operation=' + operation + ']');
+        if (operation == 'add') {
+            var antiList = $('ul.supplier_amendments[operation=remove]');
+        } else if (operation == 'remove') {
+            var antiList = $('ul.supplier_amendments[operation=add]');
+        }
+        antiList.find('li[supplierId=' + supplierId + ']').remove();
+
+        var riskCheckbox = $('.supplier_at_risk_checkbox[supplierId=' + supplierId + ']');
+
+        var originallyAtRisk = false;
+        if (riskCheckbox.attr('originallyAtRisk') == 'true') {
+            originallyAtRisk = true;
+        }
+
+        if (
+            ((operation == 'add') && originallyAtRisk) ||
+            ((operation == 'remove') && !originallyAtRisk)
+        ) {
+            return;
+        }
+
+        if (list.find('li[supplierId=' + supplierId + ']').length) {
+            // supplier is already in the target list
+            return;
+        }
+
+        var score = 0;
+        var title = 'Supplier ' + supplierId;
+        var comment = 'Manually added supplier';
+
+        var checkbox = $('.supplier_checkbox[supplierId=' + supplierId + ']');
+        if (checkbox.length) {
+            title = checkbox.attr('supplierTitle');
+            score = checkbox.attr('matchScore');
+            comment = checkbox.attr('matchComment');
+        }
+
+        list.append(
+            $('<li>').attr('supplierId', supplierId).append(
+                $('<span>').addClass('hint').attr('title', 'ID ' + supplierId + ', score ' + score).append(title),
+                $('<input>').attr('type', 'hidden').attr('name', 'suppliers[' + operation + '][]').attr('value', supplierId),
+                $('<input>').attr('type', 'hidden').attr('name', 'scores[' + operation + '][]').attr('value', score),
+                $('<input>').attr('type', 'hidden').attr('name', 'comments[' + operation + '][]').attr('value', comment),
+
+                $('<input>').attr('type', 'button').attr('value', 'X').click(function (event) {
+                    var li = $(event.target).closest('li');
+                    var ul = li.closest('ul');
+                    var operation = ul.attr('operation');
+
+                    var supplierId = li.attr('supplierId');
+                    ul.find('li[supplierId=' + supplierId + ']').remove();
+
+                    riskCheckbox.prop('checked', originallyAtRisk);
+                })
+            )
+        );
+    }
+
+    $(document).ready(function() {
+        $('.supplier_at_risk_checkbox').click(function (event) {
+            var supplierCheckbox = $(event.target);
+            var supplierId = supplierCheckbox.attr('supplierId');
+
+            $('.supplier_at_risk_checkbox[supplierId=' + supplierId + ']').prop('checked', supplierCheckbox.prop('checked'));
+
+            if (supplierCheckbox.prop('checked')) {
+                addSupplierToListAmendments('add', supplierId);
+            } else {
+                addSupplierToListAmendments('remove', supplierId);
+            }
+        });
+
+        $('.amend_list').click(function (event) {
+            var size = $('ul.supplier_amendments[operation=remove]').size() + $('ul.supplier_amendments[operation=add]').size();
+
+            if (size < 1) {
+                alert('No amendments planned!');
+                return;
+            }
+
+            $('#amendListForm').submit();
+        })
+    });
+
+</script>

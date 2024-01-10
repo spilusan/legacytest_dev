@@ -1,0 +1,234 @@
+<h2 class="print-only">Ordering</h2>
+
+<div class="container charts">
+    <div class="row">
+        <div class="gr-12">
+            <h3>Total spend (USD) <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="total-spend-tip"></i></h3>
+
+            <div class="hide" id="total-spend-tip">
+                The total spend in USD with the selected supplier. The total spend is shown for direct orders and competitive orders.
+                A competitive order has an underlying RFQ. The total spend is also shown as a trend over time.
+            </div>
+        </div>
+
+        <div class="gr-4 push-0@tablet gr-12@tablet chart-min-height">
+            <h4>Summary</h4>
+
+            <div class="waiting-spinner">Loading...</div>
+
+            <div id="table-total-spend">
+            </div>
+        </div>
+
+        <div class="push-1 gr-7 push-0@tablet gr-12@tablet chart-min-height">
+            <h4>Trend</h4>
+
+            <div class="waiting-spinner">Loading...</div>
+
+            <div class="chart" id="chart-total-spend">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="gr-12">
+            <h3>Number of orders <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="number-orders-tip"></i></h3>
+
+            <div class="hide" id="number-orders-tip">
+                A breakdown of the count of orders sent to the selected supplier. The count is shown as direct orders and competitive orders.
+                The number of orders is also shown as a trend over time.
+            </div>
+        </div>
+
+        <div class="gr-4 push-0@tablet gr-12@tablet chart-min-height">
+            <h4>Summary</h4>
+
+            <div class="waiting-spinner">Loading...</div>
+
+            <div id="table-number-of-orders">
+            </div>
+        </div>
+
+        <div class="push-1 gr-7 push-0@tablet gr-12@tablet chart-min-height">
+            <h4>Trend</h4>
+
+            <div class="waiting-spinner">Loading...</div>
+
+            <div class="chart" id="chart-number-of-orders">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="gr-12">
+            <h3>Average order value (USD) <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="average-value-tip"></i></h3>
+
+            <div class="hide" id="average-value-tip">
+                A breakdown of the average value in USD of the orders places with the selected supplier shown by direct and competitive orders
+                and an average of both. The average order value is also shown as a trend over time.
+            </div>
+        </div>
+
+        <div class="gr-4 push-0@tablet gr-12@tablet chart-min-height">
+            <h4>Summary</h4>
+
+            <div class="waiting-spinner">Loading...</div>
+
+            <div id="table-average-order-value">
+            </div>
+        </div>
+
+        <div class="push-1 gr-7 push-0@tablet gr-12@tablet chart-min-height">
+            <h4>Trend</h4>
+
+            <div class="waiting-spinner">Loading...</div>
+
+            <div class="chart" id="chart-average-order-value">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="gr-12">
+            <h3>% Orders confirmed <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="orders-confirmed-tip"></i></h3>
+
+            <div class="hide" id="orders-confirmed-tip">
+                The percentage of orders that the selected supplier confirms over the selected time period. This is benchmarked against all
+                suppliers with you and the ShipServ average. The order confirmation percentage is the shown over time in
+                the trend graph.
+            </div>
+        </div>
+
+        <div class="gr-4 push-0@tablet gr-12@tablet chart-min-height">
+            <div class="waiting-spinner">Loading...</div>
+
+            <div class="chart" id="bar-orders-confirmed">
+            </div>
+        </div>
+
+        <div class="push-1 gr-7 push-0@tablet gr-12@tablet chart-min-height">
+            <h4>Trend</h4>
+
+            <div class="waiting-spinner">Loading...</div>
+
+            <div class="chart" id="chart-orders-confirmed">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="gr-12">
+            <h3>Average time to confirm order <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="average-time-tip"></i></h3>
+
+            <div class="hide" id="average-time-tip">
+                The average time in hours for this supplier to confirm an order. This is benchmarked against all suppliers with you and the
+                ShipServ average. The average time to confirm an order is shown as a trend over time.
+            </div>
+        </div>
+
+        <div class="gr-4 push-0@tablet gr-12@tablet chart-min-height">
+            <div class="waiting-spinner">Loading...</div>
+
+            <div class="chart" id="bar-average-time-confirm">
+            </div>
+        </div>
+
+        <div class="push-1 gr-7 push-0@tablet gr-12@tablet chart-min-height">
+            <h4>Trend</h4>
+
+            <div class="waiting-spinner">Loading...</div>
+
+            <div class="chart" id="chart-average-time-confirm">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="gr-12">
+            <h3>Spend by item <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="most-common-tip"></i></h3>
+
+            <div class="hide" id="most-common-tip">
+                List of the most commonly bought items by part number and quantity. The list is sorted by total spend for each item.
+            </div>
+        </div>
+
+        <div class="gr-12 chart-min-height">
+            <div class="waiting-spinner">Loading...</div>
+
+            <table id="table-most-commonly-bought-items"></table>
+        </div>
+
+        <div class="gr-12 text-center margin-top show-more-block">
+            <a id="more-most-commonly-bought-items" class="btn transparent transparent-blue">Show 10 more</a>
+            <a id="more-most-commonly-bought-items-export" class="btn green export">Export All Data</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="gr-12">
+            <h3>Spend by vessel <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="spend-vessel-tip"></i></h3>
+
+            <div class="hide" id="spend-vessel-tip">
+                Lists the spend by vessel by number of orders and total USD value of the orders placed.
+            </div>
+        </div>
+
+        <div class="gr-12 chart-min-height">
+            <div class="waiting-spinner">Loading...</div>
+
+            <table id="table-spend-by-vessel"></table>
+        </div>
+
+        <div class="gr-12 text-center margin-top show-more-block">
+            <a id="more-spend-by-vessel" class="btn transparent transparent-blue">Show 10 more</a>
+            <a id="more-spend-by-vessel-export" class="btn green export">Export All Data</a>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="gr-12">
+            <h3>Spend by vessel type (USD) <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="spend-type-tip"></i></h3>
+
+            <div class="hide" id="spend-type-tip">
+                The total spend in USD by vessel type and the percentage split of spent shown in the pie chart.
+            </div>
+        </div>
+
+        <div class="gr-4 push-0@tablet gr-12@tablet chart-min-height">
+            <div class="waiting-spinner">Loading...</div>
+
+            <div id="table-spend-by-vessel-type">
+            </div>
+        </div>
+
+        <div class="push-1 gr-7 push-0@tablet gr-12@tablet chart-min-height">
+            <div class="waiting-spinner">Loading...</div>
+
+            <div class="chart" id="pie-spend-by-vessel-type">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="gr-12">
+            <h3>Spend by purchaser <i class="fa fa-info-circle tip" aria-hidden="true" data-tooltipelement="spend-purchaser-tip"></i></h3>
+
+            <div class="hide" id="spend-purchaser-tip">
+                A list of the top 10 purchasers and the breakdown of the number of RFQs, competitive orders and direct orders sent by purchaser
+                as well as the number of RFQs raised where no purchase order was placed.
+            </div>
+        </div>
+
+        <div class="gr-12 chart-min-height">
+            <div class="waiting-spinner">Loading...</div>
+
+            <table id="table-spend-by-purchaser">
+            </table>
+        </div>
+
+        <div class="gr-12 text-center margin-top show-more-block">
+            <a id="more-spend-by-purchaser" class="btn transparent transparent-blue">Show 10 more</a>
+            <a id="more-spend-by-purchaser-export" class="btn green export">Export All Data</a>
+        </div>
+    </div>
+</div>

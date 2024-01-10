@@ -1,0 +1,122 @@
+<?php
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+?>
+
+<div style="padding: 10px">
+<h1 style="font-size: 1.6em; font-weight: bold">Line Item Segmentation</h1>    
+<p>Points to note:</p>
+<p>
+    <ol>
+        <li>Data is derived from previous 30 days of trading up to 16th Jan.</li>
+        <li>All data is based on POs and quotes currently</li>
+        <li>Data is heirarchial, if you choose a parent category, all children, grandchildren etc are included. </li>
+    </ol>
+</p>
+<br />
+<br />
+<form method="POST">
+    <select name ="category" id="category" onchange="javascript: this.form.submit();">
+        <option value="">Choose..</option>
+        <?php
+        foreach ($this->cats as $cat) {
+            ?>
+            <optgroup label="<?php echo $cat['NAME']; ?>">
+                <?php
+                if (lg_count($cat['subcats']) > 0) {
+                    $level = 1;
+                    foreach ($cat['subcats'] as $subcat) {
+                        ?>
+                        <option value="<?php echo $subcat['ID']; ?>" <?php
+                        if ((int) $subcat['ID'] == $this->selectedCat) {
+                            echo "selected";
+                        }
+                        ?>><?php echo str_repeat('&nbsp;', ((int) $subcat['LEVEL'] - 1) * 3) . $subcat['NAME']; ?></option>
+                                <?php
+                            }
+                        }
+                        ?>
+            </optgroup>
+            <?php
+        }
+        ?>
+
+    </select>
+</form>
+<br /><br />
+<?php if (empty($this->selectedCat)): ?>
+    Choose a category or subcategory from above
+<?php else: ?>
+    <?php if (empty($this->qotresults) && empty($this->ordresults)): ?>
+        No Results to display
+    <?php else: ?>
+        <table>
+            <tr>
+                <td><strong>Quote Line Item Count</strong></td>
+                <td>&nbsp;</td>
+                <td><?php echo $this->qotresults['LI_COUNT']; ?></td>
+            </tr>
+            <tr>
+                <td><strong>Quote Value</strong></td>
+                <td>&nbsp;</td>
+                <td><?php 
+                setlocale(LC_MONETARY, 'en_US');
+                echo  money_format('%i', $this->qotresults['TOTAL']); ?></td>
+            </tr>
+            <tr>
+                <td><strong>Quote Unique Suppliers</strong></td>
+                <td>&nbsp;</td>
+                <td><?php echo $this->qotresults['SUPPS']; ?></td>
+            </tr>
+            <tr>
+                <td><strong>Quote Unique Buyers</strong></td>
+                <td>&nbsp;</td>
+                <td><?php echo $this->qotresults['BUYERS']; ?></td>
+            </tr>
+            <tr>
+                <td><strong>Quote Unique Documents</strong></td>
+                <td>&nbsp;</td>
+                <td><?php echo $this->qotresults['DOCS']; ?></td>
+            </tr>
+        </table>
+        <br />
+        <br />
+        <br />
+        <table>
+            <tr>
+                <td><strong>Order Line Item Count</strong></td>
+                <td>&nbsp;</td>
+                <td><?php echo $this->ordresults['LI_COUNT']; ?></td>
+            </tr>
+            <tr>
+                <td><strong>Order Value</strong></td>
+                <td>&nbsp;</td>
+                <td><?php 
+                setlocale(LC_MONETARY, 'en_US');
+                echo  money_format('%i', $this->ordresults['TOTAL']); ?></td>
+            </tr>
+            <tr>
+                <td><strong>Order Unique Suppliers</strong></td>
+                <td>&nbsp;</td>
+                <td><?php echo $this->ordresults['SUPPS']; ?></td>
+            </tr>
+            <tr>
+                <td><strong>Order Unique Buyers</strong></td>
+                <td>&nbsp;</td>
+                <td><?php echo $this->ordresults['BUYERS']; ?></td>
+            </tr>
+            <tr>
+                <td><strong>Order Unique Documents</strong></td>
+                <td>&nbsp;</td>
+                <td><?php echo $this->ordresults['DOCS']; ?></td>
+            </tr>
+        </table>
+        
+        
+        
+
+    <?php endif; ?>
+<?php endif; ?>
+</div>

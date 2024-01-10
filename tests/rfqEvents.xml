@@ -1,0 +1,57 @@
+<!--
+    Testing match engine stored searches introduced in S7924
+
+    Run as phpunit -c rfqEvents.xml
+    Rfq IDs to test against can be specified under <php> section as "rfqId1", "rfqId2" ... "rfqIdN"
+
+    @author     Yuriy Akopov
+    @story      S10029
+    @date       2014-04-11
+-->
+<phpunit bootstrap="./bootstrap.php">
+    <testsuites>
+        <testsuite name="RFQ events trigger">
+            <file>./database/rfqEventsTriggerTest.php</file>
+        </testsuite>
+    </testsuites>
+    <php>
+        <!--
+            Environment to use, as required by Bootstrap-cli.php
+
+            Supported values:  development|testing|test2|ukdev|production
+        -->
+        <var name="phpUnitEnv" value="development" />
+
+        <!-- if true, DB changes will be rolled back, otherwise they'd be printed out -->
+        <var name="dbCleanUp" value="true" />
+
+        <!-- how many times to insert the given RFQs and their line items -->
+        <var name="iterationCount" value="1" />
+
+        <!-- file to save CSV performance report in -->
+        <var name="reportFilename" value="rfqEventTriggerTest.csv" />
+
+        <!-- RFQs to test by cloning them and their line items, plus their sender signatures (BYO|SPB):(BuyerOrgId|SupplierOrgId) -->
+
+        <!-- direct RFQs -->
+        <var name="rfqId1" value="9218040" />
+        <var name="rfqSender1" value="BYO:295" />
+
+        <var name="rfqId2" value="9468610" />
+        <var name="rfqSender2" value="BYO:295" />
+
+        <!-- match forwarded RFQs -->
+        <var name="rfqId3" value="20001933" />
+        <var name="rfqSender3" value="BYO:372" />
+
+        <var name="rfqId4" value="8612600" />
+        <var name="rfqSender4" value="BYO:376" />
+
+        <!-- Pages RFQs -->
+        <var name="rfqId5" value="9569176" />
+        <var name="rfqSender5" value="BYO:433" />
+
+        <var name="rfqId6" value="9607029" />
+        <var name="rfqSender6" value="BYO:200426" />
+    </php>
+</phpunit>

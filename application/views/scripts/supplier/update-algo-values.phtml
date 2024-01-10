@@ -1,0 +1,17 @@
+<?php if($this->message):?>
+	<span class="notice"><?php echo $this->message; ?><span>
+<?php endif;?>
+<form method="POST">
+	<table width="700">
+	<?php 
+	foreach($this->results as $result):
+	?>
+	<tr>
+		<td><input type="number" name="<?php echo $result['MVA_NAME']; ?>" value="<?php echo $result['MVA_VALUE']; ?>" /><label style="width: 300px;" for="<?php echo $result['MVA_NAME']; ?>"><?php echo $result['MVA_NAME']; ?></label></td>
+	</tr>
+	<?php
+	endforeach;
+	?>
+	</table>
+	<input type="submit" value="Submit" />
+</form>

@@ -1,0 +1,22 @@
+<h2>Quote to Order Conversion (GMV View)</h2>
+<div class="chart" id="conversion_chart"></div>
+
+<table>
+<thead>
+	<tr>
+		<th class="colTitle">Date</th>
+		<th>Value Quoted USD</th>
+		<th>Value Ordered USD</th>
+		<th>%quoted GMV ordered</th>
+	</tr>
+</thead>
+{{#each data}}
+<tr>
+	<td>{{this.date}}</td>
+	<td>{{formatCurrencyNa this.sir2QOT}}</td>
+	<td>{{formatCurrencyNa this.sir2Po}}</td>
+	<td>{{formatCurrencyNa this.Conversion}}%</td>
+</tr>
+{{/each}}
+</table>
+<hr>

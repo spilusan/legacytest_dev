@@ -1,0 +1,103 @@
+/*
+Document   : _review
+Created on : Jun 14, 2012, 10:20:08 AM
+Author     : gly
+Description: Review related profile styles
+*/
+
+
+.profile-company-item {
+	height:66px; 
+	padding-top:4px; 
+}
+
+.profile-companies-item-txt {
+	float:left; 
+	margin-left:10px; 
+}
+
+.profile-companies-item-title {
+	font-weight:700; 
+	font-size:16px; 
+	margin-bottom:4px; 
+}
+
+.profile-companies-item-subtitle {
+	font-size:12px; 
+	color:#A3A5A4; 
+}
+
+.review-request-block{
+	margin:5px 0; 
+    
+    h3 {
+        font-size:14px; 
+        font-weight:700; 
+    }
+}
+
+.review-request-block-top {
+	background:url(https://cdn1.shipserv.com/images/layout_v2/profile/top_block_border.gif) no-repeat top left; 
+	height:10px; 
+	width:435px; 
+}
+
+.review-request-block-middle {
+	background:url(https://cdn1.shipserv.com/images/layout_v2/profile/mid_block_border.gif) repeat-y top left; 
+	width:415px; 
+	padding:0 10px;
+    
+    .text-column {
+        float:left; 
+        width:357px; 
+        padding:0 0 0 8px;
+        
+        .request-text {
+            font:italic 11px Arial; 
+            color:#000; 
+            padding:10px 0; 
+        }
+    }
+}
+
+.review-request-block-bottom {
+	background:url(https://cdn1.shipserv.com/images/layout_v2/profile/bottom_block_border.gif) no-repeat top left; 
+	height:10px; 
+	width:435px; 
+}
+
+.review-request-action, .review-action,.brand-action, 
+.category-action, .membership-action {
+	float:right; 
+	padding-left:8px; 
+	font:normal 11px Arial;
+    
+    a {
+        text-decoration:none; 
+    }
+}
+
+.review-request-action, .review-action, 
+.brand-action, .category-action {
+	float:right; 
+	padding-left:8px; 
+	font:normal 11px Arial; 
+}
+
+.dotted-line {
+	background:url(https://cdn1.shipserv.com/images/layout_v2/endorsement/dots_line.gif) repeat-x; 
+	height:1px; 
+	margin-top:10px; 
+	margin-bottom:10px; 
+}
+
+.review-action-left {
+	float:left; 
+	padding-right:8px; 
+	font:normal 11px Arial; 
+}
+
+#invite_person {
+	float:right;
+	margin:2px 10px 0 0;
+}

@@ -1,0 +1,323 @@
+				<?php 
+				$statistic = $this->statistic;
+				$ignoredRate = @ round($statistic['notClicked'] / $statistic['sent'] * 100);
+				$archiveAge = 180;
+				?>
+								
+				<div class="intro">
+					<? if($statistic['sent'] == 0 ) echo 'You received '; else echo 'ShipServ sent you '?>
+					 <b><?= $statistic['sent'] . " " . (($statistic['sent']>1)?"RFQs":"RFQ") ?></b> from: <b><?= $this->period['start']->format('d M Y')?> to <?= $this->period['end']->format('d M Y')?>.</b> <br />
+					<? if($statistic['sent'] == 1 ) echo 'See below for details on all of this. '; else if($statistic['sent'] > 1) echo 'See below for details on all of these.'?>
+				</div>
+				<br />
+				<? if( $statistic['sent'] == 0 ) echo "Pages RFQs will be sent "; else if( $statistic['sent'] == 1 ) echo "This Pages RFQ is currently being sent "; else echo "These Pages RFQs are currently being sent " ?>
+				to: <b><?= $this->supplier->getEnquiryEmail(); ?></b>.
+				<? 
+					if( $this->supplier->hasValidPublicBranch() === false)
+					{
+						if( $this->user->canEditListing( $this->supplier->tnid ) !== false )
+						{
+							?><a href="<?= $this->supplier->getEditUrl(); ?>"><?php
+						}
+						else
+						{
+							?><a onclick="alert('ShipServ employees cannot change the email unless he/she is part of this company.');"><?php
+						}
+						
+						?>
+							Click here</a> to change this email.
+							<div class="inline contextual help" data-title="Changing the email" data-message-div="changing-email"></div>
+						<?
+					}
+					else
+					{
+						?>
+							You can only view details of this RFQ, only <?= $this->supplier->getPublicTnid()?> can respond to this RFQ. 
+							Contact <a href="mailto:support@shipserv.com">support@shipserv.com</a> to change this email
+						<?
+					}
+				?>
+				<div id="changing-email" class="hidden">
+					All your company's Pages RFQs are sent to just one email address.  It's vital this is the right person.  <br /><br />The email can easily be changed by clicking this 
+					<? if( $this->user->isShipservUser() ){?>
+					<a onclick="alert('ShipServ employees cannot change the email unless he/she is part of this company.');">link</a>
+					<? }else{?>
+					<a href="<?= $this->supplier->getEditUrl(); ?>">link</a>
+					<? }?>
+					
+					.<br />
+	 				<br />
+					This link clicks through to your company's online Profile editing tool.  You can edit and save a different
+					email recipient. For Premium listers, the relevant email address can be found in Step 1 ('General') tab.
+				</div>
+				<div class="enquiry-statistic">
+					
+					Here's how you responded to the <strong><?= $statistic['sent'] . " " . (($statistic['sent']>1)?"RFQ emails":"RFQ email") ?> </strong> we sent you:
+					
+					<table width="100%" style="font-size:12px; margin-top:5px;">
+						<tr>
+							<td valign="top" width="80" class="replied-text" style="vertical-align:top;">
+								<?= $statistic['replied'] . " " . (($statistic['replied']>1)?"RFQs":"RFQ") ?>
+							</td>
+							<td>
+								<div class="enquiry-status replied">Replied</div> 
+								<div style="float:right; width:245px; ">clicked "Respond to buyer via this email address" button<div class="inline contextual help" data-title="Replied" data-message-div="replied-info-1"></div></div>
+							</td>
+						</tr>
+						<tr>
+							<td class="read-text"><?= $statistic['read'] . " " . (($statistic['read']>1)?"RFQs":"RFQ") ?></td>
+							<td>
+								<div class="enquiry-status read">Details viewed</div> clicked "View details" button
+								<div class="inline contextual help" data-title="Details viewed" data-message-div="read-info-1"></div>
+							</td>
+						</tr>
+						<tr> 
+							<td class="declined-text"><?= $statistic['declined'] . " " . (($statistic['declined']>1)?"RFQs":"RFQ") ?></td>
+							<td>
+								<div class="enquiry-status declined">Not interested</div> 
+								<div style="float:right; width:245px; ">
+									clicked "Not interested" button
+									<div class="inline contextual help" data-title="Not interested" data-message-div="declined-info-1"></div>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="ignored-text" valign="top" style="vertical-align:top;">
+								<?php if( $ignoredRate > 15 ){?>
+								<div class="inline contextual help" data-title="Warning - Missed new business"  data-message-div="warning-info-1" style="background: url('/images/profile-completeness/icon_alert.jpg') no-repeat scroll center center transparent; float:left; margin-left:-3px;"></div>
+								<?php }?>							
+								<?= $statistic['notClicked'] . " " . (($statistic['notClicked']>1)?"RFQs":"RFQ") ?>
+							</td>
+							<td>
+								<div class="enquiry-status ignored">Not clicked</div> 
+								<div style="float:right; width:245px; ">
+									MISSED RFQs
+									<div class="inline contextual help" data-title="Not clicked"  data-message-div="ignored-info-1" style="margin-left:-5px"></div>
+									<?php if( $ignoredRate > 15 ){?>
+									<div class="inline contextual help" data-title="Warning - Missed new business"  data-message-div="warning-info-1" style="margin-left:-5px; background: url('/images/profile-completeness/icon_alert.jpg') no-repeat scroll center center transparent"></div>
+									<?php }?>
+								</div>								
+							</td>
+						</tr>
+					</table>
+					<div class="clear"></div>
+					<div id="replied-info-1" class="hidden" style="font-size:14px !important;">
+						This is the number of RFQs when you intended to reply to the buyer.<br /> 
+						<br />
+						<b style="text-decoration:underline;">Please note that we only started tracking this from 21 May 2012 and we do not have historic data.  In other words, any email replies from you to an RFQ made before 21 May 2012 will be shown here as 0 (zero).</b><br />
+						<br />
+						It might not be the number of RFQs you actually replied to, because you reply from your own email system, which we are unable to track.
+					</div>
+					<div id="warning-info-1" class="hidden" style="font-size:14px !important;">
+						In the last 12 months you have missed <?= $ignoredRate?>% of your Pages RFQs.<br />
+						<br />
+						As a result you could be missing out on new business.<br />
+						<br />
+						In other words, you have NOT CLICKED on <?= $ignoredRate?>% of your RFQs - therefore NOT seeing who the buyer is. 
+					</div>
+					<div id="read-info-1" class="hidden">
+						<b>The number of RFQs where you have viewed the details of that RFQ.</b><br />
+						 <br />
+						By viewing the details you see who the buyer is and their contact email.<br />
+						 <br />
+						You can view the details by either clicking on VIEW DETAILS button here or on the notification email we send out.  Both are counted.<br />
+					</div>
+					<div id="declined-info-1" class="hidden">
+						<b>The number of RFQs where either the "I'm not interested" or the "Decline to quote" buttons were clicked.</b><br />
+						 <br />
+						If you clicked on the "I'm not interested" button in the email then the name of the buyer/buyer company is not displayed at this point and so clicking this means that this RFQ was rejected without the buyer being known.<br />
+						<br />
+						The buyer can be seen by clicking on a different button ('Show details').<br />
+ 
+					</div>
+					<div id="ignored-info-1" class="hidden">
+						This is the number of RFQs where no action at all has been taken by you.<br />
+						 <br />
+						<b>This means that you've not looked at the detail of the RFQ and so <span style="text-decoration:underline"> NOT seen the buyer's company name.</span></b><br />
+						<br />
+						You therefore may be missing out on new business.<br />
+						 <br />
+						You can see who the buyer is by clicking on the 'Show details' button/link in the original email. Or you can see the details here in this report.
+					</div>
+				</div>
+				
+				<?php if( $ignoredRate > 15 ){?>
+				<div class="clear"></div>				
+				<div class="warning">
+					In the last 12 months you have missed <?= $ignoredRate?>% of your Pages RFQs.<br />
+					<br />
+					As a result you could be missing out on new business.<br />
+					<br />
+					In other words, you have NOT CLICKED on <?= $ignoredRate?>% of your RFQs - therefore NOT seeing who the buyer is. 
+				</div>
+				<?php }?>
+				
+				<?foreach( (array)$this->enquiries as $enquiry){?>
+				
+					<div class="enquiry" id="enquiry-<?=$enquiry->pinId?>">
+						<div class="header-block">
+							<div class="caption"><?= $enquiry->pinCreationDate?></div>
+							<div class="info subject">
+								<div class="enquiry-subject"><?= $this->string()->sanitise($enquiry->pinSubject)?></div>
+								<div class="enquiry-status <?= $enquiry->getStatus();?>"><?= $enquiry->getStatus( true );?></div>
+							</div>
+							<div class="clearfix"></div> 
+						</div>
+						<div class="body">
+							<div class="caption">Company/Buyer:</div>
+							<div class="info"><?= $this->string()->sanitise($enquiry->pinCompany)?></div>
+							<div class="clear"></div>					
+								
+							<div class="caption">Name:</div>
+							<div class="info"><?= $this->string()->sanitise($enquiry->pinName)?></div>
+							<div class="clear"></div>					
+							
+							<div class="caption">Email:</div>
+							<div class="info"><a href="mailto: <?= $enquiry->pinEmail?>"><?= $enquiry->pinEmail?></a></div>
+							<div class="clear"></div>					
+							
+							<div class="caption">Delivery date:</div>
+							<div class="info"><?= $enquiry->pinDeliveryDate?></div>
+							<div class="clear"></div>					
+	
+							<div class="caption">Delivery location:</div>
+							<div class="info"><?= $this->string()->sanitise($enquiry->pinDeliverLocation)?></div>
+							<div class="clear"></div>					
+														
+							<div class="caption">RFQ Details:</div>
+							<div class="info enquiryText">
+								<div class="enquiry-detail">
+									<div class="enquiry-detail-2">
+										<?= nl2br($this->string()->sanitise($enquiry->pinInquiryText, true))?>
+									</div>
+								</div>
+								<? if($enquiry->pinHasAttachment == "1" ){?>
+									<br />This RFQ has attachment
+								<? }?>		
+								<div class="hidden more-text-available"><br /><a onclick="$('#viewDetailButtonFor<?= $enquiry->pirId?>').trigger('click');">Click here to view the rest of this RFQ</a></div>						
+							</div>
+							<hr class="dotted" style="width:460px; display:block;" />
+							<span class="archived-enquiry-detail-button hidden" id="<?= $enquiry->pinId; ?>" style="float:right; clear:right; font-weight:bold; margin-top:-20px; cursor:pointer;" title="click here to see more of the message">more</span>
+							<div class="clear"></div>
+							
+							
+							
+							<?php 
+								if( $enquiry->dateDiffFromToday < $archiveAge )
+								{ 
+									?><div class="zz small lblue button" style="margin-left:0px; margin-top:-20px;"><button id="viewDetailButtonFor<?= $enquiry->pirId?>" class="enquiry-detail-button" accountType="<?= $this->supplier->getEnquiryAccountType()?>" status="<?= $enquiry->getStatus()?>" link="<?= $enquiry->getUrl( !$this->user->isPartOfSupplier( $this->params['id'] ) ); ?>/r/<?= $this->uri()->obfuscate($_SERVER['REQUEST_URI']);?>">View details</button></div><?php 
+								}
+								else
+								{
+									?><div class="zz small grey button" style="margin-left:0px; margin-top:-20px;"><button id="viewDetailButtonFor<?= $enquiry->pirId?>" class="archived-enquiry-detail-button-page" link="<?= $enquiry->pinId; ?>">View archived RFQ</button></div><?php 
+								}
+							?>
+							
+							<div class="clear"></div>
+							
+						</div>
+					</div>
+					
+				<? }?>
+
+				<?php if( $this->totalFound > 10 ){?>
+				<div class="suggestion">
+					<?php if ($this->supplier->premiumListing != "0" ){?>
+					
+						To increase the number of RFQs you are getting from ShipServ Pages make sure your profile is as fully filled out as possible. Have you included all the brands and categories you sell?  
+						<? if( $this->user->canEditListing( $this->supplier->tnid ) == false ){?>
+						<a onclick="alert('ShipServ employees cannot change the email unless he/she is part of this company.');">Click here</a>
+						<? }else{?>
+						<a href="<?= $this->supplier->getEditUrl(); ?>">Click here</a>
+						<? }?>
+
+						 to change your profile now.<br />
+						<br />
+						For more help on increasing your RFQs and making the most of your Premium Profile <a href="/help/premium">click here</a>.<br />
+						 <br />
+						<? if( $this->supplier->accountManagerName != "" ){?>
+						Your account manager would be delighted to help you with any questions you have.  Here is their contact information:
+						<?= $this->supplier->accountManagerName . " (<a href='mailto:" . $this->supplier->accountManagerEmail . "'>" . $this->supplier->accountManagerEmail . "</a>)" ?>
+						<?php }?>
+					<?php }else{?>
+						There are several things you can do to increase the number of RFQs you are getting from ShipServ Pages.  
+						Make sure your <b>profile is as fully filled out as possible</b>. Have you included all the brands and categories you sell? 
+						<? if( $this->user->canEditListing( $this->supplier->tnid ) == false ){?>
+						<a onclick="alert('ShipServ employees cannot change the email unless he/she is part of this company.');">Click here</a>
+						<? }else{?>
+						<a href="<?= $this->supplier->getEditUrl(); ?>">Click here</a>
+						<? }?>
+						
+						to change your profile now.<br />
+						<br />
+						Consider Upgrading to Premium Profile, with the following benefits:<br />
+						<ul class="impact">
+						<li>ALL Premium listers are ranked ABOVE basic listers in Pages search results</li>
+						<li>Allows you to add much more content to your profile</li>
+						<li>Allows you to add many more categories and brands to your listing so you come up more often in search result</li>
+						</ul>
+						<br />
+						For more information <a href="/info/pages-for-suppliers/win-new-business-with-a-premium-listing/">click here</a>,  or to request a call from one of our team please email: <a href="mailto:pages@shipserv.com">pages@shipserv.com</a>.  Or see our <a href="/info/pages-for-suppliers/webstore">Web Store</a>.
+					<?php }?>
+				</div>
+				<?php }else{?>
+				<div class="suggestion important">
+					<?php if ($this->supplier->premiumListing == "0" ){?>
+						There are several things you can do to increase the number of RFQs you are getting from ShipServ Pages.  
+						Make sure your <b>profile is as fully filled out as possible</b>. Have you included all the brands and categories you sell? 
+						<? if( $this->user->canEditListing( $this->supplier->tnid ) == false ){?>
+						<a onclick="alert('ShipServ employees cannot change the email unless he/she is part of this company.');">Click here</a>
+						<? }else{?>
+						<a href="<?= $this->supplier->getEditUrl(); ?>">Click here</a>
+						<? }?>
+												to change your profile now.<br />
+						
+						<br />
+						Consider Upgrading to Premium Profile, with the following benefits:<br />
+						<ul class="impact">
+						<li>ALL Premium listers are ranked ABOVE basic listers in Pages search results</li>
+						<li>Allows you to add much more content to your profile</li>
+						<li>Allows you to add many more categories and brands to your listing so you come up more often in search result</li>
+						</ul>
+						<br />
+						For more information <a href="/info/pages-for-suppliers/win-new-business-with-a-premium-listing/">click here</a>, or to request a call from one of our team please email: <a href="mailto:pages@shipserv.com">pages@shipserv.com</a>.  Or see our <a href="/info/pages-for-suppliers/webstore">Web Store</a>.
+					<?php }else{ ?>
+						To increase the number of RFQs you are getting from ShipServ Pages make sure your  <b>profile is as fully filled out as possible</b>. Have you included all the brands and categories you sell?  
+						<? if( $this->user->canEditListing( $this->supplier->tnid ) == false ){?>
+						<a onclick="alert('ShipServ employees cannot change the email unless he/she is part of this company.');">Click here</a>
+						<? }else{?>
+						<a href="<?= $this->supplier->getEditUrl(); ?>">Click here</a>
+						<? }?>
+						to change your profile now.<br />
+						<br />
+						For more help on increasing your RFQs and making the most of your Premium Profile <a href="/help/premium">click here</a>.<br />
+						<br />
+						<? if( $this->supplier->accountManagerName != "" ){?>
+						Your account manager would be delighted to help you.  Here is their contact information: 
+						<?= $this->supplier->accountManagerName . " (<a href='mailto:" . $this->supplier->accountManagerEmail . "'>" . $this->supplier->accountManagerEmail . "</a>)" ?>
+						<?php }?>
+					<?php }?>
+				</div>
+				<?php }?>
+				
+				<div class="profile-pagination">
+					<?php
+						if( $this->params['tnid'] !== null )
+						{
+							$url = "/profile/enquiry-browser/tnid/".$this->params['tnid'];
+						}
+						else 
+						{
+							$url = "/profile/company-enquiry/type/v/id/".$this->params['id'];
+						}
+						echo $this->partial('profile/pagination.phtml', array(
+							'style' => 'new',
+							'currentPage' => $this->currentPage,
+							'recordCount' => $this->totalFound,
+							'pageSize'	=> $this->pageSize,
+							'url' => $url 
+						));
+					?>
+				</div>
+				
+				<div class="clear"></div>

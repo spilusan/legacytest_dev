@@ -1,0 +1,29 @@
+/*
+Document   : rfq-inbox.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: combining partials for rfq-outbox styles
+*/
+
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/min";
+
+@import "partials/def/left_nav";
+@import "partials/def/context_help";
+@import "partials/def/modal_new";
+@import "partials/def/cloud_list";
+
+//Item selector component
+@import "partials/itemselector/selector";
+
+@import "partials/buyer/side-bar";
+@import "partials/buyer/content";
+@import "partials/buyer/rfq-outbox/rfq_list";
+@import "partials/buyer/rfq-outbox/rfq_display";
+@import "partials/buyer/rfq-outbox/rfq_summary";
+@import "partials/buyer/rfq-outbox/rfq_details";
+@import "partials/buyer/rfq-outbox/match";
+@import "partials/buyer/rfq-outbox/send_to-recommended";
+@import "partials/buyer/filter_manager";
+

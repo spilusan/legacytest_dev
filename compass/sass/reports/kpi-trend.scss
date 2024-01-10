@@ -1,0 +1,15 @@
+/*
+Document   : kpi-trend.scss
+Created on : Jul 23, 2015, 09:50:00 PM
+Author     : Attila O
+Description: combining partials for kpi*-trend-repor styles
+*/
+
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "partials/def/left_nav";
+@import "partials/def/modal_new";
+
+/* Export related imports */
+@import "partials/reports/kpi-trend/filters";
+@import "partials/reports/kpi-trend/content";

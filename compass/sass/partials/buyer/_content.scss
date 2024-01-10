@@ -1,0 +1,16 @@
+#body {
+	#content {
+		h1.styled {
+			margin-bottom: 20px;
+			.button {
+				float: right;
+			}
+		}
+	}
+	&.liquid {
+		#content {
+			left: 222px;
+			top: 17px;
+		}
+	}
+}

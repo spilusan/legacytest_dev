@@ -1,0 +1,100 @@
+<?php
+$this->headLink()->appendStylesheet('/css/shipmate.css')
+->appendStylesheet('/css/uniform.rfq.css');
+
+
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()
+->addModule('match/report')
+->addDefinition('/match/reportType', '"shipmate-po-rate"')
+;
+
+?>
+
+<style>
+	td{
+		font-size:12px;
+	}
+	td b{
+		font-size:16px;
+		line-height:20px;
+	}
+</style>
+
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Salesforce', 'url'  => '/shipmate/value-event');
+	$breadcrumbs[] = array('name' => 'PO Rate Health Check', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+	
+?>
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.colVis.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+
+<div id="body" style="width:883px;">
+	<div id="content" style="width: 628px;">
+		<h1 class="styled">PO Rate Health Check</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<div class="innerContent">
+			<div class="">	
+			
+				<div style="margin-bottom:10px; font-size:12px; ">Showing all Suppliers with VBP PO % or PO Pack %</div>
+				
+				<form method="get" class="new">
+				<table id="resultsTab" style="display:block; ">
+					<thead>
+						<tr>
+							<th class="left"></th>
+							<th class="left">TNID</th>
+							<th class="left">Name</th>
+							<th class="left">Effective PO %</th>
+							<th class="left">VBP PO %</th>
+							<th class="left">PO Pack %</th>
+							<th class="left"></th>
+							
+						</tr>
+					</thead>	
+					<tbody>			
+						<?php foreach($this->result as $row){?>
+						<?php 
+							if($row['SPB_MONETIZATION_PERCENT']!="") $poPc++;
+							if($row['SPB_VBP_PERCENTAGE']!="") $vbp++;
+							if($row['SPB_PO_PACK_PERCENTAGE']!="") $poPack++;
+							?>
+						<tr>
+							<td><?= ++$i?></td>
+							<td><?= $row['SPB_BRANCH_CODE']?></td>
+							<td class="left"><?= $row['SPB_NAME']?></td>
+							<td><?= $row['SPB_MONETIZATION_PERCENT']?></td>
+							<td><?= $row['SPB_VBP_PERCENTAGE']?></td>
+							<td><?= $row['SPB_PO_PACK_PERCENTAGE']?></td>
+							<td><? if($row['SFA_ID'] != "" ){?><a target="_blank" href="https://ssl.salesforce.com/<?= $row['SFA_ID']?>">Salesforce</a><?php }?></td>
+						</tr>
+						<?php }?>
+					</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="3">Total</td>
+							<td><?= $poPc?></td>
+							<td><?= $vbp?></td>
+							<td><?= $poPack?></td>
+							<td></td>
+						</tr>
+					</tfoot>
+				</table>
+				<div class="clear"></div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>

@@ -1,0 +1,97 @@
+/*
+Document   : partials/def/_tables.scss
+Created on : Aug 24, 2012, 4:00:43 PM
+Author     : gly
+Description: default styles for tables
+*/
+
+table {
+	border: 0;
+	margin: 0;
+	margin-bottom: 20px;
+	padding:0;
+
+	&.report {
+		td {
+			font-size: 11px;
+			padding: 13px 7px;
+		}
+
+		th {
+			font-size: 11px;
+			padding: 0;
+		}
+
+		thead {
+			tr {
+				th {
+					table {
+						margin: 0;
+						tr {
+							td {
+								background-color: #caedf9;
+								border: 1px solid #90dcf7;
+
+								&.spacer {
+									font-size: 2px;
+									width: 2px;
+									background-color: transparent;
+									border: 0;
+									padding: 0;
+								}
+
+								a {
+									color: #005aad;
+									text-decoration: none;
+									font-weight: bold;
+									padding-right: 20px;
+
+									&.asc {
+										background: url(/img/asc.png) no-repeat right center transparent;
+									}
+
+									&.desc {
+										background: url(/img/desc.png) no-repeat right center transparent;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		tbody {
+			tr {
+				background-color: #ffffff;
+
+				td {
+					color: #2e3235;
+					border-bottom: 1px dotted #bec4cb;
+
+					&.right {
+						text-align: right;
+					}
+
+					a {
+						color: #005aad;
+						text-decoration: none;
+					}
+				}
+
+				&.even {
+					background-color: #f5f7fa;
+				}
+
+				&.total {
+					background-color: #e0e5eb;
+
+					td {
+						border: 0;
+						font-weight: bold;
+					}
+				}
+			}
+		}
+	}
+}

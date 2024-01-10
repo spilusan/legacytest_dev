@@ -1,0 +1,11 @@
+<td title="{{reqrefno}}"><a href="/printables/app/print?md5={{rptData.user.usrmd5}}&docid={{reqintno}}&doctype=REQ&usercode={{rptData.user.usrcode}}&custtype=buyer&branchcode={{bybtnid}}" target="_blank">{{reqrefno}}</a></td>
+{{#if rptData.iscnsldt}}
+<td title="{{bybtnid}}">{{bybtnid}}</td>
+{{/if}}
+<td title="{{bybname}}">{{bybname}}</td>
+<td title="{{vesname}}">{{vesname}}</td>
+<td title="{{reqsubjc}}">{{reqsubjc}}</td>
+<td title="{{reqsubdt}}">{{reqsubdt}}</td>
+<td title="{{formatCurrency reqcost}}" class="right">{{formatCurrency reqcost}}</td>
+<td title="{{reqcurr}}">{{reqcurr}}</td>
+<td title="{{formatCurrency currconv}}" class="right">{{formatCurrency currconv}}</td>

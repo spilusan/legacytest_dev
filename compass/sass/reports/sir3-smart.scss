@@ -1,0 +1,79 @@
+/*
+Document   : sir.scss
+Created on : Jun 11, 2015, 12:35:43 PM
+Author     : Attila O
+Description: combining partials for sir
+*/
+
+@import "compass/css3";
+@import "compass/css3/inline-block";
+@import "compass/utilities/general/min";
+
+@import "partials/def/tab_nav";
+@import "partials/def/context_help";
+@import "partials/def/modal_new";
+@import "partials/def/datepicker";
+
+@import "partials/itemselector/selectorNew";
+
+/*
+@import "partials/reports/sir/content";
+@import "partials/reports/sir/summary";
+@import "partials/reports/sir/details";
+@import "partials/reports/sir/filters";
+@import "partials/reports/sir/emailDialog";
+*/
+
+@import "partials/reports/sir/membership";
+@import "partials/reports/sir/content";
+@import "partials/reports/sir/summary";
+@import "partials/reports/sir/details";
+/* @import "partials/reports/sir/filters"; */
+@import "partials/reports/sir/filters-new"; 
+@import "partials/reports/sir/emailDialog";
+@import "partials/reports/sir/transaction";
+@import "partials/reports/sir/gmv-table";
+@import "partials/reports/sir/summary-analysis";
+@import "partials/reports/sir/summary-calculator";
+@import "partials/reports/sir/customers";
+@import "partials/reports/sir/help";
+@import "partials/reports/sir/error";
+@import "partials/reports/sir/progressBar";
+
+body {
+	background-image: none;
+	background: #e9edf1;
+	
+	#body {
+		width: 960px;
+		@include border-radius(0 6px 6px 6px);
+		
+		#content {
+			h1.styled {
+				padding: 10px 15px;
+			}
+			.versionControl {
+				width: 942px;
+				text-align: right;
+			}
+		}
+	}
+	
+	ul.tabs {
+		margin-top: 15px;
+		
+		li {
+			position: relative;
+			top: 1px;
+		
+		&.selected {
+				a {
+					border: 0;
+					cursor: pointer;
+				}
+			}
+		}
+	}
+}
+
+

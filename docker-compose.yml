@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - APPLICATION_ENV=development
+    volumes:
+      - .:/var/www/html
+    networks:
+            - pages-back
+  memcached:
+    image: memcached:latest
+    ports:
+      - "11211:11211"
+    networks:
+      - pages-back
+  httpd:
+    build: 
+      context: ./docker/loadbalancer
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    networks:
+            - pages-back
+networks:
+    pages-back:
+        driver: "bridge"

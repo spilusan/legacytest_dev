@@ -1,0 +1,31 @@
+/*
+Document   : default.scss
+Created on : May 12, 2016, 14:24:15 AM
+Author     : .:Gly:.
+Description: main stylesheet combining default partials
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+@import "font-awesome";
+@import "partials/mixins/mixins";
+
+@import "2016_campfire/main/clearfix";
+@import "2016_campfire/main/colours";
+@import "2016_campfire/main/buttons";
+@import "2016_campfire/main/tables";
+@import "2016_campfire/main/forms";
+@import "2016_campfire/main/typo";
+@import "2016_campfire/main/tooltip";
+
+@import "2016_campfire/main/header";
+@import "2016_campfire/main/footer";
+@import "2016_campfire/nav/main-nav/index";
+@import "2016_campfire/main/body";
+@import "2016_campfire/main/titles";
+
+@import "partials/def/breadcrumbs";
+@import "partials/def/content";
+@import "partials/def/overlays";
+@import "partials/alerts/general";
+

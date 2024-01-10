@@ -1,0 +1,49 @@
+#body {
+	#content {
+		.section {
+			table {
+				width: 100%;
+				border-collapse: collapse;
+				border-top: 1px solid #d6dce4;
+				border-left: 1px solid #d6dce4;
+				margin-bottom: 20px;
+
+				tbody {
+					tr {
+						td {
+							border-bottom: 1px solid #d6dce4;
+							border-right: 1px solid #d6dce4;
+							background-color: #f9fafb;
+							padding: 15px;
+							vertical-align: top;
+							color: #2e3235; 
+
+							&.dark {
+								background-color: #e9edf1;
+								width: 402px;
+								font-size: 14px;
+
+								a {
+									font-weight: bold;
+									font-size: 12px;
+								}
+							}
+
+							h2 {
+								font-size: 18px;
+								font-weight: bold;
+								color: #008b00;
+								margin-bottom: 15px;
+							}
+
+							p {
+								font-size: 12px;
+								color: #2e3235; 
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

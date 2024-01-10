@@ -1,0 +1,86 @@
+<?php
+/**
+ * A partial view for tag.phtml displaying the search controls sidebar form
+ *
+ * @author  Yuriy Akopov
+ * @date    2013-10-08
+ */
+?>
+<?php
+if (lg_count($this->searches)) {
+    ?>
+    <select id="storedSearchId">
+        <option value="">--</option>
+        <?php
+        foreach ($this->searches as $search) { /** @var Shipserv_Match_Component_Search $search */
+            $searchId = $search->getId();
+            $opened = ($searchId == $this->searchId);
+            ?>
+            <option value="<?php echo $searchId; ?>" <?php if ($opened) { ?>selected="selected"<?php } ?>>
+                <?php print ($search->isModified() ? 'Custom terms' : 'Default terms'); ?>
+                (<?php echo $search->getDate(true)->format('Y-m-d H:i:s'); ?>)
+                <?php if ($opened) { ?>[OPENED]<?php } ?>
+            </option>
+        <?php
+        }
+        ?>
+    </select>
+
+    <br/><br/>
+    <input type="button" class="stored_search_load" value="Load selected search">
+    <input type="button" class="stored_search_delete" value="Delete selected search">
+<?php
+} else {
+    ?>
+    <p>No saved searches yet</p>
+<?php
+}
+?>
+
+<form id="searchControlsForm" action="/match/tag" method="POST">
+    <input type="hidden" name="txtRfqid" value="<?php echo $this->rfq->rfq_header->rfqInternalRefNo; ?>">
+    <input type="hidden" name="searchId" value="">
+    <input type="hidden" name="userAction" value="">
+</form>
+
+<script>
+    $(document).ready(function() {
+        $('.stored_search_load').click(function (event) {
+            var searchId = $('#storedSearchId').val();
+            if (searchId == '') {
+                alert('Please select a saved search to load');
+                return;
+            }
+
+            var form = $('#searchControlsForm');
+            form.find('input[name=searchId]').attr('value', searchId);
+            form.find('input[name=userAction]').attr('value', 'stored_search_load');
+
+            form.submit();
+        });
+
+        $('.stored_search_delete').click(function (event) {
+            var select = $('#storedSearchId');
+
+            var searchId = select.val();
+            if (searchId == '') {
+                alert('Please select a saved search to delete');
+                return;
+            }
+
+            var rfqId = $('#searchControlsForm').find('input[name=txtRfqid]').val();
+
+            $.ajax({
+                type:   'GET',
+                url:    '/match/delete_search',
+                data:   'txtRfqid=' + rfqId + '&searchId=' + searchId + '&feedType=' + '<?php echo $this->feedType; ?>'
+            }).done(function(response) {
+                select.find('option[value=' + response.search_id + ']').remove();
+                alert("Search removed. If it's currently open, you might get an error if you try to reload the page");
+
+            }).fail(function() {
+                alert("Failed to remove search");
+            });
+        });
+    });
+</script>

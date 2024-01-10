@@ -1,0 +1,110 @@
+input .textfield{
+	width:200px;
+}
+
+.main .field label{
+	width:150px;
+}
+
+.main{
+	padding-bottom: 0;
+}
+
+form.main {
+    border:0;
+}
+
+form.main label.error{
+	margin-left: 161px;
+}
+
+form.main #form-header{
+	margin-left:30px;
+	overflow:auto;
+	clear:both;
+	margin-bottom:30px;
+}
+
+form.main #form-header img{
+	float:left;
+}
+
+form.main #form-header h1{
+	float:left;
+	font-weight:bold; 
+	font-size:20px;
+	color: #E16712;
+	line-height:40px;
+	margin-left:20px;
+}
+
+form.main fieldset.footer-block{
+	margin-top:20px;
+	padding-bottom: 15px;
+    border-radius: 0 0 10px 10px;
+    -moz-border-radius: 0 0 10px 10px;
+    -webkit-border-radius: 0 0 10px 10px; 
+}
+
+form.main .closing-text{
+	font-size: 0.7em;
+    line-height: 18px;
+    width:410px;
+	margin-left:170px;
+}
+
+
+form.main .form-button{
+	margin-left:45px;	
+}
+
+#brand_invitation_form_popup { background: none; border: 0; width: inherit; z-index: 3000; }
+
+#cssp-invite-brand-owner-form { position: fixed; z-index:12345; }
+
+div.content_wide.popup form {
+    padding: 5px;
+    position: relative;
+}
+
+div.content_wide.popup {
+    position: relative
+}
+
+
+div.content_wide div.zz.header {
+    margin: 0;
+    margin-bottom: 20px;
+    position: relative;
+}
+div.ssModal.button.close {
+    position: absolute;
+    top: -48px;
+    right: 0;
+    cursor: pointer;
+}
+
+form.main {
+    width: 620px;
+    behavior: url(/css/PIE.htc);
+}
+
+.content_wide.popup {
+    width: 630px;
+}
+
+#brand_invitation_form_popup {
+    z-index: 10001 !important;
+}
+
+#inv_brand_body {
+	position: relative;
+	background: white;
+	-moz-border-radius: 6px;
+	-webkit-border-radius: 6px;
+	-o-border-radius: 6px;
+	-khtml-border-radius: 6px;
+	border-radius: 6px;
+	padding: 5px;
+	behavior: url(/css/PIE.htc);
+}

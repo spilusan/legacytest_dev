@@ -1,0 +1,467 @@
+/*
+Document   : user
+Created on : Apr 7, 2014, 3:41:39 PM
+Author     : gly
+Description: login styles
+*/
+
+@import "compass/css3";
+@import "partials/def/forms";
+@import "partials/def/modal_new";
+
+div#waiting {
+    display: none;
+}
+
+.modal {
+    width: 400px;
+
+    .modalBody {
+        .modalContent {
+            padding-top: 10px;
+            padding-bottom: 0;
+        }
+    }
+}
+
+form {
+    &.new {
+        &.pwdSent {
+            display: none;
+        }
+
+        .error {
+            margin-left: 134px;
+            margin-bottom: 10px;
+            margin-top: 5px;
+
+            &.success {
+                color: green;
+                background: url(/img/icons/small/check.png) no-repeat left center transparent;
+            }
+
+            &.terms {
+                margin-left: 2px;
+            }
+        }
+    }
+}
+
+div.loginBox {
+    position: relative;
+    width: 590px;
+    padding: 5px;
+    background: #ffffff;
+    @include border-radius(6px);
+    margin: 47px auto 0 auto;
+    display: none;
+    behavior: url(/css/PIE.htc);
+
+    &.valueEvent {
+        margin-top: 25px;
+    }
+
+    form {
+        &.new {
+            .error {
+                margin-left: 0px;
+                margin-top: 0px;
+                padding-left: 25px;
+
+                &:before {
+                    margin-right: 7px;
+                }
+
+                &.terms {
+                    margin-left: 2px;
+                }
+            }
+        }
+    }
+
+    .left, .right {
+        width: 289px;
+    }
+
+    .left {
+        float: left;
+        padding-right: 5px;
+        border-right: 1px dotted #000000;
+
+        .formContainer{
+            padding: 15px;
+
+            form {
+                fieldset{
+                    position: relative;
+                    margin-bottom: 15px;
+                    background: #f5f7fa;
+                    border: 1px solid #d6dce4;
+                    @include border-radius(6px);
+                    padding: 15px;
+                    behavior: url(/css/PIE.htc);
+
+                    input[type="email"], input[type="password"] {
+                        width: 203px;
+                        display: block;
+                    }
+
+                    label[for="loginUsername"], label[for="loginPassword"] {
+                        display: block;
+                        top: 0px;
+                        font-size: 12px;
+                        font-weight: bold;
+                        margin-bottom: 8px;
+
+                        sup {
+                            color: #fe2121;
+                        }
+                    }
+
+                    label[for="loginRememberMe"] {
+                        top: 2px;
+                    }
+                }
+
+                a {
+                    display: inline;
+                }
+
+                a, p {
+                    font-size: 10px;
+                }
+
+                p {
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }
+
+    .right {
+        padding-left: 5px;
+        float: right;  
+        position: relative;
+
+        h3 {
+            font-size: 19px;
+            font-weight: normal;
+            margin-top: 75px;
+            margin-bottom: 10px;
+            margin-left: 15px;
+        }
+
+        h4 {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            margin-left: 15px;
+        }
+
+        p {
+            font-size: 12px;
+            margin-left: 15px;
+            margin-bottom: 113px;
+
+            span {
+                color: #ff0000;
+                font-weight: bold;
+            }
+        }
+
+        input {
+            position: absolute;
+            margin-left: 15px;
+            text-align: center;
+            width: 175px;
+            bottom: 0;
+        }
+    }
+
+    &.forgot {
+        .right {
+            h3 {
+                font-size: 19px;
+                font-weight: normal;
+                margin-top: 15px;
+                margin-bottom: 10px;
+                margin-left: 15px;
+            }
+        }
+    }
+}
+
+div.registerBox {
+    position: relative;
+    width: 590px;
+    padding: 5px;
+    background: #ffffff;
+    @include border-radius(6px);
+    margin: 47px auto 30px auto;
+    display: none;
+    behavior: url(/css/PIE.htc);
+
+    h1 {
+        a {
+            float: right;
+        }
+    }
+
+    p {
+        &.infoText {
+            padding: 15px 15px 5px 15px;
+        }
+    }
+
+    .formContainer {
+        padding: 15px;
+
+        .steps {
+            height: 42px;
+            overflow: hidden;
+            background: url(/img/register/steps-bg.png) no-repeat left top transparent;
+            margin: 5px 0 20px 0;
+
+            &.company {
+                background: url(/img/register/steps-bg.png) no-repeat left -42px transparent;
+            }
+
+            p {
+                float: left;
+                font-size: 12px;
+                font-weight: bold;
+                padding: 10px;
+
+                span {
+                    font-weight: normal;
+                }
+
+                &.company {
+                    margin-left: 30px;
+                }
+            }
+        }
+
+        .box {
+            position: relative;
+            background: #f5f7fa;
+            border: 1px solid #d6dce4;
+            @include border-radius(6px);
+            padding: 15px 15px 5px 15px;
+            font-size: 12px;
+            behavior: url(/css/PIE.htc);
+        }
+
+        .step1 {
+            .box {
+                padding-bottom: 15px;
+            }
+        }
+
+        h3 {
+            font-size: 16px;
+            font-weight: normal;
+            margin-top: 15px;
+            margin-bottom: 16px;
+        }
+
+        label {
+            font-size: 12px;
+            font-weight: bold;
+            top: 0;
+            width: 130px;
+            display: inline-block;
+
+            sup {
+                color: #fe2121;
+            }
+
+            &[for="companyType"] {
+                top: 0;
+                width: 128px;
+            }
+
+            &[for="companyOtherType"], &[for="jobOtherType"] {
+                display: none;
+            }
+
+            &[for="jobType"] {
+                width: 128px;
+                top: -7px;
+            }
+
+            &[for="country"] {
+                width: 128px;
+            }
+
+            &[for="decision"] {
+                display: block;
+                font-weight: normal;
+                margin-bottom: 10px;
+                width: 167px;
+
+                input[type="image"]{
+                    display: block;
+                    width: 15px;
+                    height: 15px;
+                    float: right;
+                    position: relative;
+                    top: -2px;
+                }
+            }
+
+            &[for="address2"] {
+                font-weight: normal;
+            }
+
+            &[for="address3"] {
+                font-weight: normal;
+            }
+
+            &[for="phone"] {
+                font-weight: normal;
+            }
+
+            &[for="web"] {
+                font-weight: normal;
+            }
+
+            &[for="spend"] {
+                display: inline-block;
+                font-weight: normal;
+                width: 117px;
+                margin-right: 11px;
+
+                input[type="image"]{
+                    display: block;
+                    width: 15px;
+                    height: 15px;
+                    float: right;
+                    position: relative;
+                    top: -2px;
+                }
+            }
+
+            &[for="vesselNo"] {
+                font-weight: normal;
+                width: 103px;
+            }
+
+            &[for="vesselType[]"] {
+                font-weight: normal;
+                display: inline-block;
+                width: 111px;
+            }
+
+            &[for="agree"]{
+                width: auto;
+            }
+
+            &.empty {
+                display: inline-block;
+                width: 80px;
+            }
+        }
+
+        input[name="companyOtherType"], input[name="jobOtherType"] {
+            display: none;
+        }
+
+        input[name="jobOtherType"] {
+            margin-bottom: 15px !important;
+        }
+
+        div.separate {
+            height: 15px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"]{
+            width: 237px;
+            margin-bottom: 3px;
+        }
+
+        input[name="zip"] {
+            width: 100px;
+        }
+
+        input[name="vesselNo"] {
+            width: 70px;
+        }
+
+        .types {
+            margin-top: 10px;
+
+            .title {
+                width: 103px;
+                float: left;
+                height: 200px;
+            }
+        }
+
+        .agreement {
+            margin-top: 15px;
+            margin-bottom: 10px;
+
+            span {
+                font-weight: normal;
+            }
+        }
+
+        .updates {
+            margin-bottom: 10px;
+
+            label {
+                font-weight: normal;
+                width: auto;
+            }
+        }
+
+        .privacy {
+            p {
+                line-height: 1.2;
+            }
+        }
+
+        .checker {
+            top: -1px;
+        }
+
+        .selector {
+            width: 250px;
+            margin-top: -2px;
+
+            &.invalid {
+                border: 1px solid red;
+            }
+
+            &#uniform-country, &#uniform-spend, &#uniform-companyType, &#uniform-jobType {
+                margin-bottom: 2px;
+            }
+
+            &#uniform-spend {
+                top: -4px;
+            }
+
+            span {
+                width: 225px;
+            }
+
+            select {
+                width: 260px;
+            }
+        }
+
+        input[type="submit"]{
+            margin-top: 15px;
+        }
+
+        span.dec {
+            position: relative;
+            top: 3px;
+        }
+
+        div.radio {
+            margin-left: 130px;
+        }
+    }
+}

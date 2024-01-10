@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>ShipServ Match</title>
+</head>
+
+<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0" bgcolor="#f5f7fa">
+    <table border="0" cellpadding="0" cellspacing="0" width="636" bgcolor="#f5f7fa" style="margin:0 auto;">
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                    <tr><td height="14px" style="line-height: 1; font-size: 14px;">&nbsp;</td></tr>
+                    <tr>
+                        <td  style="padding-left: 8px;font-family: Arial, Helvetica, sans-serif; color: #2e3235; font-size: 12px;">
+                            <p>Dear ShipServ Customer,</p>
+
+                            <p>
+                                <ul>
+                                    <li><strong>Ref:</strong> <?php     echo htmlentities($this->quote->qotRefNo); ?></li>
+                                    <li><strong>Subject:</strong> <?php echo htmlentities($this->quote->qotSubject); ?></li>
+                                    <li><strong>Buyer:</strong> <?php   echo $this->buyer->getName(); ?></li>
+                                    <li><strong>Vessel:</strong> <?php  echo htmlentities($this->rfq->rfqVesselName); ?></li>
+                                    <li><strong>Sent:</strong> <?php    echo htmlentities($this->date->format('Y-m-d H:i:s')); ?> UTC</li>
+                                </ul>
+                            </p>
+
+                            <p>
+                                To view this quote please click <a href="<?php echo $this->quote->getUrl(); ?>">here</a>.
+                            </p>
+
+                            <p>
+                                Your quote has been automatically declined by the buyer for the following reason:
+                            </p>
+
+                            <p>
+                                <ul>
+                                    <li><strong>Reason:</strong> Buyer has received cheaper quote(s) from other suppliers</li>
+                                </ul>
+                            </p>
+                            <p>
+                                Should you have any questions or require immediate service, please contact ShipServ through
+                                <a href="https://www.shipserv.com/support">https://www.shipserv.com/support</a> or send an email to
+                                <a href="mailto:support@shipserv.com">support@shipserv.com</a>.
+                            </p>
+                            <p>
+                                Best Regards,<br/>
+                                ShipServ<br/>
+                                <a href="mailto:support@shipserv.com">support@shipserv.com</a>
+                            </p>
+
+                        </td>
+
+                    </tr>
+                    <tr><td>&nbsp;</td></tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr><td>&nbsp;</td></tr>
+
+        <tr>
+            <td>
+                <table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-size: 11px; border-top: 1px dotted #d7dade; padding-top: 10px;">
+                    <tr>
+                        <td style="font-family: Arial, Helvetica, sans-serif; color: #2e3235; font-weight: normal; font-size: 11px;padding-right:4px;">
+                            ShipServ &copy; 2014
+                            <span style="font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 11px;color: #d7dade;">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                            <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/legal-notes/terms-and-conditions" style="font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 11px;color: #00386e;text-decoration: none;">Terms &amp; Conditions</a>
+                            <span style="font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 11px;color: #d7dade;">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                            <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/privacy-policy" style="font-family: Arial, Helvetica, sans-serif; font-weight: normal; font-size: 11px;color: #00386e;text-decoration: none;">Privacy Policy</a>
+                        </td>
+                        <td style="text-align:right;"><img src="<?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->hostname; ?>/images/match/email/logo_foot.png" alt="ShipServ"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr><td>&nbsp;</td></tr>
+    </table>
+</body>
+</html>

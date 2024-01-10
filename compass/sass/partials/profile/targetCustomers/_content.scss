@@ -1,0 +1,889 @@
+#main_content_area {
+	width: 1280px;
+	font-family: Lato, sans-serif;
+	.content_wide {
+		.content_new-wide_body {
+			.profile-body-right{
+				&.companyProfile {
+					width: 1024px;
+					overflow: visible;
+
+					h1 {
+						&.styled {
+							padding: 5px 15px;
+							min-height: 29px;
+
+							span {
+								position: relative;
+								top: 6px;
+							}
+
+							.button {
+								&.settings, &.closeSettings {
+									float: right;
+									font-weight: normal;
+									background-image: none;
+									background: #00478A;
+									padding: 8px 25px;
+								}
+							}
+						}
+					}
+
+					.btn {
+						&.howitworks {
+							// I thing using different font sizes for the same type of button on the same page is not a good practice, but this was requested, that's why it is here 
+							font-size: 15px;
+						}
+					}
+					.cont {
+						padding: 25px 20px;
+
+						&.settings {
+							.btn {
+								&.medium {
+									margin: 1px;
+									&.closeSettings {
+										margin: 11px;
+									}
+								}
+
+							}
+						
+							.tab-list-holder {
+								width: 100%;
+								height: 60px;
+								margin-bottom: 12px;
+								display: block;
+								float: left;
+								background-color: $lt-grey;
+								div {
+									font-family: Lato, sans-serif;
+									font-weight: bold;
+									float: left;
+									height: 55px;
+									line-height: 55px;
+									text-align: center;
+									padding: 0px 25px;
+									-webkit-touch-callout: none;
+								    -webkit-user-select: none;
+								    -khtml-user-select: none;
+								    -moz-user-select: none;
+								    -ms-user-select: none;
+								    user-select: none;
+								    cursor: pointer;							
+									&.selected {
+										border-bottom: 5px solid $link-blue;
+									}
+								}
+								
+								a {
+									font-family: Lato, sans-serif;
+									float: right;
+									margin: 7px 14px;
+								}
+							}
+							
+							.greyBox {
+								margin-top: 20px;
+								background: #f6f7fb;
+								border: 1px solid #d5dce4;
+								@include border-radius(6px);
+								padding: 15px;
+								margin-bottom: 20px;
+
+								h2 {
+									font-size: 16px;
+									font-weight: bold;
+									margin-bottom: 15px;
+								}
+
+								label {
+									display: inline;
+									padding-right: 10px;
+									font-size: 14px;
+								}
+
+								.checker {
+									top: -1px;
+								}
+
+								.selector {
+									width: 60px;
+									font-size: 14px;
+
+									span {
+										width: 31px;
+									}
+								}
+							}
+							.settingsButton	{
+								margin-top: 10px;
+
+								.button {
+									background-image: none;
+									text-shadow: none;
+									background: #008B00;
+									float: right;
+									border: 0;
+								}
+							}
+						}
+
+						.blueBox {
+							float: left;
+							display: block;
+							padding: 20px;
+							font-size: 16px;
+							background: #CAEDF9;
+							margin-bottom: 25px;
+							@include border-radius(6px);
+							behavior: url(/css/PIE.htc);
+						}
+
+						.infoBox {
+							height: 142px;
+							@include border-radius(8px 8px 0 0);
+							background: #90DCF7;
+							padding: 30px 25px 0 25px;
+							position: relative;
+							
+							h2 {
+								font-size: 24px;
+								margin-bottom: 10px;
+							}
+
+							p {
+								font-size: 14px;
+								line-height: 1.2;
+							}
+
+							.leftBox {
+								vertical-align: top;
+								p {
+									margin-bottom: 20px;
+								}
+							}
+
+							.rightBox {
+								background:#dcf6fc;
+								padding: 20px;
+								position: absolute;
+								top: 30px;
+								right: 25px;
+							}
+							.transRightBox {
+								padding: 0px 20px;
+								position: absolute;
+								top: 30px;
+								right: 25px;
+							}
+						}
+
+						&.targeted {
+							.infoBox {
+								p {
+									line-height: 1.2;
+								}
+
+								.rightBox {
+									font-size: 15px;
+									line-height: 1.2;
+									padding: 0;
+									width: 526px;
+
+									.dark {
+										text-align: center;
+										width: 205px;
+										color: #ffffff;
+										background: #0090D4;
+										font-size: 15px;
+										font-weight: normal;
+									    padding: 20px;
+
+										.medium {
+											font-weight: bold;
+											font-size: 16px;
+											position: relative;
+											top: -7px;
+										}
+
+										.large {
+											font-weight: bold;
+											font-size: 40px;
+										}
+
+										.percent {
+											font-weight: bold;
+											font-size: 24px;
+										}
+									}
+
+									.light {
+										float: right;
+										padding: 20px;
+									}
+								}
+
+								.clear {
+									font-size: 0px;
+									height: 0px;
+								}
+							}
+						}
+
+						&.excluded {
+							.infoBox {
+								p {
+									line-height: 1.2;
+								}
+
+								.rightBox {
+									font-size: 15px;
+									line-height: 1.2;
+									padding: 0;
+									width: 526px;
+
+									.dark {
+										text-align: center;
+										width: 205px;
+										color: #ffffff;
+										background: #0090D4;
+										font-size: 15px;
+										font-weight: normal;
+									    padding: 20px;
+
+										.medium {
+											font-weight: bold;
+											font-size: 16px;
+											position: relative;
+											top: -7px;
+										}
+
+										.large {
+											font-weight: bold;
+											font-size: 40px;
+										}
+
+										.percent {
+											font-weight: bold;
+											font-size: 24px;
+										}
+									}
+
+									.light {
+										float: right;
+										padding: 20px;
+									}
+								}
+
+								.clear {
+									font-size: 0px;
+									height: 0px;
+								}
+							}
+						}
+
+						.tabs {
+							.tab {
+								position: relative;
+								left: 0;
+								width: 327px;
+								margin-right: 2px;
+								height: 38px;
+								display: inline-block;
+								background: #ADB7BE;
+								border-top: 5px solid #ADB7BE;
+								color: #ffffff;
+								text-align: center;
+								font-size: 18px;
+								cursor: pointer;
+								padding: 8px 0;
+
+								span {
+									position: relative;
+									top: -8px;
+								}
+
+								&.active {
+									background: #ffffff;
+									border-top: 5px solid #0090D4;
+									color: #0090D4;
+								}
+
+								&.last {
+									margin-right: 0;
+									width: 326px;
+								}
+							}
+						}
+
+						.data {
+							padding-top: 50px;
+						}
+
+						table {
+							table-layout: fixed;
+							border-top: 1px solid #D5DCE4;
+							border-left: 1px solid #D5DCE4;
+
+							thead {
+								tr {
+									th {
+										border-bottom: 1px solid #D5DCE4;
+										border-right: 1px solid #D5DCE4;
+										background: #F6F7FB;
+										font-size: 12px;
+										font-weight: bold;
+										text-align: center;
+										vertical-align: middle;
+										padding: 9px 5px;
+
+										&.left {
+											text-align: left;
+										}
+									}
+								}
+							}
+
+							&.pendingTable {
+								thead {
+									tr {
+										th {
+											&.sb {
+												width: 20px;
+												position: relative;
+												line-height: 14px;
+
+												img {
+													cursor: pointer;
+												}
+
+												.helpTooltip {
+													display: none;
+												    position: absolute;
+												    top: 46px;
+												    left: -74px;
+												    width: 180px;
+												    height: 155px;
+												    background: url(/img/profile/targetCustomers/sbinfo.png) left top no-repeat transparent;
+												    z-index: 9999;
+												}
+											}
+
+											&.tnid {
+												width: 40px;
+											}
+											&.since {
+												width: 75px
+											}
+
+											&.location {
+												width: 85px;
+											}
+
+											&.vesselNo {
+												width: 75px;
+											}
+
+											&.vesselTypes {
+												width: 125px;
+											}
+
+											&.ordVal {
+												width: 90px;
+												position: relative;
+
+												img {
+													cursor: pointer;
+												}
+
+												.helpTooltip {
+													display: none;
+												    position: absolute;
+												    top: 57px;
+    												left: -21px;
+												    width: 142px;
+												    height: 102px;
+												    background: url(/img/profile/targetCustomers/ordvalTooltipBg.png) left top no-repeat transparent;
+												    z-index: 9999;
+												}
+											}
+
+											&.lastTxnDate {
+												width: 78px;
+											}
+
+											&.action {
+												width: 190px;
+											}
+										}
+									}
+								}
+							}
+
+							&.targetedTable {
+								thead {
+									tr {
+										th {
+											&.sb {
+												width: 20px;
+												position: relative;
+
+												img {
+													cursor: pointer;
+												}
+
+												.helpTooltip {
+													display: none;
+												    position: absolute;
+												    top: 46px;
+												    left: -74px;
+												    width: 180px;
+												    height: 155px;
+												    background: url(/img/profile/targetCustomers/sbinfo.png) left top no-repeat transparent;
+												    z-index: 9999;
+												}
+											}
+
+											&.tnid {
+												width: 40px;
+											}
+
+											&.since {
+												width: 75px;
+											}
+
+											&.location {
+												width: 80px;
+											}
+
+											&.vesselNo {
+												width: 60px;
+											}
+
+											&.vesselTypes {
+												width: 130px;
+											}
+
+											&.targetedBy {
+												width: 85px;
+											}
+
+											&.rfqRec {
+												width: 60px;
+												position: relative;
+
+												img {
+													cursor: pointer;
+												}
+
+												.helpTooltip {
+													display: none;
+												    position: absolute;
+												    top: 46px;
+												    left: -37px;
+												    width: 142px;
+												    height: 102px;
+												    background: url(/img/profile/targetCustomers/rfqTooltipBg.png) left top no-repeat transparent;
+												    z-index: 9999;
+												}
+											}
+
+											&.qotRate {
+												width: 53px;
+												position: relative;
+
+												img {
+													cursor: pointer;
+												}
+
+												.helpTooltip {
+													display: none;
+												    position: absolute;
+												    top: 45px;
+												    left: -38px;
+												    width: 142px;
+												    height: 80px;
+												    background: url(/img/profile/targetCustomers/qotTooltipBg.png) left top no-repeat transparent;
+												    z-index: 9999;
+												}
+											}
+
+											&.ordVal {
+												width: 85px;
+
+												span {
+													font-size: 12px;
+													font-weight: normal;
+												}
+											}
+
+											&.action {
+												width: 100px;
+											}
+										}
+									}
+								}
+							}
+
+							&.excludedTable {
+								thead {
+									tr {
+										th {
+											&.sb {
+												width: 20px;
+												position: relative;
+
+												img {
+													cursor: pointer;
+												}
+
+												.helpTooltip {
+													display: none;
+												    position: absolute;
+												    top: 46px;
+												    left: -74px;
+												    width: 180px;
+												    height: 155px;
+												    background: url(/img/profile/targetCustomers/sbinfo.png) left top no-repeat transparent;
+												    z-index: 9999;
+												}
+											}
+
+											&.tnid {
+												width: 40px;
+											}
+
+											&.since {
+												width: 75px;
+											}
+
+											&.location {
+												width: 80px;
+											}
+
+											&.vesselNo {
+												width: 60px;
+											}
+
+											&.vesselTypes {
+												width: 130px;
+											}
+
+											&.excludedBy {
+												width: 85px;
+											}
+
+											&.ordVal {
+												width: 83px;
+												position: relative;
+
+												span {
+													font-weight: normal;
+												}
+
+												img {
+													cursor: pointer;
+												}
+
+												.helpTooltip {
+													display: none;
+												    position: absolute;
+												    top: 58px;
+												    left: -24px;
+												    width: 142px;
+												    height: 102px;
+												    background: url(/img/profile/targetCustomers/ordvalTooltipBg.png) left top no-repeat transparent;
+												    z-index: 9999;
+												}
+											}
+
+											&.lastTxnDate {
+												width: 95px;
+											}
+
+											&.action {
+												width: 90px;
+											}
+										}
+									}
+								}
+							}
+
+							&.settingsTable {
+								thead {
+									tr {
+										th {
+											&.email {
+												width: 370px;
+											}
+
+											&.receive {
+												width: 180px;
+											}
+
+											&.canTarget {
+												width: 170px;
+											}
+										}
+									}
+								}
+							}
+
+							tbody {
+								tr {
+									td {
+										border-bottom: 1px solid #D5DCE4;
+										border-right: 1px solid #D5DCE4;
+										background: #ffffff;
+										font-size: 12px;
+										font-weight: normal;
+										text-align: center;
+										vertical-align: middle;
+										padding: 9px 5px;
+										position: relative;
+
+										&.left {
+											text-align: left;
+										}
+
+										&.excludeAction {
+											img {
+												cursor: pointer;
+											}
+
+											.lockTooltip {
+											    display: none;
+											    position: absolute;
+											    top: 0px;
+											    left: 95px;
+											    width: 145px;
+											    height: 73px;
+											    background: url(/img/profile/targetCustomers/lockedTooltipBg.png) left top no-repeat transparent;
+											    z-index: 9999;
+
+											    p {
+									    	        font-size: 14px;
+												    padding: 5px;
+												    padding-left: 20px;
+												    padding-top: 10px;
+												    line-height: 1.2;
+											    }
+											}
+										}
+
+										.button.medium {
+											padding: 6px 14px;
+											font-weight: normal;
+										}
+
+										.button.target {
+											background: #008B00;
+											text-shadow: none;
+											margin-right: 5px;
+										}
+										.button.exclude {
+											background: #000000;
+											text-shadow: none;
+
+											&.inactive {
+												background: #dadada;
+												cursor: default;
+											}
+										}
+
+										.locked {
+											position: absolute;
+											left: 86px;
+											top: 20px;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+#modal, #modalX {
+	width: 485px;
+	.modalBody {
+		.modalContent {
+			p {
+				font-size: 14px;
+				line-height: 1.2;
+				margin: 0;
+				padding: 0;
+
+				&.marginBottom {
+					font-size: 16px;
+					margin-bottom: 15px;
+					margin-top: 10px;
+				}
+			}
+
+			.buttons {
+				text-align: center;
+				margin-top: 40px;
+				margin-bottom: 15px;
+			}
+
+			input[name="pmote"]{
+				background-image: none;
+				background: #008B00;
+				font-weight: normal;
+				font-size: 15px;
+				text-shadow: none;
+				margin-right: 10px;
+			}
+
+			input[name="xclude"]{
+				background-image: none;
+				background: #000000;
+				font-weight: normal;
+				font-size: 15px;
+				text-shadow: none;
+				margin-right: 10px;
+			}
+
+			input[name="cancel"]{
+				background-image: none;
+				background: #E9EDF1;
+				font-weight: normal;
+				color: #000000;
+				border: 1px solid #8E959C;
+				font-size: 15px;
+				text-shadow: none;
+			}
+		}
+	}
+}
+
+
+.shipservPopupContent {
+	ol {
+		list-style-type: decimal;
+		padding: 25px;
+		li {
+			padding: 0px 0px 60px 12px;
+			font-size: 17px;
+    			line-height: 1.5em;
+    			color: $text-grey;
+			span {
+				padding: 0;
+				margin: 0;
+				&.red {
+					color: red;
+				}
+			}
+			
+			img {
+				float: right;
+				width: 115px;
+				height: 115px;
+				margin: 0px;
+				&.margin-up {
+					margin-top: -20px;
+				}
+			}
+		}
+	}
+}
+
+p {
+	&.save-confirmation {
+		display: none;
+		float: right;
+		padding: 12px 16px;
+		color: $text-green;
+		font-size: 14px;
+	    margin-top: -8px;
+		.fa {
+			font-size: 30px;
+    			vertical-align: middle;
+		}
+	}
+}
+
+form {
+	&.filters {
+		background-color: white;
+		.top-selector {
+			display: block;
+		    float: left;
+		    width: 100%;
+		    padding: 20px 0px;
+		}
+		#keyworListContainer {
+			-webkit-touch-callout: none; 
+			-webkit-user-select: none; 
+			-khtml-user-select: none; 
+			-moz-user-select: none; 
+			-ms-user-select: none; 
+			user-select: none; 
+			margin-left: -7px;
+			.col {
+				display: block;
+				width: 225px; 
+				margin: 0px 6px;
+				float: left;
+				div {
+					display: block;
+					float: left;
+					width: 225px;
+					height: 40px;
+					margin: -1px 0 0 0;
+					border: 1px solid $dark-grey;
+					span {
+						font-family: Lato, sans-serif;
+						vertical-align: middle;
+						display: inline-block;
+						line-height: 40px;
+						padding: 0;
+						margin: 0;
+						&.kw-label {
+							width: 185px;
+							text-indent: 15px;
+							white-space: nowrap;
+				  			overflow: hidden;
+				  			text-overflow: ellipsis;
+			  			}
+			  			.fa {
+			  				margin-left: 5px;
+			  				font-size: 27px;
+			  				vertical-align: middle;
+			  				color: $text-grey;
+			  				cursor: pointer;
+			  			}
+					}
+				
+					&.highlighed {
+						background-color: $lt-grey;	
+					}
+				}
+			}
+
+		}
+	
+		div {
+			&.al-right {
+				display: none;
+				text-align: right;
+			    margin: 35px 16px;
+			}
+		
+			&.no-items-message {
+				display: none;
+				margin: 35px  0px;
+				p {
+					font-size: 14px;
+					color: $text-grey;
+				}
+			}
+		}
+	}
+}

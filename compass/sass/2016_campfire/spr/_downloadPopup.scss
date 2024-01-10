@@ -1,0 +1,61 @@
+#body {
+    #content {
+        .downloadPopup {
+            display: block;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -75px;
+            margin-left: -200px;
+            z-index: 999;
+            width: 400px;
+            height: 150px;
+            background-color: white;
+            border: 1px solid;
+            box-shadow: 2px 2px #d9d9d9;
+        
+            .title {
+                display: block;
+                width: 100%;
+                background-color: #dedede;
+                border-bottom: 1px solid;
+        
+                p {
+                    display: inline-block;
+                    margin: 0;
+                    padding: 5px;
+                    line-height: 1;
+                    font-weight: bold;
+
+                }
+        
+                span {
+                    &.downloadClose {
+                       width: 18px;
+                       height: 18px;
+                       position: absolute;
+                       color: darkgrey;
+                       background-color: white;
+                       right: 2px;
+                       top: 2px;
+                       cursor: pointer;
+                       background-image: url("data:image/svg+xml;charset=utf8,%3C?xml version='1.0' encoding='UTF-8'?%3E%3C!DOCTYPE svg PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'%3E%3C!-- Creator: CorelDRAW --%3E%3Csvg xmlns='http://www.w3.org/2000/svg' xml:space='preserve' width='18px' height='18px' style='shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd' viewBox='0 0 640 640' xmlns:xlink='http://www.w3.org/1999/xlink'%3E%3Cdefs%3E%3Cstyle type='text/css'%3E%3C![CDATA[ .fil0 {fill:black} ]]%3E%3C/style%3E%3C/defs%3E%3Cg id='Layer_x0020_1'%3E%3Cmetadata id='CorelCorpID_0Corel-Layer'/%3E%3Cpath class='fil0' d='M67.6898 0l504.62 0c37.2288,0 67.6898,30.461 67.6898,67.6898l0 504.62c0,37.2288 -30.461,67.6898 -67.6898,67.6898l-504.62 0c-37.2288,0 -67.6898,-30.461 -67.6898,-67.6898l0 -504.62c0,-37.2288 30.461,-67.6898 67.6898,-67.6898zm335.709 165.262c19.0987,-19.3821 50.1384,-19.4766 69.3198,-0.188979 19.205,19.2876 19.2758,50.6345 0.188979,70.0166l-83.7648 84.9459 83.8711 85.0404c18.9097,19.2168 18.6498,50.3864 -0.590558,69.5914 -19.2522,19.1931 -50.1738,19.1459 -69.1071,-0.0944894l-83.3042 -84.438 -83.4105 84.6034c-19.0987,19.3821 -50.1384,19.4766 -69.3198,0.188979 -19.205,-19.2876 -19.2758,-50.6345 -0.188979,-70.0166l83.7648 -84.9459 -83.8711 -85.0404c-18.9097,-19.2168 -18.6498,-50.3864 0.590558,-69.5914 19.2522,-19.1931 50.1738,-19.1459 69.1071,0.0944894l83.3042 84.438 83.4105 -84.6034zm-285.086 -101.068l403.375 0c29.776,0 54.1188,24.3428 54.1188,54.1188l0 403.375c0,29.776 -24.3428,54.1188 -54.1188,54.1188l-403.375 0c-29.776,0 -54.1188,-24.3428 -54.1188,-54.1188l0 -403.375c0,-29.776 24.3428,-54.1188 54.1188,-54.1188z'/%3E%3C/g%3E%3C/svg%3E");
+                      }
+                }
+            }
+        
+            .dowloadPopupContent {
+                text-align: center;
+
+                p {
+                    font-size: 14px;
+                    padding: 30px 5px 20px 5px;
+                }
+
+                img {
+                    margin-top: 25px;
+                }
+            }
+        }
+    }
+}

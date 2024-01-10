@@ -1,0 +1,32 @@
+<?
+	$companyInfo = $this->brandAuthRequest->getCompanyInfo();
+	$brandInfo = $this->brandAuthRequest->getBrandInfo ();
+?>
+Dear Customer<br />
+ <br />
+<?php echo $companyInfo["SPB_NAME"]?> wishes to add your brand (<?php echo $brandInfo["NAME"]?>) under their profile, indicating that they are <?php echo $this->brandAuthRequest->getAuthLevelDisplayName()?> supplier.<br />
+ <br />
+Please follow this link to confirm or reject their listing request:<br />
+<?php echo $this->data["link"]?><br />
+<br />
+Best regards,<br />
+ShipServ Team<br />
+<br />
+<br />
+<br />
+<br />
+<div style="color: #525c64;">
+	<b>FAQs</b><br />
+	Why is it important that I confirm/reject a listing request from suppliers for my brand?<br />
+	Brand verification gives you control over the ShipServ Pages search rankings for your brand and therefore, you can drive RFQs to the suppliers YOU authorise.<br />
+	Brand verification enables you to control which suppliers can list your brand in their profile with the status AUTHORISED Agent/Installer/Repairer/OEM (Genuine/Original) spares supplier. This ensures that the suppliers with genuine and verified links with your brand will be listed HIGHER in search results.<br />
+	 <br />
+	<b>How easy and quick is this?</b><br />
+	You simply click this link (<?php echo $this->data["link"]?>) and after you log in you can view and manage all your brand listing requests. It will only take you 10 seconds.<br />
+	 <br />
+	<b>What will it cost me?</b><br />
+	This is a FREE service, with no obligations on your part whatsoever.<br />
+	 <br />
+	<?php /*For more information on brand verification, please click here.(link with FAQ on brand verification on Help, on Pages - I am writng it now and will get it live asap.)<br />*/ ?>
+	If you need any assistance, please contact support@shipserv.com
+</div> 

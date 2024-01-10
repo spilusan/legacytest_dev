@@ -1,0 +1,91 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()
+	->addModule('match/match')
+	;
+
+function getMonth($number)
+{
+	$dateObj   = new DateTime;
+	$dateObj->setDate('2014', $number, '1');
+	$monthName = $dateObj->format('M'); // March
+	return strtoupper($monthName);
+}
+
+?>
+
+<?php
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Match reports', 'url'  => '/match/adoption-kpi');
+	$breadcrumbs[] = array('name' => 'Usage report', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.colVis.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+
+
+<div id="body" class="usage">
+	<div id="content">
+		<h1 class="styled">Usage report</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<form method="get" class="new" id="report-form">
+			<input type="hidden" id="selectedTnid" />
+		    <table style=";">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		            	<span style="font-size:12px; ;">
+		            			Displaying
+		            			<select name="doc" id="docId">
+                            		<option value="">All</option>
+                            		<option value="rfqSent" <?php echo ($_GET['doc'] == 'rfq')?'selected="selected"':"" ?>>Total RFQ sent to match</option>
+                            	    <option value="rfqForwarded" <?php echo ($_GET['doc'] == 'rfq-forwarded' )?'selected="selected"':"" ?>>Total RFQ forwarded by match to suppliers</option>
+                            		<option value="quoteReceived" <?php echo ($_GET['doc'] == 'qot')?'selected="selected"':"" ?>>Total Quote(s) received from match selected suppliers</option>
+                            		<option value="quoteRate" <?php echo ($_GET['doc'] == 'quote-rate')?'selected="selected"':"" ?>>Quote rate (%)</option>
+                            	</select>
+                            	in 
+                            	<select name="yyyy" onchange="$('#report-form').submit();">
+                            		<? 
+                            		for($i=2012; $i<=date('Y'); $i++) {
+										$selectedYear = ((!isset($_GET['yyyy']) || $_GET['yyyy']=="")? date('Y') : _htmlspecialchars($_GET['yyyy']));
+									?>
+                            			<option value="<?= $i?>" <?php echo ($selectedYear == $i)?'selected="selected"':"" ?>><?=$i?></option>
+                        			<? 
+									}
+									?>
+                            	</select>
+                            	grouped by month
+            			</span>
+            			
+            			<div class="clear"></div>
+            			
+            			<div style="font-size:14px; margin-top:20px; font-weight: bold;" id="titleBuyerName"></div>
+            			<div class="clear"></div>
+            			<div id="chart_div" style="width: 800px; height: 400px;"></div>
+            			
+            			<?php echo $this->partial('match/usage-report-table.phtml', array('name' => 'rfqSent', 		'display' => true,  'idx' => 0, 'operation' => 'sum', 'data' => $this->totalRfqSentToMatch)); ?>
+						<?php echo $this->partial('match/usage-report-table.phtml', array('name' => 'rfqForwarded', 'display' => false, 'idx' => 1, 'operation' => 'sum', 'data' => $this->totalForwardedRfq)); ?>
+            			<?php echo $this->partial('match/usage-report-table.phtml', array('name' => 'quoteReceived','display' => false, 'idx' => 2, 'operation' => 'sum', 'data' => $this->totalQuoteReceived)); ?>
+						<?php echo $this->partial('match/usage-report-table.phtml', array('name' => 'quoteRate', 	'display' => false, 'idx' => 3, 'operation' => 'avg', 'data' => $this->totalQuoteRate, 'report' => $this->report)); ?>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript" src="/js/modules/match/usage-report.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+//<![CDATA[
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(draw);
+//]]>
+</script>

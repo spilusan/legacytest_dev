@@ -1,0 +1,185 @@
+/*
+Document   : partials/def/reports/_tables.scss
+Created on : Aug 21, 2014, 2:54:43 PM
+Author     : Attila O.
+Description: combining partials for rfq-outbox styles
+*/
+table {
+	&.head {
+		img {
+			max-width: 115px; 
+			/* This is a fix for the logo, on IE7, and bootstrap compatibility bug */
+		}
+	}
+	&.foot {
+		clear: both;
+	}
+}
+.sticky-wrapper {
+	height: auto !important;
+	min-width: 1290px !important;
+}
+.toStick {
+	z-index: 9999;
+	/* background: #ffffff; */
+	min-width: 1290px !important;
+	width: 100% !important;
+
+	&.fit {
+		width: auto !important;
+	}
+
+	&.stuck {
+		position: fixed;
+		left: 241px;
+		top: 60px;
+	}
+}
+
+.recordInfo {
+	float: left;
+	font-size: 11px;
+	color: #999999;
+	font-weight: bold;
+	padding-top: 10px;
+	margin-right: 26px;
+}
+
+.spbBtns {
+	a {
+		display: inline-block; 
+		border: 1px solid #bbbbbb;
+		background-color: #f5f5f5;
+		padding: 2px 6px;
+		font-size: 11px;
+		line-height: 17px;
+		color: #333333;
+		@include border-radius(6px);
+		@include x-multiple-colored-gradient(#ffffff 0%, #e6e6e6 100%);
+			-pie-background: linear-gradient(top, #ffffff 0%, #e6e6e6 100%);
+			-pie-poll: true;
+		behavior: url(/css/PIE.htc);
+
+		&.selected {
+			cursor: default;
+			background: #0044cc;
+			color: #ffffff;
+			opacity: 0.65;
+			filter: alpha(opacity=65);
+		}
+	}
+}
+
+.pagination {
+	float: right;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+table.data {
+	display: table;
+	table-layout: auto;
+	width: 100%;
+	border-collapse: collapse;
+	min-width: 1290px !important;
+	margin-top: 12px;
+	clear: both;
+
+	&.fit {
+		width: auto !important;
+	}
+
+	td, th {
+		&.right {
+			text-align: right;
+		}
+	}
+
+	thead {
+		border-top: 1px solid #e9e9e9;
+		border-right: 1px solid #e9e9e9;
+		tr {
+			th {
+				background-color: #d9d9d9;
+				border-bottom: 1px solid #e9e9e9;
+				border-left: 1px solid #e9e9e9;
+				vertical-align: middle;
+				padding: 3px;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				font-size: 11px;
+
+				a {
+					color: #005aad;
+					text-decoration: none;
+					font-weight: bold;
+					margin-right: 13px;
+					display: block;
+					overflow: hidden;
+					text-overflow: ellipsis;
+
+					&.ord {
+						padding-right: 13px;
+
+						&.asc {
+							background:url(../../../img/webreporter/asc.png) right center no-repeat transparent;
+						}
+						&.desc {
+							background:url(../../../img/webreporter/desc.png) right center no-repeat transparent;
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+	tbody {
+		tr {
+			background: #ffffff;
+
+			&:nth-child(even) {
+				background: #f5f7fa;
+			}
+
+			td {
+				&:nth-child(1) {
+					border-left: 1px dotted #bec4cb;
+				}
+				border-right: 1px dotted #bec4cb;
+				font-size: 11px;
+				padding: 3px;
+				vertical-align: middle;
+				color: #2e3235;
+				border-bottom: 1px dotted #bec4cb;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
+		}
+	}
+}
+
+.spbReportData {
+	&.fixed {
+		.toStick, table {
+			width: 1775px !important;
+		}
+	}
+
+
+
+}
+.reportData {
+	margin-top: 44px;
+
+	}
+a {
+	cursor: pointer;
+}
+
+#uniform-timezoneselect {
+	width: 500px;
+	span {
+		width: 465px;
+	}
+}

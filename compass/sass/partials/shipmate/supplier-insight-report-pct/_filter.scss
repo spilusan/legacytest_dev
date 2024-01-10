@@ -1,0 +1,154 @@
+/*
+ * CSS rules for filter section in Supplier Insight report
+ */
+
+.header-container {
+  #exelexport {
+    margin-top: -8px;
+    float: right;
+  }
+}
+
+#body {
+  #content {
+    #report_content {
+      font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+      .pct-sir-filter {
+        display: block;
+        padding: 16px 0;
+        height: 120px;
+        width: 1050px;
+        margin: 0 auto;
+
+        div, form {
+          display: block;
+          width: 65%;
+          float: left;
+
+          div {
+            width: auto;
+          }
+
+          span {
+            font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            display: block;
+            padding: 14px 0;
+            width: 100%;
+            font-weight: bold;
+          }
+
+          div.border {
+            margin: 14px 0;
+            border: 1px solid #9BA7BA;
+            border-radius: 4px;
+            font-size: 16px;
+            color: #333333;
+            padding: 13px 2%;
+            width: 60%;
+            overflow: hidden;
+            text-overflow: ellipsis; 
+          }
+
+          .buttons {
+            margin-left: 65px;
+          }
+        }
+
+        form {
+          width: 35%;
+
+          label {
+            float: right;
+            display: block;
+
+            div {
+              font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+              display: block;
+              padding: 16px 0;
+              width: 100%;
+              font-weight: bold;
+              font-size: 16px;
+            }
+
+            input {
+              &.btn {
+                padding: 10px 26px;
+                float: right;
+                font-size: 14px;
+              }
+
+              &#date-picker {
+                width: 230px;
+                height: 30px;
+                text-align: center;
+              }
+            }
+          }
+        }
+      }
+
+      .pct-sir-profile {
+        display: block;
+        width: 1050px;
+        margin: 0 auto;
+        
+        height: 60px;
+
+        &.premium {
+          background: #5d7190;
+        }
+
+        &.basic {
+          background: #d9131f;
+        }
+
+        div {
+          color: white;
+          margin: 6px;
+          display: block;
+          float: left;
+          padding: 0px 24px 0 12px;
+
+          &:nth-child(1) {
+            border-right: 1px solid white;
+
+            p {
+              text-transform: uppercase;
+              text-align: center;
+            }
+          }
+
+          i {
+            vertical-align: super;
+            font-size: 40px;
+            margin: 0 12px 0 0;
+          }
+
+          p {
+            padding: 0;
+            color: white;
+            max-width: 750px;
+          }
+        }
+      }
+
+      .pct-sir-premium-text {
+        display: block;
+        width: 1050px;
+        margin: 0 auto;
+        background: #e9ecf1;
+
+        p {
+          padding: 6px;
+
+          i {
+            color: #9aa7b1;
+            margin-right: 6px;
+          }
+        }
+      }
+    }
+  }
+}
+

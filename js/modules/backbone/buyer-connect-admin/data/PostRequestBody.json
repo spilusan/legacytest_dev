@@ -1,0 +1,2822 @@
+{
+	"id": 1,
+	"parsedData": {
+		"headers": {
+			"Sender": "10427",
+			"Currency": "GBP",
+			"DocumentType": "RFQ",
+			"DeliveryPort": "Bremerhaven",
+			"Recipient": "52572",
+			"DateDeliveryRequested": "1-Dec-16",
+			"HeaderDiscountPercentage": "10.00%",
+			"VesselName": "MORNING CAMILLA",
+			"LineItemCount": "280",
+			"DocumentName": "MorningCamilla.XLS"
+		},
+		"lineItemRecords": [{
+				"UnitCost": "",
+				"Description": "INSTANT COFFEE",
+				"PartNumber": "A01",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "GOLD",
+				"Packaging": "PKT",
+				"LineItem": "1",
+				"Quantity": "12",
+				"WeightPacking": "200"
+			}, {
+				"UnitCost": "",
+				"Description": "COFFEE CREAMER POWDER",
+				"PartNumber": "A02",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "2",
+				"Quantity": "12",
+				"WeightPacking": "450"
+			}, {
+				"UnitCost": "",
+				"Description": "MILO",
+				"PartNumber": "A03",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "NESTLE",
+				"Packaging": "TIN",
+				"LineItem": "3",
+				"Quantity": "8",
+				"WeightPacking": "400"
+			}, {
+				"UnitCost": "",
+				"Description": "OVALTINE",
+				"PartNumber": "A04",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "CADBURY'S",
+				"Packaging": "TIN",
+				"LineItem": "4",
+				"Quantity": "2",
+				"WeightPacking": "400"
+			}, {
+				"UnitCost": "",
+				"Description": "CHOCOLATE DRINK - NESQUIK",
+				"PartNumber": "A05",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "5",
+				"Quantity": "4",
+				"WeightPacking": "400"
+			}, {
+				"UnitCost": "",
+				"Description": "TEA BAGS",
+				"PartNumber": "A06",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "LIPTON",
+				"Packaging": "BOX",
+				"LineItem": "6",
+				"Quantity": "6",
+				"WeightPacking": "200"
+			}, {
+				"UnitCost": "",
+				"Description": "GREEN TEA BAGS",
+				"PartNumber": "A12",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "7",
+				"Quantity": "6",
+				"WeightPacking": "100"
+			}, {
+				"UnitCost": "",
+				"Description": "ALL BRAN",
+				"PartNumber": "B01",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "8",
+				"Quantity": "1",
+				"WeightPacking": "375"
+			}, {
+				"UnitCost": "",
+				"Description": "CORNFLAKES",
+				"PartNumber": "B02",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "9",
+				"Quantity": "1",
+				"WeightPacking": "375"
+			}, {
+				"UnitCost": "",
+				"Description": "MUESLI",
+				"PartNumber": "B03",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "10",
+				"Quantity": "1",
+				"WeightPacking": "375"
+			}, {
+				"UnitCost": "",
+				"Description": "QUICK OATS",
+				"PartNumber": "B04",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "11",
+				"Quantity": "6",
+				"WeightPacking": "375"
+			}, {
+				"UnitCost": "",
+				"Description": "RICE KRISPIES",
+				"PartNumber": "B05",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "12",
+				"Quantity": "1",
+				"WeightPacking": "375"
+			}, {
+				"UnitCost": "",
+				"Description": "WHEAT FLAKES",
+				"PartNumber": "B06",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "13",
+				"Quantity": "1",
+				"WeightPacking": "375"
+			}, {
+				"UnitCost": "",
+				"Description": "ASSORTED FRUIT JAMS (Mixed fruit, Mango, Peach, Pineapple, Strawberry, Raspberry)",
+				"PartNumber": "C01",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "14",
+				"Quantity": "6",
+				"WeightPacking": "450"
+			}, {
+				"UnitCost": "",
+				"Description": "HONEY",
+				"PartNumber": "C02",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "dabar",
+				"Packaging": "BTL",
+				"LineItem": "15",
+				"Quantity": "12",
+				"WeightPacking": "500"
+			}, {
+				"UnitCost": "",
+				"Description": "1000 ISLAND DRESSING",
+				"PartNumber": "D01",
+				"UnitOfMeasure": "ML",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "16",
+				"Quantity": "6",
+				"WeightPacking": "250"
+			}, {
+				"UnitCost": "",
+				"Description": "ITALIAN SAUCE",
+				"PartNumber": "D02",
+				"UnitOfMeasure": "ML",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "17",
+				"Quantity": "2",
+				"WeightPacking": "250"
+			}, {
+				"UnitCost": "",
+				"Description": "BARBEQUE SAUCE  ",
+				"PartNumber": "D04",
+				"UnitOfMeasure": "ML",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "18",
+				"Quantity": "4",
+				"WeightPacking": "540"
+			}, {
+				"UnitCost": "",
+				"Description": "CHILLY SAUCE ",
+				"PartNumber": "D05",
+				"UnitOfMeasure": "ML",
+				"CountryOfOrigin": "TWIN VALLEY",
+				"Packaging": "BTL",
+				"LineItem": "19",
+				"Quantity": "12",
+				"WeightPacking": "340"
+			}, {
+				"UnitCost": "",
+				"Description": "COCONUT MILK",
+				"PartNumber": "D06",
+				"UnitOfMeasure": "ML",
+				"CountryOfOrigin": "good quality",
+				"Packaging": "TIN",
+				"LineItem": "20",
+				"Quantity": "24",
+				"WeightPacking": "400"
+			}, {
+				"UnitCost": "",
+				"Description": "HP STEAK SAUCE",
+				"PartNumber": "D08",
+				"UnitOfMeasure": "ML",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "21",
+				"Quantity": "1",
+				"WeightPacking": "255"
+			}, {
+				"UnitCost": "",
+				"Description": "MEAT TENDERISER",
+				"PartNumber": "D10",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "22",
+				"Quantity": "1",
+				"WeightPacking": "450"
+			}, {
+				"UnitCost": "",
+				"Description": "OLIVE BLACK",
+				"PartNumber": "D14",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "seedless",
+				"Packaging": "BTL",
+				"LineItem": "23",
+				"Quantity": "2",
+				"WeightPacking": "140"
+			}, {
+				"UnitCost": "",
+				"Description": "OLIVE GREEN",
+				"PartNumber": "D15",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "seedless",
+				"Packaging": "BTL",
+				"LineItem": "24",
+				"Quantity": "6",
+				"WeightPacking": "140"
+			}, {
+				"UnitCost": "",
+				"Description": "TOBASCO SAUCE",
+				"PartNumber": "D21",
+				"UnitOfMeasure": "ML",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "25",
+				"Quantity": "6",
+				"WeightPacking": "142"
+			}, {
+				"UnitCost": "",
+				"Description": "TOMATO KETCHUP",
+				"PartNumber": "D22",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "26",
+				"Quantity": "24",
+				"WeightPacking": "340"
+			}, {
+				"UnitCost": "",
+				"Description": "VINEGAR DARK",
+				"PartNumber": "D23",
+				"UnitOfMeasure": "ML",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "27",
+				"Quantity": "1",
+				"WeightPacking": "750"
+			}, {
+				"UnitCost": "",
+				"Description": "VINEGAR WHITE",
+				"PartNumber": "D24",
+				"UnitOfMeasure": "ML",
+				"CountryOfOrigin": "DATA PUTTY",
+				"Packaging": "BTL",
+				"LineItem": "28",
+				"Quantity": "6",
+				"WeightPacking": "750"
+			}, {
+				"UnitCost": "",
+				"Description": "CHILLI PICKLE  ",
+				"PartNumber": "D26",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "green",
+				"Packaging": "BTL",
+				"LineItem": "29",
+				"Quantity": "4",
+				"WeightPacking": "500"
+			}, {
+				"UnitCost": "",
+				"Description": "GARLIC PICKLE",
+				"PartNumber": "D27",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "30",
+				"Quantity": "6",
+				"WeightPacking": "500"
+			}, {
+				"UnitCost": "",
+				"Description": "LEMON PICKLE",
+				"PartNumber": "D28",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "31",
+				"Quantity": "1",
+				"WeightPacking": "500"
+			}, {
+				"UnitCost": "",
+				"Description": "MANGO PICKLE",
+				"PartNumber": "D30",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "32",
+				"Quantity": "4",
+				"WeightPacking": "500"
+			}, {
+				"UnitCost": "",
+				"Description": "MIX VEG PICKLE",
+				"PartNumber": "D31",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "33",
+				"Quantity": "4",
+				"WeightPacking": "500"
+			}, {
+				"UnitCost": "",
+				"Description": "PICKLED GHERKINS",
+				"PartNumber": "D34",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "34",
+				"Quantity": "1",
+				"WeightPacking": "500"
+			}, {
+				"UnitCost": "",
+				"Description": "MANG TOMAS SAUCE ",
+				"PartNumber": "D37",
+				"UnitOfMeasure": "ML",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "35",
+				"Quantity": "6",
+				"WeightPacking": "350"
+			}, {
+				"UnitCost": "",
+				"Description": "REFINED WHEAT FLOUR (MAIDA)",
+				"PartNumber": "E02",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "36",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "WHOLE WHEAT FLOUR (ATTA)",
+				"PartNumber": "E03",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "PILLSBURY",
+				"Packaging": "",
+				"LineItem": "37",
+				"Quantity": "50",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BENGAL GRAM FLOUR (BESAN)",
+				"PartNumber": "E04",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "INDAIN ",
+				"Packaging": "",
+				"LineItem": "38",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CORN FLOUR",
+				"PartNumber": "E05",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "39",
+				"Quantity": "3",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BASMATI RICE",
+				"PartNumber": "E08",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "GOOD QUALITY",
+				"Packaging": "",
+				"LineItem": "40",
+				"Quantity": "40",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "RICE LONG GRAIN",
+				"PartNumber": "E10",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "STICKEY",
+				"Packaging": "",
+				"LineItem": "41",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "RICE SHORT GRAIN",
+				"PartNumber": "E11",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "JASMIN FLAVOUR",
+				"Packaging": "",
+				"LineItem": "42",
+				"Quantity": "100",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BLACK CHANA",
+				"PartNumber": "F01",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "43",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BLACK EYE DRY BEANS (CHAVLI BEANS)",
+				"PartNumber": "F02",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "44",
+				"Quantity": "4",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "DRY GREEN PEAS",
+				"PartNumber": "F03",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "45",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "KABULI CHANNA (GARBANJO BEANS)",
+				"PartNumber": "F05",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "GOOD QUALITY",
+				"Packaging": "",
+				"LineItem": "46",
+				"Quantity": "4",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "RAJMA (RED KIDNEY BEANS)",
+				"PartNumber": "F06",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "47",
+				"Quantity": "4",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SPLIT BENGAL GRAM (CHANNA DAL)",
+				"PartNumber": "F07",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "48",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SPLIT BLACK GRAM (URAD DAL)",
+				"PartNumber": "F08",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "WHOLE",
+				"Packaging": "",
+				"LineItem": "49",
+				"Quantity": "1",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SPLIT GREEN GRAM (MOONG DAL)",
+				"PartNumber": "F09",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "50",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SPLIT LENTIL(MASOOR DAL)",
+				"PartNumber": "F10",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "51",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SPLIT RED GRAM(TOOR DAL)",
+				"PartNumber": "F11",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "52",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "WHOLE GREEN GRAM (MOONG WHOLE)",
+				"PartNumber": "F12",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "53",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "WHOLE LENTILS (MASOOR WHOLE)",
+				"PartNumber": "F13",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "54",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "DOSA MIX",
+				"PartNumber": "G01",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "55",
+				"Quantity": "12",
+				"WeightPacking": "200"
+			}, {
+				"UnitCost": "",
+				"Description": "GULAB JAMUN MIX ",
+				"PartNumber": "G02",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "56",
+				"Quantity": "6",
+				"WeightPacking": "200"
+			}, {
+				"UnitCost": "",
+				"Description": "IDLI MIX",
+				"PartNumber": "G03",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "57",
+				"Quantity": "12",
+				"WeightPacking": "200"
+			}, {
+				"UnitCost": "",
+				"Description": "VADA MIX",
+				"PartNumber": "G04",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "58",
+				"Quantity": "12",
+				"WeightPacking": "200"
+			}, {
+				"UnitCost": "",
+				"Description": "POHA (PRESSED RICE)",
+				"PartNumber": "G05",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "59",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SEMOLINA  (SUJI)",
+				"PartNumber": "G07",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "60",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PAPPAD ",
+				"PartNumber": "G08",
+				"UnitOfMeasure": "",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "61",
+				"Quantity": "12",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "RASGULLA IN TIN ",
+				"PartNumber": "G11",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "62",
+				"Quantity": "12",
+				"WeightPacking": "1"
+			}, {
+				"UnitCost": "",
+				"Description": "KAJU  KATLI / BARFI",
+				"PartNumber": "G26",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "63",
+				"Quantity": "4",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BAKING POWDER",
+				"PartNumber": "H01",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "64",
+				"Quantity": "1",
+				"WeightPacking": "500"
+			}, {
+				"UnitCost": "",
+				"Description": "BISCUITS SALTED - CRACKERS",
+				"PartNumber": "H02",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "MR SANS/ RITZ",
+				"Packaging": "PKT",
+				"LineItem": "65",
+				"Quantity": "24",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BISCUITS SWEET - ASSORTED",
+				"PartNumber": "H03",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "FAMILY CIRCLE",
+				"Packaging": "",
+				"LineItem": "66",
+				"Quantity": "24",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "ESSANCE - Vanila/Strawberry/cherry",
+				"PartNumber": "H05",
+				"UnitOfMeasure": "ML",
+				"CountryOfOrigin": "VANILA",
+				"Packaging": "BTL",
+				"LineItem": "67",
+				"Quantity": "2",
+				"WeightPacking": "100"
+			}, {
+				"UnitCost": "",
+				"Description": "FOOD COLOURS - POWDER",
+				"PartNumber": "H07",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "YELLOW",
+				"Packaging": "TIN",
+				"LineItem": "68",
+				"Quantity": "1",
+				"WeightPacking": "100"
+			}, {
+				"UnitCost": "",
+				"Description": "JELLY CRYSTALS - ASSORTED FLAVORS",
+				"PartNumber": "H10",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "NOT ASSORTED",
+				"Packaging": "PKT",
+				"LineItem": "69",
+				"Quantity": "12",
+				"WeightPacking": "90"
+			}, {
+				"UnitCost": "",
+				"Description": "PUFF PASTRY (frozen)",
+				"PartNumber": "H12",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "70",
+				"Quantity": "5",
+				"WeightPacking": "500"
+			}, {
+				"UnitCost": "",
+				"Description": "WHITE SUGAR  GRANULATED",
+				"PartNumber": "H13",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "71",
+				"Quantity": "25",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BREAD LOAF SLICED - BROWN (whole meal)",
+				"PartNumber": "H16",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "IONG EXP",
+				"Packaging": "PKT",
+				"LineItem": "72",
+				"Quantity": "6",
+				"WeightPacking": "800"
+			}, {
+				"UnitCost": "",
+				"Description": "BREAD LOAF SLICED - WHITE",
+				"PartNumber": "H18",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "long exp",
+				"Packaging": "PKT",
+				"LineItem": "73",
+				"Quantity": "12",
+				"WeightPacking": "600"
+			}, {
+				"UnitCost": "",
+				"Description": "BURGER BUNS",
+				"PartNumber": "H19",
+				"UnitOfMeasure": "NOS",
+				"CountryOfOrigin": "\"",
+				"Packaging": "",
+				"LineItem": "74",
+				"Quantity": "50",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PIZZA BASE",
+				"PartNumber": "H21",
+				"UnitOfMeasure": "NOS",
+				"CountryOfOrigin": "12\" DIA ONLY",
+				"Packaging": "",
+				"LineItem": "75",
+				"Quantity": "12",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "ALMONDS WITHOUT SHELL",
+				"PartNumber": "H22",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "76",
+				"Quantity": "1",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CASHEW NUTS",
+				"PartNumber": "H23",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "77",
+				"Quantity": "1",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PITACHIO NUTS",
+				"PartNumber": "H24",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "78",
+				"Quantity": "1",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "RAISINS DRY  (KISMIS)",
+				"PartNumber": "H25",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "79",
+				"Quantity": "1",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "TUTTI FRUITY",
+				"PartNumber": "H26",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "80",
+				"Quantity": "1",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BREAD CRUMBS",
+				"PartNumber": "H37",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "81",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "COOKING OIL (REFINED)",
+				"PartNumber": "I01",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "Refined Sunflower oil",
+				"Packaging": "DRUM",
+				"LineItem": "82",
+				"Quantity": "3",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PURE GHEE",
+				"PartNumber": "I04",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "AMUL",
+				"Packaging": "",
+				"LineItem": "83",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "AJINOMOTO (mono sodium glutamete)",
+				"PartNumber": "J01",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "84",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BLACK PEPPER - POWDERED",
+				"PartNumber": "J05",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "85",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BLACK PEPPER - WHOLE",
+				"PartNumber": "J06",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "86",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CARDAMOM GREEN",
+				"PartNumber": "J07",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "87",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CARDAMON BLACK",
+				"PartNumber": "J08",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "88",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CORIANDER POWDER",
+				"PartNumber": "J12",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "EVEREST",
+				"Packaging": "",
+				"LineItem": "89",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CORIANDER WHOLE",
+				"PartNumber": "J13",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "90",
+				"Quantity": "1",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CUMIN POWDER ",
+				"PartNumber": "J14",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "EVEREST",
+				"Packaging": "",
+				"LineItem": "91",
+				"Quantity": "1",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CUMIN SEEDS",
+				"PartNumber": "J15",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "JEERA",
+				"Packaging": "",
+				"LineItem": "92",
+				"Quantity": "1",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "HING(ASAFOETIDA)",
+				"PartNumber": "J16",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "93",
+				"Quantity": "6",
+				"WeightPacking": "50"
+			}, {
+				"UnitCost": "",
+				"Description": "MUSTARD SEEDS",
+				"PartNumber": "J17",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "94",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "RED CHILLI POWDER",
+				"PartNumber": "J19",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "HOT",
+				"Packaging": "",
+				"LineItem": "95",
+				"Quantity": "4",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "RED CHILLI WHOLE",
+				"PartNumber": "J20",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "96",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SALT-COOKING",
+				"PartNumber": "J21",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "FINE",
+				"Packaging": "",
+				"LineItem": "97",
+				"Quantity": "15",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SALT-TABLE (FINE)",
+				"PartNumber": "J22",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "98",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "TURMERIC POWDER",
+				"PartNumber": "J25",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "99",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CHOLE MASALA - INDIAN",
+				"PartNumber": "J28",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "100",
+				"Quantity": "4",
+				"WeightPacking": "100"
+			}, {
+				"UnitCost": "",
+				"Description": "GARAM MASALA POWDER - INDIAN",
+				"PartNumber": "J30",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "EVEREST",
+				"Packaging": "",
+				"LineItem": "101",
+				"Quantity": "12",
+				"WeightPacking": "100"
+			}, {
+				"UnitCost": "",
+				"Description": "PAV BHAJI MASALA - INDIAN",
+				"PartNumber": "J33",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "EVEREST",
+				"Packaging": "PKT",
+				"LineItem": "102",
+				"Quantity": "6",
+				"WeightPacking": "100"
+			}, {
+				"UnitCost": "",
+				"Description": "INSTANT NOODLES - ASST. FLAVOURS",
+				"PartNumber": "K01",
+				"UnitOfMeasure": "BOX",
+				"CountryOfOrigin": "VEG",
+				"Packaging": "",
+				"LineItem": "103",
+				"Quantity": "4",
+				"WeightPacking": "30 pkts x 100gms"
+			}, {
+				"UnitCost": "",
+				"Description": "CANTON NOODLES",
+				"PartNumber": "K02",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "104",
+				"Quantity": "3",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PASTA - MACARONI",
+				"PartNumber": "K03",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "105",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PASTA FUSILLI",
+				"PartNumber": "K04",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "106",
+				"Quantity": "1",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PASTA SPAGHETTI",
+				"PartNumber": "K05",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "107",
+				"Quantity": "3",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "VERMICILLI (indian)",
+				"PartNumber": "K09",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "bambino",
+				"Packaging": "PKT",
+				"LineItem": "108",
+				"Quantity": "12",
+				"WeightPacking": "500"
+			}, {
+				"UnitCost": "",
+				"Description": "APPLE JUICE  ",
+				"PartNumber": "L01",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "109",
+				"Quantity": "24",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "GRAPE JUICE ",
+				"PartNumber": "L03",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "110",
+				"Quantity": "12",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "GUAVA JUICE",
+				"PartNumber": "L04",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "ALL ",
+				"Packaging": "PKT",
+				"LineItem": "111",
+				"Quantity": "12",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "MANGO JUICE",
+				"PartNumber": "L05",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "REAL",
+				"Packaging": "PKT",
+				"LineItem": "112",
+				"Quantity": "24",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "MIX FRUIT JUICE",
+				"PartNumber": "L06",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "113",
+				"Quantity": "24",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "ORANGE JUICE",
+				"PartNumber": "L07",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "114",
+				"Quantity": "36",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PEACH JUICE",
+				"PartNumber": "L08",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "115",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PEAR JUICE",
+				"PartNumber": "L09",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "116",
+				"Quantity": "12",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PINEAPPLE JUICE",
+				"PartNumber": "L10",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "117",
+				"Quantity": "36",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "LEMON SQUASH",
+				"PartNumber": "L12",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "118",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "ORANGE SQUASH",
+				"PartNumber": "L13",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "119",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CORNED BEEF",
+				"PartNumber": "M01",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "120",
+				"Quantity": "12",
+				"WeightPacking": "340"
+			}, {
+				"UnitCost": "",
+				"Description": "LUNCHEON MEAT - BEEF",
+				"PartNumber": "M02",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "121",
+				"Quantity": "12",
+				"WeightPacking": "340"
+			}, {
+				"UnitCost": "",
+				"Description": "LUNCHEON MEAT - PORK",
+				"PartNumber": "M03",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "122",
+				"Quantity": "12",
+				"WeightPacking": "340"
+			}, {
+				"UnitCost": "",
+				"Description": "LUNCHEON MEAT - CHICKEN",
+				"PartNumber": "M04",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "123",
+				"Quantity": "24",
+				"WeightPacking": "340"
+			}, {
+				"UnitCost": "",
+				"Description": "SARDINES IN OIL",
+				"PartNumber": "M05",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "124",
+				"Quantity": "24",
+				"WeightPacking": "340"
+			}, {
+				"UnitCost": "",
+				"Description": "SARDINES IN TOMATO",
+				"PartNumber": "M06",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "125",
+				"Quantity": "24",
+				"WeightPacking": "340"
+			}, {
+				"UnitCost": "",
+				"Description": "TUNA IN OIL",
+				"PartNumber": "M07",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "White Flakes",
+				"Packaging": "TIN",
+				"LineItem": "126",
+				"Quantity": "24",
+				"WeightPacking": "185"
+			}, {
+				"UnitCost": "",
+				"Description": "BAKED BEANS IN TOMATO SAUCE",
+				"PartNumber": "N01",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "127",
+				"Quantity": "4",
+				"WeightPacking": "400"
+			}, {
+				"UnitCost": "",
+				"Description": "CHERRIES",
+				"PartNumber": "N02",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "128",
+				"Quantity": "12",
+				"WeightPacking": "400"
+			}, {
+				"UnitCost": "",
+				"Description": "FRUIT COCKTAIL ",
+				"PartNumber": "N03",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "129",
+				"Quantity": "12",
+				"WeightPacking": "800"
+			}, {
+				"UnitCost": "",
+				"Description": "MUSHROOMS IN TIN (whole)",
+				"PartNumber": "N04",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "130",
+				"Quantity": "4",
+				"WeightPacking": "800"
+			}, {
+				"UnitCost": "",
+				"Description": "MUSHROOMS IN TIN (sliced)",
+				"PartNumber": "N05",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "131",
+				"Quantity": "6",
+				"WeightPacking": "800"
+			}, {
+				"UnitCost": "",
+				"Description": "LITCHEES",
+				"PartNumber": "N06",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "132",
+				"Quantity": "2",
+				"WeightPacking": "800"
+			}, {
+				"UnitCost": "",
+				"Description": "PEACHES ",
+				"PartNumber": "N07",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "133",
+				"Quantity": "2",
+				"WeightPacking": "800"
+			}, {
+				"UnitCost": "",
+				"Description": "PEARS ",
+				"PartNumber": "N08",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "134",
+				"Quantity": "2",
+				"WeightPacking": "800"
+			}, {
+				"UnitCost": "",
+				"Description": "PINEAPPLE ",
+				"PartNumber": "N09",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "135",
+				"Quantity": "2",
+				"WeightPacking": "800"
+			}, {
+				"UnitCost": "",
+				"Description": "SWEETENED CORN",
+				"PartNumber": "N10",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "136",
+				"Quantity": "12",
+				"WeightPacking": "400"
+			}, {
+				"UnitCost": "",
+				"Description": "TOMATO PASTE",
+				"PartNumber": "N11",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "137",
+				"Quantity": "6",
+				"WeightPacking": "800"
+			}, {
+				"UnitCost": "",
+				"Description": "TOMATOES WHOLE PEELED",
+				"PartNumber": "N12",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "138",
+				"Quantity": "12",
+				"WeightPacking": "850"
+			}, {
+				"UnitCost": "",
+				"Description": "CHEESE SLICED ",
+				"PartNumber": "O06",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "139",
+				"Quantity": "12",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "ICE CREAMS (ASSORTED FLAVOURS)",
+				"PartNumber": "O07",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "RUM&RASINS",
+				"Packaging": "",
+				"LineItem": "140",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "MILK LONG LIFE ",
+				"PartNumber": "O08",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "141",
+				"Quantity": "150",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SALTED TABLE BUTTER",
+				"PartNumber": "O09",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "142",
+				"Quantity": "12",
+				"WeightPacking": "250"
+			}, {
+				"UnitCost": "",
+				"Description": "YOGHURT - ASST. FRUIT FLAVOURS",
+				"PartNumber": "O10",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "LONG EXP",
+				"Packaging": "CUP",
+				"LineItem": "143",
+				"Quantity": "96",
+				"WeightPacking": "125"
+			}, {
+				"UnitCost": "",
+				"Description": "YOGHURT PLAIN",
+				"PartNumber": "O11",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "NATURAL",
+				"Packaging": "CUP",
+				"LineItem": "144",
+				"Quantity": "24",
+				"WeightPacking": "125"
+			}, {
+				"UnitCost": "",
+				"Description": "YOGHURT PLAIN",
+				"PartNumber": "O12",
+				"UnitOfMeasure": "LTR",
+				"CountryOfOrigin": "NATURAL",
+				"Packaging": "TUB",
+				"LineItem": "145",
+				"Quantity": "10",
+				"WeightPacking": "1"
+			}, {
+				"UnitCost": "",
+				"Description": "CONDENSED MILK",
+				"PartNumber": "O13",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "146",
+				"Quantity": "18",
+				"WeightPacking": "400"
+			}, {
+				"UnitCost": "",
+				"Description": "EVAPORATED MILK",
+				"PartNumber": "O14",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "TIN",
+				"LineItem": "147",
+				"Quantity": "12",
+				"WeightPacking": "400"
+			}, {
+				"UnitCost": "",
+				"Description": "MILK POWDER",
+				"PartNumber": "O15",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "unsweetened",
+				"Packaging": "",
+				"LineItem": "148",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PANEER",
+				"PartNumber": "O16",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "149",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "ICE CREAM - CHOCO BAR",
+				"PartNumber": "O20",
+				"UnitOfMeasure": "PCS",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "150",
+				"Quantity": "50",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "ICE CREAM - CUP",
+				"PartNumber": "O24",
+				"UnitOfMeasure": "ML",
+				"CountryOfOrigin": "",
+				"Packaging": "CUP",
+				"LineItem": "151",
+				"Quantity": "10",
+				"WeightPacking": "100"
+			}, {
+				"UnitCost": "",
+				"Description": "ICE CREAM - CORNETTO",
+				"PartNumber": "O27",
+				"UnitOfMeasure": "PCS",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "152",
+				"Quantity": "50",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "ICE CREAM  - SOLSTICK",
+				"PartNumber": "O73",
+				"UnitOfMeasure": "PCS",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "153",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "MOZZARELLA CHEESE",
+				"PartNumber": "O91",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "154",
+				"Quantity": "4",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BEEF LOIN",
+				"PartNumber": "P03",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "155",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BEEF MINCE",
+				"PartNumber": "P04",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "156",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BEEF RUMP",
+				"PartNumber": "P05",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "157",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BEEF SHANK",
+				"PartNumber": "P06",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "slice",
+				"Packaging": "",
+				"LineItem": "158",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BEEF SHORT RIB",
+				"PartNumber": "P07",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "chooped",
+				"Packaging": "",
+				"LineItem": "159",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BEEF SILVERSIE",
+				"PartNumber": "P08",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "160",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BEEF STRIPLOIN",
+				"PartNumber": "P09",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "161",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "OXTAIL",
+				"PartNumber": "P14",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "162",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PORK BELLIES",
+				"PartNumber": "Q01",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "163",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PORK CHOPS",
+				"PartNumber": "Q03",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "164",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PORK FEET",
+				"PartNumber": "Q04",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "165",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PORK LEG BONE IN",
+				"PartNumber": "Q06",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "166",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PORK LEG BONELESS",
+				"PartNumber": "Q07",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "167",
+				"Quantity": "15",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PORK LIVER",
+				"PartNumber": "Q08",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "168",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PORK LOIN",
+				"PartNumber": "Q09",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "169",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PORK MINCE",
+				"PartNumber": "Q10",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "170",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PORK SPARE RIBS",
+				"PartNumber": "Q12",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "171",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PORK HEAD",
+				"PartNumber": "Q17",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "172",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SUCKLING PIG",
+				"PartNumber": "Q19",
+				"UnitOfMeasure": "PCS",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "173",
+				"Quantity": "2",
+				"WeightPacking": "8-10 KG"
+			}, {
+				"UnitCost": "",
+				"Description": "LAMB LEGS",
+				"PartNumber": "R03",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "(bonein)",
+				"Packaging": "",
+				"LineItem": "174",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "LAMB LEGS",
+				"PartNumber": "R04",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "(boneless)",
+				"Packaging": "",
+				"LineItem": "175",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "MUTTON LEGS",
+				"PartNumber": "R10",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "NO LAMB",
+				"Packaging": "",
+				"LineItem": "176",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "MUTTON LEGS",
+				"PartNumber": "R11",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "bonless-no lamb",
+				"Packaging": "",
+				"LineItem": "177",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CHICKEN BREASTS (with bone)",
+				"PartNumber": "S01",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "BONELESS",
+				"Packaging": "",
+				"LineItem": "178",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CHICKEN LEG QUARTERS",
+				"PartNumber": "S03",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "DRUMSTICK",
+				"Packaging": "",
+				"LineItem": "179",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CHICKEN LEGS WHOLE",
+				"PartNumber": "S04",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "180",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CHICKEN LIVER",
+				"PartNumber": "S05",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "181",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "WHOLE CHICKEN",
+				"PartNumber": "S08",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "AGRADE",
+				"Packaging": "",
+				"LineItem": "182",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "EGGS (Hen)",
+				"PartNumber": "S10",
+				"UnitOfMeasure": "NOS",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "183",
+				"Quantity": "1200",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "TURKEY",
+				"PartNumber": "S13",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "184",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "FISH TILAPIA",
+				"PartNumber": "T04",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "185",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "KING FISH",
+				"PartNumber": "T07",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "BIG SIZE",
+				"Packaging": "",
+				"LineItem": "186",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "MACKEREL ",
+				"PartNumber": "T08",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "A\"4 SIZE INDIAN",
+				"Packaging": "",
+				"LineItem": "187",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "POMFRETS - BLACK ",
+				"PartNumber": "T11",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "INDIAN",
+				"Packaging": "",
+				"LineItem": "188",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "POMFRETS - WHITE",
+				"PartNumber": "T12",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "INDIAN",
+				"Packaging": "",
+				"LineItem": "189",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PRAWNS / SHRIMPS",
+				"PartNumber": "T13",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "tiger",
+				"Packaging": "",
+				"LineItem": "190",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PRAWNS / SHRIMPS",
+				"PartNumber": "T14",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "1",
+				"Packaging": "",
+				"LineItem": "191",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "RED SNAPPER",
+				"PartNumber": "T15",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "192",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SQUIDS",
+				"PartNumber": "T17",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "CLEANED",
+				"Packaging": "",
+				"LineItem": "193",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SALMON - FRESH / FROZEN",
+				"PartNumber": "T21",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "194",
+				"Quantity": "25",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "TIGER PRAWNS",
+				"PartNumber": "T22",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "195",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BEEF SAUSAGES",
+				"PartNumber": "U01",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "196",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CHICKEN SAUSAGES",
+				"PartNumber": "U02",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "FRANKS",
+				"Packaging": "PKT",
+				"LineItem": "197",
+				"Quantity": "7",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "POLISH SAUSAGES",
+				"PartNumber": "U03",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "(PLS SPECIFY)",
+				"Packaging": "",
+				"LineItem": "198",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PORK SAUSAGES",
+				"PartNumber": "U04",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "199",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SLICED BACON",
+				"PartNumber": "U05",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "200",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SALAMI - CHICKEN ",
+				"PartNumber": "U07",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "201",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BURGER PATTIES - CHICKEN",
+				"PartNumber": "U13",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "202",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CARROTS  ",
+				"PartNumber": "V03",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": " FROZEN",
+				"Packaging": "",
+				"LineItem": "203",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CAULIFLOWER ",
+				"PartNumber": "V04",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": " FROZEN",
+				"Packaging": "",
+				"LineItem": "204",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "FRENCH BEANS  ",
+				"PartNumber": "V05",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": " FROZEN",
+				"Packaging": "",
+				"LineItem": "205",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "FRENCH FRIES",
+				"PartNumber": "V06",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": " FROZEN",
+				"Packaging": "",
+				"LineItem": "206",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "GREEN PEAS ",
+				"PartNumber": "V07",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": " FROZEN",
+				"Packaging": "",
+				"LineItem": "207",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "MIXED VEGETABLES ",
+				"PartNumber": "V08",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": " FROZEN",
+				"Packaging": "",
+				"LineItem": "208",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "OKRA  ",
+				"PartNumber": "V09",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": " FROZEN",
+				"Packaging": "",
+				"LineItem": "209",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SPINACH ",
+				"PartNumber": "V10",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "leaves FROZEN",
+				"Packaging": "",
+				"LineItem": "210",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BEET ROOTS",
+				"PartNumber": "W02",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "211",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BELL PEPPER - GREEN",
+				"PartNumber": "W03",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "212",
+				"Quantity": "15",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BELL PEPPER - RED",
+				"PartNumber": "W04",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "213",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BELL PEPPER - YELLOW",
+				"PartNumber": "W05",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "214",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BITTER GOURD (MELON)",
+				"PartNumber": "W06",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "215",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CABBAGE - CHINESE",
+				"PartNumber": "W07",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "216",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CABBAGE - GREEN",
+				"PartNumber": "W08",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "217",
+				"Quantity": "15",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CARROTS",
+				"PartNumber": "W09",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "218",
+				"Quantity": "35",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CAULIFLOWER (without leaves)",
+				"PartNumber": "W10",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "219",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "RED CABBAGE",
+				"PartNumber": "W111",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "220",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CUCUMBER",
+				"PartNumber": "W12",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "221",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "EGGPLANTS (BRINJAL)",
+				"PartNumber": "W14",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "222",
+				"Quantity": "15",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "FRENCH BEANS",
+				"PartNumber": "W15",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "NO FROZEN",
+				"Packaging": "",
+				"LineItem": "223",
+				"Quantity": "7",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "GREEN CHILLIES",
+				"PartNumber": "W16",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "indian hot",
+				"Packaging": "",
+				"LineItem": "224",
+				"Quantity": "7",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "GREEN MARROW",
+				"PartNumber": "W17",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "225",
+				"Quantity": "15",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "LEEKS",
+				"PartNumber": "W18",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "226",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "LETTUCE",
+				"PartNumber": "W19",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "227",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "OKRA (lady fingers)",
+				"PartNumber": "W21",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "NO FROZEN",
+				"Packaging": "",
+				"LineItem": "228",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "POTATOES",
+				"PartNumber": "W22",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "229",
+				"Quantity": "50",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PUMPKIN - GREEN/WHITE",
+				"PartNumber": "W23",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "230",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PUMPKIN - RED/YELLOW",
+				"PartNumber": "W24",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "231",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SNAKE GOURD",
+				"PartNumber": "W25",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "232",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SPINACH",
+				"PartNumber": "W26",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "233",
+				"Quantity": "7",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "STRING BEANS",
+				"PartNumber": "W27",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "BROAD BEANS",
+				"Packaging": "",
+				"LineItem": "234",
+				"Quantity": "7",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "TOMATOES",
+				"PartNumber": "W28",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "HALF RIPE ONLY",
+				"Packaging": "",
+				"LineItem": "235",
+				"Quantity": "50",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "WHITE RADDISH",
+				"PartNumber": "W29",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "236",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "ZUCHINI",
+				"PartNumber": "W31",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "237",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "RED ONIONS (dry)",
+				"PartNumber": "W32",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "LARGE",
+				"Packaging": "",
+				"LineItem": "238",
+				"Quantity": "150",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SPRING ONION",
+				"PartNumber": "W34",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "239",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CELERY LEAVES",
+				"PartNumber": "W35",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "240",
+				"Quantity": "2",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CORIANDER LEAVES",
+				"PartNumber": "W36",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "241",
+				"Quantity": "4",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CURRY LEAVES",
+				"PartNumber": "W37",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "242",
+				"Quantity": "0.5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "MINT LEAVES",
+				"PartNumber": "W39",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "243",
+				"Quantity": "1",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "GARLIC",
+				"PartNumber": "W42",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "244",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "GINGER",
+				"PartNumber": "W43",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "245",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "LEMON",
+				"PartNumber": "W44",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "246",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "DRY COCONUT",
+				"PartNumber": "W45",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "WHOLE",
+				"Packaging": "",
+				"LineItem": "247",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "REGULAR DRY ONIONS",
+				"PartNumber": "W46",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "248",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "APPLES - GREEN",
+				"PartNumber": "X01",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "249",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "APPLES - RED",
+				"PartNumber": "X02",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "250",
+				"Quantity": "40",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BANANAS ",
+				"PartNumber": "X03",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "HALF RIPE ONLY",
+				"Packaging": "",
+				"LineItem": "251",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "CANTALOUPE MELON",
+				"PartNumber": "X04",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "252",
+				"Quantity": "15",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "GRAPES - BLACK",
+				"PartNumber": "X05",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "SEEDLESS ONLY",
+				"Packaging": "",
+				"LineItem": "253",
+				"Quantity": "7",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "GRAPES - GREEN",
+				"PartNumber": "X06",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "SEEDLESS ONLY",
+				"Packaging": "",
+				"LineItem": "254",
+				"Quantity": "7",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "GUAVA",
+				"PartNumber": "X07",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "255",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "HONEYDEW MELON ",
+				"PartNumber": "X08",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "256",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "KIWI FRUIT",
+				"PartNumber": "X09",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "257",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "MANDARINES ",
+				"PartNumber": "X10",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "258",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "MANGO",
+				"PartNumber": "X11",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "INDIAN",
+				"Packaging": "",
+				"LineItem": "259",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "ORANGE",
+				"PartNumber": "X12",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "260",
+				"Quantity": "40",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PAPAYA ",
+				"PartNumber": "X13",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "HALF RIPE ONLY",
+				"Packaging": "",
+				"LineItem": "261",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PEACHES",
+				"PartNumber": "X14",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "262",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PEARS",
+				"PartNumber": "X15",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "263",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PINEAPPLE",
+				"PartNumber": "X16",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "264",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PLUM",
+				"PartNumber": "X17",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "265",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SWEETLIME",
+				"PartNumber": "X18",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "266",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "WATERMELON",
+				"PartNumber": "X19",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "SMALL ONLY",
+				"Packaging": "",
+				"LineItem": "267",
+				"Quantity": "30",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "DESSICATED COCONUT - COCONUT POWDER",
+				"PartNumber": "Y001",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "268",
+				"Quantity": "1",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BBQ CHARCOAL",
+				"PartNumber": "Y004",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "269",
+				"Quantity": "20",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "TANG - ASSTD",
+				"PartNumber": "Y023",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "270",
+				"Quantity": "12",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "BOONDI LADOO",
+				"PartNumber": "Y026",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "271",
+				"Quantity": "4",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "SINIGANG MIX - TAMARIND SOUP BASE",
+				"PartNumber": "Y039",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "272",
+				"Quantity": "12",
+				"WeightPacking": "500"
+			}, {
+				"UnitCost": "",
+				"Description": "CHOCOLATES (TOFFIES)",
+				"PartNumber": "Y048",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "ASSORTED",
+				"Packaging": "PKT",
+				"LineItem": "273",
+				"Quantity": "5",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "ASSTD SWEETS",
+				"PartNumber": "Y130",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "LOCAL",
+				"Packaging": "",
+				"LineItem": "274",
+				"Quantity": "10",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "COOKING CREAM",
+				"PartNumber": "Y2281",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "275",
+				"Quantity": "3",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "NUTELLA CHOC SPREAD",
+				"PartNumber": "Y239",
+				"UnitOfMeasure": "GMS",
+				"CountryOfOrigin": "",
+				"Packaging": "BTL",
+				"LineItem": "276",
+				"Quantity": "12",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "PEPPERONI SAUSAGE",
+				"PartNumber": "Y489",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "277",
+				"Quantity": "4",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "TOCINO MIX",
+				"PartNumber": "Y568",
+				"UnitOfMeasure": "PCS",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "278",
+				"Quantity": "6",
+				"WeightPacking": ""
+			}, {
+				"UnitCost": "",
+				"Description": "DANISH BUTTER COOKIES",
+				"PartNumber": "Y816",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "",
+				"LineItem": "279",
+				"Quantity": "12",
+				"WeightPacking": "GMS"
+			}, {
+				"UnitCost": "",
+				"Description": "CAKE FOR X MAS NEW YEARS",
+				"PartNumber": "Y897",
+				"UnitOfMeasure": "KG",
+				"CountryOfOrigin": "",
+				"Packaging": "PKT",
+				"LineItem": "280",
+				"Quantity": "2",
+				"WeightPacking": "2"
+			}
+		],
+		"headerParsingStatus": "success",
+		"lineItemParsingStatus": "success",
+		"status": "success"
+	}
+}

@@ -1,0 +1,271 @@
+<td>{{id}}</td>
+<td>{{name}}</td>
+<td>
+	{{#if engLevel}}
+		<div class="lvl {{engLevel}}">&nbsp;</div>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if activeTradingAccounts}}
+		<a href="#activeTradingAccounts" class="openDrilldown">
+			{{activeTradingAccounts}}
+		</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>{{formatIsoDateTarget dateCompanyCreated}}</td>
+<td>
+	{{#if companyAnonymityLevel}}
+		{{companyAnonymityLevel}}
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if verifiedUserAccounts}}
+		<a href="#verifiedUserAccounts" class="openDrilldown">
+			{{verifiedUserAccounts}}
+		</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if nonVerifiedActiveUserAccounts}}
+		<a href="#nonVerifiedUserAccounts" class="openDrilldown">
+			{{nonVerifiedActiveUserAccounts}}
+		</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if pendingJoinRequests}}
+		{{pendingJoinRequests}}
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if successfulSignIns}}
+		<a href="#succSignIns" class="openDrilldown">
+			{{successfulSignIns}}
+		</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if failedSignIns}}
+	<a href="#failedSignIns" class="openDrilldown">
+		{{failedSignIns}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if searchEvents}}
+	<a href="#searchEvents" class="openDrilldown">
+		{{searchEvents}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if supplierPageImpressions}}
+	<a href="#spbPageImpressions" class="openDrilldown">
+		{{supplierPageImpressions}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if contactRequests}}
+	<a href="#contactRequests" class="openDrilldown">
+		{{contactRequests}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if pagesRFQsSent}}
+	<a href="#pagesRfqsSent" class="openDrilldown">
+		{{pagesRFQsSent}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if reviewRequestsReceived}}
+		{{reviewRequestsReceived}}
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if reviewsSubmitted}}
+		{{reviewsSubmitted}}
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if buyTabEvents}}
+	<a href="#userActivity" class="openDrilldown" data-id="buy">
+		{{buyTabEvents}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if spendBenchmarkingReportEvents}}
+	<a href="#userActivity" class="openDrilldown" data-id="spend_benchmark">
+		{{spendBenchmarkingReportEvents}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if matchDashboardEvents}}
+	<a href="#userActivity" class="openDrilldown" data-id="match-dashboard">
+		{{matchDashboardEvents}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if matchReportEvents}}
+	<a href="#userActivity" class="openDrilldown" data-id="match-report">
+		{{matchReportEvents}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+
+<td>
+	{{#if sprReportViews}}
+	<a href="#userActivity" class="openDrilldown" data-id="spr_report">
+		{{sprReportViews}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+
+
+<td>
+	{{#if transactionMonitorEvents}}
+	<a href="#userActivity" class="openDrilldown" data-id="txnmon">
+		{{transactionMonitorEvents}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if webReporterEvents}}
+	<a href="#userActivity" class="openDrilldown" data-id="webreporter">
+		{{webReporterEvents}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if impaPriceBenchmarkingEvents}}
+	<a href="#userActivity" class="openDrilldown" data-id="impa_bpm">
+		{{impaPriceBenchmarkingEvents}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if impaSpendTrackerEvents}}
+	<a href="#userActivity" class="openDrilldown" data-id="impa_spend">
+		{{impaSpendTrackerEvents}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if totalSpendReportEvents}}
+	<a href="#userActivity" class="openDrilldown" data-id="total_spend">
+		{{totalSpendReportEvents}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if automaticComplianceMonitoringActivated}}
+	<a href="#userActivity" class="openDrilldown" data-id="automatic_compliance">
+		{{automaticComplianceMonitoringActivated}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if approvedSuppliers}}
+	<a href="#userActivity" class="openDrilldown" data-id="approved-suppliers">
+		{{approvedSuppliers}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if branchesWithRfqAutomaticRemindersActivated}}
+		{{branchesWithRfqAutomaticRemindersActivated}}
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if branchesWithPoAutomaticRemindersActivated}}
+	<a href="#userActivity" class="openDrilldown" data-id="automatic-reminders">
+		{{branchesWithPoAutomaticRemindersActivated}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if branchesWithSpendBenchmarkingActivated}}
+	<a href="#userActivity" class="openDrilldown" data-id="spend_benchmark_act">
+		{{branchesWithSpendBenchmarkingActivated}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if rfqOrdWoImoCount}}
+	<a href="#rfqOrdWoImo" class="openDrilldown">
+		{{rfqOrdWoImoCount}}
+	</a>
+	{{else}}
+		-
+	{{/if}}
+</td>
+<td>
+	{{#if sprKpReportsEnabled}}
+		{{sprKpReportsEnabled}}
+	{{else}}
+		-
+	{{/if}}
+</td>

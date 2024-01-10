@@ -1,0 +1,14 @@
+#main_content_area {
+  div {
+    &.back-to-impa {
+      width: 960px;
+      height: 60px;
+      position: relative;
+      margin: auto;
+      a {
+        line-height: 60px;
+        float: right;
+      }
+    }
+  }
+}

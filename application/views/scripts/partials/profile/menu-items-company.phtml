@@ -1,0 +1,34 @@
+<?$sessionActiveCompany = Myshipserv_Helper_Session::getActiveCompanyNamespace();?>
+
+<h3 class="zz company-menu"><?=$sessionActiveCompany->company->name?></h3>
+<ul>
+	<?foreach ($this->menuItems as $menuItem): ?>
+		<li class="<?php if ($menuItem['selected']) echo 'selected'; ?> <?if(isset($menuItem['secondary'])) { echo 'selected expanded'; }?>">
+			<a href="<?php echo $menuItem['link'] ?>" title="<?php echo htmlentities($menuItem['text']) ?>">
+				<span>
+					<?=htmlentities($menuItem['text']); ?>
+				</span>
+				</a>
+                <?php if( isset($menuItem['isNew']) && $menuItem['isNew'] == true ): ?>
+                <span style="color:#e81e24; position:relative; top:-7px;font-weight:700;font-size:7px; text-decoration: none !important;">NEW</span>
+                <?endif?>
+				<?if ($menuItem['countOverlay']):?>
+					<div class="countOverlay" id="<?php echo $menuItem['countOverlayId']; ?>"><span class="<?php echo $menuItem['countOverlayId']; ?>-span"><?php echo $menuItem['countOverlay']; ?></span></div>
+				<?else:?>
+					<?// we still need to output the div so we can update it inline when the user adds a company?>
+					<div class="countOverlay" id="<?php echo $menuItem['countOverlayId']; ?>" style="display: none;"><span class="<?php echo $menuItem['countOverlayId']; ?>-span"></span></div>
+                <?endif?>
+		</li>
+
+        <?if(isset($menuItem['secondary'])):?>
+        <li class="secondary">
+            <ul>
+                <?foreach($menuItem['secondary'] as $secondary):?>
+                    <li class="<?if ($secondary['selected']) echo 'selected';?>"><a href="<?=$secondary['link']?>"><?=htmlentities($secondary['text']); ?></a></li>
+                <?endforeach?>
+            </ul>
+        </li>
+        <?endif?>
+        
+    <?endforeach?>
+</ul>

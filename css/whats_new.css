@@ -1,0 +1,76 @@
+.impact{
+	margin-top:10px;
+	list-style-type: square;
+	list-style-position: outside;
+	margin-left: 20px;	
+}
+.impact li{
+	padding-left:10px;
+	margin-bottom:5px;
+}
+.shipmate{
+	font-size:14px;
+	line-height:14px;
+}
+
+div.new-feature {
+    padding: 20px;
+}
+
+div.new-feature .shipmate h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color:  #000;
+    line-height: 1.5;
+}
+
+div.new-feature .shipmate h2 {
+    font-size: 20px;
+    line-height: 1.2;
+    font-weight: bold;
+    color: #e81e24;
+    margin-bottom: 10px;
+}
+
+div.new-feature .shipmate ul {
+    margin-bottom: 10px;
+}
+
+div.new-feature .shipmate p {
+    font-size: 14px;
+    color: #000;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+div.new-feature .shipmate strong {
+    font-weight: bold;
+}
+
+div.new-feature .stat {
+	margin-bottom:20px;	
+}
+div.new-feature .stat table{
+	margin-top: 10px;
+	table-layout: fixed;
+	border:1px solid #CAEDF9;
+	border-bottom: 0;
+	border-right: 0;
+}
+div.new-feature .stat td{
+	padding:5px;	
+	border-right:1px solid #caedf9;
+	border-bottom: 1px solid #caedf9;
+	font-size:12px;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+div.new-feature .stat thead{
+	background-color:#caedf9;
+	font-weight:bold;
+	font-size:14px;
+}
+
+div.new-feature .stat .util{
+	margin-right:10px;
+}

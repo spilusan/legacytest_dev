@@ -1,0 +1,19 @@
+/*
+Document   : supplier-catalogue.scss
+Created on : Jul 20, 2018
+Author     : Attila O
+Description: styles for supplier catalogue
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+@import "font-awesome";
+@import "partials/mixins/mixins";
+@import "2016_campfire/main/colours";
+
+@import "2016_campfire/supplierCatalogue/tree";
+@import "2016_campfire/supplierCatalogue/list";
+@import "2016_campfire/supplierCatalogue/products";
+@import "2016_campfire/supplierCatalogue/product";
+@import "2016_campfire/supplierCatalogue/page";
+

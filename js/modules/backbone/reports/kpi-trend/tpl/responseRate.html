@@ -1,0 +1,22 @@
+<h2>Response Rate</h2>
+<div class="chart" id="response_chart"></div>
+
+<table>
+<thead>
+	<tr>
+		<th class="colTitle">Date</th>
+		<th>Overall Response Rate</th>
+		<th>Quote Rate</th>
+		<th>Decline Rate</th>
+	</tr>
+</thead>
+{{#each data}}
+<tr>
+	<td>{{this.date}}</td>
+	<td>{{this.overallResponseRate}}%</td>
+	<td>{{this.quoteRate}}%</td>
+	<td>{{this.declineRate}}%</td>
+</tr>
+{{/each}}
+</table>
+<hr>

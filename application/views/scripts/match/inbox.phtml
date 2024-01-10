@@ -1,0 +1,31 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()->addModule('match/match');
+?>
+<!--[if IE]>
+<link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+<link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+
+<div id="breadcrumbs">
+    <?php
+    $breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+    $breadcrumbs[] = array('name' => 'Match', 'url'  => '/match/inbox');
+    $breadcrumbs[] = array('name' => 'Inbox', 'url'  => '');
+    echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+    ?>
+</div>
+
+<div id="body" class="inbox">
+    <div id="content">
+        <?php // Match engine application authorised through CAS ?>
+        <?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+        <iframe src="<?php echo $this->matchInboxUrl; ?>" allowtransparency="true" scrolling="no" width="950" height="5000"></iframe>
+    </div>
+</div>
+<div class="clear"></div>

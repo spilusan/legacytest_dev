@@ -1,0 +1,54 @@
+/*
+Document   : default.scss
+Created on : Aug 24, 2012, 9:34:15 AM
+Author     : gly
+Description: main stylesheet combining default partials
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+@import "font-awesome";
+
+body {
+	background: url(/img/global/bodyBg.png) left top repeat-x #e9edf1;
+
+	/* Fix for IOS */
+    -webkit-text-size-adjust: 100%;
+}
+
+.clear {
+	display: block;
+	height: 1px;
+	line-height: 1px;
+	clear: both;
+}
+
+p {
+    font-size: 12px;
+    color: #2e3235;
+}
+
+a {
+	text-decoration: none;
+	color: #005aad;
+
+	&:hover, &:active {
+		text-decoration: none !important;
+	}
+}
+
+strong {
+	font-weight: bold;
+}
+
+@import "2016_campfire/main/colours";
+@import "2016_campfire/main/header";
+@import "2016_campfire/nav/main-nav/index";
+@import "partials/def/buttons";
+@import "partials/def/breadcrumbs";
+@import "partials/def/content";
+@import "partials/def/overlays";
+@import "2016_campfire/main/footer_pages";
+@import "2016_campfire/components/traderank/index";
+@import "partials/def/forms";
+@import "partials/alerts/general";

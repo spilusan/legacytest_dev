@@ -1,0 +1,172 @@
+#modalChanges {
+	width: 750px;
+
+	.modalBody {
+		.modalContent {
+			padding: 15px;
+			h2 {
+				font-size: 24px;
+				color: #008b00;
+				font-weight: bold;
+			}
+			ul {
+				list-style-image: url(/img/reports/sir/bullet.png);
+				margin: 15px 0 15px 15px;
+
+				li {
+					font-size: 14px;
+					margin-bottom: 5px;
+				}
+			}
+
+			p {
+				font-size: 14px;
+				font-weight: bold;
+			}
+		}
+	}
+}
+
+#body {
+	width: 1187px;
+
+	#sidebar {
+		ul#nav {
+			li {
+				padding: 8px 15px;
+				cursor: pointer;
+			}
+		}
+	}
+
+	#content {
+		width: 950px;
+
+		h1 {
+			&.styled {
+				font-weight: normal;
+				padding: 5px 15px;
+
+				span {
+					position: relative;
+					top: 5px;
+				}
+				.button {
+					float: right;
+				}
+			}
+		}
+
+		.shipmateControlls {
+			position: relative;
+			background:#d6dce4;
+			padding: 5px;
+			margin-top: 5px;
+			@include border-radius(6px);
+			behavior: url(/css/PIE.htc);
+
+			a {
+				float: right;
+			}
+		}
+
+		.innerContent {
+			padding: 20px 15px 0px;
+
+			.contactUs {
+				margin-top: 35px;
+				margin-bottom: 15px;
+
+				.contactButton {
+					font-size: 16px;
+					position: relative;
+					top: -8px;
+				}
+
+				.copy {
+					display: inline-block;
+					padding-left: 10px;
+
+					p {
+						margin-bottom: 0;
+						padding-bottom: 0;
+					}
+				}
+			}
+
+			.box {
+				position: relative;
+				border: 1px solid #dadada;
+				@include border-radius(6px);
+				behavior: url(/css/PIE.htc);
+				padding: 5px 15px;
+
+				.left {
+					float: left;
+				}
+
+				.right {
+					padding-left: 15px;
+					float: right;
+					width: 588px;
+
+					h4 {
+						font-weight: bold;
+						font-size: 16px;
+						padding-bottom: 7px;
+						padding-top: 9px;
+					}
+					p {
+						padding-bottom: 0;
+					}
+				}
+
+				&.attention {
+					border: 2px solid #ff5f40;
+					padding-right: 5px;
+					margin-bottom: 20px;
+
+					.left {
+						position: relative;
+						top: 3px;
+						width: 275px;
+						border-right: 2px dotted #b0b3ba;
+						padding-right: 15px;
+						vertical-align: top;
+
+						.rfqInfo {
+							height: 40px;
+
+							p {
+								line-height: 1.2;
+								margin: auto 0;
+								padding: 0;
+
+								&.rfqCount {
+									position: relative;
+									top: 0px;
+									float: right;
+									@include border-radius(6px);
+									padding: 0px 10px 0px 10px;
+									font-size: 30px;
+									font-weight: bold;
+									width: 120px;
+									overflow: hidden;
+									text-overflow: ellipsis;
+									background:#fff0ef;
+									text-align: center;
+									behavior: url(/css/PIE.htc);
+								}
+							}
+
+							.cHelp {
+								position: relative;
+								top: 3px;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

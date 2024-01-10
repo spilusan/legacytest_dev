@@ -1,0 +1,17 @@
+/*
+Document   : rfq/rfq.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: combining partials for rfq styles
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+@import "partials/def/context_help";
+@import "partials/def/datepicker";
+@import "partials/def/modal_new";
+
+@import "partials/rfq/content";
+@import "partials/rfq/form";
+@import "partials/rfq/form_rfqdetails";

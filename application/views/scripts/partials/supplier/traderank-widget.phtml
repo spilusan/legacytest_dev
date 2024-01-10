@@ -1,0 +1,52 @@
+<?php
+
+/*
+ * This partial will display the trade rank widget, along with RDFa details of the rating for Google Rich Snippets and other search engines.
+ * 
+ * This partial expects a supplier object passed as 'supplier'
+ */
+?>
+<div class="tradenet" data-traderank="<?=$this->supplier->tradeRank ?>">
+<?php if($this->supplier->tradeRank > 0): ?>
+    <?php
+        $stringHelper = $this->string();
+        if($this->supplier->ports){
+            $addressArray = $this->supplier->ports[0];
+            $name = $addressArray['name'];
+            $country = $addressArray['countryCode'];
+            if(!empty($name)){
+                $addressToShow = $name;
+            }
+            
+            if($addressToShow && !empty($country)){
+                $addressToShow .= ', ' . $country;
+            }
+        }
+        
+    ?>
+    <div xmlns:v="http://rdf.data-vocabulary.org/#" typeof="<?php if($this->supplierReviewCount == 0): ?>v:Review<?php else:?>v:Review-aggregate<?php endif; ?>">
+        <?php if($this->supplierReviewCount == 0 ):?>
+            <span property="v:reviewer" content="ShipServ" ></span>
+        <?php else: ?>
+            <span property="v:Count" content="<?php echo $this->supplierReviewCount; ?>" ></span>
+        <?php endif; ?>
+        
+        <span property="v:itemreviewed" content="<?php 
+                                                echo $this->supplier->name;
+                                                if ($addressToShow) 
+                                                { 
+                                                    echo  ' (' . $addressToShow . ')';
+                                                    } ?>" ></span> 
+
+        <span  rel="v:rating">            
+            <span property="<?php if($this->supplierReviewCount == 0 ):?>v:value<?php else: ?>v:average<?php endif; ?>" content="<?php echo round($this->supplier->tradeRank/4, 2); ?>"></span>
+            <span property="v:best" content="5"></span>
+        </span>       
+    </div>
+    <?php endif; ?>
+    <div class="trade-rank" id="tradeRank-<?php echo $this->supplier->tnid;?>">
+        <i class="fa fa-users" aria-hidden="true"></i>
+        TradeRank
+        <div class="rank rank-<?=$this->supplier->tradeRank?>"></div>
+    </div>
+</div>

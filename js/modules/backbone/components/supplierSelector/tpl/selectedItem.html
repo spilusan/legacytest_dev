@@ -1,0 +1,28 @@
+<div class="data-row">
+	<div class="data-cell">
+		<span>{{value}}</span>
+	</div>
+	<div class="data-cell"> 
+		<span class="tooltip">
+		{{country}}
+		    <span class="tooltiptext">
+   				{{countryName}}
+   			</span>
+		</span>                         
+	</div>
+	<div class="data-cell">
+		<span>{{pk}}</span>
+	</div>
+	<div class="data-cell">
+		<span>
+		{{#ifCond hasOrder '1'}}
+    		YES
+    	{{else}}
+    		NO
+    	{{/ifCond}}
+		</span>
+	</div>
+	<div class="data-cell">
+		<span><i class="fa fa-times-circle supplier-remove" aria-hidden="true" data-id="{{pk}}"></i></span>
+	</div>
+</div>

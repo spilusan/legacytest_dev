@@ -1,0 +1,381 @@
+<?php
+$this->compressedScript()->appendFile('/js/json2.js')
+						 ->appendFile('/js/jquery-ui-1.8.4.custom.min.js')
+						 ->appendFile('/js/jquery.urlparse.js')
+						 ->appendFile('/js/jquery.textarea.js') 
+						 ->appendFile('/js/jquery.jsoncookie.js')
+						 ->appendFile('/js/jquery.cookie.js')
+						 ->appendFile('/js/enquiry.js');
+						 
+$this->CDNLink()->appendStylesheet('/css/enquiries.css')
+				->appendStylesheet('/css/jquery-ui-1.8.4.custom.css');
+				
+$this->requirejs()->addModule('search/enquiry');
+
+
+// fetch all countries for the dropdown
+$countryAdapter = new Shipserv_Oracle_Countries();
+$countries = $countryAdapter->fetchAllCountries();
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+               array('name' => 'Search Results',
+						   'url'  => $this->backToSearch()->getUrl()),
+			   array('name' => 'New RFQ',
+						   'url'  => '/enquiry'));
+
+$breadcrumbs[] = array('name' => 'Home', 'url'  => '/search');
+$breadcrumbs[] = array('name' => 'Search Results', 'url'  => $this->backToSearch()->getUrl());
+
+
+$breadcrumbs[] = array('name' => 'Home', 'url'  => '/search');
+$breadcrumbs[] = array('name' => 'New RFQ', 'url'  => '');
+?>
+
+<!--[if (gte IE 5.5)&(lte IE 8)]>
+	<script type="text/javascript" src="/js/ie-css3.js"></script>
+<![endif]-->
+
+<script type="text/javascript" charset="utf-8">
+	<!--
+	var cookieName   = '<?php echo $this->basketCookie['name']; ?>';
+	var cookiePath   = '<?php echo $this->basketCookie['path']; ?>';
+	var cookieDomain = '<?php echo $this->basketCookie['domain']; ?>';
+	var maxSelectedSuppliers = <?php echo $this->maxSelectedSuppliers; ?>
+	//-->
+</script>
+
+<div id="main_content_area">
+	<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+	<div class="content_wide new clearfix">
+		<div class="zz header">
+			<h2>New RFQ</h2>
+		</div>
+	
+        <div class="inner_content clearfix" id="rfq">
+            <form enctype="multipart/form-data" id="rfq-form" method="post" action="/enquiry/" name="rfq-form">
+                <div class="left">
+                    <?php
+                    if ($this->showForm)
+                    {
+                        ?>
+                        <h3>Send to:<div class="inline contextual help howtouse" ></div></h3>
+
+                        <ul>
+                            <?php
+                            foreach ($this->selectedSupplier as $tnid => $supplier)
+                            {
+                                ?>
+                                <li><input class="supplier" <?php echo (array_key_exists($tnid, $this->selectedSupplier)) ? 'checked' : ''; ?> type="checkbox" name="<?php echo $tnid; ?>" id="<?php echo $tnid; ?>" /> <?php echo $supplier; ?></li>
+                                <?php
+                            }
+                            ?>
+                        </ul>
+                        <?php
+                    }
+                    ?>
+                </div>
+
+                <div class="right">
+
+                    <?php
+                    echo $this->partial('top-error-block.phtml', array('errors' => $this->errors['top']));
+
+                    if ($this->showForm)
+                    {
+                        ?>
+                        <fieldset>
+                            <?php
+                            echo $this->partial('enquiry/form-field.phtml', array('name'      => 'enquiry-subject',
+                                                                                'value'     => $this->formValues['enquiry-subject'],
+                                                                                'errors'    => $this->errors['enquiry-subject'],
+                                                                                'required'  => true,
+                                                                                'type'      => 'text',
+                                                                                'class'     => 'wide',
+                                                                                'maxlength' => 130,
+                                                                                'label'     => 'Subject',
+                                                                                'includeHowToUse'		  => true));
+                            ?>
+
+                            <div <?php if ($this->errors['enquiry-text']) echo 'class="error"'; ?>>
+                                <label for="enquiry-text" class="required">RFQ Detail *</label>
+
+                                <?php
+                                if ($this->errors['enquiry-text'])
+                                {
+                                    ?>
+                                    <ul>
+                                        <?php
+                                        foreach ($this->errors['enquiry-text'] as $error)
+                                        {
+                                            ?>
+                                            <li><?php echo $error; ?></li>
+                                            <?php
+                                        }
+                                        ?>
+                                    </ul>
+                                    <?php
+                                }
+
+                                if ($this->errors['enquiry-text'])
+                                {
+                                    ?>
+                                    <div class="error-footer"></div>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                            <textarea name="enquiry-text" id="enquiry-text"><?php echo $this->formValues['enquiry-text']; ?></textarea>
+                            <div class="maxChars">(Maximum characters: 1800)</div>
+                            <div class="charsLeft">You have <span id="countdown">1800</span> characters left.</div>
+
+                            <?php 
+                            if( lg_count($this->files) > 0 )
+                            {
+                                foreach( $this->files as $file )
+                                {
+                                    $filename = basename( $file );
+                                    $obfuscatedUrl = '/enquiry/see-attachment/f/' . $this->uri()->obfuscate($filename);
+                                    ?><input type="checkbox" checked="checked" name="existingEnquiryFile[]" value="<?php echo $filename; ?>" /><a target="_blank" href="<?php echo $obfuscatedUrl; ?>"><?echo $filename?></a><br /><?php 
+                                }
+                                ?><br /><div class="clear"></div><?php  
+                            }
+                            ?>
+
+                            <?php
+                            if ($this->errors['enquiryFile'])
+                            {
+                                ?>
+                                <div class="error">
+                                    <label for="enq-file-1">File Upload</label>
+
+                                    <ul>
+                                        <?php
+                                        foreach ($this->errors['enquiryFile'] as $key => $value)
+                                        {
+                                            ?>
+                                            <li><?php echo $value; ?></li>
+                                            <?php
+                                        }
+                                        ?>
+                                    </ul>
+
+                                    <div class="error_msg_arrow"></div>
+                                </div>
+                                <?php
+                            }
+                            ?>
+                            <div id="attach-files" style="<?php if (!$this->showFileUploads) echo 'display:none;'; ?>">
+                                <input type="file" id="enq-file-1" name="enquiryFile[]"><br />
+                                <input type="file" id="enq-file-2" name="enquiryFile[]"><br />
+                                <input type="file" id="enq-file-3" name="enquiryFile[]">
+
+                                <p class="file-info">Maximum of 1MB per file</p>
+                            </div>
+
+                            <?php
+                            if (!$this->showFileUploads)
+                            {
+                                ?>
+                                <div class="zz medium white button" id="attach-files"><input type="button" class="attach-files" value="Attach a File" /></div>
+                                
+                                <?php
+                            }
+                            ?>
+                        </fieldset>
+
+                        <fieldset id="vessel-data">
+                            <div>
+                                <?php
+                                echo $this->partial('enquiry/form-field.phtml', array('name'     => 'vessel-name',
+                                                                                    'value'    => $this->formValues['vessel-name'],
+                                                                                    'errors'   => $this->errors['vessel-name'],
+                                                                                    'required' => false,
+                                                                                    'type'     => 'text',
+                                                                                    'maxlength' => 40,
+                                                                                    'label'    => 'Vessel Name'));
+
+                                echo $this->partial('enquiry/form-field.phtml', array('name'     => 'delivery-location',
+                                                                                    'value'    => $this->formValues['delivery-location'],
+                                                                                    'errors'   => $this->errors['delivery-location'],
+                                                                                    'required' => false,
+                                                                                    'maxlength' => 200,
+                                                                                    'type'     => 'text',
+                                                                                    'label'    => 'Delivery Location'));
+                                ?>
+                            </div>
+
+                            <div>
+                                <?php
+                                echo $this->partial('enquiry/form-field.phtml', array('name'     => 'imo',
+                                                                                    'value'    => $this->formValues['imo'],
+                                                                                    'errors'   => $this->errors['imo'],
+                                                                                    'required' => false,
+                                                                                    'type'     => 'text',
+                                                                                    'maxlength' => 12,
+                                                                                    'label'    => 'IMO'));
+                                ?>
+                            <div class="maxChars">(numbers only)</div>
+                                <?php
+                                echo $this->partial('enquiry/form-field.phtml', array('name'     => 'delivery-date',
+                                                                                    'value'    => $this->formValues['delivery-date'],
+                                                                                    'errors'   => $this->errors['delivery-date'],
+                                                                                    'required' => false,
+                                                                                    'type'     => 'text',
+                                                                                    'label'    => 'Delivery Date'));
+                                ?>
+                            </div>
+                        </fieldset>
+
+                        <fieldset>
+                            <?php
+                            echo $this->partial('enquiry/form-field.phtml', array('name'     => 'sender-name',
+                                                                                'value'    => $this->formValues['sender-name'],
+                                                                                'errors'   => $this->errors['sender-name'],
+                                                                                'required' => true,
+                                                                                'type'     => 'text',
+                                                                                'class'    => 'wide',
+                                                                                'maxlength' => 80,
+                                                                                'label'    => 'Your Name',
+                                                                                'includeHowToUse'		  => true));
+
+                            echo $this->partial('enquiry/form-field.phtml', array('name'      => 'sender-email',
+                                                                                'value'     => str_replace(" ", "", $this->formValues['sender-email']),
+                                                                                'errors'    => $this->errors['sender-email'],
+                                                                                'required'  => true,
+                                                                                'type'      => 'text',
+                            												    'maxlength' => 100,
+                                                                                'class'     => 'wide',
+                                                                                'label'     => 'Email',
+                                                                                'labelSpan' => '(Replies will be sent to this email address, plus a copy of your message)'));
+
+                            echo $this->partial('enquiry/form-field.phtml', array('name'     => 'company-name',
+                                                                                'value'    => $this->formValues['company-name'],
+                                                                                'errors'   => $this->errors['company-name'],
+                                                                                'required' => true,
+                                                                                'class'    => 'wide',
+                                                                                'type'     => 'text',
+                                                                                'maxlength' => 100,
+                                                                                'label'    => 'Company Name'));
+
+                            echo $this->partial('enquiry/form-field.phtml', array('name'     => 'sender-phone',
+                                                                                'value'    => $this->formValues['sender-phone'],
+                                                                                'errors'   => $this->errors['sender-phone'],
+                                                                                'required' => false,
+                                                                                'class'    => 'wide',
+                                                                                'type'     => 'text',
+                                                                                'maxlength' => 100,
+                                                                                'label'    => 'Phone'));
+
+                            foreach( $countries as $country )
+                            {
+                                $options[] = array('value' => $country['CNT_COUNTRY_CODE'], 'label' => $country['CNT_NAME']); 
+                            } 
+
+                            echo $this->partial('enquiry/form-field.phtml', array('name'     => 'sender-country',
+                                                                                'value'    => $this->defaultCountry,
+                                                                                'errors'   => $this->errors['sender-country'],
+                                                                                'required' => $this->isPPGSupplier,
+                                                                                'class'    => 'wide',
+                                                                                'type'     => 'select',
+                                                                                'maxlength' => 100,
+                                                                                'options'  => $options,
+                                                                                'label'    => 'Country'));
+                            ?>
+                        </fieldset>
+						<?php if( isset( $this->captcha ) ){?>
+						<fieldset>
+							<input type="hidden" name="captcha[id]" value="<?= $this->captchaId ?>">
+							<style>
+							</style>
+							
+							<div>
+								<label for="sender-country">
+									Please type the word below							
+								</label>
+								<div class="captcha">
+									<img src="<?= $this->captcha->getImgUrl() . $this->captcha->getId() . $this->captcha->getSuffix() ?>" height="<?= $this->captcha->getHeight()?>?>" width="<?= $this->captcha->getWidth()?>">
+									<div class="description">
+										<span>This helps us to prevent spams. If you're <br />having difficulties reading this text, please <br /><a class="new-captcha">click here</a> or contact support <br />at <a href="mailto:support@shipserv.com">support@shipserv.com</a></span>
+									</div>
+								</div>
+								<div class="clear"></div>
+								<input type="text" style="margin-top:10px;" name="captcha[input]" >
+								
+							</div>						
+						
+						</fieldset>
+						<?php }?>
+                        <input type="submit" name="send" id="send" value="" />
+
+                        <p class="notice">Fill all sections marked with an asterisk <span>(*Required Field)</span></p>
+                        <?php
+                    }
+                    ?>
+                </div>
+            </form>
+        </div>
+    </div>
+	
+	<div class="clear"></div>
+	
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+
+	function round_up (val, precision) {
+	    power = Math.pow (10, precision);
+	    poweredVal = Math.ceil (val * power);
+	    result = poweredVal / power;
+
+	    return result;
+	}
+	
+	function convertToMb(size)
+	{
+		return round_up(size/1048576,2);
+	}
+	
+	// DE2940: fix to remove spaces on email form
+	$('input[name="sender-email"]').unbind('blur').bind('blur', function(){
+		var emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+		var value = $(this).val();
+		value = value.replace(' ','');
+		$(this).val( value );
+	});
+
+	$('input[type="file"]').bind('change', function() {
+		if( !$.browser.msie ) {
+		 	if( this.files[0].size > 1048576 ){
+				alert("Your file is too big: " + convertToMb( this.files[0].size ) + " MB" );
+				this.value = "";
+		 	}
+		 	if( this.files[0].size < 3 ){
+		 		alert("Your file is 0 Kb in size" );
+				this.value = "";
+		 	}
+		}
+	});
+	
+
+	
+});
+</script>
+
+<div id="howtouse" style="display: none;">
+	<p>It's quick, easy and FREE to send your purchase RFQs through this tool on ShipServ Pages.  You save time: when asking for quotes from multiple suppliers you only need to type your requirements once.  You save money: you can send your requirements to more suppliers, or suppliers you would not normally have considered, so getting a better winning quote.</p>
+	<p>It's a 3 step process:</p>
+	<p><strong>Step 1</strong><br/>
+		You choose a number of suppliers (up to a maximum of 75) by ticking the boxes by the suppliers on the search pages.  You can go back now, or at any time, to add more suppliers to this RFQ.
+	</p>
+	<p><strong>Step 2</strong><br/>
+		Fill out the New RFQ form with your product or service requirements.  Click SEND RFQ.  (You'll need to sign in or sign up as a Pages User at this point – signing up only takes a minute).
+	</p>
+	<p><strong>Step 3</strong><br/>
+		ShipServ then immediately emails your RFQ to a specified email address at the supplier companies.  They read your RFQ and if they respond/quote then you will hear back from the supplier directly.
+	</p>
+	<p>If you'd prefer to contact them yourself then look for the CONTACT TAB.  Open a supplier profile and then you will see 4 tabs just underneath the supplier company name at the top of the profile.  The second tab is ‘Contact' – click this.  You'll find the contact details, as entered by the supplier company.</p>
+	<p><strong>There is NO COST for buyers to use this Send RFQ tool. You can use it as frequently as you like.</strong> (But you can't use it for spam emails to our suppliers – <a href="/help#8">see here</a>).</p>
+	<p><a href="/help">For more help for buyers, click here.</a></p>
+
+</div>

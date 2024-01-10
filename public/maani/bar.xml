@@ -1,0 +1,45 @@
+<chart>
+	<chart_type>column</chart_type>
+	<legend layout='hide' />
+	
+	<chart_border top_thickness='0'
+		bottom_thickness='0'
+		left_thickness='0'
+		right_thickness='0'
+		color='000000'
+    /> 
+
+	
+	<chart_grid_h color='FF0000' />
+	
+	
+	<!--<chart_guide horizontal='1' color='FF0000' thickness='10' />87CCFF-->
+	
+	<chart_rect positive_color='FFFFFF' />
+	
+	<axis_value color='0099FF' />
+	<axis_category color='000000' />
+	
+	<axis_ticks category_ticks='0' />
+	
+	<series_color>
+		<color>CDCDCD</color>
+	</series_color>
+	
+	<chart_data>
+      <row>
+         <null/>
+         <string>Dec 09</string>
+         <string>Jan 10</string>
+         <string>Feb 10</string>
+         <string>March 10</string>
+      </row>
+      <row>
+         <null/>
+         <number>10000</number>
+         <number>12000</number>
+         <number>15000</number>
+         <number>1000</number>
+      </row>
+	</chart_data>
+</chart>

@@ -1,0 +1,37 @@
+<table class="bordered">
+    <thead>
+        <tr>
+            <th class="text-center" style="width: 50px;">TNID</th>
+            <th class="text-left" style="width: auto;">Supplier</th>
+            <th class="text-center" style="width: 150px;">No. of POs</th>
+            <th class="text-center" style="width: 150px;">Total Spend (USD)</th>
+            <th class="text-center" style="width: 100px;">Actions</th>
+            {{#if drilldownEnabled}}
+            <th class="text-center" style="width: 30px;"></th>
+            {{/if}}
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td colspan="10">
+                <span class="no-data">
+                    <i class=" fa fa-fw fa-exclamation-triangle" aria-hidden="true"></i> No data for this date range
+                </span>
+            </td>
+        </tr>
+    </tbody>
+
+    {{#if showTotals}}
+    <tfoot>
+        <tr>
+            <td colspan="2" class="no-border text-right">
+                <strong>Total</strong>
+            </td>
+            <td class="text-right">{{formatNumber total_po_cnt}}</td>
+            <td class="text-right">${{formatCurrency total_po_spend 2}}</td>
+            <td colspan="2" class="no-border"></td>
+        </tr>
+    </tfoot>
+    {{/if}}
+</table>

@@ -1,0 +1,101 @@
+#!/bin/sh
+#This is to be installed into git@sweb:/prod/git/ShipServPages/hooks/post-receive 
+
+
+#Replace this constant with the correct git project  
+PROJECT="ShipServPages";
+
+
+failed="0";
+function raise_error {
+    failed="1";
+    file="$1";
+    errmsg="$2";
+    newrev="$3";
+    branch="$4";
+    sandbox="/prod/git/git-hooks-sandbox/post-receive/$PROJECT/$newrev"
+    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    echo "!!! Error found on file $file: $errmsg"
+    #echo "!!! Reverting rev $newrev on branch $branch"
+    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+    
+    #Cannot do this because need to checkout before...
+    #git revert --no-edit $newrev;
+    #git push origin $branch;
+
+    echo "
+    Error found on file $file of project $PROJECT: $errmsg. 
+    Push with rev $newrev on branch $branch SHOULD BE REVERTED MANUALLY 
+    (this is error was triggered by post-receive hook, thus your commits have been pushed already)
+    " | mail -s "[ShipServ Git] Error found on file $file: $errmsg" product.development@shipserv.com
+}
+
+
+
+while read oldrev newrev refname
+do
+    branch=`echo $refname | sed 's/refs\/heads\///g'`
+    sandbox="/prod/git/git-hooks-sandbox/post-receive/$PROJECT/$newrev"
+    echo "post-receive hook script will parse the file committed with rev $newrev into branch $branch and send an email if syntax errors were found"
+
+    if [ "$oldrev" = "0000000000000000000000000000000000000000" ]; then
+        filelist=`git diff --name-only --diff-filter=ACMR master..$branch`;
+    else
+        filelist=`git diff --name-only --diff-filter=ACMR $oldrev..$newrev`;
+    fi
+
+    for file in $filelist
+    do
+        mkdir -p $sandbox/$file #create whole path
+        rmdir $sandbox/$file #rm the last component of the path which has been created as a dir instead of as a file
+        git show $newrev:$file > $sandbox/$file;
+
+        #checking php syntax
+        if [ `echo $sandbox/$file | grep -E "*\.(php|phtml)$"` ]; then
+            php -l -d display_errors=0 $sandbox/$file > /dev/null;
+            if [ "$?" -ne "0" ]; then
+                errmsg="ERROR CHECKING PHP SYNTAX (php -l -d display_errors=0 $sandbox/$file)";
+                raise_error "$file" "$errmsg" "$newrev" "$branch";
+            fi
+        fi
+
+        #check forbidden functions
+        if [ `echo $sandbox/$file | grep -E "*\.(php|phtml)$"` ]; then
+            pattern="shell_exec( )*\(";
+            pattern="$pattern|shell_exec( )*\(";
+            pattern="$pattern|eval( )*\(";
+            pattern="$pattern|system( )*\(";
+            pattern="$pattern|pcntl_exec( )*\(";
+            pattern="$pattern|passthru( )*\(";
+            pattern="$pattern|preg_replace( )*\(['\"]/.*/e";
+            pattern="$pattern|\$_GET|\$_POST|\$_REQUEST";
+            out=`cat $sandbox/$file | grep -E "($pattern)" | egrep -v "( )*//"`;
+            count=`echo -n $out | wc -l`
+            if [ $count != 0 ]; then
+                errmsg="A FORBIDDEN FUNCTION/VAR WAS DETECTED in file $sandbox/$file: $out";
+                raise_error "$file" "$errmsg" "$newrev" "$branch";
+            fi
+        fi
+    
+        #checking js syntax
+        if [ `echo $sandbox/$file | grep -E "*.js$"` ]; then 		
+            out=`jshint --verbose $sandbox/$file | grep -E E[0-9]+.$ | grep -v "js/lib/"`;
+            if [ "$out" != "" ]; then
+                errmsg="ERROR CHECKING JS SYNTAX (jshint --verbose $sandbox/$file): $out";
+                raise_error "$file" "$errmsg" "$newrev" "$branch";
+            fi
+        fi
+
+        #checking css syntax
+        if [ `echo $sandbox/$file | grep -E "*\.css$"` ]; then 		
+            out=`csslint --errors=errors --quiet $sandbox/$file`;
+            if [ "$out" != "" ]; then
+                errmsg="ERROR CHECKING CSS SYNTAX (csslint --errors=errors --quiet $sandbox/$file): $out";
+                raise_error "$file" "$errmsg" "$newrev" "$branch";
+            fi
+        fi
+    done
+done
+
+
+exit $failed;

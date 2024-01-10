@@ -1,0 +1,25 @@
+/* Headers amd containers */
+.content_wide{ float: left; width: 960px; margin-bottom: 30px; background-color: #FFF; margin: auto; }
+.content-shaded-header{ width: 100%; height: 73px; position: relative; background-color: #01488A; border-radius: 10px 10px 0 0;/* Soft radial gradient for modern browsers */background-image:-moz-radial-gradient(50% 0% 0deg,ellipse cover,#0162BD,#01488A,#01488A 100%); background-image: -o-radial-gradient(50% 0% 0deg,ellipse cover,#0162BD,#01488A,#01488A 100%); background-image: -webkit-gradient(radial,50% -160,300,50% -160,0,from(#01488A),to(#0162BD)); }
+.content_wide_header_divide{ width: 960px; height: 1px; border-bottom: 1px solid #041b3b; background: #054fbd url(https://cdn1.shipserv.com/images/layout_v2/side_shadow.jpg) 735px repeat-y; }
+.content_wide_header h1,.content-shaded-header h1{ color: #fff; font-size: 19px; padding: 19px 20px 4px 30px; }
+.content_wide_header h1.profile{ padding-top: 10px; font-weight: 400; }
+.content-shaded-header h1.profile{ font-size: 17px!important; font-weight: 700; padding-top: 22px; }
+.content_wide_header h2,.content-shaded-header h2{ color: #a1cdff; font-size: 11px; margin-left: 31px; }
+.content_wide_header a.send_enquiry_button,.content-shaded-header a.send_enquiry_button{ width: 153px; height: 43px; background: url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_enquiry_sprite.png) no-repeat; text-indent: -5000px; border: none; position: absolute; right: 20px; top: 8px; }
+.content_wide_header a.send_enquiry_button:hover,.content-shaded-header a.send_enquiry_button:hover{ background: url(https://cdn1.shipserv.com/images/layout_v2/buttons/send_enquiry_sprite.png) 0 -43px no-repeat; cursor: pointer; }
+.content_new-wide_body{ width: 960px; padding-bottom: 20px; background-color: #FFF; box-shadow: 2px 2px 2px #D3D3D3; border-radius: 10px; }
+/* Non-homepage header */
+.content_wide>div.header{ width: 918px; height: 82px; border: 1px solid #ddd; border-top: 1px solid #FFF; border-radius: 0 0 10px 10px; margin: 20px; margin-top: 0; background: #efefef; background: -moz-linear-gradient(top,#ffffff 0%,#ebebeb 100%); background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#ffffff),color-stop(100%,#ebebeb)); background: -webkit-linear-gradient(top,#ffffff 0%,#ebebeb 100%); background: -o-linear-gradient(top,#ffffff 0%,#ebebeb 100%); background: -ms-linear-gradient(top,#ffffff 0%,#ebebeb 100%); filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff',endColorstr='#ebebeb',GradientType=0 ); background: linear-gradient(top,#ffffff 0%,#ebebeb 100%); }
+.content_wide>div.header h2 {line-height: 82px; vertical-align:middle; color: #333333; font-size: 24px; font-weight: bold; float:left; margin-left: 24px }
+/* Body */
+.content_wide .content{ background: #efefef; border-radius: 10px; width: 918px; margin: 20px; border: 1px solid #ddd; }
+/* Sub nav + content layout*/
+.body-right{ float: left; padding-right: 34px; width: 696px; overflow: hidden; }
+.body-right h2{ font-weight: 700; font-size: 20px; padding-top: 20px; padding-bottom: 14px; margin-bottom: 20px; border-bottom: 1px solid #ebebeb; }
+/* End sub nav + content layout*/
+/* Forms */
+.body-right form.main{ width: 694px; border: 0; }
+/* End Forms */
+/* FOOTER */
+.content_new-wide_footer{ width: 960px; height: 12px; font-size: 1px; background: #f0f0f0 url(https://cdn1.shipserv.com/images/layout_v2/new-wide-footer.png) 0 0 no-repeat; }

@@ -1,0 +1,16 @@
+/*
+Document   : block-buyer.scss
+Created on : Feb 7, 2012, 1:00:43 PM
+Author     : gly
+Description: combining partials for block-buyer styles
+*/
+
+@import "compass/css3";
+@import "compass/utilities/general/min";
+
+@import "partials/def/tabbed_head";
+@import "partials/def/modal_new";
+@import "partials/def/left_nav";
+
+
+@import "partials/trade/block-buyer/content";

@@ -1,0 +1,28 @@
+div.content_wide {
+  background: url(/images/info.png) no-repeat left -75px transparent !important;
+  overflow: visible;
+  height: 483px;
+}
+div.content_wide .success-box {
+  background-image: none;
+  background: transparent;
+  margin-left: 415px;
+  margin-right: 0;
+}
+div.content_wide .success-box ul.success {
+  border: 0;
+  background: transparent;
+}
+div.content_wide .success-box ul.success li {
+  background: transparent;
+  line-height: 1.2;
+  padding-left: 0;
+  color: #525c64;
+  font-size: 13px;
+}
+div.content_wide .success-box ul.success li.title {
+  color: #13b5ea;
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}

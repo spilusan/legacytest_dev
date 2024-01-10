@@ -1,0 +1,33 @@
+<?php
+
+$this->headLink()->appendStylesheet('/css/internal-supplier-kpi.css');
+
+$this->requirejs()
+	->addModule('backbone/reports/internalKpi/views/mainView');
+
+
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Usage report', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'Internal Supplier KPI', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+
+?>
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+
+<div id="body" class="liquid">
+	<div id="content">
+		<h1 class="styled">Internal Supplier KPI dashboard</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<div id="innerContent">
+			<div class="center">
+				<img src="/images/layout_v2/file_icons/spinner_big.gif" alt="Please wait"><p>Loading...</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="clear"></div>
+<div id="waiting">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>

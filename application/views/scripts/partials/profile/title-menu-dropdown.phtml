@@ -1,0 +1,45 @@
+<?/*
+<div class="content-shaded-header">
+	<h1 id="profile-heading" class="profile" >
+		<?php if( $this->supplierProfile->tnid != "" ){?>
+		<div style="float:left;">RFQs for:</div> 
+		<form method="get" id="f" style="float:left; margin-left:20px;">
+			<input type="hidden" name="id" id="tnid" value="<?php echo $this->supplierProfile->tnid?>"/>
+			<input type="hidden" name="type" value="V">
+			<select id="tnidSelector">
+				<option value="">Please select</option>
+				<?foreach($this->myCompanies as $company): if($company['type'] == 'v'){ ?>
+				<option value="<?php echo $company['id']?>" <?php echo ($company['id'] == $this->supplierProfile->tnid )?'selected="selected"':'';?>><?php echo $company['name']?></option>
+				<?}endforeach?>
+			</select>
+		</form>
+		<?php }?>
+	</h1>
+</div>
+*/?>
+
+<div id="profile-menu" class="subnav">
+<?php 
+echo $this->partial('profile/menu-items.phtml', array('menuItems' => $this->menuItems['menuItems']));
+
+$sessionActiveCompany = Myshipserv_Helper_Session::getActiveCompanyNamespace();
+
+if( $sessionActiveCompany->company->id !== null && lg_count( $this->menuItemsCompany['menuItems'] ) > 0 )
+{
+	echo $this->partial('profile/menu-items-company.phtml', array('menuItems' => $this->menuItemsCompany['menuItems']));
+}
+?>
+</div>
+
+<?/*
+<script type="text/javascript">
+$(document).ready(function(){
+	$('#tnidSelector').live('change', function () {
+		if( $(this).val() != "" )
+	    location.href='/profile/company-enquiry/type/v/id/' + $(this).val();
+		else
+		location.href='/profile/company-enquiry/';
+	});
+});
+</script>
+*/?>

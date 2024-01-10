@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title></title>
+    </head>
+    <body style="margin:0; padding:0; font-size: 12px; font-family: Arial, Helvetica, sans-serif; color: #2e3235; background-color: #f5f7fa;">
+        <table style="margin: 0 auto; padding:0; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #2e3235;" cellpadding="0" cellspacing="0" border="0" width="635">
+            <tbody>
+                <tr>
+                    <td style="margin: 0 auto; padding:20px 0; font-family: Arial, Helvetica, sans-serif; font-size: 18px; color: #008b00; font-weight: bold;">
+                        Congratulations! You have received an RFQ from <?php echo $this->buyer['BYB_NAME']; ?> – we have already sent you a notification email and this second email is to explain that this is a Match RFQ.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin: 0 auto; padding:0 0 20px 0; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #ff0000; font-weight: bold;">
+                        This RFQ is part of the ShipServ Match programme – please quote quickly if you want to win it!
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin: 0 auto; padding:0 0 0 20px; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #2e3235; font-weight: bold; background-color: #caedf9; vertical-align: middle; height: 40px;" bgcolor="#13b5ea" valign="middle" height="40">
+                        RFQ Summary
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table border="0" cellpadding="0" cellspacing="0" style="background-color: #fff; width: 100%; border: 1px solid #d6dce4; margin-top: 5px;">
+                            <tr>
+                                <td style="width: 315px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: normal; color: #2e3235;vertical-align: top; padding: 5px;" valign="top">
+                                    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%">
+                                        <tr>
+                                            <td style="width: 100px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: normal; color: #2e3235;padding: 5px; ">RFQ Ref.:</td>
+                                            <td style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #2e3235;padding: 5px; "><?php echo $this->rfq['RFQ_REF_NO']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 100px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: normal; color: #2e3235;padding: 5px; ">Buyer name:</td>
+                                            <td style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #2e3235;padding: 5px; "><?php echo $this->buyerName; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 100px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: normal; color: #2e3235;padding: 5px; ">Vessel name:</td>
+                                            <td style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #2e3235;padding: 5px; "><?php echo $this->rfq['RFQ_VESSEL_NAME']; ?></td>
+                                        </tr>
+                                        <?php if (!$this->smartSupplier): ?>
+                                            <tr>
+                                                <td style="width: 100px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: normal; color: #2e3235;padding: 5px;" colspan="2"><a href="<?php echo $this->startSupplierRootURL; ?>/viewrfq?login=<?php echo $this->supplier['SPB_BRANCH_CODE']; ?>&rfqrefno=<?php echo $this->rfqid; ?>" style="font-family: Arial, Helvetica, sans-serif; width:255px; height:14px; font-size: 14px; font-weight: bold; color: #fff; background-color: #13b5ea; display: block; padding: 5px 25px; text-decoration: none; ">VIEW FULL RFQ AND THEN QUOTE &gt;</a></td>
+                                            </tr>
+                                        <?php endif; ?>
+                                    </table>
+                                </td>
+                                <td style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: normal; color: #2e3235; vertical-align: top;padding: 5px;" valign="top">
+                                    <table border="0" cellpadding="0" cellspacing="0" style="width: 100%">
+                                        <tr>
+                                            <td style="width: 100px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: normal; color: #2e3235;padding: 5px; ">Delivery time:</td>
+                                            <td style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #2e3235;padding: 5px; "><?php echo $this->rfq['RFQ_DELIVERY_DATE']; ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width: 100px; font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: normal; color: #2e3235;padding: 5px; ">Delivery port:</td>
+                                            <td style="font-family: Arial, Helvetica, sans-serif; font-size: 13px; font-weight: bold; color: #2e3235;padding: 5px; "><?php echo $this->rfq['RFQ_DELIVERY_PORT']; ?></td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <?php if ($this->smartSupplier): ?>
+                        <td style="margin: 0 auto; padding:20px 0 20px 0; font-family: Arial, Helvetica, sans-serif; font-size: 13px; color: #ff0000; font-weight: bold;">
+                            To view this RFQ go to your SmartSupplier.
+                        </td>
+                    <?php else: ?>
+                        <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 11px; color: #2e3235 font-weight: normal; padding: 15px 0;">
+                            To view the RFQ, you will need your StartSupplier password. You should have received this password in a separate Account Activation email. If you do not know your password, please click on the RFQ link above and then click on “Forgotten Password”.
+                        </td>
+                    <?php endif; ?>
+                </tr>
+                <tr>
+                    <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #2e3235; font-weight: bold; padding: 0;">
+                        What is ShipServ Match?
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #2e3235 font-weight: normal; padding: 15px 0;">
+                        Match is a new service from ShipServ which gives suppliers like you the chance to win new business from buyers who had <strong>not originally</strong> put you in their RFQ.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #2e3235; font-weight: normal; padding: 0;">
+                        It’s only available to Premium suppliers.
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #2e3235; font-weight: bold; padding: 15px 0;">
+                        How does ShipServ Match work?
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #2e3235; font-weight: normal; padding: 0;">
+                        1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The buyer has added a code to this RFQ to say they’d like Shipserv Match to recommend suppliers<br />
+                        2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ShipServ Match has searched ShipServ Pages to find highly relevant suppliers for this particular RFQ<br />
+                        3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ShipServ Match sends the RFQ to a small number of matched suppliers - <strong>like this one we've sent you today</strong><br />
+                        4.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You reply with a quote<br />
+                        5.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Buyer awards the PO to the supplier with the best qualified quote<br />
+
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #2e3235; font-weight: bold; padding: 15px 0;">
+                        Why is this, and every, Match RFQ good for me?
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #2e3235; font-weight: normal; padding: 0;padding-bottom: 20px;">
+                        If you win this RFQ then you will be winning genuinely new and incremental business. Winning this business will then put you in a position to become a favoured supplier for this buyer going forward.
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table cellpadding="0" cellspacing="0" border="0" style="border: 2px solid #fdd45c; background-color: #fff0c5;">
+                            <tr>
+                                <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #2e3235; font-weight: normal; padding: 10px;">
+                                    <h1 style="font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #2e3235; font-weight: bold; margin-top: 0;">Our tips for suppliers</h1>
+                                    In our experience your chances of winning a Match RFQ is increased if Match suppliers do the following:<br /><br />
+                                    1.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff0000;font-weight: bold;">QUOTE BACK VERY QUICKLY</span> – 2 days should be your maximum, earlier if you can.<br />
+                                    2.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff0000;font-weight: bold;">BE VERY COMPETITIVE</span> - need to be more competitive than them if you want to win this order.<br />
+                                    3.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: #ff0000;font-weight: bold;">THINK CAREFULLY ABOUT DEMANDING PRE-PAYMENT</span> – this buyer’s existing preferred supplier will<br />
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;not demand pre-payment. If you do this, you will be at a disadvantage, even if your quote is more<br/>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;competitive.
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #2e3235; font-weight: bold; padding: 20px 0 15px;">
+                        What will quoting on this RFQ cost me?
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #2e3235; font-weight: normal; padding: 0;">
+                        At the moment, the Match campaigns are FREE to suppliers (and buyers). We do plan on charging suppliers for this service in the future (but the charge will be directly related to winning business you otherwise would not have been considered for).
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 16px; color: #2e3235; font-weight: bold; padding: 15px 0;">
+                        What do I do now?
+                    </td>
+                </tr>
+                <tr>
+                    <?php if ($this->smartSupplier): ?>
+                        <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #2e3235; font-weight: normal; padding: 0 0 30px 0;border-bottom: 1px dotted #bec4cb;">
+                        <?php else: ?>
+                            <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #2e3235; font-weight: normal; padding: 0;">
+                            <?php endif; ?>
+                            Quote on this RFQ as quickly as you can.<br />
+                            If you have any questions about ShipServ Match, email: <a href="mailto:marketing@shipserv.com" style="color: #0e4d87; text-decoration: none;">marketing@shipserv.com</a>.
+                            <?php if (!$this->smartSupplier): ?>
+                            </td>
+                    </tr>
+                    <tr>
+                        <td style="margin: 0 auto; padding: 15px 0;">
+                            <a href="<?php echo $this->startSupplierRootURL; ?>/viewrfq?login=<?php echo $this->supplier['SPB_BRANCH_CODE']; ?>&rfqrefno=<?php echo $this->rfqid; ?>" style="font-family: Arial, Helvetica, sans-serif; font-size: 14px; font-weight: bold; color: #fff; background-color: #13b5ea; padding: 5px 25px; text-decoration: none;">VIEW FULL RFQ AND THEN QUOTE &gt;</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="margin: 0 auto; font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #2e3235 font-weight: normal; padding: 15px 0;border-bottom: 1px dotted #bec4cb;">
+                            Or cut and paste this link into your browser:<br/>
+                            <a href="<?php echo $this->startSupplierRootURL; ?>/viewrfq?login=<?php echo $this->supplier['SPB_BRANCH_CODE']; ?>&rfqrefno=<?php echo $this->rfqid; ?>" style="color: #0e4d87; text-decoration: none;"><?php echo Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->startSupplierRootURL; ?>/viewrfq?login=<?php echo $this->supplier['SPB_BRANCH_CODE']; ?>&rfqrefno=<?php echo $this->rfqid; ?></a>
+
+
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="margin:0; padding: 15px 0 40px 0; font-family: Arial, Helvetica, sans-serif; font-size: 11px; font-weight: normal; color: #737d84;">
+                        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="font-size: 11px; font-family: Arial, Helvetica, sans-serif;padding-top: 10px; padding-bottom: 10px;">
+                            <tbody>
+                                <tr>
+                                    <td style="padding-right:4px;font-family: Arial, Helvetica, sans-serif !important;">ShipServ © 2012<span style="color: #d7dade;">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/legal-notes/terms-and-conditions/" style="color: #00386e; text-decoration: none;font-family: Arial, Helvetica, sans-serif !important;">Terms &amp; Conditions</a><span style="color: #d7dade;">&nbsp;&nbsp;|&nbsp;&nbsp;</span><a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/privacy-policy/" style="color: #00386e; text-decoration: none;font-family: Arial, Helvetica, sans-serif !important;">Privacy Policy</a></td>
+                                    <td style="text-align:right;"><img src="https://www.shipserv.com/images/match/email/logo_foot.png" alt="ShipServ"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>

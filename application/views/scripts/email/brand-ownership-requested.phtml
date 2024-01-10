@@ -1,0 +1,37 @@
+<h1>BRAND OWNERSHIP REQUEST CLAIM</h1>
+
+				
+<b>Brand(s) claimed:</b><br/><br/>
+
+<?php
+
+$brandsClaimed = array();
+foreach ($this->details as $key => $value) {
+	if (strpos($key, 'brandname') === 0) {
+		
+		$brandPos = ((int)substr($key, 9, strlen($key)-9));
+		
+		$brandId = isset($this->details['brandid'.$brandPos]) ? $this->details['brandid'.$brandPos] : '';
+		if (!empty($value))
+		{
+			$displayValue = $value;
+			if (!empty($brandId)) {
+				$displayValue .= " (Brand ID: $brandId)";
+			}
+			$brandsClaimed[] = $displayValue;
+		}
+	}
+}
+
+foreach($brandsClaimed as $pos => $brand) {
+	echo ($pos+1). " ". $brand."<br/>";
+}
+
+?>
+				
+
+<br/><br/>				
+Contact person: <?php echo $this->details['contact']; ?><br/>
+Company name:   <?php echo $this->details['company']; ?><br/>
+Email:           <?php echo $this->details['email']; ?><br/>
+Telephone:      <?php echo $this->details['telephone']; ?><br/>

@@ -1,0 +1,87 @@
+<td colspan="9" class="sections">
+	<table cellpadding="0" cellspacing="0" border="0" class="summary">
+		<tr>
+			<td class="first">&nbsp;</td>
+			<td class="second">
+				<div class="right">
+					{{#if savings_hidden}}
+						****
+					{{else}}
+						{{formatCurrency best_price_original}}
+						{{#if best_price_original}} USD{{/if}}
+					{{/if}}
+				</div>
+				<div class="left">
+					Best price from your suppliers:
+				</div>
+				<div class="clear"></div>
+				<div class="right">
+					{{#if savings_hidden}}
+						****
+					{{else}}
+						{{formatCurrency best_price_match}}
+						{{#if best_price_match}} USD{{/if}}
+					{{/if}}
+					</div>
+				<div class="left">
+					Best price from recommended suppliers:
+				</div>
+				<div class="clear"></div>
+			</td>
+			<td class="third">
+				<div class="right"><span>
+					{{#if savings_hidden}}
+						****
+					{{else}}
+						{{formatCurrency potential_savings}}
+						{{#if potential_savings}} USD{{/if}}
+					{{/if}}
+				</span></div>
+				<div class="left">
+					Potential savings from recommended suppliers:
+				</div>
+				<div class="clear"></div>
+				<div class="right">
+					{{#if savings_hidden}}
+						****
+					{{else}}
+						{{formatCurrency actual_savings}}
+						{{#if actual_savings}} USD{{/if}}
+					{{/if}}
+				</div>
+				<div class="left">
+					Actual savings:
+				</div>
+				<div class="clear"></div>
+			</td>
+			<td class="last summary">
+				Sourcing status: {{getMatchStat match_status}}
+			</td>
+		</tr>
+	</table>
+	<div class="clear"></div>
+	<div class="section rfq">
+		<h2>
+			<input type="button" name="rfq" value="Show" class="button small white toggle" />
+			RFQ preview
+		</h2>
+	</div>
+	<div class="section match">
+		<h2>
+			<input type="button" name="match" value="Show" class="button small white toggle" />
+			Sourcing Engine Interpretation
+		</h2>
+	</div>
+	<div class="section sendTo">
+		<h2>
+			<input type="button" name="sendTo" value="Show" class="button small white toggle" />
+			This RFQ was sent to:
+		</h2>
+	</div>
+	<div class="section recommended">
+		<h2>
+			<input type="button" name="recommended" value="Show" class="button small white toggle" />
+			Additional recommended suppliers: <div class="smallSpin"></div>
+		</h2>
+	</div>
+</td>

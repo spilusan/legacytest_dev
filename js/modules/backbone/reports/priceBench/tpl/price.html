@@ -1,0 +1,134 @@
+			<div>
+				<div class="rightData">
+					<div class="avg">
+						<div class="value"></div>
+						<h2>Market avg. <strong>quoted price</strong></h2>
+						<p>Per unit (USD)</p>
+						<div class="clear"></div>
+					</div>
+					<div class="dataContainer">
+						<form class="new">
+							<img src="/img/icons/medium/spy-green.png" border="0" alt="search" class="spy"/>
+							<input type="text" name="filterRight" value="{{refineRightQuery}}"/><input type="submit" value="Filter" name="submitRight" class="button small green" /> <input type="button" value="Clear" name="clearRight" class="button small green" />
+						</form>
+						<div class="data">
+							<table width="100%" cellpadding="0" cellspacing="0" border="0" class="dataTable">
+								<thead>
+									<tr>
+										<th class="descrR{{#ifCond sortRight li_desc}} ord {{sortOrderRight}}{{/ifCond}}"><a class="order right" href="li_desc">Description</a></th>
+										<th class="countR{{#ifCond sortRight li_count}} ord {{sortOrderRight}}{{/ifCond}}"><a class="order right" href="li_count">Count</a></th>
+										<th class="qtyR {{#ifCond sortRight total_qty}} ord {{sortOrderRight}}{{/ifCond}}"><a class="order right" href="total_qty">Volume</a></th>
+										<th class="avgPrice {{#ifCond sortRight unit_cost}} ord {{sortOrderRight}}{{/ifCond}}"><a class="order right" href="unit_cost">Avg. Price</a></th>
+										<th class="last"></th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="leftData">
+					<div class="avg">
+						<div class="value"></div>
+						<h2>Your avg. <strong>purchase price</strong></h2>
+						<p>Per unit (USD)</p>
+						<div class="clear"></div>
+					</div>
+					<div class="dataContainer">
+						<form class="new">
+							<img src="/img/icons/medium/spy-blue.png" border="0" alt="search" class="spy"/>
+							<input type="text" name="filterLeft" value="{{refineLeftQuery}}"/><input type="submit" value="Filter" name="submitLeft" class="button small lblue" /> <input type="button" value="Clear" name="clearLeft" class="button small lblue" />
+						</form>
+						<div class="data">
+							<table width="100%" cellpadding="0" cellspacing="0" border="0" class="dataTable">
+								<thead>
+									<tr>
+										<th class="descr{{#ifCond sortLeft li_desc}} ord {{sortOrderLeft}}{{/ifCond}}"><a class="order left" href="li_desc">Description</a></th>
+										<th class="poRef{{#ifCond sortLeft ord_ref_no}} ord {{sortOrderLeft}}{{/ifCond}}" ><a class="order left" href="ord_ref_no">PO ref.</a></th>
+										<th class="date{{#ifCond sortLeft ord_date}} ord {{sortOrderLeft}}{{/ifCond}}"><a class="order left" href="ord_date">Date</a></th>
+										<th class="sup{{#ifCond sortLeft supplier_name}} ord {{sortOrderLeft}}{{/ifCond}}"><a class="order left" href="supplier_name">Supplier</a></th>
+										<th class="qty{{#ifCond sortLeft li_qty}} ord {{sortOrderLeft}}{{/ifCond}}"><a class="order left" href="li_qty">Qty</a></th>
+										<th class="unt{{#ifCond sortLeft uom}} ord {{sortOrderLeft}}{{/ifCond}}"><a class="order left" href="uom">Unit</a></th>
+										<th class="unPrice{{#ifCond sortLeft unit_cost}} ord {{sortOrderLeft}}{{/ifCond}}"><a class="order left" href="unit_cost">Unit Price</a></th>
+										<th class="ttlPrice{{#ifCond sortLeft total_cost}} ord {{sortOrderLeft}}{{/ifCond}}"><a class="order left" href="total_cost">Total Price</a></th>
+										<th class="last">&nbsp;</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			
+
+<!--
+				<div class="rightData">
+					<div class="avg">
+						<div class="value"></div>
+						<h2>Market avg. <strong>quoted price</strong></h2>
+						<p>Per unit (USD)</p>
+						<div class="clear"></div>
+					</div>
+					<div class="dataContainer">
+						<form class="new">
+							<img src="/img/icons/medium/spy-green.png" border="0" alt="search" class="spy"/>
+							<input type="text" name="filterRight" /><input type="submit" value="Filter" name="submitRight" class="button small green" /> <input type="button" value="Clear" name="clearRight" class="button small green" />
+						</form>
+						<div class="data">
+							<table width="100%" cellpadding="0" cellspacing="0" border="0" class="dataTable">
+								<thead>
+									<tr>
+										<th class="descrR"><a class="order right" href="desc">Description</a></th>
+										<th class="qtyR">Qty</th>
+										<th class="avgPrice">Avg. Price</th>
+										<th class="last"></th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="leftData">
+					<div class="avg">
+						<div class="value"></div>
+						<h2>Your avg. <strong>purchase price</strong></h2>
+						<p>Per unit (USD)</p>
+						<div class="clear"></div>
+					</div>
+					<div class="dataContainer">
+						<form class="new">
+							<img src="/img/icons/medium/spy-blue.png" border="0" alt="search" class="spy"/>
+							<input type="text" name="filterLeft" /><input type="submit" value="Filter" name="submitLeft" class="button small lblue" /> <input type="button" value="Clear" name="clearLeft" class="button small lblue" />
+						</form>
+						<div class="data">
+							<table width="100%" cellpadding="0" cellspacing="0" border="0" class="dataTable">
+								<thead>
+									<tr>
+										<th class="descr"><a class="order left" href="desc">Description</a></th>
+										<th class="poRef" ><a class="order left" href="ref">PO ref.</a></th>
+										<th class="date"><a class="order left" href="date">Date</a></th>
+										<th class="sup"><a class="order left" href="supplier">Supplier</a></th>
+										<th class="qty"><a class="order left" href="qty">Qty</a></th>
+										<th class="unt"><a class="order left" href="unit">Unit</a></th>
+										<th class="unPrice"><a class="order left" href="price_unit">Unit Price</a></th>
+										<th class="ttlPrice"><a class="order left" href="price_total">Total Price</a></th>
+										<th class="last">&nbsp;</th>
+									</tr>
+								</thead>
+								<tbody>
+									
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="clear"></div>
+-->

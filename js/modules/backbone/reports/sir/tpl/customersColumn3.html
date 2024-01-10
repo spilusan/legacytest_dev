@@ -1,0 +1,137 @@
+{{#unless isCompare}}
+
+<div class="clear"></div>
+
+<div class="custFull">
+	<table class="containerTable">
+		<tbody>
+			<tr>
+				<td class="rotatedColumn darkBlue"><span>Total</span></td>
+				<td>
+					<table class="headTable">
+						<tbody>
+						<tr>
+							<td>Total order value:</td>
+							<td class="valueCell">{{formatNumRound periodData.attributes.revenue-value}} USD</td>
+						</tr>
+						<tr>
+							<td>Number of customers:</td>
+							<td>{{formatNumRound periodData.attributes.no-of-customers}}</td>
+						</tr>
+						</tbody>		
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Competitive block -->
+	<table class="containerTable">
+		<tbody>
+			<tr>
+				<td class="rotatedColumn darkGray competitive">&nbsp;</td>
+
+				<td>
+
+					<table class="dataTable">
+						<thead>
+							<th data-ord="l_company-name" class="arrow-down">Company name</th>
+							<th data-ord="l_rfq-count">RFQs</th>
+							<th data-ord="l_qot-rate">Quotes &amp; Quote rate</th>
+							<th data-ord="l_win-rate">POs &amp; Win rate</th>
+							<th data-ord="l_ave-qot-time">Average quote time hours</th>
+							<th data-ord="l_po-value">PO value [USD]</th>
+						</thead>
+						<tbody id="compatitive2">
+						</tbody>
+					</table>
+
+					<!-- sum of competitive -->
+						<table class="headTable">
+							<tbody>
+							<tr>
+								<td>Total order value:</td>
+								<td class="valueCell">{{formatNumRound periodData.attributes.competitive-buyer.revenue-value}} USD</td>
+							</tr>
+							<tr>
+								<td>Number of customers:</td>
+								<td>{{formatNumRound periodData.attributes.competitive-buyer.no-of-customers}}</td>
+							</tr>
+							</tbody>		
+						</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<!-- Direct block -->
+		<table class="containerTable">
+		<tbody>
+			<tr>
+				<td class="rotatedColumn darkGray direct">&nbsp;</td>
+				<td>
+					<table class="smallDataTable">
+						<thead>
+							<th data-ord="l_company-name" class="arrow-down">Company name</th>
+							<th data-ord="l_po-count">POs</th>
+							<th data-ord="l_po-value">PO value [USD]</th>
+						</thead>
+						<tbody id="direct2">
+						</tbody>
+					</table>
+
+					<!-- sum of direct  -->
+
+					<table class="headTable">
+						<tbody>
+						<tr>
+							<td>Total order value:</td>
+							<td class="valueCell">{{formatNumRound periodData.attributes.direct-buyer.revenue-value}}USD</td>
+						</tr>
+						<tr>
+							<td>Number of customers:</td>
+							<td>{{formatNumRound periodData.attributes.direct-buyer.no-of-customers}}</td>
+						</tr>
+						</tbody>		
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+{{/unless}}
+
+<!-- not trading companies -->
+<div class="clear"></div>
+
+<table class="notTradedBuyers">
+	<thead>
+		<tr>
+			<th colspan="6">ShipServ Buyers you didn’t trade with</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td class="noBuyers" rowspan="2">
+				<div>
+					<a href="customers-no-buyers" class="cHelp light alRight"></a>
+					<p>No. of<br>Buyers</p>
+					<span>{{formatNumRound periodData.attributes.potential-buyer.no-of-customers}}</span>
+				</div>
+			</td>
+			<td class="buyerListTitle">Selected Buyers:</td>
+		</tr>
+		<tr>
+			<td class="listContainer">
+				<ul class="buyerList">
+					{{#each periodData.attributes.potential-buyer.buyers}}
+						<li title="{{this.company-name}}">{{this.company-name}}</li>
+					{{/each}}
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" class="btnRow"><a href="/info/pages-for-suppliers/" class="button dblue medium wide" target="_blank">Win more business with ShipServ</a></td>
+		</tr>
+	</tbody>
+</table>

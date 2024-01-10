@@ -1,0 +1,25 @@
+/*
+Document   : partials/guidelines/pages/_pages_medium.scss
+Created on : August 18, 2016
+Author     : Daniele Manca
+Description: styles for pages sections on medium sized devices (eg, laptops)
+*/
+/* Base */
+
+@media only screen and (max-width: 1200px) and (min-width: 1025px) {
+	section {
+
+		.wrapper {
+			padding: 0 30px;
+		}
+
+		&.intro {
+			&.darkGrey {
+				.back-btn {
+					right: 50px;
+				}
+			}
+		}
+
+	}
+}

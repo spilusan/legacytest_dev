@@ -1,0 +1,177 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+$this->headScript()->appendFile('/js/modules/backbone/lib/jquery.shipserv-tooltip.js');
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+$this->requirejs()
+	->addModule('match/match')
+
+	;
+
+function getMonth($number)
+{
+	$dateObj   = new DateTime;
+	$dateObj->setDate('2014', $number, '1');
+	$monthName = $dateObj->format('M'); // March
+	return strtoupper($monthName);
+}
+
+$heading = array(
+	'RFQ Action Rates'
+	, '%RFQ Events Resulting in a PO'
+	, 'RFQ Counts'
+	, 'RFQ Event Counts'
+	, 'Actioned RFQ Counts'
+	, 'RFQ Events resulting in a PO'
+	, '%RFQ Events with No Quotes'
+	, 'Leakage'
+);
+
+$summationEnabled = array(
+	'RFQ Counts'
+	, 'RFQ Event Counts'
+	, 'Actioned RFQ Counts'
+	, 'RFQ Events resulting in a PO'
+);
+
+?>
+
+<?php
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'Usage report', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'Engagement report', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+?>
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.colVis.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedColumns.css" media="screen" rel="stylesheet" type="text/css">
+
+<div id="body" class="usage">
+	<div id="content">
+		<h1 class="styled">Engagement report</h1>
+		<?= $this->partial('shipmate/data-confidentiality-reminder.phtml'); ?>
+		<form method="get" class="new" id="report-form">
+			<input type="hidden" id="selectedTnid" />
+		    <table style=";">
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		            	<span style="font-size:12px; ;">
+                            	<select name="yyyy" onchange="$('#report-form').submit();">
+                            		<?
+                            		for($i=2012; $i<=date('Y'); $i++)
+									{
+										$selectedYear = ($_GET['yyyy']=="")?date('Y'):$_GET['yyyy'];
+										?>
+                            			<option value="<?= $i?>" <?php echo ($selectedYear == $i)?'selected="selected"':"" ?>><?=$i?></option>
+                            			<?
+									}
+									?>
+                            	</select>
+                            	grouped by month
+            			</span>
+
+            			<div class="clear"></div>
+
+            			<div style="font-size:14px; margin-top:20px; font-weight: bold;" id="titleBuyerName"></div>
+            			<div class="clear"></div>
+            			<div id="chart_div" style="width: 800px; height: 400px;"></div>
+
+						<table id="resultsTab" style="border-collapse: collapse; width:100%;">
+		                    <thead>
+		                    	<tr>
+									<th style="width:350px; text-align:left;"></th>
+		                    		<?php for( $i=1; $i<13; $i++){?>
+		                            <th class="<?= ($i==12)?'last':''?>"><?= getMonth( $i) ?></th>
+		                            <?php }?>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php foreach ((array)$this->data as $type => $result) : $key=1; $totalNotNull = $totalPerBuyer=0; ?>
+		                        <?php
+		                        	$isHeading = ( in_array($type, $heading) !== false );
+		                        	$sumIsEnabled = ( in_array($type, $summationEnabled) !== false );
+		                        ?>
+		                            <tr class="dr <?php if ($key % 2 == 0): ?>altColor<?php endif; ?> handCursor">
+		                            	<? if( $isHeading === true ){ $rowCount=0; $sum=array(); $headingText=$type;?>
+		                                <td class="nr statsName last" onmouseover="" colspan="13" style="background-color:#f5f7fa; font-weight:bold; font-size:14px; text-align:left; padding-top:20px; border-bottom: 1px solid #d6dce4;">
+		                                	<?php 
+		                                	echo $type;
+		                                	if ($type === 'Leakage'):
+		                                	?>
+		                                	<i class="fa fa-info-circle taHelp" aria-hidden="true" data-tooltipelement="engLevelTooltip"></i>
+		                                	<?php endif ?>
+		                                </td>
+		                            	<? }else{ $rowCount++; ?>
+		                                <td class="statsName" style=" text-align:left; border-bottom: 1px solid #d6dce4;">
+		                                	<?php echo $type; ?>
+		                                </td>
+			                            <?php for( $i=1; $i<13; $i++){?>
+				                            <td style="border-bottom: 1px solid #d6dce4;" class="<?php echo 'm' . $i; ?> <?= ($i==12)?'last':''?>" ><?
+			                            		$keyData = (($_GET['yyyy']=="")?date('Y'):$_GET['yyyy']) . '-' .  getMonth($i);
+			                            		$output = ($result[$keyData]==null)?"0":round($result[$keyData]);
+			                            		echo number_format($output);
+			                            		$aggregate[$type][$i] = round($output);
+			                            		$sum[$i] += round($output);
+				                            ?></td>
+			                            <?php }?>
+			                            <?php }?>
+									</tr>
+									<?php if($rowCount== (($headingText=='RFQ Events resulting in a PO')?4:3) ){ ++$totalSumDisplayed;?>
+									<tr style="<?php echo (($totalSumDisplayed<=3)?'display:none':'')?>;">
+										<td class="statsName" style="font-weight:bold; text-align:left; border-bottom: 1px solid #d6dce4;">Total</td>
+			                            <?php for( $i=1; $i<13; $i++){?>
+				                            <td style="font-weight:bold; border-bottom: 1px solid #d6dce4;" class="<?php echo 'm' . $i; ?> <?= ($i==12)?'last':''?>" ><?
+			                            		echo number_format($sum[$i],0);
+				                            ?></td>
+										<?php }?>
+									</tr>
+									<?php }?>
+		                        <?php endforeach; ?>
+		                    </tbody>
+		                </table>
+		                </div>
+		        	</td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div id="engLevelTooltip">
+	<!-- TODO request a better description wording -->
+	<h2>GMV Leakage</h2>
+	<p>This represents the difference between the GMV we would expect, and the GMV what we actually recieve.</p>
+	<p>Avarage order Total Cost for 12 month / Total number of RFQ's per events</p>
+	<h2>Revenue Leakage</h2>
+	<p>This represents the difference between the revenue we would expect, and the revenue what we actually have.</p>
+</div>
+<div class="clear"></div>
+<script>
+	var allData = JSON.parse('<?php echo json_encode( $aggregate )?>');
+</script>
+<script type="text/javascript" src="/js/modules/match/dashboard/pages.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+//<![CDATA[
+	google.load("visualization", "1", {packages:["corechart"]});
+	google.setOnLoadCallback(function(){
+		draw();
+		$(".statsName").each(function(){
+			if( $(this).html().trim()=='%Overall RFQs Actioned')
+			{
+				$(this).parent().trigger("click");
+			}
+		});
+	});
+//]]>
+</script>
+<script type="text/javascript">
+	$('.taHelp').shTooltip({
+	    displayType : 'left'
+	});
+</script>
+
+

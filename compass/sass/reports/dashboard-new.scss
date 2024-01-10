@@ -1,0 +1,12 @@
+/*
+Document   : reports/dashboard.scss
+Created on : Sep 5, 2012, 1:00:43 PM
+Author     : gly
+Description: combining partials for match dashboard styles
+*/
+
+@import "compass/css3";
+
+@import "partials/def/datepicker";
+
+@import "partials/reports/dashboard-new/content";

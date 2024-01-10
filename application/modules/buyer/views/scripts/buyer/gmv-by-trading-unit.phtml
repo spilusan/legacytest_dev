@@ -1,0 +1,206 @@
+<?php
+$this->headLink()->appendStylesheet('/css/trade/rfq-inbox.css');
+$this->headLink()->appendStylesheet('/css/match-kpi.css');
+$this->headLink()->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+
+$this->requirejs()
+	->addModule('match/report')
+	->addDefinition('/match/reportType', '"buyer-gmv-breakdown"')
+;
+?>
+<!--[if IE]>
+    <link href="/css/ie/rfq-inbox-ie.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<!--[if IE 7]>
+    <link href="/css/ie/ie7-rfq-inbox.css" media="screen" rel="stylesheet" type="text/css">
+<![endif]-->
+<style>
+	table tr.child td {
+		background-color:#d6dce4;
+	}
+	table tr.bold td {
+		font-weight:bold;;
+	}
+	#body #content {
+		left: 0 !important;
+	}
+</style>
+
+<?php
+	// -------- BREADCRUMBS ---------------
+	$breadcrumbs[] = array('name' => 'ShipServ Pages', 'url'  => '/search');
+	$breadcrumbs[] = array('name' => 'Shipmate', 'url'  => '/shipmate');
+	$breadcrumbs[] = array('name' => 'GMV Report', 'url'  => '/reports/gmv');
+	$breadcrumbs[] = array('name' => 'Buyer', 'url'  => '');
+	$breadcrumbs[] = array('name' => 'Drilldown by trading unit', 'url'  => '');
+	echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs));
+
+	$startDate = ((isset($_GET['fromDate']) && $_GET['toDate'])? strip_tags($_GET['fromDate']) : date("d/m/Y", mktime(0, 0, 0, date('n'), date('j'), date('Y')-1)));
+	$endDate =  ((isset($_GET['toDate']) && $_GET['toDate'])? strip_tags($_GET['toDate']) : date('d/m/Y'));
+?>
+
+<link href="/css/jquery.dataTables.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.tableTools.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.fixedHeader.css" media="screen" rel="stylesheet" type="text/css">
+<link href="/css/dataTables.CSV.css" media="screen" rel="stylesheet" type="text/css">
+
+<div id="body" class="buyerGmvDetail">
+	<div id="content">
+		<h1 class="styled">GMV Report for Buyer - Trading Unit List</h1>
+		<form method="get" class="new">
+		    <table style="margin: auto;  width:100%;">
+		    	<tr>
+		        	<td>
+		        		<form action="/buyer/gmv" id="buyerGmvForm">
+			        		<table style="font-size:12px; ">
+								<tr>
+						            <td width="130">
+						            	Buyer TNID:
+						            </td>
+						            <td>
+						               <?= $this->buyer->bybBranchCode?>
+						            </td>
+								</tr>
+								<tr>
+						            <td width="130">
+						            	Buyer Name:
+						            </td>
+						            <td>
+						               <?= $this->buyer->bybName?>
+						            </td>
+								</tr>
+								<tr>
+						            <td width="130">
+						            	For period:
+						            </td>
+						            <td>
+						               <?= $this->report->startDate->format('d/M/Y');?> to <?= $this->report->endDate->format('d/M/Y');?>
+						            </td>
+								</tr>
+
+			        		</table>
+		        		</form>
+		        	</td>
+		        </tr>
+
+		        <tr style="position: relative;">
+		            <td colspan="5">
+		            	<? if( lg_count($this->results) > 0 ){ ?>
+							<table id="resultsTab">
+		                    <thead>
+		                        <tr>
+		                            <th style="width:30px;"></th>
+		                            <th class="left" style="width: 340px;">Vessel Name</th>
+		                        	<th class="left">Vessel IMO</th>
+		                            <th>Number of RFQ events raised for this vessel in period</th>
+		                            <th>Average Number of Supplier selected</th>
+		                            <th>Number of orders resulting from RFQ events</th>
+		                            <?php if($this->report->isParent === false): ?>
+										<th>RFQ Events with no PO</th>
+										<th>%RFQ Events with no PO</th>
+			                        	<th>Estimated GMV Leakage (USD)</th>
+			                        	<th>Estimated Revenue Leakage (USD)</th>
+										<th>Total orders raised during period</th> 
+										<th>Total direct orders raised during period</th> 
+									<?php endif ?>
+									<th>Value Orders Raised (USD)</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                        <?php
+		                        foreach( (array) $this->results as $result )
+		                        {
+		                        	$totalGMVForBuyer += $result['TOTAL_GMV'];
+		                        }
+
+		                        foreach ( (array) $this->results as $result )
+		                        {
+		                        	++$no;
+		                        	$supplier = Shipserv_Supplier::getInstanceById($result['SPB_BRANCH_CODE'], null, $true);
+		                        	?>
+		                            <tr>
+										<td style="width:30px;"><?= $no?></td>
+										<td class="left" style="width: 340px;"><?= ucwords($result['VESSEL_NAME']) ?></td>
+										<td class="left"><?= $result['IMO_NO'] ?></td>
+										<td class="currency"><?= $result['UNIQUE_EVENT_HASH'] ?></td>
+										<td><?= round($result['AVG_SPB'], 2) ?></td>
+										<!-- <td class="currency"><?= $result['PO_BY_RFQ_EVENT'] ?></td> -->
+										<td class="currency"><?= $result['TOTAL_PO'] ?></td>
+										<?php if($this->report->isParent === false): ?>
+											<td class="currency"><?= round(($result['UNIQUE_EVENT_HASH']-$result['TOTAL_PO'])) ?></td>
+											<td class=""><?= round(($result['UNIQUE_EVENT_HASH']-$result['TOTAL_PO'])/$result['UNIQUE_EVENT_HASH']*100,0) ?></td>
+											<td class="currency"><?= ($result['LEAKAGE_GMV']=="")?"0":$result['LEAKAGE_GMV'] ?></td>
+											<td class="currency"><?= ($result['LEAKAGE_REVENUE']=="")?"0":$result['LEAKAGE_REVENUE'] ?></td>
+											<td class=""><?= $result['TOTAL_PO_IN_PERIOD'] ?></td> 
+											<td class=""><?= $result['TOTAL_DIRECT_PO_IN_PERIOD'] ?><!-- Total direct orders raised during period--></td> 
+										<?php endif ?>
+										<td class="currency"><?= ($result['TOTAL_ORD_VALUE_USD']=="")?"0":$result['TOTAL_ORD_VALUE_USD']?></td>
+		                            </tr>
+		                        	<?
+
+									$total['TOTAL_ORD_VALUE_USD'] += $result['TOTAL_ORD_VALUE_USD'];
+									$total['UNIQUE_EVENT_HASH'] += $result['UNIQUE_EVENT_HASH'];
+									$total['TOTAL_PO'] += $result['TOTAL_PO'];
+									$total['PO_BY_RFQ_EVENT'] += $result['PO_BY_RFQ_EVENT'];
+									$total['AVG_SPB'] += $result['AVG_SPB'];
+									$total['LEAKAGE_GMV'] += $result['LEAKAGE_GMV'];
+									$total['LEAKAGE_REVENUE'] += $result['LEAKAGE_REVENUE'];
+									$total['RFQ_EVENT_WITH_PO'] += round(($result['UNIQUE_EVENT_HASH']-$result['TOTAL_PO']));
+									$total['TOTAL_DIRECT_ORDERS'] += $result['TOTAL_DIRECT_ORDERS']; 
+									$total['TOTAL_PO_IN_PERIOD'] += $result['TOTAL_PO_IN_PERIOD']; 
+									$total['TOTAL_DIRECT_PO_IN_PERIOD'] += $result['TOTAL_DIRECT_PO_IN_PERIOD']; 
+		                        }
+		                        ?>
+		                    </tbody>
+							<tfoot>
+								<tr style="background-color: #d6dce4">
+									<td style="width:30px;"></td>
+									<td class="left" style="width: 340px;"></td>
+									<td class="left"></td>
+									<td class="left">Total</td>
+									<td class="left ">Average</td>
+									<td class="left">Total</td>
+									<?php if($this->report->isParent === false): ?>
+										<td class="left">Total</td>
+										<td class="">Average</td>
+										<td class="left">Total</td>
+										<td class="left">Total</td>
+										<td class="left">Total</td>
+										<td class="left">Total</td>
+									<?php endif ?>
+									<td class="left">Total</td>
+								</tr>
+
+								<tr>
+									<td style="width:30px;"></td>
+									<td class="left" style="width: 340px;"></td>
+									<td class="left"></td>
+									<td class="currency"><?= $total['UNIQUE_EVENT_HASH'] ?></td>
+									<td><?= ($no != 0) ? round($total['AVG_SPB'] / $no, 2) : '' ?></td>
+									<td class="currency"><?= $total['PO_BY_RFQ_EVENT'] ?></td>
+									<?php if($this->report->isParent === false): ?>
+										<td class="currency"><?= $total['RFQ_EVENT_WITH_PO'] ?></td>
+										<td class="percentage"><?= round(($total['UNIQUE_EVENT_HASH']-$total['TOTAL_PO'])/$total['UNIQUE_EVENT_HASH']*100) ?></td>
+										<td class="currency"><?= ($total['LEAKAGE_GMV']=="")?"0":$total['LEAKAGE_GMV'] ?></td>
+										<td class="currency"><?= ($total['LEAKAGE_REVENUE']=="")?"0":$total['LEAKAGE_REVENUE'] ?></td>
+										<td class=""><?= $total['TOTAL_PO_IN_PERIOD'] ?></td>
+										<td class=""><?= $total['TOTAL_DIRECT_PO_IN_PERIOD'] ?></td>
+									<?php endif ?>
+									<td class="currency"><?= ($total['TOTAL_ORD_VALUE_USD']=="")?"0":$total['TOTAL_ORD_VALUE_USD']?></td>
+								</tr>
+							</tfoot>
+		                </table>
+		                <?php }?>
+		            </td>
+		        </tr>
+		    </table>
+		</form>
+	</div>
+</div>
+<div class="clear"></div>
+<script type="text/javascript">
+	function changeParentId(parentId){
+		$('#parentId').val(parentId);
+		$("#buyerGmvForm").submit();
+	}
+</script>

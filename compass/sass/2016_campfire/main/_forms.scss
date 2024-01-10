@@ -1,0 +1,313 @@
+/*
+Document   : partials/guidelines/_forms.scss
+Created on : Jun 13, 2016, 10:05:43 AM
+Author     : gly
+Description: Forms
+*/
+
+form {
+    margin-bottom: 20px;
+    vertical-align: top;
+    .input-control[disabled] {
+        background-color: #f2f2f2;
+    }
+    .input-control.dirty {
+        background-color: #fff3c5;
+    }
+    fieldset {
+        position: relative;
+        &.bordered {
+            border: 1px solid $dark-grey;
+            padding: 15px;
+            margin: 10px 10px 20px 10px;
+            min-height: 75px;
+            .btn {
+                width: auto;
+                font-size: 16px;
+                padding: 6px;
+                line-height: auto;
+                margin: 0 5px;
+                text-align: center;
+            }
+            .add-line {
+                margin-top: 20px;
+                margin-left: 0;
+                padding: 15px;
+            }
+            .loader {
+                display: none;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+            }
+            &.loading {
+                .field {
+                    visibility: hidden;
+                }
+                .loader {
+                    display: block;
+                    .label {
+                        position: absolute;
+                        top: 50%;
+                        left: 50%;
+                        transform: translate(-50%, -50%);
+                    }
+                }
+            }
+        }
+    }
+    .field {
+        -ms-box-orient: horizontal;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: flex;
+        margin: 0 -10px 10px;
+        padding: 0 10px;
+        label {
+            flex: none;
+            line-height: 2em;
+            min-width: 180px;
+            margin: 0 5px;
+        }
+        .input-control {
+            flex: 1 1 auto;
+            margin: 0 5px;
+        }
+        .group {
+            flex: 1 1 auto;
+            -ms-box-orient: horizontal;
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -moz-flex;
+            display: -webkit-flex;
+            display: flex;
+        }
+        .sm {
+            max-width: 50px;
+        }
+        .md {
+            max-width: 150px;
+        }
+        .lg {
+            max-width: 350px;
+        }
+    }
+    @media (max-width: 800px) {
+        .field {
+            flex-direction: column;
+        }
+        .field .input-control {
+            margin-top: 2px;
+        }
+        .field .label.right-inline {
+            text-align: left;
+            padding-right: 0;
+            padding-left: 0;
+        }
+    }
+    &.filters {
+        background: $lt-grey;
+        @include border-radius(4px);
+        padding: 15px;
+    }
+    label {
+        font-size: 14px;
+        color: $text-grey;
+        font-family: 'Lato', sans-serif;
+        display: inline-block;
+        vertical-align: top;
+        margin-right: 15px;
+        div {
+            margin-bottom: 10px;
+        }
+    }
+    textarea {
+        min-height: 10em;
+        background: $white;
+        border: 1px solid $dark-grey;
+        @include border-radius(4px);
+        font-size: 16px;
+        color: $text-grey;
+        font-family: 'Lato', sans-serif;
+        padding: 6px;
+        &:focus {
+            border-color: $cyan-blue;
+        }
+    }
+    input {
+        &[type="text"],
+        &[type="password"],
+        &[type="email"],
+        &[type="date"] {
+            background: $white;
+            border: 1px solid $dark-grey;
+            @include border-radius(4px);
+            font-size: 16px;
+            color: $text-grey;
+            font-family: 'Lato', sans-serif;
+            padding: 6px;
+            &:focus {
+                border-color: $cyan-blue;
+            }
+        }
+        &[type="checkbox"],
+        &[type="radio"] {
+            opacity: 0;
+            position: absolute;
+            display: inline-block;
+            vertical-align: middle;
+            margin: 5px;
+            cursor: pointer;
+            +.checkbox-label:before,
+            +.radio-label:before {
+                content: '';
+                background: $white;
+                border: 1px solid $dark-grey;
+                display: inline-block;
+                vertical-align: middle;
+                width: 20px;
+                height: 20px;
+                margin-right: 5px;
+                text-align: center;
+            }
+            &:focus {
+                +.checkbox-label:before,
+                +.radio-label:before {
+                    border-color: $cyan-blue;
+                }
+            }
+        }
+        &[type="checkbox"] {
+            +.checkbox-label:before {
+                @include border-radius(4px);
+                position: relative;
+                top: -2px;
+            }
+            &:checked {
+                +.checkbox-label:before {
+                    color: $white;
+                    content: $fa-var-check;
+                    border-color: $cyan-blue;
+                    background: $cyan-blue;
+                    padding-top: 3px;
+                    height: 17px;
+                    font: normal normal normal 14px/1 FontAwesome;
+                }
+            }
+        }
+        &[type="radio"] {
+            +.radio-label:before {
+                border-radius: 50%;
+            }
+            &:checked {
+                +.radio-label:before {
+                    background: $mid-grey;
+                }
+            }
+        }
+    }
+    .checkbox-label,
+    .radio-label {
+        display: inline-block;
+        vertical-align: middle;
+        cursor: pointer;
+        position: relative;
+        top: -2px;
+    }
+    .select {
+        display: inline-block;
+        overflow: hidden;
+        border: 1px solid $dark-grey;
+        position: relative;
+        @include border-radius(4px);
+        width: 200px;
+        height: 19px;
+        padding: 6px 0 6px 8px;
+        background: $white;
+        font-family: 'Lato', sans-serif;
+        &:after {
+            content: '';
+            position: absolute;
+            right: 7px;
+            top: 50%;
+            margin-top: -3px;
+            pointer-events: none;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 8px 5px 0 5px;
+            border-color: $dark-grey transparent transparent transparent;
+        }
+        &,
+        >* {
+            cursor: pointer;
+        }
+        select {
+            @include box-sizing(content-box);
+            background: transparent;
+            border: 1px solid transparent;
+            outline: 0;
+            padding: 6px 0 6px 8px;
+            font-size: 14px;
+            width: 120%;
+            height: 19px;
+            -webkit-user-select: none;
+            -moz-user-select: -moz-none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-appearance: none;
+            -moz-appearance: radio-container;
+            appearance: none;
+            position: absolute;
+            left: -1px;
+            top: -1px;
+            z-index: 1000;
+            &:focus {
+                border: 1px solid $cyan-blue;
+                @include border-radius(4px);
+            }
+        }
+    }
+}
+
+.form-control {
+    border: 1px solid $dark-grey;
+    padding: 9px;
+    height: 45px;
+    outline: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333333;
+    background: white;
+    border-radius: 4px;
+    position: relative;
+    margin: 0 15px 10px 10px;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+    &:last-child {
+        margin-right: 0;
+    }
+    &:fist-child {
+        margin-left: 0;
+    }
+}
+
+.form-inline {
+    display: inline-block;
+    .form-group {
+        display: inline-block;
+        label,
+        .form-control {
+            margin: 10px 10px;
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+}

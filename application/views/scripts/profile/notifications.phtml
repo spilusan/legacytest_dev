@@ -1,0 +1,136 @@
+<?php
+$this->headScript()->appendFile('/js/jquery.auto-complete.js')
+					->appendFile('/js/jquery.metadata.js')
+					->appendFile('/js/jquery.color.js')
+					->appendFile('/js/profile-privacy.js')
+					->appendFile('/js/lib/jquery.uniform.min.js');
+
+$this->headLink()->appendStylesheet('/css/transition.css');
+$this->CDNLink()->appendStylesheet('/css/uniform.default.new.css')
+				->appendStylesheet('/css/profile.css');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Settings',
+						   'url'  => '/profile/notifications'));						
+?>
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], 'notifications'),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], '', $this->pendingUsers, $isAdmin)
+				)
+			);
+				
+			?>
+			<div class="profile-body-right">
+				<div class="zz header">
+					<h2>Settings</h2>
+				</div>
+				<div class="profileContent">
+					<?php
+					
+					if ($this->saveSuccess)
+					{
+						?>
+						<h3 class="success-message">Your notification settings were successfully updated</h3>
+						<?php
+					}
+					?>
+
+                    <?php
+                    /**
+                     * @todo by Yuriy Akopov, 2014-09-24 Ideally the block should be built from form variable submitted
+                     * but in the moment it is semi-manual because of styles and additional layout-related elements
+                     * converting to Zend decorators is going to be as messy, and also through the project we use
+                     * 'manual' forms anyway :(
+                     */
+
+                     /* @var Myshipserv_Form_Alerts $notificationForm */
+                    $notificationForm = $this->notificationForm;
+                    ?>
+
+					<form action="/profile/notifications" class="new" method="post" enctype="application/x-www-form-urlencoded">
+						<div class="profile-body-header"></div>
+						<div class="profile-body-group">
+							<div style="margin-bottom: 15px;">
+								<label class="required" for="status" style="font-weight:bold;">Choose how often review request notifications are to be delivered:</label>
+							</div>
+							<?php
+                                $alertsValues = $notificationForm->getAlertsElement()->getMultiOptions();
+                                foreach ($alertsValues as $key => $value) {
+                                    $id = Myshipserv_Form_Alerts::ELEMENT_ALERTS . '_' . $key;
+                                    $checked = ($key === $this->user->alertStatus);
+                                    // strange formatting here with label including element tag, but styles are adjusted to that, so leaving it like this
+                                    ?>
+                                    <label for="<?php echo $id; ?>">
+                                        <input type="radio" id="<?php echo $id; ?>" name="<?php echo Myshipserv_Form_Alerts::ELEMENT_ALERTS; ?>" value="<?php echo htmlentities($key); ?>" <?php if ($checked) { echo 'checked="checked"'; } ?>>
+                                        <?php echo htmlentities($value); ?>
+                                    </label>
+                                    <?php
+                                }
+							?>
+							<div class="clear"></div>
+							
+							<hr />
+							
+							<!--  
+							default would be the 2nd ones 
+							privacy policy and terms of use need to be link
+							-->
+							
+							<label class="isDecisionMaker" for="anonAll" style=";">
+You have previously consented to a change in our <a href="/info/privacy-policy/" target="_blank">Privacy Policy</a> and <a href="/info/terms-of-use" target="_blank">Terms of Use</a> which were updated to enable us to share some of your information with suppliers. By doing this, suppliers on our system have more reason to improve their profiles which gives users, such as you, a better experience.<br />
+ <br />
+<b>We only share your information with your consent. If you wish to select a different share option please select from the list below.</b>
+							
+							</label>
+							<br />
+							<div class="clear"></div>
+
+                            <?php
+                            $anonValues = $notificationForm->getAnonymityElement()->getMultiOptions();
+                            foreach ($anonValues as $key => $value) {
+                                $id = Myshipserv_Form_Alerts::ELEMENT_ANONYMITY . '_' . $key;
+                                $checked = ($key === $this->user->anonymityFlag);
+                                // strange formatting here with label including element tag, but styles are adjusted to that, so leaving it like this
+                                ?>
+                                <label for="<?php echo $id; ?>">
+                                    <input type="radio" id="<?php echo $id; ?>" name="<?php echo Myshipserv_Form_Alerts::ELEMENT_ANONYMITY; ?>" value="<?php echo htmlentities($key); ?>" <?php if ($checked) { echo 'checked="checked"'; } ?>>
+                                    <?php echo htmlentities($value); ?>
+                                </label>
+                                <?php
+                            }
+                            ?>
+							<div class="clear"></div>
+								
+						</div>
+						<div class="profile-body-footer"></div>
+						
+						<div style="padding-top: 15px">
+							<div class="zz medium green button save-button" id><input type="submit" value="Save changes" id="submit" name="submit"></div>
+                            <div class="clear" style="height: 1px;"></div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("input[type='radio']").uniform();
+	});
+</script>

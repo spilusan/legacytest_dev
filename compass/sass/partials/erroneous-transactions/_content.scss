@@ -1,0 +1,44 @@
+#emailPreview {
+		display: none;
+		position: fixed;
+		z-index: 9997;
+		background-color: white;
+		left: 50%;
+		top: 0;
+		margin-top: 5px;
+		width: 700px;
+		margin-left: -300px;
+		border: 1px solid #d6dce4;
+		@include border-radius(6px);
+		behavior: url(/css/PIE.htc);
+		padding: 12px;
+	#closeEmailPev {
+		z-index: 9998;
+	    float: right;
+		font-size: 36px;
+		margin-right: 12px;
+		color: #000033;
+		cursor: pointer;
+	}
+
+	#emailWrapper {
+		font-size: 0.8em;
+		width: 100%;
+		overflow: auto;
+		line-height: 1.1em;
+		p {
+			margin: 0;
+			padding: 3px 0px;
+
+		}
+		ul {
+			margin: 0px;
+			padding: 6px;
+			list-style: disc;
+			li {
+			margin-left: 6px;
+			}
+		}
+	}
+
+}

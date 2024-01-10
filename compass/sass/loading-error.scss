@@ -1,0 +1,28 @@
+#lifesaver { 
+	float: left; 
+	margin-bottom: 30px; 
+}
+div {
+	&.error { 
+		width: 960px; 
+		margin: 30px auto auto; 
+	}
+	&.messages { 
+		float:right; 
+		width: 553px; 
+		padding-left: 25px; 
+		h1 { 
+			color: #e81e24; 
+			font-size: 22px; 
+			line-height: 30px; 
+			font-weight: bold; 
+			margin-top: 30px; 
+		}
+		p { 
+			color: #525c64; 
+			font-size: 16px; 
+			margin-top: 15px; 
+			margin-bottom: 20px; 
+		}
+	}
+}

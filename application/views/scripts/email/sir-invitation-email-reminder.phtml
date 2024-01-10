@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Supplier Insight Report</title>
+		<style type="text/css">
+		
+			#outlook a { padding:0; } /* Force Outlook to provide a "view in browser" button. */
+			body { width:100% !important; } /* Force Hotmail to display emails at full width */
+			body { -webkit-text-size-adjust:none; } /* Prevent Webkit platforms from changing default text sizes. */		
+		
+			/* Reset Styles */
+			body { margin:0; padding:0; }
+			#container { margin:0; padding:0; width:636px !important; }
+			/*-*/
+		
+			body, #container { color: #2e3235; font-size: 12px; font-family: Arial, sans-serif; font-weight: normal; }
+			p, h1, h2, div, td { font-family: Arial, sans-serif; font-weight: normal; padding: 0; margin: 0; }
+			table { margin: 0; border: 0; padding: 0; }
+			td{ padding:10px; }
+			a { text-decoration: none; }
+		
+			h1.dear { font-size: 17px; font-weight: bold; color: #13b5ea; }
+			h2 { font-size: 16px; font-weight: bold; color: #2e3235; }
+			p.intro { font-size: 15px; margin-bottom: 20px; line-height: 1.1em; }
+			ul.points, ul.points li { /*list-style-position: inside;*/ margin: 0; text-align: left; }
+			ul.points { margin-left:20px; margin-top: 20px; margin-bottom: 20px; }
+			ul.points li { margin-bottom: 5px; padding: 0px; font-weight:bold; font-size:15px; }
+		
+			div.dotted { border-bottom: 1px dotted #333333; height: 1px; width: 358px; margin: 20px auto; }
+		</style>
+
+		<!--[if gte mso 9]>
+		<style type="text/css">
+			ul.points { margin-left: 5px; }
+			ul.points li { padding: 0; margin-left: 14px; }
+		</style>
+		<![endif]-->
+
+	</head>
+
+	<body leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+		<table id="container" border="0" cellpadding="0" cellspacing="0" width="636">
+						
+			<tr valign="middle">
+				<td>
+					<h1 class="dear">Dear <?= trim($this->supplierName) ?>,</h1>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<?php if( $this->mode == "pages_user_accepting_enquiries" ){?>
+						<p class="intro">
+							In the last year, these are your usage statistics about your business from your ShipServ Pages listing:<br />
+						</p>
+						<ul class="points" style="margin: 0px; margin-left:20px;">
+							<?php if( $this->statistic->pagesEnquiry > 0 ){?><li><?= $this->statistic->pagesEnquiry ?> Enquir<?= ( ( $this->statistic->pagesEnquiry > 1 )?"ies":"y" )?></li><?php }?>
+							<?php if( $this->statistic->profileView > 0 ){?><li><?= $this->statistic->profileView ?> Profile View<?= ( ( $this->statistic->profileView > 1 )?"s":"" )?></li><?php }?>
+							<?php if( $this->statistic->contactView > 0 ){?><li><?= $this->statistic->contactView ?> Contact View<?= ( ( $this->statistic->contactView > 1 )?"s":"" )?></li><?php }?>
+						</ul>
+						<p class="intro">
+							<br />Want more detail on this or how this compares to the average? Then click below to view your Supplier Insight Report. It will only take a second and the link below takes you straight there - you don't need a login or password this time.
+						</p>
+						<center>
+							<table border="0" cellpadding="0" cellspacing="0" width="636">
+								<tr style="height: 35px; vertical-align: middle;" valign="middle">
+									<td valign="middle" style="background-color: #e81e24; font-size: 18px; font-weight: bold; color: #fff; vertical-align: middle; text-align:center;"><a href="<?=$this->url;?>" style="color:#fff; text-decoration: none; vertical-align: middle; text-align:center;">CLICK HERE TO VIEW YOUR SUPPLIER INSIGHT REPORT NOW</a></td>
+								</tr>
+							</table>
+						</center>
+						<p class="intro">
+							<br />
+							I'd really like you to have the chance to see how a Premium Profile could benefit your company as a Premium Profile on average can bring 20x more enquiries and with the brand new Supplier Insight Report you can measure your results instantly.<br />   
+							<br />
+							<b>So, for the first time ever, we're able to offer a Premium Profile for 3 months at a very special price of $295.</b><br />  
+							<br />
+							For more details about this offer and to buy now, go to our secure <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/pages-for-suppliers/webstore">Webstore</a>. Or if you'd like a ShipServ account manager to contact you then just reply to this email.<br /> 
+							<br />
+							To speak to someone now, phone our Sales Hotline on +44 203 111 9700.<br />
+							<br />
+							But don't delay - this offer WILL close on 31 March so please act now!<br />
+							<br />
+							<br />
+							Best regards,<br />
+							<br />
+							Freddy Ingemann<br />
+							Senior VP <br />
+							ShipServ<br />
+						</p>
+					<?php } else if( $this->mode == "pages_user_zero_enquiries" ){?>
+						<p class="intro">
+							In the last year, these are your usage statistics about your business from your ShipServ Pages listing:<br />
+						</p>
+						<ul class="points" style="margin: 0px; margin-left:20px;">
+							<?php if( $this->statistic->profileView > 0 ){?><li><?= $this->statistic->profileView ?> Profile View<?= ( ( $this->statistic->profileView > 1 )?"s":"" )?></li><?php }?>
+							<?php if( $this->statistic->contactView > 0 ){?><li><?= $this->statistic->contactView ?> Contact View<?= ( ( $this->statistic->contactView > 1 )?"s":"" )?></li><?php }?>
+						</ul>
+						<p class="intro">
+							<br />Want more detail on this or how this compares to the average? Then click below to view your Supplier Insight Report. It will only take a second and the link below takes you straight there - you don't need a login or password this time.
+						</p>
+						<center>
+							<table border="0" cellpadding="0" cellspacing="0" width="636">
+								<tr style="height: 35px; vertical-align: middle;" valign="middle">
+									<td valign="middle" style="background-color: #e81e24; font-size: 18px; font-weight: bold; color: #fff; vertical-align: middle; text-align:center;"><a href="<?=$this->url;?>" style="color:#fff; text-decoration: none; vertical-align: middle; text-align:center;">CLICK HERE TO VIEW YOUR SUPPLIER INSIGHT REPORT NOW</a></td>
+								</tr>
+							</table>
+						</center>
+						<p class="intro">
+							<br />
+							I'd really like you to have the chance to see how a Premium Profile could benefit your company as a Premium Profile on average can bring 20x more enquiries and with the brand new Supplier Insight Report you can measure your results instantly.  <br /> 
+							<br />
+							<b>So, for the first time ever, we're able to offer a Premium Profile for 3 months at a very special price of $295.</b><br />  
+							<br />
+							For more details about this offer and to buy now, go to our secure <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/pages-for-suppliers/webstore">Webstore</a>. Or if you'd like a ShipServ account manager to contact you then just reply to this email.<br /> 
+							<br />
+							To speak to someone now, phone our Sales Hotline on +44 203 111 9700.<br />
+							<br />
+							But don't delay - this offer WILL close on 31 March so please act now!<br />
+							<br />
+							Best regards,<br />
+							<br />
+							<br />
+							Freddy Ingemann<br />
+							Senior VP <br />
+							ShipServ<br />
+						</p>
+					<?php } else if( $this->mode == "salesforce_user_accepting_enquiries" ){?>
+						<p class="intro">
+							Did you know you have received enquiries from ShipServ Pages over the last twelve months?<br />
+							<br />
+							To get further details on these enquiries plus a lot more information including the number of times a prospective client has looked at your profile, click the link below and enter either your account details or register as a new user. 
+						</p>
+						<center>
+							<table border="0" cellpadding="0" cellspacing="0" width="636">
+								<tr style="height: 35px; vertical-align: middle;" valign="middle">
+									<td valign="middle" style="background-color: #e81e24; font-size: 18px; font-weight: bold; color: #fff; vertical-align: middle; text-align:center;"><a href="<?=$this->url;?>" style="color:#fff; text-decoration: none; vertical-align: middle; text-align:center;">CLICK HERE TO VIEW YOUR SUPPLIER INSIGHT REPORT NOW</a></td>
+								</tr>
+							</table>
+						</center>
+						<p class="intro">
+							<br />						
+							I'd really like you to have the chance to see how a Premium Profile could benefit your company as a Premium Profile on average can bring 20x more enquiries and with the brand new Supplier Insight Report you can measure your results instantly. <br />  
+							<br />
+							<b>So, for the first time ever, we're able to offer a Premium Profile for 3 months at a very special price of $295.</b><br />  
+							<br />
+							For more details about this offer and to buy now, go to our secure <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/pages-for-suppliers/webstore">Webstore</a>. Or if you'd like a ShipServ account manager to contact you then just reply to this email.<br />
+							<br />
+							To speak to someone now, phone our Sales Hotline on +44 203 111 9700.<br />
+							<br />
+							But don't delay - this offer WILL close on 31 March so please act now!<br />
+							<br />
+							Best regards,<br />
+							<br />
+							<br />
+							Freddy Ingemann<br />
+							Senior VP <br />
+							ShipServ<br />
+						</p>
+					<?php } else if( $this->mode == "salesforce_user_zero_enquiries" ){?>
+						<p class="intro">
+							Did you know your listing has been viewed on  ShipServ Pages?<br />
+							<br />
+							To get further details on your profile views  plus a lot more information including the number of times you have appeared in searches, click the link below and enter either your account details or register as a new user. 
+						</p>
+						<center>
+							<table border="0" cellpadding="0" cellspacing="0" width="636">
+								<tr style="height: 35px; vertical-align: middle;" valign="middle">
+									<td valign="middle" style="background-color: #e81e24; font-size: 18px; font-weight: bold; color: #fff; vertical-align: middle; text-align:center;"><a href="<?=$this->url;?>" style="color:#fff; text-decoration: none; vertical-align: middle; text-align:center;">CLICK HERE TO VIEW YOUR SUPPLIER INSIGHT REPORT NOW</a></td>
+								</tr>
+							</table>
+						</center>
+						<p class="intro">
+							<br />
+							I'd really like you to have the chance to see how a Premium Profile could benefit your company as a Premium Profile on average can bring 20x more enquiries and with the brand new Supplier Insight Report you can measure your results instantly.<br />   
+							<br />
+							<b>So, for the first time ever, we're able to offer a Premium Profile for 3 months at a very special price of $295.</b><br />  
+							<br />
+							For more details about this offer and to buy now, go to our secure <a href="<?php echo Myshipserv_Config::getCorporateSiteUrl() ?>/info/pages-for-suppliers/webstore">Webstore</a>. Or if you'd like a ShipServ account manager to contact you then just reply to this email.<br /> 
+							<br />
+							To speak to someone now, phone our Sales Hotline on +44 203 111 9700.<br />
+							<br />
+							But don't delay - this offer WILL close on 31 March so please act now!<br />
+							<br />
+							Best regards,<br />
+							<br />
+							<br />
+							Freddy Ingemann<br />
+							Senior VP<br />
+							ShipServ<br />
+						</p>
+						<?php }?>							
+				</td>
+			</tr>
+			</table>
+	</body>
+</html>

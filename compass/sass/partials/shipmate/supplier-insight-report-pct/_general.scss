@@ -1,0 +1,241 @@
+/*
+ * General CSS rules for Supplier Insight Report
+ */
+
+.header-container {
+  h1 {
+    color: $white;
+    font-size: 24px;
+    padding: 25px 15px;
+    background-color: $mid-blue;
+    margin: 0;
+  }
+}
+
+#body {
+  #content {
+    #report_content {
+      width: 1050px;
+      margin: 0 auto;
+
+      p, div {
+        font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: 400;
+      }
+
+      p {
+        display: inline-block;
+        padding: 12px 0px;
+        font-size: 16px;
+
+        i.fa {
+          font-size: 20px;
+        }
+      }
+
+      hr {
+        margin: 3px 0px;
+        border: 1px solid #e6e9f0;
+        clear: both;
+      }
+
+
+      .userTypeLabel {
+        display: block;
+        float: left;
+        height: 60px;
+        line-height: 60px;
+        width: 100%;
+        clear: both;
+
+        span {
+          text-align: center;
+
+
+        }
+
+        span, p {
+          display: block;
+          float: left;
+        }
+      }
+
+      .dataBox {
+        display: block;
+        margin-top: 40px;
+        float: left;
+        width: 1050px;
+        height: 225px;
+        clear: both;
+
+
+        div {
+          height: 155px;
+          margin: 35px 0px;
+          float: left;
+
+          &.col1 {
+            width: 225px;
+            padding: 0 20px;
+            font-size: 20px;
+            line-height: 150%;
+          }
+
+          &.col2 {
+            div {
+              margin: 0;
+              padding: 0;
+              height: 155px;
+              text-align: center;
+              width: 178px;
+              line-height: 36px;
+              font-size: 22px;
+            }
+          }
+
+          &.col3 {
+            width: 560px;
+            margin: 35px 20px;
+
+            div {
+              margin: 0;
+              padding: 0;
+              width: 100%;
+              height: 50px;
+              line-height: 50px;
+              font-size: 18px;
+
+              span {
+                display: inline-block;
+                float: right;
+              }
+
+              i.fa {
+                font-size: 30px;
+                margin-right: 6px;
+                vertical-align: sub;
+              }
+            }
+
+            div:last-child {
+              border-bottom: 1px solid white;
+            }
+          }
+        }
+      }
+
+      .description {
+        width: 1008px;
+        padding: 25px 20px;
+        display: block;
+        float: left;
+        margin-top: 30px;
+
+        p {
+          font-size: 16px;
+          padding: 0px;
+          line-height: 150%;
+        }
+
+        h1 {
+          font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-size: 24px;
+          font-weight: bold;
+        }
+
+        h2 {
+          font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-size: 18px;
+          font-weight: bold;
+          margin-bottom: 6px;
+        }
+
+        ul {
+          list-style: disc;
+          li {
+            font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            margin: 10px 22px;
+          }
+        }
+      }
+
+      .description-attachment {
+        width: 1008px;
+        padding: 20px;
+        display: block;
+        float: left;
+        text-align: center;
+        font-weight: 400;
+        font-size: 25px;
+      }
+
+      h2.center {
+        font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        text-align: center;
+        font-weight: 400;
+        font-size: 24px;
+        padding: 34px 0px 10px 0px;
+        display: inline;
+        float: left;
+        width: 100%;
+      }
+
+      div.circlebox-center {
+        width: 830px;
+        margin: 0 auto;
+      }
+
+      .circle {
+        height: 220px;
+        width: 220px;
+        border-radius: 50%;
+        display: inline-block;
+        float: left;
+        text-align: center;
+        margin: 25px;
+        p {
+          padding: 25px;
+          font-size: 18px;
+        }
+        i.fa {
+          font-size: 60px;
+          color: black;
+          margin-bottom: 10px;
+        }
+      }
+
+      .explanation {
+        display: block;
+        width: 174px;
+        height: 400px;
+        padding: 15px;
+        margin: 25px 0px;
+        float: left;
+
+        p {
+          font-size: 15px;
+        }
+
+        h3 {
+          font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-weight: 400;
+        }
+
+        i.fa {
+          font-size: 40px;
+          margin-bottom: 12px;
+        }
+      }
+
+      .reportfooter {
+        display: block;
+        clear: both;
+        width: 1050px;
+        padding: 10px 0px;
+        text-align: center;
+        font-weight: 400;
+        font-size: 16px;
+      }
+    }
+  }
+}

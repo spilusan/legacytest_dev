@@ -1,0 +1,32 @@
+<p>This is an alert message informing you that a transaction has been sent via ShipServ to a supplier that is not on your approved vendor list.</p>
+<table>
+	<tr>
+		<td>Transaction Type:</td><td><?= $this->data['branchCodes']['DOCTYPE'] ?></td>
+	</tr>
+	<tr>
+		<td>Subject:</td><td><?= $this->data['branchCodes']['RFQ_SUBJECT'] ?></td>
+	</tr>
+	<tr>
+		<td>Reference:</td><td><?= $this->data['branchCodes']['RFQ_REF_NO'] ?></td>
+	</tr>
+	<tr>
+		<td>Transaction Date:</td><td><?= $this->data['branchCodes']['RFQ_SUBMITTED_DATE'] ?></td>
+	</tr>
+	<tr>
+		<td>Buyer Office:</td><td><?= $this->data['branchCodes']['BYB_ADDRESS_1'].' '.$this->data['branchCodes']['BYB_ADDRESS_2'] ?></td>
+	</tr>
+	<tr>
+		<td>Purchaser:</td><td><?= $this->data['branchCodes']['BYB_NAME'] ?></td>
+	</tr>
+	<tr>
+		<td>Supplier TNID:</td><td><?= $this->data['branchCodes']['SPB_BRANCH_CODE'] ?></td>
+	</tr>
+	<tr>
+		<td>Supplier:</td><td><?= $this->data['branchCodes']['SPB_NAME'] ?></td>
+	</tr>
+</table> 
+<p>
+	To view this transaction, please <a href="<?= $this->data['printable'] ?>">click here.</a><br>
+	<!-- To add this supplier to your approved vendor list on ShipServ, please <a href="">click here.</a><br> -->
+	To configure your alert settings, please <a href="<?= Myshipserv_Helper_ApplicationProtocol::getInstance()->getProtocolURL().$this->data['hostName'] ?>/profile/company-approved-suppliers">click here.</a><br>
+</p>

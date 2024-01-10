@@ -1,0 +1,233 @@
+<?php
+$this->compressedScript()->appendFile('/js/jquery.auto-complete.js')
+						 ->appendFile('/js/jquery.metadata.js')
+						 ->appendFile('/js/jquery.color.js')
+						 ->appendFile('/js/my-companies.js');
+
+$this->headLink()->appendStylesheet('/css/transition.css');
+$this->CDNLink()->appendStylesheet('/css/endorsements.css')
+				->appendStylesheet('/css/profile.css');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'My Reviews',
+						   'url'  => '/profile/my-reviews'));
+?>
+
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+
+		<?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		<div class="content_new-wide_body">
+			<?php
+			echo $this->partial('profile/title-menu.phtml',
+				array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], 'my-reviews'),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'], $this->companyDetail['id'], '', $this->pendingUsers, $isAdmin)
+				)
+			);
+			?>
+			<div class="profile-body-right">
+				<div class="zz header">
+					<h2>My Reviews</h2>
+				</div>
+				<div class="profileContent">
+					<?php
+					if (lg_count($this->reviews)>0)
+					{
+						echo $this->partial (
+							"table-header.phtml",
+							array( "columns" => array(
+									array(
+										"text"=>"Opinion",
+										"width"=>"100px"
+									),
+									array(
+										"text"=>"Delivered items as described",
+										"width"=>"80px"
+									),
+									array(
+										"text"=>"On-time delivery",
+										"width"=>"80px"
+									),
+									array(
+										"text"=>"Customer service",
+										"width"=>"154px"
+									),
+								)
+							)
+						);
+
+						foreach ($this->reviews as $review) :
+							$endorseeInfo = $review->getEndorseeInfo();
+							?>
+							<div id="review-<?php echo $review->id; ?>" class="profile-review">
+								<table class="nbox">
+									<tr>
+										<td class="nbox-top-left"></td>
+										<td class="nbox-top"></td>
+										<td class="nbox-top-right"></td>
+									</tr>
+									<tr>
+										<td class="nbox-left"></td>
+										<td class="nbox-content">
+											<h3>
+												<?php echo $endorseeInfo['SPB_NAME']?>
+											</h3>
+											<div class="text">
+												<span class="ago-text"><?php echo $this->string()->ago($review->createdDate);?>: </span>
+												<?php echo nl2br($review->comment)?>
+											</div>
+											<div class="my-review-ratings">
+												<div class="rating-opinion">
+													<?php
+														switch ($review->overallImpression)
+														{
+															case -1:
+																?>
+																<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/negative_tick.png'); ?>" alt="Negative" />
+																<h4 class="negative">Negative</h4>
+																<?php
+															break;
+
+															case 0:
+																?>
+																<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/neutral_tick.png'); ?>" alt="Neutral" />
+																<h4 class="neutral">Neutral</h4>
+																<?php
+															break;
+
+															case 1:
+																?>
+																<img src="<?php echo $this->CDNLink()->image('/images/layout_v2/endorsement/positive_tick.png'); ?>" alt="Positive" />
+																<h4 class="positive">Positive</h4>
+																<?php
+															break;
+
+															case 'null':
+															default:
+
+															break;
+														}
+														?>
+												</div>
+												<div class="rating-iad">
+													<?php
+													if ($review->ratingItemsAsDescribed > 0)
+													{
+														echo $this->partial('endorsement/star-rating.phtml', array('stars' => round($review->ratingItemsAsDescribed, 0)));
+													}
+
+													?>
+												</div>
+												<div class="rating-dot">
+													<?php
+													if ($review->ratingDeliveredOnTime > 0)
+													{
+														echo $this->partial('endorsement/star-rating.phtml', array('stars' => round($review->ratingDeliveredOnTime, 0)));
+													}
+
+													?>
+												</div>
+												<div class="rating-cs">
+													<?php
+													if ($review->ratingCustomerService > 0)
+													{
+														echo $this->partial('endorsement/star-rating.phtml', array('stars' => round($review->ratingCustomerService, 0)));
+													}
+
+													?>
+												</div>
+												<div class="clear"></div>
+											</div>
+											<div class="dotted-line"></div>
+											<div class="review-actions">
+
+												<div class="review-action">
+													<a href="#" title="Delete" class="review-action-delete" id="delete-<?php echo $review->id?>">
+														<img src="<?php echo $this->CDNLink()->image('/images/icons/remove_icon.png'); ?>" alt="Delete Review" />
+														<span>Delete</span>
+													</a>
+												</div>
+												<div class="review-action">
+													<a href="/reviews/edit-review/r/<?php echo $review->id?>" title="Edit" class="review-action-edit" id="edit-<?php echo $review->id?>">
+														<img src="<?php echo $this->CDNLink()->image('/images/icons/edit_icon.png'); ?>" alt="Edit Review" />
+														<span>Edit</span>
+													</a>
+												</div>
+												<div class="clear"></div>
+											</div>
+										</td>
+										<td class="nbox-right"></td>
+									</tr>
+									<tr>
+										<td class="nbox-bottom-left"></td>
+										<td class="nbox-bottom"></td>
+										<td class="nbox-bottom-right"></td>
+									</tr>
+								</table>
+							</div>
+							<?php
+						endforeach;
+					}
+					else
+					{
+						?>
+						<table class="nbox">
+							<tr>
+								<td class="nbox-top-left"></td>
+								<td class="nbox-top"></td>
+								<td class="nbox-top-right"></td>
+							</tr>
+							<tr>
+								<td class="nbox-left"></td>
+								<td class="nbox-content" align="center" style="font:bold 15px Arial; color:#952900; vertical-align: middle; text-align: center;height:30px;">
+									You do not have any reviews.
+								</td>
+								<td class="nbox-right"></td>
+							</tr>
+							<tr>
+								<td class="nbox-bottom-left"></td>
+								<td class="nbox-bottom"></td>
+								<td class="nbox-bottom-right"></td>
+							</tr>
+						</table>
+						<?php
+					}
+					?>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	<!--
+
+
+	$(document).ready(function(){
+
+		$('a[class="review-action-delete"]').click(function(){
+			if (confirm('Are you sure you want to remove your review?')) {
+				var reviewId = $(this).attr('id').replace('delete-', '');
+
+				$.post('/reviews/remove/format/json/',
+					{
+						reviewId: reviewId
+					},
+					function(data) {
+						$('#review-' + reviewId).slideUp(200);
+					},
+					'json'
+				);
+			}
+
+			return false;
+		});
+	});
+	//-->
+</script>

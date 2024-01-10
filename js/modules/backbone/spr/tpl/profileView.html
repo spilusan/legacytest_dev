@@ -1,0 +1,172 @@
+<section class="profile-main">
+
+	<div class="first-level-data">
+		{{#if logoUrl}}
+		<div class="profile">
+			<div class="logo">
+				<img src="{{logoUrl}}">
+			</div>
+		</div>
+		{{/if}}
+
+		<div class="company-wrapper">
+			{{#if displaySupplierBranches}}
+			<div id="dd" class="wrapper-dropdown">
+				<span>{{name}}</span>
+				<ul class="dropdown">
+					{{#each supplierBranches}}
+					<li>
+						<a class="office-selector {{#ifCondNoType this.pk ../tnid}} selected {{/ifCondNoType}}" href="#" data-id="{{this.pk}}">{{this.value}}</a>
+					</li>
+					{{/each}}
+				</ul>
+			</div>
+			{{/if}}
+
+			<div class="location">
+				{{#unless displaySupplierBranches}}
+				<b>{{name}}</b>
+				<br> {{/unless}} {{#if address1}}{{address1}}
+				<br>{{/if}} {{#if address2}}{{address2}}
+				<br>{{/if}} {{#if city}}{{city}}
+				<br>{{/if}} {{#if countryName}}{{countryName}}
+				<br>{{/if}} {{#if zipCode}}{{zipCode}}
+				<br>{{/if}}
+			</div>
+		</div>
+		{{#ifCond showMap 1}}
+			<div id="supplierAddressMap" class="office-map {{#if logoUrl}} has-logo{{else}} no-logo{{/if}}"></div>
+		{{/ifCond}}
+	</div>
+	<!-- fields for sample -->
+
+	<div class="second-level-data">
+		<div class="data-block member-since">
+			<span class="period">ShipServ member since:</span>
+			<span>{{joinedDate}}</span>
+		</div>
+
+		<div class="data-block traded-since">
+			<span class="period">Traded with you since:</span>
+			<span id="traded-since">
+				<img src="/images/layout_v2/file_icons/spinner.gif">
+			</span>
+		</div>
+
+		<div class="full-profile">
+			<a href="{{supplierProfileUrl}}" class="btn transparent transparent-blue" target="_blank">View full profile</a>
+		</div>
+	</div>
+
+	{{#if description}}
+	<div class="description">
+		<h3 class="grey-bg">Description</h3>
+		<p>{{description}}</p>
+	</div>
+	{{/if}} {{#if displayScope}}
+	<a name="supplierScope"></a>
+	<div class="scope">
+		<h3 class="grey-bg">Scope of supplier</h3>
+		{{#ifGreaterThan defaultCategories.length 0}}
+		<div class="scope-column">
+			<h4>Categories</h4>
+			<ul>
+				{{#each defaultCategories}}
+				<li>{{this.name}}</li>
+				{{/each}} {{#each categories}}
+				<li class="more-categories">{{this.name}}</li>
+				{{/each}}
+			</ul>
+			{{#ifGreaterThan categories.length 0}}
+			<a href="#more-categories" class="see-more">
+				<span>...and {{categories.length}} other</span>
+				<span class="hide-toggler">show fewer</span> categories</a>
+			{{/ifGreaterThan}}
+		</div>
+		{{/ifGreaterThan}} {{#ifGreaterThan defaultBrandNames.length 0}}
+		<div class="scope-column">
+			<h4>Brands</h4>
+			<ul>
+				{{#each defaultBrandNames}}
+				<li>{{this}}</li>
+				{{/each}} {{#each uniqueBrandNames}}
+				<li class="more-brands">{{this}}</li>
+				{{/each}}
+			</ul>
+			{{#ifGreaterThan uniqueBrandNames.length 0}}
+			<a href="#more-brands" class="see-more">
+				<span>...and {{uniqueBrandNames.length}} other</span>
+				<span class="hide-toggler">show fewer</span> brands</a>
+			{{/ifGreaterThan}}
+		</div>
+		{{/ifGreaterThan}} {{#ifGreaterThan defaultPorts.length 0}}
+		<div class="scope-column">
+			<h4>Ports Served</h4>
+			<ul>
+				{{#each defaultPorts}}
+				<li>{{this.name}}</li>
+				{{/each}} {{#each ports}}
+				<li class="more-ports">{{this.name}}</li>
+				{{/each}}
+			</ul>
+			{{#ifGreaterThan ports.length 0}}
+			<a href="#more-ports" class="see-more">
+				<span>...and {{ports.length}} other</span>
+				<span class="hide-toggler">show fewer</span> ports</a>
+			{{/ifGreaterThan}}
+		</div>
+		{{/ifGreaterThan}}
+	</div>
+	{{/if}}
+
+	<div class="reviews">
+		<h3 class="grey-bg">Reviews and customer list</h3>
+		<div id="profile-traderank">
+			TradeRank
+			<div class="rank rank-{{tradeRank}}"></div>
+		</div>
+		<p>
+			The company has traded with {{tradedWith.tradeCount}} {{#ifCond tradedWith.tradeCount 1}}company{{else}}companies{{/ifCond}}
+			on ShipServ.{{#unless tradedWith.message}} {{#ifGreaterThan tradedWith.tradeCount 0}} The most recent {{#ifCond tradedWith.tradeCount
+			1}}is{{else}}are{{/ifCond}}:{{/ifGreaterThan}}{{/unless}}
+			<br> {{tradedWith.message}}
+		</p>
+			{{#unless tradedWith.message}}
+		<ul>
+			{{#each defaultTradedWith}}
+			<li>{{this}}</li>
+			{{/each}}
+		</ul>
+		{{/unless}}
+	</div>
+
+	{{#ifGreaterThan contacts.length 0}}
+	<div class="contacts">
+		<h3 class="grey-bg">Contacts</h3>
+		{{#each contacts}}
+		<div class="contact-block">
+			<div class="inner">
+				{{this.firstName}} {{this.middleName}} {{this.lastName}}
+				<br> {{#if this.department}}{{this.department}}
+				<br>{{/if}} {{#if this.phoneNo}}{{this.phoneNo}}
+				<br>{{/if}} {{#if emailAddress}}
+				<a href="mailto:{{emailAddress}}">{{emailAddress}}</a>{{/if}}
+			</div>
+		</div>
+		{{/each}}
+	</div>
+	{{/ifGreaterThan}} {{#ifGreaterThan certifications.length 0}}
+	<h3 class="grey-bg">Certifications</h3>
+	<div class="certifications text-center">
+		{{#each certifications}}
+		<div class="cert-logo">
+			<img src="{{logoFileName}}" />
+			<br />
+			<span class="name">
+				{{name}}
+			</span>
+		</div>
+		{{/each}}
+	</div>
+	{{/ifGreaterThan}}
+</section>

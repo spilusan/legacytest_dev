@@ -1,0 +1,21 @@
+{{#ifCond isCategory "False"}}
+<div class="product_items" rel="browse">
+    <div class="image">
+        <a class="rollover product-item-link">
+            <img class="cat-item-image-placeholder" src="/images/layout_v2/file_icons/spinner_big.gif" alt="">
+        </a>
+    </div>
+    <div class="text">
+        <h2>
+            <a href="#" class="product-item-link" data-id="{{id}}">
+                {{ProductName}}
+            </a>
+        </h2>
+        <p>
+            Part No. - {{impaNumber}} ·
+            UOM - <span class="uom-placeholder"></span>
+        </p>
+    </div>
+    <div class="clear"></div>
+</div>
+{{/ifCond}}

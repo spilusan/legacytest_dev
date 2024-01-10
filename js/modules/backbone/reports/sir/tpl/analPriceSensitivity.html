@@ -1,0 +1,17 @@
+<table cellpadding="0" cellspacing="0" class="content-table">
+	{{#ifCond premium 0}}
+	<tr>
+		<td>Orders won by lowest quote - <a href="">all Market</a></td>
+		<td>{{#if hasSpinner}}<div class="spinnerIcon"></div>{{else}}{{roundOneUp attributes.cheapest-qot-pct}}%{{/if}}</td>
+	</tr>
+	{{/ifCond}}
+	<tr>
+		<td><strong>% of your quotes won by the supplier who quotes lowest</strong></td>
+		<td id="cheapestQuote{{#if isCompare}}Compare{{/if}}">{{#if premium}}<div class="spinnerIcon"></div>{{else}}<a href="upgrade" class="button yellow small read btnFix tHelp" target="_blank">Upgrade</a>{{/if}}</td>
+	</tr>
+
+	<tr>
+		<td>How often are you the lowest?</td>
+		<td id="lowestQouteFreq{{#if isCompare}}Compare{{/if}}">{{#if premium}}<div class="spinnerIcon"></div>{{else}}<a href="upgrade" class="button yellow small read btnFix tHelp" target="_blank">Upgrade</a>{{/if}}</td>
+	</tr>
+</table>

@@ -1,0 +1,89 @@
+<div id="chart_div"></div>
+
+<table class="gmvTable">
+	<thead>
+		<tr>
+		<th>&nbsp;</th>
+		{{#each gmv}}
+			<th>{{this.dispDat}}</tj>
+		{{/each}}
+		</tr>
+	</thead>
+	<tbody>
+		<tr data-field="totalGmv">
+			<td class="rowHead">Total GMV (Month)</td>	
+			{{#each gmv}}
+				<td class="right">{{formatNumRound this.totalGmv}}</td>
+			{{/each}}
+		</tr>
+		<tr data-field="trailingtotalGmv">
+			<td class="rowHead">Total GMV (trailing 12 months)</td>
+			{{#each trailing}}
+				<td class="right">{{formatNumRound this.totalGmv}}</td>
+			{{/each}}
+		</tr>
+		<tr data-field="trailingrunRate">
+			<td class="rowHead">Total GMV annualised run rate (based on previous 3 months)</td>
+			{{#each trailing}}
+				<td class="right">{{formatNumRound runRate}}</td>
+			{{/each}}
+		</tr>
+		<tr data-field="payingGmvPercentage">
+			<td class="rowHead">Percentage GMV to paying supplier for the current month</td>
+			{{#each gmv}}
+				<td class="right">{{getPercentOfRound2 this.payingTotalGmv this.totalGmv}}%</td>
+			{{/each}}
+		</tr>
+		<tr data-field="trailinggmvPercentage">
+			<td class="rowHead">Percentage GMV to paying supplier based on trailing 12 months</td>
+			{{#each trailing}}
+				<td class="right">{{getPercentOfRound2 this.payingTotalGmv this.totalGmv}}%</td>
+			{{/each}}
+		</tr>
+		<tr data-field="spbCount">
+			<td class="rowHead">Suppliers ready to trade</td>
+			{{#each gmv}}
+				<td class="right">{{formatNumRound this.spbCount}}</td>
+			{{/each}}
+		</tr>
+		<!-- 
+		<tr data-field="spbInterface">
+			<td class="rowHead">Published supplier listings</td>
+			{{#each gmv}}
+				<td class="right">{{formatNumRound this.spbInterface}}</td>
+			{{/each}}
+		</tr>
+		-->
+		<tr data-field="totalRevenue">
+			<td class="rowHead">Estimated Total Supplier Revenue</td>
+			{{#each gmv}}
+				<td class="right">{{formatNumRound this.totalRevenue}}</td>
+			{{/each}}
+		</tr>
+		<tr data-field="avgPayingMonetisation">
+			<td class="rowHead">Average monetisation of all paid GMV (Month)</td>
+			{{#each gmv}}
+				<td class="right">{{formatNumTwoDigits this.avgPayingMonetisation}}</td>
+			{{/each}}
+		</tr>
+		<tr data-field="avgMonetisation">
+			<td class="rowHead"> Average Monetisation (Month)</td>
+			{{#each gmv}}
+				<td class="right">{{formatNumTwoDigits this.avgMonetisation}}</td>
+			{{/each}}
+		</tr>
+		<tr data-field="trailingavgPayingMonetisation">
+			<td class="rowHead">Average monetisation of all paid GMV (trailing 12 months)</td>
+			{{#each trailing}}
+				<td class="right">{{formatNumTwoDigits this.avgPayingMonetisation}}</td>
+			{{/each}}
+		</tr>
+		<tr data-field="trailingavgMonetisation">
+			<td class="rowHead">Average monetisation (trailing 12 months)</td>
+			{{#each trailing}}
+				<td class="right">{{formatNumTwoDigits this.avgMonetisation}}</td>
+			{{/each}}
+		</tr>
+
+	</tbody>
+</table>

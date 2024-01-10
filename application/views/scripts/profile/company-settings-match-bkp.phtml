@@ -1,0 +1,113 @@
+<?php
+$this->requirejs()->addDefaultModule('backbone/profile/matchSettings/views/mainView')
+                  ->addDefinition('categories/allExcept', '{}')
+                  ->addDefinition('categories/onlySpecific', '{}')
+                  ->addDefinition('suppliers/matchBlacklist', '{}')
+                  ->addDefinition('suppliers/forwardBlacklist', '{}');
+
+$this->headLink()->appendStylesheet('/css/transition.css');
+$this->headLink()->appendStylesheet('/css/uniform.default.new.css')
+    			->appendStylesheet('/css/profile.css')
+                ->appendStylesheet('/css/profile/mcp.css');
+
+$breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Profile',
+						   'url'  => '/profile'),
+					 array('name' => 'Settings',
+						   'url'  => '/profile/company-settings-pages'),
+      				 array('name' => 'Match',
+      						   'url'  => '/profile/company-settings-match'));
+?>
+<div id="waiting" style="display: block;">
+    <div class="waitingMessage">Loading...</div>
+    <div class="waitingMask"></div>
+</div>
+<div id="main_content_area">
+	<div class="clear"></div>
+	<div class="content_wide">
+		
+		<?=$this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+		
+		<div class="content_new-wide_body">
+			<?=$this->partial('profile/title-menu.phtml', array(
+					'menuItems' => $this->profileMenuHelper->getTopLevelMenu($this->ownerDetails['ownerName'], '', $this->pendingCompanies),
+					'menuItemsCompany' => $this->profileMenuHelper->getCompanyMenu($this->companyDetail['name'], $this->companyDetail['type'],$this->companyDetail['id'], 'company-settings-match', $this->pendingUsers)
+				));
+			?>
+			<div class="profile-body-right">
+				<h1 class="styled">Match Control Panel</h1>
+				<div class="profileContent">
+                    <p class="savedMsg">Your settings have been saved.</p>
+					<form id="match-settings-form" class="profile-form new" method="" action="">
+                        <?// If form was submitted and no error messages?>
+                        <?if ($this->settingsForm['submitted'] && !$this->settingsForm['form']->getMessages()):?>
+                            <h3 class="success-message">Your settings were successfully saved</h3>
+                        <?endif?>
+                        <h2 class="styled grey blue">AutoMatch</h2>
+                        <div class="box blue">
+                            <label for="automate">
+                                <input type="checkbox" name="automate" id="automate" />
+                                <span>Automatically match RFQs where high savings are possible</span>
+                            </label>
+                            <img src="/img/profile/match/corner.png" alt="c" class="corner"/>
+                            <label for="onlyCHeap">
+                                <input type="checkbox" name="onlyCheap" id="onlyCheap" />
+                                <span>only forward AutoMatch quotes when cheaper than quotes from buyer selected suppliers</span>
+                            </label>
+                        </div>
+                        <h2 class="styled grey blue">Match Supplier Scope</h2>
+                        <div class="box grey">
+                            <label for="scope">
+                                <input type="radio" name="scope" value="all" id="allScope" checked="checked" />
+                                <span>All suppliers</span>
+                            </label>
+                            <!--
+                            <label for="scope">
+                                <input type="radio" name="scope" value="ordered" id="orderedScope" />
+                                <span>Suppliers we have ordered from before</span>
+                            </label>
+                            -->
+                            <label for="scope">
+                                <input type="radio" name="scope" value="specific" id="specificScope" />
+                                <span>Specified suppliers only:</span>
+                            </label>
+                            <div class="specSuppliers">
+                                <input type="text" class="textInput" name="supplierWhitelist" value="Search for Supplier to add (by name or TNID)" /><div class="spinnerFwd"></div>
+                                <ul class="forwardSupplierDisplay cloud"></ul>
+                            </div>
+                            <label for="useMatchBlacklist">
+                                <input type="checkbox" name="useMatchBlacklist" id="useMatchBlacklist" class="checkbox" value="1">
+                                <span>Blacklist: never forward RFQs to any of the following suppliers</span>
+                            </label>
+                            <input type="text" name="supplierBlacklist" class="textInput" value="Search for Supplier to add (by name or TNID)"><div class="spinnerMatch"></div>
+                            <div class="matchAutoComplete"></div>
+                            <ul class="matchSupplierDisplay cloud"></ul>
+                        </div>
+						<h2 class="styled grey blue">General settings</h2>
+                        <div class="box white">
+                            <label for="useMaxSuppliers">
+                                <input type="checkbox" name="useMaxSuppliers" id="useMaxSuppliers" />
+                                <span>Maximum number of suppliers contacted for Match RFQs</span>
+                            </label>
+                            <input type="text" name="numSuppliers" />
+                            <label for="hideContact" style="display: none;">
+                                <input type="checkbox" name="hideContact" id="hideContact"/>
+                                <span>Hide contact details on Match RFQs</span>
+                            </label>
+                        </div>
+						<div style="margin-top: 15px;">
+							<div class="zz medium green button save-button" id><input type="submit" value="Save settings" name="submit"></div><div class="spinnerSave"></div>
+                            <div class="clear" style="height: 1px;"></div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+	</div>
+</div>
+<div id="modal">
+    <div class="modalControls"><div class="close" data-dismiss="modal" aria-hidden="true">Close</div></div>
+    <div class="modalBody"></div>
+</div>

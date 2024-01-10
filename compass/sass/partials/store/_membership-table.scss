@@ -1,0 +1,149 @@
+#body {
+	#content {
+		.section {
+			table.membershipTable {
+				width: 100%;
+				border-collapse: collapse;
+				margin-bottom: 28px;
+
+				thead {
+					tr {
+						th {
+							border: 0;
+							border-bottom: 4px solid #90dcf7;
+							font-size: 16px;
+							font-weight: bold;
+							color: #2e3235;
+							padding: 15px 0;
+						}
+					}
+				}
+
+				tbody {
+					tr {
+						td {
+							border: 0;
+							border-bottom: 1px solid #90dcf7;
+							border-right: 4px solid #90dcf7;
+							font-size: 13px;
+							color: #2e3235;
+							padding: 14px 0;
+
+							input[type="image"] {
+								display: block;
+								width: 15px;
+								height: 15px;
+								float: right;
+								margin-right: 10px;
+							}
+
+							.up {
+								position: relative;
+								top: -5px;
+							}
+
+							.upper {
+								position: relative;
+								top: -10px;
+							}
+
+							&.last {
+								border-bottom: 4px solid #90dcf7;
+							}
+
+							&.right {
+								font-size: 15px;
+								background-color: #dff5fc;
+								text-align: center;
+								width: 278px;
+								padding: 14px 10px;
+
+								span {
+									font-size: 11px;
+								}
+
+								ul {
+									list-style-type: disc;
+									padding-left: 15px;
+
+									li {
+										font-size: 12px;
+										font-style: italic;
+										color: #13b6ea;
+										margin-bottom: 10px;
+										line-height: 1.2;
+
+										span {
+											font-size: 12px;
+											color: #2e3235;
+										}
+									}
+								}
+
+								a {
+									text-decoration: none;
+									font-size: 11px;
+									font-weight: bold;
+								}
+
+								&.list {
+									text-align: left;
+
+									strong {
+										display: block;
+										margin-bottom: 10px;
+									}
+								}
+
+								.check {
+									width: 27px;
+									height: 21px;
+									margin: 0 auto;
+									overflow: hidden;
+									background: url(/img/icons/medium/check.png) left top no-repeat transparent;
+								}
+							}
+						}
+					}
+				}
+
+				tfoot {
+					tr {
+						td {
+							border: 0;
+							font-size: 11px;
+							font-style: italic;
+							vertical-align: middle;
+							border-right: 4px solid #90dcf7;
+							line-height: 1.2;
+
+							&.right {
+								width: 187px;
+								padding: 10px 20px;
+								height: 99px;
+								background-color: #dff5fc;
+								border-bottom: 4px solid #90dcf7;
+
+								p {
+									text-align: center;
+									margin-top: 10px;
+								}
+
+								a {
+									font-size: 24px;
+									padding: 20px 29px;
+									display: block;
+								}
+							}
+
+							.button {
+								font-style: normal;
+								text-align: center;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

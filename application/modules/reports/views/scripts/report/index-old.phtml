@@ -1,0 +1,944 @@
+<?
+	$this->headLink()->appendStylesheet('/css/reports/svr.css')
+					 ->appendStylesheet('/css/transition.css')
+					 ->appendStylesheet('/css/jqueryui-ss/datepicker.css');
+
+	$this->requirejs()->addDefaultModule('reports/app')
+					  ->addModule('reports/filters')
+					  ->addModule('help')
+					  ->addModule('modal')
+					  ->addDefinition('supplier/profile', json_encode($this->supplierProfile));
+    $breadcrumbs = array(array('name' => 'Home',
+						   'url'  => '/search'),
+                     array('name' => 'Reports',
+						   'url'  => '/reports'));
+    
+    $isShipMate = Shipserv_User::isLoggedIn()->isShipservUser();
+?>
+<script id="rfqTemplate" type="text/x-jsrender">
+<? if($this->unactionedRfqCount > 0) { ?>
+	<div id="funnel_header" class="no-border">
+		<div class="unactioned_rfq_alert">
+			<div class="left">
+				<p>Your unactioned RFQs for the last 30 days:</p><div class="inline contextual help unactioned" data-title="Unactioned RFQs" data-message="This is a rolling count of the number of unactioned Pages and TradeNet RFQs for the last 30 days from today. Unactioned RFQs are RFQs that are yet to be quoted or declined.<br/><br/>This count is <u>not</u> effected by the time period selected in your report."></div>
+				<div class="number">
+					<p><img src="/img/icons/medium/attention.png" alt="Alert Icon" class="alert" /><?= $this->unactionedRfqCount  ; ?></p>
+				</div>
+				<!--<div class="zz medium dblue action button"><a class="button" href-"">Action these now</a></div>-->
+			</div>
+		
+			<div class="right">
+				<p class="big">Improve the relevance of future RFQs that you receive…</p>
+				<p class="text">Specifying the reason for a declined RFQ will allow ShipServ to reduce the number of RFQs that you receive in the future that do not match the products & services that you provide in the locations that you serve.</p>
+			</div>
+		</div>
+	</div>
+<?}?>
+    <table border="0" celpadding="0" cellspacing="0" width="867">
+        <thead>
+            <tr>
+                <td class="empty first">&nbsp;</td>
+                <td>Total RFQs <div class="inline contextual help" data-title="Total RFQs" data-message="For the period shown, this number is the total RFQs on TradeNet and Pages added together."></div></td>
+                <td>Quotes <div class="inline contextual help" data-title="Quotes" data-message="For the period shown, the number of quotes on TradeNet"></div></td>
+                <td>Purchase Orders <div class="inline contextual help" data-title="Purchase Orders" data-message="For the period shown, the number of Purchase Orders on TradeNet"></div>
+				</td>
+				<td>Total PO value<div class="inline contextual help" data-title="Total PO value" data-message="This is the total value of Purchase Orders on TradeNet during the selected time period (historical data starts from 2009). This is always in USD.<br/><br/>In any selected time period, ShipServ will use the latest PO value, or the latest POC (Purchase Order Confirmation) value where one exists, for all new transactions in that selected time period.<br/><br/>If a PO is in a different currency to USD then this value is converted to USD on the day the PO is issued.  The exchange rate used is updated daily.<br/><br/>Where a PO has no value or an invalid currency, the median value of all POs in the last 12 months will be used."></div></td>
+            </tr>
+        </thead>
+        <tbody>
+            {{for data.tnsum}}
+            <tr>
+                <td class="first">{{>#data.period}}</td>
+                <td><span title="Pages RFQs: {{>#data.prfq}}, TradeNet RFQs: {{>#data.rfq}}">{{>#data.srfq}}</span></td>
+                <td>{{>#data.qot}}</td>
+                <td>{{>#data.po}}</td>
+				<td>{{>#data.povalue}} USD</td>
+            </tr>
+            {{/for}}
+        </tbody>
+    </table>
+    <div class="footer">
+        <div class="info notice right">
+            <div class="icon"></div>
+            <span>
+                 <strong style="color: #919699;">The Total RFQs</strong> number above shows the total number of RFQs you have been sent on TradeNet and also Pages.  (To see the breakdown keep your cursor over the Total RFQ amount in the table above).<br/><br/>
+                 Because we currently can’t track Quotes and Purchase Orders from Pages (although we are currently working on it) these two numbers above only show that activity on TradeNet.
+            </span>
+        </div>
+    </div>
+</script>
+
+<script id="funnelViewTemplate" type="text/x-jsrender">
+<? if($this->unactionedRfqCount > 0) { ?>
+	<div id="funnel_header" class="firstTab">
+		<div class="unactioned_rfq_alert">
+			<div class="left">
+				<p>Your unactioned RFQs for the last 30 days:</p><div class="inline contextual help unactioned" data-title="Unactioned RFQs" data-message="This is a rolling count of the number of unactioned Pages and TradeNet RFQs for the last 30 days from today. Unactioned RFQs are RFQs that are yet to be quoted or declined.<br/><br/>This count is <u>not</u> effected by the time period selected in your report."></div>
+				<div class="number">
+					<p><img src="/img/icons/medium/attention.png" alt="Alert Icon" class="alert" /><?= $this->unactionedRfqCount  ; ?></p>
+				</div>
+				<!--
+				<div class="zz medium dblue action button"><a class="button" href-"">Action these now</a></div>-->
+			</div>
+		
+			<div class="right">
+				<p class="big">Improve the relevance of future RFQs that you receive…</p>
+				<p class="text">Specifying the reason for a declined RFQ will allow ShipServ to reduce the number of RFQs that you receive in the future that do not match the products & services that you provide in the locations that you serve.</p>
+			</div>
+		</div>
+	</div>
+<? }?>
+<div class="funnelBgImg <?php if($isShipMate==false){ echo 'noMate';}?>">
+    <h2 class="brand">Brand Awareness</h2>
+	<h2 class="lead">Lead Generation</h2>
+	<div class="metrics">
+		{{for data.metrics}}
+			<div id="{{>id}}">
+				<h3>{{:#data.title}}</h3><div class="inline contextual help" data-title="{{>title}}" data-message="{{>help}}"></div>
+				<div class="{{>type}}">
+					{{for graphs}}
+					<div class="graph {{intToWord values.length /}}bar {{lcase legend /}}">
+						{{for values}}
+							<div class="value {{intToWord #view.parent.views.length /}}">
+								<div class="bar {{intToWord #view.parent.views.length /}}" title="{{>#data.title}}, Exact value: {{>#data.fullvalue}}" data-value="{{>#data.value}}" data-size="{{>#data.size}}"><div class="label">{{>#data.value}}</div>
+								</div>
+							</div>
+						{{/for}}
+						<div class="legend">{{:legend}}</div>
+					</div>
+					{{/for}}
+				</div>
+			</div>
+		{{/for}}
+	</div>
+
+	<div id="data_tables">
+		<div id="search_impressions" class="data_table">
+			<h3>
+				Page 1 search<br/>
+				impressions
+				<div class="inline contextual help" data-title="Page 1 search impressions" data-message="This is the number of times where you appeared on page 1 of the Pages search results during the selected time period."></div>
+			</h3>
+			<p class="value">
+				{{>data.pageOneImpressions}}
+			</p>
+			{{if data.pageOneImpressionsCompare}}
+				<div class ="clear"></div>
+				<p class="value light">
+					{{>data.pageOneImpressionsCompare}}
+				</p>
+			{{/if}}
+		</div>
+		<div id="unique_contact_views" class="data_table" <? if(!$this->supplierProfile->hasVBPContract()){?>style="display: none;"<?}?>>
+			<h3>
+				Unique contact views
+				<div class="inline contextual help" data-title="Unique contact views" data-message="This is the number of times a unique user of Pages viewed the Contact screen on your profile and so saw your contact information.<br/><br/>Regardless of the number of times during each membership period that each user of Pages visits your Contact screen, ShipServ will only count 1 unique visit.  The date of the unique visit will be the date of the first visit made to the Contact screen in the membership year."></div>
+			</h3>
+			<p class="value">{{>data.uniqueContactViews}}</p>
+			<div class="legend P1"></div>
+			{{if data.uniqueContactViewsCompare}}
+				<div class ="clear"></div>
+				<p class="value">{{>data.uniqueContactViewsCompare}}</p>
+				<div class="legend P2"></div>
+			{{/if}}
+		</div>
+
+		<div id="po_total_value" class="data_table">
+			<h3>
+				Total PO value
+				<div class="inline contextual help" data-title="Total PO value" data-message="This is the total value of Purchase Orders on TradeNet during the selected time period (historical data starts from 2009). This is always in USD.<br/><br/>In any selected time period, ShipServ will use the latest PO value, or the latest POC (Purchase Order Confirmation) value where one exists, for all new transactions in that selected time period.<br/><br/>If a PO is in a different currency to USD then this value is converted to USD on the day the PO is issued.  The exchange rate used is updated daily.<br/><br/>Where a PO has no value or an invalid currency, the median value of all POs in the last 12 months will be used."></div>
+			</h3>
+			<p class="value">{{>data.poTotalValue}} USD</p>
+			{{if data.poTotalValueCompare}}
+				<div class ="clear"></div>
+				<p class="value light">{{>data.poTotalValueCompare}} USD</p>
+			{{/if}}
+		</div>
+	</div>
+
+    <?if($isShipMate==true):?>
+	<div id="ss_market_data">
+	    <div id="market_profile" class="data_box">
+	        <h3>
+	            Market (total)
+	            <div class="inline contextual help" data-title="Market (total) Profile Views" data-message="For all suppliers counted in the current Market settings, this is the total number of Profile Views all of them have received.<br/><br/>
+	                 If you’re looking at the default view for a Premium supplier, the Market setting here is ALL 40,000 suppliers.  So this number is the total number of Profile Views all our suppliers got in the last 12 months.<br/><br/>
+	                 When you change the Market settings (in ‘Compare to Market’) all 6 of the market numbers will change – the 3 market averages and the 3 market totals.<br/><br/>
+	                 These 3 Market total numbers are only seen by ShipMates and not customers.<br/><br/>
+	                 You may use these Total Market numbers with customers and prospects to show them the large number of amount of ‘value events’ in Pages and therefore why they should upgrade to Premium (or improve their profile complete score) to get more of this value for their company."></div>
+	        </h3>
+	        <table border="0" cellpadding="0" cellspacing="0" width="140">
+	            {{for dataMarket.market}}
+	                <tr>
+	                    <td class="legend">
+	                        <div class="legend_icon p{{>#data.p}}"></div>
+	                    </td>
+	                    <td class="value">{{>#data.imp}}</td>
+	                </tr>
+	            {{/for}}
+	        </table>
+	    </div>
+	    <div id="market_contact" class="data_box">
+	        <h3>
+	            Market (total)
+	            <div class="inline contextual help" data-title="Market (total) Contact Views" data-message="For all suppliers counted in the current Market settings, this is the total number of Contact Views all of them have received.<br/><br/>
+	                 If you’re looking at the default view for a Premium supplier, the Market setting here is ALL 40,000 suppliers.  So this number is the total number of Contact Views all our suppliers got in the last 12 months.<br/><br/>
+	                 When you change the Market settings (in ‘Compare to Market’) all 6 of the market numbers will change – the 3 market averages and the 3 market totals.<br/><br/>
+	                 These 3 Market total numbers are only seen by ShipMates and not customers. <br/><br/>
+	                 You may use these Total Market numbers with customers and prospects to show them the large number of amount of ‘value events’ in Pages and therefore why they should upgrade to Premium (or improve their profile complete score) to get more of this value for their company."></div>
+	        </h3>
+	        <table border="0" cellpadding="0" cellspacing="0" width="140">
+	            {{for dataMarket.market}}
+	            <tr>
+	                <td class="legend">
+	                    <div class="legend_icon p{{>#data.p}}"></div>
+	                </td>
+	                <td class="value">{{>#data.cont}}</td>
+	            </tr>
+	            {{/for}}
+	        </table>
+	    </div>
+	    <div id="market_rfq" class="data_box">
+	        <h3>
+	            Market (total)
+	            <div class="inline contextual help" data-title="Market (total) Pages RFQs" data-message="For all suppliers counted in the current Market settings, this is the total number of RFQs on Pages all of them have received.<br/><br/>
+	                 If you’re looking at the default view for a Premium supplier, the Market setting here is ALL 40,000 suppliers.  So this number is the total number of Pages RFQs all our suppliers got in the last 12 months.<br/><br/>
+	                 When you change the Market settings (in ‘Compare to Market’) all 6 of the market numbers will change – the 3 market averages and the 3 market totals.<br/><br/>
+	                 These 3 Market total numbers are only seen by ShipMates and not customers. <br/><br/>
+	                 You may use these Total Market numbers with customers and prospects to show them the large number of amount of ‘value events’ in Pages and therefore why they should upgrade to Premium (or improve their profile complete score) to get more of this value for their company."></div>
+	        </h3>
+	        <table border="0" cellpadding="0" cellspacing="0" width="140">
+	            {{for dataMarket.market}}
+	            <tr>
+	                <td class="legend">
+	                    <div class="legend_icon p{{>#data.p}}"></div>
+	                </td>
+	                <td class="value">{{>#data.enq}}</td>
+	            </tr>
+	            {{/for}}
+	        </table>
+	    </div>
+	</div>
+	<div class="clear"></div>
+	<?endif?>
+</div>
+
+<div class="footer <?php if($isShipMate==false){ echo 'noMate';}?>">
+    <div class="info notice left">
+        <div class="icon"></div>
+        <span>{{:leftMarketingMsg}}</span>
+    </div>
+
+    <div class="{{>marketingMsgType}} notice right">
+        <div class="icon"></div>
+        <span>{{:marketingMsg}}</span>
+    </div>
+</div>    
+</script>
+<script id="tablesTemplate" type="text/x-jsrender">
+	{{for tables tmpl="#tableTemplate" /}}
+</script>
+
+<script id="unactionedRfqTemplate" type="text/x-jsrender">
+<? if($this->unactionedRfqCount > 0) { ?>
+	<div id="funnel_header" class="no-border">
+		<div class="unactioned_rfq_alert">
+			<div class="left">
+				<p>Your unactioned RFQs for the last 30 days:</p><div class="inline contextual help unactioned" data-title="Unactioned RFQs" data-message="This is a rolling count of the number of unactioned Pages and TradeNet RFQs for the last 30 days from today. Unactioned RFQs are RFQs that are yet to be quoted or declined.<br/><br/>This count is <u>not</u> effected by the time period selected in your report."></div>
+				<div class="number">
+					<p><img src="/img/icons/medium/attention.png" alt="Alert Icon" class="alert" /><?= $this->unactionedRfqCount  ; ?></p>
+				</div>
+				<!--
+				<div class="zz medium dblue action button"><a class="button" href-"">Action these now</a></div>-->
+			</div>
+		
+			<div class="right">
+				<p class="big">Improve the relevance of future RFQs that you receive…</p>
+				<p class="text">Specifying the reason for a declined RFQ will allow ShipServ to reduce the number of RFQs that you receive in the future that do not match the products & services that you provide in the locations that you serve.</p>
+			</div>
+		</div>
+	</div>
+<? }?>
+
+<div id="detailed-graph"></div>
+</script>
+
+<script id="tableTemplate" type="text/x-jsrender">
+		<table {{if id}}id="{{>id}}"{{/if}} class="stats {{if displayLeftColumn}}titlecol{{/if}} {{if cssClass}}{{>cssClass}}{{/if}}">
+			<thead>
+				{{if title}}
+				<tr>
+					{{if displayLeftColumn}}
+						<th class="titlecol empty"></th>
+					{{/if}}
+					<th class="tbltitle" {{* ret += '';
+						var x =1;
+						if (view.data.periods.period2) { x = 3; }
+						if (view.data.vars) { x = x*2; }
+						if (x>0) { ret+= ' colspan="'+ x +'" '; }
+						}}>{{>title}}</th>
+				</tr>
+				{{/if}}
+				<tr class="subtitle">
+					{{if displayLeftColumn}}
+						{{if vars}}
+							<th class="titlecol empty"></th>
+						{{else}}
+							<th class="titlecol"><span class="nowrap">{{>leftColumnTitle}}</span></th>
+						{{/if}}
+					{{/if}}
+					<th class="subtitle period one" {{if vars}}colspan="2"{{/if}}>{{formatDate periods.period1.from /}} - {{formatDate periods.period1.to /}}</th>
+					{{if periods.period2}} 
+						<th class="subtitle period two" {{if vars}}colspan="2"{{/if}}>{{formatDate periods.period2.from /}} - {{formatDate periods.period2.to /}}</th>
+						<th class="subtitle change" {{if vars}}colspan="2"{{/if}}>% Period Change</th>
+					{{/if}}
+				</tr>
+				{{if vars}}
+					<tr class="coltitle">
+						{{if displayLeftColumn}}
+							<th class="titlecol"><span class="nowrap">{{>leftColumnTitle}}</span></th>
+						{{/if}}
+						<th>{{>vars.var1}}</th>
+						<th>{{>vars.var2}}</th>
+						{{if periods.period2}}
+							<th>{{>vars.var1}}</th>
+							<th>{{>vars.var2}}</th>
+							<th>{{>vars.var1}}</th>
+							<th>{{>vars.var2}}</th>
+						{{/if}}
+					</tr>
+				{{/if}}
+			</thead>
+			<tbody>
+				{{for data}}
+					<tr>
+						{{if #view.parent.parent.data.displayLeftColumn}}
+							<td class="titlecol" title="{{:name}}"><span class="nowrap">{{:name}}</span></td>
+						{{/if}}
+						<td>{{:period1.var1}}</td>
+						{{if period1.var2}}
+							<td>{{:period1.var2}}</td>
+						{{/if}}
+						{{if period2}}
+							{{if period2.var1}}
+								<td>{{:period2.var1}}</td>
+							{{/if}}
+							{{if period2.var2}}
+								<td>{{:period2.var2}}</td>
+							{{/if}}
+							{{if period2.var1}}
+								<td>{{*
+									if (parseFloat(view.data.period1.var1)!=0 && parseFloat(view.data.period2.var1)!=0)
+									{
+										var val = Math.round(parseFloat(view.data.period1.var1)/parseFloat(view.data.period2.var1)*100 - 100);
+										ret+= '<span class="';
+										ret+= val > 0 ? 'pos">+' : (val == 0 ? 'zero">' : 'neg">');
+										ret+= val +"%</span>";
+									}
+								}}</td>
+							{{/if}}
+							{{if period2.var2}}
+								<td>{{*
+									if (parseFloat(view.data.period1.var2)!=0 && parseFloat(view.data.period2.var2)!=0)
+									{
+										var val = Math.round(parseFloat(view.data.period1.var2)/parseFloat(view.data.period2.var2)*100 - 100);
+										ret+= '<span class="';
+										ret+= val > 0 ? 'pos">+' : (val == 0 ? 'zero">' : 'neg">');
+										ret+= val +"%</span>";
+									}
+								}}</td>
+							{{/if}}
+						{{/if}}
+					</tr>	
+				{{/for}}
+			</tbody>
+		</table>
+</script>
+<div id="waiting">
+	<div class="waitingMessage">Loading...</div>
+	<div class="waitingMask"></div>
+</div>
+<div class="zz content_wide new clearfix no-marg">
+    <?php echo $this->partial('profile/breadcrumbs.phtml', array('breadcrumbs' => $breadcrumbs)); ?>
+	<div class="content_full">
+		<div class="zz header" style="padding-left: 15px;">
+				<div class="supplier-name-pane">
+                    
+				 	<h1>Supplier Insight Report for</h1>
+
+				 	<div class="green"><?php echo $this->supplierProfile->name?> <?if($this->user->isShipservUser()):?>(TNID: <?php echo $this->supplierProfile->tnid?>)<?endif?></div>
+				</div>
+			<div class="utility">
+			<div class="zz medium dblue button"><button id="exportButton" class="button" >Export</button></div>
+			</div>
+		</div>
+		
+		<div class="zz utility">
+			<div class="zz button small white"><button onclick="location.href='<?echo $this->supplierProfile->getUrl() ?>';" class="button">View profile and your Profile Complete Score</button></div>
+			<?if($this->user->isShipservUser() && $this->user->canPerform('PSG_FORWARD_SIR')):?>
+				<div class="zz button small white"><button id="emailReportToCustomerButton" class="button">Send as email</button></div>
+			<?endif?>
+			<!--  <input type="button" value="Print" id="printButton" /> -->
+		</div>
+
+
+		<form class="exportToExcel">
+			<input type="hidden" name="tnid" id="tnid" value="<?php echo $this->supplierProfile->tnid?>"/>
+			<input type="hidden" name="start" />
+			<input type="hidden" name="end" />
+			<input type="hidden" name="start2" />
+			<input type="hidden" name="end2" />
+			<input type="hidden" name="location" />
+			<input type="hidden" name="categories" />
+			<input type="hidden" name="brands" />
+			<input type="hidden" name="products" />
+		</form>
+	
+		<div id="forwardReportAsEmailForm" style="display:none;" class="clearfix">
+			<form class="main" method="post" style="width:600px; margin:0px;">
+			<input type="hidden" value="<?php echo $this->supplierProfile->tnid?>" name="destinationTnid" />
+			<input type="hidden" value="" name="startDate" />
+			<input type="hidden" value="" name="endDate" />
+			The TNID of the SIR you want to send: <?php echo $this->supplierProfile->tnid?> <b>(<?php echo $this->supplierProfile->name?>)</b>
+		
+			<ul>
+				<li>Only ShipMates will be able to send an SIR using this tool.</li>
+	 			<li>Be very careful when you use this tool as you are sending a summary SIR with confidential data in it.</li>
+				<li>You are NOT allowed to send one company's SIR to another company.</li>
+				<li>It is your own personal responsibility to make sure that our customers' data, including SIR data, is protected and you use confidential data like this in accordance with the ShipServ company policy.</li>
+			</ul>
+		
+			<br /><br />
+			<fieldset>
+			Email address(es) you want the SIR to go to:<br />
+			<br />
+			 <?=$this->partial('/forms/regular/textfield.phtml',
+				array(
+					'label'		=> 'Email address 1',
+					'name'      => 'emails[]',
+				  	'required'	=> true,
+					'value'     => "",
+					'maxchar'	=> 255,
+					'div'		=> array('class' => '')
+			 ))?>
+		
+			 <?=$this->partial('/forms/regular/textfield.phtml',
+				array(
+					'label'		=> 'Email address 2',
+					'name'      => 'emails[]',
+				  	'required'	=> false,
+					'value'     => "",
+					'maxchar'	=> 255,
+					'div'		=> array('class' => '')
+			 ))?>
+		
+			 <?=$this->partial('/forms/regular/textfield.phtml',
+				array(
+					'label'		=> 'Email address 3',
+					'name'      => 'emails[]',
+				  	'required'	=> false,
+					'value'     => "",
+					'maxchar'	=> 255,
+					'div'		=> array('class' => '')
+			 ))?>
+		
+			 <?=$this->partial('/forms/regular/textfield.phtml',
+				array(
+					'label'		=> 'Email address 4',
+					'name'      => 'emails[]',
+				  	'required'	=> false,
+					'value'     => "",
+					'maxchar'	=> 255,
+					'div'		=> array('class' => '')
+			 ))?>
+		
+			 <?=$this->partial('/forms/regular/textfield.phtml',
+				array(
+					'label'		=> 'Email address 5',
+					'name'      => 'emails[]',
+				  	'required'	=> false,
+					'value'     => "",
+					'maxchar'	=> 255,
+					'div'		=> array('class' => '')
+			 ))?>
+		
+		
+			<br />
+		
+			<?=$this->partial('/forms/regular/textarea.phtml',
+				array(
+					'label'		=> 'Enter any message you want to go into the body copy',
+					'name'      => 'bodyText',
+				  	'required'	=> true,
+					'value'     => "Dear Customer,
+
+Please find below a summary of the Supplier Insight Report for " . $this->supplierProfile->name . "
+
+
+Kind regards",
+								'maxchar'	=> 1000,
+					'div'		=> array('class' => '')
+			 ))?>
+		
+			<br />
+		
+			 <?=$this->partial('/forms/regular/textarea.phtml',
+				array(
+					'label'		=> 'Enter here who you want to show the email is from',
+					'name'      => 'fromText',
+				  	'required'	=> true,
+					'value'     => ucfirst($this->user->firstName) . " " . ucfirst($this->user->lastName) . "\nShipServ\n" . $this->user->email,
+					'maxchar'	=> 1000,
+					'div'		=> array('class' => '')
+			 ))?>
+			<br />
+			<div class="disclaimer">
+				<b>This email CANNOT be recalled once sent, so click this box to confirm:</b><br />
+				<br />
+				<br />
+				<div style="float:left">
+					<input type="checkbox" name="agree" id="agree" value="1" />
+				</div>
+				<div style="float:left; margin-left:20px; clear:right; width:370px;">
+					&bull; I have checked that this person is employed by this company<br />
+					&bull; I am sending this SIR to the right company
+				</div>
+			
+				<div class="clear"></div>
+			
+				<div class="zz large green button" id="sendButton" style="margin-top:20px;"><button>Email the SIR now</button></div>
+			
+				<br />
+				<br />
+				<br />
+			</div>
+			</fieldset>
+			</form>
+		</div>
+
+		<div class="filters clearfix">
+			<ul class="tabs">
+				<div class="period">
+					<span class="section label">Time Period<div class="inline contextual help" data-title="Time Period" data-message="You can select any time period for which to display all the data in the report.<br/><br/>Click on the light blue tab underneath ‘Time Period’ to open the drop down menu.<br/><br/>Optionally, you may specify a second period of time in order to compare data between two periods.  You do this by checking the ‘compare to period’ tick box in the Time Period drop down menu.<br/><br/>You can also click on the ‘line graph’ icon to the right of ‘Change View’ to see when, during your chosen period, the views or enquiries happened.<br/><br/>For Supplier Insight Report User Guides <a href='/help/sir'>click here</a>."></div></span>
+					<li class="period tab" data-tabname="period"><span class="selection one"></span><span class="selection two" style="display:none;"></span><div class="arrow"></div></li>
+				</div>
+				<div></div>
+				<div class="comparison">
+					<span class="section label"><img src="/images/icons/small/white/up_arrow.png" alt="up" class="up left" /><span>Compare to market</span>
+					<?if ( $this->supplierProfile->premiumListing == false ):?>
+						<div class="inline contextual help" data-title="Compare To Market" data-message="The Market benchmarks are the three grey graphs to the right of the You bar graphs.  Clicking on the words 'Compare to market' opens a drop down with 4 options (such as 'Countries & Ports') which you can click into and change in any way you wish. So, for example, you may wish to see the Market benchmarks for only your categories and ports.  (If you wish to change the time period, click the Time Period tab.)<br/><br/>Once you have made your changes to the default settings and clicked 'Apply Changes' all the Market data will be re-calculated. So you will then see revised bar graphs for the three Market graphs - the You graphs do not change.  Please note that if you change more than 1 of the 4 settings (say, you change Brands and then Categories) then you will need to Apply Changes after every change (in this example, once after you change the Brands and once again after you change Categories).  If you don’t then only your first changes (to Brands, in this example) will be re-calculated.<br/><br/>The default view on log in shows a 12 month timeframe and the Market bar graphs show the average for all the Premium suppliers that we have on ShipServ Pages. You are able to change all these defaults, as described above. We set the Market benchmark as Premium suppliers only so you can see the opportunity for basic suppliers such as yourself.<br/<br/>For Supplier Insight Report User Guides <a href='/help/sir' title='Help - Supplier Insight Report'>click here</a>"></div>
+					<?else:?>
+						<div class="inline contextual help" data-title="Compare To Market" data-message="The Market benchmarks are the three grey graphs to the right of the You bar graphs. Clicking on the words 'Compare to market' opens a drop down with 4 options (such as 'Countries & Ports') which you can click into and change in any way you wish. So, for example, you may wish to see the Market benchmarks for only your categories and ports.  (If you wish to change the time period, click the Time Period tab.)<br/><br/>Once you have made your changes to the default settings and clicked 'Apply Changes' all the Market data will be re-calculated. So you will then see revised bar graphs for the three Market graphs - the You graphs do not change.  Please note that if you change more than 1 of the 4 settings (say, you change Brands and then Categories) then you will need to Apply Changes after every change (in this example, once after you change the Brands and once again after you change Categories).  If you don’t then only your first changes (to Brands, in this example) will be re-calculated.<br/><br/>The default view on log in shows a 12 month timeframe and the Market bar graphs are set as the average for all the 39,000 suppliers we have on ShipServ Pages. You are able to change all these defaults, as described above.<br/<br/>For Supplier Insight Report User Guides <a href='/help/sir' title='Help - Supplier Insight Report'>click here</a>."></div>
+					<?endif?>
+					<img src="/images/icons/small/white/up_arrow.png" alt="up" class="up right" /></span>
+					<li class="location tab" data-tabname="location">Countries &amp; Ports<span class="selection"></span><div class="arrow"></div></li>
+					<li class="brands tab" data-tabname="brands">Brands<span class="selection"></span><div class="arrow"></div></li>
+					<li class="categories tab" data-tabname="categories">Categories<span class="selection"></span><div class="arrow"></div></li>
+					<li class="products tab" data-tabname="products">ShipServ Services<span class="selection"></span><div class="arrow"></div></li>
+				</div>
+			</ul>
+
+			<div class="tabbody">
+				<div class="tabcontent date hidden clearfix" data-tabname="period">
+					<h2>Time period</h2>
+					<div class="quickselect">
+						<label for="quickSelectPeriodOne" class="quickselect">Quick selection:</label>
+						<select name="quickSelectPeriodOne" id="quickSelectPeriodOne" class="quickselect">
+
+						</select>
+					</div>
+                
+					<!--
+					<div class="quickselect">
+						<label for="quickSelectPeriodTwo" class="quickselect">Quick selection:</label>
+						<select name="quickSelectPeriodTwo" id="quickSelectPeriodTwo" class="quickselect">
+						
+						</select>
+					</div>
+					-->
+				
+					<div class="clear"></div>
+				
+
+					<div class="period one">
+						<div class="date selection from">
+							<label class="date">From:</label>
+							<input type="text" name="fromDate" id="fromDate" value="01/10/2010" class="date" /> 
+							<label class="dmy">dd/mm/yyyy</label>
+							<div data-input="fromDate" class="datepicker" id="dpFromDate"></div>
+						</div>
+
+						<div class="date selection to">
+							<label class="date">To:</label>
+							<input type="text" name="toDate" id="toDate" value="01/10/2011" class="date"/>
+							<label class="dmy">dd/mm/yyyy</label>
+							<div data-input="toDate" class="datepicker" id="dpToDate"></div>
+						</div>
+					</div>
+				
+					<label for="periodToPeriod" id="p2p"><input type="checkbox" id="periodToPeriod" name="periodToPeriod" />Compare to period</label>
+
+					<div class="period two disabled">
+						<p class="enter">Enter the <span>earlier</span> period into these boxes.</p>
+						<div class="mask"></div>
+						<div class="date selection from">
+							<label class="date">From:</label>
+							<input type="text" name="fromDate2" id="fromDate2" value="01/01/2011" class="date" />
+							<label class="dmy">dd/mm/yyyy</label>
+							<div data-input="fromDate2" class="datepicker" id="dpFromDate2"></div>
+						</div>
+
+						<div class="date selection to">
+							<label class="date">To:</label>
+							<input type="text" name="toDate2" id="toDate2" value="01/01/2011" class="date" />
+							<label class="dmy">dd/mm/yyyy</label>
+							<div data-input="toDate2" class="datepicker" id="dpToDate2"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="tabcontent location clearfix hidden" data-tabname="location">
+	                <h2>Countries/Ports</h2>
+					<div class="waiting"></div>
+					<div class="quickselect">
+						<label for="quickSelectLocation" class="quickselect">Quick selection:</label>
+						<select name="quickSelectLocation" id="quickSelectLocation" class="quickselect">
+						
+						</select>
+					</div>
+
+					<div class="clear"></div>
+				
+					<div class="continent">
+						<label for="continent">Continent:</label>
+						<select id="continent">
+							<option value="NA" selected>North America</option>
+							<option value="SA">South America</option>
+							<option value="AN">Antarctica</option>
+							<option value="AF">Africa</option>
+							<option value="EU">Europe</option>
+							<option value="AS">Asia</option>
+							<option value="OC">Oceania (Australasia)</option>
+						</select>
+					</div>
+
+					<div class="location selectlist">
+						<div class="available list">
+							<div class="textfilter">
+								<input type="text" class="available location text filter" data-selectlist="location-available-selectlist"></input>
+							</div>
+							<ul class="available location selectlist" id="location-available-selectlist">
+
+							</ul>
+						</div>
+						<div class="selected list">
+							<div class="textfilter">
+								<input type="text" class="selected location text filter" data-selectlist="location-selected-selectlist"></input>
+							</div>
+							<ul class="selected location selectlist" id="location-selected-selectlist">
+								<span class="default">Globally</span>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="tabcontent brands hidden clearfix" data-tabname="brands">
+				    <h2>Brands</h2>
+					<div class="waiting"></div>
+					<div class="quickselect">
+						<label for="quickSelectBrands" class="quickselect">Quick selection:</label>
+						<select name="quickSelectBrands" id="quickSelectBrands" class="quickselect">
+						
+						</select>
+					</div>
+				
+					<div class="clear"></div>
+				
+					<div class="brands selectlist">
+						<div class="available list">
+							<div class="textfilter">
+								<input type="text" class="available brands text filter" data-selectlist="brands-available-selectlist"></input>
+							</div>
+							<ul class="available brands selectlist" id="brands-available-selectlist">
+
+							</ul>
+						</div>
+						<div class="selected list">
+							<div class="textfilter">
+								<input type="text" class="selected brands text filter" data-selectlist="brands-selected-selectlist"></input>
+							</div>
+							<ul class="selected brands selectlist" id="brands-selected-selectlist" data-what="brands">
+								<span class="default">All brands</span>
+							</ul>
+						</div>
+					</div>
+				</div>
+
+				<div class="tabcontent categories clearfix hidden" data-tabname="categories">
+					<h2>Categories</h2>
+					<div class="waiting"></div>
+					<div class="quickselect">
+						<label for="quickSelectCategories" class="quickselect">Quick selection:</label>
+						<select name="quickSelectCategories" id="quickSelectCategories" class="quickselect">
+						
+						</select>
+					</div>
+				
+					<div class="clear"></div>
+				
+					<div class="categories selectlist">
+						<div class="available list">
+							<div class="textfilter">
+								<input type="text" class="available categories text filter" data-selectlist="categories-available-selectlist"></input>
+							</div>
+							<ul class="available categories selectlist" id="categories-available-selectlist">
+				
+							</ul>
+						</div>
+						<div class="selected list">
+							<div class="textfilter">
+								<input type="text" class="selected categories text filter" data-selectlist="categories-selected-selectlist"></input>
+							</div>
+							<ul class="selected categories selectlist" id="categories-selected-selectlist" data-what="categories">
+								<span class="default">All categories</span>
+							</ul>
+						</div>
+					</div>
+				</div>
+		
+				<div class="tabcontent products clearfix hidden" data-tabname="products">
+				    <h2>ShipServ Services</h2>
+				    <div class="clear"></div>
+			    
+					<ul class="select products">
+						<li>
+							<label for="product-basic"><input type="checkbox" id="product-basic" class="product" data-product-id="basic" name="basic" />Basic Listing</label>
+							<p>Suppliers who have a basic listing only.</p>
+						</li>
+						<li>
+							<label for="product-premium"><input type="checkbox" id="product-premium" class="product" data-product-id="premium" name="product-premium" />Premium Profile</label>
+							<p>Suppliers who have upgraded to a Premium Profile.</p>
+						</li>
+						<li>
+							<label for="product-smart"><input type="checkbox" id="product-smart" class="product" data-product-id="smart" name="product-smart" />Smart Supplier</label>
+							<p>Smart Supplier subscribed suppliers.</p>
+						</li>
+						<li>
+							<label for="product-expert"><input type="checkbox" id="product-expert" class="product" data-product-id="expert" name="product-expert" />Expert Supplier</label>
+							<p>Expert Supplier subscribed suppliers.</p>
+						</li>
+					</ul>
+				</div>
+			
+				<div class="footer"><div class="zz large green apply button"><button class="green">Apply change</button></div></div>
+			</div>
+		</div>
+
+		<h3 class="viewTabSupplemental detailed hide">Detailed Report</h3>
+		<h3 class="viewTabSupplemental summary">Report Summary</h3>
+        <h3 class="viewTabSupplemental rfq hide">RFQs and Orders</h3>
+
+		<div id="viewTabs" class="clearfix">
+			<div class="tab summary selected" data-tabid="summary"></div>
+			<div class="tab detailed" data-tabid="detailed"></div>
+            <div class="tab rfq" data-tabid="rfq"></div>
+		</div>
+		<span class="changeview label">Change view:</span>
+
+		<div id="summary" class="viewTabBody summary">
+			<p>&nbsp;</p>
+		</div>
+		<div class="clear summary_bottom sum"></div>
+		<div id="detailed" class="viewTabBody detailed hide"></div>
+        <div id="rfq" class="viewTabBody rfq hide"></div>
+		<div id="timeline" class="viewTabSupplemental hide detailed">
+			<div class="collapsable clearfix">
+				<h3>Total & Unique</h3>
+				<div id="totalNUnique" class="multi stats clearfix">
+					<div class="tables clearfix"></div>
+				</div>
+			</div>
+
+			<div class="collapsable clearfix">
+				<h3>Category Searches/Clicks</h3>
+				<div id="categorySearches" class="multi stats clearfix"></div>
+			</div>
+			<div class="collapsable clearfix">
+				<h3>Brand Searches/Clicks</h3>
+				<div id="brandSearches" class="multi stats clearfix"></div>
+			</div>
+			<div class="collapsable clearfix">
+				<h3>Supplier Profile Page Views Statistics</h3>
+				<div id="impressionBySearchKeyword" class="single stats clearfix"></div>
+				<div id="impressionByUserType" class="single stats clearfix"></div>
+			</div>
+			<div class="collapsable clearfix">
+				<h3>RFQ Statistics</h3>
+				<div id="enquiryBySearchKeyword" class="single stats clearfix"></div>
+				<div id="enquiryByUserType" class="single stats clearfix"></div>
+			</div>
+		</div>
+
+		<div id="infoFooter">
+		    <div class="buttons clearfix">
+		        <div class="custom button tutorial"><a href="/help/sir">How to use this Report</a></div>
+				<?php if ( $this->supplierProfile->premiumListing == true ){?><div class="custom button premium"><a href="/help/premium">Premium Profile Guide</a></div><?php }?>
+		        <?php if ( $this->supplierProfile->premiumListing == false ){?><div class="custom button feedback" style="height:60px;" onclick="location.href='/info/pages-for-suppliers/win-new-business-with-a-premium-profile/';">&nbsp;</div><?php }?>
+		   		<div class="clear"></div>
+		    </div>
+		
+		    <div class="account info clearfix">
+
+				<table class="section" cellpadding=="0" cellspacing="0">
+					<tr>
+						<td class="sectionLabel">Customer support</td>
+						<td class="leftonly"><a href="mailto:support@shipserv.com">support@shipserv.com</a><br /><a href="/help/contact">Contact us</a>
+					</tr>
+				</table>
+
+	        <div class="clear"></div>
+			<?php				
+					// for basic lister
+					if( $this->supplierProfile->premiumListing == false )
+					{
+						$data = $this->supplierProfile->getAccountManager();
+						$name = $data['name'];
+						$phone = $data['phone'];
+						$email = $data['email'];
+						?>
+						<table class="section" cellpadding=="0" cellspacing="0">
+							<tr>
+								<td class="sectionLabel">To upgrade to Premium</td>
+								<td>
+									<table class="subsection" cellpadding=="0" cellspacing="0">
+										<tr>
+											<td class="sublabel">Telephone Hotline:</td>
+											<td>+44 207 048 7924</td>
+										</tr>
+										<tr>
+											<td class="sublabel">Email:</td>
+											<td><a href="mailto:pages@shipserv.com">pages@shipserv.com</a></td>
+										</tr>
+										<tr>
+											<td class="sublabel">Web Store:</td>
+											<td><a href="/info/pages-for-suppliers/webstore">www.shipserv.com/store</a></td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						<?php 					
+					}
+					else
+					{
+						if( !empty($this->supplierProfile->accountManagerName) )
+						{
+							// check field sales
+							if( !empty($fieldSales[$this->supplierProfile->accountManagerEmail]) )
+							{
+								$name = $fieldSales[$this->supplierProfile->accountManagerEmail]['name'];
+								$email = $this->supplierProfile->accountManagerEmail;
+								$phone = $fieldSales[$this->supplierProfile->accountManagerEmail]['phone'];
+							}
+							else 
+							{
+								$name = $this->supplierProfile->accountManagerName;
+								$email = $this->supplierProfile->accountManagerEmail;
+								$phone = '+44 207 048 7924';
+							}
+							?>
+							<table class="section" cellpadding=="0" cellspacing="0">
+								<tr>
+									<td class="sectionLabel">Your account manager</td>
+									<td>
+										<table class="subsection" cellpadding=="0" cellspacing="0">
+											<tr>
+												<td class="sublabel">Name:</td>
+												<td><?=$name?></td>
+											</tr>
+											<tr>
+												<td class="sublabel">Email address:</td>
+												<td><?=$email?></td>
+											</tr>
+											<tr>
+												<td class="sublabel">Phone:</td>
+												<td><?=$phone?></td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+							<?php
+						}
+						else
+						{
+						
+						}
+					}
+				?>
+
+		        <div class="clear"></div>
+			
+				<table class="section" cellpadding=="0" cellspacing="0">
+					<tr>
+						<td class="sectionLabel">Person who receives your Pages RFQs:<div class="inline contextual help" data-title="Person who receives your Pages RFQs" data-message="Buyers fill out the RFQ form on Pages and send it to a number of suppliers they choose – this is the email in your company where that enquiry is sent.<br/><br/>It’s vital this email is correct and going to the most suitable person in the company.<br/><br/>This email can be changed easily from the online Self Service tool."></div></td>
+						<td>
+							<table class="subsection" cellpadding=="0" cellspacing="0">
+								<tr>
+									<td class="leftonly">
+									<?
+										$email = $this->supplierProfile->getEnquiryEmail();
+										if( $email == "" )
+											echo "Not specified";
+										else
+											echo $email;
+										
+									?>
+									</td>
+								</tr>
+								<?php if( $this->user->isShipservUser() == false ){?>
+								<tr>
+									<td class="leftonly">
+										<a href="<?=$this->supplierProfile->getEditUrl()?>"><?if (empty($this->supplierProfile->email)):?>Set RFQ email now <?else:?> Click here to change this email and also to change your company Profile <?endif?></a>
+									</td>
+								</tr>
+								<?php }?>
+							</table>
+						</td>
+					</tr>
+				</table>
+
+		        <div class="clear"></div>
+
+				<table class="section" cellpadding=="0" cellspacing="0">
+					<tr>
+						<td class="sectionLabel">To view your Pages RFQs:<div class="inline contextual help" data-title="Pages RFQs" data-message="The number of RFQs shown here on the Supplier Insight Report (SIR) might vary slightly to that seen when you click this link. That's because the data shown on the SIR is not updated in real time so it might be up to 24 hours old."></div></td>
+						<td>
+							<?php if( $this->user->isShipservUser() == false ){?>
+							<a id="enquiry-url" href="/profile/company-enquiry/type/v/id/<?= $this->supplierProfile->tnid?>">Click here</a>
+							<?php }else{ ?>
+							<a id="enquiry-url" href="/trade/rfq">Click here</a>
+							<?php }?>
+						</td>
+					</tr>
+				</table>
+				<?php if( $this->user->isShipservUser() == true ){?>
+				<div class="clear"></div>
+
+				<table class="section" cellpadding=="0" cellspacing="0">
+					<tr>
+						<td class="sectionLabel">Get more RFQs:</td>
+						<td>
+							<a href="<?echo $this->supplierProfile->getUrl() ?>">View your profile complete score</a>
+						</td>
+					</tr>
+				</table>
+				<?php }?>
+				<div class="clear"></div>
+	        
+		    </div>
+    		<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

@@ -1,0 +1,50 @@
+<chart>
+	<chart_type>column</chart_type>
+	
+	<legend layout='hide' />
+	
+	<chart_border top_thickness='0'
+		bottom_thickness='0'
+		left_thickness='0'
+		right_thickness='0'
+		color='000000'
+    /> 
+
+	
+	<chart_grid_h color='0099FF' />
+	
+	<chart_rect positive_color='FFFFFF' />
+	
+	<axis_value color='0099FF' prefix = '$' suffix = 'k' />
+	
+	<axis_category color='000000' />
+	
+	<axis_ticks category_ticks='0' />
+	
+	<series_color>
+		<color>CDCDCD</color>
+	</series_color>
+	
+	<chart_data>
+		<row>
+			<null/>
+			<?php foreach ($this->chartData as $cd)
+			{
+			?>
+			<string><?php echo $cd['label']; ?></string>
+			<?php
+			}
+			?>
+		</row>
+		<row>
+			<null/>
+			<?php foreach ($this->chartData as $cd)
+			{
+			?>
+			<number><?php echo round($cd['value'] / 1000); ?></number>
+			<?php
+			}
+			?>
+		</row>
+	</chart_data>
+</chart>

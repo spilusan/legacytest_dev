@@ -1,0 +1,25 @@
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th class="text-left">Supplier</th>
+            <th class="text-center">Location</th>
+            <th class="text-center">Used supplier before</th>
+            <th class="text-center">Competitive quotes issued</th>
+            <th class="text-center">% of quotes cheaper</th>
+            <th class="text-center alt">Potential saving (USD)</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {{#each this}}
+        <tr>
+            <td class="text-left">{{spb-name}}</td>
+            <td class="text-center">{{spb-loc}}</td>
+            <td class="text-center">{{#if used-spb-before}}Yes{{else}}No{{/if}}</td>
+            <td class="text-center">{{comp-qot-count}}</td>
+            <td class="text-center">{{pct-qot-cheaper}}</td>
+            <td class="text-right alt">{{pot-saving}}</td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
