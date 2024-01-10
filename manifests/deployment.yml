@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: spilusanlegacytestdev 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spilusanlegacytestdev
+  template:
+    metadata:
+      labels:
+        app: spilusanlegacytestdev 
+    spec:
+      containers:
+        - name: spilusanlegacytestdev 
+          image: testpilusan.azurecr.io/spilusanlegacytestdev
+          ports:
+          - containerPort: 80
